@@ -17,13 +17,31 @@ describe("Form Runtime with Date Picker", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/datepicker/basic.html"
     const bemBlock = 'cmp-adaptiveform-datepicker'
+    let toggle_array = [];
 
     let formContainer = null
+    const fmPropertiesUI = "/libs/fd/fm/gui/content/forms/formmetadataeditor.html/content/dam/formsanddocuments/core-components-it/samples/datepicker/basic"
+    const themeRef = 'input[name="./jcr:content/metadata/themeClientLibRef"]'
+    const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
+    // enabling theme for this test case as without theme there is a bug in custom widget css
+    before(() => {
+        cy.openPage(fmPropertiesUI).then(() => {
+            cy.get(themeRef).should('be.visible').clear().type('adaptiveform.theme.canvas3').then(() => {
+                cy.get(propertiesSaveBtn).click();
+            })
+        })
+    })
 
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
         })
+
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
     });
 
     const checkHTML = (id, state, displayValue) => {
@@ -124,6 +142,8 @@ describe("Form Runtime with Date Picker", () => {
 
         cy.get(`#${datePicker4}`).find("input").clear().type(incorrectInput).blur().then(x => {
             cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Please enter a valid value.")
+            cy.get(`#${datePicker4} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${datePicker4}__errormessage`)
+            cy.get(`#${datePicker4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${datePicker4}__errormessage ${datePicker4}__longdescription ${datePicker4}__shortdescription`)
         })
 
         cy.get(`#${datePicker4}`).find("input").clear().type(correctInput).blur().then(x => {
@@ -219,6 +239,21 @@ describe("Form Runtime with Date Picker", () => {
           expect(model.getState().value).to.equal(input);
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-datepicker--filled');
       });
+    });
+
+    it(" should support display value expression", () => {
+        if(toggle_array.includes("FT_FORMS-13193")) {
+            const [dateInput, dateInputView] = Object.entries(formContainer._fields)[7];
+            const input = '2024-02-02';
+            const formatted=  '2024-02-02 today'
+            let model = dateInputView.getModel();
+
+            cy.get(`#${dateInput}`).find("input").clear().type(input).blur().then(x => {
+                expect(model.getState().value).to.equal('2024-02-02');
+                expect(model.getState().displayValue).to.be.equal(formatted)
+                cy.get(`#${dateInput}`).find('input').should('have.value', model.getState().displayValue);
+            })
+        }
     });
 
 })

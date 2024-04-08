@@ -18,6 +18,7 @@ describe("Form with Number Input", () => {
     const pagePath = "content/forms/af/core-components-it/samples/numberinput/basic.html"
     const bemBlock = 'cmp-adaptiveform-numberinput'
     const IS = "adaptiveFormNumberInput"
+    let toggle_array = [];
     const selectors = {
         numberinput : `[data-cmp-is="${IS}"]`
     }
@@ -28,6 +29,12 @@ describe("Form with Number Input", () => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
         })
+
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
     });
 
     const checkHTML = (id, state) => {
@@ -158,6 +165,8 @@ describe("Form with Number Input", () => {
 
         cy.get(`#${numberInput4}`).find("input").clear().type(incorrectInput).blur().then(x => {
             cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"Please enter a valid value.")
+            cy.get(`#${numberInput4} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${numberInput4}__errormessage`)
+            cy.get(`#${numberInput4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${numberInput4}__errormessage ${numberInput4}__longdescription ${numberInput4}__shortdescription`)
         })
 
         cy.get(`#${numberInput4}`).find("input").clear().type(correctInput).blur().then(x => {
@@ -221,5 +230,20 @@ describe("Form with Number Input", () => {
           expect(Number(model.getState().value)).to.equal(Number(1122));
           cy.get(`#${numberInput7}`).should('have.class', 'cmp-adaptiveform-numberinput--filled');
       });
+    });
+
+    it(" should support display value expression", () => {
+        if(toggle_array.includes("FT_FORMS-13193")) {
+            const [numberInput, numberInputFieldView] = Object.entries(formContainer._fields)[7];
+            const input = 1234567812345678;
+            const formatted=  '**** **** **** 5678 '
+            let model = numberInputFieldView.getModel();
+
+            cy.get(`#${numberInput}`).find("input").clear().type(input).blur().then(x => {
+                expect(Number(model.getState().value)).to.equal(Number(input));
+                expect(model.getState().displayValue).to.be.equal(formatted)
+                cy.get(`#${numberInput}`).find('input').should('have.value', model.getState().displayValue);
+            })
+        }
     });
 })

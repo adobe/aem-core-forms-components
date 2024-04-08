@@ -260,9 +260,13 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     // getting status 403 intermittently, just ignore it
     const baseUrl = contextPath;
     cy.visit(baseUrl, {'failOnStatusCode': false});
-    cy.login(baseUrl, () => {
-      cy.openPage(path, options);
-    });
+      cy.getCookie('login-token').then(cookie => {
+          if(!cookie) {
+            cy.login(baseUrl, () => {
+                cy.openPage(path, options);
+            });
+          }
+      })
   }
   const defaultOptions = {
     retryOnStatusCodeFailure: true,
@@ -713,11 +717,34 @@ Cypress.Commands.add("getContentIFrameBody", () => {
 
 Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => {
   const rect = subject[0].getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= Cypress.config("viewportHeight") &&
+        rect.right <= Cypress.config("viewportWidth")
+    );
+});
 
-  return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= Cypress.config("viewportHeight") &&
-      rect.right <= Cypress.config("viewportWidth")
-  );
+
+/**
+ * This function is used to fetch elements from ContentFrame iframe which are not accessible.
+ * Without this, the element will not be returned due to browser's cross-origin security feature.
+ */
+Cypress.Commands.add("getContentIframeBody", () => {
+    return cy
+        .get('#ContentFrame')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+});
+
+/**
+ * This function is used to fetch rule editor iframe.
+ */
+Cypress.Commands.add("getRuleEditorIframe", () => {
+    // get the iframe > document > body
+    // and retry until the body element is not empty
+    return cy
+        .get('iframe#af-rule-editor')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
 });

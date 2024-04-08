@@ -187,6 +187,9 @@
         }
     }
 
+    // Expose Accordion under v1 for custom extensions
+    FormView.v1 = Object.assign(FormView.v1 || {}, { CheckBoxGroup: CheckBoxGroup });
+
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new CheckBoxGroup({element, formContainer})

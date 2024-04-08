@@ -26,7 +26,7 @@
      data-richtext>
     <div
          data-sly-test.text="${textModel.value}"
-         tabindex="0">
+         >
         <div data-sly-unwrap="${textModel.isRichText}">${text @ context = textModel.isRichText ? 'html' : 'text'}</div>
     </div>
 </div>

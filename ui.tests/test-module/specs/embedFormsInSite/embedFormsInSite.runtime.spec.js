@@ -56,12 +56,12 @@ describe("Embed multiple form in site", () => {
 
     it("form 1 model initialized properly", () => {
         expect(formContainer[0], "formcontainer is initialized").to.not.be.null;
-        expect(Object.keys(formContainer[0]._fields).length).to.equal(11);
+        expect(Object.keys(formContainer[0]._fields).length).to.equal(12);
     });
 
     it("form 2 model initialized properly", () => {
       expect(formContainer[1], "formcontainer is initialized").to.not.be.null;
-      expect(Object.keys(formContainer[1]._fields).length).to.equal(4);
+      expect(Object.keys(formContainer[1]._fields).length).to.equal(5);
     });
 
     it(" model's changes are reflected in the html  for form1", () => {
