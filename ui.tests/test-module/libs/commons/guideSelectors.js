@@ -192,6 +192,9 @@ var selectors = {
         ruleSummary : {
             CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']"
         },
+        ruleSummary : {
+            CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']"
+        },
         operator : {
             CONTAINS : "coral-selectlist [value='CONTAINS']",
             HIDE : "coral-selectlist [value='HIDE_STATEMENT']",
