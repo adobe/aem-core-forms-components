@@ -450,7 +450,6 @@ workflows:
       - release:
           requires:
             - build-java-11
-            - jsdocs-deploy
           filters:
             branches:
               ignore: /.*/
