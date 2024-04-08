@@ -188,6 +188,9 @@ var selectors = {
             SUBMISSION_SUCCESS_RULE: "#rule-summary table[handle='table'] tr[title='FORM - Successful Submission']",
             SUBMISSION_FAILURE_RULE: "#rule-summary table[handle='table'] tr[title='FORM - Error in Submission']",
         },
+        ruleSummary : {
+            CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']"
+        },
         operator : {
             CONTAINS : "coral-selectlist [value='CONTAINS']",
             HIDE : "coral-selectlist [value='HIDE_STATEMENT']",
