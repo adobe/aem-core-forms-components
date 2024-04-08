@@ -257,7 +257,7 @@ describe("Form Runtime with Date Picker", () => {
         }
     });
 
-    it.only("Test custom error message when incorrect date format is entered", () => {
+    it("Test custom error message when incorrect date format is entered", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
         const incorrectInputs = ["adfasdfa", "29/2/2023", "32/1/2023", "1/32/23", "1-1-2023"];
         incorrectInputs.forEach(incorrectInput => {
@@ -268,5 +268,19 @@ describe("Form Runtime with Date Picker", () => {
                 cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Date format expected is d/M/y")
             });
         });
+    });
+
+    it.only("should not show calendar widget if marked readonly", () => {
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        const [datePicker8, datePicker8FieldView] = Object.entries(formContainer._fields)[9];
+        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should('have.css', 'display', 'none');
+        cy.get(`#${datePicker8}`).find("input").focus()
+            .then(() => {
+                cy.get(`#${datePicker8}`).find("input").blur().should("have.value","8 April, 2024");
+            })
+        cy.get(`#${datePicker1}`).find("input").clear().type('2024-04-08');
+        cy.get(`#${datePicker1}`).find("input").blur().then(() => {
+            cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should('have.css', 'display', 'block');
+        })
     });
 })
