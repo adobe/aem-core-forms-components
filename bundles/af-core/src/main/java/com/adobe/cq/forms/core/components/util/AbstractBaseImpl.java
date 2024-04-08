@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
+import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -117,6 +118,10 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     protected Integer maxItems;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(values = FormContainer.DEFAULT_LANGUAGE)
+    protected String lang;
+
     /** End **/
 
     @SlingObject
@@ -154,6 +159,9 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     public boolean isTooltipVisible() {
         return tooltipVisible;
     }
+
+    @Override
+    public String getLang() {return lang;}
 
     @JsonIgnore
     public @NotNull Map<String, Object> getCustomLayoutProperties() {

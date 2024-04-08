@@ -198,6 +198,14 @@
                                                     </displayPictureClause>
                                                 </items>
                                             </displayPatternGroup>
+                                            <lang
+                                                    jcr:primaryType="nt:unstructured"
+                                                    granite:class="cmp-adaptiveform-datepicker__language"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="The language used for formatting the field value."
+                                                    fieldLabel="Language"
+                                                    name="./lang">
+                                            </lang>
                                         </items>
                                     </column>
                                 </items>
