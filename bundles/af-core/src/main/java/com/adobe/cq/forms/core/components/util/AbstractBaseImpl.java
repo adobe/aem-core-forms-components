@@ -21,7 +21,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
-import com.adobe.cq.forms.core.components.models.form.FormContainer;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -119,7 +119,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     protected Integer maxItems;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(values = FormContainer.DEFAULT_LANGUAGE)
+    @Default(values = DEFAULT_LANGUAGE)
     protected String lang;
 
     /** End **/
