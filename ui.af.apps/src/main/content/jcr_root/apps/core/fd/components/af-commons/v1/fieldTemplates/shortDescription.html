@@ -1,5 +1,5 @@
 <template data-sly-template.shortDescription="${@ componentId, shortDescriptionVisible, shortDescription, bemBlock}">
-  <div class="${bemBlock}__shortdescription" id="${componentId}__shortdescription" data-sly-test="${shortDescriptionVisible && shortDescription}">
+  <div class="${bemBlock}__shortdescription" id="${componentId}__shortdescription" aria-live="polite" data-sly-test="${shortDescriptionVisible && shortDescription}">
     ${shortDescription @context='html'}
   </div>
 </template>

@@ -166,7 +166,8 @@ describe("Form with Number Input", () => {
         cy.get(`#${numberInput4}`).find("input").clear().type(incorrectInput).blur().then(x => {
             cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"Please enter a valid value.")
             cy.get(`#${numberInput4} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${numberInput4}__errormessage`)
-            cy.get(`#${numberInput4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${numberInput4}__errormessage ${numberInput4}__longdescription ${numberInput4}__shortdescription`)
+            cy.get(`#${numberInput4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${numberInput4}__errormessage ${numberInput4}__shortdescription ${numberInput4}__longdescription`)
+            cy.get(`#${numberInput4} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true')
         })
 
         cy.get(`#${numberInput4}`).find("input").clear().type(correctInput).blur().then(x => {
