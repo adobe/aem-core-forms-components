@@ -143,6 +143,7 @@ describe("Form with File Input - Basic Tests", () => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
                         cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--filled');
+                        cy.get(`#${id}`).find(".cmp-adaptiveform-fileinput__widget").should('have.attr', 'aria-invalid', 'false');
                     })
                 }
             }

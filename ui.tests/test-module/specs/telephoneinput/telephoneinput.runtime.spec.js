@@ -118,7 +118,8 @@ describe("Form Runtime with Telephone Input", () => {
             // cy.get(`.${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${telephoneInput6}__errormessage`);
             cy.get(`#${telephoneInput6} > div.${bemBlock}__errormessage`).should('have.text', 'Please match the format requested.');
             cy.get(`#${telephoneInput6} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${telephoneInput6}__errormessage`);
-            cy.get(`#${telephoneInput6} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${telephoneInput6}__errormessage ${telephoneInput6}__longdescription ${telephoneInput6}__shortdescription`);
+            cy.get(`#${telephoneInput6} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${telephoneInput6}__errormessage ${telephoneInput6}__shortdescription ${telephoneInput6}__longdescription`);
+            cy.get(`#${telephoneInput6} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true');
         })
         // Validating UK pattern
         const [telephoneInput7, fieldView1] = Object.entries(formContainer._fields)[6];

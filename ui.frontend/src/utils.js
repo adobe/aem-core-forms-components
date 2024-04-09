@@ -233,24 +233,8 @@ class Utils {
      */
     static updateId(htmlElement, oldId, newId) {
         let elementWithId = htmlElement.querySelectorAll("#" + oldId)[0];
-        let errorElementWithId = htmlElement.querySelector("#" + `${oldId}__errormessage`);
-        let elementWithDescId = htmlElement.querySelector("#" + `${oldId}-widget`);
-        let elementWithShortDescId = htmlElement.querySelector("#" + `${oldId}__shortdescription`);
-        let elementWithLongDescId = htmlElement.querySelector("#" + `${oldId}__longdescription`);
         if (elementWithId) {
             elementWithId.id = newId;
-        };
-        if (errorElementWithId) {
-            errorElementWithId.id = newId;
-        };
-        if (elementWithDescId) {
-            elementWithDescId.id = newId;
-        };
-        if (elementWithShortDescId) {
-            elementWithShortDescId.id = newId;
-        };
-        if (elementWithLongDescId) {
-            elementWithLongDescId.id = newId;
         }
     }
 

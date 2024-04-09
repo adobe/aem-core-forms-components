@@ -120,7 +120,8 @@ describe("Form Runtime with Switch Input", () => {
         cy.get(`#${id}`).find("input").click().then(x => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-switch__errormessage").should('have.text',"This is a custom required switch");
             cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`);
-            cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__widget-label > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${id}__errormessage ${id}__longdescription ${id}__shortdescription`);
+            cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__widget-label > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${id}__errormessage ${id}__shortdescription ${id}__longdescription`);
+            cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__widget-label > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true');
         })
 
         cy.get(`#${id}`).find("input").click().then(x => {
