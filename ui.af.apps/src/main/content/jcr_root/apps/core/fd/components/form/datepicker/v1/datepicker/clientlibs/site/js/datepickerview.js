@@ -71,6 +71,13 @@
             }
         }
 
+        updateReadOnly(readOnly, state) {
+            super.updateReadOnly(readOnly, state);
+            if (this.widgetObject != null) {
+                this.widgetObject.markAsReadOnly(readOnly);
+            }
+        }
+
         setModel(model) {
             super.setModel(model);
             if (!this.#noFormats()) {
