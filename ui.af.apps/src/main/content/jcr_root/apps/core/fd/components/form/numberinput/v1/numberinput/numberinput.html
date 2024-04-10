@@ -49,6 +49,7 @@
             disabled="${!numberinput.enabled}"
             readonly="${numberinput.readOnly}"
             required="${numberinput.required}"
+            aria-describedby="${numberinput.id}__errormessage ${numberinput.id}__longdescription ${numberinput.id}__shortdescription"
             placeholder="${numberinput.placeHolder}"
             dir="auto"/>
     <div data-sly-call="${shortDescription.shortDescription @componentId=numberinput.id, shortDescriptionVisible=numberinput.tooltipVisible, shortDescription=numberinput.tooltip, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap>
