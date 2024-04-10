@@ -26,6 +26,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
     #dp = null;
     #curInstance = null;
+    #calendarIcon = null;
     static #visible = false;
     static #clickedWindow;
 
@@ -322,6 +323,18 @@ if (typeof window.DatePickerWidget === 'undefined') {
             widget.click();
           }
         });
+        this.#calendarIcon = calendarIcon;
+        if (options.readOnly) {
+          this.markAsReadOnly(true)
+        }
+      }
+    }
+
+    markAsReadOnly(readonly) {
+      if (readonly) {
+        this.#calendarIcon.style.display = "none";
+      } else {
+        this.#calendarIcon.style.display = "";
       }
     }
 
