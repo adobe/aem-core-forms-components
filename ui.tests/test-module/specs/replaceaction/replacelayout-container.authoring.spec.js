@@ -147,7 +147,7 @@ describe('component replace - Authoring', function () {
                     cy.get("[value='" + afConstants.components.forms.resourceType[type] + "']").should('not.exist');
                 }
             }
-            cy.intercept('POST', '/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*').as('replaceCmp');
+            cy.intercept('POST', /core-components-it\/blank\/jcr:content\/guideContainer\/.*/).as('replaceCmp');
             cy.get(replacementComp).click();
             cy.wait("@replaceCmp");
             if(replacedComponentName === radioButtonName) {
