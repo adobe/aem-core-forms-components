@@ -52,7 +52,7 @@ public class RecaptchaImplTest {
         }
 
         @Override
-        public HCaptchaConfiguration getHcaptchaCloudConfiguration(Resource resource) throws GuideException {
+        public HCaptchaConfiguration getHCaptchaCloudConfiguration(Resource resource) throws GuideException {
             return null;
         }
     };

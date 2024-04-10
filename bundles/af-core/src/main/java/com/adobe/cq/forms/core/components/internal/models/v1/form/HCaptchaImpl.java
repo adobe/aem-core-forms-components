@@ -102,7 +102,7 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
         String siteKey = null, uri = null;
         resource = resourceResolver.getResource(this.getPath());
         if (resource != null && cloudConfigurationProvider != null) {
-            hCaptchaConfiguration = cloudConfigurationProvider.getHcaptchaCloudConfiguration(resource);
+            hCaptchaConfiguration = cloudConfigurationProvider.getHCaptchaCloudConfiguration(resource);
             if (hCaptchaConfiguration != null) {
                 siteKey = hCaptchaConfiguration.getSiteKey();
                 uri = hCaptchaConfiguration.getClientSideJsUrl();
