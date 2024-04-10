@@ -77,15 +77,15 @@
                 if (this.widgetObject == null) {
                     this.widgetObject = new DatePickerWidget(this, this.getWidget(), model);
                 }
-                if (this.widgetObject.getValue() !== '') {
-                    this._model.value = this.widgetObject.getValue();
+                if (this.isActive()) {
+                    this.widgetObject.setValue(model.value);
+                } else {
+                    this.widgetObject.setDisplayValue(model.value);
                 }
                 this.widgetObject.addEventListener('blur', (e) => {
                     this._model.value = this.widgetObject.getValue();
-
                     //setDisplayValue is required for cases where value remains same while focussing in and out.
                     this.widgetObject.setDisplayValue(this._model.value);
-
                     this.setInactive();
                 }, this.getWidget());
                 this.widgetObject.addEventListener('focus', (e) => {
@@ -104,7 +104,6 @@
                     this.setActive();
                 });
             }
-
         }
 
         #noFormats() {
