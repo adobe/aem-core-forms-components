@@ -200,11 +200,15 @@
                                             </displayPatternGroup>
                                             <lang
                                                     jcr:primaryType="nt:unstructured"
-                                                    granite:class="cmp-adaptiveform-datepicker__language"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldDescription="The language used for formatting the field value."
+                                                    granite:class="cmp-adaptiveform-numberinput__lang"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldDescription="The language to use for formatting the field."
                                                     fieldLabel="Language"
                                                     name="./lang">
+                                                <datasource
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                        type="lang"/>
                                             </lang>
                                         </items>
                                     </column>

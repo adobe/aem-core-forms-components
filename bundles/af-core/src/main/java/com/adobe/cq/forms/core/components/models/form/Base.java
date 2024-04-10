@@ -145,9 +145,9 @@ public interface Base extends FormComponent {
     }
 
     /**
-     * Returns the language configured on the field
+     * Returns the language to use for formatting the field.
      *
-     * @return returns the language configured on the field
+     * @return returns the language to use for formatting the field.
      * @since com.adobe.cq.forms.core.components.models.form 5.3.1
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)

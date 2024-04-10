@@ -66,7 +66,6 @@ public interface FormContainer extends Container {
 
     String DEFAULT_FORMS_SPEC_VERSION = "0.13.0";
 
-
     /**
      * Returns form metadata {@link FormMetaData}
      *

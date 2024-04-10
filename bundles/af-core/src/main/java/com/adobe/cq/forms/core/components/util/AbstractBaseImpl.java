@@ -21,7 +21,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -161,7 +160,9 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     }
 
     @Override
-    public String getLang() {return lang;}
+    public String getLang() {
+        return lang;
+    }
 
     @JsonIgnore
     public @NotNull Map<String, Object> getCustomLayoutProperties() {

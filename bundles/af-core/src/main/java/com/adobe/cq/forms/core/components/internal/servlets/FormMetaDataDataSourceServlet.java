@@ -85,6 +85,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     public enum FormMetaDataType {
         SUBMIT_ACTION("submitAction"),
         PREFILL_ACTION("prefillServiceProvider"),
+        LANG("lang"),
         FORMATTERS("formatters");
 
         private String value;
@@ -155,6 +156,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
             switch (type) {
                 case FORMATTERS:
+                case LANG:
                     ContentPolicy policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
                         resourceResolver);
                     resources.add(getResourceForDropdownDisplay(resourceResolver, "Select", ""));
@@ -162,15 +164,18 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                         ValueMap props = policy.getProperties();
                         if (props != null) {
                             for (Map.Entry<String, Object> entry : props.entrySet()) {
-                                if (entry.getKey().startsWith(ALLOWED_FORMAT)) {
+                                if ((type.equals(FormMetaDataType.FORMATTERS) && entry.getKey().startsWith(ALLOWED_FORMAT)) ||
+                                    (type.equals(FormMetaDataType.LANG) && entry.getKey().startsWith(FormMetaDataType.LANG.getValue()))) {
                                     String[] arr = entry.getValue().toString().split("=", 2);
                                     resources.add(getResourceForDropdownDisplay(resourceResolver, arr[0], arr[1]));
                                 }
                             }
                         }
-                        Map<String, String> allowedCustomFormattersMap = this.getAllowedCustomFormatters(policy, resourceResolver);
-                        for (Map.Entry<String, String> entry : allowedCustomFormattersMap.entrySet()) {
-                            resources.add(getResourceForDropdownDisplay(resourceResolver, entry.getKey(), entry.getValue()));
+                        if (type.equals(FormMetaDataType.FORMATTERS)) {
+                            Map<String, String> allowedCustomFormattersMap = this.getAllowedCustomFormatters(policy, resourceResolver);
+                            for (Map.Entry<String, String> entry : allowedCustomFormattersMap.entrySet()) {
+                                resources.add(getResourceForDropdownDisplay(resourceResolver, entry.getKey(), entry.getValue()));
+                            }
                         }
                     }
                     resources.add(getResourceForDropdownDisplay(resourceResolver, "Custom", "custom"));
