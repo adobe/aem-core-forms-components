@@ -50,6 +50,12 @@
                                             <title
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
+                                            <richTextTitle
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <isTitleRichText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
                                             <hideTitle
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
