@@ -44,7 +44,7 @@
     }
 
     const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
-        'placeholder', 'readOnly', 'required', 'tooltip', 'visible', 'enum', 'enumNames'];
+        'placeholder', 'readOnly', 'required', 'tooltip', 'visible', 'enum', 'enumNames', 'type'];
 
     const cannotBeReplacedWith = ['file-input'],
         irreplaceable = ['file-input'],
