@@ -270,7 +270,7 @@ describe("Form Runtime with Date Picker", () => {
         });
     });
 
-    it.only("should not show calendar widget if marked readonly", () => {
+    it("should not show calendar widget if marked readonly", () => {
         const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
         const [datePicker8, datePicker8FieldView] = Object.entries(formContainer._fields)[9];
         cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should('have.css', 'display', 'none');
