@@ -57,6 +57,7 @@ describe('Page - Authoring', function () {
      .should("exist");
     cy.get("[name='./readOnly']")
         .should("not.exist");
+    cy.get('.cmp-adaptiveform-base__istitlerichtext').should('not.exist');
 
     cy.get("[name='./visible'][type=\"checkbox\"]").should("exist").check();
     cy.get('.cq-dialog-cancel').click();
