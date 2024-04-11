@@ -44,12 +44,17 @@ describe("Form Runtime with Date Picker", () => {
         });
     });
 
-    const checkHTML = (id, state, displayValue) => {
+    const checkHTML = (id, state) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
         const passReadOnlyAttributeCheck = `${state.readOnly === true ? "" : "not."}have.attr`;
-        const value = state.value == null ? '' : state.value;
+        let value = state.value == null ? '' : state.value;
+        debugger;
+        let useDisplayValue = state.displayFormat !== 'date|short';
+        if (useDisplayValue && value) {
+            value = state.displayValue;
+        }
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
