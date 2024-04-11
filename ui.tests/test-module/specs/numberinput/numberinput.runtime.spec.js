@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe.skip("Form with Number Input", () => {
+describe("Form with Number Input", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/numberinput/basic.html"
     const bemBlock = 'cmp-adaptiveform-numberinput'
