@@ -67,7 +67,16 @@ describe("Form Runtime with Date Picker", () => {
             cy.get('input')
                 .should(passDisabledAttributeCheck, 'disabled');
             cy.get('input').should(passReadOnlyAttributeCheck, 'readonly');
-            cy.get('input').should('have.value', value)
+            cy.get('input').invoke('val').then(inputVal => {
+                const viewDate = new Date(inputVal);
+                const stateDate = new Date(value);
+               if (!isNaN(viewDate) && !isNaN(stateDate)) {
+                   // Default date could be in different format, we need to compare the intrinsic value of the date
+                   expect(viewDate.getTime()).to.equal(stateDate.getTime());
+               } else {
+                   expect(inputVal).to.equal(value)
+               }
+            })
         })
     }
 
@@ -286,6 +295,23 @@ describe("Form Runtime with Date Picker", () => {
         cy.get(`#${datePicker1}`).find("input").clear().type('2024-04-08');
         cy.get(`#${datePicker1}`).find("input").blur().then(() => {
             cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should('have.css', 'display', 'block');
+        })
+    });
+
+    it("Value selected from calendar widget should match the value set in model", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+        let model = datePicker7FieldView.getModel();
+        const date = '2023-08-10';
+        cy.get(`#${datePicker7}`).find("input").clear().type(date).blur().then(x => {
+            expect(model.getState().value).to.equal(date);
+            cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+                cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
+                cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023")
+                .then(() => {
+                    expect(datePicker7FieldView.getModel().getState().value).to.equal('2023-08-02')
+                })
+
+            });
         })
     });
 })

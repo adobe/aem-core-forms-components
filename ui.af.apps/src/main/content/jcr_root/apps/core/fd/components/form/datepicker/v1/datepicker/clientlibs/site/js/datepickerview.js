@@ -99,6 +99,12 @@
                     this.widgetObject.setValue(e.target.value);
                     this.setActive();
                 }, this.getWidget());
+                this.widgetObject.addEventListener('input', (e) => {
+                    if( e.target.value === '') {
+                        // clear the value if user manually empties the value in date input box
+                        this._model.value = "";
+                    }
+                }, this.getWidget());
             } else {
                 if (this.widget.value !== '') {
                     this._model.value = this.widget.value;
