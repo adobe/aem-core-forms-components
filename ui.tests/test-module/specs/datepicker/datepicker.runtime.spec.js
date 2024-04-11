@@ -62,7 +62,16 @@ describe("Form Runtime with Date Picker", () => {
             cy.get('input')
                 .should(passDisabledAttributeCheck, 'disabled');
             cy.get('input').should(passReadOnlyAttributeCheck, 'readonly');
-            cy.get('input').should('have.value', value)
+            cy.get('input').invoke('val').then(inputVal => {
+                const viewDate = new Date(inputVal);
+                const stateDate = new Date(value);
+               if (!isNaN(viewDate) && !isNaN(stateDate)) {
+                   // Default date could be in different format, we need to compare the intrinsic value of the date
+                   expect(viewDate.getTime()).to.equal(stateDate.getTime());
+               } else {
+                   expect(inputVal).to.equal(value)
+               }
+            })
         })
     }
 
