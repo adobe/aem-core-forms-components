@@ -49,7 +49,12 @@ describe("Form Runtime with Date Picker", () => {
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
         const passReadOnlyAttributeCheck = `${state.readOnly === true ? "" : "not."}have.attr`;
-        const displayValue = state.displayValue == null ? '' : state.displayValue;
+        let value = state.value == null ? '' : state.value;
+        debugger;
+        let useDisplayValue = state.displayFormat !== 'date|short';
+        if (useDisplayValue && value) {
+            value = state.displayValue;
+        }
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
@@ -62,7 +67,7 @@ describe("Form Runtime with Date Picker", () => {
             cy.get('input')
                 .should(passDisabledAttributeCheck, 'disabled');
             cy.get('input').should(passReadOnlyAttributeCheck, 'readonly');
-            cy.get('input').should('have.value', displayValue)
+            cy.get('input').should('have.value', value)
         })
     }
 
