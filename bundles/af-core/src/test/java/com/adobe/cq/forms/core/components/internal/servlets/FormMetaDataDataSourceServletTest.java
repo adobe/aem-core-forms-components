@@ -134,9 +134,9 @@ public class FormMetaDataDataSourceServletTest {
     public void testDataSourceForLangForNumberInput() throws Exception {
         context.currentResource("/apps/langtypedatasourcenumberinput");
         when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
-                .then(returnsFirstArg());
+            .then(returnsFirstArg());
         ContentPolicy contentPolicyMock = new MockContentPolicy(context.resourceResolver().getResource(
-                "/apps/langtypedatasourcenumberinputPolicy"));
+            "/apps/langtypedatasourcenumberinputPolicy"));
         when(contentPolicyManagerMock.getPolicy(any(Resource.class))).thenReturn(contentPolicyMock);
         context.request().setAttribute(Value.CONTENTPATH_ATTRIBUTE, "/apps/langtypedatasourcenumberinput");
         FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
@@ -144,7 +144,7 @@ public class FormMetaDataDataSourceServletTest {
         Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
         dataSourceServlet.doGet(context.request(), context.response());
         DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
-                DataSource.class.getName());
+            DataSource.class.getName());
         assertNotNull(dataSource);
         int size = 0;
         Iterator<Resource> iterator = dataSource.iterator();
@@ -154,7 +154,6 @@ public class FormMetaDataDataSourceServletTest {
         }
         assertEquals(3, size);
     }
-
 
     private void registerFormMetadataAdapter() {
         context.registerAdapter(ResourceResolver.class, FormMetaData.class,
