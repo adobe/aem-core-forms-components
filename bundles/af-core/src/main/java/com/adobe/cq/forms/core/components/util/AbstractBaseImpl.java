@@ -118,7 +118,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     protected Integer maxItems;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Default(values = DEFAULT_LANGUAGE)
     protected String lang;
 
     /** End **/
