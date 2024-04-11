@@ -49,5 +49,18 @@
                 "customFormatValue" : "15"
             }
         }
+    },
+
+    "langtypedatasourcenumberinput": {
+        "jcr:primaryType"   : "nt:unstructured",
+        "datasource" : {
+            "sling:resourceType": "/apps/langtypedatasourcenumberinputPolicy",
+            "type": "lang"
+        }
+    },
+
+    "langtypedatasourcenumberinputPolicy": {
+        "jcr:primaryType"   : "nt:unstructured",
+        "lang1": "Spanish=es-co"
     }
 }

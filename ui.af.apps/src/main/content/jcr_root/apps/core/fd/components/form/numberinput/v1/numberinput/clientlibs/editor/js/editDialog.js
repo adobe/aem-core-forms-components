@@ -24,8 +24,8 @@
         NUMERICINPUT_EXCLUDEMINCHECK = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__excludeMinimumCheck",
         NUMERICINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displaypattern",
         NUMERICINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displayformat",
-        NUMERICINPUT_LANG = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__lang",
-        NUMERICINPUT_LANGDISPLAYVALUE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__langdisplayvalue",
+        NUMERICINPUT_LANG = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__lang",
+        NUMERICINPUT_LANGDISPLAYVALUE = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__langdisplayvalue",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     /**
