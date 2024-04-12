@@ -44,12 +44,17 @@ describe("Form Runtime with Date Picker", () => {
         });
     });
 
-    const checkHTML = (id, state, displayValue) => {
+    const checkHTML = (id, state) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
         const passReadOnlyAttributeCheck = `${state.readOnly === true ? "" : "not."}have.attr`;
-        const value = state.value == null ? '' : state.value;
+        let value = state.value == null ? '' : state.value;
+        debugger;
+        let useDisplayValue = state.displayFormat !== 'date|short';
+        if (useDisplayValue && value) {
+            value = state.displayValue;
+        }
         cy.get(`#${id}`)
             .should(passVisibleCheck)
             .invoke('attr', 'data-cmp-visible')
@@ -62,7 +67,16 @@ describe("Form Runtime with Date Picker", () => {
             cy.get('input')
                 .should(passDisabledAttributeCheck, 'disabled');
             cy.get('input').should(passReadOnlyAttributeCheck, 'readonly');
-            cy.get('input').should('have.value', value)
+            cy.get('input').invoke('val').then(inputVal => {
+                const viewDate = new Date(inputVal);
+                const stateDate = new Date(value);
+               if (!isNaN(viewDate) && !isNaN(stateDate)) {
+                   // Default date could be in different format, we need to compare the intrinsic value of the date
+                   expect(viewDate.getTime()).to.equal(stateDate.getTime());
+               } else {
+                   expect(inputVal).to.equal(value)
+               }
+            })
         })
     }
 
@@ -257,7 +271,7 @@ describe("Form Runtime with Date Picker", () => {
         }
     });
 
-    it.only("Test custom error message when incorrect date format is entered", () => {
+    it("Test custom error message when incorrect date format is entered", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
         const incorrectInputs = ["adfasdfa", "29/2/2023", "32/1/2023", "1/32/23", "1-1-2023"];
         incorrectInputs.forEach(incorrectInput => {
@@ -268,5 +282,36 @@ describe("Form Runtime with Date Picker", () => {
                 cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Date format expected is d/M/y")
             });
         });
+    });
+
+    it("should not show calendar widget if marked readonly", () => {
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        const [datePicker8, datePicker8FieldView] = Object.entries(formContainer._fields)[9];
+        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should('have.css', 'display', 'none');
+        cy.get(`#${datePicker8}`).find("input").focus()
+            .then(() => {
+                cy.get(`#${datePicker8}`).find("input").blur().should("have.value","8 April, 2024");
+            })
+        cy.get(`#${datePicker1}`).find("input").clear().type('2024-04-08');
+        cy.get(`#${datePicker1}`).find("input").blur().then(() => {
+            cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should('have.css', 'display', 'block');
+        })
+    });
+
+    it("Value selected from calendar widget should match the value set in model", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+        let model = datePicker7FieldView.getModel();
+        const date = '2023-08-10';
+        cy.get(`#${datePicker7}`).find("input").clear().type(date).blur().then(x => {
+            expect(model.getState().value).to.equal(date);
+            cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+                cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
+                cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023")
+                .then(() => {
+                    expect(datePicker7FieldView.getModel().getState().value).to.equal('2023-08-02')
+                })
+
+            });
+        })
     });
 })

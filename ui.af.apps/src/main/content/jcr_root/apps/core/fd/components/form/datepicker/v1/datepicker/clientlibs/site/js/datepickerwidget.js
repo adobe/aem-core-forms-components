@@ -26,6 +26,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
     #dp = null;
     #curInstance = null;
+    #calendarIcon = null;
     static #visible = false;
     static #clickedWindow;
 
@@ -322,6 +323,18 @@ if (typeof window.DatePickerWidget === 'undefined') {
             widget.click();
           }
         });
+        this.#calendarIcon = calendarIcon;
+        if (options.readOnly) {
+          this.markAsReadOnly(true)
+        }
+      }
+    }
+
+    markAsReadOnly(readonly) {
+      if (readonly) {
+        this.#calendarIcon.style.display = "none";
+      } else {
+        this.#calendarIcon.style.display = "";
       }
     }
 
@@ -1147,6 +1160,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
     setValue(value) {
       let currDate =  new Date(value);
 
+      const timezoneOffset = currDate.getTimezoneOffset();
+      currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
         this.selectedMonth = currDate.getMonth();
@@ -1178,6 +1194,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
             break;
           case 'focus':
+            handler(e);
+            break;
+          case 'input':
             handler(e);
             break;
 

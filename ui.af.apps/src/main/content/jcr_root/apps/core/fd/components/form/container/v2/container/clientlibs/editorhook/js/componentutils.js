@@ -34,6 +34,16 @@
         );
     };
 
+    function getComponentModel(componentPath) {
+        const result = $.ajax({
+            type: 'GET',
+            async: false,
+            url: Granite.HTTP.externalize(componentPath + ".model.json"),
+            cache: false
+        });
+        return result.responseJSON;
+    }
+
     let RequestManager = {};
     RequestManager.PostRequest = function () {
         RequestManager.Request.call(this, arguments);
@@ -52,9 +62,17 @@
     RequestManager.PostRequest.prototype.prepareReplaceParagraph = function (config, editable, preservedProperties) {
         if (config.templatePath) {
             let comTemplatePath = Granite.HTTP.externalize(config.templatePath),
-                comData = CQ.shared.HTTP.eval(comTemplatePath + ".infinity.json"); // get component default json
+                comData = CQ.shared.HTTP.eval(comTemplatePath + ".infinity.json"), // get component default json
+                updatedProps = {};
 
-            // Delete properties that are not preserved
+            if(comData?.fieldType === "radio-group") {
+                const model = getComponentModel(editable.path);
+                if(model.type && model.type.includes("[]")) {
+                    updatedProps.type = model.type.replace("[]", "");
+                }
+            }
+
+            // Delete properties that are preserved
             for (let p in comData) {
                 if ((!Array.isArray(comData[p]) && typeof comData[p] === 'object') || preservedProperties.includes(p)) {
                     delete comData[p];
@@ -62,7 +80,8 @@
             }
 
             comData["sling:resourceType"] = config.resourceType;
-            this.setParam(":content", JSON.stringify(comData));    // write component properties
+            updatedProps = {...comData, ...updatedProps};
+            this.setParam(":content", JSON.stringify(updatedProps));    // write component properties
         }
 
         // overwrite editable properties with component properties so that data is not lost while replace operation
