@@ -4,6 +4,15 @@ const commons = require('../../libs/commons/commons'),
     afConstants = require('../../libs/commons/formsConstants');
 
 describe('Rule editor authoring sanity for core-components',function(){
+    let toggle_array = [];
+
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
 
     const createRuleToHideTextInputOnButtonClick = function() {
         // Edit rule option not existing on button toolbar
@@ -67,12 +76,111 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
     }
 
+    const createRuleToHandleFormSubmission = function() {
+        // Edit rule option not existing on button toolbar
+        cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+        // click on  create option from rule editor header
+        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+
+        cy.getRuleEditorIframe().find("#objectNavigationTree li[data-elementid='$form'] > div[role='button']").click();
+
+        createSubmissionSuccessRule();
+        createSubmissionErrorRule();
+
+        // check and close rule editor
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
+    }
+
+    const createSubmissionSuccessRule = function() {
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+
+        // select the event for which rule is to written
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
+
+        // is submitted successfully option existing in 'OPERATIONS' dropdown
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_SUBMITTED_SUCCESSFULLY).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_SUBMITTED_SUCCESSFULLY).click();
+
+        // check and click on dropdown to view the actions available
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
+
+        // select HIDE action from dropdown
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
+
+        cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").should("be.visible");
+        cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").click();
+
+        cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE input[placeholder='Filter Objects']").click().type("default");
+        cy.getRuleEditorIframe().find("[value='defaultSubmitSuccessHandler']").click({force: true});
+        cy.getRuleEditorIframe().find("[value='defaultSubmitSuccessHandler']").click({force: true});
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+
+        // check if rule is created
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.SUBMISSION_SUCCESS_RULE).should("exist");
+    }
+
+    const createSubmissionErrorRule = function() {
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+
+        // select the event for which rule is to written
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
+
+        // is submitted successfully option existing in 'OPERATIONS' dropdown
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SUBMISSION_FAILS).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SUBMISSION_FAILS).click();
+
+        // check and click on dropdown to view the actions available
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
+
+        // select HIDE action from dropdown
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
+
+        cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").should("be.visible");
+        cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").click();
+
+        cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE input[placeholder='Filter Objects']").click().type("default");
+        cy.getRuleEditorIframe().find("[value='defaultSubmitErrorHandler']").click({force: true});
+        cy.getRuleEditorIframe().find("[value='defaultSubmitErrorHandler']").click({force: true});
+
+        // select the string literal parameter
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PARAMETER + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PARAMETER + " .choice-view-default").click();
+
+        // select STRING_LITERAL action from dropdown
+        cy.getRuleEditorIframe().find(".Parameters coral-selectlist [value='STRING_LITERAL']").should("exist");
+        cy.getRuleEditorIframe().find(".Parameters coral-selectlist [value='STRING_LITERAL']").click({force: true});
+
+        cy.getRuleEditorIframe().find(".terminal-view.STRING_LITERAL input[placeholder='Enter a String']").should("be.visible").click().type('abc{enter}');
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+
+        // check if rule is created
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.SUBMISSION_FAILURE_RULE).should("exist");
+    }
+
     context('Open Forms Editor', function() {
         const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/blank",
+            submitFormPath = "/content/forms/af/core-components-it/samples/ruleeditor/submit/blank",
             formContainerPath = formPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
+            submitFormContainerPath = submitFormPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
             textinputEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             buttonEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
-            buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
+            buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
+            submitFormButtonEditPath = submitFormContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
+            submitFormButtonEditPathSelector = "[data-path='" + submitFormButtonEditPath + "']";
 
         /**
          * RuleSanity for button to change label of textbox
@@ -110,6 +218,25 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.selectLayer("Edit");
             cy.deleteComponentByPath(textinputEditPath);
             cy.deleteComponentByPath(buttonEditPath);
+        })
+
+
+        it('should add submission handler rules on form', function () {
+            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
+                cy.openAuthoring(submitFormPath);
+                cy.selectLayer("Edit");
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']").should("exist");
+
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']",
+                    "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + submitFormButtonEditPathSelector);
+
+                createRuleToHandleFormSubmission();
+                cy.get(sitesSelectors.overlays.overlay.component + submitFormButtonEditPathSelector).should("exist");
+
+                cy.selectLayer("Edit");
+                cy.deleteComponentByPath(submitFormButtonEditPath);
+            }
         })
     })
 
