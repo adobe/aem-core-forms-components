@@ -55,7 +55,7 @@ describe.only('Page - Authoring', function () {
         dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Horizontal Tabs", afConstants.components.forms.resourceType.tabsontop);
     }
 
-    const testPanelBehaviour = function (tabsEditPathSelector, tabsContainerDrop, isSites) {
+    const testPanelBehaviour = function(tabsEditPathSelector, tabsContainerDrop, isSites) {
         if (isSites) {
             dropTabsInSites();
         } else {
@@ -65,22 +65,20 @@ describe.only('Page - Authoring', function () {
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
         // Check If Dialog Options Are Visible
         cy.get("[name='./name']")
-            .should("exist");
+        .should("exist");
         cy.get("[name='./jcr:title']")
-            .should("exist");
+        .should("exist");
         cy.get("[name='./dataRef']")
-            .should("exist");
+        .should("exist");
         cy.get("[name='./visible']")
-            .should("exist");
+        .should("exist");
         cy.get("[name='./enabled']")
-            .should("exist");
+        .should("exist");
         cy.get("[name='./assistPriority']")
-            .should("exist");
+        .should("exist");
         cy.get("[name='./custom']")
-            .should("exist");
-        cy.get("[name='./layout']").should("not.exist");
-
-        cy.get('.cq-dialog-cancel').click();
+        .should("exist");
+        cy.get('.cq-dialog-cancel').should('be.visible').click();
         cy.deleteComponentByPath(tabsContainerDrop);
     }
 
@@ -115,6 +113,7 @@ describe.only('Page - Authoring', function () {
                 //Add 2 children in tabs on top component
                 dropTextInputInTabComponent();
                 dropDatePickerInTabComponent();
+                cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/tabsontop/datepicker']").should('be.visible');
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']").then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);

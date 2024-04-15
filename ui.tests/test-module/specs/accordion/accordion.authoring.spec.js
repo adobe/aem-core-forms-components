@@ -66,8 +66,9 @@ describe('Page - Authoring', function () {
         cy.get("[name='./custom']")
             .should("exist");
 
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(accordionDrop);
+        cy.clickAndValidate('.cq-dialog-cancel').then(() => {
+            cy.deleteComponentByPath(accordionDrop);
+        });
     }
 
     context('Open Forms Editor', function () {
@@ -133,7 +134,6 @@ describe('Page - Authoring', function () {
             });
         });
 
-        // todo: intermittent failure
         it('open edit dialog of aem forms Accordion', {retries: 3}, function () {
             cy.cleanTest(accordionEditPath).then(function () {
                 testAccordionBehaviour(accordionEditPathSelector, accordionEditPath, true);

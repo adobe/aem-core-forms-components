@@ -65,6 +65,7 @@ public interface FormContainer extends Container {
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
     String DEFAULT_FORMS_SPEC_VERSION = "0.13.0";
+    String THEME_CLIENT_LIB_REF = "themeClientLibRef";
 
     /**
      * Returns form metadata {@link FormMetaData}
@@ -119,6 +120,12 @@ public interface FormContainer extends Container {
     @Nullable
     @JsonIgnore
     default String getClientLibRef() {
+        return null;
+    }
+
+    @Nullable
+    @JsonIgnore
+    default String getThemeClientLibRef() {
         return null;
     }
 

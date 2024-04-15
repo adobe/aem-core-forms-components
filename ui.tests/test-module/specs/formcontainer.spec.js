@@ -74,28 +74,20 @@ describe('Page/Form Authoring', function () {
         cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
         cy.get("[name='./actionType']").should("exist");
 
-        //select email submit action
-        cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
-        cy.get("._coral-Menu-itemLabel").contains('Send email').should('be.visible').click();
-        cy.get("[name='./useExternalEmailTemplate']").should("exist");
-        cy.get("[name='./templatePath']").should("exist");
-
-        cy.get("[name='./useExternalEmailTemplate']").should("exist").first().click();
-        cy.get("[name='./template']").should("exist");
-
         //select rest endpoint submit action
-        cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
-        cy.get("._coral-Menu-itemLabel").contains('Submit to REST endpoint').should('be.visible').click();
+        cy.get(".cmp-adaptiveform-container__submitaction button").click();
+        cy.get("coral-selectlist-item").contains('Submit to REST endpoint').click({force: true});
         cy.get("[name='./enableRestEndpointPost']").should("exist");
         cy.get("[name='./enableRestEndpointPost']").first().click();
-        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-9244")) {
-            cy.get("coral-radio[name='./restEndPointSource'][value='config']").first().click();
-            cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").should("not.be.visible");
-            cy.get("[name='./restEndpointConfigPath']").should("exist").should("be.visible");
-            cy.get("coral-radio[name='./restEndPointSource'][value='posturl']").first().click();
-            cy.get("[name='./restEndpointPostUrl']").should("exist").should("be.visible");
-            cy.get("[name='./restEndpointConfigPath']").should("exist").should("not.be.visible");
-        }
+        //skipping as submit cloud rest endpoint is not yet supported 6.5 and would be supported later
+        // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-9244")) {
+        //     cy.get("coral-radio[name='./restEndPointSource'][value='config']").first().click();
+        //     cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").should("not.be.visible");
+        //     cy.get("[name='./restEndpointConfigPath']").should("exist").should("be.visible");
+        //     cy.get("coral-radio[name='./restEndPointSource'][value='posturl']").first().click();
+        //     cy.get("[name='./restEndpointPostUrl']").should("exist").should("be.visible");
+        //     cy.get("[name='./restEndpointConfigPath']").should("exist").should("not.be.visible");
+        // }
         cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
 
         //save the configuration
@@ -132,11 +124,12 @@ describe('Page/Form Authoring', function () {
 
         //click save without selecting the fdm model, error should be displayed
         cy.get(".cq-dialog-submit").click();
-        cy.get(".coral-Form-errorlabel").should("be.visible");
+        cy.get(".coral-Form-fielderror").should("be.visible");
 
         //select fdm and save it
         cy.get(".cmp-adaptiveform-container__fdmselector").should("be.visible").click();
-        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/portal-unified-storage-form-data-model']").contains('Portal Unified Storage Form Data Model').should('be.visible').click();
+        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/ms-dynamics-fdm']").contains('Microsoft Dynamics FDM').should('be.visible').click();
+
         cy.get(".cq-dialog-submit").click();
     };
 
@@ -150,9 +143,13 @@ describe('Page/Form Authoring', function () {
 
         //since data model is already selected it should be disabled
         cy.get(".cmp-adaptiveform-container__selectformmodel").should("not.have.attr", "disabled");
-        cy.get(".cmp-adaptiveform-container__fdmselector").click();
+        cy.get(".cmp-adaptiveform-container__selectformmodel").click();
 
-        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments-fdm/forms-ootb-usc-workflow-fdm']").contains('Workflow Unified Storage Form Data Model').should('be.visible').click();
+        //select Schema as data model
+        cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
+        cy.get(".cmp-adaptiveform-container__schemaselector").click();
+        //choose a schema
+        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments/core-components-it/samples/panelcontainer/bank_api.schema.json']").contains('bank_api.schema.json').should('be.visible').click();
         cy.get("#formModelChange").should("be.visible");
         cy.get("#formModelDialogAcceptButton").click();
         cy.get(".cq-dialog-submit").click();

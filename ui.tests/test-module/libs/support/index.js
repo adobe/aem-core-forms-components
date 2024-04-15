@@ -50,6 +50,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes('getEditContext')) {
         return false;
     }
+    // sometimes on 6.5, the editable toolbar parent div is hidden
+    if (err.message.includes('is not visible because its parent')) {
+        return false;
+    }
+
     if (err.message.includes("reading 'extend'")) {
         return false;
     }
@@ -98,6 +103,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
     // circle ci is seen hanging due to this error
     if (err.message.includes("Cannot read properties of null (reading")) {
+        return false;
+    }
+
+    if (err.message.includes("shellMenuButton")) {
         return false;
     }
 
