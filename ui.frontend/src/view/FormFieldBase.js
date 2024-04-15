@@ -171,6 +171,37 @@ class FormFieldBase extends FormField {
         }
     }
 
+
+    #syncError() {
+        let errorElement = typeof this.getErrorDiv === 'function' ? this.getErrorDiv() : null;
+        if (errorElement) {
+            errorElement.setAttribute('id', `${this.getId()}__errormessage`);
+        }
+    }   
+
+    #syncShortDesc() {
+        let shortDescElement = typeof this.getTooltipDiv === 'function' ? this.getTooltipDiv() : null;
+        if (shortDescElement) {
+            shortDescElement.setAttribute('id', `${this.getId()}__shortdescription`);
+        }
+    } 
+
+    #syncLongDesc() {
+        let longDescElement = typeof this.getDescription === 'function' ? this.getDescription() : null;
+        if (longDescElement) {
+            longDescElement.setAttribute('id', `${this.getId()}__longdescription`);
+        }
+    } 
+
+    #syncAriaDescribedBy() {
+        let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+        let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+        widgetElement = widgetElements || widgetElement;
+        if (widgetElement) {
+            widgetElement.setAttribute('aria-describedby', `${this.getId()}__errormessage ${this.getId()}__shortdescription ${this.getId()}__longdescription`);
+        }
+    }
+
     /**
      * Synchronizes the markup with the model.
      * @method
@@ -178,6 +209,10 @@ class FormFieldBase extends FormField {
     syncMarkupWithModel() {
         this.#syncLabel()
         this.#syncWidget()
+        this.#syncShortDesc()
+        this. #syncLongDesc()
+        this.#syncAriaDescribedBy()
+        this.#syncError()
     }
 
     /**
@@ -435,8 +470,8 @@ class FormFieldBase extends FormField {
         // todo: handle the type of validity if required later
         const valid = validity.valid;
         if (this.errorDiv) {
-            this.toggle(valid, Constants.ARIA_INVALID, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+            this.widget.setAttribute(Constants.ARIA_INVALID, !valid);
             this.updateValidationMessage(state.validationMessage, state);
         }
     }
