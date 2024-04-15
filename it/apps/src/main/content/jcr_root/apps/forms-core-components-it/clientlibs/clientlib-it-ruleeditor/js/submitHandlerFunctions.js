@@ -22,15 +22,15 @@
  * @returns {void}
  */
 function customSubmitSuccessHandler(globals) {
-    const event = globals.event;
-    const submitSuccessResponse = event.payload.body;
-    const form = globals.form;
+    var event = globals.event;
+    var submitSuccessResponse = event.payload.body;
+    var form = globals.form;
     if (submitSuccessResponse) {
         if (submitSuccessResponse.redirectUrl) {
             window.location.href = encodeURI(submitSuccessResponse.redirectUrl);
         } else if (submitSuccessResponse.thankYouMessage) {
-            let formContainerElement = document.getElementById(`${form.$id}`);
-            let thankYouMessage = document.createElement("div");
+            var formContainerElement = document.getElementById(form.$id);
+            var thankYouMessage = document.createElement("div");
             thankYouMessage.setAttribute("class", "tyMessage");
             thankYouMessage.innerHTML = submitSuccessResponse.thankYouMessage;
             formContainerElement.replaceWith(thankYouMessage);
