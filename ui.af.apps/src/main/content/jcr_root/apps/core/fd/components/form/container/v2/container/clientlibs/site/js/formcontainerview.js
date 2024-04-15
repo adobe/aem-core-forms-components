@@ -30,23 +30,29 @@
             let self = this;
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                let body = action.payload?.body;
-                if (body) {
-                    if (body.redirectUrl) {
-                        window.location.href = encodeURI(body.redirectUrl);
-                    } else if (body.thankYouMessage) {
-                        let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
-                        let thankYouMessage = document.createElement("div");
-                        thankYouMessage.setAttribute("class", "tyMessage");
-                        thankYouMessage.innerHTML = body.thankYouMessage;
-                        formContainerElement.replaceWith(thankYouMessage);
+                // execute the handler only if there are no rules configured on submitSuccess event.
+                if (!state.events.submitSuccess || state.events.submitSuccess.length === 0) {
+                    let body = action.payload?.body;
+                    if (body) {
+                        if (body.redirectUrl) {
+                            window.location.href = encodeURI(body.redirectUrl);
+                        } else if (body.thankYouMessage) {
+                            let formContainerElement = document.querySelector("[data-cmp-path='" + self._path + "']");
+                            let thankYouMessage = document.createElement("div");
+                            thankYouMessage.setAttribute("class", "tyMessage");
+                            thankYouMessage.innerHTML = body.thankYouMessage;
+                            formContainerElement.replaceWith(thankYouMessage);
+                        }
                     }
                 }
             }, "submitSuccess");
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
-                window.alert(defaultSubmissionError);
+                // execute the handler only if there are no rules configured on submitError event.
+                if (!state.events.submitError || state.events.submitError.length === 0) {
+                    let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
+                    window.alert(defaultSubmissionError);
+                }
             }, "submitError");
         }
     }
