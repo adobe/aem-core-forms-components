@@ -53,7 +53,7 @@ describe('Custom Prefill Test', function () {
             cy.previewForm(pagePath, {"params" : [`prefillId=${prefillId}`]});
             // validating the prefilled data
             cy.get(nameTextBox).should("have.value", "John Doe");
-            cy.get(dobDropdown).should("have.value", "1999-10-10");
+            cy.get(dobDropdown).should("have.value", "10 October, 1999");
             cy.get(genderRadioButton).should("have.value", "0");
             cy.get(jobDropdown).should("have.value", "1");
         }

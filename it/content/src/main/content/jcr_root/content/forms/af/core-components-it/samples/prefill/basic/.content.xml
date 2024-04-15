@@ -46,6 +46,8 @@
                     sling:resourceType="forms-components-examples/components/form/datepicker"
                     enabled="{Boolean}true"
                     fieldType="date-input"
+                    displayFormat="d MMMM, y"
+                    displayPatternType="d MMMM, y"
                     name="dob"
                     readOnly="{Boolean}false"
                     textIsRich="[true,true]"
