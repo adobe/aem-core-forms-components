@@ -22,9 +22,6 @@ describe('Locale - Authoring Test', function () {
                 cy.intercept("/editor.html/content/forms/af/language-test.html").as("createFormRequest");
                 cy.intercept("/adobe/forms/fm/v1/themes*").as("getThemesRequest");
                 cy.intercept("/adobe/forms/fm/v1/templates*").as("templates");
-                cy.on('uncaught:exception', () => {
-                    return false
-                });
             });
 
             it('Create Form in German language', function (){
