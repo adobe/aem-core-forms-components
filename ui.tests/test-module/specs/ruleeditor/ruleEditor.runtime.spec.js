@@ -79,12 +79,10 @@ describe("Rule editor submission handler runtime", () => {
     let formContainer = null;
 
     it("Hardcoded submitSuccess handler should handle successful form submission", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
-            cy.previewForm(submitSuccessHardcodedHandler);
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                cy.get('body').should('contain', "Thank you for submitting the form.\n")
-            });
-        }
+        cy.previewForm(submitSuccessHardcodedHandler);
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+            cy.get('body').should('contain', "Thank you for submitting the form.\n")
+        });
     });
 
     it("Default submitSuccess handler should handle successful form submission", () => {
@@ -106,19 +104,17 @@ describe("Rule editor submission handler runtime", () => {
     });
 
     it("Hardcoded submitError handler should handle form submission error", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
-            cy.previewForm(submitErrorHardcodedHandler);
-            let alertFired = false;
-            cy.on('window:alert', (message) => {
-                expect(message).to.equal('Encountered an internal error while submitting the form.');
-                alertFired = true;
-            });
+        cy.previewForm(submitErrorHardcodedHandler);
+        let alertFired = false;
+        cy.on('window:alert', (message) => {
+            expect(message).to.equal('Encountered an internal error while submitting the form.');
+            alertFired = true;
+        });
 
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                // Confirm the alert was called
-                expect(alertFired).to.be.true;
-            });
-        }
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+            // Confirm the alert was called
+            expect(alertFired).to.be.true;
+        });
     });
 
     it("Default submitError handler should handle form submission error", () => {
