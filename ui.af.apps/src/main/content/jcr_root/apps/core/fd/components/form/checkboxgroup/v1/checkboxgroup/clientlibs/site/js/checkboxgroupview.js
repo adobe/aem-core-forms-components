@@ -111,6 +111,12 @@
             }
         }
 
+        updateValidity(validity) {
+            const valid = validity.valid ? validity.valid : false;
+            let widgets = this.widget;
+            widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
+        }    
+
         updateValue(modelValue) {
             modelValue = [].concat(modelValue);
             let selectedWidgetValues = modelValue.map(String);
@@ -186,10 +192,6 @@
             }
         }
     }
-
-    // Expose Accordion under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { CheckBoxGroup: CheckBoxGroup });
-
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new CheckBoxGroup({element, formContainer})

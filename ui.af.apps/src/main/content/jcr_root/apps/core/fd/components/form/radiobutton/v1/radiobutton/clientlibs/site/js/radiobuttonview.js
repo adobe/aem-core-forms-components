@@ -122,6 +122,12 @@
             });
         }
 
+        updateValidity(validity) {
+            const valid = validity.valid ? validity.valid : false;
+            let widgets = this.widget;
+            widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
+        } 
+
         updateValue(modelValue) {
             this.widget.forEach(widget => {
                 if (modelValue != null && widget.value != null && (modelValue.toString() == widget.value.toString())) {
@@ -158,6 +164,7 @@
         updateEnumNames(newEnumNames) {
             super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createRadioOption)
         }
+
         updateRequired(required, state) {
             if (this.widget) {
                 this.element.toggleAttribute("required", required);
@@ -165,9 +172,6 @@
             }
         }
     }
-
-    // Expose RadioButton under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { RadioButton: RadioButton });
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new RadioButton({element, formContainer});

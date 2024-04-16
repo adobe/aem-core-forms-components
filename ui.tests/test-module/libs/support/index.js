@@ -95,6 +95,12 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    // occasionally this error is seen
+    // https://web-sdk.aptrinsic.com/api/aptrinsic.js?a=AP-AULLRFDZLJ9K-2-1:8:60690
+    if (err.message.includes("Cannot read properties of undefined (reading 'contentWindow')")) {
+        return false;
+    }
+
     // circle ci is seen hanging due to this error
     if (err.message.includes("Cannot read properties of null (reading")) {
         return false;

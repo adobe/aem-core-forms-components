@@ -302,6 +302,12 @@ describe( "Form Runtime with Panel Container - Repeatability Tests", () => {
     const repeatabilityCount = 2;
 
     const checkNonDuplicateIDs = (root, instance) => {
+        const rootAriaDescribedby = root.getAttribute('aria-describedby');
+        const instanceAriaDescribedby = instance.getAttribute('aria-describedby');
+        if (rootAriaDescribedby && !exceptionIDsList.includes(rootAriaDescribedby)) {
+            expect(rootAriaDescribedby).to.not.equal(instanceAriaDescribedby, 'aria-describedby IDs should be different'); // redundant but good for debugging as this will show up in the UI
+            return rootAriaDescribedby !== instanceAriaDescribedby;
+        }
         if(root?.id !== '' && !(exceptionIDsList.includes(root.id))) {
             expect(root?.id).to.not.equal(instance?.id, `Ids generated should be different`) // redundant but good for debugging as this will show up in the UI
             return root?.id !== instance?.id;

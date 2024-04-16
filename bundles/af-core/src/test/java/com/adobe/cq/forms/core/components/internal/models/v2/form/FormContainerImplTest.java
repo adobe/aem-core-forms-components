@@ -151,7 +151,7 @@ public class FormContainerImplTest {
     void testGetAdaptiveFormDefaultVersion() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNotNull(formContainer.getAdaptiveFormVersion());
-        assertEquals("0.12.5", formContainer.getAdaptiveFormVersion());
+        assertEquals("0.13.0", formContainer.getAdaptiveFormVersion());
     }
 
     @Test

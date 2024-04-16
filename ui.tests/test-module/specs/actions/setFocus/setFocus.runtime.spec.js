@@ -33,7 +33,7 @@ describe("SetFocus Test", () => {
             });
         });
         cy.get(focusTnC).click().then(() => {
-            cy.get('[name="consenttext"]').should('have.attr', 'data-cmp-active', 'true');
+            cy.get('[data-cmp-is="adaptiveFormText"]').should('have.attr', 'data-cmp-active', 'true');
         })
     });
 

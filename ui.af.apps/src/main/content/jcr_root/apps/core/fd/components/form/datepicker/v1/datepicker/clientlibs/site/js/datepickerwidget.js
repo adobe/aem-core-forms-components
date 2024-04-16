@@ -26,6 +26,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
     #dp = null;
     #curInstance = null;
+    #calendarIcon = null;
     static #visible = false;
     static #clickedWindow;
 
@@ -322,6 +323,18 @@ if (typeof window.DatePickerWidget === 'undefined') {
             widget.click();
           }
         });
+        this.#calendarIcon = calendarIcon;
+        if (options.readOnly) {
+          this.markAsReadOnly(true)
+        }
+      }
+    }
+
+    markAsReadOnly(readonly) {
+      if (readonly) {
+        this.#calendarIcon.style.display = "none";
+      } else {
+        this.#calendarIcon.style.display = "";
       }
     }
 
@@ -728,13 +741,24 @@ if (typeof window.DatePickerWidget === 'undefined') {
     }
 
     #getLocalizedYear(date) {
+      /*
+      // Only Thai language return year according to Buddhist calendar, rest all languages follows gregorian calendar in practice.
+      // The Buddhist Year in 2024 = 543 + 2024  = B.E. 2567 (reference https://wesak.org.my/calculating-b-e/)
+      // Intl.DateTimeFormat#formatToParts returns number (2024) for all languages except for Thai (2567) & for Persian ('۱۴۰۳')
+      // For Persian ('۱۴۰۳'), returned year is not in numbers that is breaking next flow.
+      */
+      if(this.#lang === 'th') {
         const dateFormat = new Intl.DateTimeFormat(this.#lang, {
-            year: 'numeric'
+          year: 'numeric'
         });
         const dateParts = dateFormat.formatToParts(date);
         const yearObject = dateParts.find(yearObject => yearObject.type === "year");
         const localizedYear = yearObject.value;
         return Number(localizedYear);
+      }
+      else {
+        return Number(date.getFullYear());
+      }
     }
 
     /*
@@ -1136,6 +1160,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
     setValue(value) {
       let currDate =  new Date(value);
 
+      const timezoneOffset = currDate.getTimezoneOffset();
+      currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
         this.selectedMonth = currDate.getMonth();
@@ -1167,6 +1194,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
             break;
           case 'focus':
+            handler(e);
+            break;
+          case 'input':
             handler(e);
             break;
 

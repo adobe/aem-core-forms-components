@@ -74,8 +74,9 @@
                                     <specVersion
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                            ignoreData="{Boolean}true"
                                             name="./specVersion"
-                                            value="0.12.5"/>
+                                            value="0.13.0"/>
                                 </items>
                             </container>
                         </items>
