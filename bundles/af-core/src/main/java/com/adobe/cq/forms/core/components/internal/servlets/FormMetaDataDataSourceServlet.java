@@ -148,6 +148,29 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
 
+    /**
+     * Checks if the type is related to formatters policy and the entry's key starts with the allowedformat.
+     *
+     * @param type The type of form meta data.
+     * @param entry The entry in the form meta data map.
+     * @return True if the type is related to formatters policy and the entry's key starts with the allowedformat, otherwise false.
+     */
+    private Boolean isFormattersPolicy(FormMetaDataType type, Map.Entry<String, Object> entry) {
+        return type.equals(FormMetaDataType.FORMATTERS) && entry.getKey().startsWith(ALLOWED_FORMAT);
+    }
+
+    /**
+     * Checks if the type is related to language policy and the entry's key starts with the value of language metadata.
+     *
+     * @param type The type of form meta data.
+     * @param entry The entry in the form meta data map.
+     * @return True if the type is related to language policy and the entry's key starts with the value of language metadata, otherwise
+     *         false.
+     */
+    private Boolean isLangPolicy(FormMetaDataType type, Map.Entry<String, Object> entry) {
+        return type.equals(FormMetaDataType.LANG) && entry.getKey().startsWith(FormMetaDataType.LANG.getValue());
+    }
+
     private List<Resource> getDataSourceResources(HttpServletRequest request, ResourceResolver resourceResolver, FormMetaDataType type,
         String dataModel) {
         List<Resource> resources = new ArrayList<>();
@@ -164,8 +187,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                         ValueMap props = policy.getProperties();
                         if (props != null) {
                             for (Map.Entry<String, Object> entry : props.entrySet()) {
-                                if ((type.equals(FormMetaDataType.FORMATTERS) && entry.getKey().startsWith(ALLOWED_FORMAT)) ||
-                                    (type.equals(FormMetaDataType.LANG) && entry.getKey().startsWith(FormMetaDataType.LANG.getValue()))) {
+                                if (isFormattersPolicy(type, entry) || isLangPolicy(type, entry)) {
                                     String[] arr = entry.getValue().toString().split("=", 2);
                                     resources.add(getResourceForDropdownDisplay(resourceResolver, arr[0], arr[1]));
                                 }
