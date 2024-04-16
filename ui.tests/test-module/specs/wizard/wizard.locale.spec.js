@@ -19,7 +19,6 @@ describe('Locale - Authoring Test', function () {
     if(cy.af.isLatestAddon()) {
         context('Test Wizard Component String Language', function () {
             beforeEach(() => {
-                cy.intercept("POST", /editor\.html\/content\/forms\/af\/language-test\.html/).as("createFormRequest");
                 cy.intercept("/adobe/forms/fm/v1/themes*").as("getThemesRequest");
                 cy.intercept("/adobe/forms/fm/v1/templates*").as("templates");
             });
@@ -47,7 +46,6 @@ describe('Locale - Authoring Test', function () {
             it('Wizard String language test for English', function () {
                 cy.changeLanguage("en");
                 cy.openPage("/editor.html/content/forms/af/language-test.html").then(() => {
-                    cy.wait('@createFormRequest', {requestTimeout: 30000});
                     cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Please drag Wizard components here');
                 });
             });
@@ -55,7 +53,6 @@ describe('Locale - Authoring Test', function () {
             it('Wizard String language test for Italiano', function () {
                 cy.changeLanguage("it");
                 cy.openPage("/editor.html/content/forms/af/language-test.html").then(() => {
-                    cy.wait('@createFormRequest', {requestTimeout: 30000});
                     cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', "Trascina qui i componenti della procedura guidata");
                 });
             });
