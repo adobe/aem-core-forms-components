@@ -19,8 +19,8 @@ describe('Locale - Authoring Test', function () {
     if(cy.af.isLatestAddon()) {
         context('Test Wizard Component String Language', function () {
             beforeEach(() => {
-                cy.intercept("/adobe/forms/fm/v1/themes*").as("getThemesRequest");
-                cy.intercept("/adobe/forms/fm/v1/templates*").as("templates");
+                cy.intercept("**/themes*").as("getThemesRequest");
+                cy.intercept("**/templates*").as("templates");
             });
 
             it('Create Form in German language', function (){
