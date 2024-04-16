@@ -181,7 +181,7 @@
                 }else {
                     var displayFormatParentDiv=formatComponent.closest("div");
                     switch (displayPatternSelectedValue) {
-                        case "Select"     :
+                        case ""     :
                         case "#####################.###############" :
                             displayFormatParentDiv.setAttribute("hidden", true);
                             break;
@@ -189,7 +189,7 @@
                             displayFormatParentDiv.removeAttribute("hidden");
                     }
                 }
-                if(displayPatternSelectedValue!="Custom") {
+                if(displayPatternSelectedValue!="custom") {
                     formatComponent.value = patternComponent.value;
                 }
             }
