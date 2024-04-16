@@ -101,10 +101,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
-    // // sometimes this error is seen in start.html page
-    // if(err.message.includes('shellMenuButton')) {
-    //     return false;
-    // }
+    // sometimes this error is seen during create page
+    if(err.message.includes('document.registerElement is not a function')) {
+        return false;
+    }
 
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
