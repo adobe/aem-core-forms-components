@@ -21,7 +21,6 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -47,6 +46,7 @@ import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -250,10 +250,10 @@ public class FormContainerImplTest {
     @Test
     void testGetFormDefinition() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        String formDefinition=formContainer.getFormDefinition();
-        Map<String,Object>  formDefinitionJson = new ObjectMapper().readValue(formDefinition, Map.class);
+        String formDefinition = formContainer.getFormDefinition();
+        Map<String, Object> formDefinitionJson = new ObjectMapper().readValue(formDefinition, Map.class);
         assertNotNull(formContainer.getFormDefinition());
-        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",formDefinitionJson.get("action"));
+        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formDefinitionJson.get("action"));
     }
 
     @Test
