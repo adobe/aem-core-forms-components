@@ -157,13 +157,14 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.get(`#${checkBox3}`).find("input").uncheck().check(["0"]).blur().then(x => {
             cy.get(`#${checkBox5}`).find("input").uncheck().check(["1"])
             cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"Please enter a valid value.")
-            cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.attr', 'aria-describedby', `${checkBox5}__errormessage ${checkBox5}__shortdescription ${checkBox5}__longdescription`)
+            cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.attr', 'aria-describedby', ` ${checkBox5}__errormessage`)
         })
 
         cy.get(`#${checkBox3}`).find("input").uncheck().check(["0"]).blur().then(x => {
             cy.get(`#${checkBox5}`).find("input").uncheck().check(["0"])
             cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"")
             cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__option__widget").should('have.attr', 'aria-invalid', 'false');
+            cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.attr', 'aria-describedby', '');
         })
     })
 
