@@ -194,11 +194,21 @@ class FormFieldBase extends FormField {
     } 
 
     #syncAriaDescribedBy() {
+        let ariaDescribedby = '';
         let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
         let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
         widgetElement = widgetElements || widgetElement;
         if (widgetElement) {
-            widgetElement.setAttribute('aria-describedby', `${this.getId()}__errormessage ${this.getId()}__shortdescription ${this.getId()}__longdescription`);
+           if (this.getDescription()) {
+            ariaDescribedby += `${this.getId()}__longdescription`
+          }
+           if (this.getTooltipDiv()) {
+            ariaDescribedby += ` ${this.getId()}__shortdescription`;
+          }
+           if (this.getErrorDiv() && this.getErrorDiv().innerHTML) {
+            ariaDescribedby += ` ${this.getId()}__errormessage`;
+          }
+          widgetElement.setAttribute('aria-describedby', ariaDescribedby);
         }
     }
 
@@ -505,11 +515,13 @@ class FormFieldBase extends FormField {
                         'validationMessage': state.validationMessage,
                         'validationType': validationType
                     });
+                    
                     // if there is no error message in model, set a default error in the view
                     if (!state.validationMessage) {
                         this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
                     }
-                }
+                } 
+                this.#syncAriaDescribedBy();
             }
         }
     }

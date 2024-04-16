@@ -157,12 +157,14 @@ describe("Form Runtime with Date Picker", () => {
         cy.get(`#${datePicker4}`).find("input").clear().type(incorrectInput).blur().then(x => {
             cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Please enter a valid value.")
             cy.get(`#${datePicker4} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${datePicker4}__errormessage`)
-            cy.get(`#${datePicker4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${datePicker4}__errormessage ${datePicker4}__shortdescription ${datePicker4}__longdescription`)
+            cy.get(`#${datePicker4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${datePicker4}__longdescription ${datePicker4}__shortdescription ${datePicker4}__errormessage`)
             cy.get(`#${datePicker4} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true')
         })
 
         cy.get(`#${datePicker4}`).find("input").clear().type(correctInput).blur().then(x => {
             cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"")
+            cy.get(`#${datePicker4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${datePicker4}__longdescription ${datePicker4}__shortdescription`)
+            cy.get(`#${datePicker4} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'false')
         })
     })
 
