@@ -231,6 +231,22 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testGetIsEdgeDeliveryRequest() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        MockSlingHttpServletRequest request = context.request();
+        request.setAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet", false);
+        assertFalse(formContainer.isEdgeDeliveryRequest());
+    }
+
+    @Test
+    void testGetIsEdgeDeliveryRequestTrue() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        MockSlingHttpServletRequest request = context.request();
+        request.setAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet", true);
+        assertTrue(formContainer.isEdgeDeliveryRequest());
+    }
+
+    @Test
     void testGetThankYouOption() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNotNull(formContainer.getThankYouOption());
