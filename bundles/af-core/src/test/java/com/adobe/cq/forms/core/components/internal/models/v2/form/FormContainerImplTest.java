@@ -21,6 +21,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -244,6 +245,15 @@ public class FormContainerImplTest {
         MockSlingHttpServletRequest request = context.request();
         request.setAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet", true);
         assertTrue(formContainer.isEdgeDeliveryRequest());
+    }
+
+    @Test
+    void testGetFormDefinition() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        String formDefinition=formContainer.getFormDefinition();
+        Map<String,Object>  formDefinitionJson = new ObjectMapper().readValue(formDefinition, Map.class);
+        assertNotNull(formContainer.getFormDefinition());
+        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",formDefinitionJson.get("action"));
     }
 
     @Test
