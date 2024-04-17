@@ -167,25 +167,26 @@
             _managePatternDynamicBehaviour();
             patternComponent.addEventListener("change", _managePatternDynamicBehaviour );
             function _managePatternDynamicBehaviour() {
-                var displayPatternSelectedValue = patternComponent.selectedItem.innerHTML;
+                // FORMS-12822, below the pattern was compared based on the name rather than the value ("No Pattern" instead of ####.####) which was creating issue in other languages therefore now it has changed to value.
+                var displayPatternSelectedValue = patternComponent.selectedItem.value;
                 var patternComponentOptionsNodeList=patternComponent.querySelectorAll('coral-select-item');
                 if(patternComponentOptionsNodeList.length<=2 ){
-                  //there are 2 default options, "Select" and "custom".
+                    //there are 2 default options, "Select" and "custom".
                     // For this dropdown to be visible it should have atleast one other option
                     var patternComponentParentDiv=patternComponent.closest("div");
                     patternComponentParentDiv.setAttribute("hidden", true);
                 }else {
                     var displayFormatParentDiv=formatComponent.closest("div");
                     switch (displayPatternSelectedValue) {
-                        case "Select"     :
-                        case "No Pattern" :
+                        case ""     :
+                        case "#####################.###############" :
                             displayFormatParentDiv.setAttribute("hidden", true);
                             break;
                         default           :
                             displayFormatParentDiv.removeAttribute("hidden");
                     }
                 }
-                if(displayPatternSelectedValue!="Custom") {
+                if(displayPatternSelectedValue!="custom") {
                     formatComponent.value = patternComponent.value;
                 }
             }
