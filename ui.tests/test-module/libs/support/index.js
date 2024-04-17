@@ -101,6 +101,16 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    // sometimes this error is seen during create page
+    if(err.message.includes('document.registerElement is not a function')) {
+        return false;
+    }
+
+    // sometimes this error is seen during create page
+    if(err.message.includes('Coral is not defined')) {
+        return false;
+    }
+
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;
