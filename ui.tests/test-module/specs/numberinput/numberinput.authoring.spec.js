@@ -125,7 +125,7 @@ describe('Page - Authoring', function () {
             });
         })
 
-        it.only(' Format should not appear when type is No Pattern', function () {
+        it(' Format should not appear when type is No Pattern', function () {
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
