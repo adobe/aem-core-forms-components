@@ -276,7 +276,7 @@ describe("Form with number input and language", () => {
         cy.get(`#${numberInput6}`).find("input").clear().type(input).blur().then(x => {
             expect(Number(model.getState().value)).to.equal(Number(input));
 // Assert that the input value contains "121" and "212,000" regardless of the space type
-                cy.get(`#${numberInput6}`).find('input').invoke('val').should('match', /121.*212,000/);
+                cy.get(`#${numberInput6}`).find('input').invoke('val').should('equal', '121\u202F212,000');
         })
     })
 })
