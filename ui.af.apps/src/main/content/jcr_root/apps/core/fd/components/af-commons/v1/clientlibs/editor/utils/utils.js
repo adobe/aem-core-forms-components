@@ -167,10 +167,7 @@
             _managePatternDynamicBehaviour();
             patternComponent.addEventListener("change", _managePatternDynamicBehaviour );
             function _managePatternDynamicBehaviour() {
-                /*
-                commented the below line due to bug reported FORMS-12822, below the pattern is compared based on the name rather than the value ("No Pattern" instead of ####.####) which was creating issue in other languages
-                var displayPatternSelectedValue = patternComponent.selectedItem.innerHTML;
-                */
+               // FORMS-12822, below the pattern was compared based on the name rather than the value ("No Pattern" instead of ####.####) which was creating issue in other languages therefore now it has changed to value.
                 var displayPatternSelectedValue = patternComponent.selectedItem.value;
                 var patternComponentOptionsNodeList=patternComponent.querySelectorAll('coral-select-item');
                 if(patternComponentOptionsNodeList.length<=2 ){
