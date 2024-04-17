@@ -124,6 +124,23 @@ describe('Page - Authoring', function () {
                 })
             });
         })
+
+        it(' Format should not appear when type is No Pattern', function () {
+            dropNumberInputInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
+            cy.invokeEditableAction(editDialogConfigurationSelector);
+            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
+                cy.get(numberInputBlockBemSelector + '__editdialog').contains('Formats').click().then(() => {
+                    cy.get(numberInputBlockBemSelector + '__displaypattern').children('button').click();
+                    cy.get('coral-selectlist-item-content').contains('No Pattern').click({force: true}).then(() => {
+                        cy.get('.coral-Form-fieldwrapper').should('be.hidden');
+                    });
+                    cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                        cy.deleteComponentByPath(numberInputDrop);
+                    })
+                });
+            });
+        })
     });
 
     context('Open Sites Editor', function () {
