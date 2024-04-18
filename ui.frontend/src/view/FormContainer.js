@@ -66,13 +66,12 @@ class FormContainer {
         return id ? this._model.getElement(id) : this._model;
     }
 
-    // todo: fix this once exposed in af-core
     /**
      * Returns the language code of the form.
      * @returns {string} The language code (e.g., "en").
      */
     getLang() {
-        return this._model._jsonModel.lang || "en";
+        return this._model.lang || "en";
     }
 
     /**

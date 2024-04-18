@@ -250,3 +250,33 @@ describe("Form with Number Input", () => {
         }
     });
 })
+
+describe("Form with number input and language", () => {
+    const pagePath = "content/forms/af/core-components-it/samples/numberinput/basic.html"
+    const bemBlock = 'cmp-adaptiveform-numberinput'
+    const IS = "adaptiveFormNumberInput"
+    const selectors = {
+        numberinput : `[data-cmp-is="${IS}"]`
+    }
+
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath, {"params" : ["afAcceptLang=es"]}).then(p => {
+            formContainer = p;
+        })
+
+    });
+
+    it("display pattern on numeric input should update the display value based on field language", () => {
+        const [numberInput6, numberInput6FieldView] = Object.entries(formContainer._fields)[5];
+        const input = "121212";
+        let model = numberInput6FieldView.getModel();
+
+        cy.get(`#${numberInput6}`).find("input").clear().type(input).blur().then(x => {
+            expect(Number(model.getState().value)).to.equal(Number(input));
+// Assert that the input value contains "121" and "212,000" regardless of the space type
+                cy.get(`#${numberInput6}`).find('input').invoke('val').should('equal', '121\u202F212,000');
+        })
+    })
+})
