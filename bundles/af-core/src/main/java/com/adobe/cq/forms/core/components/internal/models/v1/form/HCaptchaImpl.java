@@ -40,6 +40,8 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.HCaptcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -48,6 +50,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     resourceType = { FormConstants.RT_FD_FORM_HCAPTCHA_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(HCaptchaImpl.class);
 
     @Inject
     private ResourceResolver resourceResolver;
@@ -79,14 +83,8 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     private static final String TYPE = "type";
 
     @Override
-    @JsonIgnore
     public String getCloudServicePath() {
         return cloudServicePath;
-    }
-
-    @JsonIgnore
-    public String getSize() {
-        return size;
     }
 
     @Override
@@ -94,23 +92,29 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
         return "hcaptcha";
     }
 
-    @JsonIgnore
     @Override
     public Map<String, Object> getCaptchaProperties() throws GuideException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
         String siteKey = null, uri = null;
         resource = resourceResolver.getResource(this.getPath());
-        if (resource != null && cloudConfigurationProvider != null) {
-            hCaptchaConfiguration = cloudConfigurationProvider.getHCaptchaCloudConfiguration(resource);
-            if (hCaptchaConfiguration != null) {
-                siteKey = hCaptchaConfiguration.getSiteKey();
-                uri = hCaptchaConfiguration.getClientSideJsUrl();
+        if (cloudConfigurationProvider == null) {
+            LOGGER.info("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+        }
+        try {
+            if (resource != null && cloudConfigurationProvider != null) {
+                hCaptchaConfiguration = cloudConfigurationProvider.getHCaptchaCloudConfiguration(resource);
+                if (hCaptchaConfiguration != null) {
+                    siteKey = hCaptchaConfiguration.getSiteKey();
+                    uri = hCaptchaConfiguration.getClientSideJsUrl();
+                }
             }
+        } catch (GuideException e) {
+            LOGGER.error("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
         }
         customCaptchaProperties.put(SITE_KEY, siteKey);
         customCaptchaProperties.put(URI, uri);
-        customCaptchaProperties.put(SIZE, getSize());
+        customCaptchaProperties.put(SIZE, this.size);
         customCaptchaProperties.put(THEME, "light");
         customCaptchaProperties.put(TYPE, "image");
 

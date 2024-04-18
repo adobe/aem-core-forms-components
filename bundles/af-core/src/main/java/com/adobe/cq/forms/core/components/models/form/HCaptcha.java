@@ -18,10 +18,10 @@ package com.adobe.cq.forms.core.components.models.form;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Defines the form {@code Captcha} Sling Model used for the {@code /apps/core/fd/components/form/hcaptcha/v1/hcaptcha}
+ * Defines the form {@code HCaptcha} Sling Model used for the {@code /apps/core/fd/components/form/hcaptcha/v1/hcaptcha}
  * component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+ * @since com.adobe.cq.forms.core.components.models.form 5.4.0
  */
 @ConsumerType
 public interface HCaptcha extends Captcha {}
