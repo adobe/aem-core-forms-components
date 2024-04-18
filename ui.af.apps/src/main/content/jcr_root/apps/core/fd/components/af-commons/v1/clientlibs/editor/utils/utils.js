@@ -35,11 +35,12 @@
          */
         static checkAndDisplay(components) {
             return function(condition) {
-                var elemArray = components instanceof Array ? components : [components];
+                let elemArray = components instanceof Array ? components : [components];
                 elemArray.forEach(function(elem) {
                     if (condition()) {
                         elem.show()
                     } else {
+                        elem.hide()
                         elem.hide()
                     }
                 });
@@ -88,8 +89,8 @@
          * @returns {String} Value of the selected radio option
          */
         static getSelectedRadioGroupOption(component) {
-            var radioComp = component.find('[type="radio"]');
-            for (var i = 0; i < radioComp.length; i++) {
+            let radioComp = component.find('[type="radio"]');
+            for (let i = 0; i < radioComp.length; i++) {
                 if ($(radioComp[i]).prop("checked")) {
                     return $(radioComp[i]).val();
                 }
@@ -103,7 +104,7 @@
          */
         static initializeEditDialog(editDialogClass) {
             return function() {
-                var args = Array.prototype.slice.call(arguments);
+                let args = Array.prototype.slice.call(arguments);
                 /**
                  * Initialise the conditional display of the various elements of the dialog.
                  *
@@ -130,23 +131,23 @@
          */
         static renderSubDialog(container) {
             return function(dialogPath, callback) {
-                var args = Array.prototype.slice.call(arguments);
-                var $container = $(container);
-                var componentPath = $container.data("componentpath");
-                var isDialogRendered = false;
+                let args = Array.prototype.slice.call(arguments);
+                let $container = $(container);
+                let componentPath = $container.data("componentpath");
+                let isDialogRendered = false;
                 if (componentPath && dialogPath) {
                     $container.empty();
-                    var currentDialogPath = dialogPath + "/cq:dialog.html";
+                    let currentDialogPath = dialogPath + "/cq:dialog.html";
                     if (currentDialogPath.indexOf("/") !== 0) {
                         currentDialogPath = "/mnt/overlay/" + currentDialogPath;
                     }
-                    var actionPath = currentDialogPath + componentPath;
-                    var subDialogResponse = CQ.shared.HTTP.get(actionPath);
+                    let actionPath = currentDialogPath + componentPath;
+                    let subDialogResponse = CQ.shared.HTTP.get(actionPath);
                     if (CQ.shared.HTTP.isOk(subDialogResponse)) {
-                        var parser = $(window).adaptTo("foundation-util-htmlparser"),
+                        let parser = $(window).adaptTo("foundation-util-htmlparser"),
                             html = subDialogResponse.body;
                         parser.parse(html, true).then(function (dialogHtml) {
-                            var $subDialogContent = $(dialogHtml).find('.cq-dialog-content');
+                            let $subDialogContent = $(dialogHtml).find('.cq-dialog-content');
                             $subDialogContent.addClass("guide-dialog");
                             if ($subDialogContent.length > 0) {
                                 isDialogRendered = true;
@@ -162,21 +163,21 @@
         }
 
         static handlePatternDropDown(dialog, patternClass, formatClass) {
-            var patternComponent = dialog.find(patternClass)[0];
-            var formatComponent = dialog.find(formatClass)[0];
+            let patternComponent = dialog.find(patternClass)[0];
+            let formatComponent = dialog.find(formatClass)[0];
             _managePatternDynamicBehaviour();
             patternComponent.addEventListener("change", _managePatternDynamicBehaviour );
             function _managePatternDynamicBehaviour() {
-                // FORMS-12822, below the pattern was compared based on the name rather than the value ("No Pattern" instead of ####.####) which was creating issue in other languages therefore now it has changed to value.
-                var displayPatternSelectedValue = patternComponent.selectedItem.value;
-                var patternComponentOptionsNodeList=patternComponent.querySelectorAll('coral-select-item');
+                // below the pattern was compared based on the name rather than the value ("No Pattern" instead of ####.####) which was creating issue in other languages therefore now it has changed to value.
+                let displayPatternSelectedValue = patternComponent.selectedItem.value;
+                let patternComponentOptionsNodeList=patternComponent.querySelectorAll('coral-select-item');
                 if(patternComponentOptionsNodeList.length<=2 ){
                     //there are 2 default options, "Select" and "custom".
                     // For this dropdown to be visible it should have atleast one other option
-                    var patternComponentParentDiv=patternComponent.closest("div");
+                    let patternComponentParentDiv=patternComponent.closest("div");
                     patternComponentParentDiv.setAttribute("hidden", true);
                 }else {
-                    var displayFormatParentDiv=formatComponent.closest("div");
+                    let displayFormatParentDiv=formatComponent.closest("div");
                     switch (displayPatternSelectedValue) {
                         case ""     :
                         case "#####################.###############" :
@@ -194,12 +195,12 @@
 
         static handlePatternFormat(dialog, patternClass, formatClass){
 
-            var patternComponent = dialog.find(patternClass)[0];
-            var formatComponent = dialog.find(formatClass)[0];
+            let patternComponent = dialog.find(patternClass)[0];
+            let formatComponent = dialog.find(formatClass)[0];
             _manageFormatChange()
             formatComponent.addEventListener("change", _manageFormatChange );
             function _manageFormatChange(){
-                var itemFound=false;
+                let itemFound=false;
                 if(formatComponent.value!=patternComponent.value){
                     patternComponent.items.getAll().forEach(function (item) {
                         if (item.value == formatComponent.value) {
@@ -224,10 +225,10 @@
          */
         static registerDialogDataTypeValidators(defaultTypeSelector, enumSelector, getSelectedDataType) {
             return function (dialog) {
-                var isBoolean = function(value) {
-                    var isBoolean = false;
+                let isBoolean = function(value) {
+                    let isBoolean = false;
                     if (value) {
-                        var lowerCaseValue = value.toLowerCase();
+                        let lowerCaseValue = value.toLowerCase();
                         isBoolean = lowerCaseValue === 'true' || lowerCaseValue === 'false';
                     }
                     return isBoolean
@@ -240,11 +241,11 @@
                     });
                 }
 
-                var dataTypeValidator = function(el) {
-                    var isValid = true;
-                    var value = el.value;
+                let dataTypeValidator = function(el) {
+                    let isValid = true;
+                    let value = el.value;
                     if (value) {
-                        var dataType = getSelectedDataType(dialog);
+                        let dataType = getSelectedDataType(dialog);
                         switch (dataType) {
                             case 'number':
                                 isValid = !isNaN(value);
@@ -265,7 +266,7 @@
         }
 
         static selectElement(tag, selectorValue, bStartsWith, bWithoutTypeHint) {
-            var $element = null;
+            let $element = null;
             if (bStartsWith) {
                 $element = $(tag + "[name^='" + selectorValue + "']");
             } else {
@@ -278,7 +279,7 @@
         }
 
         static showComponent(elem, parentWrapper) {
-            var parentTag = $(elem).closest(parentWrapper);
+            let parentTag = $(elem).closest(parentWrapper);
             if ($(parentTag).is("[hidden]")) {
                 $(parentTag).removeAttr("hidden");
             } else {
@@ -287,7 +288,7 @@
         }
 
         static hideComponent(elem, parentWrapper) {
-            var parentTag = $(elem).closest(parentWrapper);
+            let parentTag = $(elem).closest(parentWrapper);
             $(parentTag).attr("hidden", "");
         }
 
