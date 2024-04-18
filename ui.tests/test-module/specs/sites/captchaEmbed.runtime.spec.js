@@ -15,20 +15,31 @@
  ******************************************************************************/
 describe("Captcha In Sites Runtime Test", () => {
     const pagePath = "content/forms/sites/core-components-it/site-with-captcha-afv2-form.html";
+    const hCaptchaPagePath = "content/forms/sites/core-components-it/site-with-hcaptcha-afv2-form.html";
 
     let formContainer = null;
 
-    beforeEach(() => {
-        cy.previewForm(pagePath).then(p => {
-            formContainer = p;
-        })
-    });
 
     it("captcha should render when form is embedded in site", () => {
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-        const [id, fieldView] = Object.entries(formContainer._fields)[0]
-        const model = formContainer._model.getElement(id)
-        cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+            const [id, fieldView] = Object.entries(formContainer._fields)[0]
+            const model = formContainer._model.getElement(id)
+            cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
+        })
     })
+
+    it("hcaptcha should render when form is embedded in site", () => {
+        cy.previewForm(hCaptchaPagePath).then(p => {
+            formContainer = p;
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+            const [id, fieldView] = Object.entries(formContainer._fields)[0]
+            const model = formContainer._model.getElement(id)
+            cy.get('#' + id + ' .cmp-adaptiveform-hcaptcha__widget > div.h-captcha').should('exist');
+        })
+    })
+
 })
