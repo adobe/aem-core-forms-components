@@ -78,9 +78,6 @@
         }
     }
 
-    // Expose hCaptcha under v1 for custom extensions
-    FormView.v1 = Object.assign(FormView.v1 || {}, { HCaptcha: HCaptcha });
-
     FormView.Utils.setupField(({element, formContainer}) => {
         return new HCaptcha({element, formContainer})
     }, HCaptcha.selectors.self);
