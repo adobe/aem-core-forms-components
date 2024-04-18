@@ -35,16 +35,6 @@ describe("Form Runtime with hCaptcha Input", () => {
         });
     });
 
-    // Whitelist the error message
-    cy.on('uncaught:exception', (err) => {
-        // when we render form with captcha, and FT is not enabled, this error is expected
-        if (err.message.includes("Missing required parameters: sitekey")) {
-            return false;
-        }
-        // Let Cypress handle other errors
-        return true;
-    });
-
 
     // render the form with captcha, we have whitelisted the "Missing required parameters: sitekey" error
     beforeEach(() => {
@@ -85,7 +75,7 @@ describe("Form Runtime with hCaptcha Input", () => {
         if (toggle_array.includes(FT_HCAPTCHA)) {
             const [id, fieldView] = Object.entries(formContainer._fields)[0]
             const model = formContainer._model.getElement(id)
-            cy.get('#' + id + ' .cmp-adaptiveform-hcaptcha__widget > div.h-captcha').should('exist');
+            cy.get('div.h-captcha').should('exist');
 
             checkHTML(model.id, model.getState()).then(() => {
                 model.visible = false
@@ -111,10 +101,40 @@ describe("Form Runtime with hCaptcha Input", () => {
 
 
     it("decoration element should not have same class name", () => {
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        cy.wrap().then(() => {
-            const id = formContainer._model._children[0].id;
-            cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
-        })
+        if (toggle_array.includes(FT_HCAPTCHA)) {
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.wrap().then(() => {
+                const id = formContainer._model._children[0].id;
+                cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
+            })
+        }
     })
+
+    it("client side validation should fail if captcha is not filled", () => {
+        if (toggle_array.includes(FT_HCAPTCHA)) {
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                cy.get('.cmp-adaptiveform-hcaptcha__errormessage').should('exist').contains('Please fill in this field.');
+            });
+        }
+    })
+
+    it("submission should pass for mandatory captcha", () => {
+        if (toggle_array.includes(FT_HCAPTCHA)) {
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.get(`div.h-captcha iframe`).should('be.visible').then($iframe => {
+                cy.wrap($iframe).then($iframe => {
+                    cy.window().should('have.property', 'hcaptcha').and('not.be.undefined')
+                        .then((hcaptcha) => {
+                            hcaptcha.execute();
+                            cy.wait(2000);
+                            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                                cy.get('body').should('contain', "Thank you for submitting the form.\n")
+                            });
+                        })
+                });
+            });
+        }
+    })
+
 })
