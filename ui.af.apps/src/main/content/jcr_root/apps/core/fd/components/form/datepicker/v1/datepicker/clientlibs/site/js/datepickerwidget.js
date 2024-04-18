@@ -149,7 +149,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
     constructor(view, widget, model) {
       this.#model = model;
-      this.#lang = view.formContainer.getModel()._jsonModel.lang;
+      this.#lang = view.getModel().lang;
       let editValFn = () => {
         return model.editValue;
       };

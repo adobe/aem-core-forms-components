@@ -117,6 +117,9 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     protected Integer maxItems;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    protected String lang;
+
     /** End **/
 
     @SlingObject
@@ -153,6 +156,11 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Override
     public boolean isTooltipVisible() {
         return tooltipVisible;
+    }
+
+    @Override
+    public String getLang() {
+        return lang;
     }
 
     @JsonIgnore

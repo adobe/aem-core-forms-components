@@ -94,7 +94,7 @@ describe("Form Runtime with Email Input", () => {
         cy.get(`#${id}`).find("input").clear().type(notAllowed).blur().then(x => {
             cy.get('.cmp-adaptiveform-emailinput__errormessage').should('be.visible');
             cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`);
-            cy.get(`#${id} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${id}__errormessage ${id}__shortdescription ${id}__longdescription`);
+            cy.get(`#${id} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', ` ${id}__errormessage`);
             cy.get(`#${id} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true');
         })
         const invalidEmailPattern = "invalidEmail@domain"
@@ -104,6 +104,8 @@ describe("Form Runtime with Email Input", () => {
         const validEmailPattern = "validEmail@domain.com"
         cy.get(`#${id}`).find("input").clear().type(validEmailPattern).blur().then(x => {
             cy.get('.cmp-adaptiveform-emailinput__errormessage').should('not.be.visible');
+            cy.get(`#${id} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', '');
+            cy.get(`#${id} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'false');
         })
     });
 
