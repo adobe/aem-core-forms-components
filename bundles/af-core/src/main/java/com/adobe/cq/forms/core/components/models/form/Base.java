@@ -36,6 +36,13 @@ public interface Base extends FormComponent {
     public final String DATE_FORMATTER = "yyyy-MM-dd";
 
     /**
+     * Constant representing the default language used, typically "en-US".
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 5.3.1
+     */
+    public final String DEFAULT_LANGUAGE = "en-US";
+
+    /**
      * Returns label of the form field
      *
      * @return label of the field
@@ -135,5 +142,17 @@ public interface Base extends FormComponent {
     @JsonIgnore
     default boolean isTooltipVisible() {
         return false;
+    }
+
+    /**
+     * Returns the language to use for formatting the field.
+     *
+     * @return returns the language to use for formatting the field.
+     * @since com.adobe.cq.forms.core.components.models.form 5.3.1
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    default String getLang() {
+        return DEFAULT_LANGUAGE;
     }
 }

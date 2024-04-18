@@ -224,6 +224,35 @@
                                                             name="./formatMessage"/>
                                                 </items>
                                             </editPatternGroup>
+                                            <langGroup
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Language"
+                                                    title="Language"
+                                                    fieldDescription="The language to use for formatting the field."
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <langDisplayValue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-datepicker__langdisplayvalue"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldDescription="The language to use for formatting the field."
+                                                            fieldLabel="Type"
+                                                            name="./langDisplayValue">
+                                                        <datasource
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                                type="lang"/>
+                                                    </langDisplayValue>
+                                                    <langSaveValue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-datepicker__lang"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="The language to use for formatting the field."
+                                                            fieldLabel="IETF BCP 47 language tag"
+                                                            name="./lang">
+                                                    </langSaveValue>
+                                                </items>
+                                            </langGroup>
                                         </items>
                                     </column>
                                 </items>
