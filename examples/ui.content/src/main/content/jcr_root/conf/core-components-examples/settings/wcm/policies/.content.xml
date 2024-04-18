@@ -159,7 +159,16 @@
                             allowedFormat3="$1234.21=()¤####0.00"
                             allowedFormat4="1,234.210=#,###,##0.000"
                             allowedFormat5="123,421%=#,###,##0%"
-                            allowedFormat6="23421%=####0%">
+                            allowedFormat6="23421%=####0%"
+                            lang1="German=de-DE"
+                            lang2="English=en-US"
+                            lang3="Spanish=es-ES"
+                            lang4="French=fr-FR"
+                            lang5="Italian=it-IT"
+                            lang6="Japanese=ja-JP"
+                            lang7="Chinese (Simplified)=zh-CN"
+                            lang8="Chinese (Traditional)=zh-TW"
+                            lang9="Korean=ko-KR">
                         <jcr:content
                                 jcr:primaryType="nt:unstructured"/>
                     </default>
@@ -175,7 +184,16 @@
                             allowedFormat3="Sunday, 01 April, 2007=EEEE, d MMMM, y"
                             allowedFormat4="Sunday, April 01, 2007=EEEE, MMMM d, y"
                             allowedFormat5="1/4/2007=d/M/y"
-                            allowedFormat6="4/1/2007=M/d/y">
+                            allowedFormat6="4/1/2007=M/d/y"
+                            lang1="German=de-DE"
+                            lang2="English=en-US"
+                            lang3="Spanish=es-ES"
+                            lang4="French=fr-FR"
+                            lang5="Italian=it-IT"
+                            lang6="Japanese=ja-JP"
+                            lang7="Chinese (Simplified)=zh-CN"
+                            lang8="Chinese (Traditional)=zh-TW"
+                            lang9="Korean=ko-KR">
                         <jcr:content
                                 jcr:primaryType="nt:unstructured"/>
                     </default>
@@ -188,7 +206,16 @@
                             sling:resourceType="wcm/core/components/policy/policy"
                             allowedFormat1="International=^[+][0-9]{0,14}$"
                             allowedFormat2="US Phone Number=^[+]1[0-9]{0,10}$"
-                            allowedFormat3="UK Phone Number=^[+]44[0-9]{0,10}$">
+                            allowedFormat3="UK Phone Number=^[+]44[0-9]{0,10}$"
+                            lang1="German=de-DE"
+                            lang2="English=en-US"
+                            lang3="Spanish=es-ES"
+                            lang4="French=fr-FR"
+                            lang5="Italian=it-IT"
+                            lang6="Japanese=ja-JP"
+                            lang7="Chinese (Simplified)=zh-CN"
+                            lang8="Chinese (Traditional)=zh-TW"
+                            lang9="Korean=ko-KR">
                         <jcr:content
                                 jcr:primaryType="nt:unstructured"/>
                     </default>

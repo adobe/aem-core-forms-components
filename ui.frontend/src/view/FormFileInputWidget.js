@@ -50,7 +50,7 @@ class FormFileInputWidget {
         this.model = widgetFields.model();
         this.fileList = widgetFields.fileListDiv;
         // get the current lang
-        this.lang = this.model.form._jsonModel.lang; // todo: change this later, once API is added in af-core
+        this.lang = this.model.lang;
         // initialize options for backward compatibility
         this.options = Object.assign({}, {
             "contextPath": ""
