@@ -30,6 +30,8 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.model.HCaptchaConfiguration;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
@@ -40,8 +42,6 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.HCaptcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
