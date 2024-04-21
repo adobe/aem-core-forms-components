@@ -187,13 +187,6 @@ var selectors = {
             CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']",
             SUBMISSION_SUCCESS_RULE: "#rule-summary table[handle='table'] tr[title='FORM - Successful Submission']",
             SUBMISSION_FAILURE_RULE: "#rule-summary table[handle='table'] tr[title='FORM - Error in Submission']",
-            CUSTOM_SUBMIT_FORM_RULE: "#rule-summary table[handle='table'] tr[title='Submit - Click']",
-        },
-        ruleSummary : {
-            CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']"
-        },
-        ruleSummary : {
-            CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']"
         },
         operator : {
             CONTAINS : "coral-selectlist [value='CONTAINS']",
