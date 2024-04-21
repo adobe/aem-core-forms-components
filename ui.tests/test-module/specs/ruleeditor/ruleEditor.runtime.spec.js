@@ -98,7 +98,7 @@ describe("Rule editor submission handler runtime", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
             cy.previewForm(submitCustomSuccessHandler);
             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                cy.get('body').should('contain', "Thank you for submitting the form.\n")
+                cy.get('.modal .success-message').should('contain', "Thank you for submitting the form.")
             });
         }
     });
@@ -136,13 +136,8 @@ describe("Rule editor submission handler runtime", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
             cy.previewForm(submitCustomErrorHandler);
             let alertFired = false;
-            cy.on('window:alert', (message) => {
-                expect(message).to.equal('Custom Form submission failed!');
-                alertFired = true;
-            });
-
             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                expect(alertFired).to.be.true;
+                cy.get('.modal .error-message').should('contain', "Custom Form submission failed!")
             });
         }
     });

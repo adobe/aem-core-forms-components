@@ -110,7 +110,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
 
-        // select HIDE action from dropdown
+        // select FUNCTION_CALL action from dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
 
@@ -144,7 +144,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
 
-        // select HIDE action from dropdown
+        // select FUNCTION_CALL action from dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
 
@@ -181,7 +181,7 @@ describe('Rule editor authoring sanity for core-components',function(){
             textinputEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             buttonEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
-            submitFormButtonEditPath = submitFormContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
+            submitFormButtonEditPath = submitFormContainerPath + "/" + afConstants.components.forms.resourceType.submitButton.split("/").pop(),
             submitFormButtonEditPathSelector = "[data-path='" + submitFormButtonEditPath + "']";
 
         /**
@@ -230,12 +230,56 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']").should("exist");
 
                 cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']",
-                    "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
+                    "Adaptive Form Submit Button", afConstants.components.forms.resourceType.submitButton);
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + submitFormButtonEditPathSelector);
 
                 createRuleToHandleFormSubmission();
                 cy.get(sitesSelectors.overlays.overlay.component + submitFormButtonEditPathSelector).should("exist");
 
+                cy.selectLayer("Edit");
+                cy.deleteComponentByPath(submitFormButtonEditPath);
+            }
+        })
+
+        it('should add custom formData submit rule on submit button', function () {
+            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+                cy.openAuthoring(submitFormPath);
+                cy.selectLayer("Edit");
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']").should("exist");
+
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']",
+                    "Adaptive Form Submit Button", afConstants.components.forms.resourceType.submitButton);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + submitFormButtonEditPathSelector);
+
+                // Edit rule option not existing on button toolbar
+                cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+                cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+                cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+                // click on  create option from rule editor header
+                cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+                cy.getRuleEditorIframe().find("[title='Submit - Click'] .title-cell").should("be.visible").click();
+                // select FUNCTION_CALL action from dropdown
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
+
+                cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").should("be.visible");
+                cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").click();
+
+                cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE input[placeholder='Filter Objects']").click().type("testSubmitForm");
+                cy.getRuleEditorIframe().find("[value='testSubmitFormPreprocessor']").click({force: true});
+                cy.getRuleEditorIframe().find("[value='testSubmitFormPreprocessor']").click({force: true});
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+
+                // check if rule is created
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CUSTOM_SUBMIT_FORM_RULE).should("exist");
+
+                // check and close rule editor
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
+
+                cy.get(sitesSelectors.overlays.overlay.component + submitFormButtonEditPathSelector).should("exist");
                 cy.selectLayer("Edit");
                 cy.deleteComponentByPath(submitFormButtonEditPath);
             }

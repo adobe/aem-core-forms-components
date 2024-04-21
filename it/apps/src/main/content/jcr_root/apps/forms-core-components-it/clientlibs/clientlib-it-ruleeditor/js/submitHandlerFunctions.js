@@ -14,7 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 
-
 /**
  * Handles the success response after a form submission.
  *
@@ -25,15 +24,12 @@ function customSubmitSuccessHandler(globals) {
     var event = globals.event;
     var submitSuccessResponse = event.payload.body;
     var form = globals.form;
+
     if (submitSuccessResponse) {
         if (submitSuccessResponse.redirectUrl) {
             window.location.href = encodeURI(submitSuccessResponse.redirectUrl);
         } else if (submitSuccessResponse.thankYouMessage) {
-            var formContainerElement = document.getElementById(form.$id);
-            var thankYouMessage = document.createElement("div");
-            thankYouMessage.setAttribute("class", "tyMessage");
-            thankYouMessage.innerHTML = submitSuccessResponse.thankYouMessage;
-            formContainerElement.replaceWith(thankYouMessage);
+            showModal("success", submitSuccessResponse.thankYouMessage);
         }
     }
 }
@@ -47,5 +43,56 @@ function customSubmitSuccessHandler(globals) {
  */
 function customSubmitErrorHandler(customSubmitErrorMessage, globals) {
     // view layer should send localized error message here
-    window.alert(customSubmitErrorMessage);
+    showModal("error", customSubmitErrorMessage);
+}
+
+function showModal(type, message) {
+    // Remove any existing modals
+    var existingModal = document.getElementById("modal");
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    // Create the modal dialog
+    var modal = document.createElement("div");
+    modal.setAttribute("id", "modal");
+    modal.setAttribute("class", "modal");
+
+    // Create the modal content
+    var modalContent = document.createElement("div");
+    modalContent.setAttribute("class", "modal-content");
+
+    // Create the modal header
+    var modalHeader = document.createElement("div");
+    modalHeader.setAttribute("class", "modal-header");
+    modalHeader.innerHTML = "<h2>" + (type === "success" ? "Thank You" : "Error") + "</h2>";
+
+    // Create the modal body
+    var modalBody = document.createElement("div");
+    modalBody.setAttribute("class", "modal-body");
+    modalBody.innerHTML = "<p class='" + type + "-message'>" + message + "</p>";
+
+    // Create the modal footer
+    var modalFooter = document.createElement("div");
+    modalFooter.setAttribute("class", "modal-footer");
+
+    // Create the close button
+    var closeButton = document.createElement("button");
+    closeButton.setAttribute("class", "close-button");
+    closeButton.innerHTML = "Close";
+    closeButton.onclick = function() {
+        modal.remove();
+    };
+
+    // Append the elements to the modal content
+    modalFooter.appendChild(closeButton);
+    modalContent.appendChild(modalHeader);
+    modalContent.appendChild(modalBody);
+    modalContent.appendChild(modalFooter);
+
+    // Append the modal content to the modal
+    modal.appendChild(modalContent);
+
+    // Append the modal to the document body
+    document.body.appendChild(modal);
 }
