@@ -46,7 +46,7 @@
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on submitError event.
                 if (!state.events.submitError || state.events.submitError.length === 0) {
-                    let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
+                    let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(self.getLang(), "InternalFormSubmissionError");
                     const globals = {
                         form: self.getModel().getRuleNode(),
                         event: {
