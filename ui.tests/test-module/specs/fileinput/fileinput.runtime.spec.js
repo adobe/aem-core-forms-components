@@ -117,9 +117,15 @@ describe("Form with File Input - Basic Tests", () => {
                 const actualValue = $element.val();
                 expect(actualValue.includes("")).to.be.true;
             })
-        })
-
-
+        });
+        // attaching the same file again to check duplicate file attachment
+        cy.get(fileInput).attachFile(sampleFileName).then(() => {
+            cy.get(".cmp-adaptiveform-fileinput__filename").should('have.length', 2);
+            cy.get(fileInput).should(($element) => {
+                const actualValue = $element.val();
+                expect(actualValue.includes("")).to.be.true;
+            })
+        });
     });
 
     it(" model's changes are reflected in the html ", () => {
