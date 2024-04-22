@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" jcr:primaryType="cq:Page">
+    <jcr:content cq:lastModified="{Date}2024-03-15T10:42:13.306+05:30" cq:lastModifiedBy="admin" cq:tags="[]" cq:template="/conf/core-components-examples/settings/wcm/templates/content-page" jcr:description="Date Input" jcr:primaryType="cq:PageContent" jcr:title="Date Input" sling:resourceType="forms-components-examples/components/page">
+        <root jcr:primaryType="nt:unstructured" sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid jcr:primaryType="nt:unstructured" sling:resourceType="wcm/foundation/components/responsivegrid">
+                <text_1740702241 cq:styleIds="[1644862132301]" jcr:created="{Date}2019-02-15T19:05:53.032+01:00" jcr:createdBy="admin" jcr:lastModified="{Date}2019-02-15T19:09:39.787+01:00" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" sling:resourceType="core/wcm/components/text/v2/text" text="&lt;h1>Date Input&lt;sub>v1&lt;/sub>&lt;/h1>" textIsRich="true"/>
+                <text cq:styleIds="[1544762734201]" jcr:created="{Date}2018-12-06T19:11:23.947+01:00" jcr:createdBy="admin" jcr:lastModified="{Date}2020-07-15T13:25:39.729+02:00" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" sling:resourceType="core/wcm/components/text/v2/text" text="&lt;p>A date Input component in an Adaptive form is a user interface element that allows users to input a date  manually in a specific format. The date Input component can be configured to have different formatting, validation, and default values.&lt;/p>" textIsRich="true"/>
+                <teaser cq:styleIds="[1550165685463]" jcr:created="{Date}2019-02-14T16:41:54.952+01:00" jcr:createdBy="admin" jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;" jcr:lastModified="{Date}2019-02-14T16:49:57.290+01:00" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" jcr:title="Technical Documentation" sling:resourceType="core-components-examples/components/teaser" actionsEnabled="false" descriptionFromPage="false" fileReference="/content/dam/core-components-examples/library/github-logo.svg" linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/dateinput/v1/dateinput" textIsRich="true" titleFromPage="false"/>
+                <title_865328580 cq:styleIds="[1544759664489]" jcr:created="{Date}2018-12-06T19:22:23.729+01:00" jcr:createdBy="admin" jcr:lastModified="{Date}2018-12-06T19:23:25.116+01:00" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" jcr:title="Examples" sling:resourceType="core/wcm/components/title/v2/title" type="h2"/>
+                <title_290384408 cq:styleIds="[1544759676459]" jcr:created="{Date}2018-12-06T19:22:48.620+01:00" jcr:createdBy="admin" jcr:lastModified="{Date}2019-05-22T11:01:40.926+03:00" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" jcr:title="Standard" sling:resourceType="core/wcm/components/title/v2/title" type="h3"/>
+                <text_1337506761 jcr:created="{Date}2018-12-06T19:23:41.968+01:00" jcr:createdBy="admin" jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" sling:resourceType="core/wcm/components/text/v2/text" text="&lt;p>A simple date input allowing users to select a date from calendar.&lt;/p>" textIsRich="true"/>
+                <demo jcr:created="{Date}2018-12-07T12:55:03.496+01:00" jcr:createdBy="admin" jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" sling:resourceType="forms-components-examples/components/demo">
+                    <component jcr:primaryType="nt:unstructured" sling:resourceType="forms-components-examples/components/demo/component">
+                        <guideContainer fd:version="2.1" jcr:primaryType="nt:unstructured" sling:resourceType="forms-components-examples/components/form/container" fieldType="form">
+                            <container jcr:primaryType="nt:unstructured" sling:resourceType="forms-components-examples/components/demo/component">
+                                <dateinput_demo jcr:created="{Date}2019-03-06T14:11:01.819+01:00" jcr:createdBy="admin" jcr:lastModified="{Date}2024-03-11T16:22:36.894+05:30" jcr:lastModifiedBy="admin" jcr:primaryType="nt:unstructured" jcr:title="Date Input" sling:resourceType="forms-components-examples/components/form/dateinput" description="&lt;p>This is a long description.&lt;/p>" enabled="{Boolean}true" fieldType="date-input" hideTitle="false" name="dateinput_demo1709919824865" readOnly="{Boolean}false" textIsRich="[true,true]" tooltip="&lt;p>This is a short description.&lt;/p>" tooltipVisible="true" unboundFormElement="{Boolean}false" visible="{Boolean}true">
+                                    <datePlaceholder jcr:primaryType="nt:unstructured">
+                                        <item0 jcr:primaryType="nt:unstructured" hiddenfield="Day"/>
+                                        <item1 jcr:primaryType="nt:unstructured" hiddenfield="Month"/>
+                                        <item2 jcr:primaryType="nt:unstructured" hiddenfield="Year"/>
+                                    </datePlaceholder>
+                                </dateinput_demo>
+                            </container>
+                        </guideContainer>
+                    </component>
+                    <info jcr:primaryType="nt:unstructured" sling:resourceType="core-components-examples/components/tabs">
+                        <properties cq:panelTitle="Properties" jcr:primaryType="nt:unstructured" sling:resourceType="core-components-examples/components/demo/properties" reference="../../component/guideContainer/container"/>
+                        <markup cq:panelTitle="Markup" jcr:primaryType="nt:unstructured" sling:resourceType="core-components-examples/components/demo/markup" reference="../../component/guideContainer/container"/>
+                        <json cq:panelTitle="JSON" jcr:primaryType="nt:unstructured" sling:resourceType="core-components-examples/components/demo/json" reference="../../component/guideContainer/container"/>
+                    </info>
+                </demo>
+            </responsivegrid>
+        </root>
+    </jcr:content>
+</jcr:root>

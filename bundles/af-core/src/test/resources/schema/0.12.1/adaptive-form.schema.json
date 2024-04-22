@@ -343,7 +343,9 @@
                 "readOnly",
                 "required",
                 "value",
-                "visible"
+                "visible",
+                "combinedPlaceholder",
+                "hideDateLabel"
               ]
             }
           }
@@ -384,7 +386,9 @@
             "validationExpression",
             "id",
             "appliedCssClassNames",
-            "dataLayer"
+            "dataLayer",
+            "combinedPlaceholder",
+            "hideDateLabel"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in DateField"
