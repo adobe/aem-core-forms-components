@@ -16,8 +16,19 @@
 describe("Captcha In Sites Runtime Test", () => {
     const pagePath = "content/forms/sites/core-components-it/site-with-captcha-afv2-form.html";
     const hCaptchaPagePath = "content/forms/sites/core-components-it/site-with-hcaptcha-afv2-form.html";
+    const FT_HCAPTCHA = "FT_FORMS-12407";
 
     let formContainer = null;
+
+    let toggle_array = [];
+
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
 
 
     it("captcha should render when form is embedded in site", () => {
@@ -32,14 +43,16 @@ describe("Captcha In Sites Runtime Test", () => {
     })
 
     it("hcaptcha should render when form is embedded in site", () => {
-        cy.previewForm(hCaptchaPagePath).then(p => {
-            formContainer = p;
-            expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-            const [id, fieldView] = Object.entries(formContainer._fields)[0]
-            const model = formContainer._model.getElement(id)
-            cy.get('#' + id + ' .cmp-adaptiveform-hcaptcha__widget > div.h-captcha').should('exist');
-        })
+        if (toggle_array.includes(FT_HCAPTCHA)) {
+            cy.previewForm(hCaptchaPagePath).then(p => {
+                formContainer = p;
+                expect(formContainer, "formcontainer is initialized").to.not.be.null;
+                expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+                const [id, fieldView] = Object.entries(formContainer._fields)[0]
+                const model = formContainer._model.getElement(id)
+                cy.get('#' + id + ' .cmp-adaptiveform-hcaptcha__widget > div.h-captcha').should('exist');
+            })
+        }
     })
 
 })
