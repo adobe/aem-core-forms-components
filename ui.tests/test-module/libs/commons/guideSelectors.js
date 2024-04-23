@@ -170,19 +170,32 @@ var selectors = {
             editRule : "#EditableToolbar [data-action='editexpression']",
             createRuleButton : "#create-rule-button",
             saveRule : ".exp-Save-Button",
+            cancelRule : ".exp-Cancel-Button",
             closeRuleEditor : ".exp-Close-Button",
-            sideToggleButton : "#exp-toggle-sidepanel-button"
+            sideToggleButton : "#exp-toggle-sidepanel-button",
+            sidePanelFormObjectTab: ".exp-sidepanel-formobject-tab-label",
+            sidePanelFunctionObjectTab: ".exp-sidepanel-function-tab-label"
         },
         choiceModels : {
             STATEMENT : ".choice-model.u-coral-clearFix.STATEMENT",
             EVENT_AND_COMPARISON_OPERATOR : ".choice-model.u-coral-clearFix.EVENT_AND_COMPARISON_OPERATOR",
             PRIMITIVE_EXPRESSION : ".choice-model.u-coral-clearFix.PRIMITIVE_EXPRESSION.choice-model-inline",
-            BLOCK_STATEMENT : ".choice-model.u-coral-clearFix.BLOCK_STATEMENT"
+            BLOCK_STATEMENT : ".choice-model.u-coral-clearFix.BLOCK_STATEMENT",
+            PARAMETER : ".Parameters .choice-model.u-coral-clearFix.EXPRESSION"
+        },
+        ruleSummary : {
+            CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']",
+            SUBMISSION_SUCCESS_RULE: "#rule-summary table[handle='table'] tr[title='FORM - Successful Submission']",
+            SUBMISSION_FAILURE_RULE: "#rule-summary table[handle='table'] tr[title='FORM - Error in Submission']",
+            CUSTOM_SUBMIT_FORM_RULE: "#rule-summary table[handle='table'] tr[title='Submit - Click']",
         },
         operator : {
             CONTAINS : "coral-selectlist [value='CONTAINS']",
             HIDE : "coral-selectlist [value='HIDE_STATEMENT']",
+            FUNCTION_CALL : "coral-selectlist [value='FUNCTION_CALL']",
             IS_CLICKED : "coral-selectlist [value='is clicked']",
+            IS_SUBMITTED_SUCCESSFULLY : "coral-selectlist [value='is submitted successfully']",
+            SUBMISSION_FAILS : "coral-selectlist [value='submission fails']",
             NAVIGATE_TO : "coral-selectlist [value='NAVIGATE_TO']"
         }
     }
