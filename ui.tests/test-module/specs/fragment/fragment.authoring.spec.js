@@ -46,7 +46,7 @@ describe('Page - Authoring', function () {
     }
 
     const dropFragmentInSites = function () {
-        const dataPath = "/content/core-components-examples/library/adaptive-form/fragment/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
+        const dataPath = "/content/forms/sites/core-components-it/fragmenttest/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Fragment", afConstants.components.forms.resourceType.fragment);
@@ -150,7 +150,7 @@ describe('Page - Authoring', function () {
     })
 
     context('Open Sites Editor', function () {
-        const pagePath = "/content/core-components-examples/library/adaptive-form/fragment",
+        const pagePath = "/content/forms/sites/core-components-it/fragmenttest",
             fragmentEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/fragment",
             fragmentEditPathSelector = "[data-path='" + fragmentEditPath + "']";
 
