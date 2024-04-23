@@ -223,4 +223,13 @@ describe("Form with Dropdown", () => {
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-dropdown--filled');
       });
   });
+
+    it("should have empty value checked when default option is not configured", () => {
+        const [idDropdown, fieldView1] = Object.entries(formContainer._fields)[9];
+        const model = formContainer._model.getElement(idDropdown);
+        cy.get(`#${idDropdown} select`).invoke('val').then(val => {
+            expect(val).to.equal(null);
+            expect(model.value).to.be.null; // checking model
+        })
+    });
 })
