@@ -97,9 +97,14 @@ describe("Form with Radio Button Input", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0];
         formContainer._model.validate();
         cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"This is a required radiobutton");
+        cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`);
+        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.attr', 'aria-describedby', ` ${id}__errormessage`);
+        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('have.attr', 'aria-invalid', 'true');
 
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"");
+            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('have.attr', 'aria-invalid', 'false');
+            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.attr', 'aria-describedby', '');
         });
     });
 
@@ -199,6 +204,14 @@ describe("Form with Radio Button Input", () => {
         cy.get(`#${radioButton8}`).find("input").check("false").then(() => {
             cy.get(`#${radioButton8}`).find('input[value="false"]').should("be.checked");
         })
+    })
+
+    it("test if required property updated in model is reflected in view", () => {
+        const [id, radioButtonView] = Object.entries(formContainer._fields)[7];
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false').then(() => {
+            radioButtonView._model.required = true;
+        })
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
     })
 })
 

@@ -38,6 +38,7 @@ import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
@@ -84,6 +85,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "required")
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean required;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "assistPriority")
@@ -96,6 +98,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     protected String customAssistPriorityMsg;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean enabled;
 
     /** Adding in base since it can also be used for fields and panels **/
@@ -113,6 +116,9 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     protected Integer maxItems;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    protected String lang;
 
     /** End **/
 
@@ -150,6 +156,11 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Override
     public boolean isTooltipVisible() {
         return tooltipVisible;
+    }
+
+    @Override
+    public String getLang() {
+        return lang;
     }
 
     @JsonIgnore
@@ -221,9 +232,13 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isEnabled() {
+        return enabled == null || enabled;
+    }
+
+    @JsonProperty("enabled")
+    public Boolean getEnabledIfPresent() {
         return enabled;
     }
 
@@ -262,7 +277,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
                     putConstraintMessage(ConstraintType.FORMAT, msgs.getFormatConstraintMessage());
                 }
 
-                if (type.equals(Type.NUMBER)) {
+                if (type.equals(Type.NUMBER) || type.equals(Type.INTEGER)) {
                     putConstraintMessage(ConstraintType.MINIMUM, msgs.getMinimumConstraintMessage());
                     putConstraintMessage(ConstraintType.MAXIMUM, msgs.getMaximumConstraintMessage());
                 }

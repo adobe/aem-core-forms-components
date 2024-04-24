@@ -111,6 +111,12 @@
             }
         }
 
+        updateValidity(validity) {
+            const valid = validity.valid ? validity.valid : false;
+            let widgets = this.widget;
+            widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
+        }    
+
         updateValue(modelValue) {
             modelValue = [].concat(modelValue);
             let selectedWidgetValues = modelValue.map(String);
@@ -179,8 +185,13 @@
                 }
             });
         }
+        updateRequired(required, state) {
+            if (this.widget) {
+                this.element.toggleAttribute("required", required);
+                this.element.setAttribute("data-cmp-required", required);
+            }
+        }
     }
-
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new CheckBoxGroup({element, formContainer})

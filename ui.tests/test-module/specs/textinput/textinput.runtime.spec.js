@@ -28,6 +28,7 @@ describe("Form Runtime with Text Input", () => {
     }
 
     let formContainer = null
+    let toggle_array = [];
 
     beforeEach(() => {
          if (Cypress.mocha.getRunner().suite.ctx.currentTest.title  !== "should show different localised default error messages on different constraints") {
@@ -35,6 +36,11 @@ describe("Form Runtime with Text Input", () => {
                 formContainer = p;
             })
         }
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
     });
 
     const checkHTML = (id, state) => {
@@ -163,7 +169,7 @@ describe("Form Runtime with Text Input", () => {
         const [textbox7, textBox7FieldView] = Object.entries(formContainer._fields)[6];
         const [textbox8, textBox8FieldView] = Object.entries(formContainer._fields)[7];
 
-        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[10]
+        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[11]
 
         // 1. Required
         cy.get(`#${textbox6}`).find("input").focus().blur().then(x => {
@@ -173,6 +179,9 @@ describe("Form Runtime with Text Input", () => {
         // 2. Pattern: [^'\x22]+
         cy.get(`#${textbox6}`).find("input").clear().type("'").blur().then(x => {
             cy.get(`#${textbox6}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please match the format requested.")
+            cy.get(`#${textbox6} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${textbox6}__errormessage`);
+            cy.get(`#${textbox6} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', ` ${textbox6}__errormessage`);
+            cy.get(`#${textbox6} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true');
         })
 
         // 3. Maximum Number of Characters: 20
@@ -199,6 +208,8 @@ describe("Form Runtime with Text Input", () => {
 
         cy.get(`#${textbox1}`).find("input").clear().type(correctInput).blur().then(x => {
             cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
+            cy.get(`#${textbox1} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', '');
+            cy.get(`#${textbox1} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'false');
         })
         cy.expectNoConsoleErrors();
 
@@ -273,6 +284,21 @@ describe("Form Runtime with Text Input", () => {
             .invoke('attr', 'autocomplete')
             .should("eq", "given-name");
     })
+
+    it(" should support display value expression", () => {
+        if(toggle_array.includes("FT_FORMS-13193")) {
+            const [textInput, textInputField] = Object.entries(formContainer._fields)[10];
+            const input = '1234567812345678';
+            const formatted=  '**** **** **** 5678 '
+            let model = textInputField.getModel();
+
+            cy.get(`#${textInput}`).find("input").clear().type(input).blur().then(x => {
+                expect(model.getState().value).to.equal(input);
+                expect(model.getState().displayValue).to.be.equal(formatted)
+                cy.get(`#${textInput}`).find('input').should('have.value', model.getState().displayValue);
+            })
+        }
+    });
 })
 
 describe("Form Runtime with Text Input For Different locale", () => {

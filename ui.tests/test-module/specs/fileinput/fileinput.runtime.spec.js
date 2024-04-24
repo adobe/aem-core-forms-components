@@ -51,6 +51,7 @@ const checkFilePreviewInFileAttachment = (component) => {
 const deleteSelectedFiles = (component, fileNames) => {
     cy.get(component).then(() => {
         fileNames.forEach((fileName) => {
+            cy.get(".cmp-adaptiveform-fileinput__filedelete").should('have.attr', 'role', 'button');
             cy.get(".cmp-adaptiveform-fileinput__filename").contains(fileName).next().find('.cmp-adaptiveform-fileinput__filedelete').click();
         })
     });
@@ -142,6 +143,7 @@ describe("Form with File Input - Basic Tests", () => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
                         cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--filled');
+                        cy.get(`#${id}`).find(".cmp-adaptiveform-fileinput__widget").should('have.attr', 'aria-invalid', 'false');
                     })
                 }
             }
@@ -172,6 +174,7 @@ describe("Form with File Input - Basic Tests", () => {
         deleteSelectedFiles(fileInput, sampleFileNames)
 
         cy.get('.cmp-adaptiveform-fileinput__filelist').eq(0).children().should('have.length', 0);
+        cy.get(".cmp-adaptiveform-fileinput__widgetlabel").should('have.attr', 'role', 'button');
     })
 
 })

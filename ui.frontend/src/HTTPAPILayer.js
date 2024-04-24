@@ -26,6 +26,12 @@ import Utils from "./utils.js";
 class HTTPAPILayer {
 
     /**
+     * Constant representing the request parameter key for data reference.
+     * @type {string}
+     */
+    static REQ_PARAMETER_DATA_REF = "dataRef";
+
+    /**
      * Retrieves the form model for the specified form container path using the open api
      * @param {string} formContainerPath - The path of the form container.
      * @returns {Promise<Object|null>} - A Promise that resolves to the form model or null if there was an error.
@@ -69,7 +75,7 @@ class HTTPAPILayer {
         if (lang === null && pageLang != null) {
             lang = pageLang;
         }
-        return await this.getJson(`${formContainerPath}.model.${lang !== null ? `${lang}.` : ""}json`);
+        return await this.getJson(`${formContainerPath}.model.${lang !== null ? `${lang}.` : ""}json${this.REQ_PARAMETER_DATA_REF in params ? `?${this.REQ_PARAMETER_DATA_REF}=${params[this.REQ_PARAMETER_DATA_REF]}` : ''}`);
     }
 
     /**

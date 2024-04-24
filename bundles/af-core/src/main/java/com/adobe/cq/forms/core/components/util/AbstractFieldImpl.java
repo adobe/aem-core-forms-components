@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Abstract class which can be used as base class for {@link Field} implementations.
@@ -44,6 +45,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean readOnly;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
@@ -62,6 +64,10 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected String editFormat;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected String displayValueExpression;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataFormat")
     @Nullable
     protected String dataFormat;
@@ -74,13 +80,15 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected Integer maxLength;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximum")
-    @Nullable
-    protected Long maximum;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
+    @Default(booleanValues = false)
+    protected boolean dorExclusion;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
     @Nullable
-    protected Long minimum;
+    protected String dorColspan;
+
+    /** number and date constraint **/
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimumDate")
     @Nullable
@@ -90,29 +98,23 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected Date maximumDate;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximum")
     @Nullable
-    protected Long exclusiveMinimum;
+    protected Long maximum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimum")
+    @Nullable
+    protected Long minimum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimum")
+    @Default(booleanValues = false)
+    protected boolean exclusiveMinimum;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximum")
-    @Nullable
-    protected Long exclusiveMaximum;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimumDate")
-    @Nullable
-    protected Date exclusiveMinimumDate;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximumDate")
-    @Nullable
-    protected Date exclusiveMaximumDate;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
     @Default(booleanValues = false)
-    protected boolean dorExclusion;
+    protected boolean exclusiveMaximum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
-    @Nullable
-    protected String dorColspan;
+    /** number and date constraint **/
 
     /**
      * Returns dorBindRef of the form field
@@ -128,16 +130,24 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     private Resource resource;
 
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isReadOnly() {
+        return readOnly != null ? readOnly : Boolean.FALSE;
+    }
+
+    @JsonProperty("readOnly")
+    public Boolean getReadOnlyIfPresent() {
         return readOnly;
     }
 
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isRequired() {
+        return required != null ? required : Boolean.FALSE;
+    }
+
+    @JsonProperty("required")
+    public Boolean getRequiredIfPresent() {
         return required;
     }
 
@@ -177,6 +187,12 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     @Override
     @Nullable
+    public String getDisplayValueExpression() {
+        return displayValueExpression;
+    }
+
+    @Override
+    @Nullable
     public String getDataFormat() {
         return dataFormat;
     }
@@ -194,5 +210,4 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
         }
         return customDorProperties;
     }
-
 }

@@ -129,7 +129,7 @@ public class RadioButtonImplTest {
     @Test
     void testIsVisible() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
-        assertEquals(null, radioButton.isVisible());
+        assertEquals(true, radioButton.isVisible());
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.isVisible()).thenCallRealMethod();
         assertEquals(null, radioButtonMock.isVisible());
@@ -147,7 +147,7 @@ public class RadioButtonImplTest {
     @Test
     void testIsEnabled() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
-        assertEquals(null, radioButton.isEnabled());
+        assertEquals(true, radioButton.isEnabled());
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, radioButtonMock.isEnabled());
@@ -165,7 +165,7 @@ public class RadioButtonImplTest {
     @Test
     void testIsReadOnly() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
-        assertEquals(null, radioButton.isReadOnly());
+        assertEquals(false, radioButton.isReadOnly());
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, radioButtonMock.isReadOnly());
@@ -310,7 +310,7 @@ public class RadioButtonImplTest {
     @Test
     void testGetEnumNames() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
-        assertArrayEquals(new String[] { "Item 1", "Item 2" }, radioButton.getEnumNames());
+        assertArrayEquals(new String[] { "<p>Item 1</p>", "<p>Item 2</p>" }, radioButton.getEnumNames());
     }
 
     @Test

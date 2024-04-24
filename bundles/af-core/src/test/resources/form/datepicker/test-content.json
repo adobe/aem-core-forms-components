@@ -17,6 +17,8 @@
     "enabled": false,
     "readOnly": true,
     "required": false,
+    "lang" : "it-IT",
+    "langDisplayValue" : "it-IT",
     "assistPriority" : "custom",
     "dataRef" : "a.b",
     "fieldType": "date-input",
@@ -24,8 +26,6 @@
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
     "minimumDate": "Fri Feb 04 2022 05:30:00 GMT+0530",
-    "exclusiveMinimumDate": "Sat Feb 05 2022 05:30:00 GMT+0530",
-    "exclusiveMaximumDate": "Tue Feb 08 2022 05:30:00 GMT+0530",
     "maximumDate": "Wed Feb 09 2022 05:30:00 GMT+0530",
     "default": "Mon Feb 07 2022 05:30:00 GMT+0530",
     "fd:rules" : {
@@ -50,11 +50,11 @@
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
-    "minimumDate": "Fri Feb 04 2022 05:30:00 GMT+0530",
+    "minimumDate": "Sat Feb 05 2022 05:30:00 GMT+0530",
     "minimumMessage" : "Date should be greater than 4th Feb 2022",
-    "exclusiveMinimumDate": "Sat Feb 05 2022 05:30:00 GMT+0530",
-    "exclusiveMaximumDate": "Tue Feb 08 2022 05:30:00 GMT+0530",
-    "maximumDate": "Wed Feb 09 2022 05:30:00 GMT+0530",
+    "exclusiveMinimum": "true",
+    "exclusiveMaximum": "true",
+    "maximumDate": "Tue Feb 08 2022 05:30:00 GMT+0530",
     "maximumMessage" : "Date should be less than 9th Feb 2022",
     "default": "Mon Feb 07 2022 05:30:00 GMT+0530",
     "fd:rules" : {
@@ -89,5 +89,13 @@
     },
     "format": "date",
     ":type": "forms-components-examples/components/form/datepicker"
+  },
+  "datepicker-displayValueExpression" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "date-input",
+    "displayValueExpression": "($field.$value & abc)"
   }
 }

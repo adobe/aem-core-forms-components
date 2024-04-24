@@ -18,6 +18,7 @@ describe("Form Runtime with Telephone Input", () => {
     const pagePath = "content/forms/af/core-components-it/samples/telephoneinput/basic.html"
     const bemBlock = 'cmp-adaptiveform-telephoneinput'
     const IS = "adaptiveFormTelephoneInput"
+    let toggle_array = [];
     const selectors = {
         telephoneinput : `[data-cmp-is="${IS}"]`
     }
@@ -28,6 +29,11 @@ describe("Form Runtime with Telephone Input", () => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
         })
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
     });
 
     const checkHTML = (id, state) => {
@@ -46,7 +52,7 @@ describe("Form Runtime with Telephone Input", () => {
             cy.get('*').should(passVisibleCheck)
             cy.get('input')
                 .should(passDisabledAttributeCheck, 'disabled');
-            cy.get('input').should('have.value', value)
+            cy.get('input').should('have.value', value);
         })
     }
 
@@ -110,6 +116,9 @@ describe("Form Runtime with Telephone Input", () => {
         const [telephoneInput6, fieldView] = Object.entries(formContainer._fields)[5];
         cy.get(`#${telephoneInput6}`).find("input").clear().type(internationalInvalid).blur().then(() => {
             cy.get(`#${telephoneInput6} > div.${bemBlock}__errormessage`).should('have.text', 'Please match the format requested.');
+            cy.get(`#${telephoneInput6} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${telephoneInput6}__errormessage`);
+            cy.get(`#${telephoneInput6} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', ` ${telephoneInput6}__errormessage`);
+            cy.get(`#${telephoneInput6} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true');
         })
         // Validating UK pattern
         const [telephoneInput7, fieldView1] = Object.entries(formContainer._fields)[6];
@@ -141,5 +150,20 @@ describe("Form Runtime with Telephone Input", () => {
           expect(model.getState().value).to.equal(input);
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-telephoneinput--filled');
       });
+    });
+
+    it(" should support display value expression", () => {
+        if(toggle_array.includes("FT_FORMS-13193")) {
+            const [field, fieldView] = Object.entries(formContainer._fields)[7];
+            const input = 9999999999;
+            const formatted=  '*******999'
+            let model = fieldView.getModel();
+
+            cy.get(`#${field}`).find("input").clear().type(input).blur().then(x => {
+                expect(model.getState().value).to.equal('9999999999');
+                expect(model.getState().displayValue).to.be.equal(formatted)
+                cy.get(`#${field}`).find('input').should('have.value', model.getState().displayValue);
+            })
+        }
     });
 })

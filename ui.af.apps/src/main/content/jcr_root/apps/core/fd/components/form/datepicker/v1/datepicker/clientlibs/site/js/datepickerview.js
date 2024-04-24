@@ -71,26 +71,39 @@
             }
         }
 
+        updateReadOnly(readOnly, state) {
+            super.updateReadOnly(readOnly, state);
+            if (this.widgetObject != null) {
+                this.widgetObject.markAsReadOnly(readOnly);
+            }
+        }
+
         setModel(model) {
             super.setModel(model);
             if (!this.#noFormats()) {
                 if (this.widgetObject == null) {
                     this.widgetObject = new DatePickerWidget(this, this.getWidget(), model);
                 }
-                if (this.widgetObject.getValue() !== '') {
-                    this._model.value = this.widgetObject.getValue();
+                if (this.isActive()) {
+                    this.widgetObject.setValue(model.value);
+                } else {
+                    this.widgetObject.setDisplayValue(model.value);
                 }
                 this.widgetObject.addEventListener('blur', (e) => {
                     this._model.value = this.widgetObject.getValue();
-
                     //setDisplayValue is required for cases where value remains same while focussing in and out.
                     this.widgetObject.setDisplayValue(this._model.value);
-
                     this.setInactive();
                 }, this.getWidget());
                 this.widgetObject.addEventListener('focus', (e) => {
                     this.widgetObject.setValue(e.target.value);
                     this.setActive();
+                }, this.getWidget());
+                this.widgetObject.addEventListener('input', (e) => {
+                    if( e.target.value === '') {
+                        // clear the value if user manually empties the value in date input box
+                        this._model.value = "";
+                    }
                 }, this.getWidget());
             } else {
                 if (this.widget.value !== '') {
@@ -104,12 +117,11 @@
                     this.setActive();
                 });
             }
-
         }
 
         #noFormats() {
             return (this._model.editFormat == null || this._model.editFormat === 'date|short') &&
-                (this._model.displayFormat == null || this._model.displayFormat === 'date|short');
+                (this._model.displayFormat == null || this._model.displayFormat === 'date|short') && (this._model.displayValueExpression == null)
         }
     }
 

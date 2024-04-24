@@ -61,7 +61,7 @@
             setFocus() {
                 this.setActive();
             }
-        }
+    }
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Image({element, formContainer})

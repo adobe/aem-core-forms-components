@@ -29,6 +29,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @ConsumerType
 public interface TextInput extends Field, NumberConstraint, DateConstraint, StringConstraint {
 
+    // type number and date are implemented in sling model of text input as per crispr specification
+    // but it is not supported in AEM dialogs
+
     /**
      * Returns {@code true} if multi line, otherwise {@code false}.
      *

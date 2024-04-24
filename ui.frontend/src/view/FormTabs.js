@@ -112,12 +112,14 @@ class FormTabs extends FormPanel {
                     tabs[i].classList.add(this.#_selectors.active.tab);
                     tabs[i].setAttribute(Constants.ARIA_SELECTED, true);
                     tabs[i].setAttribute(Constants.TABINDEX, "0");
+                    tabs[i].setAttribute(Constants.ARIA_CURRENT, "true");
                 } else {
                     tabpanels[i].classList.remove(this.#_selectors.active.tabpanel);
                     tabpanels[i].setAttribute(Constants.ARIA_HIDDEN, true);
                     tabs[i].classList.remove(this.#_selectors.active.tab);
                     tabs[i].setAttribute(Constants.ARIA_SELECTED, false);
                     tabs[i].setAttribute(Constants.TABINDEX, "-1");
+                    tabs[i].setAttribute(Constants.ARIA_CURRENT, "false");
                 }
             }
         }
