@@ -64,6 +64,10 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Nullable
     protected String autocomplete;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    protected boolean showCharCounter;
+
     /** Type number specific constraints **/
     private Object exclusiveMinimumVaue;
     private Object exclusiveMaximumValue;
@@ -154,6 +158,11 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Nullable
     public String getFormat() {
         return format;
+    }
+
+    @Override
+    public boolean showCharCounter() {
+        return showCharCounter;
     }
 
     @PostConstruct
