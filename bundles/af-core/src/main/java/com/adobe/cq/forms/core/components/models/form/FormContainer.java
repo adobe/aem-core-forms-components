@@ -294,7 +294,7 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 4.0.0
      */
     default String getLang() {
-        return "en-US";
+        return Base.DEFAULT_LANGUAGE;
     }
 
     /**

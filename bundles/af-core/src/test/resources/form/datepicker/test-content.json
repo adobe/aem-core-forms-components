@@ -17,6 +17,8 @@
     "enabled": false,
     "readOnly": true,
     "required": false,
+    "lang" : "it-IT",
+    "langDisplayValue" : "it-IT",
     "assistPriority" : "custom",
     "dataRef" : "a.b",
     "fieldType": "date-input",

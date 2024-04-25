@@ -98,12 +98,13 @@ describe("Form with Radio Button Input", () => {
         formContainer._model.validate();
         cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"This is a required radiobutton");
         cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`);
-        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.attr', 'aria-describedby', `${id}__errormessage ${id}__shortdescription ${id}__longdescription`);
+        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.attr', 'aria-describedby', ` ${id}__errormessage`);
         cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('have.attr', 'aria-invalid', 'true');
 
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"");
             cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('have.attr', 'aria-invalid', 'false');
+            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.attr', 'aria-describedby', '');
         });
     });
 

@@ -14,6 +14,7 @@
   },
   "readOnly": true,
   "default": "2022-02-07",
+  "lang" : "it-IT",
   "label": {
     "visible": true,
     "value": "def"
