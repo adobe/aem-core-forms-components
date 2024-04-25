@@ -224,7 +224,7 @@ describe("Form with Dropdown", () => {
       });
   });
 
-    it.only("should have empty value checked when default option is not configured", () => {
+    it("should have empty placeholder checked when default option is not configured", () => {
         const [idDropdown, fieldView1] = Object.entries(formContainer._fields)[9];
         const model = formContainer._model.getElement(idDropdown);
         cy.get(`#${idDropdown} select`).invoke('val').then(val => {
