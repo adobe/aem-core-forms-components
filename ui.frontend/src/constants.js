@@ -350,17 +350,5 @@ export const Constants = {
      * @type {string}
      */
     API_PATH_PREFIX : "/adobe/forms/af",
-
-    /**
-     * Html input type text
-     * @type {string}
-     */
-    HTML_INPUT_TYPE_TEXT : "text",
-
-    /**
-     * Html input type password
-     * @type {string}
-     */
-    HTML_INPUT_TYPE_PASSWORD : "password"
 };
 
