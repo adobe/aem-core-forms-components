@@ -91,10 +91,10 @@
             const widget = this.getWidget();
             if(widget.value){
                 const widget = this.getWidget();
-                if (widget.type === FormView.Constants.HTML_INPUT_TYPE_PASSWORD) {
-                    widget.type = FormView.Constants.HTML_INPUT_TYPE_TEXT;
+                if (widget.type === "password") {
+                    widget.type = "text";
                     } else {
-                     widget.type = FormView.Constants.HTML_INPUT_TYPE_PASSWORD;
+                     widget.type = "password";
                     }
                 }            
         }       
