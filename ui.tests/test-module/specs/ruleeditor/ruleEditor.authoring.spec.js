@@ -108,7 +108,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         // select SAVE FORM action from dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SAVE_FORM).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SAVE_FORM).click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SAVE_FORM).click({force: true});
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
