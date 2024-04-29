@@ -223,4 +223,17 @@ describe("Form with Dropdown", () => {
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-dropdown--filled');
       });
   });
+
+    it("should have empty placeholder checked when default option is not configured", () => {
+        const [idDropdown, fieldView1] = Object.entries(formContainer._fields)[9];
+        const model = formContainer._model.getElement(idDropdown);
+        cy.get(`#${idDropdown} select`).invoke('val').then(val => {
+            expect(val, "Actual value of unselected dropdown").to.equal(null);
+        })
+        cy.get(`#${idDropdown} select`).find('option').then(options => {
+            expect(options[0].selected, "Empty Placeholder to be selected").to.be.true
+            expect(options[0].disabled, "Empty Placeholder to be disabled").to.be.true
+            expect(options[0].value, "Empty Placeholder to be empty in it's visual content").to.equal('')
+        });
+    });
 })
