@@ -192,6 +192,7 @@ var selectors = {
         operator : {
             CONTAINS : "coral-selectlist [value='CONTAINS']",
             HIDE : "coral-selectlist [value='HIDE_STATEMENT']",
+            SAVE_FORM: "coral-selectlist [value='SAVE_FORM']",
             FUNCTION_CALL : "coral-selectlist [value='FUNCTION_CALL']",
             IS_CLICKED : "coral-selectlist [value='is clicked']",
             IS_SUBMITTED_SUCCESSFULLY : "coral-selectlist [value='is submitted successfully']",
