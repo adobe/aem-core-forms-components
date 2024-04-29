@@ -43,7 +43,7 @@ describe("Captcha In Sites Runtime Test", () => {
     })
 
     it("hcaptcha should render when form is embedded in site", () => {
-        if (toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
             cy.previewForm(hCaptchaPagePath).then(p => {
                 formContainer = p;
                 expect(formContainer, "formcontainer is initialized").to.not.be.null;
