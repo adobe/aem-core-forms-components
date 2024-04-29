@@ -61,7 +61,7 @@ describe("Form Runtime with hCaptcha Input", () => {
     }
 
     it(" should get model and view initialized properly ", () => {
-        if (toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
             Object.entries(formContainer._fields).forEach(([id, field]) => {
@@ -72,7 +72,7 @@ describe("Form Runtime with hCaptcha Input", () => {
     })
 
     it(" model's changes are reflected in the html ", () => {
-        if (toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
             const [id, fieldView] = Object.entries(formContainer._fields)[0]
             const model = formContainer._model.getElement(id)
             cy.get('div.h-captcha').should('exist');
@@ -88,7 +88,7 @@ describe("Form Runtime with hCaptcha Input", () => {
     });
 
     it(" html changes are reflected in model ", () => {
-        if (toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
             const [id, fieldView] = Object.entries(formContainer._fields)[0]
             const model = formContainer._model.getElement(id)
             cy.log(model.getState().value)
@@ -101,7 +101,7 @@ describe("Form Runtime with hCaptcha Input", () => {
 
 
     it("decoration element should not have same class name", () => {
-        if (toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             cy.wrap().then(() => {
                 const id = formContainer._model._children[0].id;
@@ -111,7 +111,7 @@ describe("Form Runtime with hCaptcha Input", () => {
     })
 
     it("client side validation should fail if captcha is not filled", () => {
-        if (toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
                 cy.get('.cmp-adaptiveform-hcaptcha__errormessage').should('exist').contains('Please fill in this field.');
@@ -120,7 +120,7 @@ describe("Form Runtime with hCaptcha Input", () => {
     })
 
     it("submission should pass for mandatory captcha", () => {
-        if (toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             cy.get(`div.h-captcha iframe`).should('be.visible').then($iframe => {
                 cy.wrap($iframe).then($iframe => {
