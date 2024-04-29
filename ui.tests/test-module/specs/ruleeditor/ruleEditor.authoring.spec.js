@@ -238,8 +238,10 @@ describe('Rule editor authoring sanity for core-components',function(){
     context('Open Forms Editor', function() {
         const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/blank",
             submitFormPath = "/content/forms/af/core-components-it/samples/ruleeditor/submit/blank",
+            saveFormPath = "/content/forms/af/core-components-it/samples/ruleeditor/save/blank",
             formContainerPath = formPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
             submitFormContainerPath = submitFormPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
+            saveFormContainerPath = saveFormPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
             textinputEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             buttonEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
