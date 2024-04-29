@@ -88,18 +88,6 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
 
-        // // Forms Objects option is not existing on side panel
-        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFormObjectTab).should("exist");
-        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFormObjectTab).then($el => {
-        //     expect($el.text().trim()).to.equal("Form Objects");
-        // })
-        //
-        // // Functions option is not existing on side panel
-        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFunctionObjectTab).should("exist");
-        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFunctionObjectTab).then($el => {
-        //     expect($el.text().trim()).to.equal("Functions");
-        // })
-
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
 
@@ -244,7 +232,9 @@ describe('Rule editor authoring sanity for core-components',function(){
             saveFormContainerPath = saveFormPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
             textinputEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             buttonEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
+            saveButtonEditPath = saveFormContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
+            saveButtonEditPathSelector = "[data-path='" + saveButtonEditPath + "']",
             submitFormButtonEditPath = submitFormContainerPath + "/" + afConstants.components.forms.resourceType.submitButton.split("/").pop(),
             submitFormButtonEditPathSelector = "[data-path='" + submitFormButtonEditPath + "']";
 
@@ -357,7 +347,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
                 cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + saveFormContainerPath + "/*']",
                     "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + saveButtonEditPathSelector);
 
                 createRuleToSaveFormOnButtonClick();
 
