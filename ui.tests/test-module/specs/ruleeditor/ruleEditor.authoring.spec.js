@@ -347,8 +347,7 @@ describe('Rule editor authoring sanity for core-components',function(){
                 createRuleToSaveFormOnButtonClick();
 
                 cy.selectLayer("Edit");
-                cy.deleteComponentByPath(textinputEditPath);
-                cy.deleteComponentByPath(buttonEditPath);
+                cy.deleteComponentByPath(saveButtonEditPath);
             }
         })
 
