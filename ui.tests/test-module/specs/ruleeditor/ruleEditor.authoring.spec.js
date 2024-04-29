@@ -106,14 +106,9 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
 
-        // select HIDE action from dropdown
+        // select SAVE FORM action from dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SAVE_FORM).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SAVE_FORM).click();
-
-        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").should("be.visible");
-        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").click();
-
-        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force: true});
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
