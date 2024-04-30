@@ -159,11 +159,12 @@ describe("Rule editor save handler runtime", () => {
 
     it("should save formData on button click", () => {
         if (toggle_array.includes("FT_FORMS-11581")) {
+
+            const saveApiResponse = {
+                'draftId': 'ABC'
+            };
             // Rule when button is clicked then save call should trigger
-            cy.intercept({
-                method: 'POST',
-                url: '**/adobe/forms/af/save/*',
-            }).as('afSave');
+            cy.intercept('POST' , '**/adobe/forms/af/save/*', saveApiResponse).as('afSave');
 
             cy.previewForm(saveRunTime);
 
@@ -171,10 +172,11 @@ describe("Rule editor save handler runtime", () => {
 
             cy.wait('@afSave').then(({request, response}) => {
                 // Check the request payload
-                expect(request.body.data).to.be.not.null;
+                expect(request.body).to.be.not.null;
 
                 expect(response.statusCode).to.equal(200);
                 expect(response.body).to.be.not.null;
+                expect(response.body.draftId).to.equal('ABC');
             });
         }
     })
