@@ -46,7 +46,6 @@ import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -229,31 +228,6 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNotNull(formContainer.getThankYouMessage());
         assertEquals("Thank you for submitting.", formContainer.getThankYouMessage());
-    }
-
-    @Test
-    void testGetIsEdgeDeliveryRequest() throws Exception {
-        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        MockSlingHttpServletRequest request = context.request();
-        request.setAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet", false);
-        assertFalse(formContainer.isEdgeDeliveryRequest());
-    }
-
-    @Test
-    void testGetIsEdgeDeliveryRequestTrue() throws Exception {
-        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        MockSlingHttpServletRequest request = context.request();
-        request.setAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet", true);
-        assertTrue(formContainer.isEdgeDeliveryRequest());
-    }
-
-    @Test
-    void testGetFormDefinition() throws Exception {
-        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        String formDefinition = formContainer.getFormDefinition();
-        Map<String, Object> formDefinitionJson = new ObjectMapper().readValue(formDefinition, Map.class);
-        assertNotNull(formContainer.getFormDefinition());
-        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formDefinitionJson.get("action"));
     }
 
     @Test

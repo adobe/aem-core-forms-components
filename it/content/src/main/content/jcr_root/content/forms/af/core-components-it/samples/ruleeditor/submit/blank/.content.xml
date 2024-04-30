@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2024-03-01T10:40:51.317Z"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="blank"
+        sling:configRef="/conf/forms/core-components-it/samples/ruleeditor/blank/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            clientLibRef="corecomponent.it.customfunction"
+            dorType="none"
+            fieldType="form"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="blank"/>
+    </jcr:content>
+</jcr:root>

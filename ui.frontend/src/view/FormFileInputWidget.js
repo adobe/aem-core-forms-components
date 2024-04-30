@@ -472,6 +472,7 @@ class FormFileInputWidget {
                     this.showInvalidMessage(inValidMimeTypefileNames.substring(0, inValidMimeTypefileNames.lastIndexOf(',')), this.invalidFeature.MIMETYPE);
                 }
             }
+            this.widget.value = null;
         }
     }
 

@@ -52,7 +52,6 @@ import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
-import com.adobe.cq.forms.core.components.util.Utils;
 import com.day.cq.commons.LanguageUtil;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
@@ -363,14 +362,4 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return FormContainer.super.getName();
     }
 
-    @JsonIgnore
-    public String getFormDefinition() {
-        return Utils.getDefinitionForPublishView(this);
-    }
-
-    @Override
-    @Nullable
-    public Boolean isEdgeDeliveryRequest() {
-        return Utils.isEdgeDeliveryRequest(request);
-    }
 }

@@ -43,4 +43,10 @@ public interface FormStructureParser {
      * @return true if this resource or one of its children is a form container, else false
      */
     Boolean containsFormContainer();
+
+    /**
+     *
+     * @return form definition json in Publish view
+     */
+    String getFormDefinition();
 }

@@ -362,21 +362,4 @@ public interface FormContainer extends Container {
     default String getParentPagePath() {
         return null;
     }
-
-    @JsonIgnore
-    default String getFormDefinition() {
-        return null;
-    }
-
-    /**
-     * Returns whether this request is originating from edge delivery.
-     *
-     * @return whether this request is originating from edge delivery
-     * @since com.adobe.cq.forms.core.components.models.form 5.3.0
-     */
-    @Nullable
-    @JsonIgnore
-    default Boolean isEdgeDeliveryRequest() {
-        return null;
-    }
 }

@@ -13,38 +13,26 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-package com.adobe.cq.forms.core.components.util;
-
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
+package com.adobe.cq.forms.core.components.internal.form;
 
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.jetbrains.annotations.Nullable;
 
-import com.adobe.cq.forms.core.components.views.Views;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.adobe.cq.forms.core.components.models.form.FormUtil;
 
-public class Utils {
-    private static final Logger logger = LoggerFactory.getLogger(Utils.class);
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = FormUtil.class)
+public class FormUtilImpl implements FormUtil {
+    @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private SlingHttpServletRequest request;
 
-    public static String getDefinitionForPublishView(Object component) {
-        String result = null;
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            Writer writer = new StringWriter();
-            // return publish view specific properties only for runtime
-            mapper.writerWithView(Views.Publish.class).writeValue(writer, component);
-            result = writer.toString();
-        } catch (IOException e) {
-            logger.error("Unable to generate json from resource");
-        }
-        return result;
-    }
-
-    public static Boolean isEdgeDeliveryRequest(SlingHttpServletRequest request) {
+    public Boolean isEdgeDeliveryRequest() {
         if (request != null) {
             Object isEdgeDelivery = request.getAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet");
             Boolean res = true;

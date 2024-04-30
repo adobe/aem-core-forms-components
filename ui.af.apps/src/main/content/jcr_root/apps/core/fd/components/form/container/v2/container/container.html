@@ -14,11 +14,15 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 
-<div class="form" data-sly-use.container="com.adobe.cq.forms.core.components.models.form.FormContainer" data-sly-test.isEdgeDeliveryRequest="${container.edgeDeliveryRequest}">
+<div class="form"
+     data-sly-use.container="com.adobe.cq.forms.core.components.models.form.FormContainer"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.formUtil="com.adobe.cq.forms.core.components.models.form.FormUtil"
+     data-sly-test.isEdgeDeliveryRequest="${formUtil.edgeDeliveryRequest}">
     <div>
         <div>
       <pre>
-          <code>${container.formDefinition}</code>
+          <code>${formstructparser.formDefinition}</code>
       </pre>
         </div>
     </div>
