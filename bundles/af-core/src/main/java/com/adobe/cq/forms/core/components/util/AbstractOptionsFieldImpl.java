@@ -104,13 +104,16 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     @Override
     public String[] getEnumNames() {
-        Map<Object, String> map = getEnumPairs();
-        String[] enumName = map.values().toArray(new String[0]);
-        return Arrays.stream(enumName)
-            .map(p -> {
-                return this.translate("enumNames", p);
-            })
-            .toArray(String[]::new);
+        if (enumNames != null) {
+            Map<Object, String> map = getEnumPairs();
+            String[] enumName = map.values().toArray(new String[0]);
+            return Arrays.stream(enumName)
+                .map(p -> {
+                    return this.translate("enumNames", p);
+                })
+                .toArray(String[]::new);
+        }
+        return null;
     }
 
     @Override
