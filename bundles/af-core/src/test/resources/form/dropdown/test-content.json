@@ -211,5 +211,125 @@
       "20"
     ],
     ":type": "forms-components-examples/components/form/dropdown"
+  },
+  "dropdown-without-enumNames": {
+    "id": "dropdown-f0a2750c3a",
+    "fieldType": "drop-down",
+    "name": "dropdown1686728705395",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": [],
+    "label": {
+      "value": "Dropdown",
+      "visible": true
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2-insertion-order-check/jcr:content/guideContainer/dropdown"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "enum": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    ":type": "forms-components-examples/components/form/dropdown"
+  },
+  "dropdown-with-lesser-enumNames": {
+    "id": "dropdown-f0a2750c3a",
+    "fieldType": "drop-down",
+    "name": "dropdown1686728705395",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": ["zero","one", "two", "three"],
+    "label": {
+      "value": "Dropdown",
+      "visible": true
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2-insertion-order-check/jcr:content/guideContainer/dropdown"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "enum": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    ":type": "forms-components-examples/components/form/dropdown"
+  },
+  "dropdown-with-extra-enumNames": {
+    "id": "dropdown-f0a2750c3b",
+    "fieldType": "drop-down",
+    "name": "dropdown1686728705396",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "enforceEnum": true,
+    "enumNames": ["zero","one", "two", "three"],
+    "label": {
+      "value": "Dropdown",
+      "visible": true
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2-insertion-order-check/jcr:content/guideContainer/dropdown"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "enum": [
+      "0",
+      "1"
+    ],
+    ":type": "forms-components-examples/components/form/dropdown"
   }
 }
