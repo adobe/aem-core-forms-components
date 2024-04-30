@@ -67,10 +67,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
         LinkedHashMap<Object, String> map = new LinkedHashMap<>();
 
         if (enumArray != null) {
-            if (enumNamesArray == null) {
-                enumNamesArray = Arrays.copyOf(enumArray, enumArray.length, String[].class);
-            }
-            if (enumArray.length > enumNamesArray.length) {
+            if (enumNamesArray != null && enumArray.length != enumNamesArray.length) {
                 int oldSize = enumNamesArray.length;
                 int sizeDiff = enumArray.length - enumNamesArray.length;
                 enumNamesArray = Arrays.copyOf(enumNamesArray, oldSize + sizeDiff);
@@ -78,7 +75,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
                     enumNamesArray[i] = (String) enumArray[i];
                 }
             }
-            String[] finalEnumNamesArray = enumNamesArray; // lambdas require an unmodified array
+            String[] finalEnumNamesArray = enumNamesArray != null ? enumNamesArray : new String[enumArray.length];
             map = IntStream.range(0, enumArray.length).collect(LinkedHashMap::new, (m, i) -> m.put(enumArray[i], finalEnumNamesArray[i]),
                 LinkedHashMap::putAll);
         }
