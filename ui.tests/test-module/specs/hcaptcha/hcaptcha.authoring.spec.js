@@ -67,49 +67,55 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(hCaptchaDrop);
     }
 
-    if (cy.af.isLatestAddon()) {
-        context('Open Forms Editor', function() {
-            const pagePath = "/content/forms/af/core-components-it/blank",
-                hCaptchaEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/hcaptcha",
-                hCaptchaEditPathSelector = "[data-path='" + hCaptchaEditPath + "']",
-                hCaptchaDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + formhcaptcha.split("/").pop();
-            beforeEach(function () {
-                // this is done since cypress session results in 403 sometimes
-                cy.openAuthoring(pagePath);
-            });
+    context('Open Forms Editor', function() {
+        const pagePath = "/content/forms/af/core-components-it/blank",
+            hCaptchaEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/hcaptcha",
+            hCaptchaEditPathSelector = "[data-path='" + hCaptchaEditPath + "']",
+            hCaptchaDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + formhcaptcha.split("/").pop();
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openAuthoring(pagePath);
+        });
 
-            it('insert hCaptcha in form container', function () {
+        it('insert hCaptcha in form container', function () {
+            if (cy.af.isLatestAddon()) {
                 dropHCaptchaInContainer();
                 cy.deleteComponentByPath(hCaptchaDrop);
-            });
+            }
+        });
 
-            it ('open edit dialog of hCaptcha',{ retries: 3 }, function(){
+        it ('open edit dialog of hCaptcha',{ retries: 3 }, function(){
+            if (cy.af.isLatestAddon()) {
                 cy.cleanTest(hCaptchaDrop).then(function(){
                     testHCaptchaBehaviour(hCaptchaEditPathSelector, hCaptchaDrop);
                 });
-            })
+            }
         })
+    })
 
-        context('Open Sites Editor', function () {
-            const pagePath = "/content/core-components-examples/library/adaptive-form/hcaptcha",
-                hCaptchaEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/hcaptcha",
-                hCaptchaEditPathSelector = "[data-path='" + hCaptchaEditPath + "']",
-                hCaptchaDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + formhcaptcha.split("/").pop();
+    context('Open Sites Editor', function () {
+        const pagePath = "/content/core-components-examples/library/adaptive-form/hcaptcha",
+            hCaptchaEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/hcaptcha",
+            hCaptchaEditPathSelector = "[data-path='" + hCaptchaEditPath + "']",
+            hCaptchaDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + formhcaptcha.split("/").pop();
 
-            beforeEach(function () {
-                // this is done since cypress session results in 403 sometimes
-                cy.openAuthoring(pagePath);
-            });
+        beforeEach(function () {
+            // this is done since cypress session results in 403 sometimes
+            cy.openAuthoring(pagePath);
+        });
 
-            it('insert aem forms hCaptcha', function () {
+        it('insert aem forms hCaptcha', function () {
+            if (cy.af.isLatestAddon()) {
                 dropHCaptchaInSites();
                 cy.deleteComponentByPath(hCaptchaDrop);
-            });
-
-            it('open edit dialog of aem forms hCaptcha', function() {
-                testHCaptchaBehaviour(hCaptchaEditPathSelector, hCaptchaDrop, true);
-            });
+            }
         });
-    }
+
+        it('open edit dialog of aem forms hCaptcha', function() {
+            if (cy.af.isLatestAddon()) {
+                testHCaptchaBehaviour(hCaptchaEditPathSelector, hCaptchaDrop, true);
+            }
+        });
+    });
 
 });
