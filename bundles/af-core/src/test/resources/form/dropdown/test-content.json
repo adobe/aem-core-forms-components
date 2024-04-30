@@ -221,7 +221,6 @@
     "enabled": true,
     "readOnly": false,
     "enforceEnum": true,
-    "enumNames": [],
     "label": {
       "value": "Dropdown",
       "visible": true
