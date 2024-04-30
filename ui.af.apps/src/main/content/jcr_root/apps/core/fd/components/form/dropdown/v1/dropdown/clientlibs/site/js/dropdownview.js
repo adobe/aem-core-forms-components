@@ -84,7 +84,6 @@
         }
 
         updateEnabled(enabled, state) {
-            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widget = this.widget;
             if (enabled === false) {

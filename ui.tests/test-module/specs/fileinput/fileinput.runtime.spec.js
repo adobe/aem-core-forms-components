@@ -80,7 +80,7 @@ describe("Form with File Input - Basic Tests", () => {
     const checkHTML = (id, state) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
         const value = (state.value == null ? '' : (Array.isArray(state.value) ? state.value[0].name : state.value.name)); // check for file name in dom
         cy.get(`#${id}`)
             .should(passVisibleCheck)
@@ -157,7 +157,12 @@ describe("Form with File Input - Basic Tests", () => {
                 if (model.visible && model.enabled) {
                     cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--empty');
                     cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
-                    cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+                    if(model.readOnly) {
+                        cy.get(`#${id}`).should('have.attr', 'data-cmp-readonly', 'true');
+                    } else {
+                        cy.get(`#${id}`).should('have.attr', 'data-cmp-readonly', 'false');
+                    }
+                    //cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
                     cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
@@ -167,7 +172,7 @@ describe("Form with File Input - Basic Tests", () => {
                 }
             }
         });
-        getFormObjTest(['empty.pdf', 'empty.pdf', 'empty.pdf', 'empty.pdf'])
+        getFormObjTest(['empty.pdf', 'empty.pdf', 'empty.pdf', 'empty.pdf', 'empty.pdf'])
     });
 
     it("should toggle description and tooltip", () => {
@@ -195,6 +200,11 @@ describe("Form with File Input - Basic Tests", () => {
         cy.get('.cmp-adaptiveform-fileinput__filelist').eq(0).children().should('have.length', 0);
         cy.get(".cmp-adaptiveform-fileinput__widgetlabel").should('have.attr', 'role', 'button');
     })
+
+    it(`fielinput is disabled when readonly property is true`, () => {
+        const fileInput5 =  "input[name='fileinput5']";
+        cy.get(fileInput5).should("have.attr", "disabled", "disabled"); 
+    });
 
 })
 
