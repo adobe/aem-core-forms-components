@@ -38,9 +38,11 @@ describe("Form Runtime with hCaptcha Input", () => {
 
     // render the form with captcha, we have whitelisted the "Missing required parameters: sitekey" error
     beforeEach(() => {
-        cy.previewForm(pagePath).then((p) => {
-            formContainer = p;
-        });
+        if (cy.af.isLatestAddon()) {
+            cy.previewForm(pagePath).then((p) => {
+                formContainer = p;
+            });
+        }
     });
 
     const checkHTML = (id, state) => {
