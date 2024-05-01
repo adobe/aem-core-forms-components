@@ -15,11 +15,13 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.Date;
-
-import javax.annotation.Nullable;
-import javax.annotation.PostConstruct;
-
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -28,21 +30,17 @@ import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
-import com.adobe.cq.export.json.ComponentExporter;
-import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
-import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
-import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import javax.annotation.Nullable;
+import javax.annotation.PostConstruct;
+import java.util.Date;
 
 @Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { TextInput.class, ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_TEXT_V1, FormConstants.RT_FD_FORM_EMAIL_V1, FormConstants.RT_FD_FORM_TELEPHONE_V1 })
+        adaptables = {SlingHttpServletRequest.class, Resource.class},
+        adapters = {TextInput.class, ComponentExporter.class},
+        resourceType = {FormConstants.RT_FD_FORM_TEXT_V1, FormConstants.RT_FD_FORM_EMAIL_V1, FormConstants.RT_FD_FORM_TELEPHONE_V1})
 @Exporter(
-    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
-    extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+        name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
+        extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
     // type number and date are implemented in sling model as per crispr specification
@@ -51,6 +49,10 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
     protected boolean multiLine;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    protected boolean showCharCounter;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -64,11 +66,15 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Nullable
     protected String autocomplete;
 
-    /** Type number specific constraints **/
+    /**
+     * Type number specific constraints
+     **/
     private Object exclusiveMinimumVaue;
     private Object exclusiveMaximumValue;
 
-    /** End of Type number specific constraints **/
+    /**
+     * End of Type number specific constraints
+     **/
     @Override
     public boolean isMultiLine() {
         return multiLine;
@@ -148,6 +154,11 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Override
     public Date getExclusiveMinimumDate() {
         return ComponentUtils.clone((Date) exclusiveMinimumVaue);
+    }
+
+    @Override
+    public boolean showCharCounter() {
+        return showCharCounter;
     }
 
     @Override
