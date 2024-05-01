@@ -14,10 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 describe("Sites with Aem Embed Container", () => {
-
+    const PAGE_PATH = "/content/forms/sites/core-components-it/afcorecomponentsembedtest.html";
     context('aem embed container in iframe mode ', function () {
 
-        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontainer.html";
+        const pagePath = PAGE_PATH;
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -61,7 +61,7 @@ describe("Sites with Aem Embed Container", () => {
 
     context('aem embed container in iframe mode with custom height ', function () {
 
-        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontainerwithcustomheight.html?wcmmode=disabled";
+        const pagePath = "/content/forms/sites/core-components-it/aemembedcontainerwithcustomheight.html?wcmmode=disabled";
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
