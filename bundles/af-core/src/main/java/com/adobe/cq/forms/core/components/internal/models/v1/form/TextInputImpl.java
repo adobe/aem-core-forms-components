@@ -56,6 +56,10 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Nullable
     protected String format;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Default(booleanValues = false)
+    protected boolean showCharCounter;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "pattern")
     @Nullable
     protected String pattern;
@@ -72,6 +76,11 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Override
     public boolean isMultiLine() {
         return multiLine;
+    }
+
+    @Override
+    public boolean showCharCounter() {
+        return showCharCounter;
     }
 
     @Override
