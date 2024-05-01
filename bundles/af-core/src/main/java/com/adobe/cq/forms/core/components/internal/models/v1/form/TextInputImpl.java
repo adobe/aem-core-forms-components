@@ -1,18 +1,18 @@
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2022 Adobe
- ~
- ~ Licensed under the Apache License, Version 2.0 (the "License");
- ~ you may not use this file except in compliance with the License.
- ~ You may obtain a copy of the License at
- ~
- ~     http://www.apache.org/licenses/LICENSE-2.0
- ~
- ~ Unless required by applicable law or agreed to in writing, software
- ~ distributed under the License is distributed on an "AS IS" BASIS,
- ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- ~ See the License for the specific language governing permissions and
- ~ limitations under the License.
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*
+ * Copyright 2022 Adobe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import com.adobe.cq.export.json.ComponentExporter;
@@ -35,16 +35,19 @@ import javax.annotation.PostConstruct;
 import java.util.Date;
 
 @Model(
-        adaptables = {SlingHttpServletRequest.class, Resource.class},
-        adapters = {TextInput.class, ComponentExporter.class},
-        resourceType = {FormConstants.RT_FD_FORM_TEXT_V1, FormConstants.RT_FD_FORM_EMAIL_V1, FormConstants.RT_FD_FORM_TELEPHONE_V1})
+        adaptables = { SlingHttpServletRequest.class, Resource.class },
+        adapters = { TextInput.class, ComponentExporter.class },
+        resourceType = {
+                FormConstants.RT_FD_FORM_TEXT_V1,
+                FormConstants.RT_FD_FORM_EMAIL_V1,
+                FormConstants.RT_FD_FORM_TELEPHONE_V1
+        }
+)
 @Exporter(
         name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
-        extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+        extensions = ExporterConstants.SLING_MODEL_EXTENSION
+)
 public class TextInputImpl extends AbstractFieldImpl implements TextInput {
-
-    // type number and date are implemented in sling model as per crispr specification
-    // but it is not supported in AEM dialogs
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(booleanValues = false)
@@ -66,15 +69,9 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Nullable
     protected String autocomplete;
 
-    /**
-     * Type number specific constraints
-     **/
-    private Object exclusiveMinimumVaue;
+    private Object exclusiveMinimumValue;
     private Object exclusiveMaximumValue;
 
-    /**
-     * End of Type number specific constraints
-     **/
     @Override
     public boolean isMultiLine() {
         return multiLine;
@@ -133,7 +130,7 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Override
     @Nullable
     public Long getExclusiveMinimum() {
-        return (Long) exclusiveMinimumVaue;
+        return (Long) exclusiveMinimumValue;
     }
 
     @Override
@@ -153,7 +150,7 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
     @Override
     public Date getExclusiveMinimumDate() {
-        return ComponentUtils.clone((Date) exclusiveMinimumVaue);
+        return ComponentUtils.clone((Date) exclusiveMinimumValue);
     }
 
     @Override
@@ -170,12 +167,12 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @PostConstruct
     private void initTextInput() {
         exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, null);
-        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, null);
-        // in json either, exclusiveMaximum or maximum should be present
+        exclusiveMinimumValue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, null);
+
         if (exclusiveMaximumValue != null) {
             maximum = null;
         }
-        if (exclusiveMinimumVaue != null) {
+        if (exclusiveMinimumValue != null) {
             minimum = null;
         }
     }
