@@ -47,7 +47,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class StaticImageImpl extends AbstractFormComponentImpl implements StaticImage {
 
-    public final String DAM_REPO_PATH = "fd:repoPath";
+    public static final String DAM_REPO_PATH = "fd:repoPath";
 
     private Image image;
 
