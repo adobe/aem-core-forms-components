@@ -26,4 +26,8 @@
     <filter root="/conf/core-components-examples/settings/wcm/policies/wcm/foundation/components/responsivegrid/page-header/jcr:content" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/policies/wcm/foundation/components/responsivegrid/page-footer" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/policies/wcm/foundation/components/responsivegrid/page-footer/jcr:content" mode="update"/>
+    <filter root="/content/forms/af/core-forms-components-examples/sample" mode="merge"/>
+    <filter root="/content/dam/formsanddocuments/core-forms-components-examples/sample" mode="merge"/>
+    <filter root="/content/forms/af/core-forms-components-examples/test-fragment" mode="merge"/>
+    <filter root="/content/dam/formsanddocuments/core-forms-components-examples/test-fragment" mode="merge"/>
 </workspaceFilter>

@@ -415,7 +415,6 @@ class FormFieldBase extends FormField {
      */
     updateEnabled(enabled, state) {
         if (this.widget) {
-            this.toggle(enabled, Constants.ARIA_DISABLED, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             if (enabled === false) {
                 this.widget.setAttribute("disabled", "disabled");
@@ -432,7 +431,7 @@ class FormFieldBase extends FormField {
      * @param {boolean} readOnly - The read-only state.
      * @param {Object} state - The state object.
      */
-    updateReadOnly(readOnly, state) {
+    updateReadOnly(readOnly) {
         if (this.widget) {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_READONLY, readOnly);
             if (readOnly === true) {
