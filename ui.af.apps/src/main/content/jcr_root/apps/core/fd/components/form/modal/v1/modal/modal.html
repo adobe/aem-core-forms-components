@@ -1,0 +1,48 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<sly data-sly-use.modal="com.adobe.cq.forms.core.components.models.form.Modal"
+     data-sly-use.renderer="${'modal.js'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}">
+</sly>
+
+<div class="cmp-adaptiveform-modal"
+     data-cmp-is="adaptiveFormModal"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+     id="${modal.id}"
+     title="${modal.tooltipVisible ? '' : modal.tooltipText}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+
+    <div class="cmp-adaptiveform-modal__label-container">
+        <div data-sly-call="${label.label @componentId=widgetId, labelValue=modal.label.value, labelVisible=modal.label.visible, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=modal.id, longDescription=modal.description, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
+    </div>
+
+    <div role="dialog">
+        <div class="${wcmmode.preview || wcmmode.disabled ? 'cmp-adaptiveform-modal__dialog' : ''}">
+            <div class="cmp-adaptiveform-modal__panel-container" data-sly-resource="${'panelcontainer'}"></div>
+        </div>
+    </div>
+    <div class="cmp-adaptiveform-modal__button" data-sly-resource="${'button'}"></div>
+
+    <div data-sly-call="${shortDescription.shortDescription @componentId=modal.id, shortDescriptionVisible=modal.tooltipVisible, shortDescription=modal.tooltip, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=modal.id, longDescription=modal.description, bemBlock='cmp-adaptiveform-modal'}" data-sly-unwrap></div>
+</div>

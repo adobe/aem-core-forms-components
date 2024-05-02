@@ -81,6 +81,7 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
         return defaultValue;
     }
 
+    @JsonIgnore
     @Override
     public String getButtonType() {
         return buttonType;
@@ -112,6 +113,11 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
             properties.put("fd:buttonType", buttonType);
         }
         return properties;
+    }
+
+    @Override
+    public Type getType() {
+        return null;
     }
 
     @Override

@@ -1,0 +1,98 @@
+{
+  "id": "modal-3f8ac07b1d",
+  "fieldType": "panel",
+  "name": "modal1711016014566",
+  "label": {
+    "value": "Modal"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/modal"
+  },
+  ":itemsOrder": [
+    "panelcontainer",
+    "button"
+  ],
+  ":items": {
+    "panelcontainer": {
+      "id": "panelcontainer-bc5563a2b9",
+      "fieldType": "panel",
+      "name": "panelcontainer",
+      "label": {
+        "value": "Panel"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false,
+          "dorExcludeTitle": false,
+          "dorExcludeDescription": false
+        },
+        "fd:path": "/content/modal/panelcontainer"
+      },
+      ":itemsOrder": [
+        "datepicker"
+      ],
+      ":items": {
+        "datepicker": {
+          "id": "datepicker-43f0efd69b",
+          "fieldType": "date-input",
+          "name": "datepicker1711461935572",
+          "type": "string",
+          "label": {
+            "value": "Date Input"
+          },
+          "events": {
+            "custom:setProperty": [
+              "$event.payload"
+            ]
+          },
+          "properties": {
+            "fd:dor": {
+              "dorExclusion": false
+            },
+            "fd:path": "/content/modal/panelcontainer/datepicker"
+          },
+          "format": "date",
+          ":type": "core/fd/components/form/datepicker/v1/datepicker"
+        }
+      },
+      ":type": "core/fd/components/form/panelcontainer/v1/panelcontainer"
+    },
+    "button": {
+      "id": "button-1605226465",
+      "fieldType": "button",
+      "name": "button1711016014673",
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/modal/button",
+        "fd:buttonType": "button"
+      },
+      "label": {
+        "value": "Open Modal"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      ":type": "core/fd/components/form/button/v1/button"
+    }
+  },
+  ":type": "core/fd/components/form/modal/v1/modal"
+}
