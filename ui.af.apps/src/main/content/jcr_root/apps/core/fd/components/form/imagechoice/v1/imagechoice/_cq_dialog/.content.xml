@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Adaptive Form ImageChoice field"
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          extraClientlibs="[core.forms.components.imagechoice.v1.editor]"
+          helpPath="https://www.adobe.com/go/aem_af_cmp_imagechoice_v1"
+          trackingFeature="core-components:adaptiveform-imagechoice:v1">
+    <content
+            granite:class="cmp-adaptiveform-imagechoice__editdialog"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                    maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Basic"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <placeholder
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <selectionType
+                                                    wrapperClass="cmp-adaptiveform-imagechoice__selectionType"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldLabel="Selection Type"
+                                                    name="./selectionType"
+                                                    required="{Boolean}true">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <single
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Single"
+                                                            value="single"/>
+                                                    <multiple
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Multiple"
+                                                            value="multiple"/>
+                                                </items>
+                                            </selectionType>
+                                            <options
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="bindref"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                    composite="{Boolean}true"
+                                                    fieldDescription="Add image options for the image choice component."
+                                                    fieldLabel="Options">
+                                                <field
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                        name="./options">
+                                                    <layout
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/fieldlayout"
+                                                            type="fixedcolumns"/>
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <column
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <value
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Data Value"
+                                                                        name="./imageValue"
+                                                                        required="{Boolean}true"/>
+                                                                <image
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                                        fieldLabel="Image"
+                                                                        name="./imageSrc"
+                                                                        required="{Boolean}true"
+                                                                        rootPath="/content/dam"/>
+                                                                <alt
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Image Alternate text"
+                                                                        name="./altText"/>
+                                                            </items>
+                                                        </column>
+                                                    </items>
+                                                </field>
+                                            </options>
+                                            <type
+                                                    wrapperClass="cmp-adaptiveform-imagechoice__type"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    sling:orderBefore="visible"
+                                                    fieldLabel="Data type of submitted value"
+                                                    name="./type"
+                                                    key="String"
+                                                    value="string[]">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <string jcr:primaryType="nt:unstructured" text="String" value="string[]"/>
+                                                    <boolean jcr:primaryType="nt:unstructured" text="Boolean" value="boolean[]"/>
+                                                    <number jcr:primaryType="nt:unstructured" text="Number" value="number[]"/>
+                                                </items>
+                                            </type>
+                                            <alignment
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="visible"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
+                                                    fieldLabel="Display options"
+                                                    name="./orientation"
+                                                    text="Item Alignment">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <horizontal
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/radio"
+                                                            checked="true"
+                                                            text="Horizontally"
+                                                            value="horizontal"/>
+                                                    <vertical
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/radio"
+                                                            text="Vertically"
+                                                            value="vertical"/>
+                                                </items>
+                                            </alignment>
+                                            <value
+                                                    wrapperClass="cmp-adaptiveform-imagechoice__value"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="visible"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                    fieldDescription="All the specified default options are preselected on form load."
+                                                    fieldLabel="Default options">
+                                                <field
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        name="./default"
+                                                        required="{Boolean}false"/>
+                                            </value>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </basic>
+                    <patterns
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Patterns"
+                            sling:hideResource="{Boolean}true"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"/>
+                    <help
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Help Content"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured"/>
+                    </help>
+                    <accessibility
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Accessibility"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <assistPriority
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <assistPriorityCustom
+                                                    granite:class="cmp-adaptiveform-imagechoice__assistprioritycustom"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="customText"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldLabel="Text for screen readers"
+                                                    name="./assistPriority"
+                                                    value="\0">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <empty
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="\0"
+                                                            value="\0"/>
+                                                    <customText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Custom text"
+                                                            value="custom"/>
+                                                    <caption
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Title"
+                                                            value="caption"/>
+                                                </items>
+                                            </assistPriorityCustom>
+                                            <customText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                    fieldLabel="Custom text"
+                                                    wrapperClass="cmp-adaptiveform-imagechoice__customtext">
+                                                <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        wrapper-class="custom-text-wrapper"/>
+                                                <field
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        name="./custom"/>
+                                            </customText>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </accessibility>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

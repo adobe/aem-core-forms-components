@@ -1,0 +1,37 @@
+{
+  ":type": "forms-components-examples/components/form/imagechoice",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "fieldType": "imagechoice",
+  "id": "imagechoice-3922625f42",
+  "label": {
+    "value": "Image Choice"
+  },
+  "name": "imagechoice1709406386838",
+  "options": {
+    "item0": {
+      "altText": "aem-corecomponents-logo",
+      "imageSrc": "/content/dam/core-components-examples/library/aem-corecomponents-logo.svg",
+      "imageValue": "1"
+    },
+    "item1": {
+      "altText": "adobe-logo",
+      "imageSrc": "/content/dam/core-components-examples/library/adobe-logo.svg",
+      "imageValue": "2"
+    }
+  },
+  "properties": {
+    "afs:layout": {
+      "orientation": "horizontal",
+      "selectionType": "single"
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/forms/af/core-components-it/samples/imagechoice/basic/jcr:content/guideContainer/imagechoice"
+  },
+  "type": "string[]"
+}

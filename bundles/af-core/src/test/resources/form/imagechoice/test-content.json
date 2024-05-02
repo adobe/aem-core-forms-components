@@ -1,0 +1,204 @@
+{
+  "imagechoice": {
+    ":type": "forms-components-examples/components/form/imagechoice",
+    "fieldType": "imagechoice",
+    "id": "imagechoice-3922625f42",
+    "jcr:created": "Sun Mar 03 2024 00:36:26 GMT+0530",
+    "jcr:createdBy": "admin",
+    "jcr:lastModified": "Sun Mar 03 2024 00:55:31 GMT+0530",
+    "jcr:lastModifiedBy": "admin",
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Image Choice",
+    "name": "imagechoice1709406386838",
+    "options": {
+      "item0": {
+        "altText": "aem-corecomponents-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/aem-corecomponents-logo.svg",
+        "imageValue": "1"
+      },
+      "item1": {
+        "altText": "adobe-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/adobe-logo.svg",
+        "imageValue": "2"
+      }
+    },
+    "orientation": "horizontal",
+    "selectionType": "multiple",
+    "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
+    "properties": {
+      "afs:layout": {
+        "orientation": "horizontal",
+        "selectionType": "multiple"
+      },
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/core-components-it/samples/imagechoice/basic/jcr:content/guideContainer/imagechoice"
+    },
+    "type": "string[]"
+  },
+  "imagechoice-customized": {
+    ":type": "forms-components-examples/components/form/imagechoice",
+    "assistPriority": "custom",
+    "custom": "custom text",
+    "dataRef": "a.b",
+    "default": "1",
+    "description": "long description",
+    "dorColspan": "4",
+    "dorExclusion": true,
+    "enabled": true,
+    "fieldType": "imagechoice",
+    "id": "imagechoice-3922625f43",
+    "jcr:created": "Sun Mar 03 2024 00:36:26 GMT+0530",
+    "jcr:createdBy": "admin",
+    "jcr:lastModified": "Sun Mar 03 2024 00:55:31 GMT+0530",
+    "jcr:lastModifiedBy": "admin",
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Image Choice",
+    "mandatoryMessage": "This is a required field",
+    "name": "imagechoice_12345",
+    "options": {
+      "item0": {
+        "altText": "aem-corecomponents-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/aem-corecomponents-logo.svg",
+        "imageValue": "1"
+      },
+      "item1": {
+        "altText": "adobe-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/adobe-logo.svg",
+        "imageValue": "2"
+      }
+    },
+    "orientation": "vertical",
+    "readOnly": true,
+    "required": "true",
+    "selectionType": "single",
+    "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
+    "textIsRich": [
+      "true",
+      "true"
+    ],
+    "properties": {
+      "afs:layout": {
+        "orientation": "vertical",
+        "selectionType": "single",
+        "tooltipVisible": true
+      },
+      "fd:dor": {
+        "dorColspan": "4",
+        "dorExclusion": true
+      },
+      "fd:path": "/content/forms/af/core-components-it/samples/imagechoice/basic/jcr:content/guideContainer/imagechoice"
+    },
+    "tooltip": "<p>short description</p>",
+    "tooltipVisible": "true",
+    "type": "string",
+    "validateExpMessage": "Required Expression",
+    "visible": false
+  },
+  "imagechoice-datalayer": {
+    ":type": "forms-components-examples/components/form/imagechoice",
+    "description": "Input your preferred option",
+    "enabled": true,
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "fieldType": "imagechoice",
+    "id": "imagechoice-337847e8a8",
+    "jcr:title": "Select your preferred option",
+    "label": {
+      "value": "Preferred Option"
+    },
+    "name": "PreferredOption",
+    "options": {
+      "item0": {
+        "altText": "aem-corecomponents-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/aem-corecomponents-logo.svg",
+        "imageValue": "1"
+      },
+      "item1": {
+        "altText": "adobe-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/adobe-logo.svg",
+        "imageValue": "2"
+      }
+    },
+    "properties": {
+      "afs:layout": {
+        "orientation": "horizontal",
+        "selectionType": "single"
+      },
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/core-components-it/samples/imagechoice/basic/jcr:content/guideContainer/imagechoice"
+    },
+    "readOnly": false,
+    "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
+    "type": "string[]",
+    "visible": true
+  },
+  "imagechoice-insertion-order": {
+    ":type": "forms-components-examples/components/form/imagechoice",
+    "enabled": true,
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "fieldType": "imagechoice",
+    "id": "imagechoice-420118894b",
+    "label": {
+      "value": "Image Choice",
+      "visible": true
+    },
+    "name": "imagechoice21333404011709406558711",
+    "options": {
+      "item0": {
+        "altText": "aem-corecomponents-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/aem-corecomponents-logo.svg",
+        "imageValue": "1"
+      },
+      "item1": {
+        "altText": "adobe-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/adobe-logo.svg",
+        "imageValue": "2"
+      },
+      "item2": {
+        "altText": "aem-corecomponents-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/aem-corecomponents-logo.svg",
+        "imageValue": "2"
+      },
+      "item3": {
+        "altText": "adobe-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/adobe-logo.svg",
+        "imageValue": "3"
+      },
+      "item4": {
+        "altText": "aem-corecomponents-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/aem-corecomponents-logo.svg",
+        "imageValue": "4"
+      },
+      "item5": {
+        "altText": "adobe-logo",
+        "imageSrc": "/content/dam/core-components-examples/library/adobe-logo.svg",
+        "imageValue": "5"
+      }
+    },
+    "properties": {
+      "afs:layout": {
+        "orientation": "horizontal",
+        "selectionType": "single",
+        "tooltipVisible": true
+      },
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/core-components-it/samples/imagechoice/basic/jcr:content/guideContainer/imagechoice"
+    },
+    "readOnly": false,
+    "type": "string[]",
+    "visible": true
+  }
+}
