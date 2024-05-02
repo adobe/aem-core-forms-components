@@ -22,10 +22,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import com.adobe.xfa.Obj;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
@@ -39,6 +35,9 @@ import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -94,11 +93,13 @@ public class FormStructureParserImplTest {
     void testFormDefinition() throws JsonProcessingException {
         String path = FORM_CONTAINER_PATH;
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
-        String formDef=formStructureParser.getFormDefinition();
-        HashMap<String, Object> formJson= (HashMap<String, Object>) new ObjectMapper().readValue(formDef, new TypeReference<Map<String, Object>>() {});
+        String formDef = formStructureParser.getFormDefinition();
+        HashMap<String, Object> formJson = (HashMap<String, Object>) new ObjectMapper().readValue(formDef,
+            new TypeReference<Map<String, Object>>() {});
         assertNotNull(formStructureParser.getFormDefinition());
-        assertEquals(formJson.get("fieldType"),"form");
+        assertEquals(formJson.get("fieldType"), "form");
     }
+
     @Test
     void testFormContainerPathEmbedWithoutIframe() {
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(JCR_CONTENT_PATH, FORM_CONTAINER_PATH);

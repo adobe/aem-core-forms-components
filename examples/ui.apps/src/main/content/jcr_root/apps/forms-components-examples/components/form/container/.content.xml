@@ -4,5 +4,4 @@
     jcr:title="Adaptive Form Container"
     jcr:description="Add an Adaptive Form to a page."
     sling:resourceSuperType="core/fd/components/form/container/v2/container"
-    cq:styleElements="[div,section,article,main,aside,header,footer]"
     componentGroup="Core Components Examples - Adaptive Form"/>
