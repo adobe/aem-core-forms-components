@@ -22,12 +22,12 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.cq.forms.core.components.models.form.FormUtil;
+import com.adobe.cq.forms.core.components.models.form.HtlUtil;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = FormUtil.class)
-public class FormUtilImpl implements FormUtil {
+    adapters = HtlUtil.class)
+public class HtlUtilImpl implements HtlUtil {
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private SlingHttpServletRequest request;

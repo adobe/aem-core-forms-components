@@ -45,6 +45,7 @@ public interface FormStructureParser {
     Boolean containsFormContainer();
 
     /**
+     * @since com.adobe.cq.forms.core.components.models.form 5.3.2
      *
      * @return form definition json in Publish view
      */

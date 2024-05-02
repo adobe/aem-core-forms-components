@@ -18,6 +18,6 @@ package com.adobe.cq.forms.core.components.models.form;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
-public interface FormUtil {
+public interface HtlUtil {
     Boolean isEdgeDeliveryRequest();
 }

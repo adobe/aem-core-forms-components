@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.adobe.cq.export.json.SlingModelFilter;
-import com.adobe.cq.forms.core.components.models.form.FormUtil;
+import com.adobe.cq.forms.core.components.models.form.HtlUtil;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
-public class FormUtilTest {
+public class HtlUtilTest {
     private static final String BASE = "/form/formutil";
     private static final String CONTENT_ROOT = "/content";
     private static final String JCR_CONTENT_PATH = CONTENT_ROOT + "/myTestPage/jcr:content";
@@ -79,7 +79,7 @@ public class FormUtilTest {
         context.currentResource(FORM_CONTAINER_PATH);
         MockSlingHttpServletRequest request = context.request();
         request.setAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet", false);
-        FormUtil formUtil = request.adaptTo(FormUtil.class);
+        HtlUtil formUtil = request.adaptTo(HtlUtil.class);
         assertFalse(formUtil.isEdgeDeliveryRequest());
     }
 
@@ -88,7 +88,7 @@ public class FormUtilTest {
         context.currentResource(FORM_CONTAINER_PATH);
         MockSlingHttpServletRequest request = context.request();
         request.setAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet", true);
-        FormUtil formUtil = request.adaptTo(FormUtil.class);
+        HtlUtil formUtil = request.adaptTo(HtlUtil.class);
         assertTrue(formUtil.isEdgeDeliveryRequest());
     }
 }
