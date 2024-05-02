@@ -459,7 +459,6 @@
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
-            <version>2024.04.18.00-240300</version>
         </dependency>
 
 

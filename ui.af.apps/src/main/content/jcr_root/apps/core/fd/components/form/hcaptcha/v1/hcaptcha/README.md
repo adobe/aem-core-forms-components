@@ -22,14 +22,17 @@ Adaptive Form hCaptcha field component written in HTL.
 * Provides the following type of input:
   * hCaptcha
 * Allows various flavours of hCaptcha
+  * Always Challenge
+  * 99.9% Passive
+* Only visible mode is supported as of now
 * Styles
 * Custom constraint messages for the above types
 
 ### Use Object
-The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.HCaptcha` Sling Model for its Use-object.
+The hCaptcha component uses the `com.adobe.cq.forms.core.components.models.form.HCaptcha` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Recaptcha component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Form hCaptcha component and are expected to be available as `Resource` properties:
 
 1. `./jcr:title` - defines the label to use for this field
 2. `./hideTitle` - if set to `true`, the label of this field will be hidden
@@ -39,8 +42,8 @@ The following properties are written to JCR for this Form Recaptcha component an
 6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
 8. `./readOnly` - if set to `true`, the filed will be read only
-9. `./cloudServicePath` - defines the path of cloud configuration resource for reCAPTCHA
-10. `./size` - defines the size attribute of Google reCAPTCHA
+9. `./cloudServicePath` - defines the path of cloud configuration resource for hCaptcha
+10. `./size` - defines the size attribute of hCaptcha
 
 ## Client Libraries
 The component provides a `core.forms.components.hcaptcha.v1.runtime` client library category that contains the Javascript runtime for the component.

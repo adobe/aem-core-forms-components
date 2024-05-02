@@ -24,6 +24,7 @@ if (typeof window.HCaptchaWidget === 'undefined') {
         #model = null // passed by reference
         #options = null
         #lang = 'en'
+        static FD_CAPTCHA = "fd:captcha";
 
         constructor(view, model, widget) {
             // initialize the widget and model
@@ -42,23 +43,23 @@ if (typeof window.HCaptchaWidget === 'undefined') {
 
         #renderHCaptcha(element) {
 
-            var self = this;
-            var hCaptchaConfigData = this.#options;
+            const self = this;
+            const hCaptchaConfigData = this.#options;
             element.innerHTML = '<div class="h-captcha"></div>';
-            var hcontainer = document.getElementsByClassName("h-captcha")[0];
-            var widgetId;
-            var url = hCaptchaConfigData.properties["fd:captcha"].config.uri;
+            const hcontainer = document.getElementsByClassName("h-captcha")[0];
+            let widgetId;
+            const url = hCaptchaConfigData.properties[HCaptchaWidget.FD_CAPTCHA].config.uri;
 
-            var successCallback = function(response) {
+            const successCallback = function(response) {
                 self.setCaptchaModel(response);
             };
 
-            var expiredCallback = function() {
+            const expiredCallback = function() {
                 hcaptcha.reset(widgetId);
                 self.setCaptchaModel("");
             };
 
-            var onloadCallbackInternal = function() {
+            const onloadCallbackInternal = function() {
                 widgetId = hcaptcha.render(
                     hcontainer,
                     hparameters
@@ -66,19 +67,19 @@ if (typeof window.HCaptchaWidget === 'undefined') {
                 return widgetId;
             };
 
-            var hparameters = {
-                'sitekey': hCaptchaConfigData.properties["fd:captcha"].config.siteKey,
-                'size': hCaptchaConfigData.properties["fd:captcha"].config.size,
-                'theme': hCaptchaConfigData.properties["fd:captcha"].config.theme || 'light',
+            const hparameters = {
+                'sitekey': hCaptchaConfigData.properties[HCaptchaWidget.FD_CAPTCHA].config.siteKey,
+                'size': hCaptchaConfigData.properties[HCaptchaWidget.FD_CAPTCHA].config.size,
+                'theme': hCaptchaConfigData.properties[HCaptchaWidget.FD_CAPTCHA].config.theme || 'light',
                 'callback': successCallback,
                 'expired-callback': expiredCallback
             };
 
             window.onloadHCaptchaCallback = onloadCallbackInternal;
 
-            var runtimeLocale = this.#lang;
+            const runtimeLocale = this.#lang;
 
-            var scr = document.createElement('script');
+            const scr = document.createElement('script');
             scr.src = url + "?onload=onloadHCaptchaCallback&render=explicit&hl=" + runtimeLocale;
             scr.async = true;
             element.appendChild(scr);
