@@ -7,7 +7,7 @@
     "hideTitle" : false,
     "visible" : false,
     "altText": "abc",
-    "filereference": "/content/dam/formsanddocuments/abc.jpeg",
+    "fileReference": "/content/dam/formsanddocuments/abc.jpeg",
     "excludeFromDor": false,
     "fieldType": "image"
   },

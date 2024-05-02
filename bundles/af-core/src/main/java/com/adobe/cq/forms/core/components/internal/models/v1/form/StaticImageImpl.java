@@ -16,7 +16,9 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.io.IOException;
+import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.jcr.RepositoryException;
 
@@ -44,6 +46,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class StaticImageImpl extends AbstractFormComponentImpl implements StaticImage {
+
+    public final String DAM_REPO_PATH = "fd:repoPath";
 
     private Image image;
 
@@ -126,7 +130,9 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     }
 
     @Override
-    public String getSource() {
-        return fileReference;
+    public @Nonnull Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        properties.put(DAM_REPO_PATH, fileReference);
+        return properties;
     }
 }

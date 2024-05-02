@@ -50,16 +50,6 @@ public interface StaticImage extends FormComponent {
     }
 
     /**
-     * Retrieves the parsed img value to be displayed.
-     *
-     * @return the parsed img value to be displayed, or {@code null} if no value can be returned
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1;
-     */
-    default String getSource() {
-        return null;
-    }
-
-    /**
      * Returns the alternate text in place of image.
      *
      * @return the alternate text in place of image

@@ -73,9 +73,8 @@ public class StaticImageImplTest {
     void testExportedTypeForParsedImage() {
         StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE_PARSED, StaticImage.class, context);
         assertEquals(FormConstants.RT_FD_FORM_IMAGE_V1, staticImage.getExportedType());
-        StaticImage staticImageMock = Mockito.mock(StaticImage.class);
-        Mockito.when(staticImageMock.getExportedType()).thenCallRealMethod();
-        assertEquals("", staticImageMock.getExportedType());
+
+        assertEquals("/content/dam/formsanddocuments/abc.jpeg", staticImage.getProperties().get("fd:repoPath"));
     }
 
     @Test
