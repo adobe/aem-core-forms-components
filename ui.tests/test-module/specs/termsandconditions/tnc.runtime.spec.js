@@ -34,6 +34,7 @@ describe("Form Runtime with Terms and Conditions", () => {
     const checkHTML = (id, state, view, count) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
+        const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
         cy.get(`#${id}`)
         .should(passVisibleCheck)
         .invoke('attr', 'data-cmp-visible')
@@ -43,7 +44,13 @@ describe("Form Runtime with Terms and Conditions", () => {
         .should('eq', state.enabled.toString());
         expect(state.items.length, "model has children equal to count").to.equal(2);
         expect(view.children.length, "tab has children equal to count").to.equal(2); // this is because at any given point, either links are shown or text content is shown
-        return cy.get(`#${id}`);
+        return cy.get(`#${id}`).within((root) => {
+            cy.get('*').should(passVisibleCheck)
+            cy.get('input')
+                .should('have.length', 1)
+            cy.get('input')
+                .should(passDisabledAttributeCheck, 'disabled');
+        })
     };
 
     it(" should get model and view initialized properly and parent child relationship is set ", () => {
