@@ -35,6 +35,7 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @ExtendWith(AemContextExtension.class)
 public class HCaptchaImplTest {
@@ -130,4 +131,10 @@ public class HCaptchaImplTest {
         Utils.testJSONExport(hCaptcha, Utils.getTestExporterJSONPath(BASE, PATH_HCAPTCHA));
     }
 
+    @Test
+    void hCaptchaConfigExceptionTest() throws GuideException {
+        Mockito.when(hCaptchaConfiguration.getSiteKey()).thenThrow(new GuideException("Error while fetching site key"));
+        HCaptcha hcaptcha = Utils.getComponentUnderTest(PATH_HCAPTCHA, HCaptcha.class, context);
+        assertNotNull(hcaptcha.getCaptchaProperties());
+    }
 }
