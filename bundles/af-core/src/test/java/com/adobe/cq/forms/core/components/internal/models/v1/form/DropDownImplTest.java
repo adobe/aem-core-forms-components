@@ -444,6 +444,15 @@ public class DropDownImplTest {
     }
 
     @Test
+    void testEnumsWithoutEnumNames() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_NO_ENUM_NAMES, DropDown.class, context);
+        Set<String> set = new LinkedHashSet<>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
+            "15", "16", "17", "18", "19", "20"));
+        assertArrayEquals(set.toArray(new String[0]), dropdown.getEnums());
+        assertNull(dropdown.getEnumNames());
+    }
+
+    @Test
     void testEnumsWithLesserEnumNames() {
         DropDown dropdown1 = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_LESSER_ENUM_NAMES, DropDown.class, context);
         Set<String> set1 = new LinkedHashSet<>(Arrays.asList("zero", "one", "two", "three", "4", "5", "6", "7", "8", "9"));
