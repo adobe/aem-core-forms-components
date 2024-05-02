@@ -33,6 +33,7 @@
     "jcr:createdBy": "admin",
     "jcr:title": "Image",
     "name": "emptyImage",
+    "fileReference": "/content/dam/formsanddocuments/abc.jpeg",
     "sling:resourceType": "core/fd/components/form/image/v1/image",
     "fieldType": "image"
   },

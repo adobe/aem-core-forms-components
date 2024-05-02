@@ -132,7 +132,9 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @Override
     public @Nonnull Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
-        properties.put(DAM_REPO_PATH, fileReference);
+        if (fileReference != null && fileReference.length() > 0) {
+            properties.put(DAM_REPO_PATH, fileReference);
+        }
         return properties;
     }
 }
