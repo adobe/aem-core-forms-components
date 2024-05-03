@@ -59,7 +59,7 @@
             }, "submitError");
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                // execute the handler only if there are no rules configured on submitSuccess event.
+                // execute the handler only if there are no rules configured on custom:saveSuccess event.
                 if (!state.events['custom:saveSuccess'] || state.events['custom:saveSuccess'].length === 0) {
                     console.log("Draft id = " + action?.payload?.body?.draftId);
                     window.alert("Draft has been saved successfully");
@@ -67,7 +67,7 @@
             }, "saveSuccess");
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                // execute the handler only if there are no rules configured on submitSuccess event.
+                // execute the handler only if there are no rules configured on custom:saveError event.
                 if (!state.events['custom:saveError'] || state.events['custom:saveError'].length === 0) {
                     window.alert("Issue while saving draft");
                 }
