@@ -158,7 +158,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
             cy.get(`#${checkBox5}`).find("input").uncheck().check(["1"])
             cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__errormessage").should('have.text',"Please enter a valid value.")
             cy.get(`#${checkBox5}`).should('have.attr', 'data-cmp-valid', 'false')
-            cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.attr', 'aria-describedby', ` ${checkBox5}__errormessage`)
+            cy.get(`#${checkBox5}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('have.attr', 'aria-describedby', `${checkBox5}__errormessage`)
         })
 
         cy.get(`#${checkBox3}`).find("input").uncheck().check(["0"]).blur().then(x => {

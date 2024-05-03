@@ -117,7 +117,7 @@ describe("Form Runtime with Telephone Input", () => {
         cy.get(`#${telephoneInput6}`).find("input").clear().type(internationalInvalid).blur().then(() => {
             cy.get(`#${telephoneInput6} > div.${bemBlock}__errormessage`).should('have.text', 'Please match the format requested.');
             cy.get(`#${telephoneInput6} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${telephoneInput6}__errormessage`);
-            cy.get(`#${telephoneInput6} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', ` ${telephoneInput6}__errormessage`);
+            cy.get(`#${telephoneInput6} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${telephoneInput6}__errormessage`);
             cy.get(`#${telephoneInput6} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true');
         })
         // Validating UK pattern
