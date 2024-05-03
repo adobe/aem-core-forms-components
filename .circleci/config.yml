@@ -175,21 +175,6 @@ jobs:
           conf: .circleci/codecov.yml
           flags: unittests
 
-  build-java-8:
-    executor: forms_executor_java8
-    working_directory: /home/circleci/build
-    steps:
-      - checkout
-      - *restore_cache
-      - run:
-          name: Update permissions
-          command: sudo chown -R circleci /usr/local/lib/node_modules
-      - run:
-          name: Build
-          command: node .circleci/ci/build.js
-      - store_artifacts:
-          path: test-results/junit
-
   cypress-chrome-cloudready-with-addon:
     executor: test_executor_cloudready
     environment:
@@ -387,31 +372,24 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - build-java-8:
-          filters:
-            tags:
-              only: /.*/
       - cypress-chrome-cloudready-with-addon:
           filters:
             tags:
               only: /.*/
           requires:
             - build-java-11
-            - build-java-8
       - cypress-chrome-cloudready-with-latest-addon:
           filters:
             tags:
               only: /.*/
           requires:
             - build-java-11
-            - build-java-8
       - cypress-chrome-cloudready-with-latest-addon-without-ft:
           filters:
             tags:
               only: /.*/
           requires:
             - build-java-11
-            - build-java-8
       - jsdocs-deploy:
           requires:
             - build-java-11
