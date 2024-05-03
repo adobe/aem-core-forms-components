@@ -40,6 +40,9 @@ describe('Locale - Authoring Test', function () {
                     cy.wait("@createFormRequest").then((interception) => {
                         assert.equal(interception.response?.statusCode, 200);
                     });
+                    cy.wait("@createFormRequest").then((interception) => {
+                        assert.equal(interception.response?.statusCode, 200);
+                    });
                 });
                 cy.openPage('/editor.html/content/forms/af/language-test.html');
                 const dataPath = "/content/forms/af/language-test/jcr:content/guideContainer/*",
