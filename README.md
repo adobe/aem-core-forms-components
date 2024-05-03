@@ -4,7 +4,7 @@
 ![GitHub](https://img.shields.io/github/license/adobe/aem-core-forms-components.svg)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=dev&repo=285932577&machine=standardLinux32gb&location=WestEurope&devcontainer_path=.devcontainer%2Fdevcontainer.json)
 
-# AEM Forms Core Components
+# AEM Forms Core Component
 
 The AEM Forms Core Components project serves as accelerator to get started with projects using AEM Forms. The project contains re-useable Forms core components which are server-side rendered AEM components for dynamic experiences / data. 
 
