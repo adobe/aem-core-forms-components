@@ -72,6 +72,21 @@
                     tooltip="This is short description"
                     multiSelection="true"
                     type="file"/>
+             <fileinput5
+                    jcr:lastModified="{Date}2023-01-24T16:47:36.882+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="File Input - 5"
+                    sling:resourceType="forms-components-examples/components/form/fileinput"
+                    accept="[audio/*, video/*, image/*, text/*, application/pdf]"
+                    buttonText="Attach Files"
+                    enabled="{Boolean}true"
+                    fieldType="file-input"
+                    name="fileinput5"
+                    readOnly="{Boolean}true"
+                    textIsRich="[true,true]"
+                    type="file[]"
+                    visible="{Boolean}true"/>
             <submit
                     jcr:lastModified="{Date}2023-01-17T16:28:58.844+05:30"
                     jcr:lastModifiedBy="admin"
