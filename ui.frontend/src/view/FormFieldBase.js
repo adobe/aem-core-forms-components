@@ -202,13 +202,15 @@ class FormFieldBase extends FormField {
            if (this.getDescription()) {
             ariaDescribedby += `${this.getId()}__longdescription`
           }
+          
            if (this.getTooltipDiv()) {
-            ariaDescribedby += ` ${this.getId()}__shortdescription`;
+            ariaDescribedby += ariaDescribedby ? ` ${this.getId()}__shortdescription` : `${this.getId()}__shortdescription`;
           }
+
            if (this.getErrorDiv() && this.getErrorDiv().innerHTML) {
-            ariaDescribedby += ` ${this.getId()}__errormessage`;
+            ariaDescribedby += ariaDescribedby ? ` ${this.getId()}__errormessage` : `${this.getId()}__errormessage`;
           }
-          widgetElement.setAttribute('aria-describedby', ariaDescribedby);
+            widgetElement.setAttribute('aria-describedby', ariaDescribedby);
         }
     }
 
