@@ -21,6 +21,9 @@ describe('Locale - Authoring Test', function () {
             beforeEach(() => {
                 cy.intercept("**/themes*").as("getThemesRequest");
                 cy.intercept("**/templates*").as("templates");
+                cy.intercept({ method: "POST", url: "**/forms*" }).as(
+                    "createFormRequest"
+                );
             });
 
             it('Create Form in German language', function (){
@@ -33,6 +36,9 @@ describe('Locale - Authoring Test', function () {
                         cy.get('[type="button"]').contains( 'Erstellen').click({force: true});
                         cy.get('input[name="submitDialogTitle"]').type('language-test');
                         cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().click();
+                    });
+                    cy.wait("@createFormRequest").then((interception) => {
+                        assert.equal(interception.response?.statusCode, 200);
                     });
                 });
                 cy.openPage('/editor.html/content/forms/af/language-test.html');
