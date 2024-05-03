@@ -10,7 +10,7 @@
             jcr:primaryType="cq:PageContent"
             jcr:title="Page Edge Delivery"
             sling:configRef="/conf/forms/afv2/"
-            sling:resourceType="/libs/core/fd/components/page/v2/page">
+            sling:resourceType="core/fd/components/page/v2/page">
         <guideContainer
                 fd:version="2.1"
                 jcr:primaryType="nt:unstructured"
