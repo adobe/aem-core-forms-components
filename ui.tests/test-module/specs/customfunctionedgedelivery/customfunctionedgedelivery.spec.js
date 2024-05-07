@@ -16,7 +16,7 @@
  * from Adobe Systems Incorporated.
  */
 
-describe("Form with Number Input", () => {
+describe("Form to check custom function defined in edge delivery", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/customfunctionedgedelivery/customfunctionedgedelivery.html"
     let toggle_array = [];
