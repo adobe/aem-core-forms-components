@@ -16,7 +16,9 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.io.IOException;
+import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.jcr.RepositoryException;
 
@@ -45,6 +47,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class StaticImageImpl extends AbstractFormComponentImpl implements StaticImage {
 
+    public static final String DAM_REPO_PATH = "fd:repoPath";
+
     private Image image;
 
     @SlingObject
@@ -61,6 +65,10 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "description")
     @org.jetbrains.annotations.Nullable
     protected String description; // long description as per current spec
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fileReference")
+    @Nullable
+    protected String fileReference;
 
     /**
      * Returns the source where the image is present.
@@ -119,5 +127,14 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
         } catch (RepositoryException | IOException e) {
             return null;
         }
+    }
+
+    @Override
+    public @Nonnull Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        if (fileReference != null && fileReference.length() > 0) {
+            properties.put(DAM_REPO_PATH, fileReference);
+        }
+        return properties;
     }
 }
