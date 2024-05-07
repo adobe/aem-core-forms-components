@@ -49,7 +49,6 @@ public interface StaticImage extends FormComponent {
         return null;
     }
 
-
     /**
      * Returns the alternate text in place of image.
      *
