@@ -23,8 +23,7 @@ import com.adobe.aemds.guide.service.GuideException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Defines the form {@code Captcha} Sling Model used for the {@code /apps/core/fd/components/form/recaptcha/v1/recaptcha}
- * component.
+ * Defines a base interface to be extended by all the different types of captcha.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
