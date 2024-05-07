@@ -16,7 +16,7 @@ limitations under the License.
 -->
 Adaptive Form Core Page (v1)
 ====
-Adaptive Form Core Page component v1 which extends the wcm v3 [Page](https://github.com/adobe/aem-core-wcm-components/tree/d50ba1cb0d6544870daff71281bf9dfd3f6fbeb0/content/src/content/jcr_root/apps/core/wcm/components/page/v3/page) Component.
+Adaptive Form Core Page component v1 which extends the wcm  [Page](https://github.com/adobe/aem-core-wcm-components/tree/main/content/src/content/jcr_root/apps/core/wcm/components/page/v3/page) Component.
 
 ## Features
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-describe("Form with Number Input", () => {
+describe("Form with Page component version 2", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/page/afv2.html"
     let formContainer = null
