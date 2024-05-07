@@ -118,6 +118,10 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     @Default(values = "false")
     private String usePageLocale;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String roleAttribute;
+
     protected String getClientLibCategory(String themePath) {
         String clientLibCategory = "";
         if (StringUtils.isNotBlank(themePath)) {
@@ -151,6 +155,12 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
         } else {
             return formRef;
         }
+    }
+
+    @Nullable
+    @Override
+    public String getRoleAttribute() {
+        return roleAttribute;
     }
 
     @Override

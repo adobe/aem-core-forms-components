@@ -52,7 +52,7 @@ describe('Page/Form Authoring', function () {
             cy.get("[name='./redirect'").should("exist"); // should exist
             cy.get("[name='./actionType'").should("exist"); // should exist
             cy.get("[name='./prefillService'").should("exist"); // prefillService option exist in v2
-
+            cy.get("[name='./roleAttribute'").should("exist");
             //open submission tab
             cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
             cy.get("[name='./actionType']").should("exist");

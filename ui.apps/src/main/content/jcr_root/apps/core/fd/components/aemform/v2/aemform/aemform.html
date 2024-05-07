@@ -19,6 +19,26 @@
     // Editor evaluates this script and if the clientlib is not loaded by then, it will fail. Hence triggering an
     // event after clientlib load and initializing on that event.
     (function () {
+
+        const registerGuideBridgeEvents = (e) => {
+            const formContainerPath = e.detail.getPath();
+            bridge.connect(()=>{
+                if(window.guideBridge) {
+                    window.guideBridge.getFormModel()?.setAdditionalMetadata({paths: {...window.guideBridge?.getFormModel()?.additionalMetadata?.paths, "${form.formPagePath @ context='scriptString'}": "${resource.path @ context='scriptString'}"}});
+                }
+            }, null, formContainerPath);
+        }
+
+        const onDocumentReady = () => {
+            if(window.guideBridge !== undefined){
+                bridge = window.guideBridge;
+            } else {
+                window.addEventListener("bridgeInitializeStart", (event)=>{
+                    bridge = event.detail.guideBridge;
+                });
+            }
+            document.addEventListener("AF_FormContainerInitialised", registerGuideBridgeEvents);
+        }
         var onScriptLoad = function (evnt) {
             var formApp = evnt.detail.formApp;
             formApp.initializeAEMForm({
@@ -37,6 +57,7 @@
             window.removeEventListener("aemform-onscript-load", onScriptLoad);
         };
         window.addEventListener("aemform-onscript-load", onScriptLoad);
+        window.addEventListener("DOMContentLoaded", onDocumentReady);
     }());
 </script>
 <sly data-sly-list="${form.htmlPageItems}"><script data-sly-test="${item.location.name == 'header'}"
@@ -49,6 +70,7 @@
     <sly data-sly-set.wcmmode="${!wcmmode.edit?'wcmmode=DISABLED':''}"/>
     <sly data-sly-set.formUrlParams="${wcmmode ? '?':''}${wcmmode}${dataRef ? '&dataRef=' :''}${dataRef}"/>
      <iframe title="${form.title}"
+             role="${form.roleAttribute || ''}"
              class="cmp-aemform__iframecontent"
                 src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html${formUrlParams}"
                 width="100%;"

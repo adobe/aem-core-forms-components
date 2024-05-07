@@ -106,6 +106,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    private String roleAttribute;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     private String data;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -235,6 +239,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     public String getPrefillService() {
         return prefillService;
+    }
+
+    @JsonIgnore
+    @Nullable
+    public String getRoleAttribute() {
+        return roleAttribute;
     }
 
     @Override
