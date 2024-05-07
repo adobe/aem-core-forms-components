@@ -56,6 +56,8 @@ https://opensource.adobe.com/aem-core-forms-components/
 -   [Header](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
 -   [Footer](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
 -   [Switch](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/switch/v1/switch)
+-   [ReCaptcha](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/recaptcha/v1/recaptcha)
+-   [HCaptcha](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/hcaptcha/v1/hcaptcha)
 
 ## System Requirements
 
