@@ -37,22 +37,6 @@ describe("Form with Number Input", () => {
 
     it(" fullName field should update on change in first name and last name ", () => {
         if(toggle_array.includes("FT_FORMS-11269") && toggle_array.includes("FT_FORMS-12423")) {
-            Cypress.config('chromeWebSecurity',false);
-            console.log("cypress security is "+Cypress.config('chromeWebSecurity'));
-            const firstName = Object.entries(formContainer._fields)[0];
-            const lastName = Object.entries(formContainer._fields)[1];
-            const fullName = Object.entries(formContainer._fields)[2];
-            cy.get(`#${firstName[0]}`).find("input").clear().type("fname").blur().then(x => {
-                cy.get(`#${lastName[0]}`).find("input").clear().type("lname").blur().then(x => {
-                    cy.get(`#${fullName[0]}`).find("input").should('have.value', 'fname lname')
-                })
-            })
-        }
-    })
-
-    it(" fullNames field should update on change in first name and last name ", () => {
-        if(toggle_array.includes("FT_FORMS-11269") && toggle_array.includes("FT_FORMS-12423")) {
-            console.log("cypress security is "+Cypress.config('chromeWebSecurity'));
             const firstName = Object.entries(formContainer._fields)[0];
             const lastName = Object.entries(formContainer._fields)[1];
             const fullName = Object.entries(formContainer._fields)[2];
