@@ -52,14 +52,14 @@ describe('Locale - Authoring Test', function () {
             it('Wizard String language test for English', function () {
                 cy.changeLanguage("en");
                 cy.openPage("/editor.html/content/forms/af/language-test.html").then(() => {
-                    cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('not.be.visible').should('equal', 'Please drag Wizard components here');
+                    cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Please drag Wizard components here');
                 });
             });
 
             it('Wizard String language test for Italiano', function () {
                 cy.changeLanguage("it");
                 cy.openPage("/editor.html/content/forms/af/language-test.html").then(() => {
-                    cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('not.be.visible').should('equal', "Trascina qui i componenti della procedura guidata");
+                    cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', "Trascina qui i componenti della procedura guidata");
                 });
             });
 
