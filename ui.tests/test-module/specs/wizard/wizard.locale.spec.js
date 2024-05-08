@@ -27,7 +27,7 @@ describe('Locale - Authoring Test', function () {
             });
 
             it('Create Form in German language', function (){
-                // cy.changeLanguage("de");
+                cy.changeLanguage("de");
                 cy.openPage('/aem/forms.html/content/dam/formsanddocuments');
                 cy.openPage('/libs/fd/fm/gui/content/forms/af/create.html').then(() => {
                     cy.wait('@templates', {requestTimeout: 30000});
@@ -36,9 +36,6 @@ describe('Locale - Authoring Test', function () {
                         cy.get('[type="button"]').contains('Erstellen').should("be.visible").and("not.be.disabled").click();
                         cy.get('input[name="submitDialogTitle"]').type('language-test');
                         cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().should("be.visible").and("not.be.disabled").click();
-                    });
-                    cy.wait("@createFormRequest").then((interception) => {
-                        assert.equal(interception.response?.statusCode, 200);
                     });
                     cy.wait("@createFormRequest").then((interception) => {
                         assert.equal(interception.response?.statusCode, 200);
