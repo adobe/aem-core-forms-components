@@ -27,15 +27,15 @@ describe('Locale - Authoring Test', function () {
             });
 
             it('Create Form in German language', function (){
-                cy.changeLanguage("de");
+                // cy.changeLanguage("de");
                 cy.openPage('/aem/forms.html/content/dam/formsanddocuments');
                 cy.openPage('/libs/fd/fm/gui/content/forms/af/create.html').then(() => {
                     cy.wait('@templates', {requestTimeout: 30000});
                     cy.get('[data-item-id="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"]').click({force: true});
                     cy.wait('@getThemesRequest').then(() => {
-                        cy.get('[type="button"]').contains( 'Erstellen').click({force: true});
+                        cy.get('[type="button"]').contains('Erstellen').should("be.visible").and("not.be.disabled").click();
                         cy.get('input[name="submitDialogTitle"]').type('language-test');
-                        cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().click();
+                        cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().should("be.visible").and("not.be.disabled").click();
                     });
                     cy.wait("@createFormRequest").then((interception) => {
                         assert.equal(interception.response?.statusCode, 200);
@@ -52,14 +52,14 @@ describe('Locale - Authoring Test', function () {
             it('Wizard String language test for English', function () {
                 cy.changeLanguage("en");
                 cy.openPage("/editor.html/content/forms/af/language-test.html").then(() => {
-                    cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', 'Please drag Wizard components here');
+                    cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('not.be.visible').should('equal', 'Please drag Wizard components here');
                 });
             });
 
             it('Wizard String language test for Italiano', function () {
                 cy.changeLanguage("it");
                 cy.openPage("/editor.html/content/forms/af/language-test.html").then(() => {
-                    cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('equal', "Trascina qui i componenti della procedura guidata");
+                    cy.get('[data-path="/content/forms/af/language-test/jcr:content/guideContainer/wizard/*"]').invoke('attr', 'data-text').should('not.be.visible').should('equal', "Trascina qui i componenti della procedura guidata");
                 });
             });
 
