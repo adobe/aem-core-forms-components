@@ -33,9 +33,9 @@ describe('Locale - Authoring Test', function () {
                     cy.wait('@templates', {requestTimeout: 30000});
                     cy.get('[data-item-id="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"]').click({force: true});
                     cy.wait('@getThemesRequest').then(() => {
-                        cy.get('[type="button"]').contains('Erstellen').should("be.visible").and("not.be.disabled").click();
+                        cy.get('[type="button"]').contains('Erstellen').should("be.visible").and("not.be.disabled").click({force: true});
                         cy.get('input[name="submitDialogTitle"]').type('language-test');
-                        cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().should("be.visible").and("not.be.disabled").click();
+                        cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().should("be.visible").and("not.be.disabled").click({force: true});
                     });
                     cy.wait("@createFormRequest").then((interception) => {
                         assert.equal(interception.response?.statusCode, 200);
