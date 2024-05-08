@@ -457,8 +457,11 @@
         <!-- AEM and forms sdk versions -->
         <!-- the below order of dependencies is very critical -->
         <dependency>
-            <groupId>com.adobe.aem</groupId>
+            <groupId>com.adobe.aemfd</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
+            <version>2024.04.22.01-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/aem-forms-sdk-api-2024.04.22.01-SNAPSHOT.jar</systemPath>
         </dependency>
 
 

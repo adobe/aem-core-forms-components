@@ -71,7 +71,10 @@ public final class FormConstants {
     /** The resource type for check box group v1 */
     public static final String RT_FD_FORM_CHECKBOX_GROUP_V1 = RT_FD_FORM_PREFIX + "checkboxgroup/v1/checkboxgroup";
 
-    /** The resource type for reCaptcha v1 */
+    /** The resource type for turnstile v1 */
+    public static final String RT_FD_FORM_TURNSTILE_V1 = RT_FD_FORM_PREFIX + "turnstile/v1/turnstile";
+
+    /** The resource type for hCaptcha v1 */
     public static final String RT_FD_FORM_HCAPTCHA_V1 = RT_FD_FORM_PREFIX + "hcaptcha/v1/hcaptcha";
 
     /** The resource type for reCaptcha v1 */

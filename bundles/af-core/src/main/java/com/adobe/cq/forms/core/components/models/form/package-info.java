@@ -35,7 +35,7 @@
  * </p>
  */
 
-@Version("5.4.1") // aligning this with release/650 since af2-rest-api is compiled with 5.2.0 in release/650
+@Version("5.5.0") // aligning this with release/650 since af2-rest-api is compiled with 5.2.0 in release/650
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.Version;
