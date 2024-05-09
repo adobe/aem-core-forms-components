@@ -141,7 +141,6 @@ describe("Rule editor submission handler runtime", () => {
             });
         }
     });
-<<<<<<< HEAD
 })
 
 describe("Rule editor save handler runtime", () => {
@@ -181,6 +180,4 @@ describe("Rule editor save handler runtime", () => {
             });
         }
     })
-=======
->>>>>>> master
 })
