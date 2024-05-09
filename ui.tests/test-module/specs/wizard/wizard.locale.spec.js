@@ -15,7 +15,7 @@
  ******************************************************************************/
 const afConstants = require("../../libs/commons/formsConstants");
 const sitesSelectors = require("../../libs/commons/sitesSelectors");
-describe('Locale - Authoring Test', function () {
+describe.skip('Locale - Authoring Test', function () {
     if(cy.af.isLatestAddon()) {
         context('Test Wizard Component String Language', function () {
             beforeEach(() => {

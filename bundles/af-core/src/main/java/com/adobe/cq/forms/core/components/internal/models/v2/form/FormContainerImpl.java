@@ -32,6 +32,8 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
@@ -63,6 +65,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class FormContainerImpl extends AbstractContainerImpl implements FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
 
+    private static final Logger logger = LoggerFactory.getLogger(FormContainerImpl.class);
     private static final String DOR_TYPE = "dorType";
     private static final String DOR_TEMPLATE_REF = "dorTemplateRef";
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";

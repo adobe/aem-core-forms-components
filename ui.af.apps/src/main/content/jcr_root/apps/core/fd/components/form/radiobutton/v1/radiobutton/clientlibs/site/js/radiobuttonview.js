@@ -94,7 +94,6 @@
         }
 
         updateEnabled(enabled, state) {
-            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widgets = this.widget;
             widgets.forEach(widget => {
@@ -110,7 +109,7 @@
             });
         }
 
-        updateReadOnly(readonly, state) {
+        updateReadOnly(readonly) {
             let widgets = this.widget;
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_READONLY, readonly);
             widgets.forEach(widget => {
@@ -125,6 +124,7 @@
         updateValidity(validity) {
             const valid = validity.valid ? validity.valid : false;
             let widgets = this.widget;
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
             widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
         } 
 

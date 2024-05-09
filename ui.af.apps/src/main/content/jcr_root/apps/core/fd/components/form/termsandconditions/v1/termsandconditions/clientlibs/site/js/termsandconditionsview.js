@@ -62,10 +62,12 @@
                     threshold: [1],
                 })
                 function onIntersection ([{isIntersecting}]) {
+                    const isEnabled = self.getModel()?.enabled && !self.getModel()?.readOnly;
                     if (isIntersecting) {
-                        self.children.filter(c => c.getModel()._jsonModel.fieldType === 'checkbox').forEach(cb => {
-                            cb.getModel().enabled = true;
-                        })
+                        if (isEnabled) {
+                              self.children.filter(c => c.getModel()._jsonModel.fieldType === 'checkbox').forEach(cb => {
+                                cb.getModel().enabled = true;
+                        })}
                         io.unobserve(intersection);
                     }
                 }
