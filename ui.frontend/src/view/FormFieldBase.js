@@ -198,17 +198,28 @@ class FormFieldBase extends FormField {
         let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
         let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
         widgetElement = widgetElements || widgetElement;
+        
+        function appendDescription(descriptionType, id) {
+            if (ariaDescribedby) {
+               ariaDescribedby += ` ${id}__${descriptionType}`;
+             } else {
+                 ariaDescribedby = `${id}__${descriptionType}`;
+             }
+         }
+            
         if (widgetElement) {
            if (this.getDescription()) {
-            ariaDescribedby += `${this.getId()}__longdescription`
+            appendDescription('longdescription', this.getId());
           }
+          
            if (this.getTooltipDiv()) {
-            ariaDescribedby += ` ${this.getId()}__shortdescription`;
+            appendDescription('shortdescription', this.getId());
           }
+
            if (this.getErrorDiv() && this.getErrorDiv().innerHTML) {
-            ariaDescribedby += ` ${this.getId()}__errormessage`;
+            appendDescription('errormessage', this.getId());
           }
-          widgetElement.setAttribute('aria-describedby', ariaDescribedby);
+            widgetElement.setAttribute('aria-describedby', ariaDescribedby);
         }
     }
 

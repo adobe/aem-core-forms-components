@@ -180,7 +180,7 @@ describe("Form Runtime with Text Input", () => {
         cy.get(`#${textbox6}`).find("input").clear().type("'").blur().then(x => {
             cy.get(`#${textbox6}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please match the format requested.")
             cy.get(`#${textbox6} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${textbox6}__errormessage`);
-            cy.get(`#${textbox6} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', ` ${textbox6}__errormessage`);
+            cy.get(`#${textbox6} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${textbox6}__errormessage`);
             cy.get(`#${textbox6} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true');
         })
 

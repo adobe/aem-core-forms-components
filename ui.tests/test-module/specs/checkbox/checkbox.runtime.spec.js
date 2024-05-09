@@ -124,7 +124,7 @@ describe("Form Runtime with CheckBox Input", () => {
         cy.get(`#${id}`).find("input").click().then(x => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-checkbox__errormessage").should('have.text',"This is a custom required checkbox")
             cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`)
-            cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', ` ${id}__errormessage`)
+            cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${id}__errormessage`)
             cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true')
         })
 
