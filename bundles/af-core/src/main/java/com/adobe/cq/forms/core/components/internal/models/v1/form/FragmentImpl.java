@@ -125,6 +125,11 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     @JsonIgnore
+    public Resource getFragmentContainer() {
+        return fragmentContainer;
+    }
+
+    @JsonIgnore
     public String getFragmentTitle() {
         String fragmentTitle = "";
         if (fragmentContainer != null) {

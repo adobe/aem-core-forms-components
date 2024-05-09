@@ -112,6 +112,14 @@ public class FragmentImplTest {
     }
 
     @Test
+    void testFragmentContainerResource() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Resource fragmentContainer = fragment.getFragmentContainer();
+        assertNotNull(fragmentContainer);
+        assertEquals("/content/affragment/jcr:content/guideContainer", fragmentContainer.getPath());
+    }
+
+    @Test
     void testJSONExport() throws Exception {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
