@@ -18,8 +18,6 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -31,7 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.Field;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -80,14 +77,6 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected Integer maxLength;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
-    @Default(booleanValues = false)
-    protected boolean dorExclusion;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
-    @Nullable
-    protected String dorColspan;
-
     /** number and date constraint **/
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimumDate")
@@ -115,16 +104,6 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     protected boolean exclusiveMaximum;
 
     /** number and date constraint **/
-
-    /**
-     * Returns dorBindRef of the form field
-     *
-     * @return dorBindRef of the field
-     * @since com.adobe.cq.forms.core.components.util 2.1.0
-     */
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorBindRef")
-    @Nullable
-    protected String dorBindRef;
 
     @SlingObject
     private Resource resource;
@@ -197,17 +176,4 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
         return dataFormat;
     }
 
-    @Override
-    @JsonIgnore
-    public Map<String, Object> getDorProperties() {
-        Map<String, Object> customDorProperties = new LinkedHashMap<>();
-        customDorProperties.put("dorExclusion", dorExclusion);
-        if (dorColspan != null) {
-            customDorProperties.put("dorColspan", dorColspan);
-        }
-        if (dorBindRef != null) {
-            customDorProperties.put("dorBindRef", dorBindRef);
-        }
-        return customDorProperties;
-    }
 }

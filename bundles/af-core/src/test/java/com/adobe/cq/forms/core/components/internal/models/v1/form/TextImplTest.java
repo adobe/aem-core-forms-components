@@ -146,4 +146,11 @@ public class TextImplTest {
         FieldUtils.writeField(text, "dataLayerEnabled", true, true);
         Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_DATALAYER));
     }
+
+    @Test
+    void testDorProperties() {
+        TextImpl textImpl = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, TextImpl.class, context);
+        assertEquals(true, textImpl.getDorProperties().get("dorExclusion"));
+        assertEquals("4", textImpl.getDorProperties().get("dorColspan"));
+    }
 }

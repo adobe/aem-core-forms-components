@@ -37,7 +37,10 @@
         ]
       },
       "properties": {
-        "fd:path": "/content/termsandconditions/text"
+        "fd:path": "/content/termsandconditions/text",
+        "fd:dor": {
+          "dorExclusion": false
+        }
       },
       ":type": "core/fd/components/form/text/v1/text"
     },

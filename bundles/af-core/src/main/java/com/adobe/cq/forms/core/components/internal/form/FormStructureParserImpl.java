@@ -15,6 +15,10 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.form;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
@@ -22,16 +26,20 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.adobe.cq.forms.core.components.views.Views;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = FormStructureParser.class)
 public class FormStructureParserImpl implements FormStructureParser {
-
+    private static final Logger logger = LoggerFactory.getLogger(FormStructureParserImpl.class);
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private SlingHttpServletRequest request;
@@ -103,5 +111,20 @@ public class FormStructureParserImpl implements FormStructureParser {
         }
 
         return getFormContainerPath(resource.getParent());
+    }
+
+    public String getFormDefinition() {
+        String result = null;
+        FormContainer formContainer = resource.adaptTo(FormContainer.class);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Writer writer = new StringWriter();
+            // return publish view specific properties only for runtime
+            mapper.writerWithView(Views.Publish.class).writeValue(writer, formContainer);
+            result = writer.toString();
+        } catch (IOException e) {
+            logger.error("Unable to generate json from resource");
+        }
+        return result;
     }
 }

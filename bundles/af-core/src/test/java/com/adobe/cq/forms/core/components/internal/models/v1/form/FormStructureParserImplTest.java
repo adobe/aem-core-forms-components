@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +35,9 @@ import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -83,6 +87,17 @@ public class FormStructureParserImplTest {
         String path = FORM_CONTAINER_PATH + "/datepicker";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+    }
+
+    @Test
+    void testFormDefinition() throws JsonProcessingException {
+        String path = FORM_CONTAINER_PATH;
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        String formDef = formStructureParser.getFormDefinition();
+        HashMap<String, Object> formJson = (HashMap<String, Object>) new ObjectMapper().readValue(formDef,
+            new TypeReference<Map<String, Object>>() {});
+        assertNotNull(formStructureParser.getFormDefinition());
+        assertEquals(formJson.get("fieldType"), "form");
     }
 
     @Test
