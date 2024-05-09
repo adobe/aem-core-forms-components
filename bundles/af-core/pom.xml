@@ -453,7 +453,6 @@
             <artifactId>httpclient</artifactId>
         </dependency>
 
-
         <!-- AEM and forms sdk versions -->
         <!-- the below order of dependencies is very critical -->
         <dependency>
@@ -658,6 +657,11 @@
             <artifactId>org.apache.sling.testing.caconfig-mock-plugin</artifactId>
             <version>1.3.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.aemds.guide</groupId>
+            <artifactId>aemds-guide-core</artifactId>
+            <version>7.0.1183-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
