@@ -95,6 +95,25 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @SlingObject
     private Resource resource;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
+    @Default(booleanValues = false)
+    protected boolean dorExclusion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
+    @Nullable
+    protected String dorColspan;
+
+    /**
+     * Returns dorBindRef of the form field
+     *
+     * @return dorBindRef of the field
+     * @since com.adobe.cq.forms.core.components.util 4.0.0
+     */
+    @JsonIgnore
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorBindRef")
+    @Nullable
+    protected String dorBindRef;
+
     /**
      * Flag indicating if the data layer is enabled.
      */
@@ -472,5 +491,19 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon. Returning an empty map.");
             return Collections.emptyMap();
         }
+    }
+
+    @Override
+    @JsonIgnore
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        customDorProperties.put("dorExclusion", dorExclusion);
+        if (dorColspan != null) {
+            customDorProperties.put("dorColspan", dorColspan);
+        }
+        if (dorBindRef != null) {
+            customDorProperties.put("dorBindRef", dorBindRef);
+        }
+        return customDorProperties;
     }
 }
