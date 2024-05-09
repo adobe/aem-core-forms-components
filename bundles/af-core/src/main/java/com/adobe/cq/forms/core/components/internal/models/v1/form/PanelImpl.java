@@ -115,6 +115,13 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     }
 
     @Override
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Nullable
+    public boolean isWrapData() {
+        return wrapData;
+    }
+
+    @Override
     @JsonIgnore
     @NotNull
     public Map<String, Object> getDorProperties() {
