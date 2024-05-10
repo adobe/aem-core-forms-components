@@ -38,7 +38,7 @@
         <div data-sly-call="${shortDescription.shortDescription @componentId=fragment.id, shortDescriptionVisible=fragment.tooltipVisible, shortDescription=fragment.tooltip, bemBlock='cmp-adaptiveform-fragment'}" data-sly-unwrap></div>
         <div data-sly-call="${longDescription.longDescription @componentId=fragment.id, longDescription=fragment.description, bemBlock='cmp-adaptiveform-fragment'}" data-sly-unwrap></div>
         <sly data-sly-test.showfragment="${wcmmode.preview || wcmmode.disabled}"
-             data-sly-repeat="${fragment.fragmentChildren}" data-sly-resource="${item.path @ decoration=true}"></sly>
+             data-sly-resource="${fragment.fragmentContainer @ resourceType='wcm/foundation/components/responsivegrid'}"></sly>
         <sly data-sly-test="${ !showfragment }"
              data-sly-use.placeholder="placeholder.html"
              data-sly-call="${ placeholder.placeholder @ fragment=fragment, templates=templates }"></sly>
