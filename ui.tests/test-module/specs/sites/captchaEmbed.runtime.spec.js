@@ -16,6 +16,7 @@
 describe("Captcha In Sites Runtime Test", () => {
     const pagePath = "content/forms/sites/core-components-it/site-with-captcha-afv2-form.html";
     const hCaptchaPagePath = "content/forms/sites/core-components-it/site-with-hcaptcha-afv2-form.html";
+    const turnstilePagePath = "content/forms/sites/core-components-it/site-with-turnstile-afv2-form.html";
     const FT_HCAPTCHA = "FT_FORMS-12407";
 
     let formContainer = null;
@@ -51,6 +52,19 @@ describe("Captcha In Sites Runtime Test", () => {
                 const [id, fieldView] = Object.entries(formContainer._fields)[0]
                 const model = formContainer._model.getElement(id)
                 cy.get('#' + id + ' .cmp-adaptiveform-hcaptcha__widget > div.h-captcha').should('exist');
+            })
+        }
+    })
+
+    it("turnstile should render when form is embedded in site", () => {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+            cy.previewForm(turnstilePagePath).then(p => {
+                formContainer = p;
+                expect(formContainer, "formcontainer is initialized").to.not.be.null;
+                expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
+                const [id, fieldView] = Object.entries(formContainer._fields)[0]
+                const model = formContainer._model.getElement(id)
+                cy.get('#' + id + ' .cmp-adaptiveform-turnstile__widget > div.cf-turnstile').should('exist');
             })
         }
     })

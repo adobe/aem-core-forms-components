@@ -81,7 +81,7 @@ if (typeof window.TurnstileWidget === 'undefined') {
             var runtimeLocale = this.#lang;
 
             var scr = document.createElement('script');
-            scr.src = url + "?onload=onloadTurnstileCallback&render=explicit" + runtimeLocale;
+            scr.src = url + "?onload=onloadTurnstileCallback&render=explicit";
             scr.async = true;
             element.appendChild(scr);
         }
