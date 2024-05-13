@@ -93,7 +93,7 @@ describe("Form with Radio Button Input", () => {
         });
     });
 
-    it.only("radiobutton should show error messages in the HTML", () => {
+    it("radiobutton should show error messages in the HTML", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0];
         formContainer._model.validate();
         cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"This is a required radiobutton");
