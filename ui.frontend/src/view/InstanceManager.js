@@ -282,11 +282,27 @@ class InstanceManager {
                 let afterElement = this.children[0].element.parentElement;
                 this.parentElement.insertBefore(htmlElement, afterElement);
             } else {
-                let beforeViewElement = (beforeElement != null) ? beforeElement : this.children[instanceIndex - 1].element.parentElement;
+                let beforeViewElement = this.#getElementAt(instanceIndex - 1);
                 beforeViewElement.after(htmlElement);
             }
         }
         return htmlElement;
+    }
+
+    /**
+     * Gets the HTML element at the given index
+     * @param index {number} The index of the element
+     * @returns {Element}
+     */
+    #getElementAt(index) {
+        let childModel = this._model.items.find((model) => model.index === index);
+        let viewElement = this.parentElement.querySelector(`#${childModel.id}`);
+        if (viewElement) {
+            while (viewElement.parentElement !== this.parentElement) {
+                viewElement = viewElement.parentElement;
+            }
+        }
+        return viewElement;
     }
 
     /**
