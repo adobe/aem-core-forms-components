@@ -62,12 +62,12 @@
         updateValue(value) {
             if (this.widgetObject) {
                 if (this.isActive()) {
-                    this.widgetObject.setValue(value);
+                    this.widgetObject.setValue(value ? value : '');
                 } else {
-                    this.widgetObject.setDisplayValue(value);
+                    this.widgetObject.setDisplayValue(value ? value : '');
                 }
             } else {
-                super.updateValue(value);
+                super.updateValue(value ? value : '');
             }
         }
 
@@ -103,6 +103,34 @@
                     if( e.target.value === '') {
                         // clear the value if user manually empties the value in date input box
                         this._model.value = "";
+                        return;
+                    }
+                    // Currently only solving this for MM/dd/yyyy format
+                    if (this._model.editFormat === "date|MM/dd/yyyy") {
+                        let invalidDate = true;
+                        let inputVal = e.target.value;
+                        let arr = inputVal.split('/');
+                        if (arr.length === 3 && !isNaN(arr[0]) && !isNaN(arr[1]) && !isNaN(arr[2])) {
+                            let month = parseInt(arr[0]);
+                            let day = parseInt(arr[1]);
+                            if (month > 0  && month < 13 && day > 0 && day < 32 && arr[2].length == 4) {
+                                let inputDate = new Date(inputVal);
+                                let monthStr = inputDate.getMonth() + 1 + "";
+                                let dayStr = inputDate.getDate() + "";
+                                if (monthStr.length === 1) {
+                                    monthStr = "0" + monthStr;
+                                }
+                                if (dayStr.length === 1) {
+                                    dayStr = "0" + dayStr;
+                                }
+                                this._model.value = inputDate.getFullYear() + "-" + monthStr + "-" + dayStr;
+                                invalidDate = false;
+                            }
+                        }
+                        // add the manually entered incorrect value, or is in process of entering value
+                        if (invalidDate) {
+                            this._model.value = e.target.value;
+                        }
                     }
                 }, this.getWidget());
             } else {
