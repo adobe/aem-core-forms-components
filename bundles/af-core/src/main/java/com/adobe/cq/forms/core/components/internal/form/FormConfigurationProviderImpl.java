@@ -35,7 +35,9 @@ public class FormConfigurationProviderImpl implements FormConfigurationProvider 
 
     private static final String CUSTOM_FUNCTION_CONFIG_BUCKET_NAME = "settings/cloudconfigs";
     private static final String CUSTOM_FUNCTION_CONFIG_NAME = "edge-delivery-service-configuration";
-
+    private static final String CUSTOM_FUNCTION_FILE_PATH = "/blocks/form/functions.js";
+    private static final String HTTPS_PROTOCOL = "https://";
+    private static final String EDGE_DELIVERY_DOMAIN = ".hlx.live";
     @SlingObject
     private Resource resource;
 
@@ -55,8 +57,10 @@ public class FormConfigurationProviderImpl implements FormConfigurationProvider 
                     ValueMap configValueMap = jcrResource.getValueMap();
                     String owner = configValueMap.getOrDefault("owner", "").toString();
                     String repo = configValueMap.getOrDefault("repo", "").toString();
+                    String ref = configValueMap.getOrDefault("ref", "main").toString();
                     if (!owner.isEmpty() && !repo.isEmpty()) {
-                        customFunctionUrl = "https://main--" + repo + "--" + owner + ".hlx.live/blocks/form/functions.js";
+                        customFunctionUrl = HTTPS_PROTOCOL + ref + "--" + repo + "--" + owner + EDGE_DELIVERY_DOMAIN
+                            + CUSTOM_FUNCTION_FILE_PATH;
                     }
                 }
             }

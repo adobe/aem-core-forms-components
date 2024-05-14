@@ -335,6 +335,7 @@ class Utils {
     static async registerCustomFunctionsByUrl(url) {
         if (url != null && url.trim().length > 0) {
             // webpack ignore is added because webpack was converting this to a static import upon bundling resulting in error.
+            //This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.
             const customFunctionModule = await import(/*webpackIgnore: true*/ url);
             const keys = Object.keys(customFunctionModule);
             const functions = [];

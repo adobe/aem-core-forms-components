@@ -18,11 +18,15 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * This interface provides the configurations for the form container, @since 5.4.2
+ */
+
 @ProviderType
 public interface FormConfigurationProvider {
     /**
      *
-     * @returns Returns the url to fetch custom functions bundled as an ESM
+     * @returns Returns the url to fetch custom functions bundled as an ESM, @since 5.4.2
      */
     String getCustomFunctionModuleUrl();
 }
