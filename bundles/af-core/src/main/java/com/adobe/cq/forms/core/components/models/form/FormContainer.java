@@ -86,19 +86,6 @@ public interface FormContainer extends Container {
     }
 
     /*
-     * Returns role
-     *
-     * @return role attribute
-     *
-     * @since com.adobe.cq.forms.core.components.models.form 2.1.0
-     */
-    @Nullable
-    @JsonIgnore
-    default String getRoleAttribute() {
-        return null;
-    }
-
-    /*
      * Returns schema reference
      *
      * @return reference to schema
