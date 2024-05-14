@@ -238,8 +238,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return prefillService;
     }
 
-    @JsonIgnore
-    @Nullable
+    @Override
     public String getRoleAttribute() {
         return roleAttribute;
     }
