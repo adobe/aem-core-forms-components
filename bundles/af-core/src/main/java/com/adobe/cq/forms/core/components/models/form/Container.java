@@ -92,6 +92,12 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
         return null;
     }
 
+    @Nullable
+    @JsonIgnore
+    default String getRoleAttfribute() {
+        return null;
+    }
+
     // the below mentioned interface methods are copied from ResponsiveGridExporter
     // done because CM throws this, the product interface com.day.cq.wcm.foundation.model.responsivegrid.export.ResponsiveGridExporter
     // annotated with @ProviderType should not be implemented by custom code.

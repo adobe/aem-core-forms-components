@@ -24,7 +24,7 @@
             const formContainerPath = e.detail.getPath();
             bridge.connect(()=>{
                 if(window.guideBridge) {
-                    window.guideBridge.getFormModel()?.setAdditionalMetadata({paths: {...window.guideBridge?.getFormModel()?.additionalMetadata?.paths, "${form.formPagePath @ context='scriptString'}": "${resource.path @ context='scriptString'}"}});
+                    window.guideBridge.getFormModel()?.setAdditionalSubmitMetadata({paths: {...window.guideBridge?.getFormModel()?.additionalMetadata?.paths, "${form.formPagePath @ context='scriptString'}": "${resource.path @ context='scriptString'}"}});
                 }
             }, null, formContainerPath);
         }
