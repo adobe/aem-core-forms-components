@@ -6,13 +6,17 @@
   "value": "<p>xyz</p>",
   "visible": true,
   "richText": true,
-  ":type": "core/fd/components/form/text/v1/text",
-  "properties": {
-    "fd:path":"/content/text-customized"
-  },
   "events": {
     "custom:setProperty": [
       "$event.payload"
     ]
-  }
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": true,
+      "dorColspan": "4"
+    },
+    "fd:path": "/content/text-customized"
+  },
+  ":type": "core/fd/components/form/text/v1/text"
 }

@@ -12,6 +12,8 @@
     "value" : "<p>xyz</p>",
     "visible" : true,
     "dataRef" : "a.b",
+    "dorExclusion": true,
+    "dorColspan": "4",
     "fieldType": "plain-text",
     "textIsRich": true
   },
@@ -28,7 +30,10 @@
       ]
     },
     "properties": {
-      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/text"
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/text",
+      "fd:dor": {
+        "dorExclusion": true
+      }
     },
     ":type": "forms-components-examples/components/form/text"
   }

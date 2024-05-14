@@ -109,7 +109,7 @@ describe("Sites with Aem Embed Container", () => {
         it("model initialized properly", () => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             // fragment component, text field and IntanceManager
-            expect(Object.keys(formContainer._fields).length).to.equal(3);
+            expect(Object.keys(formContainer._fields).length).to.equal(4);
         })
 
         it("model's changes are reflected in the html ", () => {

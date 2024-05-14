@@ -21,7 +21,7 @@ describe("Form Runtime with Fragment", () => {
     const selectors = {
         textinput : `[data-cmp-is="${IS}"]`
     }
-
+    const fragmentChildCount = 2;
     let formContainer = null
 
     beforeEach(() => {
@@ -100,7 +100,7 @@ describe("Form Runtime with Fragment", () => {
 
         expect(fragmentView, "fragment view is created").to.not.be.null;
         expect(textInputView, "fragment child view is created").to.not.be.null;
-        expect(fragmentView.children.length, "fragment has one child").to.equal(1);
+        expect(fragmentView.children.length, `fragment has ${fragmentChildCount} child`).to.equal(fragmentChildCount);
         expect(fragmentView.children[0].id, "fragment has reference to child view").to.equal(textInputId);
         expect(textInputView.parentView.id, "text input has reference to parent panel view").to.equal(fragmentId);
 
@@ -113,16 +113,23 @@ describe("Form Runtime with Fragment", () => {
     it(" model's changes are reflected in the html ", () => {
         const fragmentId = formContainer._model.items[0].items[0].id;
         const model = formContainer._model.getElement(fragmentId);
-        const fragmentView = formContainer.getAllFields()[fragmentId];
-        const count = 1;
-        checkHTML(model.id, model.getState(), fragmentView, count).then(() => {
+        checkHTML(model.id, model.getState()).then(() => {
             model.visible = false;
-            return checkHTML(model.id, model.getState(), fragmentView, count);
+            return checkHTML(model.id, model.getState());
         }).then(() => {
             model.enable = false;
-            return checkHTML(model.id, model.getState(), fragmentView, count);
+            return checkHTML(model.id, model.getState());
         });
     });
+
+    it("responsive component in fragment", () => {
+        const responsiveTextInputId = formContainer._model.items[0].items[0].items[1].id;
+        cy.get(`#${responsiveTextInputId}`).should('be.visible');
+        cy.get(`#${responsiveTextInputId}`).parent()
+            .should('have.class', 'aem-GridColumn')
+            .should('have.class', 'aem-GridColumn--default--9')
+            .should('have.class', 'aem-GridColumn--offset--default--1');
+    })
 
     it(" add instance and remove instance of model is reflected in html ", () => {
 

@@ -43,4 +43,12 @@ public interface Fragment extends Panel {
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     List<Resource> getFragmentChildren();
+
+    /**
+     * Returns fragment container resource
+     *
+     * @return
+     * @since com.adobe.cq.forms.core.components.models.form 5.4.1
+     */
+    Resource getFragmentContainer();
 }
