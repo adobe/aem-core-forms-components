@@ -15,12 +15,15 @@
  ******************************************************************************/
 const afConstants = require("../../libs/commons/formsConstants");
 const sitesSelectors = require("../../libs/commons/sitesSelectors");
-describe.skip('Locale - Authoring Test', function () {
+describe('Locale - Authoring Test', function () {
     if(cy.af.isLatestAddon()) {
         context('Test Wizard Component String Language', function () {
             beforeEach(() => {
                 cy.intercept("**/themes*").as("getThemesRequest");
                 cy.intercept("**/templates*").as("templates");
+                cy.intercept({ method: "POST", url: "**/forms*" }).as(
+                    "createFormRequest"
+                );
             });
 
             it('Create Form in German language', function (){
@@ -30,9 +33,12 @@ describe.skip('Locale - Authoring Test', function () {
                     cy.wait('@templates', {requestTimeout: 30000});
                     cy.get('[data-item-id="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"]').click({force: true});
                     cy.wait('@getThemesRequest').then(() => {
-                        cy.get('[type="button"]').contains( 'Erstellen').click({force: true});
+                        cy.get('[type="button"]').contains('Erstellen').should("be.visible").and("not.be.disabled").click({force: true});
                         cy.get('input[name="submitDialogTitle"]').type('language-test');
-                        cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().click();
+                        cy.get('[data-testid="modal"]').contains('button', 'Erstellen').last().should("be.visible").and("not.be.disabled").click({force: true});
+                    });
+                    cy.wait("@createFormRequest").then((interception) => {
+                        assert.equal(interception.response?.statusCode, 200);
                     });
                 });
                 cy.openPage('/editor.html/content/forms/af/language-test.html');
