@@ -521,11 +521,18 @@ if (typeof window.DatePickerWidget === 'undefined') {
     #show() {
       this.#options.locale = this.#curInstance.locale;
       if (!DatePickerWidget.#visible) {
-        let date,
-            validDate;
-
-        validDate = this.#curInstance.selectedDate || this.#model.value;
-        date = validDate ? new Date(validDate) : new Date();
+        let date  = new Date(),
+            validDate,
+            parsedDate;
+        if (this.#curInstance.selectedDate) {
+          validDate = this.#curInstance.selectedDate;
+        } else if (this.#model.valid) {
+          validDate = this.#model.value;
+        }
+        if (validDate) {
+          parsedDate = validDate ? new Date(validDate) : null;
+          date = (parsedDate == null || parsedDate == 'Invalid Date') ? date : parsedDate;
+        }
         this.selectedDay = this.currentDay = date.getDate();
         this.selectedMonth = this.currentMonth = date.getMonth();
         this.selectedYear = this.currentYear = date.getFullYear();

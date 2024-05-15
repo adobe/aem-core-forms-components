@@ -62,12 +62,15 @@
         updateValue(value) {
             if (this.widgetObject) {
                 if (this.isActive()) {
-                    this.widgetObject.setValue(value);
+                    // Replacing undefined / null with empty string on reset
+                    this.widgetObject.setValue(value ? value : '');
                 } else {
-                    this.widgetObject.setDisplayValue(value);
+                    // Replacing undefined / null with empty string on reset
+                    this.widgetObject.setDisplayValue(value ? value : '');
                 }
             } else {
-                super.updateValue(value);
+                // Replacing undefined / null with empty string on reset
+                super.updateValue(value ? value : '');
             }
         }
 

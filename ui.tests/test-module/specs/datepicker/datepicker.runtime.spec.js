@@ -316,4 +316,18 @@ describe("Form Runtime with Date Picker", () => {
             });
         })
     });
+
+    it("Test invalid date should result in valid calender", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        const model = formContainer._model.getElement(id);
+        const input = "invalid";
+        cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+            expect(model.getState().value).to.equal(input);
+        });
+        cy.get(`#${id}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+            let todayDate = new Date();
+            let todayYear = todayDate.getFullYear() + "";
+            cy.get(".dp-caption").should('include.text', todayYear);
+        });
+    });
 })
