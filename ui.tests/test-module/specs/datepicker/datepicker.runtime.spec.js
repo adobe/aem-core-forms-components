@@ -318,7 +318,7 @@ describe("Form Runtime with Date Picker", () => {
     });
 
     it("Test invalid date should result in valid calender", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        const [id, fieldView] = Object.entries(formContainer._fields)[6];
         const model = formContainer._model.getElement(id);
         const input = "invalid";
         cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
