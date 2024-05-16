@@ -75,21 +75,34 @@
     });
 
     it('test the rules editor', () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[1];
         cy.get('.cmp-adaptiveform-textinput__widget')
           .type('Hide me');
         cy.get('.cmp-adaptiveform-textinput')
           .click({ multiple: true });
-        cy.get('[data-cmp-is="adaptiveFormText"]').should('not.be.visible');
+        cy.get(`#${id}`).should('not.be.visible');
 
         cy.get('.cmp-adaptiveform-textinput__widget').clear()
             .type('Show me');
         cy.get('.cmp-adaptiveform-textinput')
             .click({ multiple: true });
-        cy.get('[data-cmp-is="adaptiveFormText"]').should('be.visible');
+        cy.get(`#${id}`).should('be.visible');
 
         cy.get('.cmp-adaptiveform-textinput__widget').clear()
             .type('Change me').blur();
-        cy.get('[data-cmp-is="adaptiveFormText"]').contains("CHANGED");
-    })
+        cy.get(`#${id}`).contains("CHANGED");
+    });
+
+     it(" Reset should not reset Static Text ", () => {
+         const [id, fieldView] = Object.entries(formContainer._fields)[2];
+         const [resetId, resetFieldView] = Object.entries(formContainer._fields)[3];
+         const model = formContainer._model.getElement(id);
+         expect(model.value, " Text model value should have").contains("Test text");
+         cy.get(`#${id}`).contains("Test text");
+         cy.get(`#${resetId}`).should("be.visible").click().then(() => {
+             expect(model.value, " Text model after reset should have same value").contains("Test text");
+             cy.get(`#${id}`).contains("Test text");
+         });
+     });
 
  })
