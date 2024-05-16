@@ -23,7 +23,9 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.json.Json;
+import javax.json.JsonReader;
+
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -53,10 +55,6 @@ import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import javax.json.Json;
-import javax.json.JsonReader;
-
-import static com.adobe.cq.forms.core.Utils.getJson;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
