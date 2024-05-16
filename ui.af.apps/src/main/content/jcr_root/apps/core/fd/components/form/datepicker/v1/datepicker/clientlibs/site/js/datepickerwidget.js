@@ -532,6 +532,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
         if (validDate) {
           parsedDate = validDate ? new Date(validDate) : null;
           date = (parsedDate == null || parsedDate == 'Invalid Date') ? date : parsedDate;
+          const timezoneOffset = date.getTimezoneOffset();
+          date.setMinutes(date.getMinutes() + timezoneOffset);
         }
         this.selectedDay = this.currentDay = date.getDate();
         this.selectedMonth = this.currentMonth = date.getMonth();
