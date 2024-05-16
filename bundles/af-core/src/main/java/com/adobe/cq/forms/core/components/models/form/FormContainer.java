@@ -362,4 +362,13 @@ public interface FormContainer extends Container {
     default String getParentPagePath() {
         return null;
     }
+
+    /**
+     * Returns the form container's json.
+     * @return A String that consists of the form container json
+     */
+    @JsonIgnore
+    default String getFormDefinition() {
+        return null;
+    }
 }

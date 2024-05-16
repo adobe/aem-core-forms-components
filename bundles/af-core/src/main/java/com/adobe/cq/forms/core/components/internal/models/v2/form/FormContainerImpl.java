@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -52,10 +55,12 @@ import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.day.cq.commons.LanguageUtil;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -362,4 +367,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return FormContainer.super.getName();
     }
 
+    @JsonIgnore
+    public String getFormDefinition() {
+        String result = null;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Writer writer = new StringWriter();
+            // return publish view specific properties only for runtime
+            mapper.writerWithView(Views.Publish.class).writeValue(writer, this);
+            result = writer.toString();
+        } catch (IOException e) {
+            logger.error("Unable to generate json from resource");
+        }
+        return result;
+    }
 }

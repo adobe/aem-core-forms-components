@@ -15,17 +15,21 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.io.InputStream;
+import java.io.StringReader;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
 import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,6 +53,10 @@ import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
+import javax.json.Json;
+import javax.json.JsonReader;
+
+import static com.adobe.cq.forms.core.Utils.getJson;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -453,4 +461,16 @@ public class FormContainerImplTest {
         assertEquals("ltr", formContainer.getLanguageDirection());
     }
 
+    @Test
+    public void testGetFormDefinition() {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        JsonReader actualJsonReader = Json.createReader(new StringReader(formContainer.getFormDefinition()));
+        try {
+            InputStream is = Utils.class.getResourceAsStream(Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));
+            JsonReader expectedJsonReader = Json.createReader(is);
+            Assertions.assertEquals(actualJsonReader.read(), expectedJsonReader.read());
+        } catch (Exception e) {
+            Assert.fail("Unable to find test file " + Utils.getTestExporterJSONPath(BASE, PATH_FORM_1) + ".");
+        }
+    }
 }
