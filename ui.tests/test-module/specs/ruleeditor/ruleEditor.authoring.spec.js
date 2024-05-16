@@ -290,6 +290,7 @@ describe('Rule editor authoring sanity for core-components',function(){
             }
         })
 
+
         it('should add custom formData submit rule on submit button', function () {
             if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
                 cy.openAuthoring(submitFormPath);
