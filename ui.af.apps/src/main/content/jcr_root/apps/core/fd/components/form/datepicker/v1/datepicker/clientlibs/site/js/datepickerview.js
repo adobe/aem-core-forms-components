@@ -63,14 +63,14 @@
             if (this.widgetObject) {
                 if (this.isActive()) {
                     // Replacing undefined / null with empty string on reset
-                    this.widgetObject.setValue(value ? value : '');
+                    this.widgetObject.setValue(value || '');
                 } else {
                     // Replacing undefined / null with empty string on reset
-                    this.widgetObject.setDisplayValue(value ? value : '');
+                    this.widgetObject.setDisplayValue(value || '');
                 }
             } else {
                 // Replacing undefined / null with empty string on reset
-                super.updateValue(value ? value : '');
+                super.updateValue(value || '');
             }
         }
 
