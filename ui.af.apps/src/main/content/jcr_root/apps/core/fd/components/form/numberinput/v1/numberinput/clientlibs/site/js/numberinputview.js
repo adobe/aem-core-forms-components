@@ -100,12 +100,14 @@
                     this._model.value = e.target.value;
                     if(this.element) {
                         this.setInactive();
+                        this.triggerExit();
                     }
                 });
             }
             this.getWidget().addEventListener('focus', (e) => {
                 if (this.element) {
                     this.setActive();
+                    this.triggerEnter();
                 }
             });
         }

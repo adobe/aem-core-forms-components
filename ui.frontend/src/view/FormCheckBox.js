@@ -50,7 +50,15 @@ class FormCheckBox extends FormFieldBase {
             } else {
                 this._model.value = this._offValue;
             }
-        })
+        });
+        this.widget.addEventListener('focus', (e) => {
+            this.setActive();
+            this.triggerEnter();
+        });
+        this.widget.addEventListener('blur', (e) => {
+            this.setInactive();
+            this.triggerExit();
+        });
 
     }
 }

@@ -74,10 +74,12 @@
                 this._model.value = e.target.value;
                 this.setWidgetValueToDisplayValue();
                 this.setInactive();
+                this.triggerExit();
             });
             this.widget.addEventListener('focus', (e) => {
                 this.setActive();
                 this.setWidgetValueToModelValue();
+                this.triggerEnter();
             });
         }
     }
