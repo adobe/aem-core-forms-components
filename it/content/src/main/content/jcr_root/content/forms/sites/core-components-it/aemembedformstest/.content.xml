@@ -1,79 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
-    jcr:primaryType="cq:Page">
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          jcr:primaryType="cq:Page">
     <jcr:content
-        cq:contextHubPath="/etc/cloudsettings/default/contexthub"
-        cq:contextHubSegmentsPath="/etc/segmentation/contexthub"
-        cq:lastModified="{Date}2024-05-13T16:05:51.498+05:30"
-        cq:lastModifiedBy="admin"
-        cq:template="/conf/mysite10/settings/wcm/templates/page-content"
-        jcr:primaryType="cq:PageContent"
-        jcr:title="en"
-        sling:resourceType="mysite10/components/page"
-        pageTitle="mysite10">
+            cq:lastModified="{Date}2023-04-18T12:30:56.377+05:30"
+            cq:lastModifiedBy="admin"
+            cq:tags="[]"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
+            jcr:description="Aem Embed Container With Custom Height"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Aem Embed Container With Custom Height"
+            sling:resourceType="forms-components-examples/components/page">
         <root
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="mysite10/components/container"
-            layout="responsiveGrid">
-            <container
                 jcr:primaryType="nt:unstructured"
-                sling:resourceType="mysite10/components/container">
-                <title
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
                     jcr:primaryType="nt:unstructured"
-                    sling:resourceType="mysite10/components/title"/>
-                <container
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="mysite10/components/container"
-                    layout="responsiveGrid">
-                    <teaser
-                        jcr:description="&lt;p>Don't stop half way, go for the top!&lt;/p>&#xd;&#xa;"
+                    sling:resourceType="wcm/foundation/components/responsivegrid">
+                <text_1740702241
+                        cq:styleIds="[1644862132301]"
+                        jcr:lastModified="{Date}2019-02-15T19:09:39.787+01:00"
+                        jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Epic Journey"
-                        sling:resourceType="mysite10/components/teaser"
+                        sling:resourceType="core/wcm/components/text/v2/text"
+                        text="&lt;h1>Aem Embed Container &lt;sub>v1&lt;/sub>&lt;/h1>"
+                        textIsRich="true"/>
+                <text
+                        cq:styleIds="[1544762734201]"
+                        jcr:lastModified="{Date}2020-07-15T13:25:39.729+02:00"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core/wcm/components/text/v2/text"
+                        text="&lt;p>Aem Embed Container Core Component allows users to embed Adaptive form in sites in iframe and non iframe mode .&lt;/p>"
+                        textIsRich="true"/>
+                <teaser
+                        cq:styleIds="[1550165685463]"
+                        jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;"
+                        jcr:lastModified="{Date}2019-02-14T16:49:57.290+01:00"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Technical Documentation"
+                        sling:resourceType="core-components-examples/components/teaser"
                         actionsEnabled="false"
                         descriptionFromPage="false"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v2/aemform"
                         textIsRich="true"
-                        titleFromPage="false">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                                jcr:primaryType="nt:unstructured"
-                                offset="0"
-                                width="4"/>
-                        </cq:responsive>
-                    </teaser>
-                    <teaser_copy
-                        jcr:description="&lt;p>Don't stop half way, go for the top!&lt;/p>&#xd;&#xa;"
+                        titleFromPage="false"/>
+                <title_865328580
+                        cq:styleIds="[1544759664489]"
+                        jcr:lastModified="{Date}2018-12-06T19:23:25.116+01:00"
+                        jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Epic Journey"
-                        sling:resourceType="mysite10/components/teaser"
-                        actionsEnabled="false"
-                        descriptionFromPage="false"
-                        textIsRich="true"
-                        titleFromPage="false">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                                jcr:primaryType="nt:unstructured"
-                                offset="0"
-                                width="4"/>
-                        </cq:responsive>
-                    </teaser_copy>
-                    <teaser_copy_1579324932
-                        jcr:description="&lt;p>Don't stop half way, go for the top!&lt;/p>&#xd;&#xa;"
+                        jcr:title="Examples"
+                        sling:resourceType="core/wcm/components/title/v2/title"
+                        type="h2"/>
+                <title_290384408
+                        cq:styleIds="[1544759676459]"
+                        jcr:lastModified="{Date}2019-05-22T11:01:40.926+03:00"
+                        jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Epic Journey"
-                        sling:resourceType="mysite10/components/teaser"
-                        actionsEnabled="false"
-                        descriptionFromPage="false"
-                        textIsRich="true"
-                        titleFromPage="false">
-                        <cq:responsive jcr:primaryType="nt:unstructured">
-                            <default
-                                jcr:primaryType="nt:unstructured"
-                                offset="0"
-                                width="4"/>
-                        </cq:responsive>
-                    </teaser_copy_1579324932>
-                    <aemform_2092964155
+                        jcr:title="Standard"
+                        sling:resourceType="core/wcm/components/title/v2/title"
+                        type="h3"/>
+                <text_1337506761
+                        jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core/wcm/components/text/v2/text"
+                        text="&lt;p>Aem Embed Container in iframe mode &lt;/p>"
+                        textIsRich="true"/>
+                <aemform_2092964155
                         jcr:created="{Date}2024-05-02T14:49:42.607+05:30"
                         jcr:createdBy="admin"
                         jcr:lastModified="{Date}2024-05-09T15:56:52.091+05:30"
@@ -81,7 +78,7 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="forms-components-examples/components/aemform"
                         enableFocusOnFirstField="{Boolean}true"
-                        formRef="/content/dam/formsanddocuments/testaf2"
+                        formRef="/content/dam/formsanddocuments/core-components-it/samples/embed/embedform"
                         roleAttribute="main"
                         submitType="pageRefresh"
                         textIsRich="true"
@@ -89,21 +86,7 @@
                         thankyouMessage="&lt;p>Thank You message from sites.&lt;/p>&#xd;&#xa;"
                         useiframe="false"
                         usePageLocale="true"/>
-                    <aemform
-                        jcr:created="{Date}2024-05-13T12:18:55.103+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-05-13T16:05:51.463+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="forms-components-examples/components/aemform"
-                        enableFocusOnFirstField="{Boolean}true"
-                        formRef="/content/dam/formsanddocuments/af2-testform"
-                        submitType="inline"
-                        textIsRich="true"
-                        useiframe="false"
-                        usePageLocale="true"/>
-                </container>
-            </container>
+            </responsivegrid>
         </root>
     </jcr:content>
 </jcr:root>
