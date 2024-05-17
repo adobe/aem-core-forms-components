@@ -37,7 +37,9 @@ try {
     ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
     ci.sh(`docker cp ${qpContainerId}:/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/ /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/`);
 
-    let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
+    //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
+    //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
+    let wcmVersion = "2.25.4";
     ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
         // Connect to QP
