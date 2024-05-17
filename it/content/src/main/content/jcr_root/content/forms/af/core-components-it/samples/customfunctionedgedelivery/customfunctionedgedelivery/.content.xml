@@ -9,7 +9,8 @@
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="CustomFunctionEdgeDelivery"
-        sling:configRef="/conf/forms/core-components-it/samples/customfunctionedgedelivery/customfunctionedgedelivery/"
+        sling:configRef="/conf/core-components-it/samples/customfunctionedgedelivery/"
+        cq:conf="/conf/core-components-it"
         sling:resourceType="forms-components-examples/components/page">
         <guideContainer
             fd:version="2.1"
