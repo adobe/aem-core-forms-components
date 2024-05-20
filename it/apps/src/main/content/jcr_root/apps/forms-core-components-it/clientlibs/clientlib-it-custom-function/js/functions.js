@@ -130,5 +130,57 @@ function formatTelephoneInput(field)
     return phoneNumber;
 }
 
+/**
+ * Tests import data
+ * @name testImportData
+ * @param {scope} globals
+ */
+function testImportData(globals)
+{
+    globals.functions.importData(Object.fromEntries([['textinput_12605243111716188337417','abc']]));
+}
 
+/**
+ * Tests set focus
+ * @name testSetFocus
+ * @param {object} emailField
+ * @param {scope} globals
+ */
+function testSetFocus(emailField, globals)
+{
+    globals.functions.setFocus(emailField);
+}
 
+/**
+ * Tests set focus with focusOption
+ * @name testSetFocusWithFocusOption
+ * @param {object} emailField
+ * @param {string} focusOption
+ * @param {scope} globals
+ */
+function testSetFocusWithFocusOption(emailField, focusOption, globals)
+{
+    globals.functions.setFocus(emailField, focusOption);
+}
+
+/**
+ * Tests add instance with dispatchEvent
+ * @name testAddInstance
+ * @param {scope} globals
+ */
+function testAddInstance(globals)
+{
+    var repeatablePanel = globals.form.panelcontainer2;
+    globals.functions.dispatchEvent(repeatablePanel, 'addInstance');
+}
+
+/**
+ * Tests remove instance with dispatchEvent
+ * @name testRemoveInstance
+ * @param {scope} globals
+ */
+function testRemoveInstance(globals)
+{
+    var repeatablePanel = globals.form.panelcontainer2;
+    globals.functions.dispatchEvent(repeatablePanel, 'removeInstance');
+}
