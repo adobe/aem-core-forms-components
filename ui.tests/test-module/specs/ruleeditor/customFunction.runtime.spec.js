@@ -72,7 +72,7 @@ describe('Form with custom functions configured in client lib', () => {
                 url: '**/adobe/forms/af/submit/*',
             }).as('afSubmission');
 
-            cy.get(`.cmp-adaptiveform-button__widget`).click();
+            cy.contains('button', 'Button').click();
 
             cy.wait('@afSubmission').then(({request, response}) => {
                 // Check the request payload
@@ -84,6 +84,46 @@ describe('Form with custom functions configured in client lib', () => {
                 expect(response.body.thankYouMessage).to.be.not.null;
                 expect(response.body.thankYouMessage).to.equal("Thank you for submitting the form.");
             });
+        }
+    })
+
+    it("should import formData on button click", () => {
+        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+            cy.contains('button', 'Import Data Button').click();
+            cy.get('.cmp-adaptiveform-textinput__widget[name="textinput_12605243111716188337417"]').should('have.value', "abc");
+        }
+    })
+
+    it("should set focus on email field on button click", () => {
+        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+            cy.contains('button', 'Set Focus Button').click();
+            cy.get('.cmp-adaptiveform-emailinput__widget[name="emailinput1716186792262"]').should('be.focused');
+        }
+    })
+
+    it("should set focus on text box with nextItem option on button click", () => {
+        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+            cy.contains('button', 'Set Focus Button').click();
+            cy.contains('button', 'Set Focus Option Button').click();
+            cy.get('.cmp-adaptiveform-textinput__widget[name="textinput1716186710837"]').should('be.focused');
+        }
+    })
+
+    it("should add instance of repeatable panel on button click", () => {
+        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+            cy.contains('button', 'Add Instance Button').click();
+            cy.get('.cmp-container__label')
+                .filter((index, element) => element.textContent.includes('Repeatable Panel'))
+                .should('have.length', 3);
+        }
+    })
+
+    it("should remove instance of repeatable panel on button click", () => {
+        if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+            cy.contains('button', 'Remove Instance Button').click();
+            cy.get('.cmp-container__label')
+                .filter((index, element) => element.textContent.includes('Repeatable Panel'))
+                .should('have.length', 2);
         }
     })
 })
