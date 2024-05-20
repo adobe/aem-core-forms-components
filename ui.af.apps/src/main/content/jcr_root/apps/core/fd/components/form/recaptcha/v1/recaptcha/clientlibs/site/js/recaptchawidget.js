@@ -24,6 +24,7 @@ if (typeof window.RecaptchaWidget === 'undefined') {
         #model = null // passed by reference
         #options = null
         #lang = 'en'
+        static FD_CAPTCHA = "fd:captcha";
 
         constructor(view, model, widget) {
             // initialize the widget and model
@@ -47,8 +48,8 @@ if (typeof window.RecaptchaWidget === 'undefined') {
             element.innerHTML = '<div class="g-recaptcha"></div>';
             var gcontainer = document.getElementsByClassName("g-recaptcha")[0];
             var widgetId;
-            var url = recaptchaConfigData.properties["fd:captcha"].config.uri;
-            if (recaptchaConfigData.properties["fd:captcha"].config.size == "invisible") {
+            var url = recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.uri;
+            if (recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.size == "invisible") {
                 gcontainer.classList.add('g-recaptcha-invisible');
                 recaptchaConfigData.required = false;
             }
@@ -58,27 +59,32 @@ if (typeof window.RecaptchaWidget === 'undefined') {
             };
 
             var expiredCallback = function() {
-                grecaptcha.reset(widgetId);
+                if (isRecaptchaEnterprise()) {
+                    grecaptcha.enterprise.reset(widgetId);
+                } else {
+                    grecaptcha.reset(widgetId);
+                }
                 self.setCaptchaModel("");
             };
 
             var onloadCallbackInternal = function() {
-                widgetId = grecaptcha.render(
-                    gcontainer,
-                    gparameters
-                );
+                widgetId = isRecaptchaEnterprise() ? grecaptcha.enterprise.render(gcontainer, gparameters)
+                    : grecaptcha.render(gcontainer, gparameters);
                 return widgetId;
             };
 
             var gparameters = {
-                'sitekey': recaptchaConfigData.properties["fd:captcha"].config.siteKey,
-                'size': recaptchaConfigData.properties["fd:captcha"].config.size,
-                'theme': recaptchaConfigData.properties["fd:captcha"].config.theme || 'light',
-                'type': recaptchaConfigData.properties["fd:captcha"].config.type || 'image',
+                'sitekey': recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.siteKey,
+                'size': recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.size,
+                'theme': recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.theme || 'light',
+                'type': recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.type || 'image',
                 'callback': successCallback,
                 'expired-callback': expiredCallback
             };
 
+            const isRecaptchaEnterprise = function () {
+                return recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.version === "enterprise";
+            }
             window.onloadRecaptchaCallback = onloadCallbackInternal;
 
             var runtimeLocale = this.#lang;
