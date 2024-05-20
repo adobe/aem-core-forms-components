@@ -23,8 +23,8 @@
         const registerGuideBridgeEvents = (e) => {
             const formContainerPath = e.detail.getPath();
             bridge.connect(()=>{
-                if(window.guideBridge) {
-                    window.guideBridge.getFormModel()?.setAdditionalSubmitMetadata({embedContainerFormPathMapping: {...window.guideBridge?.getFormModel()?.additionalSubmitMetadata?.embedContainerFormPathMapping, "${form.formPagePath @ context='scriptString'}": "${resource.path @ context='scriptString'}"}});
+                if(window.guideBridge && typeof window.guideBridge?.getFormModel().setAdditionalSubmitMetadata == 'function') {
+                    window.guideBridge?.getFormModel()?.setAdditionalSubmitMetadata({embedContainerFormPathMapping: {...window.guideBridge?.getFormModel()?.additionalSubmitMetadata?.embedContainerFormPathMapping, "${form.formPagePath @ context='scriptString'}": "${resource.path @ context='scriptString'}"}});
                 }
             }, null, formContainerPath);
         }
