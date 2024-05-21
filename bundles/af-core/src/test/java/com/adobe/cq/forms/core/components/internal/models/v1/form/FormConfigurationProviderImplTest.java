@@ -43,6 +43,10 @@ public class FormConfigurationProviderImplTest {
     private static final String BASE = "/form/formconfigprovider";
 
     private static final String TEST_CONTENT_CONF_JSON = "/test-content-conf.json";
+
+    private static final String TEST_BLANK_OWNER_CONF_JSON = "/blank-owner-conf.json";
+
+    private static final String TEST_BLANK_REPO_CONF_JSON = "/blank-repo-conf.json";
     private static final String TEST_CONTENT_JSON = "/test-content.json";
     private static final String CONF_PATH = "/conf/global/settings/cloudconfigs/edge-delivery-service-configuration";
     private static final String CONTENT_ROOT = "/content";
@@ -56,7 +60,7 @@ public class FormConfigurationProviderImplTest {
 
     @BeforeEach
     void setUp() {
-        context.load().json(BASE + TEST_CONTENT_CONF_JSON, CONF_PATH);
+
         context.load().json(BASE + TEST_CONTENT_JSON, CONTENT_ROOT);
         context.registerService(ConfigurationResourceResolver.class, configurationResourceResolverMock);
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
@@ -86,6 +90,7 @@ public class FormConfigurationProviderImplTest {
 
     @Test
     void testGetCustomFunctionModuleUrl() {
+        context.load().json(BASE + TEST_CONTENT_CONF_JSON, CONF_PATH);
         String path = "/content/formcontainerv2";
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(path);
         Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
@@ -94,7 +99,38 @@ public class FormConfigurationProviderImplTest {
             .getCustomFunctionModuleUrl());
     }
 
-    private FormConfigurationProvider getFormConfigProviderUnderTest(String resourcePath) {
+    @Test
+    void testGetCustomFunctionModuleUrlWithNoConf() {
+        context.load().json(BASE + TEST_CONTENT_CONF_JSON, CONF_PATH);
+        String path = "/content/formcontainerv2";
+        FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(path);
+        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
+                CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(null);
+        assertEquals("", formConfigurationProvider
+                .getCustomFunctionModuleUrl());
+    }
+
+    @Test
+    void testGetCustomFunctionModuleUrlWithNoOwner() {
+        context.load().json(BASE + TEST_BLANK_OWNER_CONF_JSON, CONF_PATH);
+        FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(CONF_PATH);
+        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
+                CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
+        assertEquals("", formConfigurationProvider
+                .getCustomFunctionModuleUrl());
+    }
+
+    @Test
+    void testGetCustomFunctionModuleUrlWithNoRepo() {
+        context.load().json(BASE + TEST_BLANK_REPO_CONF_JSON, CONF_PATH);
+        FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(CONF_PATH);
+        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
+                CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
+        assertEquals("", formConfigurationProvider
+                .getCustomFunctionModuleUrl());
+    }
+
+        private FormConfigurationProvider getFormConfigProviderUnderTest(String resourcePath) {
         Resource resource = context.currentResource(resourcePath);
         FormConfigurationProvider formConfigurationProvider = resource.adaptTo(FormConfigurationProvider.class);
         return formConfigurationProvider;
