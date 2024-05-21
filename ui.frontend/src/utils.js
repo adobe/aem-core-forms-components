@@ -172,7 +172,7 @@ class Utils {
         console.debug("Initializing field views ", formContainer);
         Object.values(Utils.#fieldCreatorOrder).forEach(function (fieldSelectorInCreator) {
             const {fieldSelector, fieldCreator, fieldClass} = Utils.#fieldCreatorSets[fieldSelectorInCreator];
-            console.debug("Initializing all fields of field selector ", fieldSelector);
+            //console.debug("Initializing all fields of field selector ", fieldSelector);
             let fieldElements = document.querySelectorAll(fieldSelector);
             Utils.#createFormContainerFields(fieldElements, fieldCreator, formContainer);
             Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
@@ -312,9 +312,9 @@ class Utils {
                 if (loader) {
                     const path = loader.getAttribute('data-cmp-adaptiveform-container-loader');
                     const response = await fetch(`/adobe/forms/af/${path}`)
-                    _formJson = await response.json();
+                    _formJson = (await response.json()).afModelDefinition;
                     window.formJson = _formJson
-                    loadXfa(_formJson.afModelDefinition.formdom, _formJson.afModelDefinition.xfaRenderContext);
+                    loadXfa(_formJson.formdom, _formJson.xfaRenderContext);
                 } else {
                     _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 }
