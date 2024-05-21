@@ -105,9 +105,9 @@ public class FormConfigurationProviderImplTest {
         String path = "/content/formcontainerv2";
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(path);
         Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-                CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(null);
+            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(null);
         assertEquals("", formConfigurationProvider
-                .getCustomFunctionModuleUrl());
+            .getCustomFunctionModuleUrl());
     }
 
     @Test
@@ -115,9 +115,9 @@ public class FormConfigurationProviderImplTest {
         context.load().json(BASE + TEST_BLANK_OWNER_CONF_JSON, CONF_PATH);
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(CONF_PATH);
         Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-                CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
+            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
         assertEquals("", formConfigurationProvider
-                .getCustomFunctionModuleUrl());
+            .getCustomFunctionModuleUrl());
     }
 
     @Test
@@ -125,12 +125,12 @@ public class FormConfigurationProviderImplTest {
         context.load().json(BASE + TEST_BLANK_REPO_CONF_JSON, CONF_PATH);
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(CONF_PATH);
         Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-                CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
+            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
         assertEquals("", formConfigurationProvider
-                .getCustomFunctionModuleUrl());
+            .getCustomFunctionModuleUrl());
     }
 
-        private FormConfigurationProvider getFormConfigProviderUnderTest(String resourcePath) {
+    private FormConfigurationProvider getFormConfigProviderUnderTest(String resourcePath) {
         Resource resource = context.currentResource(resourcePath);
         FormConfigurationProvider formConfigurationProvider = resource.adaptTo(FormConfigurationProvider.class);
         return formConfigurationProvider;
