@@ -91,6 +91,21 @@ class FormOptionFieldBase extends FormFieldBase {
         }
     }
 
+    /**
+     * Applies the full state of the field to the HTML.
+     * Generally done just after the model is bound to the field.
+     * @param {Object} state - The state object.
+     */
+    applyState(state) {
+        super.applyState(state);
+        if (state.enum) {
+            this.updateEnum(state.enum);
+        }
+        if (state.enumNames) {
+            this.updateEnumNames(state.enumNames);
+        }
+    }
+
 }
 
 export default FormOptionFieldBase;

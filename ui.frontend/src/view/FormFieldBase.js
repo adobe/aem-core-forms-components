@@ -270,6 +270,12 @@ class FormFieldBase extends FormField {
         this.updateReadOnly(state.readOnly)
         this.updateEnabled(state.enabled, state)
         this.initializeHelpContent(state);
+        if (state.enum) {
+            this.updateEnum(state.enum);
+        }
+        if (state.enumNames) {
+            this.updateEnumNames(state.enumNames);
+        }
     }
 
     /**
