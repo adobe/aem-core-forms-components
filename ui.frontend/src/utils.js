@@ -18,7 +18,7 @@ import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core'
-
+import {loadXfa} from "./handleXfa";
 
 /**
  * @module FormView
@@ -307,7 +307,17 @@ class Utils {
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
+                const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
+                let _formJson
+                if (loader) {
+                    const path = loader.getAttribute('data-cmp-adaptiveform-container-loader');
+                    const response = await fetch(`/adobe/forms/af/${path}`)
+                    _formJson = await response.json();
+                    window.formJson = _formJson
+                    loadXfa(_formJson.afModelDefinition.formdom, _formJson.afModelDefinition.xfaRenderContext);
+                } else {
+                    _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
+                }
                 console.debug("fetched model json", _formJson);
                 await this.registerCustomFunctions(_formJson.id);
                 const urlSearchParams = new URLSearchParams(window.location.search);
