@@ -68,6 +68,7 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     protected Style currentStyle;
 
     @ScriptVariable
+    @Optional
     protected ValueMap properties;
 
     @ValueMapValue(name = AEMForm.PN_THANK_YOU_PAGE, injectionStrategy = InjectionStrategy.OPTIONAL)

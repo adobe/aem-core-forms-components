@@ -41,7 +41,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import 'cypress-file-upload';
-import {recurse} from 'cypress-recurse'
+import { recurse } from 'cypress-recurse';
 
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
@@ -391,7 +391,7 @@ const waitForFormInitMultipleContiners = (multipleEmbedContainers) => {
                 }
                 document.addEventListener(INIT_EVENT, listener1);
             })
-        if(multipleEmbedContainers){
+        if(typeof multipleEmbedContainers == "boolean" && multipleEmbedContainers){
             promiseArray.push(new Cypress.Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(promise);
@@ -401,7 +401,7 @@ const waitForFormInitMultipleContiners = (multipleEmbedContainers) => {
             promiseArray.push(promise)
         }
         }).then(($lis) => {
-            if(multipleEmbedContainers) {
+            if(typeof multipleEmbedContainers == "boolean" && multipleEmbedContainers) {
                 setTimeout(() => {
                     return Promise.all(promiseArray);
                 }, 1000);

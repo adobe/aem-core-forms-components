@@ -43,8 +43,7 @@ describe("Embed multiple form in site", () => {
                 method: 'POST',
                 url: '**/adobe/forms/af/submit/*',
             }).as('afSubmission');
-            debugger;
-            cy.get(`.cmp-adaptiveform-button__widget`).eq(0).should('be.visible').wait(1000).click().then(x => {
+            cy.get(`.cmp-adaptiveform-button__widget`).eq(0).should('be.visible').wait(500).click().then(x => {
             cy.get('body').should('contain', "Thank You message from sites.\n")
             });
         });
@@ -53,7 +52,7 @@ describe("Embed multiple form in site", () => {
             method: 'POST',
             url: '**/adobe/forms/af/submit/*',
         }).as('afSubmission');
-        cy.get(`.cmp-adaptiveform-button__widget`).eq(1).should('be.visible').wait(1000).click().then(x => {
+        cy.get(`.cmp-adaptiveform-button__widget`).eq(1).should('be.visible').wait(500).click().then(x => {
         cy.get('body').should('contain', "Thank you for submitting the form.\n")
       });
     });
