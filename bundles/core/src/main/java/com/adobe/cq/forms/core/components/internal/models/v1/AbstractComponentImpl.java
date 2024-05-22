@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1;
 
-import java.util.Calendar;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
@@ -31,11 +30,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.cq.wcm.core.components.internal.ContentFragmentUtils;
 import com.adobe.cq.wcm.core.components.models.Component;
-import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
-import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
-import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.components.ComponentContext;
 
@@ -84,16 +80,6 @@ public abstract class AbstractComponentImpl implements Component {
     private String id;
 
     /**
-     * Flag indicating if the data layer is enabled.
-     */
-    private Boolean dataLayerEnabled;
-
-    /**
-     * The data layer component data.
-     */
-    private ComponentData componentData;
-
-    /**
      * Getter for current page.
      *
      * @return The current {@link Page}
@@ -128,31 +114,6 @@ public abstract class AbstractComponentImpl implements Component {
     }
 
     /**
-     * See {@link Component#getData()}
-     *
-     * @return The component data
-     */
-    @Override
-    @Nullable
-    public ComponentData getData() {
-        if (componentData == null) {
-            if (this.dataLayerEnabled == null) {
-                if (this.currentPage != null) {
-                    // Check at page level to allow components embedded via containers in editable templates to inherit the setting
-                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.currentPage.getContentResource());
-                } else {
-                    this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
-                }
-
-            }
-            if (this.dataLayerEnabled) {
-                componentData = getComponentData();
-            }
-        }
-        return componentData;
-    }
-
-    /**
      * See {@link Component#getAppliedCssClasses()}
      *
      * @return The component styles/css class names
@@ -165,27 +126,6 @@ public abstract class AbstractComponentImpl implements Component {
             .map(ComponentStyleInfo::getAppliedCssClasses)
             .filter(StringUtils::isNotBlank)
             .orElse(null);		// Returning null so sling model exporters don't return anything for this property if not configured
-    }
-
-    /**
-     * Override this method to provide a different data model for your component. This will be called by
-     * {@link AbstractComponentImpl#getData()} in case the datalayer is activated.
-     *
-     * @return The component data.
-     */
-    @NotNull
-    protected ComponentData getComponentData() {
-        return DataLayerBuilder.forComponent()
-            .withId(this::getId)
-            .withLastModifiedDate(() ->
-            // Note: this can be simplified in JDK 11
-            Optional.ofNullable(resource.getValueMap().get(JcrConstants.JCR_LASTMODIFIED, Calendar.class))
-                .map(Calendar::getTime)
-                .orElseGet(() -> Optional.ofNullable(resource.getValueMap().get(JcrConstants.JCR_CREATED, Calendar.class))
-                    .map(Calendar::getTime)
-                    .orElse(null)))
-            .withType(() -> this.resource.getResourceType())
-            .build();
     }
 
 }
