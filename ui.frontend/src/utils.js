@@ -19,7 +19,6 @@ import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core'
 
-
 /**
  * @module FormView
  */
@@ -299,6 +298,7 @@ class Utils {
         let elements = document.querySelectorAll(formContainerSelector);
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);
+            const customFunctionUrl = dataset["customFunctionsModuleUrl"];
             const _path = dataset["path"];
             const _pageLang = dataset["pageLang"];
             if ('contextPath' in dataset) {
@@ -310,6 +310,7 @@ class Utils {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
                 await this.registerCustomFunctions(_formJson.id);
+                await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
@@ -328,6 +329,23 @@ class Utils {
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }
+        }
+    }
+
+    static async registerCustomFunctionsByUrl(url) {
+        if (url != null && url.trim().length > 0) {
+            // webpack ignore is added because webpack was converting this to a static import upon bundling resulting in error.
+            //This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.
+            const customFunctionModule = await import(/*webpackIgnore: true*/ url);
+            const keys = Object.keys(customFunctionModule);
+            const functions = [];
+            for (const name of keys) {
+                const funcDef = customFunctionModule[name];
+                if (typeof funcDef === 'function') {
+                    functions[name] = funcDef;
+                }
+            }
+            FunctionRuntime.registerFunctions(functions);
         }
     }
 
