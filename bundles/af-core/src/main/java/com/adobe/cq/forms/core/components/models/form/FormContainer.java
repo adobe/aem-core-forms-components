@@ -341,6 +341,11 @@ public interface FormContainer extends Container {
         return null;
     }
 
+    @JsonIgnore
+    default String getRoleAttribute() {
+        return null;
+    }
+
     /**
      * Set the contextPath in formContainer
      *
