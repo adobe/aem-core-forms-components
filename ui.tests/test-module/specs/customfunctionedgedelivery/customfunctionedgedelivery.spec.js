@@ -36,7 +36,6 @@ describe("Form to check custom function defined in edge delivery", () => {
 
 
     it(" fullName field should update on change in first name and last name ", () => {
-        if(toggle_array.includes("FT_FORMS-11269") && toggle_array.includes("FT_FORMS-12423")) {
             const firstName = Object.entries(formContainer._fields)[0];
             const lastName = Object.entries(formContainer._fields)[1];
             const fullName = Object.entries(formContainer._fields)[2];
@@ -45,7 +44,6 @@ describe("Form to check custom function defined in edge delivery", () => {
                     cy.get(`#${fullName[0]}`).find("input").should('have.value', 'fname lname')
                 })
             })
-        }
     })
 
 })
