@@ -61,7 +61,6 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
     private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
 
-
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
