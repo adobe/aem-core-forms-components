@@ -232,6 +232,15 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testShowCharCounter() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
+        assertEquals(true, textInput.showCharCounter());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.showCharCounter()).thenCallRealMethod();
+        assertEquals(false, textInputMock.showCharCounter());
+    }
+
+    @Test
     void testGetPlaceHolder() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
         assertEquals(null, textInput.getPlaceHolder());

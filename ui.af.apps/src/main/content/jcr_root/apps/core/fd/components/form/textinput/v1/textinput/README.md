@@ -56,6 +56,9 @@ BLOCK cmp-adaptiveform-textinput
     ELEMENT cmp-adaptiveform-textinput__label
     ELEMENT cmp-adaptiveform-textinput__label-container
     ELEMENT cmp-adaptiveform-textinput__widget
+    ELEMENT cmp-adaptiveform-textinput__charcounter
+    ELEMENT cmp-adaptiveform-textinput__charcount
+    ELEMENT cmp-adaptiveform-textinput__maxchar
     ELEMENT cmp-adaptiveform-textinput__questionmark
     ELEMENT cmp-adaptiveform-textinput__shortdescription
     ELEMENT cmp-adaptiveform-textinput__longdescription
