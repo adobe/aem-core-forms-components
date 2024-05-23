@@ -79,24 +79,6 @@ public abstract class AbstractComponentImpl implements Component {
      */
     private String id;
 
-    /**
-     * Getter for current page.
-     *
-     * @return The current {@link Page}
-     */
-    protected Page getCurrentPage() {
-        return currentPage;
-    }
-
-    /**
-     * Setter for current page.
-     * 
-     * @param currentPage The {@link Page} to set
-     */
-    protected void setCurrentPage(Page currentPage) {
-        this.currentPage = currentPage;
-    }
-
     @NotNull
     @Override
     public String getId() {
