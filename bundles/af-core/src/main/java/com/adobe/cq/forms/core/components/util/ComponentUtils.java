@@ -44,6 +44,10 @@ import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FOR
  * Utility helper functions for components.
  */
 public class ComponentUtils {
+
+    private static final String EDGE_DELIVERY_FRAGMENT_CONTAINER_REL_PATH = "root/section/form";
+    private static final String[] EDGE_DELIVERY_RESOURCE_TYPES = new String[] { "core/franklin/components/page/v1/page" };
+
     /**
      * Private constructor to prevent instantiation of utility class.
      */
@@ -203,7 +207,14 @@ public class ComponentUtils {
         if (StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
             fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
         }
-        return resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
+        Resource pageContentResource = resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT);
+        if (pageContentResource != null) {
+            if (Arrays.stream(EDGE_DELIVERY_RESOURCE_TYPES).anyMatch(pageContentResource::isResourceType)) {
+                return pageContentResource.getChild(EDGE_DELIVERY_FRAGMENT_CONTAINER_REL_PATH);
+            }
+            return pageContentResource.getChild("guideContainer");
+        }
+        return null;
     }
 
     public static boolean isFragmentComponent(Resource resource) {
