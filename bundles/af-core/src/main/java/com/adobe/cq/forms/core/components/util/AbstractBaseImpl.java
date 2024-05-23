@@ -49,6 +49,8 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     private static final String PN_TOOLTIP = "tooltip";
 
+    private static final String PN_VIEWTYPE = "fd:viewType";
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected String dorTemplateRef;
@@ -119,6 +121,10 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     protected String lang;
+
+    @Nullable
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_VIEWTYPE)
+    protected String viewType;
 
     /** End **/
 
@@ -466,6 +472,9 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     @Override
     public @NotNull String getExportedType() {
+        if (viewType != null) {
+            return viewType;
+        }
         return resource.getResourceType();
     }
 
