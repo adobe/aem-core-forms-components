@@ -1,0 +1,22 @@
+{
+  "id": "textinput-af83154b9e",
+  "fieldType": "text-input",
+  "name": "abc",
+  "type": "string",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/textinput-with-viewtype"
+  },
+  "placeholder": "test-placeholder",
+  ":type": "some/custom/value"
+}
