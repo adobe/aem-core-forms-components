@@ -151,20 +151,6 @@ public interface AEMForm extends Component {
         throw new UnsupportedOperationException();
     }
 
-    @JsonIgnore
-    default String getRoleAttribute() {
-        return null;
-    }
-
-    /**
-     * Returns the theme path
-     *
-     * @return the role attribute, if one was set, or {@code null}
-     * @since com.adobe.cq.forms.core.components.models.aemform 1.5.0;
-     */
-    @JsonIgnore
-    String getRoleAttribute();
-
     /**
      * Returns the role attribute value
      *

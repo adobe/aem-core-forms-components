@@ -30,7 +30,7 @@ describe("Form in site using embed container", () => {
       })
   
       it("should render three form", () => {
-        expect(formContainer.length).to.equal(1);
+        expect(formContainer.length).to.equal(3);
       });
     it.skip("should submit on button click and thank you message of embed container must be overridden", () => {
                 cy.intercept({
