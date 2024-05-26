@@ -128,6 +128,13 @@ public interface AEMForm extends Component {
     String PN_USEPAGELOCALE = "usePageLocale";
 
     /**
+     * Name of the resource property that defines role attribute of container
+     *
+     * @since com.adobe.cq.forms.core.components.models.aemform 1.5.0
+     */
+    String PN_ROLEATTRIBUTE = "fd:roleAttribute";
+
+    /**
      * Name of the resource property that defines whether to enable focus on first field of form or not
      *
      * @since com.adobe.cq.forms.core.components.models.aemform 0.0.14
@@ -144,10 +151,14 @@ public interface AEMForm extends Component {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Returns the theme path
+     *
+     * @return the role attribute, if one was set, or {@code null}
+     * @since com.adobe.cq.forms.core.components.models.aemform 1.5.0;
+     */
     @JsonIgnore
-    default String getRoleAttribute() {
-        return null;
-    }
+    String getRoleAttribute();
 
     /**
      * Returns the theme path

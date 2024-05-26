@@ -15,16 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -65,9 +55,18 @@ import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
-
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(AemContextExtension.class)
 public class FormContainerImplTest {
@@ -200,6 +199,12 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testGetIdWithFormRenderingInsideEmbedContainer() throws Exception {
+        FormContainer formContainer = getFormContainerWithLocaleUnderTest(FORM_CONTAINER_PATH_IN_SITES);
+        assertNotNull(formContainer.getId());
+    }
+
+    @Test
     void testGetLocalizedValue() throws Exception {
         FormContainer formContainer = getFormContainerWithLocaleUnderTest(PATH_FORM_1);
         TextInput textInput = (TextInput) formContainer.getItems().stream()
@@ -266,7 +271,7 @@ public class FormContainerImplTest {
     @Test
     void testGetRoleAttribute() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        assertEquals(formContainer.getRoleAttribute(), null);
+        assertEquals(formContainer.getRoleAttribute(), "test-role-attribute");
     }
 
     @Test
@@ -361,6 +366,7 @@ public class FormContainerImplTest {
             }
         });
         MockSlingHttpServletRequest request = context.request();
+        request.setAttribute("formRenderingInsideEmbedContainer", "");
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
         request.setParameterMap(paramMap);

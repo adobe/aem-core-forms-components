@@ -69,7 +69,7 @@ describe('Page - Authoring', function () {
                     .should("be.visible")
                     .click({multiple: true});
                 cy.get("[name='./thankyouMessage']").should("be.visible");
-                cy.get("[name='./roleAttribute']").should("not.be.checked");
+                cy.get("[name='./fd:roleAttribute']").should("not.be.checked");
                 // check for dynamic operations performed using JS
                 cy.get("[name='./thankyouConfig'][value='page']")
                     .should("be.visible")

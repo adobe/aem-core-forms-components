@@ -53,6 +53,7 @@ import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.commons.LanguageUtil;
+import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -72,6 +73,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
+    public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -104,7 +106,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private String prefillService;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(name = FD_ROLE_ATTRIBUTE, injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String roleAttribute;
 
@@ -213,9 +215,16 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getId() {
-        String parentPagePath = getParentPagePath();
-        if (GuideWCMUtils.isForms(parentPagePath)) {
-            return ComponentUtils.getEncodedPath(parentPagePath);
+        if (getCurrentPage() != null) {
+            if (GuideWCMUtils.isForms(getCurrentPage().getPath())) {
+                return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
+            } else {
+                if (request != null && request.getAttribute("formRenderingInsideEmbedContainer") != null) {
+                    return ComponentUtils.getEncodedPath(StringUtils.replace(getPath(), "/" + JcrConstants.JCR_CONTENT + "/"
+                        + GuideConstants.GUIDE_CONTAINER_NODE_NAME, ""));
+                }
+                return ComponentUtils.getEncodedPath(getPath());
+            }
         } else {
             return ComponentUtils.getEncodedPath(getPath());
         }
@@ -304,6 +313,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF)))) {
             formDataEnabled = true;
         }
+        properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         return properties;
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
-          xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
-          xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:lastModified="{Date}2023-04-18T12:30:56.377+05:30"
-            cq:lastModifiedBy="admin"
+            cq:lastModifiedBy="adminiframe
+            "
             cq:tags="[]"
             cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
             jcr:description="Aem Embed Container With Custom Height"
@@ -85,7 +85,7 @@
                         textIsRich="true"
                         thankyouConfig="message"
                         thankyouMessage="&lt;p>Thank You message from sites.&lt;/p>&#xd;&#xa;"
-                        useiframe="false"
+                        useiframe="true"
                         usePageLocale="true"/>
             </responsivegrid>
         </root>

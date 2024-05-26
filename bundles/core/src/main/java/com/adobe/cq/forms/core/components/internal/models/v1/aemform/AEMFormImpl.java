@@ -123,7 +123,7 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     @Default(values = "false")
     private String usePageLocale;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(name = AEMForm.PN_ROLEATTRIBUTE, injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String roleAttribute;
 

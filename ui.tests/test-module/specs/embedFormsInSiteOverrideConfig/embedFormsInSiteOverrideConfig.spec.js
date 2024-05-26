@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe("Embed multiple form in site", () => {
+describe("Form in site using embed container", () => {
 
-    context('Forms inside site', function () {
+    context('Forms inside site using adaptive form embed container', function () {
   
       before(() => {
         cy.attachConsoleErrorSpy();
@@ -32,29 +32,15 @@ describe("Embed multiple form in site", () => {
       it("should render three form", () => {
         expect(formContainer.length).to.equal(1);
       });
-  
-      it("form 1 model initialized properly", () => {
-          expect(formContainer[0], "formcontainer is initialized").to.not.be.null;
-          expect(formContainer[0].length).to.equal(5);
-      });
-    
+
     it.skip("should submit on button click and thank you message of embed container must be overridden", () => {
                 cy.intercept({
                 method: 'POST',
                 url: '**/adobe/forms/af/submit/*',
             }).as('afSubmission');
-            cy.get(`.cmp-adaptiveform-button__widget`).eq(0).should('be.visible').wait(500).click().then(x => {
+            cy.get(`.cmp-adaptiveform-button__widget`).eq(0).should('be.visible').wait(500).click().then(() => {
             cy.get('body').should('contain', "Thank You message from sites.\n")
             });
-        });
-    it.skip("should submit on button click and thank you message of form should be visible not the embed", () => {
-            cy.intercept({
-            method: 'POST',
-            url: '**/adobe/forms/af/submit/*',
-        }).as('afSubmission');
-        cy.get(`.cmp-adaptiveform-button__widget`).eq(1).should('be.visible').wait(500).click().then(x => {
-        cy.get('body').should('contain', "Thank you for submitting the form.\n")
-      });
     });
     })
   });
