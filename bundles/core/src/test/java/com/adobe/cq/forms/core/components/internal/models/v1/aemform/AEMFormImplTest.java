@@ -71,6 +71,15 @@ class AEMFormImplTest {
     }
 
     @Test
+    void testGetRoleAttribute() {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
+        assertEquals(null, aemform.getRoleAttribute());
+        AEMForm aemFormMock = Mockito.mock(AEMForm.class);
+        Mockito.when(aemFormMock.getRoleAttribute()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::getRoleAttribute);
+    }
+
+    @Test
     void testGetUseIframe() {
         AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
         assertEquals("true", aemform.getUseIframe());
@@ -197,12 +206,6 @@ class AEMFormImplTest {
         AEMForm aemFormMock = Mockito.mock(AEMForm.class);
         Mockito.when(aemFormMock.getThemePath()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::getThemePath);
-    }
-
-    @Test
-    void testGetRoleAttribute() {
-        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
-        assertEquals(null, aemform.getRoleAttribute());
     }
 
     @Test

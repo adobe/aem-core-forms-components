@@ -255,7 +255,7 @@ describe('Page/Form Authoring', function () {
             const pagePath = "/content/forms/af/core-components-it/blank.html";
 
             beforeEach(function () {
-                cy.previewForm(pagePath, {"params" : ["formRenderingInsideEmbedContainer=''"]});
+                cy.previewForm(pagePath);
             });
 
             it('check wcmmode cookie deletion when disbaled mode', function () {

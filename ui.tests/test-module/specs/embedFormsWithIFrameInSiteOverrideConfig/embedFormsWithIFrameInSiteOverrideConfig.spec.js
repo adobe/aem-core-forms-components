@@ -33,7 +33,7 @@ describe("Embed form in site inside an iframe", () => {
         .within(() => {
           // accessing the form inside the iframe
           cy.get('.cmp-adaptiveform-container').should("exist").within(() => {
-            cy.get(`.cmp-adaptiveform-button__widget`).should('be.visible').wait(500).click();
+            cy.get(`.cmp-adaptiveform-button__widget`).should('be.visible').click();
           });
           // accessing the div containing the thank you message
           cy.get('.cmp-aemform__content').should("exist").should('contain', "Thank you for submitting the form.\n");;

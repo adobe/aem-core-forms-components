@@ -8,9 +8,9 @@
             "
             cq:tags="[]"
             cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-            jcr:description="Aem Embed Container With Custom Height"
+            jcr:description="Embed Container In iframe"
             jcr:primaryType="cq:PageContent"
-            jcr:title="Aem Embed Container With Custom Height"
+            jcr:title="Embed Container In iFrame"
             sling:resourceType="forms-components-examples/components/page">
         <root
                 jcr:primaryType="nt:unstructured"
@@ -24,7 +24,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;h1>Aem Embed Container &lt;sub>v1&lt;/sub>&lt;/h1>"
+                        text="&lt;h1>Embed Container &lt;sub>v1&lt;/sub>&lt;/h1>"
                         textIsRich="true"/>
                 <text
                         cq:styleIds="[1544762734201]"
@@ -32,7 +32,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>Aem Embed Container Core Component allows users to embed Adaptive form in sites in iframe and non iframe mode .&lt;/p>"
+                        text="&lt;p>Embed Container Core Component allows users to embed Adaptive form in sites in iframe and non iframe mode .&lt;/p>"
                         textIsRich="true"/>
                 <teaser
                         cq:styleIds="[1550165685463]"
@@ -69,7 +69,7 @@
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="core/wcm/components/text/v2/text"
-                        text="&lt;p>Aem Embed Container in iframe mode &lt;/p>"
+                        text="&lt;p>Embed Container in iframe mode &lt;/p>"
                         textIsRich="true"/>
                 <aemform_2092964155
                         jcr:created="{Date}2024-05-02T14:49:42.607+05:30"
