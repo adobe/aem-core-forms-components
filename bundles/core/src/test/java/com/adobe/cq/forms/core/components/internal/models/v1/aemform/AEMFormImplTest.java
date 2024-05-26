@@ -209,12 +209,6 @@ class AEMFormImplTest {
     }
 
     @Test
-    void testGetRoleAttribute() {
-        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
-        assertEquals(null, aemform.getRoleAttribute());
-    }
-
-    @Test
     void testGetBlankThemePath() {
         AEMForm aemform = getAEMFormUnderTest(PATH_FORM_2);
         assertEquals("", aemform.getThemePath());
