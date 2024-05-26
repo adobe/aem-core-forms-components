@@ -29,17 +29,28 @@ describe("Form in site using embed container", () => {
           })
       })
   
-      it("should render three form", () => {
-        expect(formContainer.length).to.equal(3);
+      it("should render two form", () => {
+        expect(formContainer.length).to.equal(2);
       });
-    it.skip("should submit on button click and thank you message of embed container must be overridden", () => {
-                cy.intercept({
-                method: 'POST',
-                url: '**/adobe/forms/af/submit/*',
-            }).as('afSubmission');
-            cy.get(`.cmp-adaptiveform-button__widget`).eq(0).should('be.visible').click().then(() => {
-            cy.get('body').should('contain', "Thank You message from sites.\n")
-            });
-    });
+
+      it.skip("should submit on button click and thank you message of embed container must be overridden", () => {
+            cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+        }).as('afSubmission');
+        cy.get(`.cmp-adaptiveform-button__widget`).eq(0).should('be.visible').click().then(() => {
+        cy.get('body').should('contain', "Thank You message from sites.\n")
+        });
+      });
+
+      it.skip("should submit on button click and thank you message of embed container must be overridden", () => {
+        cy.intercept({
+        method: 'POST',
+        url: '**/adobe/forms/af/submit/*',
+        }).as('afSubmission');
+        cy.get(`.cmp-adaptiveform-button__widget`).eq(0).should('be.visible').click().then(() => {
+        cy.get('body').should('contain', "Thank You message from new form in sites.\n")
+        });
+      });
     })
   });

@@ -87,6 +87,22 @@
                         thankyouMessage="&lt;p>Thank You message from sites.&lt;/p>&#xd;&#xa;"
                         useiframe="false"
                         usePageLocale="true"/>
+                <aemform_2092964156
+                        jcr:created="{Date}2024-05-03T14:49:42.607+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-05-10T15:56:52.091+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        fd:roleAttribute="main"
+                        sling:resourceType="forms-components-examples/components/aemform"
+                        enableFocusOnFirstField="{Boolean}true"
+                        formRef="/content/dam/formsanddocuments/core-components-it/samples/embed/embedformNew"
+                        submitType="pageRefresh"
+                        textIsRich="true"
+                        thankyouConfig="message"
+                        thankyouMessage="&lt;p>Thank You message from new form in sites.&lt;/p>&#xd;&#xa;"
+                        useiframe="false"
+                        usePageLocale="true"/>
             </responsivegrid>
         </root>
     </jcr:content>
