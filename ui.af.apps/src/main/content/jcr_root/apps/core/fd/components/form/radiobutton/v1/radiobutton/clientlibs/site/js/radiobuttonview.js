@@ -171,6 +171,17 @@
                 this.element.setAttribute("data-cmp-required", required);
             }
         }
+
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
+            this.#syncWidgetName();
+        }
+
+        #syncWidgetName() {
+            this.widget.forEach(widget => {
+                widget.setAttribute("name", this.id + "_name");
+            });
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
