@@ -87,5 +87,16 @@ export const customFunctions = {
      * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
      * @returns {void}
      */
-    defaultSubmitErrorHandler: cf.defaultSubmitErrorHandler
+    defaultSubmitErrorHandler: cf.defaultSubmitErrorHandler,
+
+    /**
+     * Fetches the captcha token for the form.
+     *
+     * This function uses the Google reCAPTCHA Enterprise service to fetch the captcha token.
+     *
+     * @async
+     * @param {object} globals - An object containing read-only form instance, read-only target field instance and methods for form modifications.
+     * @returns {string} - The captcha token.
+     */
+    fetchCaptchaToken: cf.fetchCaptchaToken
 };

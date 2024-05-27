@@ -85,12 +85,19 @@ if (typeof window.RecaptchaWidget === 'undefined') {
             const isRecaptchaEnterprise = function () {
                 return recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.version === "enterprise";
             }
+            const isScoreBasedKey = function () {
+                return isRecaptchaEnterprise() && recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.keyType === "score";
+            }
+
             window.onloadRecaptchaCallback = onloadCallbackInternal;
 
             var runtimeLocale = this.#lang;
 
             var scr = document.createElement('script');
-            scr.src = url + "?onload=onloadRecaptchaCallback&render=explicit&hl=" + runtimeLocale;
+            let queryParams = isScoreBasedKey() ? "?render=" + recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.siteKey
+                : "?onload=onloadRecaptchaCallback&render=explicit";
+            queryParams += "&hl=" + runtimeLocale;
+            scr.src = url + queryParams;
             scr.async = true;
             element.appendChild(scr);
         }

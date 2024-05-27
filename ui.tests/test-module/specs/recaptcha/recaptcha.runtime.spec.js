@@ -17,6 +17,7 @@ describe("Form Runtime with Recaptcha Input", () => {
 
     const FT_CLOUD_CONFIG_PROVIDER = "FT_FORMS-8771";
     const pagePath = "content/forms/af/core-components-it/samples/recaptcha/basic.html"
+    const enterprisePagePath = "content/forms/af/core-components-it/samples/recaptcha/enterprisescore.html"
     const bemBlock = 'cmp-adaptiveform-recaptcha'
     const IS = "adaptiveFormRecaptcha"
     const selectors = {
@@ -115,5 +116,24 @@ describe("Form Runtime with Recaptcha Input", () => {
             const id = formContainer._model._children[0].id;
             cy.get(`#${id}`).parent().should("not.have.class", bemBlock);
         })
+    })
+
+    xit("submission should pass for enterprise score based captcha", () => {
+        const secretKey = Cypress.env('RECAPTCHA_ENT_API_KEY');
+        cy.visit("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fentscore").then(x => {
+            cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey).then(x => {
+                cy.get("#shell-propertiespage-doneactivator").click();
+            });
+        });
+        cy.previewForm(enterprisePagePath).then((p) => {
+            formContainer = p;
+        });
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
+            window.grecaptcha.enterprise.execute();
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                cy.get('body').should('contain', "Thank you for submitting the form.\n")
+            })
+        });
     })
 })
