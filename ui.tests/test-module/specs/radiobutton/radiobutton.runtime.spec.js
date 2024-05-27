@@ -180,11 +180,11 @@ describe("Form with Radio Button Input", () => {
     })
 
     it("rich text should render correctly", () => {
-        const [radioButton8, radioButton8FieldView] = Object.entries(formContainer._fields)[7];
-        cy.get(`#${radioButton8}`).find(".cmp-adaptiveform-radiobutton__option").should('have.length', 2);
-        cy.get(`#${radioButton8}`).find(".cmp-adaptiveform-radiobutton__label").contains('Select Animal').should('have.css', 'font-weight', '700');
-        cy.get(`#${radioButton8}`).find(".cmp-adaptiveform-radiobutton__option-label span").contains('Dog').should('have.css', 'font-style', 'italic');
-        cy.get(`#${radioButton8}`).find(".cmp-adaptiveform-radiobutton__option-label span").contains('Cat').should('have.css', 'text-decoration', 'underline solid rgb(50, 50, 50)');
+        const [radioButton9, radioButton9FieldView] = Object.entries(formContainer._fields)[8];
+        cy.get(`#${radioButton9}`).find(".cmp-adaptiveform-radiobutton__option").should('have.length', 2);
+        cy.get(`#${radioButton9}`).find(".cmp-adaptiveform-radiobutton__label").contains('Select Animal').should('have.css', 'font-weight', '700');
+        cy.get(`#${radioButton9}`).find(".cmp-adaptiveform-radiobutton__option-label span").contains('Dog').should('have.css', 'font-style', 'italic');
+        cy.get(`#${radioButton9}`).find(".cmp-adaptiveform-radiobutton__option-label span").contains('Cat').should('have.css', 'text-decoration', 'underline solid rgb(50, 50, 50)');
     });
 
     it("decoration element should not have same class name", () => {
