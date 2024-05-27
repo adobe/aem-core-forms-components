@@ -48,4 +48,11 @@ public interface FormStructureParser {
      * @return true if this resource or one of its children is a form container, else false
      */
     Boolean containsFormContainer();
+
+    /**
+     * @since com.adobe.cq.forms.core.components.models.form 5.4.1
+     *
+     * @return form definition json in Publish view
+     */
+    String getFormDefinition();
 }

@@ -13,8 +13,24 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<div class="form"
+     data-sly-use.container="com.adobe.cq.forms.core.components.models.form.FormContainer"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.formUtil="com.adobe.cq.forms.core.components.models.form.HtlUtil"
+     data-sly-test.isEdgeDeliveryRequest="${formUtil.edgeDeliveryRequest}">
+    <div>
+        <div>
+      <pre>
+          <code>${formstructparser.formDefinition}</code>
+      </pre>
+        </div>
+    </div>
+</div>
+<sly data-sly-test="${!isEdgeDeliveryRequest}">
 <sly data-sly-test="${wcmmode.edit}" data-sly-use.allowed="com.day.cq.wcm.foundation.AllowedComponentList"></sly>
-<form data-sly-use.container="com.adobe.cq.forms.core.components.models.form.FormContainer"
+
+<form data-sly-use.configurationProvider="com.adobe.cq.forms.core.components.models.form.FormConfigurationProvider"
       data-sly-use.grid="com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid"
       data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
       action="${container.metadata.action}"
@@ -24,6 +40,7 @@
       data-cmp-page-lang="${container.containingPageLang}"
       data-cmp-path="${resource.path}"
       class="cmp-adaptiveform-container cmp-container ${wcmmode.edit ? 'cmp-adaptiveform-container--edit' : ''}"
+      data-cmp-custom-functions-module-url="${configurationProvider.customFunctionModuleUrl}"
       dir="${container.languageDirection}"
       method="post">
 
@@ -43,3 +60,4 @@
     </div>
 </form>
 <div data-cmp-adaptiveform-container-loader="${container.id}"></div>
+</sly>

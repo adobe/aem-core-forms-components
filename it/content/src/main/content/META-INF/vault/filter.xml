@@ -7,6 +7,7 @@
     <filter root="/content/dam/formsanddocuments/core-components-it" mode="update"/>
     <filter root="/content/dam/formsanddocuments-fdm/core-components-it" mode="update"/>
     <filter root="/conf/global/settings/workflow/models/core-component-it-test" mode="update"/>
+    <filter root="/conf/global/settings/cloudconfigs/edge-delivery-service-configuration" mode="update"/>
     <filter root="/conf/core-components-it" mode="update"/>
     <filter root="/conf/wknd" mode="update"/>
     <filter root="/conf/datalayerContainer" mode="update"/>
