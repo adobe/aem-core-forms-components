@@ -198,7 +198,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="&lt;p>&lt;b>Select Animal&lt;/b>&lt;/p>"
-                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    sling:resourceType="forms-components-examples/components/form/radiobutton"
                     areOptionsRichText="true"
                     enabled="{Boolean}true"
                     enum="[0,1]"
