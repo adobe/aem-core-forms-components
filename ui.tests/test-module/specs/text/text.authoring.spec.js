@@ -51,11 +51,15 @@ describe('Page - Authoring', function () {
     // Check If Dialog Options Are Visible
     cy.get("[name='./name']")
     .should("exist");
-    cy.get("[name='./dataRef']")
-    .should("exist");
     cy.get("[name='./name']")
      .should("exist");
+    cy.get("[name='./dataRef']")
+        .should("not.exist");
     cy.get("[name='./readOnly']")
+        .should("not.exist");
+    cy.get("[name='./unboundFormElement']")
+        .should("not.exist");
+    cy.get("[name='./dorBindRef']")
         .should("not.exist");
     cy.get('.cmp-adaptiveform-base__istitlerichtext').should('not.exist');
 

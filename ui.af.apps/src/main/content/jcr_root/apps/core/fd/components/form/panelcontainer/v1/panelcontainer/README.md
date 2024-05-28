@@ -24,7 +24,6 @@ Adaptive Form Panel Container component written in HTL.
     * Background images and colors can be enabled through policy configuration.
     * Color swatches for background color can be defined through policy configuration.
     * Background color can be restricted to only allow swatches through policy configuration.
-* Configurable HTML ID attribute.
 * Allowed components can be configured through policy configuration.
 * Style System support.
 * Allows replacing this component with other component (as mentioned below).

@@ -1,76 +1,271 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
-    jcr:primaryType="cq:Page">
+          jcr:primaryType="cq:Page">
     <jcr:content
-        cq:deviceGroups="[mobile/groups/responsive]"
-        cq:lastModified="{Date}2024-03-01T09:52:48.013Z"
-        cq:lastModifiedBy="admin"
-        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
-        jcr:language="en"
-        jcr:primaryType="cq:PageContent"
-        jcr:title="Adaptive Form V2 (IT)"
-        sling:resourceType="forms-components-examples/components/page">
+            cq:deviceGroups="[mobile/groups/responsive]"
+            cq:lastModified="{Date}2024-05-20T06:59:59.759Z"
+            cq:lastModifiedBy="admin"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+            jcr:language="en"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Adaptive Form V2 (IT)"
+            sling:resourceType="forms-components-examples/components/page">
         <guideContainer
-            fd:version="2.1"
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="forms-components-examples/components/form/container"
-            clientLibRef="corecomponent.it.customfunction"
-            fieldType="form"
-            thankYouMessage="Thank you for submitting the form."
-            thankYouOption="message">
-            <textinput
-                jcr:lastModified="{Date}2023-05-26T15:34:29.160+05:30"
-                jcr:lastModifiedBy="admin"
+                fd:version="2.1"
                 jcr:primaryType="nt:unstructured"
-                jcr:title="Text Input 1"
-                sling:resourceType="forms-components-examples/components/form/textinput"
-                autocomplete="off"
-                enabled="{Boolean}true"
-                fieldType="text-input"
-                hideTitle="false"
-                name="textinput1"
-                readOnly="{Boolean}false"
-                textIsRich="[true,true]"
-                unboundFormElement="{Boolean}false"
-                visible="{Boolean}true">
-                <fd:rules
-                    fd:calc="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CALC_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testFunction1&quot;\,&quot;displayName&quot;:&quot;test function 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}\,{&quot;nodeName&quot;:&quot;When&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITIONORALWAYS&quot;\,&quot;choice&quot;:null}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;testFunction1()&quot;\,&quot;eventName&quot;:&quot;Calculate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                sling:resourceType="forms-components-examples/components/form/container"
+                clientLibRef="corecomponent.it.customfunction"
+                fieldType="form"
+                thankYouMessage="Thank you for submitting the form."
+                thankYouOption="message">
+            <textinput
+                    jcr:lastModified="{Date}2023-05-26T15:34:29.160+05:30"
+                    jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
-                    validationStatus="valid"
-                    value="testFunction1()"/>
+                    jcr:title="Text Input 1"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    autocomplete="off"
+                    enabled="{Boolean}true"
+                    fieldType="text-input"
+                    hideTitle="false"
+                    name="textinput1"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:calc="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CALC_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;textinput1&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testFunction1&quot;\,&quot;displayName&quot;:&quot;test function 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}\,{&quot;nodeName&quot;:&quot;When&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITIONORALWAYS&quot;\,&quot;choice&quot;:null}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;testFunction1()&quot;\,&quot;eventName&quot;:&quot;Calculate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"
+                        value="testFunction1()"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </textinput>
             <text
-                jcr:primaryType="nt:unstructured"
-                jcr:title="Text 1"
-                sling:resourceType="forms-components-examples/components/form/text"
-                fieldType="text"
-                name="text1"
-                value="Custom Text"/>
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text 1"
+                    sling:resourceType="forms-components-examples/components/form/text"
+                    fieldType="text"
+                    name="text1"
+                    value="Custom Text"/>
             <button
-                jcr:created="{Date}2024-03-01T09:25:14.489Z"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2024-03-01T09:25:19.075Z"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                jcr:title="Button"
-                sling:resourceType="forms-components-examples/components/form/button"
-                dorExclusion="true"
-                enabled="{Boolean}true"
-                fieldType="button"
-                hideTitle="false"
-                name="button1709285114563"
-                textIsRich="[true,true]"
-                unboundFormElement="{Boolean}false"
-                visible="{Boolean}true">
+                    jcr:created="{Date}2024-03-01T09:25:14.489Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-03-01T09:25:19.075Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Button"
+                    sling:resourceType="forms-components-examples/components/form/button"
+                    dorExclusion="true"
+                    enabled="{Boolean}true"
+                    fieldType="button"
+                    hideTitle="false"
+                    name="button1709285114563"
+                    textIsRich="[true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true">
                 <fd:rules
-                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1709285114563&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1709285114563&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testSubmitFormPreprocessor&quot;\,&quot;displayName&quot;:&quot;testSubmitFormPreprocessor&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testSubmitFormPreprocessor()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                    jcr:primaryType="nt:unstructured"
-                    validationStatus="valid"/>
+                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1709285114563&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1709285114563&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testSubmitFormPreprocessor&quot;\,&quot;displayName&quot;:&quot;testSubmitFormPreprocessor&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testSubmitFormPreprocessor()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
                 <fd:events
-                    jcr:primaryType="nt:unstructured"
-                    click="[testSubmitFormPreprocessor()]"/>
+                        jcr:primaryType="nt:unstructured"
+                        click="[testSubmitFormPreprocessor()]"/>
             </button>
+            <textinput_1260524311
+                    jcr:created="{Date}2024-05-20T06:58:57.360Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-05-20T06:58:57.360Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input"
+                    name="textinput_12605243111716188337417"/>
+            <button_289594588
+                    jcr:created="{Date}2024-05-20T06:40:35.236Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-05-20T06:40:50.697Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Import Data Button"
+                    sling:resourceType="forms-components-examples/components/form/button"
+                    dorExclusion="true"
+                    enabled="{Boolean}true"
+                    fieldType="button"
+                    name="import_data_button"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer1.import_data_button&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;import_data_button&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testImportData&quot;\,&quot;displayName&quot;:&quot;testImportData&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testImportData()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="[testImportData()]"/>
+            </button_289594588>
+            <panelcontainer
+                    jcr:created="{Date}2024-05-20T06:31:39.115Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-05-20T06:31:44.875Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Panel"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    hideTitle="false"
+                    name="panelcontainer1"
+                    readOnly="{Boolean}false"
+                    repeatable="false"
+                    textIsRich="[true,true,true]"
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}false">
+                <emailinput
+                        jcr:created="{Date}2024-05-20T06:33:12.164Z"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-05-20T06:33:12.164Z"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Email Input"
+                        sling:resourceType="forms-components-examples/components/form/emailinput"
+                        autocomplete="email"
+                        fieldType="email"
+                        name="emailinput1716186792262"
+                        pattern="^(([^&lt;>()\\[\\]\\\\.,;:\\s@&quot;]+(\\.[^&lt;>()\\[\\]\\\\.,;:\\s@&quot;]+)*)|(&quot;.+&quot;))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$"/>
+                <textinput
+                        jcr:created="{Date}2024-05-20T06:31:50.789Z"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-05-20T06:31:54.467Z"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1716186710837"/>
+                <button_222097558
+                        jcr:created="{Date}2024-05-20T06:39:34.198Z"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-05-20T06:41:09.358Z"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Set Focus Button"
+                        sling:resourceType="forms-components-examples/components/form/button"
+                        dorExclusion="true"
+                        enabled="{Boolean}true"
+                        fieldType="button"
+                        name="set_focus_button"
+                        textIsRich="[true,true,true]"
+                        unboundFormElement="{Boolean}false"
+                        visible="{Boolean}true">
+                    <fd:rules
+                            fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer1.set_focus_button&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;set_focus_button&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testSetFocus&quot;\,&quot;displayName&quot;:&quot;testSetFocus&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;OBJECT|AFCOMPONENT&quot;\,&quot;name&quot;:&quot;emailField&quot;\,&quot;description&quot;:&quot;emailField&quot;\,&quot;isMandatory&quot;:true}]\,&quot;impl&quot;:&quot;$0($1)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer1.emailinput1716186792262&quot;\,&quot;displayName&quot;:&quot;Email Input&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Panel/Email Input/&quot;\,&quot;name&quot;:&quot;emailinput1716186792262&quot;\,&quot;parent&quot;:&quot;$form.panelcontainer1&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testSetFocus(emailinput1716186792262)&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                            jcr:primaryType="nt:unstructured"
+                            validationStatus="valid"/>
+                    <fd:events
+                            jcr:primaryType="nt:unstructured"
+                            click="[testSetFocus(emailinput1716186792262)]"/>
+                </button_222097558>
+                <button_1861385374
+                        jcr:created="{Date}2024-05-20T06:40:08.053Z"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-05-20T06:41:02.695Z"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Set Focus Option Button "
+                        sling:resourceType="forms-components-examples/components/form/button"
+                        dorExclusion="true"
+                        enabled="{Boolean}true"
+                        fieldType="button"
+                        name="set_focus_option_button"
+                        textIsRich="[true,true,true]"
+                        unboundFormElement="{Boolean}false"
+                        visible="{Boolean}true">
+                    <fd:rules
+                            fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer1.set_focus_option_button&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;set_focus_option_button&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testSetFocusWithFocusOption&quot;\,&quot;displayName&quot;:&quot;testSetFocusWithFocusOption&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;OBJECT|AFCOMPONENT&quot;\,&quot;name&quot;:&quot;emailField&quot;\,&quot;description&quot;:&quot;emailField&quot;\,&quot;isMandatory&quot;:true}\,{&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;focusOption&quot;\,&quot;description&quot;:&quot;focusOption&quot;\,&quot;isMandatory&quot;:true}]\,&quot;impl&quot;:&quot;$0($1\,$2)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer1.emailinput1716186792262&quot;\,&quot;displayName&quot;:&quot;Email Input&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Panel/Email Input/&quot;\,&quot;name&quot;:&quot;emailinput1716186792262&quot;\,&quot;parent&quot;:&quot;$form.panelcontainer1&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;nextItem&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testSetFocusWithFocusOption(emailinput1716186792262\,'nextItem')&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                            jcr:primaryType="nt:unstructured"
+                            validationStatus="valid"/>
+                    <fd:events
+                            jcr:primaryType="nt:unstructured"
+                            click="[testSetFocusWithFocusOption(emailinput1716186792262\,'nextItem')]"/>
+                </button_1861385374>
+            </panelcontainer>
+            <panelcontainer_1347457265
+                    jcr:created="{Date}2024-05-20T06:38:05.902Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-05-20T06:49:37.341Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Repeatable Panel"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    hideTitle="false"
+                    maxOccur="3"
+                    minOccur="2"
+                    name="panelcontainer2"
+                    readOnly="{Boolean}false"
+                    repeatable="true"
+                    textIsRich="[true,true,true]"
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}false">
+                <textinput
+                        jcr:created="{Date}2024-05-20T06:38:20.457Z"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-05-20T06:45:05.732Z"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1716187100495"/>
+            </panelcontainer_1347457265>
+            <button_118352608
+                    jcr:created="{Date}2024-05-20T06:38:31.566Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-05-20T06:38:52.226Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Add Instance Button"
+                    sling:resourceType="forms-components-examples/components/form/button"
+                    dorExclusion="true"
+                    enabled="{Boolean}true"
+                    fieldType="button"
+                    name="add_instance_button"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer1.add_instance_button&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;add_instance_button&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testAddInstance&quot;\,&quot;displayName&quot;:&quot;testAddInstance&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testAddInstance()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="[testAddInstance()]"/>
+            </button_118352608>
+            <button_476277589
+                    jcr:created="{Date}2024-05-20T06:38:59.297Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-05-20T06:39:20.900Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Remove Instance Button"
+                    sling:resourceType="forms-components-examples/components/form/button"
+                    dorExclusion="true"
+                    enabled="{Boolean}true"
+                    fieldType="button"
+                    name="remove_instance_button"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.panelcontainer1.remove_instance_button&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;remove_instance_button&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testRemoveInstance&quot;\,&quot;displayName&quot;:&quot;testRemoveInstance&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testRemoveInstance()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="[testRemoveInstance()]"/>
+            </button_476277589>
         </guideContainer>
     </jcr:content>
 </jcr:root>
