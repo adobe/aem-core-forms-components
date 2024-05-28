@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+import 'cypress-wait-until';
+
 describe("Form Runtime with Recaptcha Input", () => {
 
     const FT_CLOUD_CONFIG_PROVIDER = "FT_FORMS-8771";
@@ -118,21 +120,43 @@ describe("Form Runtime with Recaptcha Input", () => {
         })
     })
 
-    xit("submission should pass for enterprise score based captcha", () => {
+    function updateEnterpriseConfig(score) {
         const secretKey = Cypress.env('RECAPTCHA_ENT_API_KEY');
         cy.visit("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fentscore").then(x => {
-            cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey).then(x => {
-                cy.get("#shell-propertiespage-doneactivator").click();
-            });
-        });
+            cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey);
+            cy.get('#recaptcha-cloudconfiguration-threshold-score').clear().type(score);
+            cy.get("#shell-propertiespage-doneactivator").click();
+        })
+    }
+
+    it("submission should pass for enterprise score based captcha",() => {
+        updateEnterpriseConfig(0.5);
         cy.previewForm(enterprisePagePath).then((p) => {
             formContainer = p;
         });
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
-            window.grecaptcha.enterprise.execute();
             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                cy.get('body').should('contain', "Thank you for submitting the form.\n")
+                // Need to submit multiple times until the form is submitted successfully
+                // Due to below error while validating recaptcha enterprise
+                // https://cloud.google.com/recaptcha-enterprise/docs/faq#returned_browser_error_when_creating_an_assessment_what_should_i_do_about_this
+                cy.waitUntil(() =>
+                    cy.location('href').then((href) => {
+                        if (href.includes("guideContainer.guideThankYouPage.html")) {
+                            return true;
+                        }
+                        else {
+                            cy.get(`.cmp-adaptiveform-button__widget`).click().then(() => {
+                                return false;
+                            });
+                        }
+                    }),
+                    {
+                        errorMsg: 'The form with recaptcha enterprise was not submitted successfully',
+                        timeout: 50000,
+                        interval: 5000
+                    }
+                );
             })
         });
     })
