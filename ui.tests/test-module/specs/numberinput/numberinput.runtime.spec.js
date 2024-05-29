@@ -222,24 +222,6 @@ describe("Form with Number Input", () => {
         })
     })
 
-    it("integer type validation for required field", () => {
-        const [numberInput9, numberInput9FieldView] = Object.entries(formContainer._fields)[9];
-        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[10];
-
-        cy.get(`#${submitbutton1}`).find("button").click();
-        cy.get(`#${numberInput9}`).find("input").then(x => {
-            cy.get(`#${numberInput9}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"This is required integer numberinput");
-        });
-
-        cy.get(`#${numberInput9}`).find("input").clear().type("1234").blur().then(x => {
-            cy.get(`#${numberInput9}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"");
-        });
-
-        cy.get(`#${numberInput9}`).find("input").clear().blur().then(x => {
-            cy.get(`#${numberInput9}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"This is required integer numberinput");
-        });
-    });
-
     it(" should add filled/empty class at container div ", () => {
       const [numberInput7, numberInput7FieldView] = Object.entries(formContainer._fields)[6];
       const input = "11.22";
@@ -266,6 +248,42 @@ describe("Form with Number Input", () => {
                 cy.get(`#${numberInput}`).find('input').should('have.value', model.getState().displayValue);
             })
         }
+    });
+})
+
+describe("Form with Number Input Required Validation", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/numberinput/validation.html";
+    let formContainer = null;
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        });
+    });
+
+    const validateRequiredMessage = (id, submitButton, errorMessage) => {
+        cy.get(`#${submitButton}`).find("button").click();
+        cy.get(`#${id}`).find("input").then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',errorMessage);
+        });
+
+        cy.get(`#${id}`).find("input").clear().type("1234").blur().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"");
+        });
+
+        cy.get(`#${id}`).find("input").clear().blur().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',errorMessage);
+        });
+    }
+
+
+    it("integer type validation for required field", () => {
+        const [numberInput1] = Object.entries(formContainer._fields)[0];
+        const [numberInput2] = Object.entries(formContainer._fields)[1];
+        const [submitbutton] = Object.entries(formContainer._fields)[2];
+        validateRequiredMessage(numberInput1, submitbutton, "This is required numberinput");
+        validateRequiredMessage(numberInput2, submitbutton, "This is required integer numberinput");
     });
 })
 
