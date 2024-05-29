@@ -37,7 +37,7 @@
     <div class="cmp-adaptiveform-recaptcha__widget"
          name="${recaptcha.name}"
          required="${recaptcha.required}"></div>
-    <div data-sly-test="${recaptcha.properties['fd:captcha'].config.keyType != 'score'}">
+    <div data-sly-test="${recaptcha && recaptcha.properties && recaptcha.properties['fd:captcha'] && recaptcha.properties['fd:captcha'].config && recaptcha.properties['fd:captcha'].config.keyType != 'score'}">
          <div data-sly-call="${errorMessage.errorMessage @componentId=recaptcha.id, bemBlock='cmp-adaptiveform-recaptcha'}" data-sly-unwrap></div>
     </div>
 </div>

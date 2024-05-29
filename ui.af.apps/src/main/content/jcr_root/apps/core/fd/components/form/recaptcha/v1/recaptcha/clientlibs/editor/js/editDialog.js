@@ -19,8 +19,6 @@
     var EDIT_DIALOG = ".cmp-adaptiveform-recaptcha__editdialog",
         RECAPTCHA_CONFIG = EDIT_DIALOG + " .cmp-adaptiveform-recaptcha__configuration",
         RECAPTCHA_SIZE = EDIT_DIALOG + " .cmp-adaptiveform-recaptcha__size",
-        RECAPTCHA_SIZE_NORMAL_RADIO_BTN = "coral-radio[name='./recaptchaSize'][value='normal']",
-        RECAPTCHA_SIZE_COMPACT_RADIO_BTN = "coral-radio[name='./recaptchaSize'][value='compact']",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -41,19 +39,11 @@
         const selectedConfig = recaptchaConfigElement.querySelector("coral-select-item[selected]");
         const selectedVersion = selectedConfig.getAttribute("data-version");
         const selectedKeyType = selectedConfig.getAttribute("data-key.type");
-        let disableSize = false;
+        const inputs = recaptchaSize.querySelectorAll('input');
         if (selectedVersion === "enterprise" && selectedKeyType === "score") {
-            disableSize = true;
-        }
-        toggleFieldDisable(recaptchaSize.querySelector(RECAPTCHA_SIZE_NORMAL_RADIO_BTN), disableSize);
-        toggleFieldDisable(recaptchaSize.querySelector(RECAPTCHA_SIZE_COMPACT_RADIO_BTN), disableSize);
-    }
-
-    function toggleFieldDisable(field, disable) {
-        if (disable) {
-            field.setAttribute("disabled", true);
+            inputs.forEach(input => input.setAttribute("disabled", true));
         } else {
-            field.removeAttribute("disabled");
+            inputs.forEach(input => input.removeAttribute("disabled"));
         }
     }
 
