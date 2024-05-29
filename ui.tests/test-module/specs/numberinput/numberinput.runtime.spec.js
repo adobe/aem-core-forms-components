@@ -222,6 +222,24 @@ describe("Form with Number Input", () => {
         })
     })
 
+    it("integer type validation for required field", () => {
+        const [numberInput9, numberInput9FieldView] = Object.entries(formContainer._fields)[9];
+        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[10];
+
+        cy.get(`#${submitbutton1}`).find("button").click();
+        cy.get(`#${numberInput9}`).find("input").then(x => {
+            cy.get(`#${numberInput9}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"This is required integer numberinput");
+        });
+
+        cy.get(`#${numberInput9}`).find("input").clear().type("1234").blur().then(x => {
+            cy.get(`#${numberInput9}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"");
+        });
+
+        cy.get(`#${numberInput9}`).find("input").clear().blur().then(x => {
+            cy.get(`#${numberInput9}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"This is required integer numberinput");
+        });
+    });
+
     it(" should add filled/empty class at container div ", () => {
       const [numberInput7, numberInput7FieldView] = Object.entries(formContainer._fields)[6];
       const input = "11.22";

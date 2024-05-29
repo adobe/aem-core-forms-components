@@ -78,8 +78,7 @@
                  this.#regex = new RegExp(localeStr, "g");
                  this.#engRegex = new RegExp(engStr, "g");
              }
-             //initialise the model by the existing value entered in the widget (in case data was entered before initialisation)
-             //this.#model.value = this.getValue(this.#widget.value);
+
              // change the input type to text for patterns
              this.#widget.setAttribute("type", "text");
              this.#attachEventHandlers(widget);
