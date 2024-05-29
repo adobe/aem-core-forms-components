@@ -122,7 +122,7 @@ describe("Form Runtime with Recaptcha Input", () => {
 
     function updateEnterpriseConfig(score) {
         const secretKey = Cypress.env('RECAPTCHA_ENT_API_KEY');
-        cy.visit("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fentscore").then(x => {
+        cy.openPage("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fentscore").then(x => {
             cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey);
             cy.get('#recaptcha-cloudconfiguration-threshold-score').clear().type(score);
             cy.get("#shell-propertiespage-doneactivator").click();
