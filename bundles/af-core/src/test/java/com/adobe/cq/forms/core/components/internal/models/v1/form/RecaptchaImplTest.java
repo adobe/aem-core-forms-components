@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Map;
+
 import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,8 +34,6 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
-
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -138,6 +138,6 @@ public class RecaptchaImplTest {
         Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         Map<String, Object> captchaProps = recaptcha.getCaptchaProperties();
         String enterpriseUrl = (String) captchaProps.get("uri");
-        assertEquals("https://www.recaptcha.net//recaptcha/enterprise.js", enterpriseUrl);
+        assertEquals("https://www.recaptcha.net/recaptcha/enterprise.js", enterpriseUrl);
     }
 }
