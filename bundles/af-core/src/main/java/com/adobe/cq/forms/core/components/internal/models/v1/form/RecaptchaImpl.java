@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -74,11 +75,15 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
+    public static final String RECAPTCHA_ENTERPRISE_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/enterprise.js";
+
     private static final String RECAPTCHA_SITE_KEY = "siteKey";
     private static final String RECAPTCHA_URI = "uri";
     private static final String RECAPTCHA_SIZE = "size";
     private static final String RECAPTCHA_THEME = "theme";
     private static final String RECAPTCHA_TYPE = "type";
+    private static final String RECAPTCHA_VERSION = "version";
+    private static final String RECAPTCHA_KEYTYPE = "keyType";
 
     @Override
     @JsonIgnore
@@ -102,18 +107,28 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
         String siteKey = null;
+        String version = null;
+        String keyType = null;
         resource = resourceResolver.getResource(this.getPath());
         if (resource != null && cloudConfigurationProvider != null) {
             reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
             if (reCaptchaConfiguration != null) {
                 siteKey = reCaptchaConfiguration.siteKey();
+                version = reCaptchaConfiguration.version();
+                keyType = reCaptchaConfiguration.keyType();
             }
         }
         customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
-        customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
+        if (StringUtils.isNotEmpty(version) && version.equals("enterprise")) {
+            customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_ENTERPRISE_DEFAULT_URL);
+        } else {
+            customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
+        }
         customCaptchaProperties.put(RECAPTCHA_SIZE, getSize());
         customCaptchaProperties.put(RECAPTCHA_THEME, "light");
         customCaptchaProperties.put(RECAPTCHA_TYPE, "image");
+        customCaptchaProperties.put(RECAPTCHA_VERSION, version);
+        customCaptchaProperties.put(RECAPTCHA_KEYTYPE, keyType);
 
         return customCaptchaProperties;
 

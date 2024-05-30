@@ -63,6 +63,30 @@ describe('Page - Authoring', function () {
              .should("exist");
 
         // Checking some dynamic behaviours
+        cy.get(".cmp-adaptiveform-recaptcha__configuration").click().then(() => {
+            cy.get("coral-selectlist-item[value='entScore']").click();
+            cy.get("input[name='./recaptchaSize'][value='normal']").should("be.disabled");
+            cy.get("input[name='./recaptchaSize'][value='compact']").should("be.disabled");
+        })
+        cy.get('.cq-dialog-submit').click();
+        cy.reload();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + recaptchaEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("input[name='./recaptchaSize'][value='normal']").should("be.disabled");
+        cy.get("input[name='./recaptchaSize'][value='compact']").should("be.disabled");
+
+
+        cy.get(".cmp-adaptiveform-recaptcha__configuration").click().then(() => {
+            cy.get("coral-selectlist-item[value='v2checkbox']").click();
+            cy.get("input[name='./recaptchaSize'][value='normal']").should("be.enabled");
+            cy.get("input[name='./recaptchaSize'][value='compact']").should("be.enabled");
+        })
+        cy.get('.cq-dialog-submit').click();
+        cy.reload();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + recaptchaEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("input[name='./recaptchaSize'][value='normal']").should("be.enabled");
+        cy.get("input[name='./recaptchaSize'][value='compact']").should("be.enabled");
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(recaptchaDrop);
     }
