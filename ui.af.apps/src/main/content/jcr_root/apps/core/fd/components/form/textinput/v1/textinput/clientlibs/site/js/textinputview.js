@@ -66,11 +66,13 @@
         }
 
         setModel(model) {
+            console.log(`setting model for ${model.qualifiedName}`)
             super.setModel(model);
             if (this.widget.value !== '') {
                 this._model.value = this.widget.value;
             }
             this.widget.addEventListener('blur', (e) => {
+                console.log(`blur event on ${model.qualifiedName}`)
                 this._model.value = e.target.value;
                 this.setWidgetValueToDisplayValue();
                 this.setInactive();

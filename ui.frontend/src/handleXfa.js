@@ -20,5 +20,7 @@ export function loadXfa(formdom, renderContext) {
     xfalib.script.XfaModelRegistry.prototype.createModel(xfaJson);
     //initialize Acrobat specific scripts
     new xfalib.acrobat.Acrobat();
+    // xfalib.runtime.xfa.form._initialize(true);
+    $(window).trigger("XfaInitialized");
     // todo: sync props between xfa and af model
 }
