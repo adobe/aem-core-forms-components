@@ -9,7 +9,7 @@
             guide="1"
             type="guide">
         <metadata
-                cq:conf="/conf/global"
+                cq:conf="/conf/core-components-it"
                 fd:version="2.1"
                 jcr:language="en"
                 jcr:primaryType="nt:unstructured"
