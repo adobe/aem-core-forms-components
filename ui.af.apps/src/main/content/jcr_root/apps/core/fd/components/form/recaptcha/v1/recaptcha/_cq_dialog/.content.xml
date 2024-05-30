@@ -18,6 +18,7 @@
         jcr:primaryType="nt:unstructured"
         jcr:title="Adaptive Form reCAPTCHA"
         sling:resourceType="cq/gui/components/authoring/dialog"
+        extraClientlibs="[core.forms.components.recaptcha.v1.editor]"
         helpPath=""
         trackingFeature="core-components:adaptiveform-recaptcha:v1">
     <content
@@ -59,6 +60,7 @@
                                                     fieldLabel="Configuration Settings"
                                                     emptyText="Select CAPTCHA Configuration"
                                                     sling:orderBefore="visible"
+                                                    granite:class="cmp-adaptiveform-recaptcha__configuration"
                                                     required="{Boolean}true"
                                                     name="./rcCloudServicePath">
                                                 <datasource
@@ -73,6 +75,7 @@
                                                     fieldDescription="Represent data-size attribute of Google reCAPTCHA (https://developers.google.com/recaptcha/docs/invisible)"
                                                     fieldLabel="Type"
                                                     sling:orderBefore="visible"
+                                                    granite:class="cmp-adaptiveform-recaptcha__size"
                                                     name="./recaptchaSize"
                                                     text="Captcha Size">
                                                 <items jcr:primaryType="nt:unstructured">
