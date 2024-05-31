@@ -281,9 +281,20 @@ describe("Form with Number Input Required Validation", () => {
     it("integer type validation for required field", () => {
         const [numberInput1] = Object.entries(formContainer._fields)[0];
         const [numberInput2] = Object.entries(formContainer._fields)[1];
-        const [submitbutton] = Object.entries(formContainer._fields)[2];
+        const [submitbutton] = Object.entries(formContainer._fields)[3];
         validateRequiredMessage(numberInput1, submitbutton, "This is required numberinput");
         validateRequiredMessage(numberInput2, submitbutton, "This is required integer numberinput");
+    });
+
+    it("check value entered before model initialization", () => {
+        const [numberInput3, numberInput3FieldView] = Object.entries(formContainer._fields)[2];
+        const input = "1212";
+        let model = numberInput3FieldView.getModel();
+        expect(Number(model.getState().value)).to.equal(Number(10));
+
+        cy.get(`#${numberInput3}`).find("input").clear().type(input).blur().then(x => {
+            expect(Number(model.getState().value)).to.equal(Number(input));
+        })
     });
 })
 

@@ -55,6 +55,22 @@
                     required="true"
                     type="integer"
                     visible="{Boolean}true"/>
+            <numberinput3
+                    jcr:lastModified="{Date}2023-01-30T15:58:08.713+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Number Input 3"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    default="10"
+                    enabled="{Boolean}true"
+                    fieldType="number-input"
+                    hideTitle="false"
+                    mandatoryMessage="mandatory message!!!"
+                    name="numberinput3"
+                    readOnly="{Boolean}false"
+                    required="true"
+                    type="integer"
+                    visible="{Boolean}true"/>
             <submit
                     jcr:lastModified="{Date}2023-06-22T17:28:46.456+05:30"
                     jcr:lastModifiedBy="admin"
