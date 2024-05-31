@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.adobe.cq.forms.core.components.internal.form.FormWhitelist;
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
 
@@ -37,15 +38,15 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ENFORCE_ENUM)
     @Default(booleanValues = true)
     private boolean enforceEnum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ENUM)
     @Nullable
     protected String[] enums; // todo: this needs to be thought through ?
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ENUM_NAMES)
     @Nullable
     protected String[] enumNames;
 

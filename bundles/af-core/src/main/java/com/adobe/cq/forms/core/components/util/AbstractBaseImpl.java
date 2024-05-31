@@ -31,6 +31,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.cq.forms.core.components.internal.form.FormWhitelist;
 import com.adobe.cq.forms.core.components.models.form.AssistPriority;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
@@ -45,85 +46,79 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public abstract class AbstractBaseImpl extends AbstractFormComponentImpl implements Base, BaseConstraint {
 
-    private static final String PN_DESCRIPTION = "description";
-
-    private static final String PN_TOOLTIP = "tooltip";
-
-    private static final String PN_VIEWTYPE = "fd:viewType";
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_TEMPLATE_REF)
     @Nullable
     protected String dorTemplateRef;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_TYPE)
     @Nullable
     protected String dorType;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    @Named("fd:formtype")
+    @Named(FormWhitelist.PN_DOR_TEMPLATE_TYPE)
     protected String dorTemplateType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_DESCRIPTION)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DESCRIPTION)
     @Nullable
     protected String description; // long description as per current spec
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_TOOLTIP)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_TOOLTIP)
     @Nullable
     protected String tooltip;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "tooltipVisible")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_TOOLTIP_VISIBLE)
     @Default(booleanValues = false)
     protected boolean tooltipVisible;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "type") // needs to be implemented in dialog
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_TYPE) // needs to be implemented in dialog
     @Nullable
     protected String typeJcr; // todo: note this should never be array, we infer array types based on other metadata
     protected Type type;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_VALIDATION_EXPRESSION)
     @Nullable
     protected String validationExpression;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "required")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_REQUIRED)
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean required;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "assistPriority")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ASSIST_PRIORITY)
     @Nullable
     protected String assistPriorityJcr;
     private AssistPriority assistPriority;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "custom")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_CUSTOM_ASSIST_PRIORITY)
     @Nullable
     protected String customAssistPriorityMsg;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ENABLED)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean enabled;
 
     /** Adding in base since it can also be used for fields and panels **/
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_REPEATABLE)
     protected Boolean repeatable;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MIN_OCCUR)
     protected Integer minOccur;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MAX_OCCUR)
     protected Integer maxOccur;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MIN_ITEMS)
     protected Integer minItems;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MAX_ITEMS)
     protected Integer maxItems;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_LANG)
     protected String lang;
 
     @Nullable
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_VIEWTYPE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_VIEWTYPE)
     protected String viewType;
 
     /** End **/
@@ -156,7 +151,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     @Override
     public @Nullable String getTooltip() {
-        return translate(PN_TOOLTIP, tooltip);
+        return translate(FormWhitelist.PN_TOOLTIP, tooltip);
     }
 
     @Override
@@ -228,7 +223,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Override
     @Nullable
     public String getDescription() {
-        return translate(PN_DESCRIPTION, description);
+        return translate(FormWhitelist.PN_DESCRIPTION, description);
     }
 
     /**

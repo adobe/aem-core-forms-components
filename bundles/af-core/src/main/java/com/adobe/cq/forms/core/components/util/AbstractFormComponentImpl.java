@@ -19,8 +19,10 @@ import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -31,6 +33,7 @@ import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
+import javax.inject.Named;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,6 +52,7 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.FormWhitelist;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -66,40 +70,41 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DATAREF)
     @Nullable
     protected String dataRef;
 
     // mandatory property else adapt should fail for adaptive form components
-    @ValueMapValue(name = "fieldType")
+    @ValueMapValue(name = FormWhitelist.PN_FIELDTYPE)
     protected String fieldTypeJcr;
     private FieldType fieldType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_NAME)
     @Nullable
     protected String name;
 
     @ValueMapValue
+    @Named(FormWhitelist.PN_VALUE)
     @Default(values = "")
     protected String value;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_VISIBLE)
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean visible;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_UNBOUND_FORM_ELEMENT)
     @Nullable
     protected Boolean unboundFormElement;
 
     @SlingObject
     private Resource resource;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_EXCLUSION)
     @Default(booleanValues = false)
     protected boolean dorExclusion;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_COLSPAN)
     @Nullable
     protected String dorColspan;
 
@@ -110,7 +115,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @since com.adobe.cq.forms.core.components.util 4.0.0
      */
     @JsonIgnore
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorBindRef")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_BINDREF)
     @Nullable
     protected String dorBindRef;
 
@@ -483,14 +488,31 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
     private Map<String, String> getCustomProperties() {
+        Map<String, String> customProperties = new HashMap<>();
+        Map<String, String> templateBasedCustomProperties;
+        List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
+
+        List<String> whitelistedProperties = FormWhitelist.getNodeProperties();
+        ValueMap resouceMap = resource.getValueMap();
+        Map<String, String> nodeBasedCustomProperties = resouceMap.entrySet()
+            .stream()
+            .filter(entry -> !whitelistedProperties.contains(entry.getKey())
+                && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
+            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().toString()));
+
+        nodeBasedCustomProperties.forEach(customProperties::putIfAbsent);
         try {
-            return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
+            templateBasedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
                 .map(CustomPropertyInfo::getProperties)
                 .orElse(Collections.emptyMap());
         } catch (NoClassDefFoundError e) {
             logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon. Returning an empty map.");
             return Collections.emptyMap();
         }
+        if (!templateBasedCustomProperties.isEmpty()) {
+            templateBasedCustomProperties.forEach(customProperties::putIfAbsent);
+        }
+        return customProperties;
     }
 
     @Override
