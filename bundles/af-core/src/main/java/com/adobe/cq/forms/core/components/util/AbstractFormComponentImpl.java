@@ -493,8 +493,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
 
         List<String> whitelistedProperties = FormWhitelist.getNodeProperties();
-        ValueMap resouceMap = resource.getValueMap();
-        Map<String, String> nodeBasedCustomProperties = resouceMap.entrySet()
+        ValueMap resourceMap = resource.getValueMap();
+        Map<String, String> nodeBasedCustomProperties = resourceMap.entrySet()
             .stream()
             .filter(entry -> !whitelistedProperties.contains(entry.getKey())
                 && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
