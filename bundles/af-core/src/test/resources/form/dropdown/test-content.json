@@ -100,8 +100,7 @@
     "enum": [
       "Owl",
       "Wolf"
-    ],
-    ":type": "forms-components-examples/components/form/dropdown"
+    ]
   },
   "dropdown-duplicate-enum": {
     "id": "dropdown-076f3bd737",

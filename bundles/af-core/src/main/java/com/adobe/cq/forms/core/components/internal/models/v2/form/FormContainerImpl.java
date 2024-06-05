@@ -44,6 +44,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
@@ -77,38 +78,38 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private SlingHttpServletRequest request;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_THANK_YOU_MSG_V2)
     @Nullable
     private String thankYouMessage;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_THANK_YOU_OPTION)
     @Nullable
     private String thankYouOption;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CLIENTLIB_REF)
     @Nullable
     private String clientLibRef;
 
     protected String contextPath = StringUtils.EMPTY;
     private boolean formDataEnabled = false;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TITLE)
     @Nullable
     private String title;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_REDIRECT)
     @Nullable
     private String redirect;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_PREFILL_SERVICE)
     @Nullable
     private String prefillService;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATA)
     @Nullable
     private String data;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
 

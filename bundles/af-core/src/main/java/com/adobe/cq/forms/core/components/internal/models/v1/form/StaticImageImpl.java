@@ -33,6 +33,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.day.cq.wcm.foundation.Image;
@@ -54,19 +55,19 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @SlingObject
     private Resource resource;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ALT_TEXT)
     @Nullable
     protected String altText;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_IMG_SRC)
     @Nullable
     protected String imageSrc;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "description")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DESCRIPTION)
     @org.jetbrains.annotations.Nullable
     protected String description; // long description as per current spec
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fileReference")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FILE_REF)
     @Nullable
     protected String fileReference;
 

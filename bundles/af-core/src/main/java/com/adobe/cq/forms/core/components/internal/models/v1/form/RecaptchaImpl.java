@@ -38,6 +38,7 @@ import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -63,12 +64,12 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CloudConfigurationProvider cloudConfigurationProvider;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CLOUD_SERVICE_PATH)
     @JsonIgnore
     @Named("rcCloudServicePath")
     protected String cloudServicePath;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SIZE)
     @JsonIgnore
     @Named("recaptchaSize")
     protected String size;

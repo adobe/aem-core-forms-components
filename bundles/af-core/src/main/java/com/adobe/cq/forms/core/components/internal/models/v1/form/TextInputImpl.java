@@ -31,6 +31,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
@@ -48,19 +49,19 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     // type number and date are implemented in sling model as per crispr specification
     // but it is not supported in AEM dialogs
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MULTILINE)
     @Default(booleanValues = false)
     protected boolean multiLine;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FORMAT)
     @Nullable
     protected String format;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "pattern")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_PATTERN)
     @Nullable
     protected String pattern;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_AUTOCOMPLETE)
     @Nullable
     protected String autocomplete;
 

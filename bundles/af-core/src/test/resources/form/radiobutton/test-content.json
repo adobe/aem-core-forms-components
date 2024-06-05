@@ -97,8 +97,7 @@
     "enum": [
       "0",
       "1"
-    ],
-    ":type": "forms-components-examples/components/form/radiobutton"
+    ]
   },
   "radiobutton-duplicate-enum": {
     "id": "dropdown-076f3bd737",

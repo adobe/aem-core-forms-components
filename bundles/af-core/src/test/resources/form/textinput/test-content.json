@@ -129,8 +129,7 @@
         "dorExclusion": false
       },
       "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/textinput"
-    },
-    ":type": "forms-components-examples/components/form/textinput"
+    }
   },
   "textinput_unboundFormElement" : {
     "jcr:primaryType": "nt:unstructured",

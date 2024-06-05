@@ -52,7 +52,7 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
-import com.adobe.cq.forms.core.components.internal.form.FormWhitelist;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -70,41 +70,40 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DATAREF)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATAREF)
     @Nullable
     protected String dataRef;
 
     // mandatory property else adapt should fail for adaptive form components
-    @ValueMapValue(name = FormWhitelist.PN_FIELDTYPE)
+    @ValueMapValue(name = ReservedProperties.PN_FIELDTYPE)
     protected String fieldTypeJcr;
     private FieldType fieldType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_NAME)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_NAME)
     @Nullable
     protected String name;
 
-    @ValueMapValue
-    @Named(FormWhitelist.PN_VALUE)
+    @ValueMapValue(name = ReservedProperties.PN_VALUE)
     @Default(values = "")
     protected String value;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_VISIBLE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VISIBLE)
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean visible;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_UNBOUND_FORM_ELEMENT)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_UNBOUND_FORM_ELEMENT)
     @Nullable
     protected Boolean unboundFormElement;
 
     @SlingObject
     private Resource resource;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_EXCLUSION)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUSION)
     @Default(booleanValues = false)
     protected boolean dorExclusion;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_COLSPAN)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_COLSPAN)
     @Nullable
     protected String dorColspan;
 
@@ -115,7 +114,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @since com.adobe.cq.forms.core.components.util 4.0.0
      */
     @JsonIgnore
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_BINDREF)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_BINDREF)
     @Nullable
     protected String dorBindRef;
 
@@ -492,11 +491,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         Map<String, String> templateBasedCustomProperties;
         List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
 
-        List<String> whitelistedProperties = FormWhitelist.getNodeProperties();
+        List<String> reservedProperties = ReservedProperties.getNodeProperties();
         ValueMap resourceMap = resource.getValueMap();
         Map<String, String> nodeBasedCustomProperties = resourceMap.entrySet()
             .stream()
-            .filter(entry -> !whitelistedProperties.contains(entry.getKey())
+            .filter(entry -> entry.getValue() instanceof String
+                && !reservedProperties.contains(entry.getKey())
                 && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
             .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().toString()));
 

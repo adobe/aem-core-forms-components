@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.adobe.cq.forms.core.components.internal.form.FormWhitelist;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
 
@@ -38,15 +38,15 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ENFORCE_ENUM)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENFORCE_ENUM)
     @Default(booleanValues = true)
     private boolean enforceEnum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ENUM)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENUM)
     @Nullable
     protected String[] enums; // todo: this needs to be thought through ?
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ENUM_NAMES)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENUM_NAMES)
     @Nullable
     protected String[] enumNames;
 
@@ -107,7 +107,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
                 .map(p -> {
-                    return this.translate(FormWhitelist.PN_ENUM_NAMES, p);
+                    return this.translate(ReservedProperties.PN_ENUM_NAMES, p);
                 })
                 .toArray(String[]::new);
         }

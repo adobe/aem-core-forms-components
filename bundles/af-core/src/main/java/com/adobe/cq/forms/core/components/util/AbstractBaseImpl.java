@@ -31,7 +31,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.adobe.cq.forms.core.components.internal.form.FormWhitelist;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.AssistPriority;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
@@ -46,79 +46,79 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public abstract class AbstractBaseImpl extends AbstractFormComponentImpl implements Base, BaseConstraint {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_TEMPLATE_REF)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_TEMPLATE_REF)
     @Nullable
     protected String dorTemplateRef;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DOR_TYPE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_TYPE)
     @Nullable
     protected String dorType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_TEMPLATE_TYPE)
     @Nullable
-    @Named(FormWhitelist.PN_DOR_TEMPLATE_TYPE)
+    @Named("fd:formType")
     protected String dorTemplateType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DESCRIPTION)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DESCRIPTION)
     @Nullable
     protected String description; // long description as per current spec
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_TOOLTIP)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TOOLTIP)
     @Nullable
     protected String tooltip;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_TOOLTIP_VISIBLE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TOOLTIP_VISIBLE)
     @Default(booleanValues = false)
     protected boolean tooltipVisible;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_TYPE) // needs to be implemented in dialog
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TYPE) // needs to be implemented in dialog
     @Nullable
     protected String typeJcr; // todo: note this should never be array, we infer array types based on other metadata
     protected Type type;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_VALIDATION_EXPRESSION)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VALIDATION_EXPRESSION)
     @Nullable
     protected String validationExpression;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_REQUIRED)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_REQUIRED)
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean required;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ASSIST_PRIORITY)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ASSIST_PRIORITY)
     @Nullable
     protected String assistPriorityJcr;
     private AssistPriority assistPriority;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_CUSTOM_ASSIST_PRIORITY)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CUSTOM_ASSIST_PRIORITY)
     @Nullable
     protected String customAssistPriorityMsg;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_ENABLED)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENABLED)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean enabled;
 
     /** Adding in base since it can also be used for fields and panels **/
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_REPEATABLE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_REPEATABLE)
     protected Boolean repeatable;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MIN_OCCUR)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MIN_OCCUR)
     protected Integer minOccur;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MAX_OCCUR)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAX_OCCUR)
     protected Integer maxOccur;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MIN_ITEMS)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MIN_ITEMS)
     protected Integer minItems;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MAX_ITEMS)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAX_ITEMS)
     protected Integer maxItems;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_LANG)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LANG)
     protected String lang;
 
     @Nullable
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_VIEWTYPE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VIEWTYPE)
     protected String viewType;
 
     /** End **/
@@ -151,7 +151,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     @Override
     public @Nullable String getTooltip() {
-        return translate(FormWhitelist.PN_TOOLTIP, tooltip);
+        return translate(ReservedProperties.PN_TOOLTIP, tooltip);
     }
 
     @Override
@@ -223,7 +223,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Override
     @Nullable
     public String getDescription() {
-        return translate(FormWhitelist.PN_DESCRIPTION, description);
+        return translate(ReservedProperties.PN_DESCRIPTION, description);
     }
 
     /**
@@ -346,122 +346,108 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
 
     private class ConstraintMessagesProvider implements ConstraintMessages {
 
-        private static final String PN_TYPE_MESSAGE = "typeMessage";
-        private static final String PN_REQUIRED_MESSAGE = "mandatoryMessage"; // reusing the same property name as in foundation
-        private static final String PN_MINIMUM_MESSAGE = "minimumMessage";
-        private static final String PN_MAXIMUM_MESSAGE = "maximumMessage";
-        private static final String PN_MINLENGTH_MESSAGE = "minLengthMessage";
-        private static final String PN_MAXLENGTH_MESSAGE = "maxLengthMessage";
-        // for fileInput min, max number of files, maximum file size and accept of file type messages
-        private static final String PN_MAXFILESIZE_MESSAGE = "maxFileSizeMessage";
-        private static final String PN_ACCEPT_MESSAGE = "acceptMessage";
-
-        private static final String PN_STEP_MESSAGE = "stepMessage";
-        private static final String PN_FORMAT_MESSAGE = "formatMessage";
-        private static final String PN_PATTERN_MESSAGE = "validatePictureClauseMessage"; // reusing the same property name as in foundation
-        private static final String PN_MINITEMS_MESSAGE = "minItemsMessage";
-        private static final String PN_MAXITEMS_MESSAGE = "maxItemsMessage";
-        private static final String PN_UNIQUEITEMS_MESSAGE = "uniqueItemsMessage";
-        private static final String PN_ENFORCEENUM_MESSAGE = "enforceEnumMessage";
-        private static final String PN_VALIDATIONEXPRESSION_MESSAGE = "validateExpMessage"; // reusing the same property name as in
-                                                                                            // foundation
-
         private ValueMap properties = resource.getValueMap();
 
         @Override
         @Nullable
         public String getTypeConstraintMessage() {
-            return translate(PN_TYPE_MESSAGE, properties.get(PN_TYPE_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_TYPE_MESSAGE, properties.get(ReservedProperties.PN_TYPE_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getRequiredConstraintMessage() {
-            return translate(PN_REQUIRED_MESSAGE, properties.get(PN_REQUIRED_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_REQUIRED_MESSAGE, properties.get(ReservedProperties.PN_REQUIRED_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinimumConstraintMessage() {
-            return translate(PN_MINIMUM_MESSAGE, properties.get(PN_MINIMUM_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_MINIMUM_MESSAGE, properties.get(ReservedProperties.PN_MINIMUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaximumConstraintMessage() {
-            return translate(PN_MAXIMUM_MESSAGE, properties.get(PN_MAXIMUM_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_MAXIMUM_MESSAGE, properties.get(ReservedProperties.PN_MAXIMUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinLengthConstraintMessage() {
-            return translate(PN_MINLENGTH_MESSAGE, properties.get(PN_MINLENGTH_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_MINLENGTH_MESSAGE, properties.get(ReservedProperties.PN_MINLENGTH_MESSAGE,
+                String.class));
         }
 
         @Override
         @Nullable
         public String getMaxLengthConstraintMessage() {
-            return translate(PN_MAXLENGTH_MESSAGE, properties.get(PN_MAXLENGTH_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_MAXLENGTH_MESSAGE, properties.get(ReservedProperties.PN_MAXLENGTH_MESSAGE,
+                String.class));
         }
 
         @Override
         @Nullable
         public String getMaxFileSizeConstraintMessage() {
-            return translate(PN_MAXFILESIZE_MESSAGE, properties.get(PN_MAXFILESIZE_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_MAX_FILE_SIZE_MESSAGE, properties.get(ReservedProperties.PN_MAX_FILE_SIZE_MESSAGE,
+                String.class));
         }
 
         @Override
         @Nullable
         public String getAcceptConstraintMessage() {
-            return translate(PN_ACCEPT_MESSAGE, properties.get(PN_ACCEPT_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_ACCEPT_MESSAGE, properties.get(ReservedProperties.PN_ACCEPT_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getStepConstraintMessage() {
-            return translate(PN_STEP_MESSAGE, properties.get(PN_STEP_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_STEP_MESSAGE, properties.get(ReservedProperties.PN_STEP_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getFormatConstraintMessage() {
-            return translate(PN_FORMAT_MESSAGE, properties.get(PN_FORMAT_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_FORMAT_MESSAGE, properties.get(ReservedProperties.PN_FORMAT_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getPatternConstraintMessage() {
-            return translate(PN_PATTERN_MESSAGE, properties.get(PN_PATTERN_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_PATTERN_MESSAGE, properties.get(ReservedProperties.PN_PATTERN_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinItemsConstraintMessage() {
-            return translate(PN_MINITEMS_MESSAGE, properties.get(PN_MINITEMS_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_MINITEMS_MESSAGE, properties.get(ReservedProperties.PN_MINITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaxItemsConstraintMessage() {
-            return translate(PN_MAXITEMS_MESSAGE, properties.get(PN_MAXITEMS_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_MAXITEMS_MESSAGE, properties.get(ReservedProperties.PN_MAXITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getUniqueItemsConstraintMessage() {
-            return translate(PN_UNIQUEITEMS_MESSAGE, properties.get(PN_UNIQUEITEMS_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_UNIQUE_ITEMS_MESSAGE, properties.get(ReservedProperties.PN_UNIQUE_ITEMS_MESSAGE,
+                String.class));
         }
 
         @Override
         @Nullable
         public String getEnforceEnumConstraintMessage() {
-            return translate(PN_ENFORCEENUM_MESSAGE, properties.get(PN_ENFORCEENUM_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_ENFORCE_ENUM_MESSAGE, properties.get(ReservedProperties.PN_ENFORCE_ENUM_MESSAGE,
+                String.class));
         }
 
         @Override
         @Nullable
         public String getValidationExpressionConstraintMessage() {
-            return translate(PN_VALIDATIONEXPRESSION_MESSAGE, properties.get(PN_VALIDATIONEXPRESSION_MESSAGE, String.class));
+            return translate(ReservedProperties.PN_VALIDATION_EXPRESSION_MESSAGE, properties.get(
+                ReservedProperties.PN_VALIDATION_EXPRESSION_MESSAGE, String.class));
         }
     }
 

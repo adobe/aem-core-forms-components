@@ -37,9 +37,7 @@
         "fieldType" : "text-input",
         "fd:translationIds" : "{\"jcr:title\":\"guideContainer##textinput##jcr:title##5598\",\"description\":\"guideContainer##textinput##description##5648\"}",
         "visible" : false
-      },
-      "action": "/a/b",
-      "dataUrl": "/c/d"
+      }
     },
     "formcontainerv2WithoutRedirect": {
       "jcr:primaryType": "nt:unstructured",

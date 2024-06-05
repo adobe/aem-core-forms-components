@@ -53,7 +53,6 @@
     },
     "properties": {
       "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/image"
-    },
-    ":type": "forms-components-examples/components/form/image"
+    }
   }
 }

@@ -34,7 +34,6 @@
       "fd:dor": {
         "dorExclusion": true
       }
-    },
-    ":type": "forms-components-examples/components/form/text"
+    }
   }
 }

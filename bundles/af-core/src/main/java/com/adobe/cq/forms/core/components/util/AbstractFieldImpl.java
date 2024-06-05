@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.adobe.cq.forms.core.components.internal.form.FormWhitelist;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -40,66 +40,66 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractFieldImpl.class);
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_READ_ONLY)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_READ_ONLY)
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean readOnly;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DEFAULT_VALUE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DEFAULT_VALUE)
     @Nullable
     protected Object[] defaultValue;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_PLACEHOLDER)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_PLACEHOLDER)
     @Nullable
     protected String placeholder;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DISPLAY_FORMAT)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DISPLAY_FORMAT)
     @Nullable
     protected String displayFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_EDIT_FORMAT)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EDIT_FORMAT)
     @Nullable
     protected String editFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DISPLAY_VALUE_EXPRESSION)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DISPLAY_VALUE_EXPRESSION)
     @Nullable
     protected String displayValueExpression;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_DATA_FORMAT)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATA_FORMAT)
     @Nullable
     protected String dataFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MIN_LENGTH)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MIN_LENGTH)
     @Nullable
     protected Integer minLength;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MAX_LENGTH)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAX_LENGTH)
     @Nullable
     protected Integer maxLength;
 
     /** number and date constraint **/
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MINIMUM_DATE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MINIMUM_DATE)
     @Nullable
     protected Date minimumDate;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MAXIMUM_DATE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAXIMUM_DATE)
     @Nullable
     protected Date maximumDate;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MAXIMUM)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAXIMUM)
     @Nullable
     protected Long maximum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_MINIMUM)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MINIMUM)
     @Nullable
     protected Long minimum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_EXCLUSIVE_MINIMUM)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUSIVE_MINIMUM)
     @Default(booleanValues = false)
     protected boolean exclusiveMinimum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = FormWhitelist.PN_EXCLUSIVE_MAXIMUM)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUSIVE_MAXIMUM)
     @Default(booleanValues = false)
     protected boolean exclusiveMaximum;
 
@@ -149,7 +149,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Override
     @Nullable
     public String getPlaceHolder() {
-        return translate(FormWhitelist.PN_PLACEHOLDER, placeholder);
+        return translate(ReservedProperties.PN_PLACEHOLDER, placeholder);
     }
 
     @Override

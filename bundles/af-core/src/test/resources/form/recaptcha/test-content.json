@@ -1,12 +1,10 @@
 {
   "recaptcha": {
-    "id": "recaptcha-4b672680a2",
     "jcr:primaryType": "nt:unstructured",
     "jcr:createdBy": "admin",
     "jcr:title": "CAPTCHA",
     "enabled": true,
     "readOnly": false,
-    "mandatory": "true",
     "name": "test-recaptcha",
     "rcCloudServicePath": "v2checkbox",
     "visible": true,
@@ -21,7 +19,6 @@
     },
     "properties": {
       "fd:path": "/content/forms/af/af2runtime/jcr:content/guideContainer/recaptcha"
-    },
-    ":type": "forms-components-examples/components/form/recaptcha"
+    }
   }
 }

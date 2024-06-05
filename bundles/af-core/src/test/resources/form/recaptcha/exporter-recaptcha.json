@@ -1,37 +1,36 @@
 {
-  "id": "recaptcha-4b672680a2",
-  "fieldType": "captcha",
-  "name": "test-recaptcha",
-  "visible": true,
-  "type": "string",
-  "enabled": true,
-  "readOnly": false,
-  "label": {
-    "visible": true,
-    "value": "CAPTCHA"
+  "id":"recaptcha-60133be3c2",
+  "fieldType":"captcha",
+  "name":"test-recaptcha",
+  "visible":true,
+  "type":"string",
+  "enabled":true,
+  "readOnly":false,
+  "label":{
+    "value":"CAPTCHA",
+    "visible":true
   },
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  "properties": {
-    "fd:dor": {
-      "dorExclusion": false
+  "properties":{
+    "fd:dor":{
+      "dorExclusion":false
     },
-    "fd:path": "/content/recaptcha",
-    "fd:captcha": {
-      "provider": "recaptcha",
-      "config": {
-        "keyType": null,
-        "siteKey": null,
-        "uri": "https://www.recaptcha.net/recaptcha/api.js",
-        "size": "compact",
-        "theme": "light",
-        "type": "image",
-        "version": null
+    "fd:path":"/content/recaptcha",
+    "fd:captcha":{
+      "provider":"recaptcha",
+      "config":{
+        "siteKey":null,
+        "uri":"https://www.recaptcha.net/recaptcha/api.js",
+        "size":"compact",
+        "theme":"light",
+        "type":"image",
+        "version":null,
+        "keyType":null
       }
     }
   },
-  ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
+  "events":{
+    "custom:setProperty":[
+      "$event.payload"]
+  },
+  ":type":"core/fd/components/form/recaptcha/v1/recaptcha"
 }
