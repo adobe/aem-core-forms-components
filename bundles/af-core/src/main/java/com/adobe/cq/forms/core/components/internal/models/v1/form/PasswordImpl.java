@@ -17,6 +17,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import javax.annotation.Nullable;
+import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -30,6 +31,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Password;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -39,6 +41,9 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class PasswordImpl extends AbstractFieldImpl implements Password {
+
+    private Object exclusiveMinimumVaue;
+    private Object exclusiveMaximumValue;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -70,16 +75,6 @@ public class PasswordImpl extends AbstractFieldImpl implements Password {
     }
 
     @Override
-    public Long getExclusiveMaximum() {
-        return exclusiveMaximum;
-    }
-
-    @Override
-    public Long getExclusiveMinimum() {
-        return exclusiveMinimum;
-    }
-
-    @Override
     public String getFormat() {
         return displayFormat;
     }
@@ -87,6 +82,29 @@ public class PasswordImpl extends AbstractFieldImpl implements Password {
     @Override
     public String getValidationPattern() {
         return validationPattern;
+    }
+
+    @Override
+    public Long getExclusiveMaximum() {
+        return (Long) exclusiveMaximumValue;
+    }
+
+    @Override
+    public Long getExclusiveMinimum() {
+        return (Long) exclusiveMinimumVaue;
+    }
+
+    @PostConstruct
+    private void initTextInput() {
+        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, null);
+        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, null);
+        // in json either, exclusiveMaximum or maximum should be present
+        if (exclusiveMaximumValue != null) {
+            maximum = null;
+        }
+        if (exclusiveMinimumVaue != null) {
+            minimum = null;
+        }
     }
 
 }
