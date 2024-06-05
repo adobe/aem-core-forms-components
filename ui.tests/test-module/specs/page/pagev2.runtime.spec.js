@@ -30,3 +30,24 @@ describe("Form with Page component version 2", () => {
         cy.get("html body main form").should("exist");
     })
 })
+
+describe("Form with Page component version 2", () => {
+
+    const pagePath = "/bin/franklin.delivery/deepprakash345/selectorXwalk/main/content/forms/af/core-components-it/samples/page/afv2.html"
+    beforeEach(() => {
+        cy.openPage(pagePath);
+    });
+
+    it(" form should get rendered with main tag in body and should have pre code tags ", () => {
+        cy.get("html body main div div div pre code").should("exist");
+        cy.get("html body main div div div pre code").then(($codeEle)=>{
+            const encodedJson=$codeEle.get()[0].innerHTML;
+            const formJson=JSON.parse(JSON.parse(encodedJson));
+            expect(formJson).to.have.property("id");
+            expect(formJson).to.have.property("fieldType");
+            expect(formJson).to.have.property(":items");
+            expect(formJson).to.have.property("title");
+
+        })
+    })
+})
