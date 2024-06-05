@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2024-03-18T11:20:18.066+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Basic"
+        sling:configRef="/conf/forms/core-components-it/samples/password/basic/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="Basic">
+            <password
+                jcr:created="{Date}2024-03-16T07:23:14.759+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-16T07:23:33.085+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 1"
+                sling:resourceType="forms-components-examples/components/form/password"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                name="password1"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                validationExpression="$field.$value == 'validate'"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;password1&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password1&quot;\,&quot;displayName&quot;:&quot;Password 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 1/&quot;\,&quot;name&quot;:&quot;password1&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;validate&quot;}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field.$value == 'validate'&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BINARY_EVENT_CONDITION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;password1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is changed&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;password1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Adobe@123&quot;}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password2&quot;\,&quot;displayName&quot;:&quot;Password 2&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 2/&quot;\,&quot;name&quot;:&quot;password2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password3&quot;\,&quot;displayName&quot;:&quot;Password 3&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 3/&quot;\,&quot;name&quot;:&quot;password3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if(($field.$value'null' &amp;&amp; $field.$value == 'Adobe@123')\, dispatchEvent(password2\, 'custom:setProperty'\, {visible : false()})\, {})&quot;\,&quot;if(($field.$value'null' &amp;&amp; $field.$value == 'Adobe@123')\, dispatchEvent(password3\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BINARY_EVENT_CONDITION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;password1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is changed&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;password1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Aem@123&quot;}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password2&quot;\,&quot;displayName&quot;:&quot;Password 2&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 2/&quot;\,&quot;name&quot;:&quot;password2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password4&quot;\,&quot;displayName&quot;:&quot;Password 4&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 4/&quot;\,&quot;name&quot;:&quot;password4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if(($field.$value'null' &amp;&amp; $field.$value == 'Aem@123')\, dispatchEvent(password2\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if(($field.$value'null' &amp;&amp; $field.$value == 'Aem@123')\, dispatchEvent(password4\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,[if(($field.$value'null' &amp;&amp; $field.$value == 'Adobe@123')\, dispatchEvent(password2\, 'custom:setProperty'\, {visible : false()})\, {})\,if(($field.$value'null' &amp;&amp; $field.$value == 'Adobe@123')\, dispatchEvent(password3\, 'custom:setProperty'\, {visible : true()})\, {})]\,{}),if(contains($event.payload.changes[].propertyName\, 'value')\,[if(($field.$value'null' &amp;&amp; $field.$value == 'Aem@123')\, dispatchEvent(password2\, 'custom:setProperty'\, {enabled : true()})\, {})\,if(($field.$value'null' &amp;&amp; $field.$value == 'Aem@123')\, dispatchEvent(password4\, 'custom:setProperty'\, {enabled : false()})\, {})]\,{})]"/>
+            </password>
+            <password2
+                jcr:created="{Date}2024-03-16T07:23:42.550+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-16T07:23:52.354+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 2"
+                sling:resourceType="forms-components-examples/components/form/password"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                name="password2"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <password3
+                jcr:created="{Date}2024-03-16T07:23:57.432+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-16T07:24:07.349+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 3"
+                sling:resourceType="forms-components-examples/components/form/password"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                name="password3"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <password4
+                jcr:created="{Date}2024-03-16T07:24:13.202+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-16T07:24:25.005+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 4"
+                sling:resourceType="forms-components-examples/components/form/password"
+                description="This is long description"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                id="tooltip_scenario_test"
+                name="password4"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                tooltip="This is short description"
+                tooltipVisible="true"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <password5
+                jcr:created="{Date}2024-03-16T07:24:30.767+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-16T07:24:39.724+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 5"
+                sling:resourceType="forms-components-examples/components/form/password"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                name="password5"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BINARY_EVENT_CONDITION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password5&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;password5&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is changed&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password5&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;password5&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Aemforms@123&quot;}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CLEAR_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password4&quot;\,&quot;displayName&quot;:&quot;Password 4&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 4/&quot;\,&quot;name&quot;:&quot;password4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password1&quot;\,&quot;displayName&quot;:&quot;Password 1&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 1/&quot;\,&quot;name&quot;:&quot;password1&quot;\,&quot;parent&quot;:&quot;$form&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;new password&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if(($field.$value'null' &amp;&amp; $field.$value == 'Aemforms@123')\, dispatchEvent(password4\, 'custom:setProperty'\, {value : `null`})\, {})&quot;\,&quot;if(($field.$value'null' &amp;&amp; $field.$value == 'Aemforms@123')\, dispatchEvent(password1\, 'custom:setProperty'\, {value : 'new password'})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,[if(($field.$value'null' &amp;&amp; $field.$value == 'Aemforms@123')\, dispatchEvent(password4\, 'custom:setProperty'\, {value : `null`})\, {})\,if(($field.$value'null' &amp;&amp; $field.$value == 'Aemforms@123')\, dispatchEvent(password1\, 'custom:setProperty'\, {value : 'new password'})\, {})]\,{})]"/>
+            </password5>
+            <password6
+                jcr:created="{Date}2024-03-16T07:24:45.111+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-18T10:30:26.685+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 6"
+                sling:resourceType="forms-components-examples/components/form/password"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                name="password6"
+                readOnly="{Boolean}false"
+                required="true"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BINARY_EVENT_CONDITION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password6&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;password6&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is changed&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password6&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;password6&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;IS_EMPTY&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;errorMessage&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password6&quot;\,&quot;displayName&quot;:&quot;Password 6&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 6/&quot;\,&quot;name&quot;:&quot;password6&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Please fill in this field.&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if(($field.$value'null' &amp;&amp; !($field.$value))\, {errorMessage : 'Please fill in this field.'}\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,[if(($field.$value'null' &amp;&amp; !($field.$value))\, {errorMessage : 'Please fill in this field.'}\, {})]\,{})]"/>
+            </password6>
+            <password7
+                jcr:created="{Date}2024-03-16T07:24:59.585+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-16T07:25:09.650+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 7"
+                sling:resourceType="forms-components-examples/components/form/password"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                name="password7"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                validationExpression="!(!($field.$value)) &amp;&amp; length($field.$value) &lt; 8"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password7&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;password7&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_BINARY_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password7&quot;\,&quot;displayName&quot;:&quot;Password 7&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 7/&quot;\,&quot;name&quot;:&quot;password7&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;IS_NOT_EMPTY&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;EXPRESSION&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;length&quot;\,&quot;displayName&quot;:&quot;Length&quot;\,&quot;type&quot;:&quot;NUMBER&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|STRING[]|NUMBER[]|DATE[]|BOOLEAN[]|FILE[]|ARRAY|OBJECT&quot;\,&quot;name&quot;:&quot;subject&quot;\,&quot;description&quot;:&quot;subject&quot;}]\,&quot;impl&quot;:&quot;$0($1)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password7&quot;\,&quot;displayName&quot;:&quot;Password 7&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 7/&quot;\,&quot;name&quot;:&quot;password7&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}]}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;LESS_THAN&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;8&quot;}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;!(!($field.$value)) &amp;&amp; length($field.$value) &lt; 8&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password7&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|STRING&quot;\,&quot;name&quot;:&quot;password7&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is changed&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;errorMessage&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password7&quot;\,&quot;displayName&quot;:&quot;Password 7&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 7/&quot;\,&quot;name&quot;:&quot;password7&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Please use passwords with minimum 8 characters.&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;{errorMessage : 'Please use passwords with minimum 8 characters.'}&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,[{errorMessage : 'Please use passwords with minimum 8 characters.'}]\,{})]"/>
+            </password7>
+            <password_675396662
+                jcr:created="{Date}2024-03-18T11:10:50.124+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-18T11:11:15.449+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 8"
+                sling:resourceType="forms-components-examples/components/form/password"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                name="password8"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <password8
+                jcr:created="{Date}2024-03-16T07:25:15.657+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-16T07:25:25.392+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 9"
+                sling:resourceType="forms-components-examples/components/form/password"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                name="password9"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true">
+                <fd:rules
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password9&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;password9&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is changed&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;valid&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password10&quot;\,&quot;displayName&quot;:&quot;Password 10&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 10/&quot;\,&quot;name&quot;:&quot;password10&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_LITERAL&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;False&quot;\,&quot;value&quot;:null}}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;errorMessage&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.password10&quot;\,&quot;displayName&quot;:&quot;Password 10&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Password 10/&quot;\,&quot;name&quot;:&quot;password10&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Field is not valid&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(password10\, 'custom:setProperty'\, {valid : false()\, errorMessage : 'Field is not valid'})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\,[dispatchEvent(password10\, 'custom:setProperty'\, {valid : false()\, errorMessage : 'Field is not valid'})]\,{})]"/>
+            </password8>
+            <password9
+                jcr:created="{Date}2024-03-16T07:25:30.435+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-03-16T07:25:46.980+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Password 10"
+                sling:resourceType="forms-components-examples/components/form/password"
+                enabled="{Boolean}true"
+                fieldType="password"
+                hideTitle="false"
+                name="password10"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>
