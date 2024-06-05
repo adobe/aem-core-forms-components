@@ -69,6 +69,7 @@
             return this.element.querySelector(CheckBox.selectors.tooltipDiv);
         }
     }
+
     FormView.Utils.setupField(({element, formContainer}) => {
         return new CheckBox({element, formContainer})
     }, CheckBox.selectors.self);

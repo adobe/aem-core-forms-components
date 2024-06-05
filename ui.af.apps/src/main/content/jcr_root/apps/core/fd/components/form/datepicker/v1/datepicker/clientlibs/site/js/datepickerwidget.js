@@ -26,6 +26,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
     #dp = null;
     #curInstance = null;
+    #calendarIcon = null;
     static #visible = false;
     static #clickedWindow;
 
@@ -57,7 +58,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
      */
     #defaultOptions = {
       yearsPerView: 16,
-      width: 433,
+      width: 340,
       viewHeight: 248,
       locale: {
         days: ["S","M","T","W","T","F","S"],
@@ -148,7 +149,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
     constructor(view, widget, model) {
       this.#model = model;
-      this.#lang = view.formContainer.getModel()._jsonModel.lang;
+      this.#lang = view.getModel().lang;
       let editValFn = () => {
         return model.editValue;
       };
@@ -322,6 +323,18 @@ if (typeof window.DatePickerWidget === 'undefined') {
             widget.click();
           }
         });
+        this.#calendarIcon = calendarIcon;
+        if (options.readOnly) {
+          this.markAsReadOnly(true)
+        }
+      }
+    }
+
+    markAsReadOnly(readonly) {
+      if (readonly) {
+        this.#calendarIcon.style.display = "none";
+      } else {
+        this.#calendarIcon.style.display = "";
       }
     }
 
@@ -508,11 +521,20 @@ if (typeof window.DatePickerWidget === 'undefined') {
     #show() {
       this.#options.locale = this.#curInstance.locale;
       if (!DatePickerWidget.#visible) {
-        let date,
-            validDate;
-
-        validDate = this.#curInstance.selectedDate || this.#model.value;
-        date = validDate ? new Date(validDate) : new Date();
+        let date  = new Date(),
+            validDate,
+            parsedDate;
+        if (this.#curInstance.selectedDate) {
+          validDate = this.#curInstance.selectedDate;
+        } else if (this.#model.valid) {
+          validDate = this.#model.value;
+        }
+        if (validDate) {
+          parsedDate = validDate ? new Date(validDate) : null;
+          date = (parsedDate == null || parsedDate == 'Invalid Date') ? date : parsedDate;
+        }
+        const timezoneOffset = date.getTimezoneOffset();
+        date.setMinutes(date.getMinutes() + timezoneOffset);
         this.selectedDay = this.currentDay = date.getDate();
         this.selectedMonth = this.currentMonth = date.getMonth();
         this.selectedYear = this.currentYear = date.getFullYear();
@@ -626,9 +648,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
       var self = this,
           curDate = new Date(this.currentYear, this.currentMonth),
           maxDay = this.#maxDate(this.currentMonth),
-          prevMaxDay = this.#maxDate((this.currentMonth + 12) % 12),
+          prevMaxDay = this.#maxDate((this.currentMonth + 11) % 12),
           day1 = new Date(this.currentYear, this.currentMonth, 1).getDay(),
-          rowsReq = Math.ceil((day1 + maxDay) / 7) + 1,
           data, display;
           var localizedYear = this.#getLocalizedYear(curDate);
 
@@ -637,19 +658,22 @@ if (typeof window.DatePickerWidget === 'undefined') {
             caption: this.#options.locale.months[this.currentMonth] + ", "
                 + this.#convertNumberToLocale(localizedYear),
             header: this.#options.locale.days,
-            numRows: rowsReq,
+            numRows: 7,
             numColumns: 7,
             elementAt: function (row, col) {
               var day = (row - 1) * 7 + col - day1 + 1;
+              var monthVal = self.currentMonth + 1;
               let gridId = "day-" + day;
               display = self.#convertNumberToLocale(day);
               data = day;
               if (day < 1) {
                 display = self.#convertNumberToLocale(prevMaxDay + day);
-                data = -1
+                data = -1;
+                monthVal = self.currentMonth;
               } else if (day > maxDay) {
                 display = self.#convertNumberToLocale(day - maxDay);
                 data = -1;
+                monthVal = self.currentMonth + 2;
               } else {
                 curDate.setDate(day);
                 // check if the currentdate is valid based on max and min valid date
@@ -664,7 +688,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
                 gridId: gridId,
                 display: display,
                 ariaLabel: self.#options.editValue(
-                    self.currentYear + "-" + self.#pad2(self.currentMonth + 1)
+                    self.currentYear + "-" + self.#pad2(monthVal)
                     + "-" + self.#pad2(display))
               };
             }
@@ -727,13 +751,24 @@ if (typeof window.DatePickerWidget === 'undefined') {
     }
 
     #getLocalizedYear(date) {
+      /*
+      // Only Thai language return year according to Buddhist calendar, rest all languages follows gregorian calendar in practice.
+      // The Buddhist Year in 2024 = 543 + 2024  = B.E. 2567 (reference https://wesak.org.my/calculating-b-e/)
+      // Intl.DateTimeFormat#formatToParts returns number (2024) for all languages except for Thai (2567) & for Persian ('۱۴۰۳')
+      // For Persian ('۱۴۰۳'), returned year is not in numbers that is breaking next flow.
+      */
+      if(this.#lang === 'th') {
         const dateFormat = new Intl.DateTimeFormat(this.#lang, {
-            year: 'numeric'
+          year: 'numeric'
         });
         const dateParts = dateFormat.formatToParts(date);
         const yearObject = dateParts.find(yearObject => yearObject.type === "year");
         const localizedYear = yearObject.value;
         return Number(localizedYear);
+      }
+      else {
+        return Number(date.getFullYear());
+      }
     }
 
     /*
@@ -856,20 +891,6 @@ if (typeof window.DatePickerWidget === 'undefined') {
           c++;
         }
         this.insertRow(r++, row, false, options.elementAt);
-      }
-
-      rows = this["$" + this.view.toLowerCase()].querySelectorAll("ul");
-      rows = [...rows].filter((r) => {
-        return !(r.offsetHeight === 0 && r.offsetWidth === 0)
-      });
-      let len = rows.length;
-      while (len > options.numRows) {
-        this["$" + this.view.toLowerCase()].querySelectorAll(
-            "ul")[--len].style.display = "none";
-      }
-      while (options.numRows > len) {
-        this["$" + this.view.toLowerCase()].querySelectorAll(
-            "ul")[len++].style.display = "flex";
       }
     }
 
@@ -1149,6 +1170,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
     setValue(value) {
       let currDate =  new Date(value);
 
+      const timezoneOffset = currDate.getTimezoneOffset();
+      currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
         this.selectedMonth = currDate.getMonth();
@@ -1180,6 +1204,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
             break;
           case 'focus':
+            handler(e);
+            break;
+          case 'input':
             handler(e);
             break;
 

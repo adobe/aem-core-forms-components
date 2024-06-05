@@ -51,7 +51,7 @@ const calculateAccessibility = async () => {
         });
         await driver.getPageSource();
 
-        const axeBuilder = new AxeBuilder(driver);
+        const axeBuilder = new AxeBuilder(driver).withTags(['wcag2a', 'wcag2aa', 'wcag2aaa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice', 'wcag***', 'ACT', 'TTv5', 'TT*.*', 'EN-301-549', 'EN-9.*', 'experimental', 'cat.*', 'section508', 'section508.*.*']);
         const results = await axeBuilder.analyze();
         const reportHTML = createHtmlReport({
           results: results,
@@ -67,7 +67,7 @@ const calculateAccessibility = async () => {
         }
         console.log('node index ', nodeIndex);
 
-        if ((process.env.AEM === "addon" || process.env.AEM === "classic") && nodeIndex == 0) {
+        if ((process.env.AEM === "addon" || process.env.AEM === "classic" || process.env.AEM === "addon-latest") && nodeIndex == 0) {
 
             if (results.violations.length > 0) {
                 console.log(getAccessibilityViolationsTable(results.violations))

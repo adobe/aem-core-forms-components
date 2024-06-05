@@ -14,10 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 describe("Sites with Aem Embed Container", () => {
-
+    const PAGE_PATH = "/content/forms/sites/core-components-it/afcorecomponentsembedtest.html";
     context('aem embed container in iframe mode ', function () {
 
-        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontainer.html";
+        const pagePath = PAGE_PATH;
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -41,12 +41,12 @@ describe("Sites with Aem Embed Container", () => {
 
         it("test for aemembedcontainer presence inside iframe", () => {
             getIframeBody().find('.cmp-adaptiveform-container').should('have.length', 1);
-            getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 7);
+            getIframeBody().find('.cmp-adaptiveform-container').find('.cmp-adaptiveform-numberinput__widget').should('have.length', 8);
         })
 
         it("test for form presence in nonIframe mode", () => {
             cy.get('.cmp-adaptiveform-container').should('have.length', 1);
-            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 10);
+            cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 11);
         })
 
         it('Test iframe src with dataRef', () => {
@@ -61,7 +61,7 @@ describe("Sites with Aem Embed Container", () => {
 
     context('aem embed container in iframe mode with custom height ', function () {
 
-        const pagePath = "/content/core-components-examples/library/adaptive-form/aemembedcontainerwithcustomheight.html?wcmmode=disabled";
+        const pagePath = "/content/forms/sites/core-components-it/aemembedcontainerwithcustomheight.html?wcmmode=disabled";
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -109,7 +109,7 @@ describe("Sites with Aem Embed Container", () => {
         it("model initialized properly", () => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             // fragment component, text field and IntanceManager
-            expect(Object.keys(formContainer._fields).length).to.equal(3);
+            expect(Object.keys(formContainer._fields).length).to.equal(4);
         })
 
         it("model's changes are reflected in the html ", () => {

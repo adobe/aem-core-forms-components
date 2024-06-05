@@ -41,12 +41,34 @@ public class ComponentUtilsTest {
     public void testGetFragmentContainer() {
         ResourceResolver resourceResolver = Mockito.mock(ResourceResolver.class);
         String fragmentPath = "/content/forms/af/abc";
+        Resource resource = Mockito.mock(Resource.class);
+        Mockito.when(resource.isResourceType(Mockito.anyString())).thenReturn(false);
+        Mockito.when(resourceResolver.getResource(fragmentPath + "/" + JcrConstants.JCR_CONTENT)).thenReturn(resource);
         ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
-        Mockito.verify(resourceResolver).getResource(fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
+        Mockito.verify(resource).getChild("guideContainer");
+    }
+
+    @Test
+    public void testGetFragmentContainerForDamPath() {
+        ResourceResolver resourceResolver = Mockito.mock(ResourceResolver.class);
+        String fragmentPath = "/content/forms/af/abc";
         String damFragmentPath = "/content/dam/formsanddocuments/abc";
-        resourceResolver = Mockito.mock(ResourceResolver.class);
+        Resource resource = Mockito.mock(Resource.class);
+        Mockito.when(resource.isResourceType(Mockito.anyString())).thenReturn(false);
+        Mockito.when(resourceResolver.getResource(fragmentPath + "/" + JcrConstants.JCR_CONTENT)).thenReturn(resource);
         ComponentUtils.getFragmentContainer(resourceResolver, damFragmentPath);
-        Mockito.verify(resourceResolver).getResource(fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/guideContainer");
+        Mockito.verify(resource).getChild("guideContainer");
+    }
+
+    @Test
+    public void testGetFragmentContainerForEDS() {
+        ResourceResolver resourceResolver = Mockito.mock(ResourceResolver.class);
+        String fragmentPath = "/content/forms/af/formfragment";
+        Resource resource = Mockito.mock(Resource.class);
+        Mockito.when(resource.isResourceType(Mockito.anyString())).thenReturn(true);
+        Mockito.when(resourceResolver.getResource(fragmentPath + "/" + JcrConstants.JCR_CONTENT)).thenReturn(resource);
+        ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
+        Mockito.verify(resource).getChild("root/section/form");
     }
 
     @Test

@@ -21,6 +21,8 @@
         DATEPICKER_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__displayformat",
         DATEPICKER_EDITPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__editpattern",
         DATEPICKER_EDITFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__editformat",
+        DATEPICKER_LANG = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__lang",
+        DATEPICKER_LANGDISPLAYVALUE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__langdisplayvalue",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -40,5 +42,10 @@
         Utils.handlePatternFormat(dialog,DATEPICKER_EDITPATTERN,DATEPICKER_EDITFORMAT);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleEditPatternDropDown,handleEditFormat);
+    function handleLang(dialog){
+        Utils.handlePatternDropDown(dialog,DATEPICKER_LANGDISPLAYVALUE,DATEPICKER_LANG);
+        Utils.handlePatternFormat(dialog,DATEPICKER_LANGDISPLAYVALUE,DATEPICKER_LANG);
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleEditPatternDropDown,handleEditFormat,handleLang);
 })(jQuery);

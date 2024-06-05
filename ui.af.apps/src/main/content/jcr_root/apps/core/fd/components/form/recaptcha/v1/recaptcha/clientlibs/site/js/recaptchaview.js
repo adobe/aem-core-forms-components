@@ -76,7 +76,7 @@
                 }
             }
         }
-}
+    }
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Recaptcha({element, formContainer})

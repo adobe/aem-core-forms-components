@@ -61,6 +61,9 @@ public class DropDownImplTest {
 
     private static final String PATH_DROPDOWN_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/dropdown-duplicate-enum";
     private static final String PATH_DROPDOWN_FOR_INSERTION_ORDER = CONTENT_ROOT + "/dropdown-insertion-order";
+    private static final String PATH_DROPDOWN_FOR_NO_ENUM_NAMES = CONTENT_ROOT + "/dropdown-without-enumNames";
+    private static final String PATH_DROPDOWN_FOR_LESSER_ENUM_NAMES = CONTENT_ROOT + "/dropdown-with-lesser-enumNames";
+    private static final String PATH_DROPDOWN_FOR_EXTRA_ENUM_NAMES = CONTENT_ROOT + "/dropdown-with-extra-enumNames";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -140,7 +143,7 @@ public class DropDownImplTest {
     @Test
     void testIsVisible() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isVisible());
+        assertEquals(true, dropdown.isVisible());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isVisible()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isVisible());
@@ -158,7 +161,7 @@ public class DropDownImplTest {
     @Test
     void testIsEnabled() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isEnabled());
+        assertEquals(true, dropdown.isEnabled());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isEnabled());
@@ -176,7 +179,7 @@ public class DropDownImplTest {
     @Test
     void testIsReadOnly() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isReadOnly());
+        assertEquals(false, dropdown.isReadOnly());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isReadOnly());
@@ -194,7 +197,7 @@ public class DropDownImplTest {
     @Test
     void testIsRequired() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
-        assertEquals(null, dropdown.isRequired());
+        assertEquals(false, dropdown.isRequired());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.isRequired()).thenCallRealMethod();
         assertEquals(null, dropdownMock.isRequired());
@@ -438,5 +441,28 @@ public class DropDownImplTest {
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), dropdown.getEnumNames());
+    }
+
+    @Test
+    void testEnumsWithoutEnumNames() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_NO_ENUM_NAMES, DropDown.class, context);
+        Set<String> set = new LinkedHashSet<>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
+            "15", "16", "17", "18", "19", "20"));
+        assertArrayEquals(set.toArray(new String[0]), dropdown.getEnums());
+        assertNull(dropdown.getEnumNames());
+    }
+
+    @Test
+    void testEnumsWithLesserEnumNames() {
+        DropDown dropdown1 = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_LESSER_ENUM_NAMES, DropDown.class, context);
+        Set<String> set1 = new LinkedHashSet<>(Arrays.asList("zero", "one", "two", "three", "4", "5", "6", "7", "8", "9"));
+        assertArrayEquals(set1.toArray(new String[0]), dropdown1.getEnumNames());
+    }
+
+    @Test
+    void testEnumsWithExtraEnumNames() {
+        DropDown dropdown2 = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_EXTRA_ENUM_NAMES, DropDown.class, context);
+        Set<String> set2 = new LinkedHashSet<>(Arrays.asList("zero", "one"));
+        assertArrayEquals(set2.toArray(new String[0]), dropdown2.getEnumNames());
     }
 }

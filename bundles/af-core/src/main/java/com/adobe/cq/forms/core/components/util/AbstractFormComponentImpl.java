@@ -59,6 +59,7 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -84,6 +85,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean visible;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -92,6 +94,25 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     @SlingObject
     private Resource resource;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
+    @Default(booleanValues = false)
+    protected boolean dorExclusion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
+    @Nullable
+    protected String dorColspan;
+
+    /**
+     * Returns dorBindRef of the form field
+     *
+     * @return dorBindRef of the field
+     * @since com.adobe.cq.forms.core.components.util 4.0.0
+     */
+    @JsonIgnore
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorBindRef")
+    @Nullable
+    protected String dorBindRef;
 
     /**
      * Flag indicating if the data layer is enabled.
@@ -191,15 +212,17 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isVisible() {
-        if (getEditMode()) {
-            return true;
-        }
+        return visible == null || visible;
+    }
+
+    @JsonProperty("visible")
+    public Boolean getVisibleIfPresent() {
         return visible;
     }
 
+    // API kept for backward compatibility, this is not to be used anymore
     @JsonIgnore
     protected boolean getEditMode() {
         boolean editMode = false;
@@ -438,7 +461,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     private static class DataRefSerializer extends JsonSerializer<String> {
-
         @Override
         public void serialize(String s, JsonGenerator jsonGenerator,
             SerializerProvider serializerProvider) throws IOException {
@@ -469,5 +491,19 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon. Returning an empty map.");
             return Collections.emptyMap();
         }
+    }
+
+    @Override
+    @JsonIgnore
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        customDorProperties.put("dorExclusion", dorExclusion);
+        if (dorColspan != null) {
+            customDorProperties.put("dorColspan", dorColspan);
+        }
+        if (dorBindRef != null) {
+            customDorProperties.put("dorBindRef", dorBindRef);
+        }
+        return customDorProperties;
     }
 }

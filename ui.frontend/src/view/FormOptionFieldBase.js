@@ -62,8 +62,6 @@ class FormOptionFieldBase extends FormFieldBase {
         }
     }
 
-
-
     /**
      * Common method to update the enums Names of checkbox and radiobutton
      * @param {Array} newEnumsNames - updated enum Names values

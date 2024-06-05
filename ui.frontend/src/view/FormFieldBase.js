@@ -171,6 +171,58 @@ class FormFieldBase extends FormField {
         }
     }
 
+
+    #syncError() {
+        let errorElement = typeof this.getErrorDiv === 'function' ? this.getErrorDiv() : null;
+        if (errorElement) {
+            errorElement.setAttribute('id', `${this.getId()}__errormessage`);
+        }
+    }   
+
+    #syncShortDesc() {
+        let shortDescElement = typeof this.getTooltipDiv === 'function' ? this.getTooltipDiv() : null;
+        if (shortDescElement) {
+            shortDescElement.setAttribute('id', `${this.getId()}__shortdescription`);
+        }
+    } 
+
+    #syncLongDesc() {
+        let longDescElement = typeof this.getDescription === 'function' ? this.getDescription() : null;
+        if (longDescElement) {
+            longDescElement.setAttribute('id', `${this.getId()}__longdescription`);
+        }
+    } 
+
+    #syncAriaDescribedBy() {
+        let ariaDescribedby = '';
+        let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+        let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+        widgetElement = widgetElements || widgetElement;
+        
+        function appendDescription(descriptionType, id) {
+            if (ariaDescribedby) {
+               ariaDescribedby += ` ${id}__${descriptionType}`;
+             } else {
+                 ariaDescribedby = `${id}__${descriptionType}`;
+             }
+         }
+            
+        if (widgetElement) {
+           if (this.getDescription()) {
+            appendDescription('longdescription', this.getId());
+          }
+          
+           if (this.getTooltipDiv()) {
+            appendDescription('shortdescription', this.getId());
+          }
+
+           if (this.getErrorDiv() && this.getErrorDiv().innerHTML) {
+            appendDescription('errormessage', this.getId());
+          }
+            widgetElement.setAttribute('aria-describedby', ariaDescribedby);
+        }
+    }
+
     /**
      * Synchronizes the markup with the model.
      * @method
@@ -178,6 +230,10 @@ class FormFieldBase extends FormField {
     syncMarkupWithModel() {
         this.#syncLabel()
         this.#syncWidget()
+        this.#syncShortDesc()
+        this. #syncLongDesc()
+        this.#syncAriaDescribedBy()
+        this.#syncError()
     }
 
     /**
@@ -307,6 +363,18 @@ class FormFieldBase extends FormField {
         return this.parentView.getModel().name;
     }
 
+    setWidgetValueToDisplayValue() {
+        if(this._model.displayValueExpression && this._model.displayValue) { // only do this if displayValueExpression is set
+            this.widget.value = this._model.displayValue;
+        }
+    }
+
+    setWidgetValueToModelValue() {
+        if(this._model.displayValueExpression && this._model.displayValue) { // only do this if displayValueExpression is set
+            this.widget.value = this._model.value;
+        }
+    }
+
     /**
      * Shows or hides the tooltip <div> based on the provided flag.
      * @param {boolean} show - If true, the tooltip <div> will be shown; otherwise, it will be hidden.
@@ -358,7 +426,6 @@ class FormFieldBase extends FormField {
      */
     updateEnabled(enabled, state) {
         if (this.widget) {
-            this.toggle(enabled, Constants.ARIA_DISABLED, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             if (enabled === false) {
                 this.widget.setAttribute("disabled", "disabled");
@@ -375,9 +442,8 @@ class FormFieldBase extends FormField {
      * @param {boolean} readOnly - The read-only state.
      * @param {Object} state - The state object.
      */
-    updateReadOnly(readOnly, state) {
+    updateReadOnly(readOnly) {
         if (this.widget) {
-            this.toggle(readOnly, "readonly");
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_READONLY, readOnly);
             if (readOnly === true) {
                 this.widget.setAttribute("readonly", "readonly");
@@ -394,7 +460,7 @@ class FormFieldBase extends FormField {
      */
     updateRequired(required, state) {
         if (this.widget) {
-            this.toggle(required, "required");
+            this.element.toggleAttribute("required", required);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
             if (required === true) {
                 this.widget.setAttribute("required", "required");
@@ -424,8 +490,8 @@ class FormFieldBase extends FormField {
         // todo: handle the type of validity if required later
         const valid = validity.valid;
         if (this.errorDiv) {
-            this.toggle(valid, Constants.ARIA_INVALID, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+            this.widget.setAttribute(Constants.ARIA_INVALID, !valid);
             this.updateValidationMessage(state.validationMessage, state);
         }
     }
@@ -449,15 +515,23 @@ class FormFieldBase extends FormField {
      */
     updateValidationMessage(validationMessage, state) {
         if (this.errorDiv) {
-            this.errorDiv.innerHTML = state.validationMessage;
-            if (state.validity.valid === false) {
-                // Find the first key whose value is true
-                const validationType = Object.keys(state.validity).find(key => key !== 'valid' && state.validity[key] === true);
-                this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN, {'validationMessage' : state.validationMessage, 'validationType': validationType});
-                // if there is no error message in model, set a default error in the view
-                if (!state.validationMessage) {
-                    this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
-                }
+            // Check if the validationMessage is different from the current content
+            if (this.errorDiv.innerHTML !== state.validationMessage) {
+                this.errorDiv.innerHTML = state.validationMessage;
+                if (state.validity.valid === false) {
+                    // Find the first key whose value is true
+                    const validationType = Object.keys(state.validity).find(key => key !== 'valid' && state.validity[key] === true);
+                    this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN, {
+                        'validationMessage': state.validationMessage,
+                        'validationType': validationType
+                    });
+                    
+                    // if there is no error message in model, set a default error in the view
+                    if (!state.validationMessage) {
+                        this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
+                    }
+                } 
+                this.#syncAriaDescribedBy();
             }
         }
     }
@@ -494,7 +568,7 @@ class FormFieldBase extends FormField {
         const filledModifierClass = `${bemClass}--filled`;
         const emptyModifierClass = `${bemClass}--empty`;
         this.element.classList.add(value ? filledModifierClass : emptyModifierClass);
-        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);         
+        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);
     }
 
     /**

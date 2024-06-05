@@ -61,7 +61,126 @@ function clearEnums() {
     return enums;
 }
 
+/**
+ * Formats Credit Card Number
+ * @name formatCreditCardNumber Formats Credit Card Number
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatCreditCardNumber(field)
+{
+    var cardNumber = field.$value ? field.$value + '' : field.$value;
+    var formattedNumber = cardNumber;
+    if(cardNumber) {
+        var maskedNumber = cardNumber.replace(/\d(?=\d{4})/g, '*');  // Replace digits with masked characters except for the last four
+        var formattedNumber = maskedNumber.replace(/(.{4})/g, '$1 '); // Add spaces after every 4 letters
+    }
+    return formattedNumber;
+}
+
+/**
+ * Formats Date input
+ * @name formatDateInput Formats Date input
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatDateInput(field)
+{
+    var date = field.$value;
+    return date ? date + ' today' : date;
+}
+
+/**
+ * Formats email input
+ * @name formatEmailInput Formats email input
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatEmailInput(field)
+{
+    var email = field.$value;
+    var transformedEmail;
+    if(email) {
+        var parts = email.split('@');
+        if (parts[0].length > 1) {
+            transformedEmail = parts[0][0] + '*'.repeat(parts[0].length - 1) + '@' + parts[1];
+        } else {
+            transformedEmail = email;
+        }
+    }
+
+    return transformedEmail;
+}
 
 
+/**
+ * Formats telephone input
+ * @name formatTelephoneInput Formats telephone input
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatTelephoneInput(field)
+{
+    var phoneNumber = field.$value;
+    if(phoneNumber) {
+        var maskedDigits = phoneNumber.substring(0, 7).replace(/\d/g, '*');
+        var lastThreeDigits = phoneNumber.substring(7);
+        return maskedDigits + lastThreeDigits;
+    }
+    return phoneNumber;
+}
 
+/**
+ * Tests import data
+ * @name testImportData
+ * @param {scope} globals
+ */
+function testImportData(globals)
+{
+    globals.functions.importData(Object.fromEntries([['textinput_12605243111716188337417','abc']]));
+}
 
+/**
+ * Tests set focus
+ * @name testSetFocus
+ * @param {object} emailField
+ * @param {scope} globals
+ */
+function testSetFocus(emailField, globals)
+{
+    globals.functions.setFocus(emailField);
+}
+
+/**
+ * Tests set focus with focusOption
+ * @name testSetFocusWithFocusOption
+ * @param {object} emailField
+ * @param {string} focusOption
+ * @param {scope} globals
+ */
+function testSetFocusWithFocusOption(emailField, focusOption, globals)
+{
+    globals.functions.setFocus(emailField, focusOption);
+}
+
+/**
+ * Tests add instance with dispatchEvent
+ * @name testAddInstance
+ * @param {scope} globals
+ */
+function testAddInstance(globals)
+{
+    var repeatablePanel = globals.form.panelcontainer2;
+    globals.functions.dispatchEvent(repeatablePanel, 'addInstance');
+}
+
+/**
+ * Tests remove instance with dispatchEvent
+ * @name testRemoveInstance
+ * @param {scope} globals
+ */
+function testRemoveInstance(globals)
+{
+    var repeatablePanel = globals.form.panelcontainer2;
+    globals.functions.dispatchEvent(repeatablePanel, 'removeInstance');
+}

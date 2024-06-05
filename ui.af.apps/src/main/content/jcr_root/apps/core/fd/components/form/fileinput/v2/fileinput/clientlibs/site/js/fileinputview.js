@@ -86,6 +86,20 @@
             return this.element.querySelector(FileInputV2.selectors.attachButtonLabel);
         }
 
+        updateEnabled(enabled, state) {
+            if (this.widget) {
+                this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
+                const isDisabled = !enabled || state.readOnly;
+                if (isDisabled) {
+                    this.widget.setAttribute("disabled", "disabled");
+                    this.widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
+                } else {
+                    this.widget.removeAttribute("disabled");
+                    this.widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
+                }
+            }
+        }
+
         updateValue(value) {
             if (this.widgetObject == null) {
                 this.widgetObject = new FileInputWidget(this.widgetFields);

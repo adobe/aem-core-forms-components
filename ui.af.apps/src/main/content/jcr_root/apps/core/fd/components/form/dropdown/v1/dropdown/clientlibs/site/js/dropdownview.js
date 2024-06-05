@@ -84,7 +84,6 @@
         }
 
         updateEnabled(enabled, state) {
-            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widget = this.widget;
             if (enabled === false) {
@@ -117,10 +116,10 @@
             }
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
+                // clear of any selection, and re-add selection (otherwise HTML shows stale state if it already existed)
+                option.removeAttribute('selected');
                 if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
                     option.setAttribute('selected', 'selected');
-                } else {
-                    option.removeAttribute('selected');
                 }
             });
             super.updateEmptyStatus();

@@ -40,7 +40,7 @@
       },
       "events": {
         "click": [
-          "submitForm('custom:submitSuccess', 'custom:submitError')"
+          "submitForm()"
         ],
         "custom:setProperty": [
           "$event.payload"

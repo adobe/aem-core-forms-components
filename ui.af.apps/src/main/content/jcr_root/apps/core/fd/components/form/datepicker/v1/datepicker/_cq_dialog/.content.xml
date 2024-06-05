@@ -91,6 +91,19 @@
                                                     granite:class="cmp-adaptiveform-datepicker__minimummessage"
                                                     fieldLabel="Minimum error message"
                                                     name="./minimumMessage"/>
+                                            <excludeMinimum
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    granite:class="cmp-adaptiveform-numberinput__excludeMinimum"
+                                                    text="Exclude minimum value"
+                                                    value="true"
+                                                    fieldLabel="Exclude Minimum"
+                                                    name="./excludeMinimum"/>
+                                            <excludeMinimum-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./excludeMinimum@TypeHint"
+                                                    value="Boolean"/>
                                             <maximum
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
@@ -105,6 +118,19 @@
                                                     granite:class="cmp-adaptiveform-datepicker__maximummessage"
                                                     fieldLabel="Maximum error message"
                                                     name="./maximumMessage"/>
+                                            <excludeMaximum
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    granite:class="cmp-adaptiveform-numberinput__excludeMaximum"
+                                                    text="Exclude maximum value"
+                                                    fieldLabel="Exclude Maximum"
+                                                    value="true"
+                                                    name="./excludeMaximum"/>
+                                            <excludeMaximum-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./excludeMaximum@TypeHint"
+                                                    value="Boolean"/>
                                         </items>
                                     </column>
                                 </items>
@@ -189,8 +215,44 @@
                                                             fieldLabel="Edit Format"
                                                             name="./editFormat">
                                                     </editFormat>
+                                                    <formatMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldDescription="Error message shown when the date format is incorrect."
+                                                            granite:class="cmp-adaptiveform-datepicker__formatmessage"
+                                                            fieldLabel="Format error message"
+                                                            name="./formatMessage"/>
                                                 </items>
                                             </editPatternGroup>
+                                            <langGroup
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Language"
+                                                    title="Language"
+                                                    fieldDescription="The language to use for formatting the field."
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <langDisplayValue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-datepicker__langdisplayvalue"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldDescription="The language to use for formatting the field."
+                                                            fieldLabel="Type"
+                                                            name="./langDisplayValue">
+                                                        <datasource
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                                type="lang"/>
+                                                    </langDisplayValue>
+                                                    <langSaveValue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-datepicker__lang"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="The language to use for formatting the field."
+                                                            fieldLabel="IETF BCP 47 language tag"
+                                                            name="./lang">
+                                                    </langSaveValue>
+                                                </items>
+                                            </langGroup>
                                         </items>
                                     </column>
                                 </items>
