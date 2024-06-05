@@ -39,6 +39,8 @@ public class PasswordImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PASSWORD_DATALAYER = CONTENT_ROOT + "/password-datalayer";
     private static final String PATH_PASSWORD_CUSTOMIZED = CONTENT_ROOT + "/password-customized";
+    private static final String PATH_NUMBER_PASSWORD_EXCLUSIVE = CONTENT_ROOT + "/number-password-exclusive";
+    private static final String PATH_NUMBER_PASSWORD_INPUT = CONTENT_ROOT + "/number-password";
 
     private static final String PATH_PASSWORD = CONTENT_ROOT + "/password";
 
