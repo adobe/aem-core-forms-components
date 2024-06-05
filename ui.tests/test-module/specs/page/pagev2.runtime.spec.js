@@ -31,7 +31,7 @@ describe("Form with Page component version 2", () => {
     })
 })
 
-describe("Form with Page component version 2", () => {
+describe("Form with Page component version 2 for eds rendering", () => {
 
     const pagePath = "/bin/franklin.delivery/deepprakash345/selectorXwalk/main/content/forms/af/core-components-it/samples/page/afv2.html"
     beforeEach(() => {
