@@ -9,7 +9,8 @@
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="Page Edge Delivery"
-            sling:configRef="/conf/forms/afv2/"
+            sling:configRef="/conf/core-components-it/samples/customfunctionedgedelivery/"
+            cq:conf="/conf/core-components-it"
             sling:resourceType="core/fd/components/page/v2/page">
         <guideContainer
                 fd:version="2.1"
