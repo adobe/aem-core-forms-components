@@ -30,6 +30,7 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @ExtendWith(AemContextExtension.class)
 public class PasswordImplTest {
@@ -38,6 +39,8 @@ public class PasswordImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PASSWORD_DATALAYER = CONTENT_ROOT + "/password-datalayer";
     private static final String PATH_PASSWORD_CUSTOMIZED = CONTENT_ROOT + "/password-customized";
+    private static final String PATH_NUMBER_PASSWORD_EXCLUSIVE = CONTENT_ROOT + "/number-password-exclusive";
+    private static final String PATH_NUMBER_PASSWORD_INPUT = CONTENT_ROOT + "/number-password";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -137,26 +140,28 @@ public class PasswordImplTest {
 
     @Test
     void testGetExclusiveMinimum() {
-        Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
-        assertEquals(8, password.getExclusiveMinimum().intValue());
+        Password password = Utils.getComponentUnderTest(PATH_NUMBER_PASSWORD_EXCLUSIVE, Password.class, context);
+        assertNull(password.getMinimum());
+        assertEquals(8L, password.getExclusiveMinimum().longValue());
     }
 
     @Test
     void testGetExclusiveMaximum() {
-        Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
-        assertEquals(16, password.getExclusiveMaximum().intValue());
+        Password password = Utils.getComponentUnderTest(PATH_NUMBER_PASSWORD_EXCLUSIVE, Password.class, context);
+        assertNull(password.getMaximum());
+        assertEquals(16L, password.getExclusiveMaximum().longValue());
     }
 
     @Test
     void testGetMinimum() {
-        Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
-        assertEquals(1, password.getMinimum().intValue());
+        Password password = Utils.getComponentUnderTest(PATH_NUMBER_PASSWORD_INPUT, Password.class, context);
+        assertEquals(8, password.getMinimum().intValue());
     }
 
     @Test
     void testGetMaximum() {
-        Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
-        assertEquals(6, password.getMaximum().intValue());
+        Password password = Utils.getComponentUnderTest(PATH_NUMBER_PASSWORD_INPUT, Password.class, context);
+        assertEquals(16, password.getMaximum().intValue());
     }
 
     @Test
