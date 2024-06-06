@@ -35,7 +35,8 @@
     "name": "emptyImage",
     "fileReference": "/content/dam/formsanddocuments/abc.jpeg",
     "sling:resourceType": "core/fd/components/form/image/v1/image",
-    "fieldType": "image"
+    "fieldType": "image",
+    "customProp": "customPropValue"
   },
   "image-datalayer": {
     "id": "image-d1298ac4bb",

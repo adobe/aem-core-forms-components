@@ -5,6 +5,7 @@
     "sling:resourceType"    : "core/fd/components/form/panelcontainer/v1/panelcontainer",
     "jcr:title": "dependent names",
     "fieldType" : "panel",
+    "customProp": "customPropValue",
     "textinput" : {
       "jcr:primaryType": "nt:unstructured",
       "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",

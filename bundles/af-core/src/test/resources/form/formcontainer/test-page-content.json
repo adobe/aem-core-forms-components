@@ -27,6 +27,7 @@
       "dorType": "generate",
       "dorTemplateRef": "xyz",
       "clientLibRef": "abc",
+      "customProp": "customPropValue",
       "textinput" : {
         "jcr:primaryType": "nt:unstructured",
         "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",

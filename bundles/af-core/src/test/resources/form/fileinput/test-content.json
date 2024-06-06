@@ -10,7 +10,8 @@
       " video/*",
       " image/*",
       " text/*",
-      " application/pdf"]
+      " application/pdf"],
+    "customProp": "customPropValue"
   },
   "fileinput-customized" : {
     "jcr:primaryType": "nt:unstructured",

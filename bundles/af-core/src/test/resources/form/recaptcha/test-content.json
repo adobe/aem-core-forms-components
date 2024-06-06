@@ -14,6 +14,7 @@
     "sling:resourceType": "core/fd/components/form/recaptcha/v1/recaptcha",
     "fieldType": "captcha",
     "recaptchaSize": "compact",
+    "customProp": "customPropValue",
     "events": {
       "custom:setProperty": [
         "$event.payload"

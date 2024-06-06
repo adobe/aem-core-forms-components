@@ -10,7 +10,8 @@
     },
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
     "fd:schemaType": "BASIC",
-    "fd:formDataEnabled": true
+    "fd:formDataEnabled": true,
+    "customProp": "customPropValue"
   },
   "events": {
     "custom:setProperty": [

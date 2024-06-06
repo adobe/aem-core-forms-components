@@ -17,6 +17,7 @@
     "tooltip": "test-short-description",
     "type": "number[]",
     "multiSelect": true,
+    "customProp": "customPropValue",
     "default": [
       0,
       1

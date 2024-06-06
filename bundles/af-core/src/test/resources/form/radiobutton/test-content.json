@@ -18,7 +18,8 @@
       "<p>Item 2</p>"
     ],
     "jcr:lastModified": "Tue Sep 13 2022 15:18:50 GMT+0530",
-    "fieldType": "radio-group"
+    "fieldType": "radio-group",
+    "customProp": "customPropValue"
   },
   "radiobutton-customized": {
     "jcr:primaryType": "nt:unstructured",

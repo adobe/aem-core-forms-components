@@ -11,7 +11,8 @@
     "fd:dor": {
       "dorExclusion":false
     },
-    "fd:path":"/content/checkbox"
+    "fd:path":"/content/checkbox",
+    "customProp": "customPropValue"
   },
   "enforceEnum":true,
   "enum" : ["on", "off"],

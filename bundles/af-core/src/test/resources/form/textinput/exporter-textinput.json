@@ -15,7 +15,8 @@
    "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/textinput"
+    "fd:path": "/content/textinput",
+    "customProp": "customPropValue"
   },
   ":type": "core/fd/components/form/textinput/v1/textinput"
 }

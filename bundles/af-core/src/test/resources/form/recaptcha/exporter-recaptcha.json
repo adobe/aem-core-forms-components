@@ -31,7 +31,8 @@
         "type": "image",
         "version": null
       }
-    }
+    },
+    "customProp": "customPropValue"
   },
   ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
 }

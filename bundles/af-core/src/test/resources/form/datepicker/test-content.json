@@ -4,7 +4,8 @@
     "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
     "name" : "abc",
     "jcr:title" : "def",
-    "fieldType": "date-input"
+    "fieldType": "date-input",
+    "customProp": "customPropValue"
   },
   "datepicker-customized" : {
     "jcr:primaryType": "nt:unstructured",
