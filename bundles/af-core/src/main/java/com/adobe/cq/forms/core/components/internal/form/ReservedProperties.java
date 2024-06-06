@@ -100,8 +100,7 @@ public final class ReservedProperties {
     public static final String PN_MAXIMUM_MESSAGE = "maximumMessage";
     public static final String PN_MINLENGTH_MESSAGE = "minLengthMessage";
     public static final String PN_MAXLENGTH_MESSAGE = "maxLengthMessage";
-    public static final String PN_MAX_FILE_SIZE_MESSAGE = "maxFileSizeMessage"; // for fileInput min, max number of files, maximum file size
-                                                                                // and accept of file type messages
+    public static final String PN_MAX_FILE_SIZE_MESSAGE = "maxFileSizeMessage"; // for fileInput min, max number of files, maximum file size and accept of file type messages
     public static final String PN_ACCEPT_MESSAGE = "acceptMessage";
     public static final String PN_STEP_MESSAGE = "stepMessage";
     public static final String PN_FORMAT_MESSAGE = "formatMessage";
@@ -128,6 +127,7 @@ public final class ReservedProperties {
     public static final String PN_THANK_YOU_OPTION = "thankYouOption";
     public static final String PN_RUNTIME_DOCUMENT_PATH = FormContainer.PN_RUNTIME_DOCUMENT_PATH;
     public static final String PN_CLOUD_SERVICE_PATH = "cloudServicePath";
+    public static final String PN_RECAPTCHA_CLOUD_SERVICE_PATH = "rcCloudServicePath";
     public static final String PN_RECAPTCHA_SIZE = "recaptchaSize";
     public static final String PN_BREAK_BEFORE_TEXT = "breakBeforeText";
     public static final String PN_BREAK_AFTER_TEXT = "breakAfterText";

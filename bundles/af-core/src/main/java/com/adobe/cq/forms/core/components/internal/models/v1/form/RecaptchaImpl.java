@@ -77,7 +77,6 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
     public static final String RECAPTCHA_ENTERPRISE_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/enterprise.js";
-
     private static final String RECAPTCHA_SITE_KEY = "siteKey";
     private static final String RECAPTCHA_URI = "uri";
     private static final String RECAPTCHA_SIZE = "size";
