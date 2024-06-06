@@ -64,14 +64,14 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CloudConfigurationProvider cloudConfigurationProvider;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CLOUD_SERVICE_PATH)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("rcCloudServicePath")
+    @Named(ReservedProperties.PN_RECAPTCHA_CLOUD_SERVICE_PATH)
     protected String cloudServicePath;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SIZE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("recaptchaSize")
+    @Named(ReservedProperties.PN_RECAPTCHA_SIZE)
     protected String size;
 
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";

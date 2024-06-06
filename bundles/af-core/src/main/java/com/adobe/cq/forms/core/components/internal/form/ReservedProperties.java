@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.wcm.core.components.models.Component;
+
 public final class ReservedProperties {
     private ReservedProperties() {
         // NOOP
@@ -51,7 +52,7 @@ public final class ReservedProperties {
     public static final String PN_DOR_LAYOUT_TYPE = "dorLayoutType";
     public static final String PN_DESCRIPTION = "description";
     public static final String PN_TOOLTIP = "tooltip";
-    public static final String PN_DOR_TEMPLATE_TYPE = "dorTemplateType";
+    public static final String PN_DOR_TEMPLATE_TYPE = "fd:formType";
     public static final String PN_TOOLTIP_VISIBLE = "tooltipVisible";
     public static final String PN_TYPE = "type";
     public static final String PN_DOR_TEMPLATE_REF = "dorTemplateRef";
@@ -100,7 +101,8 @@ public final class ReservedProperties {
     public static final String PN_MAXIMUM_MESSAGE = "maximumMessage";
     public static final String PN_MINLENGTH_MESSAGE = "minLengthMessage";
     public static final String PN_MAXLENGTH_MESSAGE = "maxLengthMessage";
-    public static final String PN_MAX_FILE_SIZE_MESSAGE = "maxFileSizeMessage"; // for fileInput min, max number of files, maximum file size and accept of file type messages
+    public static final String PN_MAX_FILE_SIZE_MESSAGE = "maxFileSizeMessage"; // for fileInput min, max number of files, maximum file size
+                                                                                // and accept of file type messages
     public static final String PN_ACCEPT_MESSAGE = "acceptMessage";
     public static final String PN_STEP_MESSAGE = "stepMessage";
     public static final String PN_FORMAT_MESSAGE = "formatMessage";

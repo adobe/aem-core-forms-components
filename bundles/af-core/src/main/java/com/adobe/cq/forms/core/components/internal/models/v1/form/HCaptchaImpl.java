@@ -67,14 +67,14 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CloudConfigurationProvider cloudConfigurationProvider;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CLOUD_SERVICE_PATH)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("cloudServicePath")
+    @Named(ReservedProperties.PN_CLOUD_SERVICE_PATH)
     protected String cloudServicePath;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SIZE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("size")
+    @Named(ReservedProperties.PN_SIZE)
     protected String size;
 
     private static final String SITE_KEY = "siteKey";

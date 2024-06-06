@@ -54,9 +54,9 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Nullable
     protected String dorType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_TEMPLATE_TYPE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    @Named("fd:formType")
+    @Named(ReservedProperties.PN_DOR_TEMPLATE_TYPE)
     protected String dorTemplateType;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DESCRIPTION)
