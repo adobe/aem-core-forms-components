@@ -43,11 +43,15 @@ import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class which can be used as base class for {@link Container} implementations.
  */
 public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Container, ContainerConstraint {
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractContainerImpl.class);
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
