@@ -143,9 +143,15 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
                 // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
                 model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
             } else {
-                model = child.adaptTo(modelClass);
-                if (model instanceof Base && i18n != null) {
-                    ((Base) model).setI18n(i18n);
+                try {
+                    model = child.adaptTo(modelClass);
+                    if (model instanceof Base && i18n != null) {
+                        ((Base) model).setI18n(i18n);
+                    }
+                } catch (Exception e) {
+                    // Log the exception as info, since there can be site component inside form, but we don't care about they being adapted or not
+                    // by default, site component cannot be adapted with resource
+                    logger.info("Could not adapt resource {} to model class {}: {}", child.getPath(), modelClass.getName(), e.getMessage());
                 }
             }
             if (model != null) {
