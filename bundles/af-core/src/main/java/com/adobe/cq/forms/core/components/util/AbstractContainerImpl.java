@@ -34,6 +34,8 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
@@ -43,8 +45,6 @@ import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class which can be used as base class for {@link Container} implementations.
@@ -153,7 +153,8 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
                         ((Base) model).setI18n(i18n);
                     }
                 } catch (Exception e) {
-                    // Log the exception as info, since there can be site component inside form, but we don't care about they being adapted or not
+                    // Log the exception as info, since there can be site component inside form, but we don't care about they being adapted
+                    // or not
                     // by default, site component cannot be adapted with resource
                     logger.info("Could not adapt resource {} to model class {}: {}", child.getPath(), modelClass.getName(), e.getMessage());
                 }
