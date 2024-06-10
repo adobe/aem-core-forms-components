@@ -59,7 +59,7 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @Nullable
     protected String altText;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_IMG_SRC)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_IMAGE_SRC)
     @Nullable
     protected String imageSrc;
 

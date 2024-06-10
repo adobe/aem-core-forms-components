@@ -57,15 +57,15 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     protected Object exclusiveMaximum;
 
     /** Adding this for backward compatibility, not to be changed anymore **/
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUSIVE_MAXIMUM_CHECK)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUDE_MAXIMUM_CHECK)
     @Nullable
     private Boolean excludeMaximumCheck;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUSIVE_MINIMUM_CHECK)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUDE_MINIMUM_CHECK)
     @Nullable
     private Boolean excludeMinimumCheck;
     /** End **/
-    private Long exclusiveMinimumVaue;
+    private Long exclusiveMinimumValue;
     private Long exclusiveMaximumValue;
 
     @Override
@@ -89,7 +89,7 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @Override
     @Nullable
     public Long getExclusiveMinimum() {
-        return exclusiveMinimumVaue;
+        return exclusiveMinimumValue;
     }
 
     @Override
@@ -105,12 +105,12 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @PostConstruct
     private void initNumberInput() {
         exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, excludeMaximumCheck);
-        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, excludeMinimumCheck);
+        exclusiveMinimumValue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, excludeMinimumCheck);
         // in json either, exclusiveMaximum or maximum should be present
         if (exclusiveMaximumValue != null) {
             maximum = null;
         }
-        if (exclusiveMinimumVaue != null) {
+        if (exclusiveMinimumValue != null) {
             minimum = null;
         }
     }

@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.wcm.core.components.models.Component;
+import com.adobe.cq.wcm.core.components.models.Title;
 
 public final class ReservedProperties {
     private ReservedProperties() {
@@ -61,7 +62,7 @@ public final class ReservedProperties {
     public static final String PN_REQUIRED = "required";
     public static final String PN_AUTOCOMPLETE = "autocomplete";
     public static final String PN_ASSIST_PRIORITY = "assistPriority";
-    public static final String PN_CUSTOM_ASSIST_PRIORITY = "custom";
+    public static final String PN_CUSTOM = "custom";
     public static final String PN_ENABLED = "enabled";
     public static final String PN_REPEATABLE = "repeatable";
     public static final String PN_MIN_OCCUR = "minOccur";
@@ -86,8 +87,8 @@ public final class ReservedProperties {
     public static final String PN_MINIMUM = "minimum";
     public static final String PN_EXCLUSIVE_MINIMUM = "exclusiveMinimum";
     public static final String PN_EXCLUSIVE_MAXIMUM = "exclusiveMaximum";
-    public static final String PN_EXCLUSIVE_MINIMUM_CHECK = "excludeMinimumCheck";
-    public static final String PN_EXCLUSIVE_MAXIMUM_CHECK = "excludeMaximumCheck";
+    public static final String PN_EXCLUDE_MINIMUM_CHECK = "excludeMinimumCheck";
+    public static final String PN_EXCLUDE_MAXIMUM_CHECK = "excludeMaximumCheck";
     public static final String PN_ENFORCE_ENUM = "enforceEnum";
     public static final String PN_ENUM = "enum";
     public static final String PN_ENUM_NAMES = "enumNames";
@@ -135,15 +136,15 @@ public final class ReservedProperties {
     public static final String PN_BREAK_AFTER_TEXT = "breakAfterText";
     public static final String PN_OVERFLOW_TEXT = "overflowText";
     public static final String PN_ALT_TEXT = "altText";
-    public static final String PN_IMG_SRC = "imageSrc";
+    public static final String PN_IMAGE_SRC = "imageSrc";
     public static final String PN_FILE_REF = "fileReference";
     public static final String PN_SHOW_APPROVAL_OPTION = "showApprovalOption";
     public static final String PN_SHOW_LINK = "showLink";
     public static final String PN_SHOW_AS_POPUP = "showAsPopup";
     public static final String PN_TEXT_IS_RICH = "textIsRich";
     public static final String PN_MULTILINE = "multiLine";
-    public static final String PN_DESIGN_DEFAULT_TYPE = "type";
-    public static final String PN_TITLE_LINK_DISABLED = "linkDisabled";
+    public static final String PN_DESIGN_DEFAULT_TYPE = Title.PN_DESIGN_DEFAULT_TYPE;
+    public static final String PN_TITLE_LINK_DISABLED = Title.PN_TITLE_LINK_DISABLED;
     public static final String PN_DRAG_DROP_TEXT = "dragDropText";
     public static final String PN_CLIENTLIB_REF = "clientLibRef";
     public static final String PN_REDIRECT = "redirect";

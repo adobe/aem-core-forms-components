@@ -90,7 +90,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     protected String assistPriorityJcr;
     private AssistPriority assistPriority;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CUSTOM_ASSIST_PRIORITY)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CUSTOM)
     @Nullable
     protected String customAssistPriorityMsg;
 
