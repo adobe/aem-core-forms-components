@@ -8,9 +8,9 @@
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
-            jcr:title="Adaptive Form V2 (IT)"
-            sling:configRef="/conf/forms/core-components-it/samples/fileinput/basic/"
-            sling:resourceType="forms-components-examples/components/page">
+            jcr:title="Adaptive Form V3 (IT)"
+            sling:configRef="/conf/forms/core-components-it/samples/fileinput/fileinputv3/basic/"
+            sling:resourceType="forms-core-components-it/components/page-fileinputv3">
         <guideContainer
                 fd:version="2.1"
                 jcr:lastModified="{Date}2023-01-17T16:29:57.778+05:30"
@@ -29,7 +29,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 1"
-                    sling:resourceType="forms-components-examples/components/form/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     buttonText="Attach Files"
                     enabled="{Boolean}true"
@@ -43,7 +43,7 @@
             <fileinput2
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 2"
-                    sling:resourceType="forms-components-examples/components/form/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     fieldType="file-input"
                     name="fileinput2"
@@ -51,7 +51,7 @@
             <fileinput3
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 3"
-                    sling:resourceType="forms-components-examples/components/form/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
                     accept="[application/pdf]"
                     description="This is long description"
                     fieldType="file-input"
@@ -63,7 +63,7 @@
             <fileinput4
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 4"
-                    sling:resourceType="forms-components-examples/components/form/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
                     accept="[application/x-msdownload,application/vnd.ms-outlook,application/pdf]"
                     description="This is long description"
                     fieldType="file-input"
@@ -77,7 +77,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 5"
-                    sling:resourceType="forms-components-examples/components/form/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     buttonText="Attach Files"
                     enabled="{Boolean}true"

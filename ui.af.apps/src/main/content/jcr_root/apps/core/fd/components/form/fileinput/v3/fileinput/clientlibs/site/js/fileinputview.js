@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2023 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class FileInput extends FormView.FormFileInput {
+    class FileInputV3 extends FormView.FormFileInput {
 
         static NS = FormView.Constants.NS;
         /**
@@ -27,66 +27,63 @@
          */
         static IS = "adaptiveFormFileInput";
         static bemBlock = 'cmp-adaptiveform-fileinput'
-        static selectors = {
+        static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widget: `.${FileInput.bemBlock}__widget`,
-            label: `.${FileInput.bemBlock}__label`,
-            description: `.${FileInput.bemBlock}__longdescription`,
-            qm: `.${FileInput.bemBlock}__questionmark`,
-            errorDiv: `.${FileInput.bemBlock}__errormessage`,
-            tooltipDiv: `.${FileInput.bemBlock}__shortdescription`,
-            fileListDiv: `.${FileInput.bemBlock}__filelist`,
-            attachButtonLabel: `.${FileInput.bemBlock}__widgetlabel`
+            widget: `.${FileInputV3.bemBlock}__widget`,
+            label: `.${FileInputV3.bemBlock}__label`,
+            description: `.${FileInputV3.bemBlock}__longdescription`,
+            qm: `.${FileInputV3.bemBlock}__questionmark`,
+            errorDiv: `.${FileInputV3.bemBlock}__errormessage`,
+            tooltipDiv: `.${FileInputV3.bemBlock}__shortdescription`,
+            fileListDiv : `.${FileInputV3.bemBlock}__filelist`,
+            attachButtonLabel : `.${FileInputV3.bemBlock}__widgetlabel`,
+            dragArea: `.${FileInputV3.bemBlock}__dragarea`
         };
 
         constructor(params) {
             super(params);
         }
-
         widgetFields = {
             widget: this.getWidget(),
             fileListDiv: this.getFileListDiv(),
-            model: () => this._model
+            model: () => this._model,
+            dragArea: this.getDragArea()
+        };
+        
+        getWidget() {
+            return this.element.querySelector(FileInputV3.selectors.widget);
         }
 
-        getWidget() {
-            return this.element.querySelector(FileInput.selectors.widget);
+        getDragArea() {
+            return this.element.querySelector(FileInputV3.selectors.dragArea);
         }
 
         getDescription() {
-            return this.element.querySelector(FileInput.selectors.description);
+            return this.element.querySelector(FileInputV3.selectors.description);
         }
 
         getLabel() {
-            return this.element.querySelector(FileInput.selectors.label);
+            return this.element.querySelector(FileInputV3.selectors.label);
         }
 
         getErrorDiv() {
-            return this.element.querySelector(FileInput.selectors.errorDiv);
+            return this.element.querySelector(FileInputV3.selectors.errorDiv);
         }
 
         getTooltipDiv() {
-            return this.element.querySelector(FileInput.selectors.tooltipDiv);
+            return this.element.querySelector(FileInputV3.selectors.tooltipDiv);
         }
 
         getQuestionMarkDiv() {
-            return this.element.querySelector(FileInput.selectors.qm);
+            return this.element.querySelector(FileInputV3.selectors.qm);
         }
 
         getFileListDiv() {
-            return this.element.querySelector(FileInput.selectors.fileListDiv);
+            return this.element.querySelector(FileInputV3.selectors.fileListDiv);
         }
 
         getAttachButtonLabel() {
-            return this.element.querySelector(FileInput.selectors.attachButtonLabel);
-        }
-
-        updateValue(value) {
-            if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.widgetFields)
-            }
-            this.widgetObject.setValue(value);
-            super.updateEmptyStatus();
+            return this.element.querySelector(FileInputV3.selectors.attachButtonLabel);
         }
 
         updateEnabled(enabled, state) {
@@ -103,10 +100,18 @@
             }
         }
 
+        updateValue(value) {
+            if (this.widgetObject == null) {
+                this.widgetObject = new FileInputWidget(this.widgetFields);
+            }
+            this.widgetObject.setValue(value);
+            super.updateEmptyStatus();
+        }
+
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.widgetFields)
+                this.widgetObject = new FileInputWidget(this.widgetFields);
             }
             this.getAttachButtonLabel().addEventListener('focus', () => {
                 this.setActive();
@@ -115,10 +120,23 @@
                 this.setInactive();
             })
         }
+
+        syncWidget() {
+            let widgetElement = this.getWidget ? this.getWidget() : null;
+            if (widgetElement) {
+                widgetElement.id = this.getId() + "__widget";
+                const closestElement = widgetElement?.previousElementSibling;
+                if (closestElement && closestElement.tagName.toLowerCase() === 'label') {
+                    closestElement.setAttribute('for', this.getId() + "__widget");
+                } else {
+                    this.getAttachButtonLabel().removeAttribute('for');
+                }
+            }
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new FileInput({element, formContainer})
-    }, FileInput.selectors.self);
+        return new FileInputV3({element, formContainer})
+    }, FileInputV3.selectors.self);
 
 })();
