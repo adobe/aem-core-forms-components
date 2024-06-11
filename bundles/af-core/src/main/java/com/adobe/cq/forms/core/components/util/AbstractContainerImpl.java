@@ -34,6 +34,8 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
@@ -48,6 +50,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * Abstract class which can be used as base class for {@link Container} implementations.
  */
 public abstract class AbstractContainerImpl extends AbstractBaseImpl implements Container, ContainerConstraint {
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractContainerImpl.class);
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
@@ -143,9 +147,16 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
                 // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
                 model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
             } else {
-                model = child.adaptTo(modelClass);
-                if (model instanceof Base && i18n != null) {
-                    ((Base) model).setI18n(i18n);
+                try {
+                    model = child.adaptTo(modelClass);
+                    if (model instanceof Base && i18n != null) {
+                        ((Base) model).setI18n(i18n);
+                    }
+                } catch (Exception e) {
+                    // Log the exception as info, since there can be site component inside form, but we don't care about they being adapted
+                    // or not
+                    // by default, site component cannot be adapted with resource
+                    logger.info("Could not adapt resource {} to model class {}: {}", child.getPath(), modelClass.getName(), e.getMessage());
                 }
             }
             if (model != null) {
