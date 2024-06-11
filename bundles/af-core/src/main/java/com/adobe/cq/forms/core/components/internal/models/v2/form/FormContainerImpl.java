@@ -217,7 +217,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             }
         } else {
             String pagePath = getParentPagePath();
-            return (StringUtils.isNotBlank(pagePath))? ComponentUtils.getEncodedPath(pagePath) : super.getId();
+            return (StringUtils.isNotBlank(pagePath)) ? ComponentUtils.getEncodedPath(pagePath) : super.getId();
         }
     }
 
