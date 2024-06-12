@@ -31,9 +31,11 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
+import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -118,6 +120,7 @@ public class FormStructureParserImpl implements FormStructureParser {
         FormContainer formContainer = resource.adaptTo(FormContainer.class);
         try {
             ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new SimpleModule().addSerializer(String.class, new AbstractBaseImpl.EncodeHTMLSerializer()));
             Writer writer = new StringWriter();
             // return publish view specific properties only for runtime
             mapper.writerWithView(Views.Publish.class).writeValue(writer, formContainer);

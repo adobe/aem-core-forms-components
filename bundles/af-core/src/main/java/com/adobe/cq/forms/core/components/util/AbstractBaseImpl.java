@@ -15,12 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -39,6 +41,10 @@ import com.adobe.cq.forms.core.components.models.form.Label;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
@@ -155,6 +161,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     }
 
     @Override
+    @JsonSerialize(using = EncodeHTMLSerializer.class)
     public @Nullable String getTooltip() {
         return translate(PN_TOOLTIP, tooltip);
     }
@@ -227,6 +234,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
      */
     @Override
     @Nullable
+    @JsonSerialize(using = EncodeHTMLSerializer.class)
     public String getDescription() {
         return translate(PN_DESCRIPTION, description);
     }
@@ -488,5 +496,15 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public String getValidationExpression() {
         return validationExpression;
+    }
+
+    public static class EncodeHTMLSerializer extends JsonSerializer<String> {
+        @Override
+        public void serialize(String value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+            if (value != null) {
+                String escapedValue = StringEscapeUtils.escapeHtml4(value);
+                jsonGenerator.writeString(escapedValue);
+            }
+        }
     }
 }
