@@ -489,8 +489,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         Map<String, String> customProperties = new HashMap<>();
         Map<String, String> templateBasedCustomProperties;
         List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
+        Set<String> reservedProperties = ReservedProperties.getReservedProperties();
 
-        List<String> reservedProperties = ReservedProperties.getNodeProperties();
         ValueMap resourceMap = resource.getValueMap();
         Map<String, String> nodeBasedCustomProperties = resourceMap.entrySet()
             .stream()
@@ -505,8 +505,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                 .map(CustomPropertyInfo::getProperties)
                 .orElse(Collections.emptyMap());
         } catch (NoClassDefFoundError e) {
-            logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon. Returning an empty map.");
-            return Collections.emptyMap();
+            logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon.");
+            templateBasedCustomProperties = Collections.emptyMap();
         }
         if (!templateBasedCustomProperties.isEmpty()) {
             templateBasedCustomProperties.forEach(customProperties::putIfAbsent);

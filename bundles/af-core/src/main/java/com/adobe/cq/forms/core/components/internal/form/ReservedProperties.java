@@ -16,8 +16,8 @@
 package com.adobe.cq.forms.core.components.internal.form;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,21 +151,26 @@ public final class ReservedProperties {
     public static final String PN_PREFILL_SERVICE = "prefillService";
     public static final String PN_SPEC_VERSION = "specVersion";
     public static final String PN_RICH_TEXT = "richText";
+    private static final Set<String> reservedProperties = aggregateReservedProperties();
 
-    public static List<String> getNodeProperties() {
-        List<String> nodeProperties = new ArrayList<>();
+    private static Set<String> aggregateReservedProperties() {
+        Set<String> reservedProperties = new HashSet<>();
         Field[] fields = ReservedProperties.class.getDeclaredFields();
 
         for (Field field : fields) {
             if (field.getType().equals(String.class)) {
                 try {
-                    nodeProperties.add((String) field.get(null));
+                    reservedProperties.add((String) field.get(null));
                 } catch (IllegalAccessException e) {
                     logger.error("[AF] Error while accessing field: {}", field.getName(), e);
                 }
             }
         }
 
-        return nodeProperties;
+        return reservedProperties;
+    }
+
+    public static Set<String> getReservedProperties() {
+        return reservedProperties;
     }
 }
