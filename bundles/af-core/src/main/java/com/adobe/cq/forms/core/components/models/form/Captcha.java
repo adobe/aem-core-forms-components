@@ -35,10 +35,16 @@ public interface Captcha extends Field {
         return null;
     }
 
+    @Deprecated
     @JsonIgnore
     String getProvider();
 
     @JsonIgnore
     Map<String, Object> getCaptchaProperties() throws GuideException;
 
+    String getCaptchaDisplayMode();
+
+    String getCaptchaProvider();
+
+    String getCaptchaSiteKey();
 }

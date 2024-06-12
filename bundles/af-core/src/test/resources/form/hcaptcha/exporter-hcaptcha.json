@@ -7,6 +7,9 @@
     "required": true,
     "enabled": true,
     "readOnly": false,
+    "captchaDisplayMode": "visible",
+    "captchaSiteKey": "dummySiteKey",
+    "captchaProvider": "hcaptcha",
     "label": {
       "visible": true,
       "value": "HCAPTCHA"
@@ -24,8 +27,8 @@
       "fd:captcha": {
         "provider": "hcaptcha",
         "config": {
-          "siteKey": null,
-          "uri": null,
+          "siteKey": "dummySiteKey",
+          "uri": "https://js.hcaptcha.com/1/api.js",
           "size": "normal",
           "theme": "light",
           "type": "image"

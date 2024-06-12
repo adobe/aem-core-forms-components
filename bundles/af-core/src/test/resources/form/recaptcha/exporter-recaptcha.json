@@ -6,6 +6,9 @@
   "type": "string",
   "enabled": true,
   "readOnly": false,
+  "captchaDisplayMode": "invisible",
+  "captchaProvider": "recaptchaEnterprise",
+  "captchaSiteKey": "dummySiteKey",
   "label": {
     "visible": true,
     "value": "CAPTCHA"
@@ -23,13 +26,13 @@
     "fd:captcha": {
       "provider": "recaptcha",
       "config": {
-        "keyType": null,
-        "siteKey": null,
-        "uri": "https://www.recaptcha.net/recaptcha/api.js",
+        "keyType": "score",
+        "siteKey": "dummySiteKey",
+        "uri": "https://www.recaptcha.net/recaptcha/enterprise.js",
         "size": "compact",
         "theme": "light",
         "type": "image",
-        "version": null
+        "version": "enterprise"
       }
     }
   },

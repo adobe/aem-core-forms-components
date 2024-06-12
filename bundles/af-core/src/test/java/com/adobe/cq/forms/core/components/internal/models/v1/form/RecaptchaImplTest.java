@@ -64,6 +64,9 @@ public class RecaptchaImplTest {
     void setUp() throws GuideException {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
         context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
+        Mockito.when(reCaptchaConfiguration.siteKey()).thenReturn("dummySiteKey");
+        Mockito.when(reCaptchaConfiguration.version()).thenReturn("enterprise");
+        Mockito.when(reCaptchaConfiguration.keyType()).thenReturn("score");
     }
 
     @Test

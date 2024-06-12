@@ -26,6 +26,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * Abstract class which can be used as base class for {@link Captcha} implementations.
  */
 public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements Captcha {
+
+    protected enum CaptchaDisplayMode {
+        VISIBLE("visible"),
+        INVISIBLE("invisible");
+
+        private String displayMode;
+
+        CaptchaDisplayMode(String displayMode) {
+            this.displayMode = displayMode;
+        }
+
+        public String getDisplayMode() {
+            return displayMode;
+        }
+    }
+
     public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
 
     @JsonIgnore
@@ -49,4 +65,12 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
         return properties;
     }
 
+    @Override
+    public abstract String getCaptchaDisplayMode();
+
+    @Override
+    public abstract String getCaptchaProvider();
+
+    @Override
+    public abstract String getCaptchaSiteKey();
 }

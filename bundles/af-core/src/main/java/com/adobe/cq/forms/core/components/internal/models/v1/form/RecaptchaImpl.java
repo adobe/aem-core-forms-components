@@ -73,6 +73,12 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     @Named("recaptchaSize")
     protected String size;
 
+    private String captchaProvider;
+    private CaptchaDisplayMode captchaDisplayMode;
+    private String captchaSiteKey;
+    private String version;
+    private String keyType;
+
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
     public static final String RECAPTCHA_ENTERPRISE_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/enterprise.js";
@@ -84,6 +90,10 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     private static final String RECAPTCHA_TYPE = "type";
     private static final String RECAPTCHA_VERSION = "version";
     private static final String RECAPTCHA_KEYTYPE = "keyType";
+    private static final String RECAPTCHA_ENT_PROVIDER = "recaptchaEnterprise";
+    private static final String RECAPTCHA_V2_PROVIDER = "recaptchaV2";
+    private static final String RECAPTCHA_ENT_SCORE_KEY = "score";
+    private static final String RECAPTCHA_ENT_VERSION = "enterprise";
 
     @Override
     @JsonIgnore
@@ -101,25 +111,42 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         return "recaptcha";
     }
 
+    /**
+     * Set the reCaptchaConfiguration, by fetching it from the cloud configurations.
+     * Also sets the captchaSiteKey, version, keyType, captchaProvider and captchaDisplayMode.
+     */
+    private void setReCaptchaConfiguration() {
+        resource = resourceResolver.getResource(this.getPath());
+        if (resource != null && cloudConfigurationProvider != null) {
+            reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
+            if (reCaptchaConfiguration != null) {
+                captchaSiteKey = reCaptchaConfiguration.siteKey();
+                version = reCaptchaConfiguration.version();
+                captchaProvider = getProvider() + version;
+                keyType = reCaptchaConfiguration.keyType();
+                if (RECAPTCHA_ENT_VERSION.equals(version)) {
+                    captchaDisplayMode = RECAPTCHA_ENT_SCORE_KEY.equals(keyType) ? CaptchaDisplayMode.INVISIBLE
+                        : CaptchaDisplayMode.VISIBLE;
+                    captchaProvider = RECAPTCHA_ENT_PROVIDER;
+                } else {
+                    captchaDisplayMode = CaptchaDisplayMode.INVISIBLE.getDisplayMode().equals(getSize()) ? CaptchaDisplayMode.INVISIBLE
+                        : CaptchaDisplayMode.VISIBLE;
+                    captchaProvider = RECAPTCHA_V2_PROVIDER;
+                }
+            }
+        }
+    }
+
     @JsonIgnore
     @Override
     public Map<String, Object> getCaptchaProperties() throws GuideException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
-        String siteKey = null;
-        String version = null;
-        String keyType = null;
-        resource = resourceResolver.getResource(this.getPath());
-        if (resource != null && cloudConfigurationProvider != null) {
-            reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
-            if (reCaptchaConfiguration != null) {
-                siteKey = reCaptchaConfiguration.siteKey();
-                version = reCaptchaConfiguration.version();
-                keyType = reCaptchaConfiguration.keyType();
-            }
+        if (reCaptchaConfiguration == null) {
+            setReCaptchaConfiguration();
         }
-        customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
-        if (StringUtils.isNotEmpty(version) && version.equals("enterprise")) {
+        customCaptchaProperties.put(RECAPTCHA_SITE_KEY, this.captchaSiteKey);
+        if (StringUtils.isNotEmpty(version) && version.equals(RECAPTCHA_ENT_VERSION)) {
             customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_ENTERPRISE_DEFAULT_URL);
         } else {
             customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
@@ -127,11 +154,34 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         customCaptchaProperties.put(RECAPTCHA_SIZE, getSize());
         customCaptchaProperties.put(RECAPTCHA_THEME, "light");
         customCaptchaProperties.put(RECAPTCHA_TYPE, "image");
-        customCaptchaProperties.put(RECAPTCHA_VERSION, version);
-        customCaptchaProperties.put(RECAPTCHA_KEYTYPE, keyType);
+        customCaptchaProperties.put(RECAPTCHA_VERSION, this.version);
+        customCaptchaProperties.put(RECAPTCHA_KEYTYPE, this.keyType);
 
         return customCaptchaProperties;
 
     }
 
+    @Override
+    public String getCaptchaProvider() {
+        if (reCaptchaConfiguration == null) {
+            setReCaptchaConfiguration();
+        }
+        return this.captchaProvider;
+    }
+
+    @Override
+    public String getCaptchaDisplayMode() {
+        if (reCaptchaConfiguration == null) {
+            setReCaptchaConfiguration();
+        }
+        return this.captchaDisplayMode.getDisplayMode();
+    }
+
+    @Override
+    public String getCaptchaSiteKey() {
+        if (reCaptchaConfiguration == null) {
+            setReCaptchaConfiguration();
+        }
+        return this.captchaSiteKey;
+    }
 }

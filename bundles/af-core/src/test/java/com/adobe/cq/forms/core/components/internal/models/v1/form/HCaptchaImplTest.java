@@ -63,6 +63,8 @@ public class HCaptchaImplTest {
     void setUp() throws GuideException {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
         context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
+        Mockito.when(hCaptchaConfiguration.getSiteKey()).thenReturn("dummySiteKey");
+        Mockito.when(hCaptchaConfiguration.getClientSideJsUrl()).thenReturn("https://js.hcaptcha.com/1/api.js");
     }
 
     @Test

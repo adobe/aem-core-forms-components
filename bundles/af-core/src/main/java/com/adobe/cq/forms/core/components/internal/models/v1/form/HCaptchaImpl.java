@@ -43,6 +43,8 @@ import com.adobe.cq.forms.core.components.models.form.HCaptcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import static com.adobe.aemds.guide.utils.GuideConstants.HCAPTCHA_SERVICE;
+
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { HCaptcha.class,
@@ -81,6 +83,7 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     private static final String SIZE = "size";
     private static final String THEME = "theme";
     private static final String TYPE = "type";
+    private String captchaSiteKey;
 
     @Override
     public String getCloudServicePath() {
@@ -89,30 +92,39 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
 
     @Override
     public String getProvider() {
-        return "hcaptcha";
+        return HCAPTCHA_SERVICE;
+    }
+
+    private void setHCaptchaConfiguration() {
+        if (cloudConfigurationProvider != null) {
+            try {
+                resource = resourceResolver.getResource(this.getPath());
+                hCaptchaConfiguration = cloudConfigurationProvider.getHCaptchaCloudConfiguration(resource);
+                if (hCaptchaConfiguration != null) {
+                    captchaSiteKey = hCaptchaConfiguration.getSiteKey();
+                }
+            } catch (GuideException e) {
+                LOGGER.error(
+                    "[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+            }
+        } else {
+            LOGGER.info(
+                "[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+        }
     }
 
     @Override
     public Map<String, Object> getCaptchaProperties() throws GuideException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
-        String siteKey = null, uri = null;
-        resource = resourceResolver.getResource(this.getPath());
-        if (cloudConfigurationProvider == null) {
-            LOGGER.info("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+        String uri = null;
+        if (hCaptchaConfiguration == null) {
+            setHCaptchaConfiguration();
         }
-        try {
-            if (resource != null && cloudConfigurationProvider != null) {
-                hCaptchaConfiguration = cloudConfigurationProvider.getHCaptchaCloudConfiguration(resource);
-                if (hCaptchaConfiguration != null) {
-                    siteKey = hCaptchaConfiguration.getSiteKey();
-                    uri = hCaptchaConfiguration.getClientSideJsUrl();
-                }
-            }
-        } catch (GuideException e) {
-            LOGGER.error("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+        if (hCaptchaConfiguration != null) {
+            uri = hCaptchaConfiguration.getClientSideJsUrl();
         }
-        customCaptchaProperties.put(SITE_KEY, siteKey);
+        customCaptchaProperties.put(SITE_KEY, captchaSiteKey);
         customCaptchaProperties.put(URI, uri);
         customCaptchaProperties.put(SIZE, this.size);
         customCaptchaProperties.put(THEME, "light");
@@ -120,6 +132,28 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
 
         return customCaptchaProperties;
 
+    }
+
+    @Override
+    public String getCaptchaProvider() {
+        return HCAPTCHA_SERVICE;
+    }
+
+    @Override
+    public String getCaptchaDisplayMode() {
+        CaptchaDisplayMode captchaDisplayMode = CaptchaDisplayMode.VISIBLE;
+        if (CaptchaDisplayMode.INVISIBLE.getDisplayMode().equals(this.size)) {
+            captchaDisplayMode = CaptchaDisplayMode.INVISIBLE;
+        }
+        return captchaDisplayMode.getDisplayMode();
+    }
+
+    @Override
+    public String getCaptchaSiteKey() {
+        if (hCaptchaConfiguration == null) {
+            setHCaptchaConfiguration();
+        }
+        return this.captchaSiteKey;
     }
 
 }
