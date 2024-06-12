@@ -209,15 +209,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getId() {
-        if (getCurrentPage() != null) {
-            if (GuideWCMUtils.isForms(getCurrentPage().getPath())) {
-                return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
-            } else {
-                return ComponentUtils.getEncodedPath(getPath());
-            }
+        String parentPagePath = getParentPagePath();
+        if (GuideWCMUtils.isForms(parentPagePath)) {
+            return ComponentUtils.getEncodedPath(parentPagePath);
         } else {
-            String pagePath = getParentPagePath();
-            return (StringUtils.isNotBlank(pagePath)) ? ComponentUtils.getEncodedPath(pagePath) : super.getId();
+            return ComponentUtils.getEncodedPath(getPath());
         }
     }
 
