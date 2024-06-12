@@ -266,7 +266,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = new LinkedHashMap<>();
-        Map<String, String> customProperties = getCustomProperties();
+        Map<String, Object> customProperties = getCustomProperties();
         if (customProperties.size() > 0) {
             customProperties.forEach(properties::putIfAbsent);
         }
@@ -480,25 +480,30 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
     }
 
+    private boolean isAllowedType(Object value) {
+        return value instanceof String || value instanceof Boolean;
+    }
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFormComponentImpl.class.getName());
+
     /**
      * Fetches all the custom properties associated with a given component's instance (including additional custom properties)
      *
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
-    private Map<String, String> getCustomProperties() {
-        Map<String, String> customProperties = new HashMap<>();
+    private Map<String, Object> getCustomProperties() {
+        Map<String, Object> customProperties = new HashMap<>();
         Map<String, String> templateBasedCustomProperties;
         List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
         Set<String> reservedProperties = ReservedProperties.getReservedProperties();
 
         ValueMap resourceMap = resource.getValueMap();
-        Map<String, String> nodeBasedCustomProperties = resourceMap.entrySet()
+        Map<String, Object> nodeBasedCustomProperties = resourceMap.entrySet()
             .stream()
-            .filter(entry -> entry.getValue() instanceof String
+            .filter(entry -> isAllowedType(entry.getValue())
                 && !reservedProperties.contains(entry.getKey())
                 && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
-            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().toString()));
-
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         nodeBasedCustomProperties.forEach(customProperties::putIfAbsent);
         try {
             templateBasedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
