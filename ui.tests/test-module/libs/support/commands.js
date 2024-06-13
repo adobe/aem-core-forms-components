@@ -41,7 +41,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import 'cypress-file-upload';
-import {recurse} from 'cypress-recurse'
+import { recurse } from 'cypress-recurse';
 
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
@@ -347,7 +347,7 @@ const waitForFormInit = () => {
         cy.get('form').then(($form) => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
-                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']")?.classList.contains("cmp-adaptiveform-container--loading")){
                         const isReady = () => {
                             const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
                             if (container &&
@@ -368,14 +368,14 @@ const waitForFormInit = () => {
     })
 }
 
-const waitForFormInitMultipleContiners = () => {
+const waitForFormInitMultipleContiners = (multipleEmbedContainers) => {
     const INIT_EVENT = "AF_FormContainerInitialised"
     return cy.document().then(document => {
         const promiseArray = []
         cy.get('form').each(($form) => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
-                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']")?.classList.contains("cmp-adaptiveform-container--loading")){
                         const isReady = () => {
                             const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
                             if (container &&
@@ -391,10 +391,23 @@ const waitForFormInitMultipleContiners = () => {
                 }
                 document.addEventListener(INIT_EVENT, listener1);
             })
-
+        if(typeof multipleEmbedContainers == "boolean" && multipleEmbedContainers){
+            promiseArray.push(new Cypress.Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(promise);
+                }, 1000);
+            }));
+        } else {
             promiseArray.push(promise)
+        }
         }).then(($lis) => {
-            return Promise.all(promiseArray)
+            if(typeof multipleEmbedContainers == "boolean" && multipleEmbedContainers) {
+                setTimeout(() => {
+                    return Promise.all(promiseArray);
+                }, 1000);
+            } else {
+                return Promise.all(promiseArray)
+            }
         });
     })
 }
@@ -463,6 +476,9 @@ Cypress.Commands.add("previewForm", (formPath, options = {}) => {
     if (options?.params) {
         options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
+    }
+    if(options?.multipleEmbedContainers) {
+        return cy.openPage(pagePath, options).then(() => waitForFormInitMultipleContiners(options?.multipleEmbedContainers))
     }
     if(options?.multipleContainers) {
         return cy.openPage(pagePath, options).then(waitForFormInitMultipleContiners)

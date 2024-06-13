@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title="Edit Adaptive Form - Embed"
     sling:resourceType="cq/gui/components/authoring/dialog"
@@ -40,6 +40,15 @@
                                             filter="adaptiveForm"
                                             name="./formRef"
                                             rootPath="/content/dam/formsanddocuments"/>
+                                    <role_Attribute
+                                            jcr:primaryType="nt:unstructured"
+                                            fieldLabel="Role"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                            fieldDescription="HTML ROLE attribute to apply to the component."
+                                            name="./fd:roleAttribute"
+                                            text="Enable Role Main"
+                                            uncheckedValue=""
+                                            value="main"/>
                                     <thankyou_config
                                             jcr:primaryType="nt:unstructured"
                                             granite:class="cmp-aemform--editor-thankyouConfig"
