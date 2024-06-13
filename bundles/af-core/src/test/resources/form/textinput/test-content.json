@@ -5,7 +5,16 @@
     "name" : "abc",
     "jcr:title" : "def",
     "fieldType": "text-input",
-    "customProp": "customPropValue"
+    "customPropString": "test-custom-string",
+    "customPropStringArray": ["a", "b"],
+    "customPropBool": true,
+    "customPropBoolArray": true,
+    "customPropLong": 45,
+    "customPropLongArray": [345, 576],
+    "customPropDecimal": 45.67,
+    "customPropDecimalArray": [45.67, 90.34],
+    "customPropDate": "2022-09-13T09:00:00.000Z",
+    "customPropDateArray": ["2022-09-13T09:00:00.000Z", "2024-06-17T02:30:00.000+05:30"]
   },
   "textinput-customized" : {
     "jcr:primaryType": "nt:unstructured",
