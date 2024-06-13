@@ -472,7 +472,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     private boolean isAllowedType(Object value) {
-        return value instanceof String || value instanceof String[] || value instanceof Boolean || value instanceof Boolean[] || value instanceof GregorianCalendar || value instanceof GregorianCalendar[] || value instanceof Double || value instanceof Double[] || value instanceof Long || value instanceof Long[];
+        return value instanceof String || value instanceof String[] || value instanceof Boolean || value instanceof Boolean[]
+            || value instanceof GregorianCalendar || value instanceof GregorianCalendar[] || value instanceof Double
+            || value instanceof Double[] || value instanceof Long || value instanceof Long[];
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFormComponentImpl.class.getName());
