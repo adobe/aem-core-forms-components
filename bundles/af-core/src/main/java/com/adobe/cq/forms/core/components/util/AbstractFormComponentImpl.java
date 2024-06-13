@@ -16,16 +16,7 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -481,7 +472,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     private boolean isAllowedType(Object value) {
-        return value instanceof String || value instanceof Boolean;
+        return value instanceof String || value instanceof String[] || value instanceof Boolean || value instanceof Boolean[] || value instanceof GregorianCalendar || value instanceof GregorianCalendar[] || value instanceof Double || value instanceof Double[] || value instanceof Long || value instanceof Long[];
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFormComponentImpl.class.getName());
