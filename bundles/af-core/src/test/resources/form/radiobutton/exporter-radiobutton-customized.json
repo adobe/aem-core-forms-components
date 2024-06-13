@@ -5,7 +5,7 @@
   "name": "radiobutton_12345",
   "visible": false,
   "description": "long description",
-  "tooltip": "&lt;p&gt;short description&lt;/p&gt;",
+  "tooltip":"<p>short description</p>",
   "type": "string",
   "required": true,
   "enabled": true,

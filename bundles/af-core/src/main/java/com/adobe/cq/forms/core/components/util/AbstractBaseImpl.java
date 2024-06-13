@@ -161,7 +161,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     }
 
     @Override
-    @JsonSerialize(using = EncodeHTMLSerializer.class)
     public @Nullable String getTooltip() {
         return translate(PN_TOOLTIP, tooltip);
     }
@@ -234,7 +233,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
      */
     @Override
     @Nullable
-    @JsonSerialize(using = EncodeHTMLSerializer.class)
     public String getDescription() {
         return translate(PN_DESCRIPTION, description);
     }
