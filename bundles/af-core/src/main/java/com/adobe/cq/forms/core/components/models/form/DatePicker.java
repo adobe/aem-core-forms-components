@@ -31,7 +31,7 @@ public interface DatePicker extends Field, DateConstraint {
      * @see Field#getDefault()
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER, timezone = "UTC")
     @Override
     default Object[] getDefault() {
         return null;
