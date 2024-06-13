@@ -11,7 +11,9 @@
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
     "fd:schemaType": "BASIC",
     "fd:formDataEnabled": true,
-    "customProp": "customPropValue"
+    "customProp": "customPropValue",
+    "fd:roleAttribute":"test-role-attribute",
+    "fd:formDataEnabled": true
   },
   "events": {
     "custom:setProperty": [

@@ -25,6 +25,7 @@ import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -98,6 +99,19 @@ public class FormStructureParserImplTest {
             new TypeReference<Map<String, Object>>() {});
         assertNotNull(formStructureParser.getFormDefinition());
         assertEquals(formJson.get("fieldType"), "form");
+    }
+
+    @Test
+    void testFormDefinitionWithHTMLEncoding() throws JsonProcessingException {
+        String path = FORM_CONTAINER_PATH;
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        String formDef = formStructureParser.getFormDefinition();
+        HashMap<String, Object> formJson = (HashMap<String, Object>) new ObjectMapper().readValue(formDef,
+            new TypeReference<Map<String, Object>>() {});
+        Assertions.assertNotNull(formStructureParser.getFormDefinition());
+        Map<String, Object> datepicker = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items")).get("datepicker");
+        Assertions.assertEquals(datepicker.get("description"), "&lt;p&gt;dummy&lt;/p&gt;");
+        Assertions.assertEquals(datepicker.get("tooltip"), "&lt;p&gt;test-short-description&lt;/p&gt;");
     }
 
     @Test

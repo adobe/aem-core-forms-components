@@ -89,6 +89,34 @@ describe('Page - Authoring', function () {
         });
     }
 
+
+    const testDatePickerMinimumMaximumConfiguration = function (datePickerEditPathSelector, datePickerDrop, isSites) {
+        const bemEditDialog = '.cmp-adaptiveform-datepicker__editdialog';
+        if (isSites) {
+            dropDatePickerInSites();
+        } else {
+            dropDatePickerInContainer();
+        }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get(bemEditDialog).contains('Validation').click().then(() => {
+            cy.get("input[name='./minimumDate']").invoke('val', "2024-06-10T00:00:00.000-00:00");
+            cy.get("input[name='./maximumDate']").invoke('val', "2024-06-12T00:00:00.000-00:00");
+            cy.get('.cq-dialog-submit').should('be.visible').click().then(() => {
+                // check model json
+                cy.getFormJson(datePickerDrop).then((componentJson) => {
+                    expect(componentJson).not.to.be.undefined;
+                    expect(componentJson['minimum']).not.to.be.undefined;
+                    expect(componentJson['minimum']).to.equal("2024-06-10");
+
+                    expect(componentJson['maximum']).not.to.be.undefined;
+                    expect(componentJson['maximum']).to.equal("2024-06-12");
+                });
+                cy.deleteComponentByPath(datePickerDrop);
+            });
+        });
+    }
+
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             datePickerEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/datepicker",
@@ -130,7 +158,15 @@ describe('Page - Authoring', function () {
         });
 
         it('verify Validation tab in edit dialog of DatePicker', function () {
-            testDatePickerValidationTab(datePickerEditPathSelector, datePickerDrop);
+            cy.cleanTest(datePickerDrop).then(function () {
+                testDatePickerValidationTab(datePickerEditPathSelector, datePickerDrop);
+            });
+        });
+
+        it('verify minimum/maximum date configuration is agnostic of client timezone', function () {
+            cy.cleanTest(datePickerDrop).then(function () {
+                testDatePickerMinimumMaximumConfiguration(datePickerEditPathSelector, datePickerDrop);
+            });
         });
 
     });
@@ -161,6 +197,12 @@ describe('Page - Authoring', function () {
 
         it('verify Validation tab in edit dialog of DatePicker', function () {
             testDatePickerValidationTab(datePickerEditPathSelector, datePickerDrop, true);
+        });
+
+        it('verify minimum/maximum date configuration is agnostic of client timezone', function () {
+            cy.cleanTest(datePickerDrop).then(function () {
+                testDatePickerMinimumMaximumConfiguration(datePickerEditPathSelector, datePickerDrop, true);
+            });
         });
 
     });

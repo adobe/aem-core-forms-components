@@ -15,7 +15,11 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.aemform;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -35,7 +39,6 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(AemContextExtension.class)
 public class AEMFormImplTest {
@@ -93,6 +96,12 @@ public class AEMFormImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(AEMForm.class);
+    }
+
+    @Test
+    void testGetRoleAttribute() {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
+        assertEquals(null, aemform.getRoleAttribute());
     }
 
     @Test
