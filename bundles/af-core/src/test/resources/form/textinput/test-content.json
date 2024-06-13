@@ -14,7 +14,10 @@
     "customPropDecimal": 45.67,
     "customPropDecimalArray": [45.67, 90.34],
     "customPropDate": "2022-09-13T09:00:00.000Z",
-    "customPropDateArray": ["2022-09-13T09:00:00.000Z", "2024-06-17T02:30:00.000+05:30"]
+    "customPropDateArray": ["2022-09-13T09:00:00.000Z", "2024-06-17T02:30:00.000+05:30"],
+    "fd:accidentalPrefix": "shouldNotBeInProperties",
+    "sling:accidentalPrefix": "shouldNotBeInProperties",
+    "jcr:accidentalPrefix": "shouldNotBeInProperties"
   },
   "textinput-customized" : {
     "jcr:primaryType": "nt:unstructured",
