@@ -215,17 +215,15 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getId() {
-        if (getCurrentPage() != null) {
-            if (GuideWCMUtils.isForms(getCurrentPage().getPath())) {
-                return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
-            } else {
-                if (request != null && request.getAttribute("formRenderingInsideEmbedContainer") != null) {
-                    return ComponentUtils.getEncodedPath(StringUtils.replace(getPath(), "/" + JcrConstants.JCR_CONTENT + "/"
-                        + GuideConstants.GUIDE_CONTAINER_NODE_NAME, ""));
-                }
-                return ComponentUtils.getEncodedPath(getPath());
-            }
+        String parentPagePath = getParentPagePath();
+        if (GuideWCMUtils.isForms(parentPagePath)) {
+            return ComponentUtils.getEncodedPath(parentPagePath);
         } else {
+            // handling use-case when AF is used in iframe mode inside embed form component
+            if (request != null && request.getAttribute("formRenderingInsideEmbedContainer") != null) {
+                return ComponentUtils.getEncodedPath(StringUtils.replace(getPath(), "/" + JcrConstants.JCR_CONTENT + "/"
+                    + GuideConstants.GUIDE_CONTAINER_NODE_NAME, ""));
+            }
             return ComponentUtils.getEncodedPath(getPath());
         }
     }
