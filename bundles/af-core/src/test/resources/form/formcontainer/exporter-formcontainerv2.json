@@ -12,8 +12,7 @@
     "fd:schemaType": "BASIC",
     "fd:formDataEnabled": true,
     "customProp": "customPropValue",
-    "fd:roleAttribute":"test-role-attribute",
-    "fd:formDataEnabled": true
+    "fd:roleAttribute":"test-role-attribute"
   },
   "events": {
     "custom:setProperty": [
