@@ -83,7 +83,8 @@
                                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
                                                     fieldLabel="Minimum date"
                                                     emptyText="YYYY-MM-DD"
-                                                    name="./minimumDate"/>
+                                                    name="./minimumDate"
+                                                    valueFormat="YYYY-MM-DD[T]HH:mm:ss.000-00:00"/> <!-- Enforce UTC timezone to be timezone agnostic -->
                                             <minimumMessage
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
@@ -110,7 +111,8 @@
                                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
                                                     fieldLabel="Maximum date"
                                                     emptyText="YYYY-MM-DD"
-                                                    name="./maximumDate"/>
+                                                    name="./maximumDate"
+                                                    valueFormat="YYYY-MM-DD[T]HH:mm:ss.000-00:00"/> <!-- Enforce UTC timezone to be timezone agnostic -->
                                             <maximumMessage
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"

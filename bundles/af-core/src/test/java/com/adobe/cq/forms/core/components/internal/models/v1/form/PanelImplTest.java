@@ -94,6 +94,12 @@ public class PanelImplTest {
     }
 
     @Test
+    void testGetRoleAttribute() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        assertEquals(null, panel.getRoleAttribute());
+    }
+
+    @Test
     void testGetName() throws Exception {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         ;

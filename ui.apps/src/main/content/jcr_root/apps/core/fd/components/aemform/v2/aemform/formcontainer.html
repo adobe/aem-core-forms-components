@@ -29,6 +29,7 @@
     </div>
 </sly>
 <div class="cmp-aemform__content"
+     role="${form.roleAttribute}"
      data-sly-test.af="${form.isAdaptiveForm || form.isMCDocument }"
      data-form-page-path="${form.formEditPagePath}"
      data-sly-use.guideConstants="com.adobe.aemds.guide.utils.GuideConstants"
@@ -36,6 +37,6 @@
     <sly data-sly-call="${clientLib.css @ categories=['guide.core.common']}"/>
     <sly data-sly-test.isParentWCMModeDisabled="${wcmmode.disabled}"/>
     <sly data-sly-test.isWCMModePreview="${wcmmode.preview}"/>
-    <sly data-sly-use="${'formcontainer.js' @ wcmmode=isWCMModePreview ? 'preview' : 'disabled', themeOverride=form.themePath, pageFallbackClientlib=guideConstants.THEME_DEFAULT_CLIENTLIB, parentWcmModeDisabled=isParentWCMModeDisabled, afAcceptLang=form.locale, removeRoleMain=''}" data-sly-resource="${ @ path=form.formPagePath, wcmmode=isWCMModePreview ? 'preview' : 'disabled'}" />
+    <sly data-sly-use="${'formcontainer.js' @ wcmmode=isWCMModePreview ? 'preview' : 'disabled', themeOverride=form.themePath, pageFallbackClientlib=guideConstants.THEME_DEFAULT_CLIENTLIB, parentWcmModeDisabled=isParentWCMModeDisabled, afAcceptLang=form.locale, removeRoleMain='', formRenderingInsideEmbedContainer=''}" data-sly-resource="${ @ path=form.formPagePath, wcmmode=isWCMModePreview ? 'preview' : 'disabled'}" />
     <sly data-sly-call="${clientLib.css @ categories=[form.cssClientlib]}"/>
 </div>

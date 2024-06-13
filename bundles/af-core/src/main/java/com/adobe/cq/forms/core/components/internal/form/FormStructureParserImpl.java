@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
@@ -33,7 +34,11 @@ import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.components.views.Views;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -118,6 +123,7 @@ public class FormStructureParserImpl implements FormStructureParser {
         FormContainer formContainer = resource.adaptTo(FormContainer.class);
         try {
             ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new SimpleModule().addSerializer(String.class, new FormStructureParserImpl.EncodeHTMLSerializer()));
             Writer writer = new StringWriter();
             // return publish view specific properties only for runtime
             mapper.writerWithView(Views.Publish.class).writeValue(writer, formContainer);
@@ -126,5 +132,15 @@ public class FormStructureParserImpl implements FormStructureParser {
             logger.error("Unable to generate json from resource");
         }
         return result;
+    }
+
+    private static class EncodeHTMLSerializer extends JsonSerializer<String> {
+        @Override
+        public void serialize(String value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+            if (value != null) {
+                String escapedValue = StringEscapeUtils.escapeHtml4(value);
+                jsonGenerator.writeString(escapedValue);
+            }
+        }
     }
 }

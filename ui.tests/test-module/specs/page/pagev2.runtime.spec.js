@@ -43,9 +43,12 @@ describe("Form with Page component version 2 for eds rendering", () => {
             const encodedJson=$codeEle.get()[0].innerHTML;
             const formJson=JSON.parse(JSON.parse(encodedJson));
             expect(formJson).to.have.property("id");
+            expect(formJson["id"]).to.equal("L2NvbnRlbnQvZm9ybXMvYWYvY29yZS1jb21wb25lbnRzLWl0L3NhbXBsZXMvcGFnZS9hZnYy");
             expect(formJson).to.have.property("fieldType");
             expect(formJson).to.have.property(":items");
             expect(formJson).to.have.property("title");
+            expect(formJson).to.have.property("action");
+            expect(formJson["action"]).to.equal("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvY29yZS1jb21wb25lbnRzLWl0L3NhbXBsZXMvcGFnZS9hZnYy");
 
         })
     })
