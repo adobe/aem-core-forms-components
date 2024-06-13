@@ -20,6 +20,7 @@
       "jcr:primaryType": "nt:unstructured",
       "sling:resourceType"    : "core/fd/components/form/container/v2/container",
       "thankYouMessage": "Thank you for submitting.",
+      "fd:roleAttribute": "test-role-attribute",
       "thankYouOption": "message",
       "redirect": "/content/wknd",
       "prefillService": "FDM",

@@ -92,6 +92,16 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
         return null;
     }
 
+    /**
+     * @return returns the role attribute that will be applied on the container.
+     * @since com.adobe.cq.forms.core.components.models.form 5.4.3
+     */
+    @Nullable
+    @JsonIgnore
+    default String getRoleAttribute() {
+        return null;
+    }
+
     // the below mentioned interface methods are copied from ResponsiveGridExporter
     // done because CM throws this, the product interface com.day.cq.wcm.foundation.model.responsivegrid.export.ResponsiveGridExporter
     // annotated with @ProviderType should not be implemented by custom code.

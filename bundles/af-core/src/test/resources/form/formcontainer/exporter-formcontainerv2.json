@@ -10,6 +10,7 @@
     },
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
     "fd:schemaType": "BASIC",
+    "fd:roleAttribute":"test-role-attribute",
     "fd:formDataEnabled": true
   },
   "events": {

@@ -48,7 +48,7 @@ import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
-    adaptables = SlingHttpServletRequest.class,
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { AEMForm.class,
         ComponentExporter.class },
     resourceType = AEMFormImpl.RESOURCE_TYPE)
@@ -69,11 +69,13 @@ public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.mod
 
     @PostConstruct
     protected void init() {
-        ResourceResolver resourceResolver = request.getResourceResolver();
-        String localeString = resourceResolver.map(getLocale());
-        Locale locale = Locale.forLanguageTag(localeString);
-        ResourceBundle resourceBundle = request.getResourceBundle(locale);
-        this.i18n = new I18n(resourceBundle);
+        if (request != null) {
+            ResourceResolver resourceResolver = request.getResourceResolver();
+            String localeString = resourceResolver.map(getLocale());
+            Locale locale = Locale.forLanguageTag(localeString);
+            ResourceBundle resourceBundle = request.getResourceBundle(locale);
+            this.i18n = new I18n(resourceBundle);
+        }
     }
 
     @Override
