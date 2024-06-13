@@ -494,14 +494,4 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     public String getValidationExpression() {
         return validationExpression;
     }
-
-    public static class EncodeHTMLSerializer extends JsonSerializer<String> {
-        @Override
-        public void serialize(String value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-            if (value != null) {
-                String escapedValue = StringEscapeUtils.escapeHtml4(value);
-                jsonGenerator.writeString(escapedValue);
-            }
-        }
-    }
 }
