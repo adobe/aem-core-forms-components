@@ -209,14 +209,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getId() {
-        if (getCurrentPage() != null) {
-            if (GuideWCMUtils.isForms(getCurrentPage().getPath())) {
-                return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
-            } else {
-                return ComponentUtils.getEncodedPath(getPath());
-            }
+        String parentPagePath = getParentPagePath();
+        if (GuideWCMUtils.isForms(parentPagePath)) {
+            return ComponentUtils.getEncodedPath(parentPagePath);
         } else {
-            return super.getId();
+            return ComponentUtils.getEncodedPath(getPath());
         }
     }
 
@@ -239,23 +236,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getAction() {
-        if (getCurrentPage() != null) {
-            return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
-        } else {
-            return null;
-        }
+        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
     }
 
     @Override
     @JsonIgnore
     public String getDataUrl() {
-        if (getCurrentPage() != null) {
-            return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(
-                getCurrentPage()
-                    .getPath());
-        } else {
-            return null;
-        }
+        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId();
     }
 
     @Override
