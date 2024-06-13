@@ -151,6 +151,8 @@ public final class ReservedProperties {
     public static final String PN_PREFILL_SERVICE = "prefillService";
     public static final String PN_SPEC_VERSION = "specVersion";
     public static final String PN_RICH_TEXT = "richText";
+    public static final String PN_OPTIONS_RICH_TEXT = "areOptionsRichText";
+    public static final String PN_EXCLUDE_FROM_DOR = "excludeFromDor";
     private static final Set<String> reservedProperties = aggregateReservedProperties();
 
     private static Set<String> aggregateReservedProperties() {
