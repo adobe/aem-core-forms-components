@@ -153,6 +153,7 @@ public final class ReservedProperties {
     public static final String PN_RICH_TEXT = "richText";
     public static final String PN_OPTIONS_RICH_TEXT = "areOptionsRichText";
     public static final String PN_EXCLUDE_FROM_DOR = "excludeFromDor";
+    public static final String PN_MANDATORY = "mandatory";
     private static final Set<String> reservedProperties = aggregateReservedProperties();
 
     private static Set<String> aggregateReservedProperties() {

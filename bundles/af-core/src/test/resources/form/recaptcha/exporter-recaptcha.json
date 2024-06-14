@@ -32,7 +32,6 @@
         "version": null
       }
     },
-    "mandatory": "true",
     "customProp": "customPropValue"
   },
   ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
