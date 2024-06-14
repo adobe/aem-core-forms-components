@@ -478,8 +478,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             || value instanceof BigDecimal[] || value instanceof Long || value instanceof Long[];
     }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFormComponentImpl.class.getName());
-
     /**
      * Fetches all the custom properties associated with a given component's instance (including additional custom properties)
      *

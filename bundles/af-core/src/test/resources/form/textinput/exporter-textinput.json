@@ -25,7 +25,7 @@
     "customPropDecimal": 45.67,
     "customPropDecimalArray": [45.67, 90.34],
     "customPropDate": 1663059600000,
-    "customPropDateArray": [1663059600000, 1718571600000]
+    "customPropDateArray": [1663059600000, 1719064800000]
   },
   ":type": "core/fd/components/form/textinput/v1/textinput"
 }
