@@ -84,6 +84,7 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     private static final String SIZE = "size";
     private static final String THEME = "theme";
     private static final String TYPE = "type";
+    private static final String HCAPTCHA_RELEASE_ERROR = "[AF] [CAPTCHA] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.";
     private String captchaSiteKey;
 
     @Override
@@ -109,12 +110,10 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
                     captchaSiteKey = hCaptchaConfiguration.getSiteKey();
                 }
             } catch (GuideException e) {
-                LOGGER.error(
-                    "[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+                LOGGER.error(HCAPTCHA_RELEASE_ERROR, e);
             }
         } else {
-            LOGGER.info(
-                "[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+            LOGGER.error(HCAPTCHA_RELEASE_ERROR);
         }
     }
 

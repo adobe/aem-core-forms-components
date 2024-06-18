@@ -127,7 +127,6 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
             if (reCaptchaConfiguration != null) {
                 captchaSiteKey = reCaptchaConfiguration.siteKey();
                 version = reCaptchaConfiguration.version();
-                captchaProvider = getProvider() + version;
                 keyType = reCaptchaConfiguration.keyType();
                 if (RECAPTCHA_ENT_VERSION.equals(version)) {
                     captchaDisplayMode = RECAPTCHA_ENT_SCORE_KEY.equals(keyType) ? CaptchaDisplayMode.INVISIBLE
