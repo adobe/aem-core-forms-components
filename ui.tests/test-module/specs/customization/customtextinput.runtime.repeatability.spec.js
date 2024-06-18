@@ -88,7 +88,7 @@ describe("Form Runtime with Custom Text Input", () => {
       cy.get(`#${textbox2}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
     })
 
-    cy.get(`#${submitButton}`).find("button").click();
+    cy.get(`#${submitButton}-widget`).click();
 
     cy.get(`#${textbox1}`).find("input").focus().clear().blur().then(x => {
       cy.get(`#${textbox1}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"this is required")

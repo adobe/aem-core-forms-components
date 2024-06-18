@@ -69,7 +69,7 @@ describe('Custom Prefill Test', function () {
 
         // submitting the form and fetching the prefillID
         let prefillId;
-        cy.get("button").click();
+        cy.get("button").last().click();
 
         cy.wait('@afSubmission').then(({response}) => {
             expect(response.statusCode).to.equal(200);
@@ -91,7 +91,7 @@ describe('Custom Prefill Test', function () {
 
         // submitting the form and fetching the prefillID
         let prefillId;
-        cy.get("button").click();
+        cy.get("button").last().click();
 
         cy.wait('@afSubmission').then(({response}) => {
             prefillId = response.body.metadata.prefillId;

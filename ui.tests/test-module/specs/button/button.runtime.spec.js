@@ -43,7 +43,7 @@ describe("Form Runtime with Button Input", () => {
             cy.stub(win, 'open');
             const [id, fieldView] = Object.entries(formContainer._fields)[4]
             // click the button with navigate
-            cy.get(`#${id}`).find("button").click().then(x => {
+            cy.get(`#${id}-widget`).click().then(x => {
                 // check if window open is called
                 cy.window().its('open').should('have.been.calledWithMatch', (arg1) => {
                     // do whatever comparisons you want on the arg1, and return `true` if

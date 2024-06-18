@@ -263,7 +263,7 @@ describe("Form with Number Input Required Validation", () => {
     });
 
     const validateRequiredMessage = (id, submitButton, errorMessage) => {
-        cy.get(`#${submitButton}`).find("button").click();
+        cy.get(`#${submitButton}-widget`).click();
         cy.get(`#${id}`).find("input").then(x => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',errorMessage);
         });

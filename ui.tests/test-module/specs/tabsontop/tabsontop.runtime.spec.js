@@ -263,13 +263,13 @@ describe("setFocus on the first invalid field on submission", () => {
     });
 
     it("check if invalid field gets focus on submit button click", () => {
-           cy.get('button').should('be.visible').click().then(() => {
+           cy.get('button').last().should('be.visible').click().then(() => {
                 cy.get('#textinput-5e96ac215d').invoke('attr','data-cmp-valid').should('equal', 'false');
                 cy.get('#textinput-5e96ac215d').invoke('attr','data-cmp-active').should('equal', 'true');
                 cy.get('#textinput-5e96ac215d-widget').should('be.focused');
 
                cy.get('#textinput-5e96ac215d-widget').type("abc").blur().then(() => {
-                   cy.get('button').click().then(() => {
+                   cy.get('button').last().click().then(() => {
                        cy.get('#numberinput-2eb1840996').invoke('attr','data-cmp-valid').should('equal', 'false');
                        cy.get('#numberinput-2eb1840996').invoke('attr','data-cmp-active').should('equal', 'true');
                        cy.get('#numberinput-2eb1840996-widget').should('be.focused');
