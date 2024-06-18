@@ -9,6 +9,6 @@
     "grammar": "json-formula-1.0.0",
     "version": "1.0.0"
   },
-  "adaptiveform":"0.13.1",
+  "adaptiveform":"0.14.0",
   ":type": "core/fd/components/form/container/v2/container"
 }

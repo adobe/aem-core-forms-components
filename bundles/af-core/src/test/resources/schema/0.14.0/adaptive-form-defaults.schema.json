@@ -1,5 +1,5 @@
 {
-  "$id": "classpath:/schema/0.13.1/adaptive-form-defaults.schema.json",
+  "$id": "classpath:/schema/0.14.0/adaptive-form-defaults.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "The schema defines the default field types for Form Fields",
   "allOf": [
