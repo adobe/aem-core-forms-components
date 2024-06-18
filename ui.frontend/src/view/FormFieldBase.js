@@ -209,7 +209,10 @@ class FormFieldBase extends FormField {
             
         if (widgetElement) {
            if (this.getDescription()) {
-            appendDescription('longdescription', this.getId());
+            const descriptionDiv = this.getDescription();
+            if (!(descriptionDiv.innerHTML.trim() === '' || descriptionDiv.children.length === 0)) {
+                appendDescription('longdescription', this.getId());
+            }
           }
           
            if (this.getTooltipDiv()) {
@@ -266,10 +269,13 @@ class FormFieldBase extends FormField {
         if (state.value) {
             this.updateValue(state.value);
         }
-        this.updateVisible(state.visible)
+        this.updateVisible(state.visible, state)
         this.updateReadOnly(state.readOnly)
         this.updateEnabled(state.enabled, state)
         this.initializeHelpContent(state);
+        this.updateLabel(state.label);
+        this.updateRequired(state.required, state);
+        this.updateDescription(state.description);
     }
 
     /**
@@ -602,7 +608,17 @@ class FormFieldBase extends FormField {
      */
     updateDescription(description) {
         if (this.description) {
-            this.description.querySelector("p").innerHTML = description;
+            if (description) {
+                if (!this.description.querySelector("p")) {
+                    // If the description is updated via rule then it might not have <p> tags
+                    this.description.appendChild(document.createElement('p'));
+                }
+                this.description.querySelector("p").innerHTML = description;
+                const questionMarkDiv = this.getQuestionMarkDiv();
+                 if (questionMarkDiv) {
+                     questionMarkDiv.style.display = "block";
+                 }
+            }
         } else {
             //TODO: handle the case when description is not present initially.
         }

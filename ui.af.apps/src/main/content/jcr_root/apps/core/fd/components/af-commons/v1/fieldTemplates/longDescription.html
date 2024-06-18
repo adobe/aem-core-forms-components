@@ -1,5 +1,5 @@
 <template data-sly-template.longDescription="${@ componentId, longDescription, bemBlock}">
-    <div class="${bemBlock}__longdescription" id="${componentId}__longdescription" data-sly-test="${longDescription}" aria-live="polite">
-      ${longDescription @context='html'}
-    </div>
+  <div class="${bemBlock}__longdescription" id="${componentId}__longdescription" style="${wcmmode.edit && longDescription ? '' : 'display:none;'} aria-live="polite">
+  ${longDescription @context='html'}
+  </div>
 </template>
