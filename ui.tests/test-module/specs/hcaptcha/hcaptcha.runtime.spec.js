@@ -45,6 +45,14 @@ describe("Form Runtime with hCaptcha Input", () => {
         }
     });
 
+    function updateHcaptchaSecretKey(secretKey) {
+        cy.openPage("mnt/overlay/fd/af/cloudservices/hcaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsettings%2Fcloudconfigs%2Fhcaptcha%2Falwayschallenge").then(x => {
+            cy.get('#captcha-cloudconfiguration-secret-key').clear().type(secretKey).then(x => {
+                cy.get("#shell-propertiespage-doneactivator").click();
+            });
+        })
+    }
+
     const checkHTML = (id, state) => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
@@ -123,12 +131,8 @@ describe("Form Runtime with hCaptcha Input", () => {
 
     it("submission should pass for mandatory captcha", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
-            const secretKey="0x0000000000000000000000000000000000000000"
-            cy.visit("mnt/overlay/fd/af/cloudservices/hcaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsettings%2Fcloudconfigs%2Fhcaptcha%2Falwayschallenge").then(x => {
-                cy.get('#captcha-cloudconfiguration-secret-key').clear().type(secretKey).then(x => {
-                    cy.get("#shell-propertiespage-doneactivator").click();
-                });
-            });
+            const secretKey="0x0000000000000000000000000000000000000000";
+            updateHcaptchaSecretKey(secretKey);
             cy.previewForm(pagePath).then((p) => {
                 formContainer = p;
             });
@@ -147,6 +151,41 @@ describe("Form Runtime with hCaptcha Input", () => {
                             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
                                 cy.get('body').should('contain', "Thank you for submitting the form.\n")
                         });
+                    })
+                });
+            });
+        }
+    })
+
+    it("submission should fail for mandatory captcha", () => {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+            const secretKey="incorrectSecretkey";
+            updateHcaptchaSecretKey(secretKey);
+            cy.previewForm(pagePath).then((p) => {
+                formContainer = p;
+            });
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.get(`div.h-captcha iframe`).should('be.visible').then($iframe => {
+                cy.wrap($iframe).then($iframe => {
+                    cy.window().should('have.property', 'hcaptcha').and('not.be.undefined')
+                        .then((hcaptcha) => {
+                            hcaptcha.execute();
+                            return new Cypress.Promise(resolve => {
+                                setTimeout(() => {
+                                    resolve();
+                                }, 3000);
+                            });
+                        }).then(() => {
+                            cy.on('window:alert', (message) => {
+                                expect(message).to.equal('Encountered an internal error while submitting the form.');
+                            });
+                            cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+                            cy.get(`.cmp-adaptiveform-button__widget`).click();
+                            cy.wait('@submitForm').then((interception) => {
+                                expect(interception.response.statusCode).to.equal(400);
+                                expect(interception.response.body).to.have.property('title', 'The CAPTCHA validation failed. Please try again.');
+                                expect(interception.response.body).to.have.property('detail', 'com.adobe.aem.forms.af.rest.exception.CaptchaValidationException: Captcha validation failed.');
+                            });
                     })
                 });
             });

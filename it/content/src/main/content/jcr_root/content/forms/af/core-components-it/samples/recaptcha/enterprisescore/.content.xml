@@ -44,6 +44,7 @@
                 size="normal"
                 textIsRich="true"
                 unboundFormElement="{Boolean}false"
+                required="{Boolean}true"
                 visible="{Boolean}true"/>
             <submit
                 jcr:created="{Date}2024-05-24T17:33:23.737+05:30"
