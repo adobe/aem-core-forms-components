@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -106,9 +107,13 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         return size;
     }
 
+    @PostConstruct
     @Override
     public String getProvider() {
-        return "recaptcha";
+        if (reCaptchaConfiguration == null) {
+            setReCaptchaConfiguration();
+        }
+        return this.captchaProvider;
     }
 
     /**
@@ -137,6 +142,7 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         }
     }
 
+    @PostConstruct
     @JsonIgnore
     @Override
     public Map<String, Object> getCaptchaProperties() throws GuideException {
@@ -161,14 +167,7 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
     }
 
-    @Override
-    public String getCaptchaProvider() {
-        if (reCaptchaConfiguration == null) {
-            setReCaptchaConfiguration();
-        }
-        return this.captchaProvider;
-    }
-
+    @PostConstruct
     @Override
     public String getCaptchaDisplayMode() {
         if (reCaptchaConfiguration == null) {
@@ -177,6 +176,7 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         return this.captchaDisplayMode.getDisplayMode();
     }
 
+    @PostConstruct
     @Override
     public String getCaptchaSiteKey() {
         if (reCaptchaConfiguration == null) {

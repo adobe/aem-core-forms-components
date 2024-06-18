@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -95,6 +96,10 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
         return HCAPTCHA_SERVICE;
     }
 
+    /**
+     * Set the hCaptchaConfiguration, by fetching it from the cloud configurations.
+     * Also sets the captchaSiteKey.
+     */
     private void setHCaptchaConfiguration() {
         if (cloudConfigurationProvider != null) {
             try {
@@ -134,11 +139,7 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
 
     }
 
-    @Override
-    public String getCaptchaProvider() {
-        return HCAPTCHA_SERVICE;
-    }
-
+    @PostConstruct
     @Override
     public String getCaptchaDisplayMode() {
         CaptchaDisplayMode captchaDisplayMode = CaptchaDisplayMode.VISIBLE;
@@ -148,6 +149,7 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
         return captchaDisplayMode.getDisplayMode();
     }
 
+    @PostConstruct
     @Override
     public String getCaptchaSiteKey() {
         if (hCaptchaConfiguration == null) {

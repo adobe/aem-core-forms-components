@@ -20,7 +20,6 @@ import java.util.Map;
 
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Abstract class which can be used as base class for {@link Captcha} implementations.
@@ -44,7 +43,6 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
 
     public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
 
-    @JsonIgnore
     public abstract String getProvider();
 
     public abstract Map<String, Object> getCaptchaProperties();
@@ -67,9 +65,6 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
 
     @Override
     public abstract String getCaptchaDisplayMode();
-
-    @Override
-    public abstract String getCaptchaProvider();
 
     @Override
     public abstract String getCaptchaSiteKey();

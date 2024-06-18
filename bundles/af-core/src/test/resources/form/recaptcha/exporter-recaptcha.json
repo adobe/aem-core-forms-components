@@ -24,7 +24,7 @@
     },
     "fd:path": "/content/recaptcha",
     "fd:captcha": {
-      "provider": "recaptcha",
+      "provider": "recaptchaEnterprise",
       "config": {
         "keyType": "score",
         "siteKey": "dummySiteKey",
