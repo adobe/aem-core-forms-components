@@ -111,6 +111,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    //Remove this whitelisting when FORMS-15071 is fixed
+    if (err.message.includes('window.guidelib.author.AuthorUtils.getIconFromResourceType is not a function')) {
+        return false;
+    }
+
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;
