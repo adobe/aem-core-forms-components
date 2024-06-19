@@ -60,7 +60,8 @@ describe('Form with RUM initialized', () => {
         })
     });
 
-    xit('sampleRUM should have accurate data', () => {
+
+    it('sampleRUM should have accurate data', () => {
         if (toggle_array.includes("FT_SKYOPS-60870") && toggle_array.includes("FT_FORMS-8965")) {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             cy.get(`.cmp-adaptiveform-textinput`).first().find("input").clear().type('random text').blur();
