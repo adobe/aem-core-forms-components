@@ -71,7 +71,10 @@ describe('Form with RUM initialized', () => {
             // Assert the arguments of the first call
             cy.get('@sampleRUMSpy').should('be.calledWith', "formviews", {
                 source: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                target: "{\"version\":\"core\"}"
+                target: JSON.stringify({
+                    version: "core",
+                    visitorId: window.af.visitorId
+                })
             });
 
             // Assert the arguments of the second call
@@ -88,19 +91,31 @@ describe('Form with RUM initialized', () => {
             // Assert the arguments of the third call
             cy.get('@sampleRUMSpy').should('be.calledWith', "formfieldfocus", {
                 source: "textinput-f226352a71",
-                target: "{\"qualifiedName\":\"$form.textinput1\",\"formId\":\"/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer\"}"
+                target: JSON.stringify({
+                    qualifiedName: "$form.textinput1",
+                    formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
+                    visitorId: window.af.visitorId
+                })
             });
 
             // Assert the arguments of the fourth call
             cy.get('@sampleRUMSpy').should('be.calledWith', "formfieldchange", {
                 source: "textinput-f226352a71",
-                target: "{\"qualifiedName\":\"$form.textinput1\",\"formId\":\"/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer\"}"
-            });
+                target: JSON.stringify({
+                    qualifiedName: "$form.textinput1",
+                    formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
+                    visitorId: window.af.visitorId
+                })            });
 
             // Assert the arguments of the fifth call
             cy.get('@sampleRUMSpy').should('be.calledWith', "formvalidationerrors", {
                 source: "textinput-f226352a71",
-                target: "{\"qualifiedName\":\"$form.textinput1\",\"formId\":\"/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer\",\"validationType\":\"expressionMismatch\"}"
+                target: JSON.stringify({
+                    qualifiedName: "$form.textinput1",
+                    formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
+                    validationType: "expressionMismatch",
+                    visitorId: window.af.visitorId
+                })
             });
 
             cy.get(`.cmp-adaptiveform-button__widget`).click();
