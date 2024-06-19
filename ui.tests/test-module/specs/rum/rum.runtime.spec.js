@@ -129,11 +129,13 @@ describe('Form with RUM initialized', () => {
                     let args = spyCall.args[5];
                     expect(args[0]).to.include("formfieldfocus");
                     expect(args[1].source).to.include("submit-64756a5a6e");
-                    expect(args[1].target).to.deep.equal({
+                    expect(args[1].target).to.include(JSON.stringify({
                         qualifiedName: "$form.submit1669185963968",
                         formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
                         visitorId: visitorId
-                    });
+                    }));
+                    expect(args[1].target).to.include('{"qualifiedName":"$form.submit1669185963968","formId":"/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",visitorId: visitorId,}');
+
                     args = spyCall.args[6];
                     expect(args[0]).to.include("formsubmit");
                     expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
