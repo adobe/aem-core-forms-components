@@ -134,8 +134,6 @@ describe('Form with RUM initialized', () => {
                         formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
                         visitorId: visitorId
                     }));
-                    expect(args[1].target).to.include('{"qualifiedName":"$form.submit1669185963968","formId":"/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",visitorId: visitorId,}');
-
                     args = spyCall.args[6];
                     expect(args[0]).to.include("formsubmit");
                     expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
