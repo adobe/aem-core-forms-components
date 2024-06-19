@@ -127,8 +127,8 @@ describe('Form with RUM initialized', () => {
                     target: JSON.stringify({
                         qualifiedName: "$form.textinput1",
                         formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                        validationType: "expressionMismatch",
-                        visitorId: visitorId
+                        visitorId: visitorId,
+                        validationType: "expressionMismatch"
                     })
                 });
 
