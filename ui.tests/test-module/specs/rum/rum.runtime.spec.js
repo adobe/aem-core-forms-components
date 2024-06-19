@@ -69,14 +69,7 @@ describe('Form with RUM initialized', () => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
 
             cy.get(`.cmp-adaptiveform-textinput`).first().find("input").clear().type('random text').blur();
-
-            // Log the arguments of each call to sampleRUMSpy
-            cy.get('@sampleRUMSpy').then((spy) => {
-                spy.getCalls().forEach((call, index) => {
-                    cy.log(`Call ${index + 1}:`, JSON.stringify(call.args));
-                });
-            });
-
+            
             // Assert the number of calls
             cy.get('@sampleRUMSpy').should('have.callCount', 5);
 
@@ -139,8 +132,11 @@ describe('Form with RUM initialized', () => {
                     let args = spyCall.args[5];
                     expect(args[0]).to.include("formfieldfocus");
                     expect(args[1].source).to.include("submit-64756a5a6e");
-                    expect(args[1].target).to.include('{"qualifiedName":"$form.submit1669185963968","formId":"/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer"}');
-
+                    expect(args[1].target).to.deep.equal({
+                        qualifiedName: "$form.submit1669185963968",
+                        formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
+                        visitorId: visitorId
+                    });
                     args = spyCall.args[6];
                     expect(args[0]).to.include("formsubmit");
                     expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
