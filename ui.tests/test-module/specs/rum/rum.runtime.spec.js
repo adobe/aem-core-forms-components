@@ -70,6 +70,13 @@ describe('Form with RUM initialized', () => {
 
             cy.get(`.cmp-adaptiveform-textinput`).first().find("input").clear().type('random text').blur();
 
+            // Log the arguments of each call to sampleRUMSpy
+            cy.get('@sampleRUMSpy').then((spy) => {
+                spy.getCalls().forEach((call, index) => {
+                    cy.log(`Call ${index + 1}:`, JSON.stringify(call.args));
+                });
+            });
+
             // Assert the number of calls
             cy.get('@sampleRUMSpy').should('have.callCount', 5);
 
