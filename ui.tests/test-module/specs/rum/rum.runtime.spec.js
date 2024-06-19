@@ -57,7 +57,11 @@ describe('Form with RUM initialized', () => {
                 waitForVariableAndSetSpy(window, 'sampleRUM', 'sampleRUMSpy', 5000);
         }}).then(p => {
             formContainer = p;
-        })
+        });
+        global.window = {};
+        window.af = {
+            visitorId: 'mockVisitorId123'
+        };
     });
 
 
@@ -73,7 +77,7 @@ describe('Form with RUM initialized', () => {
                 source: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
                 target: JSON.stringify({
                     version: "core",
-                    visitorId: window.af.visitorId
+                    visitorId: "mockVisitorId123"
                 })
             });
 
@@ -94,7 +98,7 @@ describe('Form with RUM initialized', () => {
                 target: JSON.stringify({
                     qualifiedName: "$form.textinput1",
                     formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                    visitorId: window.af.visitorId
+                    visitorId: "mockVisitorId123"
                 })
             });
 
@@ -104,7 +108,7 @@ describe('Form with RUM initialized', () => {
                 target: JSON.stringify({
                     qualifiedName: "$form.textinput1",
                     formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                    visitorId: window.af.visitorId
+                    visitorId: "mockVisitorId123"
                 })            });
 
             // Assert the arguments of the fifth call
@@ -114,7 +118,7 @@ describe('Form with RUM initialized', () => {
                     qualifiedName: "$form.textinput1",
                     formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
                     validationType: "expressionMismatch",
-                    visitorId: window.af.visitorId
+                    visitorId: "mockVisitorId123"
                 })
             });
 
