@@ -55,9 +55,6 @@ describe('Form with RUM initialized', () => {
         cy.previewForm(pagePath, {onBeforeLoad: (window) => {
                 // Check and set spy if not already set within a timeout of 5 seconds
                 waitForVariableAndSetSpy(window, 'sampleRUM', 'sampleRUMSpy', 5000);
-                window.af = {
-                    visitorId: 'mockVisitorId123'
-                };
         }}).then(p => {
             formContainer = p;
         });
@@ -69,7 +66,7 @@ describe('Form with RUM initialized', () => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
 
             cy.get(`.cmp-adaptiveform-textinput`).first().find("input").clear().type('random text').blur();
-            
+
             // Assert the number of calls
             cy.get('@sampleRUMSpy').should('have.callCount', 5);
 
