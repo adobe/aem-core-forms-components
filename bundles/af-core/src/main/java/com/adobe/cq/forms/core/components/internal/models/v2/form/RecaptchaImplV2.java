@@ -113,7 +113,7 @@ public class RecaptchaImplV2 extends RecaptchaImpl {
         if (reCaptchaConfiguration == null) {
             setReCaptchaConfiguration();
         }
-        return this.captchaDisplayMode.getValue();
+        return captchaDisplayMode != null ? this.captchaDisplayMode.getValue() : CaptchaDisplayMode.VISIBLE.getValue();
     }
 
     @PostConstruct

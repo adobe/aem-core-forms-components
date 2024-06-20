@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
@@ -63,12 +64,14 @@ public class RecaptchaImplV2Test {
     };
 
     @BeforeEach
-    void setUp() throws GuideException {
+    void setUp(TestInfo testInfo) throws GuideException {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
-        context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
-        Mockito.when(reCaptchaConfiguration.siteKey()).thenReturn("dummySiteKey");
-        Mockito.when(reCaptchaConfiguration.version()).thenReturn("enterprise");
-        Mockito.when(reCaptchaConfiguration.keyType()).thenReturn("score");
+        if (!testInfo.getTestMethod().get().getName().contains("testSetRecaptchaConfiguration")) {
+            context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
+            Mockito.when(reCaptchaConfiguration.siteKey()).thenReturn("dummySiteKey");
+            Mockito.when(reCaptchaConfiguration.version()).thenReturn("enterprise");
+            Mockito.when(reCaptchaConfiguration.keyType()).thenReturn("score");
+        }
     }
 
     @Test
@@ -135,11 +138,27 @@ public class RecaptchaImplV2Test {
     }
 
     @Test
-    void testEnterpriseUrl() {
+    void testEnterpriseCheckboxConfig() {
+        Mockito.when(reCaptchaConfiguration.version()).thenReturn("enterprise");
+        Mockito.when(reCaptchaConfiguration.keyType()).thenReturn("checkbox");
         Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         Map<String, Object> captchaProps = recaptcha.getCaptchaProperties();
         String enterpriseUrl = (String) captchaProps.get("uri");
         assertEquals("https://www.recaptcha.net/recaptcha/enterprise.js", enterpriseUrl);
+        assertEquals("recaptchaEnterprise", recaptcha.getProvider());
+        assertEquals("visible", recaptcha.getCaptchaDisplayMode());
+    }
+
+    @Test
+    void testV2Config() {
+        Mockito.when(reCaptchaConfiguration.version()).thenReturn("v2");
+        Mockito.when(reCaptchaConfiguration.keyType()).thenReturn("checkbox");
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
+        Map<String, Object> captchaProps = recaptcha.getCaptchaProperties();
+        String enterpriseUrl = (String) captchaProps.get("uri");
+        assertEquals("https://www.recaptcha.net/recaptcha/api.js", enterpriseUrl);
+        assertEquals("recaptchaV2", recaptcha.getProvider());
+        assertEquals("visible", recaptcha.getCaptchaDisplayMode());
     }
 
     @Test
@@ -158,6 +177,27 @@ public class RecaptchaImplV2Test {
         Captcha recaptchaMock = Mockito.mock(Captcha.class);
         when(recaptchaMock.getCaptchaDisplayMode()).thenCallRealMethod();
         assertEquals(null, recaptchaMock.getCaptchaSiteKey());
+    }
+
+    @Test
+    void testSetRecaptchaConfigurationWithRecaptchaConfigNull() {
+        CloudConfigurationProvider cloudConfigurationProvider = new CloudConfigurationProvider() {
+            @Override
+            public ReCaptchaConfigurationModel getRecaptchaCloudConfiguration(Resource resource) throws GuideException {
+                return null;
+            }
+
+            @Override
+            public HCaptchaConfiguration getHCaptchaCloudConfiguration(Resource resource) throws GuideException {
+                return null;
+            }
+        };
+        context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
+        assertEquals(null, recaptcha.getCaptchaSiteKey());
+        assertEquals("visible", recaptcha.getCaptchaDisplayMode());
+        Map<String, Object> recaptchaProperties = recaptcha.getCaptchaProperties();
+        assertEquals("https://www.recaptcha.net/recaptcha/api.js", recaptchaProperties.get("uri"));
     }
 
 }

@@ -16,9 +16,12 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.Map;
+
 import org.apache.sling.api.resource.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
@@ -36,7 +39,6 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(AemContextExtension.class)
@@ -62,11 +64,14 @@ public class HCaptchaImplV2Test {
     };
 
     @BeforeEach
-    void setUp() throws GuideException {
+    void setUp(TestInfo testInfo) throws GuideException {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
-        context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
-        Mockito.when(hCaptchaConfiguration.getSiteKey()).thenReturn("dummySiteKey");
-        Mockito.when(hCaptchaConfiguration.getClientSideJsUrl()).thenReturn("https://js.hcaptcha.com/1/api.js");
+
+        if (!testInfo.getTestMethod().get().getName().contains("testSetHCaptchaConfiguration")) {
+            context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
+            Mockito.when(hCaptchaConfiguration.getSiteKey()).thenReturn("dummySiteKey");
+            Mockito.when(hCaptchaConfiguration.getClientSideJsUrl()).thenReturn("https://js.hcaptcha.com/1/api.js");
+        }
     }
 
     @Test
@@ -136,7 +141,8 @@ public class HCaptchaImplV2Test {
     void hCaptchaConfigExceptionTest() throws GuideException {
         Mockito.when(hCaptchaConfiguration.getSiteKey()).thenThrow(new GuideException("Error while fetching site key"));
         HCaptcha hcaptcha = Utils.getComponentUnderTest(PATH_HCAPTCHA, HCaptcha.class, context);
-        assertNotNull(hcaptcha.getCaptchaProperties());
+        HCaptcha hCaptcha = Utils.getComponentUnderTest(PATH_HCAPTCHA, HCaptcha.class, context);
+        assertEquals(null, hCaptcha.getCaptchaSiteKey());
     }
 
     @Test
@@ -155,6 +161,34 @@ public class HCaptchaImplV2Test {
         Captcha hcaptchaMock = Mockito.mock(Captcha.class);
         when(hcaptchaMock.getCaptchaDisplayMode()).thenCallRealMethod();
         assertEquals(null, hcaptchaMock.getCaptchaSiteKey());
+    }
+
+    @Test
+    void testSetHCaptchaConfigurationWheHCaptchaConfigIsNull() {
+        CloudConfigurationProvider cloudConfigurationProvider = new CloudConfigurationProvider() {
+            @Override
+            public ReCaptchaConfigurationModel getRecaptchaCloudConfiguration(Resource resource) throws GuideException {
+                return null;
+            }
+
+            @Override
+            public HCaptchaConfiguration getHCaptchaCloudConfiguration(Resource resource) throws GuideException {
+                return null;
+            }
+        };
+        context.registerService(CloudConfigurationProvider.class, cloudConfigurationProvider);
+        HCaptcha hCaptcha = Utils.getComponentUnderTest(PATH_HCAPTCHA, HCaptcha.class, context);
+        assertEquals(null, hCaptcha.getCaptchaSiteKey());
+        Map<String, Object> hCaptchaProperties = hCaptcha.getCaptchaProperties();
+        assertEquals(null, hCaptchaProperties.get("uri"));
+    }
+
+    @Test
+    void testSetHCaptchaConfigurationWheCloudConfigurationProviderIsNull() {
+        HCaptcha hCaptcha = Utils.getComponentUnderTest(PATH_HCAPTCHA, HCaptcha.class, context);
+        assertEquals(null, hCaptcha.getCaptchaSiteKey());
+        Map<String, Object> hCaptchaProperties = hCaptcha.getCaptchaProperties();
+        assertEquals(null, hCaptchaProperties.get("uri"));
     }
 
 }
