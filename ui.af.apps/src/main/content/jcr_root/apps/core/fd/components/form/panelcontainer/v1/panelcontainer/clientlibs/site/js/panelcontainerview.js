@@ -173,8 +173,7 @@
                     result.parentElement = this._templateHTML['divToAppendChild'];
                 }
             } else {
-                var previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
-                var previousInstanceItemDiv = this.#getCachedElementById(previousInstanceElement.id).parentElement;
+                var previousInstanceItemDiv = instanceManager.getElementAt(instanceIndex - 1);
                 result.beforeViewElement = previousInstanceItemDiv;
             }
             return result;
