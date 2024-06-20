@@ -191,6 +191,12 @@
                 this.element.setAttribute("data-cmp-required", required);
             }
         }
+
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
+            this.updateEnum(this._model.enum);
+            this.updateEnumNames(this._model.enumNames);
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

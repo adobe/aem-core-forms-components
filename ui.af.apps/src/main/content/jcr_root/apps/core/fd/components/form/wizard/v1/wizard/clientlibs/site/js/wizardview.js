@@ -256,18 +256,20 @@
             const tabs = this.#getCachedTabs();
             if (wizardPanels) {
                 for (let i = 0; i < wizardPanels.length; i++) {
-                    if (i === parseInt(this.#_active)) {
-                        wizardPanels[i].classList.add(Wizard.selectors.active.wizardpanel);
-                        wizardPanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
-                        tabs[i].classList.add(Wizard.selectors.active.tab);
-                        tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
-                        tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
-                    } else {
-                        wizardPanels[i].classList.remove(Wizard.selectors.active.wizardpanel);
-                        wizardPanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
-                        tabs[i].classList.remove(Wizard.selectors.active.tab);
-                        tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
-                        tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
+                    if(tabs[i]) {
+                        if (i === parseInt(this.#_active)) {
+                            wizardPanels[i].classList.add(Wizard.selectors.active.wizardpanel);
+                            wizardPanels[i].removeAttribute(FormView.Constants.ARIA_HIDDEN);
+                            tabs[i].classList.add(Wizard.selectors.active.tab);
+                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, true);
+                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "0");
+                        } else {
+                            wizardPanels[i].classList.remove(Wizard.selectors.active.wizardpanel);
+                            wizardPanels[i].setAttribute(FormView.Constants.ARIA_HIDDEN, true);
+                            tabs[i].classList.remove(Wizard.selectors.active.tab);
+                            tabs[i].setAttribute(FormView.Constants.ARIA_SELECTED, false);
+                            tabs[i].setAttribute(FormView.Constants.TABINDEX, "-1");
+                        }
                     }
                 }
             }
@@ -617,11 +619,15 @@
                     result.beforeViewElement = this.getPreviousButtonDiv();
                 }
             } else {
-                let previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
-                let previousInstanceWizardPanelIndex = this.#getTabIndexById(previousInstanceElement.id + Wizard.#tabIdSuffix);
-                result.beforeViewElement = this.#getCachedWizardPanels()[previousInstanceWizardPanelIndex];
+                let previousInstanceElement = this.#getRepeatableElementAt(instanceManager, instanceIndex - 1)
+                result.beforeViewElement = previousInstanceElement;
             }
             return result;
+        }
+
+        #getRepeatableElementAt(instanceManager, index) {
+            let childId = instanceManager._model.items.find((model) => model.index === index)?.id;
+            return this.element.querySelector(`#${childId}${Wizard.#wizardPanelIdSuffix}`);
         }
 
         updateChildVisibility(visible, state) {
