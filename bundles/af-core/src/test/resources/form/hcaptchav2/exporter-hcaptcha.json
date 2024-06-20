@@ -1,0 +1,38 @@
+{
+    "id": "hcaptcha-abc574167c",
+    "fieldType": "captcha",
+    "name": "test-hcaptcha",
+    "visible": true,
+    "type": "string",
+    "required": true,
+    "enabled": true,
+    "readOnly": false,
+    "captchaDisplayMode": "invisible",
+    "captchaProvider": "hcaptcha",
+    "captchaSiteKey": "dummySiteKey",
+    "label": {
+      "visible": true,
+      "value": "HCAPTCHA"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/hcaptcha",
+      "fd:captcha": {
+        "provider": "hcaptcha",
+        "config": {
+          "uri": "https://js.hcaptcha.com/1/api.js",
+          "size": "invisible",
+          "theme": "light",
+          "type": "image"
+        }
+      }
+    },
+    ":type": "core/fd/components/form/hcaptcha/v2/hcaptcha"
+}

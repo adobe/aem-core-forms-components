@@ -20,15 +20,20 @@ import java.util.Map;
 
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Abstract class which can be used as base class for {@link Captcha} implementations.
  */
 public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements Captcha {
     public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
+    public static final String CAPTCHA_SITE_KEY = "siteKey";
+    public static final String CAPTCHA_URI = "uri";
+    public static final String CAPTCHA_SIZE = "size";
+    public static final String CAPTCHA_THEME = "theme";
+    public static final String CAPTCHA_THEME_LIGHT = "light";
+    public static final String CAPTCHA_TYPE = "type";
+    public static final String CAPTCHA_TYPE_IMAGE = "image";
 
-    @JsonIgnore
     public abstract String getProvider();
 
     public abstract Map<String, Object> getCaptchaProperties();
