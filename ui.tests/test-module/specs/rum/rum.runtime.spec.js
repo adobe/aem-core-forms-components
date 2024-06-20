@@ -57,7 +57,7 @@ describe('Form with RUM initialized', () => {
                 waitForVariableAndSetSpy(window, 'sampleRUM', 'sampleRUMSpy', 5000);
         }}).then(p => {
             formContainer = p;
-        });
+        })
     });
 
 
