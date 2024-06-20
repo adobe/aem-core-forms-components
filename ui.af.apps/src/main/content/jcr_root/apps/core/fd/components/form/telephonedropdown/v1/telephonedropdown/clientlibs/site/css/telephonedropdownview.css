@@ -1,0 +1,55 @@
+.cmp-adaptiveform-telephonedropdown {
+    /* Styles for the main container of the telephone dropdown component */
+}
+
+.cmp-adaptiveform-telephonedropdown__widget-container {
+    /* Styles for the container that holds the telephone input and country code dropdown */
+    display: flex;
+    align-items: center;
+}
+
+.cmp-adaptiveform-telephonedropdown__countrycode {
+    /* Styles for the country code dropdown */
+    margin-right: 10px; /* Add space between the dropdown and the telephone input */
+}
+
+.cmp-adaptiveform-telephonedropdown__widget {
+    /* Styles for the telephone input field */
+    flex-grow: 1; /* Allow the input field to take up the remaining space */
+}
+
+.cmp-adaptiveform-telephonedropdown__label {
+    /* Styles for the label of the telephone dropdown component */
+}
+
+.cmp-adaptiveform-telephonedropdown__label-container {
+    /* Styles for the container of the label and question mark icon */
+    display: flex;
+    align-items: center;
+    /*margin-bottom: 5px; !* Add space below the label container *!*/
+}
+
+.cmp-adaptiveform-telephonedropdown__longdescription {
+    /* Styles for the long description of the telephone dropdown component */
+}
+
+.cmp-adaptiveform-telephonedropdown__shortdescription {
+    /* Styles for the short description (tooltip) of the telephone dropdown component */
+}
+
+.cmp-adaptiveform-telephonedropdown__questionmark {
+    /* Styles for the question mark icon */
+    margin-left: 5px; /* Add space to the left of the question mark icon */
+}
+
+.cmp-adaptiveform-telephonedropdown__errormessage {
+    /* Styles for the error message */
+    color: #d32f2f; /* Example error color */
+    margin-top: 5px; /* Add space above the error message */
+}
+
+.errormessage {
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+}

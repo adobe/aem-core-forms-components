@@ -25,6 +25,7 @@ var formsConstants = {
                 "fpdnscomponent"  : "/apps/forms-components-examples/components/draftsandsubmissions",
                 "formtextinput": "/apps/forms-components-examples/components/form/textinput",
                 "formtelephoneinput": "/apps/forms-components-examples/components/form/telephoneinput",
+                "formtelephonedropdown": "/apps/forms-components-examples/components/form/telephonedropdown",
                 "formemailinput": "/apps/forms-components-examples/components/form/emailinput",
                 "formnumberinput": "/apps/forms-components-examples/components/form/numberinput",
                 "panelcontainer": "/apps/forms-components-examples/components/form/panelcontainer",
