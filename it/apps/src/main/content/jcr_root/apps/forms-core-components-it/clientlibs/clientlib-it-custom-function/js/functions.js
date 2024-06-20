@@ -54,7 +54,7 @@ function getEnumNames1() {
 
 /**
  * Returns 2 enum values
- * @name getEnum1 Get_Enum_1
+ * @name getEnum2 Get_Enum_2
  * @return {OPTIONS}
  */
 function getEnum2() {
@@ -66,13 +66,13 @@ function getEnum2() {
 
 /**
  * Return 2 enum Name values
- * @name getEnumNames1 Get_Enum_Names_1
+ * @name getEnumNames2 Get_Enum_Names_2
  * @return {OPTIONS}
  */
 function getEnumNames2() {
     var enumNames = [];
-    enumNames[0] = 'India';
-    enumNames[1] = 'US';
+    enumNames[0] = 'one';
+    enumNames[1] = 'two';
     return enumNames;
 }
 

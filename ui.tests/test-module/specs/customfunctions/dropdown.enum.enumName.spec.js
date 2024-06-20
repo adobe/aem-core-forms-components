@@ -23,6 +23,7 @@ describe('Test UpdateEnum, UpdateEnumName for dropdown', () => {
     let addEnumBtn1 = '#button-4f9d6db1a7-widget',
         addEnumNameBtn1 = '#button-8d6d549b2d-widget',
         addBothBtn1 = '#button-7280e14826-widget',
+        reduceBothBtn1 = '#button-d0b0be551e-widget',
 
         addEnumBtn2 = '#button-3bdbcd7835-widget',
         addEnumNameBtn2 = '#button-3d1937a260-widget',
@@ -44,6 +45,9 @@ describe('Test UpdateEnum, UpdateEnumName for dropdown', () => {
 
     let enums = ["one", "two", "three"],
         enumNames = ["India", "US", "Singapore"];
+
+    let enums1 = ["one", "two"],
+        enumNames1 = ["one", "two"];
 
     /**
      * initialization of form container before every test
@@ -89,6 +93,22 @@ describe('Test UpdateEnum, UpdateEnumName for dropdown', () => {
                     }
                 });
             })
+        });
+
+        it ('add three and then reduce to two', () => {
+            cy.get(addBothBtn1).click().then(() => {
+                cy.get(dropdown1).should('have.length', 4);
+                cy.get(reduceBothBtn1).click().then(() => {
+                    cy.get(dropdown1).should('have.length', 3);
+                    cy.get(dropdown1).each((option, index) => {
+                        if(option.val() !== '') {
+                            expect(option.val()).to.be.eq(enums1[index - 1]);
+                            expect(option.text()).to.be.eq(enumNames1[index - 1]);
+                        }
+                    });
+                })
+            })
+
         });
     });
 
