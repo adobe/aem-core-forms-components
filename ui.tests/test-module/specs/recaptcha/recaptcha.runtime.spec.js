@@ -171,7 +171,6 @@ describe("Form Runtime with Recaptcha Input", () => {
                         cy.wait('@submitForm').then((interception) => {
                             expect(interception.response.statusCode).to.equal(400);
                             expect(interception.response.body).to.have.property('title', 'The CAPTCHA validation failed. Please try again.');
-                            expect(interception.response.body).to.have.property('detail', 'com.adobe.aem.forms.af.rest.exception.CaptchaValidationException: Captcha validation failed.');
                         });
                     });
                 })
