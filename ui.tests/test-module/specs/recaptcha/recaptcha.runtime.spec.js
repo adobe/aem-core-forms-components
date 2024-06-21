@@ -18,6 +18,7 @@ import 'cypress-wait-until';
 describe("Form Runtime with Recaptcha Input", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/recaptcha/basic.html"
+    const v2checkboxPagePath = "content/forms/af/core-components-it/samples/recaptcha/v2checkbox.html"
     const enterprisePagePath = "content/forms/af/core-components-it/samples/recaptcha/enterprisescore.html"
     const bemBlock = 'cmp-adaptiveform-recaptcha'
     const IS = "adaptiveFormRecaptcha"
@@ -111,6 +112,74 @@ describe("Form Runtime with Recaptcha Input", () => {
             cy.get("#shell-propertiespage-doneactivator").click();
         })
     }
+
+    function updateRecaptchaSecretKey(secretKey) {
+        cy.openPage("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fv2checkbox").then(x => {
+            cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey);
+            cy.get("#shell-propertiespage-doneactivator").click();
+        })
+    }
+
+
+    it("client side validation should fail if recaptcha is not filled", () => {
+        cy.previewForm(v2checkboxPagePath).then((p) => {
+            formContainer = p;
+        });
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+            cy.get('.cmp-adaptiveform-recaptcha__errormessage').should('exist').contains('Please fill in this field.');
+        });
+    })
+
+    it("submission should pass for mandatory recaptcha v2", () => {
+        const secretKey="6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe";
+        updateRecaptchaSecretKey(secretKey);
+        cy.previewForm(v2checkboxPagePath).then((p) => {
+            formContainer = p;
+        });
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+        cy.get(`div.g-recaptcha iframe`).should('be.visible').then(() => {
+            const [id, fieldView] = Object.entries(formContainer._fields).find(([id, fieldView]) => id.includes("captcha"));
+            const model = formContainer._model.getElement(id);
+            cy.get(`#${id}`).then(x => {
+                model.value = "dummyResponseToken";
+                cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                    cy.wait('@submitForm').then((interception) => {
+                        expect(interception.response.statusCode).to.equal(200);
+                    });
+                });
+            })
+        });
+    });
+
+    it("submission should fail for mandatory recaptcha v2", () => {
+        if (cy.af.isLatestAddon()) {
+            const secretKey="incorrectSecretkey";
+            updateRecaptchaSecretKey(secretKey);
+            cy.previewForm(v2checkboxPagePath).then((p) => {
+                formContainer = p;
+            });
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+            cy.get(`div.g-recaptcha iframe`).should('be.visible').then(() => {
+                const [id, fieldView] = Object.entries(formContainer._fields).find(([id, fieldView]) => id.includes("captcha"));
+                const model = formContainer._model.getElement(id);
+                cy.get(`#${id}`).then(x => {
+                    model.value = "dummyResponseToken";
+                    cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                        cy.wait('@submitForm').then((interception) => {
+                            expect(interception.response.statusCode).to.equal(400);
+                            expect(interception.response.body).to.have.property('title', 'The CAPTCHA validation failed. Please try again.');
+                            expect(interception.response.body).to.have.property('detail', 'com.adobe.aem.forms.af.rest.exception.CaptchaValidationException: Captcha validation failed.');
+                        });
+                    });
+                })
+            });
+        }
+    })
+
+
 
     it("submission should pass for enterprise score based captcha",() => {
         updateEnterpriseConfig(0.5);

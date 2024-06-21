@@ -38,7 +38,11 @@ describe("Captcha In Sites Runtime Test", () => {
             expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
             const [id, fieldView] = Object.entries(formContainer._fields)[0]
             const model = formContainer._model.getElement(id)
-            cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
+            cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist').then($iframe => {
+                cy.wrap($iframe).then($iframe => {
+                    cy.window().should('have.property', 'grecaptcha').and('not.be.undefined');
+                });
+            });
         })
     })
 
@@ -48,11 +52,13 @@ describe("Captcha In Sites Runtime Test", () => {
                 formContainer = p;
                 expect(formContainer, "formcontainer is initialized").to.not.be.null;
                 expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-                const [id, fieldView] = Object.entries(formContainer._fields)[0]
-                const model = formContainer._model.getElement(id)
-                cy.get('#' + id + ' .cmp-adaptiveform-hcaptcha__widget > div.h-captcha').should('exist');
+                cy.get('.cmp-adaptiveform-hcaptcha__widget > div.h-captcha').should('exist').then($iframe => {
+                    cy.wrap($iframe).then($iframe => {
+                        cy.window().should('have.property', 'hcaptcha').and('not.be.undefined');
+                    });
+                });
+
             })
         }
     })
-
 })
