@@ -148,6 +148,7 @@ describe("Form Runtime with Recaptcha Input", () => {
                     cy.wait('@submitForm').then((interception) => {
                         expect(interception.response.statusCode).to.equal(200);
                     });
+                    cy.get('body').should('contain', "Thank you for submitting the form.\n")
                 });
             })
         });
@@ -161,6 +162,9 @@ describe("Form Runtime with Recaptcha Input", () => {
                 formContainer = p;
             });
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.on('window:alert', (message) => {
+                expect(message).to.equal('Encountered an internal error while submitting the form.');
+            });
             cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
             cy.get(`div.g-recaptcha iframe`).should('be.visible').then(() => {
                 const [id, fieldView] = Object.entries(formContainer._fields).find(([id, fieldView]) => id.includes("captcha"));
@@ -179,7 +183,6 @@ describe("Form Runtime with Recaptcha Input", () => {
     })
 
 
-
     it("submission should pass for enterprise score based captcha",() => {
         updateEnterpriseConfig(0.5);
         cy.previewForm(enterprisePagePath).then((p) => {
@@ -187,28 +190,31 @@ describe("Form Runtime with Recaptcha Input", () => {
         });
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                // Need to submit multiple times until the form is submitted successfully
-                // Due to below error while validating recaptcha enterprise
-                // https://cloud.google.com/recaptcha-enterprise/docs/faq#returned_browser_error_when_creating_an_assessment_what_should_i_do_about_this
-                cy.waitUntil(() =>
-                    cy.location('href').then((href) => {
-                        if (href.includes("guideContainer.guideThankYouPage.html")) {
-                            return true;
-                        }
-                        else {
-                            cy.get(`.cmp-adaptiveform-button__widget`).click().then(() => {
-                                return false;
-                            });
-                        }
-                    }),
-                    {
-                        errorMsg: 'The form with recaptcha enterprise was not submitted successfully',
-                        timeout: 50000,
-                        interval: 5000
+            cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+            const submitForm = () => {
+                cy.get(`.cmp-adaptiveform-button__widget`).click();
+
+                // Wait for the submitForm request
+                return cy.wait('@submitForm',{ timeout: 50000 }).then((interception) => {
+                    if (interception.response.statusCode === 200) {
+                        // Request succeeded
+                        cy.log('Submit request succeeded');
+                        return cy.wrap(true);
+                    } else {
+                        // Request failed
+                        cy.log(`Submit request failed, retrying...`);
+                        return cy.wrap(false);
                     }
-                );
-            })
+                });
+            };
+            // Need to submit multiple times until the form is submitted successfully
+            // Due to below error while validating recaptcha enterprise
+            // https://cloud.google.com/recaptcha-enterprise/docs/faq#returned_browser_error_when_creating_an_assessment_what_should_i_do_about_this
+            cy.waitUntil(() => submitForm(), {
+                errorMsg: 'Maximum retry limit reached, request did not succeed',
+                timeout: 50000, // Total timeout (10 seconds)
+                interval: 5000, // Interval between retries (1 second)
+            });
         });
     })
 

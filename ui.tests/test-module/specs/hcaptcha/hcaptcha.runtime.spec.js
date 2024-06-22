@@ -137,6 +137,7 @@ describe("Form Runtime with hCaptcha Input", () => {
                 formContainer = p;
             });
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
             cy.get(`div.h-captcha iframe`).should('be.visible').then($iframe => {
                 cy.wrap($iframe).then($iframe => {
                     cy.window().should('have.property', 'hcaptcha').and('not.be.undefined')
@@ -149,6 +150,9 @@ describe("Form Runtime with hCaptcha Input", () => {
                             });
                         }).then(() => {
                             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                                cy.wait('@submitForm').then((interception) => {
+                                    expect(interception.response.statusCode).to.equal(200);
+                                });
                                 cy.get('body').should('contain', "Thank you for submitting the form.\n")
                         });
                     })
