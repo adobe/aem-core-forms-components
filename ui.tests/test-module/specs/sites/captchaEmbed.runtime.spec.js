@@ -46,6 +46,10 @@ describe("Captcha In Sites Runtime Test", () => {
 
     it("form should not submit due to captcha validation failure", () => {
         if (cy.af.isLatestAddon()) {
+            cy.openPage("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fv2checkbox").then(x => {
+                cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type("incorrectSecretKey");
+                cy.get("#shell-propertiespage-doneactivator").click();
+            })
             cy.previewForm(pagePath).then(p => {
                 formContainer = p;
                 expect(formContainer, "formcontainer is initialized").to.not.be.null;
