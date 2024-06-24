@@ -137,7 +137,7 @@ describe("Form Runtime with hCaptcha Input", () => {
                 formContainer = p;
             });
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+            cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
             cy.get(`div.h-captcha iframe`).should('be.visible').then($iframe => {
                 cy.wrap($iframe).then($iframe => {
                     cy.window().should('have.property', 'hcaptcha').and('not.be.undefined')
@@ -183,7 +183,7 @@ describe("Form Runtime with hCaptcha Input", () => {
                             cy.on('window:alert', (message) => {
                                 expect(message).to.equal('Encountered an internal error while submitting the form.');
                             });
-                            cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+                            cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
                             cy.get(`.cmp-adaptiveform-button__widget`).click();
                             cy.wait('@submitForm').then((interception) => {
                                 expect(interception.response.statusCode).to.equal(400);

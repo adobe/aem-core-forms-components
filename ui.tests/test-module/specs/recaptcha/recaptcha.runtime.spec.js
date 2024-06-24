@@ -138,7 +138,7 @@ describe("Form Runtime with Recaptcha Input", () => {
             formContainer = p;
         });
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+        cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
         cy.get(`div.g-recaptcha iframe`).should('be.visible').then(() => {
             const [id, fieldView] = Object.entries(formContainer._fields).find(([id, fieldView]) => id.includes("captcha"));
             const model = formContainer._model.getElement(id);
@@ -165,7 +165,7 @@ describe("Form Runtime with Recaptcha Input", () => {
             cy.on('window:alert', (message) => {
                 expect(message).to.equal('Encountered an internal error while submitting the form.');
             });
-            cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+            cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
             cy.get(`div.g-recaptcha iframe`).should('be.visible').then(() => {
                 const [id, fieldView] = Object.entries(formContainer._fields).find(([id, fieldView]) => id.includes("captcha"));
                 const model = formContainer._model.getElement(id);
@@ -190,7 +190,7 @@ describe("Form Runtime with Recaptcha Input", () => {
         });
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
-            cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+            cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
             const submitForm = () => {
                 cy.get(`.cmp-adaptiveform-button__widget`).click();
 
@@ -224,7 +224,7 @@ describe("Form Runtime with Recaptcha Input", () => {
             cy.on('window:alert', (message) => {
                 expect(message).to.equal('Encountered an internal error while submitting the form.');
             });
-            cy.intercept('POST', '/adobe/forms/af/submit/*').as('submitForm');
+            cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
             cy.previewForm(enterprisePagePath).then((p) => {
                 formContainer = p;
             });
