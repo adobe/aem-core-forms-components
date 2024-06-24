@@ -22,10 +22,12 @@
         window.removeEventListener("bridgeInitializeStart", initGuideBridge);
     };
     const onInit = function(gb) {
-        gb.registerConfig(gb.ConfigKeys.LOCALE_CONFIG, async (lang) => {
-            const aemLangUrl = `/etc.clientlibs/forms-core-components-it/clientlibs/clientlib-it-custom-locale/resources/i18n/${lang}.json`;
-            await FormView.LanguageUtils.loadLang(lang, aemLangUrl);
-        });
+        if (gb.ConfigKeys) {
+            gb.registerConfig(gb.ConfigKeys.LOCALE_CONFIG, async (lang) => {
+                const aemLangUrl = `/etc.clientlibs/forms-core-components-it/clientlibs/clientlib-it-custom-locale/resources/i18n/${lang}.json`;
+                await FormView.LanguageUtils.loadLang(lang, aemLangUrl);
+            });
+        }
     };
     if (window.guideBridge) {
         let guideBridge = window.guideBridge;
