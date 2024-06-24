@@ -81,6 +81,22 @@
             }
         }
 
+        /**
+         * Parses the value from the UI, check if
+         * @param value
+         * @returns {*}
+         */
+        #parseEditValueFromUI(value) {
+            if (this._model.editFormat == null || this._model.editFormat === 'date|short') {
+                return value;
+            }
+            try {
+                return FormView.Formatters.parseDate(value, this._model.lang, this._model.editFormat);
+            } catch (e) {
+                return value;
+            }
+        }
+
         setModel(model) {
             super.setModel(model);
             if (!this.#noFormats()) {
@@ -93,6 +109,12 @@
                     this.widgetObject.setDisplayValue(model.value);
                 }
                 this.widgetObject.addEventListener('blur', (e) => {
+                    let parsedEditValue = this.#parseEditValueFromUI(e.target.value);
+                    // only if both values are not same, update the widget with the new value
+                    // this is to avoid unnecessary updates to the widget
+                    if (parsedEditValue !== e.target.value) {
+                        this.widgetObject.setValue(parsedEditValue);
+                    }
                     this._model.value = this.widgetObject.getValue();
                     //setDisplayValue is required for cases where value remains same while focussing in and out.
                     this.widgetObject.setDisplayValue(this._model.value);

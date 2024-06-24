@@ -1168,10 +1168,16 @@ if (typeof window.DatePickerWidget === 'undefined') {
      */
 
     setValue(value) {
-      let currDate =  new Date(value);
-
-      const timezoneOffset = currDate.getTimezoneOffset();
-      currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+      let currDate;
+      if (value instanceof Date && !isNaN(value)) {
+        // If value is already a Date object and it's valid, use it as is
+        currDate = value;
+      } else {
+        // Otherwise, construct a new Date object
+        currDate = new Date(value);
+        const timezoneOffset = currDate.getTimezoneOffset();
+        currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+      }
 
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
@@ -1190,7 +1196,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         }
         this.#curInstance.$field.value = this.#curInstance.editValue() || value;
       } else {
-        this.#widget.value = this.#model.editValue || value;
+        this.#widget.value = value;
       }
     }
 
