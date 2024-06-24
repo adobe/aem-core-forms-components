@@ -82,9 +82,13 @@
         }
 
         /**
-         * Parses the value from the UI, check if
-         * @param value
-         * @returns {*}
+         * This method is used to parse the value from the UI. It checks if the model's editFormat is null or equals 'date|short'.
+         * If so, it returns the value as is. Otherwise, it attempts to parse the date using the model's language and editFormat.
+         * If parsing fails, it returns the value as is.
+         *
+         * @param {string} value - The value to be parsed from the UI.
+         * @returns {string} - The parsed value if parsing is successful, otherwise the original value.
+         * @private
          */
         #parseEditValueFromUI(value) {
             if (this._model.editFormat == null || this._model.editFormat === 'date|short') {
