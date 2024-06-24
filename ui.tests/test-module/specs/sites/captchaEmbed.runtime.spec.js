@@ -36,14 +36,38 @@ describe("Captcha In Sites Runtime Test", () => {
             formContainer = p;
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-            const [id, fieldView] = Object.entries(formContainer._fields)[0]
-            const model = formContainer._model.getElement(id)
-            cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist').then($iframe => {
+            cy.get('.cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist').then($iframe => {
                 cy.wrap($iframe).then($iframe => {
                     cy.window().should('have.property', 'grecaptcha').and('not.be.undefined');
                 });
             });
         })
+    })
+
+    it("form should not submit due to captcha validation failure", () => {
+        if (cy.af.isLatestAddon()) {
+            cy.previewForm(pagePath).then(p => {
+                formContainer = p;
+                expect(formContainer, "formcontainer is initialized").to.not.be.null;
+                cy.on('window:alert', (message) => {
+                    expect(message).to.equal('Encountered an internal error while submitting the form.');
+                });
+                cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
+                cy.get(`div.g-recaptcha iframe`).should('be.visible').then(() => {
+                    const [id, fieldView] = Object.entries(formContainer._fields).find(([id, fieldView]) => id.includes("captcha"));
+                    const model = formContainer._model.getElement(id);
+                    cy.get(`#${id}`).then(x => {
+                        model.value = "dummyResponseToken";
+                        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                            cy.wait('@submitForm').then((interception) => {
+                                expect(interception.response.statusCode).to.equal(400);
+                                expect(interception.response.body).to.have.property('title', 'The CAPTCHA validation failed. Please try again.');
+                            });
+                        });
+                    })
+                });
+            })
+        }
     })
 
     it("hcaptcha should render when form is embedded in site", () => {
