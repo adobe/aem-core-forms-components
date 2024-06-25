@@ -276,7 +276,7 @@ describe("Form Runtime with Date Picker", () => {
 
     it("Test custom error message when incorrect date format is entered", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-        const incorrectInputs = ["adfasdfa"];
+        const incorrectInputs = ["adfasdfa", "2023/11/08", "1-1-2023"];
         incorrectInputs.forEach(incorrectInput => {
             cy.get(`#${datePicker7}`).find("input").should('have.attr',"type", "text");
             cy.get(`#${datePicker7}`).find("input").clear().wait(1000).type(incorrectInput).trigger('input').blur()

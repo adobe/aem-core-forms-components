@@ -1139,11 +1139,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
      */
     getValue() {
       if (this.#isEditValueOrDisplayValue(this.#widget.value)) {
-        return this.#model.value; // if the widget has edit/display value thus method should return model value
-      }
-      let dateVal = new Date(this.toString());
-      if (!isNaN(dateVal)) {
-        return this.toString();
+        return this.#model.value; // if the widget has edit/display value thiss method should return model value
       }
       return this.#widget.value;
     }
