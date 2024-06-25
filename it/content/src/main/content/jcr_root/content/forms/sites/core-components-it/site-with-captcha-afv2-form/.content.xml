@@ -22,7 +22,7 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="forms-components-examples/components/aemform"
                         enableFocusOnFirstField="{Boolean}true"
-                        formRef="/content/dam/formsanddocuments/core-components-it/samples/recaptcha/basic"
+                        formRef="/content/dam/formsanddocuments/core-components-it/samples/recaptcha/v2checkbox"
                         submitType="inline"
                         textIsRich="true"
                         useiframe="false"

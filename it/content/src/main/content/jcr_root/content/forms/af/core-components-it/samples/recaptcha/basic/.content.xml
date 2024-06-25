@@ -35,7 +35,8 @@
                     rcCloudServicePath="v2checkbox"
                     readOnly="{Boolean}false"
                     size="normal"
-                    visible="{Boolean}true"/>
+                    visible="{Boolean}true"
+                    required="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
