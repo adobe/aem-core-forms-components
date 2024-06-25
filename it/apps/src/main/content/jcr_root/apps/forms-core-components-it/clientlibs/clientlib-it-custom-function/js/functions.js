@@ -51,6 +51,31 @@ function getEnumNames1() {
     return enumNames;
 }
 
+
+/**
+ * Returns 2 enum values
+ * @name getEnum2 Get_Enum_2
+ * @return {OPTIONS}
+ */
+function getEnum2() {
+    var enums = [];
+    enums[0] = 'one';
+    enums[1] = 'two';
+    return enums;
+}
+
+/**
+ * Return 2 enum Name values
+ * @name getEnumNames2 Get_Enum_Names_2
+ * @return {OPTIONS}
+ */
+function getEnumNames2() {
+    var enumNames = [];
+    enumNames[0] = 'one';
+    enumNames[1] = 'two';
+    return enumNames;
+}
+
 /**
  * clears the enums
  * @name clearEnums clear_enum
