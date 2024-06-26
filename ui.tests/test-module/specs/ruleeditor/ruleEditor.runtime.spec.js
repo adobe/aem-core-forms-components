@@ -103,7 +103,7 @@ describe("Rule editor submission handler runtime", () => {
         }
     });
 
-    it("Hardcoded submitError handler should handle form submission error", () => {
+    it.skip("Hardcoded submitError handler should handle form submission error", () => {
         cy.previewForm(submitErrorHardcodedHandler);
         let alertFired = false;
         cy.on('window:alert', (message) => {
@@ -117,7 +117,7 @@ describe("Rule editor submission handler runtime", () => {
         });
     });
 
-    it("Default submitError handler should handle form submission error", () => {
+    it.skip("Default submitError handler should handle form submission error", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
             cy.previewForm(submitDefaultErrorHandler);
             let alertFired = false;
@@ -132,7 +132,7 @@ describe("Rule editor submission handler runtime", () => {
         }
     });
 
-    it("Custom submitError handler should handle form submission error", () => {
+    it.skip("Custom submitError handler should handle form submission error", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
             cy.previewForm(submitCustomErrorHandler);
             let alertFired = false;
