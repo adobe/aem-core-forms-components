@@ -15,12 +15,14 @@
  ******************************************************************************/
 
 export function loadXfa(formdom, renderContext) {
-    const xfaJson = JSON.parse(JSON.parse(JSON.stringify(formdom)));
-    xfalib.runtime.renderContext = JSON.parse(JSON.parse(JSON.stringify(renderContext)));
-    xfalib.script.XfaModelRegistry.prototype.createModel(xfaJson);
-    //initialize Acrobat specific scripts
-    new xfalib.acrobat.Acrobat();
-    // xfalib.runtime.xfa.form._initialize(true);
-    $(window).trigger("XfaInitialized");
-    // todo: sync props between xfa and af model
+    if (window.xfalib) {
+        const xfaJson = JSON.parse(JSON.parse(JSON.stringify(formdom)));
+        xfalib.runtime.renderContext = JSON.parse(JSON.parse(JSON.stringify(renderContext)));
+        xfalib.script.XfaModelRegistry.prototype.createModel(xfaJson);
+        //initialize Acrobat specific scripts
+        new xfalib.acrobat.Acrobat();
+        // xfalib.runtime.xfa.form._initialize(true);
+        $(window).trigger("XfaInitialized");
+        // todo: sync props between xfa and af model
+    }
 }
