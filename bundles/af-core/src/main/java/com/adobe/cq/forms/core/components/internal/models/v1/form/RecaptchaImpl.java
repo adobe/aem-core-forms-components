@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
+import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
@@ -51,17 +52,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
     @Inject
-    private ResourceResolver resourceResolver;
+    protected ResourceResolver resourceResolver;
 
-    private Resource resource;
+    protected Resource resource;
 
     @Reference
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private ReCaptchaConfigurationModel reCaptchaConfiguration;
+    protected ReCaptchaConfigurationModel reCaptchaConfiguration;
 
     @OSGiService
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private CloudConfigurationProvider cloudConfigurationProvider;
+    protected CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
@@ -77,13 +78,8 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
     public static final String RECAPTCHA_ENTERPRISE_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/enterprise.js";
 
-    private static final String RECAPTCHA_SITE_KEY = "siteKey";
-    private static final String RECAPTCHA_URI = "uri";
-    private static final String RECAPTCHA_SIZE = "size";
-    private static final String RECAPTCHA_THEME = "theme";
-    private static final String RECAPTCHA_TYPE = "type";
-    private static final String RECAPTCHA_VERSION = "version";
-    private static final String RECAPTCHA_KEYTYPE = "keyType";
+    public static final String RECAPTCHA_VERSION = "version";
+    public static final String RECAPTCHA_KEYTYPE = "keyType";
 
     @Override
     @JsonIgnore
@@ -97,6 +93,7 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     }
 
     @Override
+    @JsonIgnore
     public String getProvider() {
         return "recaptcha";
     }
@@ -118,15 +115,15 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
                 keyType = reCaptchaConfiguration.keyType();
             }
         }
-        customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
-        if (StringUtils.isNotEmpty(version) && version.equals("enterprise")) {
-            customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_ENTERPRISE_DEFAULT_URL);
+        customCaptchaProperties.put(CAPTCHA_SITE_KEY, siteKey);
+        if (StringUtils.isNotEmpty(version) && version.equals(GuideConstants.RECAPTCHA_ENTERPRISE_VERSION)) {
+            customCaptchaProperties.put(CAPTCHA_URI, RECAPTCHA_ENTERPRISE_DEFAULT_URL);
         } else {
-            customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
+            customCaptchaProperties.put(CAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
         }
-        customCaptchaProperties.put(RECAPTCHA_SIZE, getSize());
-        customCaptchaProperties.put(RECAPTCHA_THEME, "light");
-        customCaptchaProperties.put(RECAPTCHA_TYPE, "image");
+        customCaptchaProperties.put(CAPTCHA_SIZE, getSize());
+        customCaptchaProperties.put(CAPTCHA_THEME, CAPTCHA_THEME_LIGHT);
+        customCaptchaProperties.put(CAPTCHA_TYPE, CAPTCHA_TYPE_IMAGE);
         customCaptchaProperties.put(RECAPTCHA_VERSION, version);
         customCaptchaProperties.put(RECAPTCHA_KEYTYPE, keyType);
 

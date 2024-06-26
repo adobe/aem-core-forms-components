@@ -52,19 +52,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HCaptchaImpl.class);
+    protected static final String HCAPTCHA_CONFIG_FETCH_ERROR = "[AF] [CAPTCHA] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.";
 
     @Inject
-    private ResourceResolver resourceResolver;
+    protected ResourceResolver resourceResolver;
 
-    private Resource resource;
+    protected Resource resource;
 
     @Reference
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private HCaptchaConfiguration hCaptchaConfiguration;
+    protected HCaptchaConfiguration hCaptchaConfiguration;
 
     @OSGiService
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private CloudConfigurationProvider cloudConfigurationProvider;
+    protected CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
@@ -76,18 +77,13 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     @Named("size")
     protected String size;
 
-    private static final String SITE_KEY = "siteKey";
-    private static final String URI = "uri";
-    private static final String SIZE = "size";
-    private static final String THEME = "theme";
-    private static final String TYPE = "type";
-
     @Override
     public String getCloudServicePath() {
         return cloudServicePath;
     }
 
     @Override
+    @JsonIgnore
     public String getProvider() {
         return "hcaptcha";
     }
@@ -99,7 +95,7 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
         String siteKey = null, uri = null;
         resource = resourceResolver.getResource(this.getPath());
         if (cloudConfigurationProvider == null) {
-            LOGGER.info("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+            LOGGER.info(HCAPTCHA_CONFIG_FETCH_ERROR);
         }
         try {
             if (resource != null && cloudConfigurationProvider != null) {
@@ -110,13 +106,13 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
                 }
             }
         } catch (GuideException e) {
-            LOGGER.error("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+            LOGGER.error(HCAPTCHA_CONFIG_FETCH_ERROR, e);
         }
-        customCaptchaProperties.put(SITE_KEY, siteKey);
-        customCaptchaProperties.put(URI, uri);
-        customCaptchaProperties.put(SIZE, this.size);
-        customCaptchaProperties.put(THEME, "light");
-        customCaptchaProperties.put(TYPE, "image");
+        customCaptchaProperties.put(CAPTCHA_SITE_KEY, siteKey);
+        customCaptchaProperties.put(CAPTCHA_URI, uri);
+        customCaptchaProperties.put(CAPTCHA_SIZE, this.size);
+        customCaptchaProperties.put(CAPTCHA_THEME, CAPTCHA_THEME_LIGHT);
+        customCaptchaProperties.put(CAPTCHA_TYPE, CAPTCHA_TYPE_IMAGE);
 
         return customCaptchaProperties;
 

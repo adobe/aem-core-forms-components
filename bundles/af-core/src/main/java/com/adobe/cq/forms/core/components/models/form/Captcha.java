@@ -21,6 +21,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.service.GuideException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Defines a base interface to be extended by all the different types of captcha.
@@ -30,15 +31,61 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @ConsumerType
 public interface Captcha extends Field {
 
+    /**
+     * Defines the display mode for captcha.
+     * Possible values: {@code visible}, {@code invisible}
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 5.4.4
+     */
+    enum CaptchaDisplayMode {
+        VISIBLE("visible"),
+        INVISIBLE("invisible");
+
+        private String displayMode;
+
+        CaptchaDisplayMode(String displayMode) {
+            this.displayMode = displayMode;
+        }
+
+        /**
+         * Returns the string value of this enum constant.
+         *
+         * @return the string value of this enum constant
+         * @since com.adobe.cq.forms.core.components.models.form 5.4.4
+         */
+        public String getValue() {
+            return displayMode;
+        }
+    }
+
     @JsonIgnore
     default String getCloudServicePath() {
         return null;
     }
 
-    @JsonIgnore
+    @JsonProperty("captchaProvider")
     String getProvider();
 
     @JsonIgnore
     Map<String, Object> getCaptchaProperties() throws GuideException;
 
+    /**
+     * Returns the display mode of the captcha component.
+     *
+     * @return the string value of the one of the {@link CaptchaDisplayMode} enum
+     * @since com.adobe.cq.forms.core.components.models.form 5.4.4
+     */
+    default String getCaptchaDisplayMode() {
+        return null;
+    }
+
+    /**
+     * Returns the site key of the captcha component.
+     *
+     * @return the site key
+     * @since com.adobe.cq.forms.core.components.models.form 5.4.4
+     */
+    default String getCaptchaSiteKey() {
+        return null;
+    }
 }
