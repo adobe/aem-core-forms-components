@@ -116,16 +116,13 @@ class FormOptionFieldBase extends FormFieldBase {
             [...this.getOptions()].forEach((option, index) => {
                 let span = option.querySelector('span');
                 let input = option.querySelector('input');
-                if(index < newEnumNames.length) {
-                    span.textContent = newEnumNames[index];
-                } else {
-                    span.textContent = input.value;
-                }
+                let valueToSet = index < newEnumNames.length ? newEnumNames[index] : input.value;
+                span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(valueToSet) : valueToSet;
             });
         } else {
             [...this.getOptions()].forEach((option, index) => {
                 let span = option.querySelector('span');
-                span.textContent = newEnumNames[index];
+                span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(newEnumNames[index]) : newEnumNames[index];
             });
         }
     }
