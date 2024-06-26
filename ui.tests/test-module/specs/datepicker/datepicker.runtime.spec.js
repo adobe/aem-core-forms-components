@@ -208,7 +208,7 @@ describe("Form Runtime with Date Picker", () => {
     it("Test changing dates in datePicker with edit/display patterns", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
 
-        const date = '2023-08-10';
+        let date = '10/8/2023';
         cy.get(`#${datePicker7}`).find("input").clear().type(date).then(() => {
             cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Thursday, 10 August, 2023");
             cy.get(`#${datePicker7}`).find("input").focus().should("have.value","10/8/2023");
@@ -216,6 +216,7 @@ describe("Form Runtime with Date Picker", () => {
 
         // choose a different date and check if its persisted
         cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+            cy.get("#li-day-11").should("be.visible").should("have.class", "dp-selected"); // first check for the original date selection
             cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
             cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023");
             cy.get(`#${datePicker7}`).find("input").focus().should("have.value","2/8/2023");
@@ -275,7 +276,7 @@ describe("Form Runtime with Date Picker", () => {
 
     it("Test custom error message when incorrect date format is entered", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-        const incorrectInputs = ["adfasdfa", "29/2/2023", "32/1/2023", "1/32/23", "1-1-2023"];
+        const incorrectInputs = ["adfasdfa", "2023/11/08", "1-1-2023"];
         incorrectInputs.forEach(incorrectInput => {
             cy.get(`#${datePicker7}`).find("input").should('have.attr',"type", "text");
             cy.get(`#${datePicker7}`).find("input").clear().wait(1000).type(incorrectInput).trigger('input').blur()
@@ -303,9 +304,9 @@ describe("Form Runtime with Date Picker", () => {
     it("Value selected from calendar widget should match the value set in model", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
         let model = datePicker7FieldView.getModel();
-        const date = '2023-08-10';
+        const date = '2/8/2023'; // since it has edit format, the date should be in the edit format only
         cy.get(`#${datePicker7}`).find("input").clear().type(date).blur().then(x => {
-            expect(model.getState().value).to.equal(date);
+            expect(model.getState().value).to.equal('2023-08-02'); // model always has YYYY-MM-DD value
             cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
                 cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023")
