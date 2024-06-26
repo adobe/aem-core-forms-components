@@ -81,6 +81,7 @@
             }
         }
 
+
         setModel(model) {
             super.setModel(model);
             if (!this.#noFormats()) {
