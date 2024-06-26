@@ -110,8 +110,12 @@ public class FormStructureParserImplTest {
             new TypeReference<Map<String, Object>>() {});
         Assertions.assertNotNull(formStructureParser.getFormDefinition());
         Map<String, Object> datepicker = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items")).get("datepicker");
-        Assertions.assertEquals(datepicker.get("description"), "&lt;p&gt;dummy&lt;/p&gt;");
-        Assertions.assertEquals(datepicker.get("tooltip"), "&lt;p&gt;test-short-description&lt;/p&gt;");
+        Assertions.assertEquals(datepicker.get("description"), "&lt;ul&gt;\\\\n&lt;li style=&quot;font-weight: bold;&quot;&gt;&lt;strong&gt;sample tooltip or short desc&lt;\\\\\\/strong&gt;&lt;\\\\\\/li&gt;\\\\n&lt;\\\\\\/ul&gt;");
+        Assertions.assertEquals(datepicker.get("tooltip"), "&lt;p&gt;test-short-description&lt;\\\\\\/p&gt;");
+        Map<String, Object> emailinput = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items")).get("emailinput");
+//        Assertions.assertEquals(emailinput.get("description"), "&lt;p&gt;&lt;em&gt;&lt;strong&gt;click here: &lt;a href=&quot;www.google.com&quot;&gt;lol&lt;\\\\\\/a&gt;&lt;br&gt;&lt;\\\\\\/strong&gt;&lt;\\\\\\/em&gt;&lt;\\\\\\/p&gt;");
+        Assertions.assertEquals(emailinput.get("pattern"), "^(([^<>()\\\\\\\\[\\\\\\\\]\\\\\\\\\\\\\\\\.,;:\\\\\\\\s@\\\\\\\"]+(\\\\\\\\.[^<>()\\\\\\\\[\\\\\\\\]\\\\\\\\\\\\\\\\.,;:\\\\\\\\s@\\\\\\\"]+)*)|(\\\\\\\".+\\\\\\\"))@((\\\\\\\\[[0-9]{1,3}\\\\\\\\.[0-9]{1,3}\\\\\\\\.[0-9]{1,3}\\\\\\\\.[0-9]{1,3}])|(([a-zA-Z\\\\\\\\-0-9]+\\\\\\\\.)+[a-zA-Z]{2,}))$");
+
     }
 
     @Test

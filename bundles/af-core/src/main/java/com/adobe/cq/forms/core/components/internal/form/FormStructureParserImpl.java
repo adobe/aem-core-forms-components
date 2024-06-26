@@ -18,6 +18,9 @@ package com.adobe.cq.forms.core.components.internal.form;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -135,11 +138,19 @@ public class FormStructureParserImpl implements FormStructureParser {
     }
 
     private static class EncodeHTMLSerializer extends JsonSerializer<String> {
+        private final Set<String> richTextFields = new HashSet<>(Arrays.asList("description", "tooltip"));
+        private final Set<String> regexFields = new HashSet<>(Arrays.asList("pattern"));
+
         @Override
         public void serialize(String value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
             if (value != null) {
-                String escapedValue = StringEscapeUtils.escapeHtml4(value);
-                jsonGenerator.writeString(escapedValue);
+                String finalValue = value;
+                if (richTextFields.contains(jsonGenerator.getOutputContext().getCurrentName())) {
+                    finalValue = StringEscapeUtils.escapeJson(StringEscapeUtils.escapeJson(StringEscapeUtils.escapeHtml4(value)));
+                } else if (regexFields.contains(jsonGenerator.getOutputContext().getCurrentName())) {
+                    finalValue = StringEscapeUtils.escapeJson(StringEscapeUtils.escapeJson(value));
+                }
+                jsonGenerator.writeString(finalValue);
             }
         }
     }
