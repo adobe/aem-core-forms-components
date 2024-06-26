@@ -138,6 +138,13 @@
             }
         }
 
+        /**
+         * @override
+         * Method for updating the saved value in the option field.
+         * It contains the logic for updating the 'enum' value.
+         *
+         * @param {Array} newEnums - An array of primitive values to be saved in the option field.
+         */
         updateEnum(newEnums) {
             let options = this.getOptions();
             let currentEnumSize = options.length;
@@ -172,6 +179,13 @@
             }
         }
 
+        /**
+         * @override
+         * Method for updating the display value in the option field.
+         * It contains the logic for updating the 'enumNames' value.
+         *
+         * @param {Array} newEnumNames - An array of primitive values to be displayed in the option field.
+         */
         updateEnumNames(newEnumNames) {
             let options = this.getOptions();
             let currentEnumNameSize = options.length;
