@@ -70,16 +70,16 @@ describe('Form with RUM initialized', () => {
             // Assert the number of calls
             cy.get('@sampleRUMSpy').should('have.callCount', 5);
 
-            // Access window object to get the visitorId dynamically
+            // Access window object to get the sid dynamically
             cy.window().then((win) => {
-                const visitorId = win.af.visitorId;
+                const sid = win.af.sid;
 
                 // Assert the arguments of the first call
                 cy.get('@sampleRUMSpy').should('be.calledWith', "formviews", {
                     source: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
                     target: JSON.stringify({
                         version: "core",
-                        visitorId: visitorId
+                        sid: sid
                     })
                 });
 
@@ -97,7 +97,7 @@ describe('Form with RUM initialized', () => {
                     target: JSON.stringify({
                         qualifiedName: "$form.textinput1",
                         formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                        visitorId: visitorId
+                        sid: sid
                     })
                 });
 
@@ -107,7 +107,7 @@ describe('Form with RUM initialized', () => {
                     target: JSON.stringify({
                         qualifiedName: "$form.textinput1",
                         formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                        visitorId: visitorId
+                        sid: sid
                     })
                 });
 
@@ -117,7 +117,7 @@ describe('Form with RUM initialized', () => {
                     target: JSON.stringify({
                         qualifiedName: "$form.textinput1",
                         formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                        visitorId: visitorId,
+                        sid: sid,
                         validationType: "expressionMismatch"
                     })
                 });
@@ -132,7 +132,7 @@ describe('Form with RUM initialized', () => {
                     expect(args[1].target).to.include(JSON.stringify({
                         qualifiedName: "$form.submit1669185963968",
                         formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                        visitorId: visitorId
+                        sid: sid
                     }));
                     args = spyCall.args[6];
                     expect(args[0]).to.include("formsubmit");
