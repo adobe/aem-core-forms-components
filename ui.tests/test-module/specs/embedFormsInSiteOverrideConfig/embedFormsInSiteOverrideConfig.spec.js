@@ -27,10 +27,6 @@ describe("Form in site using embed container", () => {
           cy.previewForm(pagePath, {multipleEmbedContainers: true}).then(p => {
               formContainer = p;
           });
-          cy.intercept({
-            method: 'POST',
-            url: '**/adobe/forms/af/submit/*',
-            }).as('afSubmission');
       })
   
       it("should render two form", () => {
@@ -39,14 +35,22 @@ describe("Form in site using embed container", () => {
 
       if(cy.af.isLatestAddon) {
         it("should submit on button click and thank you message of embed container must be overridden", () => {
-            cy.get(`.cmp-adaptiveform-button__widget`).eq(0).trigger('mouseover').click().then(() => {
-            cy.get('body').should('contain', "Thank You message from sites.\n")
+            cy.intercept({
+              method: 'POST',
+              url: '**/adobe/forms/af/submit/*',
+              }).as('afSubmission');
+            cy.get(`.cmp-adaptiveform-button__widget`).eq(0).click().then(() => {
+            cy.get('body').should('contain', "Thank You message from sites.")
           });
         });
 
         it("should submit on button click and thank you message of embed container must be overridden", () => {
-            cy.get(`.cmp-adaptiveform-button__widget`).eq(1).trigger('mouseover').click().then(() => {
-            cy.get('body').should('contain', "Thank You message from new form in sites.\n")
+          cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+            }).as('afSubmission');
+            cy.get(`.cmp-adaptiveform-button__widget`).eq(1).click().then(() => {
+            cy.get('body').should('contain', "Thank You message from new form in sites.")
           });
         });
       }
