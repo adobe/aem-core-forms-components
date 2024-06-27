@@ -39,6 +39,7 @@ import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.HCaptcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -68,12 +69,12 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("cloudServicePath")
+    @Named(ReservedProperties.PN_CLOUD_SERVICE_PATH)
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("size")
+    @Named(ReservedProperties.PN_SIZE)
     protected String size;
 
     private static final String SITE_KEY = "siteKey";

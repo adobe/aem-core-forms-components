@@ -45,6 +45,7 @@
     ]
   },
   "properties": {
+    "customProp": "customPropValue",
     "afs:layout": {
       "tooltipVisible": false,
       "orientation": "horizontal"

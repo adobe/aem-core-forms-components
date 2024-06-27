@@ -4,7 +4,8 @@
     "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
     "name" : "abc",
     "jcr:title" : "def",
-    "fieldType": "date-input"
+    "fieldType": "date-input",
+    "customProp": "customPropValue"
   },
   "datepicker-customized" : {
     "jcr:primaryType": "nt:unstructured",
@@ -86,9 +87,7 @@
         "dorExclusion": false
       },
       "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/datepicker"
-    },
-    "format": "date",
-    ":type": "forms-components-examples/components/form/datepicker"
+    }
   },
   "datepicker-displayValueExpression" : {
     "jcr:primaryType": "nt:unstructured",

@@ -10,7 +10,8 @@
       " video/*",
       " image/*",
       " text/*",
-      " application/pdf"]
+      " application/pdf"],
+    "customProp": "customPropValue"
   },
   "fileinput-customized" : {
     "jcr:primaryType": "nt:unstructured",
@@ -80,7 +81,6 @@
         "dorExclusion": false
       },
       "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/fileinput"
-    },
-    ":type": "forms-components-examples/components/form/fileinput"
+    }
   }
 }

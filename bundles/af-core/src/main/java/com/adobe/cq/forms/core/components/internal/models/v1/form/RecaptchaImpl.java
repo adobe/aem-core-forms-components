@@ -38,6 +38,7 @@ import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -65,18 +66,17 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("rcCloudServicePath")
+    @Named(ReservedProperties.PN_RECAPTCHA_CLOUD_SERVICE_PATH)
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @JsonIgnore
-    @Named("recaptchaSize")
+    @Named(ReservedProperties.PN_RECAPTCHA_SIZE)
     protected String size;
 
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
     public static final String RECAPTCHA_ENTERPRISE_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/enterprise.js";
-
     private static final String RECAPTCHA_SITE_KEY = "siteKey";
     private static final String RECAPTCHA_URI = "uri";
     private static final String RECAPTCHA_SIZE = "size";
