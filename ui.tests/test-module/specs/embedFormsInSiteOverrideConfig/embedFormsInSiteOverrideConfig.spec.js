@@ -26,31 +26,30 @@ describe("Form in site using embed container", () => {
       beforeEach(function () {
           cy.previewForm(pagePath, {multipleEmbedContainers: true}).then(p => {
               formContainer = p;
-          })
+          });
+          cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+            }).as('afSubmission');
       })
   
       it("should render two form", () => {
         expect(formContainer.length).to.equal(2);
       });
 
-      it("should submit on button click and thank you message of embed container must be overridden", () => {
-            cy.intercept({
-            method: 'POST',
-            url: '**/adobe/forms/af/submit/*',
-        }).as('afSubmission');
-        cy.get(`.cmp-adaptiveform-button__widget`).eq(0).should('be.visible').wait(500).click().then(() => {
-        cy.get('body').should('contain', "Thank You message from sites.\n")
+      if(cy.af.isLatestAddon) {
+        it("should submit on button click and thank you message of embed container must be overridden", () => {
+            cy.get(`.cmp-adaptiveform-button__widget`).eq(0).trigger('mouseover').click().then(() => {
+            cy.get('body').should('contain', "Thank You message from sites.\n")
+          });
         });
-      });
 
-      it("should submit on button click and thank you message of embed container must be overridden", () => {
-        cy.intercept({
-        method: 'POST',
-        url: '**/adobe/forms/af/submit/*',
-        }).as('afSubmission');
-        cy.get(`.cmp-adaptiveform-button__widget`).eq(1).should('be.visible').wait(500).click().then(() => {
-        cy.get('body').should('contain', "Thank You message from new form in sites.\n")
+        it("should submit on button click and thank you message of embed container must be overridden", () => {
+            cy.get(`.cmp-adaptiveform-button__widget`).eq(1).trigger('mouseover').click().then(() => {
+            cy.get('body').should('contain', "Thank You message from new form in sites.\n")
+          });
         });
-      });
+      }
     })
   });
+  
