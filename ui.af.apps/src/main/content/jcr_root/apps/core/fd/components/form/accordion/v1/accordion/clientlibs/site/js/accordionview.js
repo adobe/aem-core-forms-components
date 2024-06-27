@@ -15,11 +15,11 @@
  ******************************************************************************/
 (function () {
 
-    class Accordion extends FormView.FormPanel {
+    const AccordionMixin = window.CQ.FormsCoreComponents.AccordionMixin;
+
+    class Accordion extends AccordionMixin(FormView.FormPanel) {
 
         static NS = FormView.Constants.NS;
-        static IS = "adaptiveFormAccordion";
-        static bemBlock = 'cmp-accordion';
         static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
         _templateHTML = {};
         static selectors = {
@@ -30,29 +30,6 @@
             tooltipDiv: `.${Accordion.bemBlock}__shortdescription`,
             label: `.${Accordion.bemBlock}__label`,
             item: `.${Accordion.bemBlock}__item`
-        };
-
-        static idSuffixes = {
-            item: "-item",
-            button: "-button",
-            panel: "-panel"
-        }
-
-        static cacheKeys = {
-            buttonKey: "button",
-            panelKey: "panel",
-            itemKey: "item"
-        }
-
-        static cssClasses = {
-            button: {
-                disabled: "cmp-accordion__button--disabled",
-                expanded: "cmp-accordion__button--expanded"
-            },
-            panel: {
-                hidden: "cmp-accordion__panel--hidden",
-                expanded: "cmp-accordion__panel--expanded"
-            }
         };
 
         static keyCodes = {
@@ -66,46 +43,20 @@
             ARROW_DOWN: 40
         };
 
-        static delay = 100;
-
-        static dataAttributes = {
-            item: {
-                expanded: "data-cmp-expanded"
-            }
-        };
-
         constructor(params) {
             super(params);
             const {element} = params;
-            this.#cacheElements(element);
-            if (this.#getCachedItems()) {
-                var expandedItems = this.#getExpandedItems();
+            this._cacheElements(element);
+            if (this._getCachedItems()) {
+                var expandedItems = this._getExpandedItems();
                 // multiple expanded items annotated, display the last item open.
                 if (expandedItems.length > 1) {
                     var lastExpandedItem = expandedItems[expandedItems.length - 1]
-                    this.#expandItem(lastExpandedItem);
-                    this.#collapseAllOtherItems(lastExpandedItem.id);
+                    this._expandItem(lastExpandedItem);
+                    this._collapseAllOtherItems(lastExpandedItem.id);
                 }
-                this.#refreshItems();
+                this._refreshItems();
                 this.#bindEvents();
-            }
-            if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
-                /*
-                 * Editor message handling:
-                 * - subscribe to "cmp.panelcontainer" message requests sent by the editor frame
-                 * - check that the message data panel container type is correct and that the id (path) matches this specific Accordion component
-                 * - if so, route the "navigate" operation to enact a navigation of the Accordion based on index data
-                 */
-                window.CQ.CoreComponents.MESSAGE_CHANNEL = window.CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
-                var _self = this;
-                window.CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
-                    if (message.data && message.data.type === "cmp-accordion" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
-                        if (message.data.operation === "navigate") {
-                            _self.#toggle(_self.#getCachedItems()[message.data.index].id);
-                            _self.#collapseAllOtherItems(_self.#getCachedItems()[message.data.index].id);
-                        }
-                    }
-                });
             }
         }
 
@@ -141,81 +92,20 @@
             super.setFocus(id);
             this.setActive();
             this.#collapseAllItems();
-            const item = this.#getItemById(id + '-item');
-            this.#expandItem(item)
+            const item = this._getItemById(id + '-item');
+            this._expandItem(item)
         }
 
 
         #collapseAllItems() {
-            var items = this.#getCachedItems();
+            var items = this._getCachedItems();
             if (items) {
                 for (var i = 0; i < items.length; i++) {
-                    if (this.#isItemExpanded(items[i])) {
-                        this.#collapseItem(items[i])
+                    if (this._isItemExpanded(items[i])) {
+                        this._collapseItem(items[i])
                     }
                 }
             }
-        }
-
-        /**
-         * Caches the Accordion elements as defined via the {@code data-accordion-hook="ELEMENT_NAME"} markup API.
-         *
-         * @private
-         * @param {HTMLElement} wrapper The Accordion wrapper element
-         */
-        #cacheElements(wrapper) {
-            this._elements = {};
-            this._elements.self = wrapper;
-            var hooks = this._elements.self.querySelectorAll("[data-" + Accordion.NS + "-hook-" + Accordion.IS + "]");
-
-            for (var i = 0; i < hooks.length; i++) {
-                var hook = hooks[i];
-                if (hook.closest("[data-cmp-is=" + Accordion.IS + "]") === this._elements.self) { // only process own accordion elements
-                    var lowerCased = Accordion.IS.toLowerCase();
-                    var capitalized = lowerCased.charAt(0).toUpperCase() + lowerCased.slice(1);
-                    var key = hook.dataset[Accordion.NS + "Hook" + capitalized];
-                    if (this._elements[key]) {
-                        if (!Array.isArray(this._elements[key])) {
-                            var tmp = this._elements[key];
-                            this._elements[key] = [tmp];
-                        }
-                        this._elements[key].push(hook);
-                    } else {
-                        this._elements[key] = [hook];
-                    }
-                }
-            }
-        }
-
-        /**
-         * Returns all expanded items.
-         *
-         * @private
-         * @returns {HTMLElement[]} The expanded items
-         */
-        #getExpandedItems() {
-            var expandedItems = [];
-
-            for (var i = 0; i < this.#getCachedItems().length; i++) {
-                var item = this.#getCachedItems()[i];
-                var expanded = this.#isItemExpanded(item);
-                if (expanded) {
-                    expandedItems.push(item);
-                }
-            }
-
-            return expandedItems;
-        }
-
-        /**
-         * Gets an item's expanded state.
-         *
-         * @private
-         * @param {HTMLElement} item The item for checking its expanded state
-         * @returns {Boolean} true if the item is expanded, false otherwise
-         */
-        #isItemExpanded(item) {
-            return item && item.dataset && item.dataset["cmpExpanded"] !== undefined;
         }
 
         /**
@@ -224,15 +114,15 @@
          * @private
          */
         #bindEvents() {
-            var buttons = this.#getCachedButtons();
+            var buttons = this._getCachedButtons();
             if (buttons) {
                 var _self = this;
                 for (var i = 0; i < buttons.length; i++) {
                     (function (index) {
                         buttons[index].addEventListener("click", function (event) {
                             var itemDivId = _self.#convertToItemDivId(buttons[index].id);
-                            _self.#toggle(itemDivId);
-                            _self.#collapseAllOtherItems(itemDivId);
+                            _self._toggle(itemDivId);
+                            _self._collapseAllOtherItems(itemDivId);
                             _self.#focusButton(buttons[index].id);
                         });
                         buttons[index].addEventListener("keydown", function (event) {
@@ -254,8 +144,8 @@
             var button = this.#getButtonById(buttonId);
             button.addEventListener("click", function (event) {
                 var itemDivId = _self.#convertToItemDivId(buttonId);
-                _self.#toggle(itemDivId);
-                _self.#collapseAllOtherItems(itemDivId);
+                _self._toggle(itemDivId);
+                _self._collapseAllOtherItems(itemDivId);
                 _self.#focusButton(buttonId);
             });
             button.addEventListener("keydown", function (event) {
@@ -271,7 +161,7 @@
          * @param {Number} id The id of the button triggering the event
          */
         #onButtonKeyDown(event, id) {
-            var buttons = this.#getCachedButtons();
+            var buttons = this._getCachedButtons();
             var lastIndex = buttons.length - 1;
             var index = this.#getButtonIndexById(id);
 
@@ -302,102 +192,12 @@
                 case Accordion.keyCodes.SPACE:
                     event.preventDefault();
                     var itemDivId = this.#convertToItemDivId(buttons[index].id);
-                    this.#toggle(itemDivId);
-                    this.#collapseAllOtherItems(itemDivId);
+                    this._toggle(itemDivId);
+                    this._collapseAllOtherItems(itemDivId);
                     this.#focusButton(buttons[index].id);
                     break;
                 default:
                     return;
-            }
-        }
-
-        /**
-         * General handler for toggle of an item.
-         *
-         * @private
-         * @param {Number} id The id of the item to toggle
-         */
-        #toggle(id) {
-            var itemToToggle = this.#getItemById(id);
-            if (itemToToggle) {
-                (this.#isItemExpanded(itemToToggle) === false) ? this.#expandItem(itemToToggle) : this.#collapseItem(itemToToggle);
-            }
-        }
-
-        /**
-         * Refreshes an item based on its expanded state.
-         *
-         * @private
-         * @param {HTMLElement} item The item to refresh
-         */
-        #refreshItem(item) {
-            var expanded = this.#isItemExpanded(item);
-            if (expanded) {
-                this.#expandItem(item);
-            } else {
-                this.#collapseItem(item);
-            }
-        }
-
-        /**
-         * Refreshes all items based on their expanded state.
-         *
-         * @private
-         */
-        #refreshItems() {
-            for (var i = 0; i < this.#getCachedItems().length; i++) {
-                this.#refreshItem(this.#getCachedItems()[i]);
-            }
-        }
-
-
-        /**
-         * Annotates the item and its internals with
-         * the necessary style and accessibility attributes to indicate it is expanded.
-         *
-         * @private
-         * @param {HTMLElement} item The item to annotate as expanded
-         */
-        #expandItem(item) {
-            var index = this.#getCachedItems().indexOf(item);
-            if (index > -1) {
-                item.setAttribute(Accordion.dataAttributes.item.expanded, "");
-                var button = this.#getCachedButtons()[index];
-                var panel = this.#getCachedPanels()[index];
-                button.classList.add(Accordion.cssClasses.button.expanded);
-                // used to fix some known screen readers issues in reading the correct state of the 'aria-expanded' attribute
-                // e.g. https://bugs.webkit.org/show_bug.cgi?id=210934
-                setTimeout(function () {
-                    button.setAttribute("aria-expanded", true);
-                }, Accordion.delay);
-                panel.classList.add(Accordion.cssClasses.panel.expanded);
-                panel.classList.remove(Accordion.cssClasses.panel.hidden);
-                panel.setAttribute("aria-hidden", false);
-            }
-        }
-
-        /**
-         * Annotates the item and its internals with
-         * the necessary style and accessibility attributes to indicate it is not expanded.
-         *
-         * @private
-         * @param {HTMLElement} item The item to annotate as not expanded
-         */
-        #collapseItem(item) {
-            var index = this.#getCachedItems().indexOf(item);
-            if (index > -1) {
-                item.removeAttribute(Accordion.dataAttributes.item.expanded);
-                var button = this.#getCachedButtons()[index];
-                var panel = this.#getCachedPanels()[index];
-                button.classList.remove(Accordion.cssClasses.button.expanded);
-                // used to fix some known screen readers issues in reading the correct state of the 'aria-expanded' attribute
-                // e.g. https://bugs.webkit.org/show_bug.cgi?id=210934
-                setTimeout(function () {
-                    button.setAttribute("aria-expanded", false);
-                }, Accordion.delay);
-                panel.classList.add(Accordion.cssClasses.panel.hidden);
-                panel.classList.remove(Accordion.cssClasses.panel.expanded);
-                panel.setAttribute("aria-hidden", true);
             }
         }
 
@@ -446,31 +246,31 @@
 
         handleChildAddition(childView) {
             var itemDivToExpand;
-            this.#cacheElements(this._elements.self);
+            this._cacheElements(this._elements.self);
             this.#bindEventsToAddedChild(childView.id);
             if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {
-                itemDivToExpand = this.#getItemById(childView.id + Accordion.idSuffixes.item);
+                itemDivToExpand = this._getItemById(childView.id + Accordion.idSuffixes.item);
             } else {
                 //this will run at initial runtime loading when the repeatable panel is being added minOccur no of times.
                 // in this case we want the focus to stay at first tab
-                itemDivToExpand = this.findFirstVisibleChild(this.#getCachedItems());
+                itemDivToExpand = this.findFirstVisibleChild(this._getCachedItems());
             }
-            this.#expandItem(itemDivToExpand);
-            this.#collapseAllOtherItems(itemDivToExpand.id);
+            this._expandItem(itemDivToExpand);
+            this._collapseAllOtherItems(itemDivToExpand.id);
             this.#showHideRepeatableButtons(childView.getInstanceManager());
         }
 
         handleChildRemoval(removedInstanceView) {
             var removedAccordionItemDivId = removedInstanceView.element.id + Accordion.idSuffixes.item;
-            var removedAccordionItemDiv = this.#getItemById(removedAccordionItemDivId);
+            var removedAccordionItemDiv = this._getItemById(removedAccordionItemDivId);
             removedAccordionItemDiv.remove();
             this.children.splice(this.children.indexOf(removedInstanceView), 1);
-            this.#cacheElements(this._elements.self);
-            var cachedItems = this.#getCachedItems();
+            this._cacheElements(this._elements.self);
+            var cachedItems = this._getCachedItems();
             if (cachedItems && cachedItems.length > 0) {
                 var firstItem = cachedItems[0];
-                this.#expandItem(firstItem);
-                this.#collapseAllOtherItems(firstItem.id);
+                this._expandItem(firstItem);
+                this._collapseAllOtherItems(firstItem.id);
             }
             this.#showHideRepeatableButtons(removedInstanceView.getInstanceManager());
         }
@@ -485,13 +285,13 @@
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
             this.#syncLabel();
-            for (var itemDiv of this.#getCachedItems()) {
+            for (var itemDiv of this._getCachedItems()) {
                 this.#syncAccordionMarkup(itemDiv);
             }
         }
 
         getChildViewByIndex(index) {
-            var accordionPanels = this.#getCachedPanels();
+            var accordionPanels = this._getCachedPanels();
             var fieldId = accordionPanels[index].id.substring(0, accordionPanels[index].id.lastIndexOf("-"));
             return this.getChild(fieldId);
         }
@@ -504,13 +304,13 @@
                 var closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
                 var indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                 if (indexToInsert > 0) {
-                    result.beforeViewElement = this.#getCachedItems()[indexToInsert - 1];
+                    result.beforeViewElement = this._getCachedItems()[indexToInsert - 1];
                 } else {
                     result.parentElement = this.element;
                 }
             } else {
                 var previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
-                var previousInstanceItemDiv = this.#getItemById(previousInstanceElement.id + Accordion.idSuffixes.item);
+                var previousInstanceItemDiv = this._getItemById(previousInstanceElement.id + Accordion.idSuffixes.item);
                 result.beforeViewElement = previousInstanceItemDiv;
             }
             return result;
@@ -555,51 +355,14 @@
             if (childView.getInstanceManager() != null && (this._templateHTML == null || this._templateHTML[childView.getInstanceManager().getId()] == null)) {
                 var accordionItemDivId = childView.element.id + Accordion.idSuffixes.item;
                 var instanceManagerId = childView.getInstanceManager().getId();
-                var accordionItemDiv = this.#getItemById(accordionItemDivId);
+                var accordionItemDiv = this._getItemById(accordionItemDivId);
                 this._templateHTML[instanceManagerId] = {};
                 this._templateHTML[instanceManagerId]['accordionItemDiv'] = accordionItemDiv;
             }
         }
 
-        #collapseAllOtherItems(itemId) {
-            var itemToToggle = this.#getItemById(itemId);
-            var itemList = this.#getCachedItems();
-            for (var i = 0; i < itemList.length; i++) {
-                if (itemList[i] !== itemToToggle) {
-                    var expanded = this.#isItemExpanded(itemList[i]);
-                    if (expanded) {
-                        this.#collapseItem(this.#getCachedItems()[i]);
-                    }
-                }
-            }
-        }
-
-
-        #getCachedItems() {
-            return (this._elements[Accordion.cacheKeys.itemKey] != null) ? this._elements[Accordion.cacheKeys.itemKey] : [];
-        }
-
-        #getCachedPanels() {
-            return this._elements[Accordion.cacheKeys.panelKey];
-        }
-
-        #getCachedButtons() {
-            return this._elements[Accordion.cacheKeys.buttonKey]
-        }
-
-        #getItemById(itemId) {
-            var items = this.#getCachedItems();
-            if (items) {
-                for (var i = 0; i < items.length; i++) {
-                    if (items[i].id === itemId) {
-                        return items[i];
-                    }
-                }
-            }
-        }
-
         #getButtonById(buttonId) {
-            var buttons = this.#getCachedButtons();
+            var buttons = this._getCachedButtons();
             if (buttons) {
                 for (var i = 0; i < buttons.length; i++) {
                     if (buttons[i].id === buttonId) {
@@ -610,7 +373,7 @@
         }
 
         #getButtonIndexById(buttonId) {
-            var buttons = this.#getCachedButtons();
+            var buttons = this._getCachedButtons();
             if (buttons) {
                 for (var i = 0; i < buttons.length; i++) {
                     if (buttons[i].id === buttonId) {
@@ -652,17 +415,17 @@
         }
 
         updateChildVisibility(visible, state) {
-            this.updateVisibilityOfNavigationElement(this.#getItemById(state.id + Accordion.idSuffixes.item), visible);
+            this.updateVisibilityOfNavigationElement(this._getItemById(state.id + Accordion.idSuffixes.item), visible);
             if (!visible) {
-                var expandedItems = this.#getExpandedItems();
+                var expandedItems = this._getExpandedItems();
                 for (let i = 0; i < expandedItems.length; i++) {
                     if (expandedItems[i].getAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE) === 'false') {
-                        this.#collapseItem(expandedItems[i]);
+                        this._collapseItem(expandedItems[i]);
                     }
                 }
-                let child = this.findFirstVisibleChild(this.#getCachedItems());
+                let child = this.findFirstVisibleChild(this._getCachedItems());
                 if (child) {
-                    this.#expandItem(child);
+                    this._expandItem(child);
                 }
             }
         }
