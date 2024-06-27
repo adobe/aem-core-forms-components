@@ -185,7 +185,7 @@ describe("Form Runtime with Text Input", () => {
         })
 
         // 3. Maximum Number of Characters: 20
-        cy.get(`#${submitbutton1}`).find("button").click()
+        cy.get(`#${submitbutton1}-widget`).click()
         cy.get(`#${textbox7}`).find("input").then(x => {
             cy.get(`#${textbox7}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please shorten this text to 20 characters or less.")
         })
