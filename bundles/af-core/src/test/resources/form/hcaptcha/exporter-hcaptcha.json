@@ -30,7 +30,8 @@
           "theme": "light",
           "type": "image"
         }
-      }
+      },
+      "customProp": "customPropValue"
     },
     ":type": "core/fd/components/form/hcaptcha/v1/hcaptcha"
 }

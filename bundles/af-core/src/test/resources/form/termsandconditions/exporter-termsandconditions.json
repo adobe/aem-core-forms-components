@@ -10,7 +10,8 @@
       "dorExcludeDescription": false
     },
     "fd:path": "/content/termsandconditions",
-    "fd:tnc": true
+    "fd:tnc": true,
+    "customProp": "customPropValue"
   },
   "label": {
     "value": "Terms And Conditions"

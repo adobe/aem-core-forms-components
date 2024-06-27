@@ -105,29 +105,46 @@ describe("Rule editor submission handler runtime", () => {
 
     it("Hardcoded submitError handler should handle form submission error", () => {
         cy.previewForm(submitErrorHardcodedHandler);
-        let alertFired = false;
-        cy.on('window:alert', (message) => {
-            expect(message).to.equal('Encountered an internal error while submitting the form.');
-            alertFired = true;
-        });
 
-        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-            // Confirm the alert was called
-            expect(alertFired).to.be.true;
+        cy.window().then(win => {
+            let alertFired = false;
+
+            // Stub the window alert to capture the alert message and set alertFired to true
+            cy.stub(win, 'alert').callsFake((message) => {
+                expect(message).to.equal('Encountered an internal error while submitting the form.');
+                alertFired = true;
+            });
+
+            // Click the submit button
+            cy.get('.cmp-adaptiveform-button__widget').click().then(() => {
+                // Use cy.wrap to ensure Cypress waits for the promise to resolve
+                cy.wrap(null).should(() => {
+                    expect(alertFired).to.be.true;
+                });
+            });
         });
     });
 
     it("Default submitError handler should handle form submission error", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
             cy.previewForm(submitDefaultErrorHandler);
-            let alertFired = false;
-            cy.on('window:alert', (message) => {
-                expect(message).to.equal('Form submission failed!');
-                alertFired = true;
-            });
 
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                expect(alertFired).to.be.true;
+            cy.window().then(win => {
+                let alertFired = false;
+
+                // Stub the window alert to capture the alert message and set alertFired to true
+                cy.stub(win, 'alert').callsFake((message) => {
+                    expect(message).to.equal('Form submission failed!');
+                    alertFired = true;
+                });
+
+                // Click the submit button
+                cy.get('.cmp-adaptiveform-button__widget').click().then(() => {
+                    // Use cy.wrap to ensure Cypress waits for the promise to resolve
+                    cy.wrap(null).should(() => {
+                        expect(alertFired).to.be.true;
+                    });
+                });
             });
         }
     });

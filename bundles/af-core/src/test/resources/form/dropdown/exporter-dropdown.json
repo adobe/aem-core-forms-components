@@ -18,7 +18,8 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/dropdown"
+    "fd:path": "/content/dropdown",
+    "customProp": "customPropValue"
   },
   ":type": "core/fd/components/form/dropdown/v1/dropdown"
 }
