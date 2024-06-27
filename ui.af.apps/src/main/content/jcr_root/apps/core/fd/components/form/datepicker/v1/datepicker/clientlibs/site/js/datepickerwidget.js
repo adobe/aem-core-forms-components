@@ -1139,11 +1139,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
      */
     getValue() {
       if (this.#isEditValueOrDisplayValue(this.#widget.value)) {
-        return this.#model.value; // if the widget has edit/display value thus method should return model value
-      }
-      let dateVal = new Date(this.toString());
-      if (!isNaN(dateVal)) {
-        return this.toString();
+        return this.#model.value; // if the widget has edit/display value thiss method should return model value
       }
       return this.#widget.value;
     }
@@ -1168,10 +1164,16 @@ if (typeof window.DatePickerWidget === 'undefined') {
      */
 
     setValue(value) {
-      let currDate =  new Date(value);
-
-      const timezoneOffset = currDate.getTimezoneOffset();
-      currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+      let currDate;
+      if (value instanceof Date && !isNaN(value)) {
+        // If value is already a Date object and it's valid, use it as is
+        currDate = value;
+      } else {
+        // Otherwise, construct a new Date object
+        currDate = new Date(value);
+        const timezoneOffset = currDate.getTimezoneOffset();
+        currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+      }
 
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
@@ -1190,7 +1192,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         }
         this.#curInstance.$field.value = this.#curInstance.editValue() || value;
       } else {
-        this.#widget.value = this.#model.editValue || value;
+        this.#widget.value = value;
       }
     }
 
