@@ -31,6 +31,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
@@ -42,17 +43,17 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "multiSelection")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MULTISELECTION)
     @Default(booleanValues = false)
     protected boolean multiSelection;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxFileSize")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAX_FILE_SIZE)
     protected String maxFileSize;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "accept")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FILE_ACCEPT)
     protected String[] accept;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_BUTTON_TEXT)
     @Default(values = FileInput.DEFAULT_BUTTON_TEXT)
     protected String buttonText;
 
@@ -96,7 +97,7 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @Override
     public String getButtonText() {
-        return translate("buttonText", buttonText);
+        return translate(ReservedProperties.PN_BUTTON_TEXT, buttonText);
     }
 
     @Override

@@ -10,8 +10,9 @@
     },
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
     "fd:schemaType": "BASIC",
-    "fd:roleAttribute":"test-role-attribute",
-    "fd:formDataEnabled": true
+    "fd:formDataEnabled": true,
+    "customProp": "customPropValue",
+    "fd:roleAttribute":"test-role-attribute"
   },
   "events": {
     "custom:setProperty": [

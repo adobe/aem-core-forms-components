@@ -32,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FileInputImpl;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -44,9 +45,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FileInputImplV2 extends FileInputImpl {
 
-    private static final String DRAG_DROP_TEXT = "dragDropText";
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dragDropText")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DRAG_DROP_TEXT)
     @Default(values = FileInput.DEFAULT_DRAGDROP_TEXT)
     protected String dragDropText;
 
@@ -58,7 +57,7 @@ public class FileInputImplV2 extends FileInputImpl {
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> customProperties = super.getProperties();
-        customProperties.put(DRAG_DROP_TEXT, getDragDropText());
+        customProperties.put(ReservedProperties.PN_DRAG_DROP_TEXT, getDragDropText());
         return customProperties;
     }
 }
