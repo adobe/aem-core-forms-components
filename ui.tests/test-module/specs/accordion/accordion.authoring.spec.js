@@ -84,6 +84,22 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(accordionEditPath);
         });
 
+        it('runtime time library should not be loaded', function() {
+            cy.intercept('GET', /jcr:content\/guideContainer\/accordion\.html/).as('accordionRequest');
+            dropAccordionInContainer()
+            cy.wait('@accordionRequest').then((interception) => {
+                const htmlContent = interception.response.body;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlContent, 'text/html');
+                const runtimeUrlPattern = /core\/fd\/af-clientlibs\/core-forms-components-runtime-base/;
+                const scriptTags = Array.from(doc.querySelectorAll('script[src]'));
+                console.log("tags ", scriptTags);
+                const isClientLibraryLoaded = scriptTags.some(script => runtimeUrlPattern.test(script.src));
+                expect(isClientLibraryLoaded).to.be.false;
+            })
+            cy.deleteComponentByPath(accordionEditPath);
+        })
+
         it('open edit dialog of Accordion', {retries: 3}, function () {
             cy.cleanTest(accordionEditPath).then(function() {
                 testAccordionBehaviour(accordionPathSelector, accordionEditPath);
