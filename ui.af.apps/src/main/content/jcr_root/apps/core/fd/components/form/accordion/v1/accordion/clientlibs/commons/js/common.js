@@ -62,20 +62,20 @@
                 super(params);
             }
 
-            _getCachedItems() {
+            getCachedItems() {
                 return (this._elements[this.constructor.cacheKeys.itemKey] != null) ? this._elements[this.constructor.cacheKeys.itemKey] : [];
             }
 
-            _getCachedPanels() {
+            getCachedPanels() {
                 return this._elements[this.constructor.cacheKeys.panelKey];
             }
 
-            _getCachedButtons() {
+            getCachedButtons() {
                 return this._elements[this.constructor.cacheKeys.buttonKey]
             }
 
-            _getItemById(itemId) {
-                var items = this._getCachedItems();
+            getItemById(itemId) {
+                var items = this.getCachedItems();
                 if (items) {
                     for (var i = 0; i < items.length; i++) {
                         if (items[i].id === itemId) {
@@ -92,12 +92,12 @@
              * @private
              * @returns {HTMLElement[]} The expanded items
              */
-            _getExpandedItems() {
+            getExpandedItems() {
                 var expandedItems = [];
 
-                for (var i = 0; i < this._getCachedItems().length; i++) {
-                    var item = this._getCachedItems()[i];
-                    var expanded = this._isItemExpanded(item);
+                for (var i = 0; i < this.getCachedItems().length; i++) {
+                    var item = this.getCachedItems()[i];
+                    var expanded = this.isItemExpanded(item);
                     if (expanded) {
                         expandedItems.push(item);
                     }
@@ -113,7 +113,7 @@
              * @param {HTMLElement} item The item for checking its expanded state
              * @returns {Boolean} true if the item is expanded, false otherwise
              */
-            _isItemExpanded(item) {
+            isItemExpanded(item) {
                 return item && item.dataset && item.dataset["cmpExpanded"] !== undefined;
             }
 
@@ -123,7 +123,7 @@
              * @private
              * @param {HTMLElement} wrapper The Accordion wrapper element
              */
-            _cacheElements(wrapper) {
+            cacheElements(wrapper) {
                 this._elements = {};
                 this._elements.self = wrapper;
                 var hooks = this._elements.self.querySelectorAll("[data-" + this.constructor.NS + "-hook-" + this.constructor.IS + "]");
@@ -147,14 +147,14 @@
                 }
             }
 
-            _collapseAllOtherItems(itemId) {
-                var itemToToggle = this._getItemById(itemId);
-                var itemList = this._getCachedItems();
+            collapseAllOtherItems(itemId) {
+                var itemToToggle = this.getItemById(itemId);
+                var itemList = this.getCachedItems();
                 for (var i = 0; i < itemList.length; i++) {
                     if (itemList[i] !== itemToToggle) {
-                        var expanded = this._isItemExpanded(itemList[i]);
+                        var expanded = this.isItemExpanded(itemList[i]);
                         if (expanded) {
-                            this._collapseItem(this._getCachedItems()[i]);
+                            this.collapseItem(this.getCachedItems()[i]);
                         }
                     }
                 }
@@ -166,10 +166,10 @@
              * @private
              * @param {Number} id The id of the item to toggle
              */
-            _toggle(id) {
-                var itemToToggle = this._getItemById(id);
+            toggle(id) {
+                var itemToToggle = this.getItemById(id);
                 if (itemToToggle) {
-                    (this._isItemExpanded(itemToToggle) === false) ? this._expandItem(itemToToggle) : this._collapseItem(itemToToggle);
+                    (this.isItemExpanded(itemToToggle) === false) ? this.expandItem(itemToToggle) : this.collapseItem(itemToToggle);
                 }
             }
 
@@ -180,12 +180,12 @@
              * @private
              * @param {HTMLElement} item The item to refresh
              */
-            _refreshItem(item) {
-                var expanded = this._isItemExpanded(item);
+            refreshItem(item) {
+                var expanded = this.isItemExpanded(item);
                 if (expanded) {
-                    this._expandItem(item);
+                    this.expandItem(item);
                 } else {
-                    this._collapseItem(item);
+                    this.collapseItem(item);
                 }
             }
 
@@ -194,9 +194,9 @@
              *
              * @private
              */
-            _refreshItems() {
-                for (var i = 0; i < this._getCachedItems().length; i++) {
-                    this._refreshItem(this._getCachedItems()[i]);
+            refreshItems() {
+                for (var i = 0; i < this.getCachedItems().length; i++) {
+                    this.refreshItem(this.getCachedItems()[i]);
                 }
             }
 
@@ -208,12 +208,12 @@
              * @private
              * @param {HTMLElement} item The item to annotate as expanded
              */
-            _expandItem(item) {
-                var index = this._getCachedItems().indexOf(item);
+            expandItem(item) {
+                var index = this.getCachedItems().indexOf(item);
                 if (index > -1) {
                     item.setAttribute(this.constructor.dataAttributes.item.expanded, "");
-                    var button = this._getCachedButtons()[index];
-                    var panel = this._getCachedPanels()[index];
+                    var button = this.getCachedButtons()[index];
+                    var panel = this.getCachedPanels()[index];
                     button.classList.add(this.constructor.cssClasses.button.expanded);
                     // used to fix some known screen readers issues in reading the correct state of the 'aria-expanded' attribute
                     // e.g. https://bugs.webkit.org/show_bug.cgi?id=210934
@@ -233,12 +233,12 @@
              * @private
              * @param {HTMLElement} item The item to annotate as not expanded
              */
-            _collapseItem(item) {
-                var index = this._getCachedItems().indexOf(item);
+            collapseItem(item) {
+                var index = this.getCachedItems().indexOf(item);
                 if (index > -1) {
                     item.removeAttribute(this.constructor.dataAttributes.item.expanded);
-                    var button = this._getCachedButtons()[index];
-                    var panel = this._getCachedPanels()[index];
+                    var button = this.getCachedButtons()[index];
+                    var panel = this.getCachedPanels()[index];
                     button.classList.remove(this.constructor.cssClasses.button.expanded);
                     // used to fix some known screen readers issues in reading the correct state of the 'aria-expanded' attribute
                     // e.g. https://bugs.webkit.org/show_bug.cgi?id=210934
@@ -253,9 +253,8 @@
         }
     }
 
-    window.CQ = window.CQ || {};
-    window.CQ.FormsCoreComponents = window.CQ.FormsCoreComponents || {};
-
-    window.CQ.FormsCoreComponents.AccordionMixin = AccordionMixin;
+    window.Forms = window.Forms || {};
+    window.Forms.CoreComponentsCommons = window.Forms.CoreComponentsCommons || {};
+    window.Forms.CoreComponentsCommons.AccordionMixin = AccordionMixin;
 
 }());

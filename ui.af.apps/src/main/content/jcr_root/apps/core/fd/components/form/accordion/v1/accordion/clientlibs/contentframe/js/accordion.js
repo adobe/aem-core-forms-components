@@ -17,24 +17,25 @@
 
 (function () {
 
-    const AccordionMixin = window.CQ.FormsCoreComponents.AccordionMixin;
+    const AccordionMixin = window.Forms.CoreComponentsCommons.AccordionMixin;
 
     class Accordion extends AccordionMixin(class {}) {
 
         constructor(params) {
             super(params);
             const { element } = params;
-            this._cacheElements(element);
-            if (this._getCachedItems()) {
-                var expandedItems = this._getExpandedItems();
+            this.cacheElements(element);
+            if (this.getCachedItems()) {
+                var expandedItems = this.getExpandedItems();
                 // multiple expanded items annotated, display the last item open.
                 if (expandedItems.length > 1) {
                     var lastExpandedItem = expandedItems[expandedItems.length - 1]
-                    this._expandItem(lastExpandedItem);
-                    this._collapseAllOtherItems(lastExpandedItem.id);
+                    this.expandItem(lastExpandedItem);
+                    this.collapseAllOtherItems(lastExpandedItem.id);
                 }
-                this._refreshItems();
+                this.refreshItems();
             }
+            element.removeAttribute("data-" + this.constructor.NS + "-is");
 
             if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
                 /*
@@ -47,9 +48,9 @@
                 var _self = this;
                 window.CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
                     if (message.data && message.data.type === "cmp-accordion" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
-                        if (message.data.operation === "navigate") {
-                            _self._toggle(_self._getCachedItems()[message.data.index].id);
-                            _self._collapseAllOtherItems(_self._getCachedItems()[message.data.index].id);
+                        if (message.data.operation === "navigate" && _self.getCachedItems()[message.data.index] !== undefined) {
+                            _self.toggle(_self.getCachedItems()[message.data.index].id);
+                            _self.collapseAllOtherItems(_self.getCachedItems()[message.data.index].id);
                         }
                     }
                 });
