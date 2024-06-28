@@ -18,5 +18,5 @@
     jcr:primaryType="cq:ClientLibraryFolder"
     allowProxy="{Boolean}true"
     categories="[core.forms.components.wizard.v1.runtime]"
-    dependencies="[core.forms.components.runtime.base,core.forms.components.container.v2.runtime,core.wcm.components.commons.site.container]"
+    dependencies="[core.forms.components.runtime.base,core.forms.components.container.v2.runtime,core.wcm.components.commons.site.container,core.forms.components.wizard.v1.commons]"
     />
