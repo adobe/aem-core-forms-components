@@ -15,7 +15,7 @@
  ******************************************************************************/
 (function () {
 
-    const AccordionMixin = window.CQ.FormsCoreComponents.AccordionMixin;
+    const AccordionMixin = window.Forms.CoreComponentsCommons.AccordionMixin;
 
     class Accordion extends AccordionMixin(FormView.FormPanel) {
 
@@ -46,16 +46,16 @@
         constructor(params) {
             super(params);
             const {element} = params;
-            this._cacheElements(element);
-            if (this._getCachedItems()) {
-                var expandedItems = this._getExpandedItems();
+            this.cacheElements(element);
+            if (this.getCachedItems()) {
+                var expandedItems = this.getExpandedItems();
                 // multiple expanded items annotated, display the last item open.
                 if (expandedItems.length > 1) {
                     var lastExpandedItem = expandedItems[expandedItems.length - 1]
-                    this._expandItem(lastExpandedItem);
-                    this._collapseAllOtherItems(lastExpandedItem.id);
+                    this.expandItem(lastExpandedItem);
+                    this.collapseAllOtherItems(lastExpandedItem.id);
                 }
-                this._refreshItems();
+                this.refreshItems();
                 this.#bindEvents();
             }
         }
@@ -92,17 +92,17 @@
             super.setFocus(id);
             this.setActive();
             this.#collapseAllItems();
-            const item = this._getItemById(id + '-item');
-            this._expandItem(item)
+            const item = this.getItemById(id + '-item');
+            this.expandItem(item)
         }
 
 
         #collapseAllItems() {
-            var items = this._getCachedItems();
+            var items = this.getCachedItems();
             if (items) {
                 for (var i = 0; i < items.length; i++) {
-                    if (this._isItemExpanded(items[i])) {
-                        this._collapseItem(items[i])
+                    if (this.isItemExpanded(items[i])) {
+                        this.collapseItem(items[i])
                     }
                 }
             }
@@ -114,15 +114,15 @@
          * @private
          */
         #bindEvents() {
-            var buttons = this._getCachedButtons();
+            var buttons = this.getCachedButtons();
             if (buttons) {
                 var _self = this;
                 for (var i = 0; i < buttons.length; i++) {
                     (function (index) {
                         buttons[index].addEventListener("click", function (event) {
                             var itemDivId = _self.#convertToItemDivId(buttons[index].id);
-                            _self._toggle(itemDivId);
-                            _self._collapseAllOtherItems(itemDivId);
+                            _self.toggle(itemDivId);
+                            _self.collapseAllOtherItems(itemDivId);
                             _self.#focusButton(buttons[index].id);
                         });
                         buttons[index].addEventListener("keydown", function (event) {
@@ -144,8 +144,8 @@
             var button = this.#getButtonById(buttonId);
             button.addEventListener("click", function (event) {
                 var itemDivId = _self.#convertToItemDivId(buttonId);
-                _self._toggle(itemDivId);
-                _self._collapseAllOtherItems(itemDivId);
+                _self.toggle(itemDivId);
+                _self.collapseAllOtherItems(itemDivId);
                 _self.#focusButton(buttonId);
             });
             button.addEventListener("keydown", function (event) {
@@ -161,7 +161,7 @@
          * @param {Number} id The id of the button triggering the event
          */
         #onButtonKeyDown(event, id) {
-            var buttons = this._getCachedButtons();
+            var buttons = this.getCachedButtons();
             var lastIndex = buttons.length - 1;
             var index = this.#getButtonIndexById(id);
 
@@ -192,8 +192,8 @@
                 case Accordion.keyCodes.SPACE:
                     event.preventDefault();
                     var itemDivId = this.#convertToItemDivId(buttons[index].id);
-                    this._toggle(itemDivId);
-                    this._collapseAllOtherItems(itemDivId);
+                    this.toggle(itemDivId);
+                    this.collapseAllOtherItems(itemDivId);
                     this.#focusButton(buttons[index].id);
                     break;
                 default:
@@ -246,31 +246,31 @@
 
         handleChildAddition(childView) {
             var itemDivToExpand;
-            this._cacheElements(this._elements.self);
+            this.cacheElements(this._elements.self);
             this.#bindEventsToAddedChild(childView.id);
             if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {
-                itemDivToExpand = this._getItemById(childView.id + Accordion.idSuffixes.item);
+                itemDivToExpand = this.getItemById(childView.id + Accordion.idSuffixes.item);
             } else {
                 //this will run at initial runtime loading when the repeatable panel is being added minOccur no of times.
                 // in this case we want the focus to stay at first tab
-                itemDivToExpand = this.findFirstVisibleChild(this._getCachedItems());
+                itemDivToExpand = this.findFirstVisibleChild(this.getCachedItems());
             }
-            this._expandItem(itemDivToExpand);
-            this._collapseAllOtherItems(itemDivToExpand.id);
+            this.expandItem(itemDivToExpand);
+            this.collapseAllOtherItems(itemDivToExpand.id);
             this.#showHideRepeatableButtons(childView.getInstanceManager());
         }
 
         handleChildRemoval(removedInstanceView) {
             var removedAccordionItemDivId = removedInstanceView.element.id + Accordion.idSuffixes.item;
-            var removedAccordionItemDiv = this._getItemById(removedAccordionItemDivId);
+            var removedAccordionItemDiv = this.getItemById(removedAccordionItemDivId);
             removedAccordionItemDiv.remove();
             this.children.splice(this.children.indexOf(removedInstanceView), 1);
-            this._cacheElements(this._elements.self);
-            var cachedItems = this._getCachedItems();
+            this.cacheElements(this._elements.self);
+            var cachedItems = this.getCachedItems();
             if (cachedItems && cachedItems.length > 0) {
                 var firstItem = cachedItems[0];
-                this._expandItem(firstItem);
-                this._collapseAllOtherItems(firstItem.id);
+                this.expandItem(firstItem);
+                this.collapseAllOtherItems(firstItem.id);
             }
             this.#showHideRepeatableButtons(removedInstanceView.getInstanceManager());
         }
@@ -285,13 +285,13 @@
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
             this.#syncLabel();
-            for (var itemDiv of this._getCachedItems()) {
+            for (var itemDiv of this.getCachedItems()) {
                 this.#syncAccordionMarkup(itemDiv);
             }
         }
 
         getChildViewByIndex(index) {
-            var accordionPanels = this._getCachedPanels();
+            var accordionPanels = this.getCachedPanels();
             var fieldId = accordionPanels[index].id.substring(0, accordionPanels[index].id.lastIndexOf("-"));
             return this.getChild(fieldId);
         }
@@ -304,13 +304,13 @@
                 var closestRepeatableFieldInstanceManagerIds = this._templateHTML[instanceManagerId]['closestRepeatableFieldInstanceManagerIds'];
                 var indexToInsert = this.getIndexToInsert(closestNonRepeatableFieldId, closestRepeatableFieldInstanceManagerIds);
                 if (indexToInsert > 0) {
-                    result.beforeViewElement = this._getCachedItems()[indexToInsert - 1];
+                    result.beforeViewElement = this.getCachedItems()[indexToInsert - 1];
                 } else {
                     result.parentElement = this.element;
                 }
             } else {
                 var previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
-                var previousInstanceItemDiv = this._getItemById(previousInstanceElement.id + Accordion.idSuffixes.item);
+                var previousInstanceItemDiv = this.getItemById(previousInstanceElement.id + Accordion.idSuffixes.item);
                 result.beforeViewElement = previousInstanceItemDiv;
             }
             return result;
@@ -355,14 +355,14 @@
             if (childView.getInstanceManager() != null && (this._templateHTML == null || this._templateHTML[childView.getInstanceManager().getId()] == null)) {
                 var accordionItemDivId = childView.element.id + Accordion.idSuffixes.item;
                 var instanceManagerId = childView.getInstanceManager().getId();
-                var accordionItemDiv = this._getItemById(accordionItemDivId);
+                var accordionItemDiv = this.getItemById(accordionItemDivId);
                 this._templateHTML[instanceManagerId] = {};
                 this._templateHTML[instanceManagerId]['accordionItemDiv'] = accordionItemDiv;
             }
         }
 
         #getButtonById(buttonId) {
-            var buttons = this._getCachedButtons();
+            var buttons = this.getCachedButtons();
             if (buttons) {
                 for (var i = 0; i < buttons.length; i++) {
                     if (buttons[i].id === buttonId) {
@@ -373,7 +373,7 @@
         }
 
         #getButtonIndexById(buttonId) {
-            var buttons = this._getCachedButtons();
+            var buttons = this.getCachedButtons();
             if (buttons) {
                 for (var i = 0; i < buttons.length; i++) {
                     if (buttons[i].id === buttonId) {
@@ -415,17 +415,17 @@
         }
 
         updateChildVisibility(visible, state) {
-            this.updateVisibilityOfNavigationElement(this._getItemById(state.id + Accordion.idSuffixes.item), visible);
+            this.updateVisibilityOfNavigationElement(this.getItemById(state.id + Accordion.idSuffixes.item), visible);
             if (!visible) {
-                var expandedItems = this._getExpandedItems();
+                var expandedItems = this.getExpandedItems();
                 for (let i = 0; i < expandedItems.length; i++) {
                     if (expandedItems[i].getAttribute(Accordion.DATA_ATTRIBUTE_VISIBLE) === 'false') {
-                        this._collapseItem(expandedItems[i]);
+                        this.collapseItem(expandedItems[i]);
                     }
                 }
-                let child = this.findFirstVisibleChild(this._getCachedItems());
+                let child = this.findFirstVisibleChild(this.getCachedItems());
                 if (child) {
-                    this._expandItem(child);
+                    this.expandItem(child);
                 }
             }
         }
