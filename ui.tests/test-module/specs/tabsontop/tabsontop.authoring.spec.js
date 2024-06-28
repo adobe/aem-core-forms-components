@@ -98,6 +98,21 @@ describe.only('Page - Authoring', function () {
             cy.deleteComponentByPath(tabsPath);
         });
 
+        it('runtime library should not be loaded', function() {
+            cy.intercept('GET', /jcr:content\/guideContainer\/tabsontop\.html/).as('tabsRequest');
+            dropTabsInContainer()
+            cy.wait('@tabsRequest').then((interception) => {
+                const htmlContent = interception.response.body;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlContent, 'text/html');
+                const runtimeUrlPattern = /core\/fd\/af-clientlibs\/core-forms-components-runtime-base/;
+                const scriptTags = Array.from(doc.querySelectorAll('script[src]'));
+                const isClientLibraryLoaded = scriptTags.some(script => runtimeUrlPattern.test(script.src));
+                expect(isClientLibraryLoaded).to.be.false;
+            })
+            cy.deleteComponentByPath(tabsPath);
+        })
+
 
         it('drop element in tabs on top', {retries: 3}, function () {
             cy.cleanTest(tabsPath).then(function () {
