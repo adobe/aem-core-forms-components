@@ -197,6 +197,7 @@
             refreshItems() {
                 for (var i = 0; i < this.getCachedItems().length; i++) {
                     this.refreshItem(this.getCachedItems()[i]);
+                }
             }
 
 
