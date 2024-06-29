@@ -149,33 +149,20 @@
             let options = this.getOptions();
             let currentEnumSize = options.length;
 
-            if(currentEnumSize === 0) { // case 1: create option with new enums
-                newEnums.forEach(value => {
+            // Update existing options and add new options in the same loop
+            newEnums.forEach((value, index) => {
+                if (index < currentEnumSize) {
+                    // Update existing option
+                    options[index].value = value;
+                } else {
+                    // Add new option
                     this.getWidget().add(this.#createDropDownOptions(value, value));
-                });
-            } else if(newEnums.length === 0) {  // case 2: remove all options
-                this.#removeAllOptions();
-            } else if(currentEnumSize === newEnums.length) { // case 3: replace existing enums
-                options.forEach((option, index) => {
-                    option.value = newEnums[index];
-                });
-            } else if(currentEnumSize < newEnums.length) {  // case 4: replace existing enums and create new options with remaining
-                options.forEach((option, index) => {
-                    option.value = newEnums[index];
-                });
-                newEnums.forEach((value, index) => {
-                    if(index > currentEnumSize - 1) {
-                        this.getWidget().add(this.#createDropDownOptions(value, value));
-                    }
-                });
-            } else {
-                options.forEach((option, index) => {    // case 5: replace existing enums and remove extra options
-                    if(index < newEnums.length) {
-                        option.value = newEnums[index];
-                    } else {
-                        this.getWidget().remove(index + 1); // accounting for the blank option in dropdown
-                    }
-                });
+                }
+            });
+
+            // Remove extra options
+            while (currentEnumSize > newEnums.length) {
+                this.getWidget().remove(currentEnumSize--);
             }
         }
 
