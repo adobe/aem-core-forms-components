@@ -148,20 +148,21 @@
         updateEnum(newEnums) {
             let options = this.getOptions();
             let currentEnumSize = options.length;
+            let startIndex = options[0] && options[0].value === '' ? 1 : 0; // Check if the first option is a blank option
 
             // Update existing options and add new options in the same loop
             newEnums.forEach((value, index) => {
-                if (index < currentEnumSize) {
+                if (index + startIndex < currentEnumSize) {
                     // Update existing option
-                    options[index].value = value;
+                    options[index + startIndex].value = value;
                 } else {
                     // Add new option
                     this.getWidget().add(this.#createDropDownOptions(value, value));
                 }
             });
 
-            // Remove extra options
-            while (currentEnumSize > newEnums.length) {
+            // Remove extra options, but never remove the first option
+            while (currentEnumSize > newEnums.length + startIndex) {
                 this.getWidget().remove(currentEnumSize--);
             }
         }
