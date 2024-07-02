@@ -40,7 +40,7 @@ describe("Form Runtime with Date Picker", () => {
    // Year should be in Buddhist calendar year for Thai language
    it("Test localisation for date picker for thai", () => {
        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-       cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+       cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({ force: true }).then(() => {
            let todayDate = new Date();
 
            const dateFormat = new Intl.DateTimeFormat('th', {
