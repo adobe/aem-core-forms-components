@@ -461,7 +461,10 @@ class FormTabs extends FormPanel {
         var tabs = this.#getCachedTabs();
         var index = this.#getTabIndexById(tabId);
         tabs[index].addEventListener("click", function (event) {
-            _self.navigateAndFocusTab(tabId);
+            // Check if the clicked element is the tab itself
+            if (event?.target?.id === tabId) {
+                _self.navigateAndFocusTab(tabId);
+            }
         });
         tabs[index].addEventListener("keydown", function (event) {
             _self.#onKeyDown(event);
