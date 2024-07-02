@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe.skip("Form with Panel Container", () => {
+describe("Form with Panel Container", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/tabsontop/basic.html";
     const childBemBlock = 'cmp-adaptiveform-datepicker';
@@ -119,7 +119,7 @@ describe.skip("Form with Panel Container", () => {
     })
 });
 
-describe.skip("Form with Tabsontop Layout Container with focus", () => {
+describe("Form with Tabsontop Layout Container with focus", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/tabsontop/focus.html";
     let formContainer = null;
@@ -166,7 +166,7 @@ describe.skip("Form with Tabsontop Layout Container with focus", () => {
 
 
 });
-describe.skip("Form with TabsOnTop Layout Container with Hidden Children", () => {
+describe("Form with TabsOnTop Layout Container with Hidden Children", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/tabsontop/visibility.html";
     let formContainer = null
@@ -210,7 +210,7 @@ describe.skip("Form with TabsOnTop Layout Container with Hidden Children", () =>
     });
 });
 
-describe.skip("setFocus of tabs using rules", () => {
+describe("setFocus of tabs using rules", () => {
 
   const pagePath = "content/forms/af/core-components-it/samples/tabsontop/focusWithRule.html";
   let formContainer = null;
@@ -252,7 +252,7 @@ describe.skip("setFocus of tabs using rules", () => {
   });
 });
 
-describe.skip("setFocus on the first invalid field on submission", () => {
+describe("setFocus on the first invalid field on submission", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/tabsontop/setfocus-first-invalid-field.html";
     let formContainer = null;
