@@ -1,0 +1,25 @@
+{
+  "id": "title-c509f1aa61",
+  "fieldType": "plain-text",
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/title-noprops",
+    "fd:format": "h2"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "dataLayer": {
+    "title-c509f1aa61": {
+      "@type": "core/fd/components/form/title/v2/title",
+      "fieldType": "plain-text"
+    }
+  },
+  ":type": "core/fd/components/form/title/v2/title"
+}
+  
+  

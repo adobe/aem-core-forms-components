@@ -1,0 +1,18 @@
+{
+  "id": "title-74a43ce8b5",
+  "fieldType": "plain-text",
+  "value": "Title_custom",
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/title-type",
+    "fd:format": "h3"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":type": "core/fd/components/form/title/v2/title"
+}

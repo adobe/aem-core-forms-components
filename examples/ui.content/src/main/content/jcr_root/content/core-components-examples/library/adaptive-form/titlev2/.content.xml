@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:tags="[]"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
+            jcr:description="Display a page heading"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Title"
+            sling:resourceType="forms-components-examples/components/page">
+        <root
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="wcm/foundation/components/responsivegrid">
+                <text_1740702241
+                        cq:styleIds="[1644862132301]"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core/wcm/components/text/v2/text"
+                        text="&lt;h1>Title&lt;sub>v3&lt;/sub>&lt;/h1>"
+                        textIsRich="true"/>
+                <text
+                        cq:styleIds="[1544762734201]"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core/wcm/components/text/v2/text"
+                        text="&lt;p>In an Adaptive Form, a &quot;title&quot; refers to the text that appears at the top of the form, typically below the header. The title is specified using the Title component. This component can be added to the form layout, and its text can be edited to match the purpose or topic of the form. The title serves as a label or brief description of the form to the user, and it helps to distinguish the form from others.&lt;/p>"
+                        textIsRich="true"/>
+                <teaser
+                        cq:styleIds="[1550165685463]"
+                        jcr:description="&lt;p>GitHub&lt;/p>"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Technical Documentation"
+                        sling:resourceType="core-components-examples/components/teaser"
+                        actionsEnabled="false"
+                        descriptionFromPage="false"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/title/v2/title"
+                        textIsRich="true"
+                        titleFromPage="false"/>
+                <title_865328580
+                        cq:styleIds="[1544759664489]"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Examples"
+                        sling:resourceType="core/fd/components/form/title/v2/title"
+                        format="h2"/>
+                <title_290384408
+                        cq:styleIds="[1544759676459]"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Standard"
+                        sling:resourceType="core/fd/components/form/title/v2/title"
+                        format="h3"/>
+                <text_1337506761
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core/wcm/components/text/v2/text"
+                        text="&lt;p>Default title without any configuration.&lt;/p>"
+                        textIsRich="true"/>
+                <demo
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="forms-components-examples/components/demo">
+                    <component
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="forms-components-examples/components/demo/component">
+                            <guideContainer
+                              fd:version="2.1"
+                              fieldType="form"
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="forms-components-examples/components/form/container">
+                                <container
+                                  jcr:primaryType="nt:unstructured"
+                                  sling:resourceType="forms-components-examples/components/demo/component">
+                                    <title
+                                      jcr:title="Lorem Ipsum"
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="core/fd/components/form/title/v2/title"/>
+                                </container>
+                            </guideContainer>
+                    </component>
+                    <info
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/tabs">
+                        <properties
+                                cq:panelTitle="Properties"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="core-components-examples/components/demo/properties"
+                                reference="../../component/guideContainer/container"/>
+                        <markup
+                                cq:panelTitle="Markup"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="core-components-examples/components/demo/markup"
+                                reference="../../component/guideContainer/container"/>
+                        <json
+                                cq:panelTitle="JSON"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="core-components-examples/components/demo/json"
+                                reference="../../component/guideContainer/container"/>
+                    </info>
+                </demo>
+            </responsivegrid>
+        </root>
+        <image jcr:primaryType="nt:unstructured">
+            <file/>
+        </image>
+    </jcr:content>
+</jcr:root>

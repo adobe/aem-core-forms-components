@@ -1,0 +1,27 @@
+{
+    "title" : {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Title",
+        "fieldType": "plain-text",
+        "sling:resourceType": "core/fd/components/form/title/v2/title"
+    },
+    "title-type" : {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Title_custom",
+        "format": "h3",
+        "fieldType": "plain-text",
+        "sling:resourceType": "core/fd/components/form/title/v2/title"
+    },
+    "title-wrongtype" : {
+        "jcr:primaryType" : "nt:unstructured",
+        "format" : "section",
+        "fieldType": "plain-text",
+        "sling:resourceType": "core/fd/components/form/title/v2/title"
+    },
+    "title-noprops" : {
+        "jcr:primaryType"   : "nt:unstructured",
+        "format": "h2",
+        "fieldType": "plain-text",
+        "sling:resourceType": "core/fd/components/form/title/v2/title"
+    }
+}

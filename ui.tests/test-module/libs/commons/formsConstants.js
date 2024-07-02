@@ -49,6 +49,7 @@ var formsConstants = {
                 "fragmentcontainer": "/apps/forms-components-examples/components/form/fragmentcontainer",
                 "termsandconditions": "/apps/forms-components-examples/components/form/termsandconditions",
                 "submitButton": "/apps/forms-components-examples/components/form/actions/submit",
+                "titlev2": "/apps/forms-components-examples/components/form/titlev2",
             }
         },
         resourceType : {

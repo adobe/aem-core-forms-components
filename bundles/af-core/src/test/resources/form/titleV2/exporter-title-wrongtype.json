@@ -1,0 +1,18 @@
+{
+  "id": "title-4a1ad605c0",
+  "fieldType": "plain-text",
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/title-wrongtype",
+    "fd:format": null
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":type": "core/fd/components/form/title/v2/title"
+}
+  
