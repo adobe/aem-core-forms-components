@@ -65,7 +65,7 @@ describe('Page - Authoring', function () {
         cy.get("[name='./hideTitle']").should("exist");
         cy.get("[name='./placeholder']").should("exist");
         cy.get("[name='./default']").should("exist");
-        cy.get('.cq-dialog-cancel').click();
+        cy.get('.cq-dialog-cancel').should('be.visible').click();
         cy.deleteComponentByPath(datePickerDrop);
     }
 

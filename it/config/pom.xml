@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>3.0.41-SNAPSHOT</version>
+        <version>1.1.41-SNAPSHOT</version>
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -154,6 +154,79 @@
                                 <configuration>
                                     <targetURL>${quickstart.publish.url}/crx/packmgr/service.jsp</targetURL>
                                     <failOnError>true</failOnError>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>disable-toggle</id>
+            <activation>
+                <property>
+                    <name>disableToggle</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- Create a copy of the original file in the target directory -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-feature-toggle-file</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/jcr_root</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/main/content/jcr_root</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.google.code.maven-replacer-plugin</groupId>
+                        <artifactId>replacer</artifactId>
+                        <version>1.5.3</version>
+                        <executions>
+                            <execution>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>replace</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <file>${project.build.directory}/jcr_root/apps/system/config/com.adobe.granite.toggle.impl.dev.DynamicToggleProviderImpl.cfg.json</file> <!-- Update with the correct path -->
+                            <replacements>
+                                <replacement>
+                                    <token><![CDATA["enabledToggles":[\s\S]*?]]]></token>
+                                    <value><![CDATA["enabledToggles": []]]></value>
+                                </replacement>
+                            </replacements>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.jackrabbit</groupId>
+                        <artifactId>filevault-package-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>package-disable-ft</id>
+                                <goals>
+                                    <goal>package</goal>
+                                </goals>
+                                <configuration>
+                                    <jcrRootSourceDirectory>${project.build.directory}/jcr_root</jcrRootSourceDirectory>
                                 </configuration>
                             </execution>
                         </executions>

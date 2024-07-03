@@ -97,6 +97,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TITLE)
     @Nullable
+    private String themeClientLibRef;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
     private String title;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_REDIRECT)
@@ -173,6 +177,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     public String getClientLibRef() {
         return clientLibRef;
+    }
+
+    @Override
+    @Nullable
+    public String getThemeClientLibRef() {
+        return themeClientLibRef;
     }
 
     @Override
