@@ -120,6 +120,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    if (err.message.includes("Missing required parameters: sitekey")) {
+        return false;
+    }
+
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;

@@ -95,7 +95,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     protected String contextPath = StringUtils.EMPTY;
     private boolean formDataEnabled = false;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TITLE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String themeClientLibRef;
 

@@ -41,11 +41,9 @@ describe("Form Runtime with Recaptcha Input", () => {
 
     // render the form with captcha, we have whitelisted the "Missing required parameters: sitekey" error
     beforeEach(() => {
-        if (toggle_array.includes(FT_CLOUD_CONFIG_PROVIDER)) {
-            cy.previewForm(pagePath).then((p) => {
-                formContainer = p;
-            });
-        }
+        cy.previewForm(pagePath).then((p) => {
+            formContainer = p;
+        });
     });
 
     const checkHTML = (id, state) => {
@@ -54,12 +52,12 @@ describe("Form Runtime with Recaptcha Input", () => {
         const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
         const value = state.value
         cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
+        .should(passVisibleCheck)
+        .invoke('attr', 'data-cmp-visible')
+        .should('eq', visible.toString());
         cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
+        .invoke('attr', 'data-cmp-enabled')
+        .should('eq', state.enabled.toString());
         return cy.get(`#${id}`).within((root) => {
             cy.get('*').should(passVisibleCheck)
         })
