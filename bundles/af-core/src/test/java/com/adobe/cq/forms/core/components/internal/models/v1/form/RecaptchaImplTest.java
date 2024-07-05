@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
-import com.adobe.aemds.guide.model.HCaptchaConfiguration;
 import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
@@ -52,11 +51,6 @@ public class RecaptchaImplTest {
         @Override
         public ReCaptchaConfigurationModel getRecaptchaCloudConfiguration(Resource resource) throws GuideException {
             return reCaptchaConfiguration;
-        }
-
-        @Override
-        public HCaptchaConfiguration getHCaptchaCloudConfiguration(Resource resource) throws GuideException {
-            return null;
         }
     };
 

@@ -438,6 +438,7 @@ workflows:
               only: /.*/
           requires:
             - build-java-11
+            - build-java-8
       - jsdocs-deploy:
           requires:
             - build-java-11
