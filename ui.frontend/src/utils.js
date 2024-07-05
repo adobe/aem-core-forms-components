@@ -311,6 +311,7 @@ class Utils {
                 console.debug("fetched model json", _formJson);
                 await this.registerCustomFunctions(_formJson.id);
                 await this.registerCustomFunctionsByUrl(customFunctionUrl);
+                await this.registerCodeEditorCustomFunction();
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
@@ -383,6 +384,40 @@ class Utils {
             let regex = "^((?!chrome|android).)*" + agentName;
             const re = new RegExp(regex, 'i');
             return re.test(navigator.userAgent);
+        }
+    }
+    static async registerCodeEditorCustomFunction() {
+        let owner="deepprakash345";
+        let repo="xwalktest";
+        let url= " https://api.github.com/repos/"+owner+"/"+repo+"/contents/functions.js";
+        try {
+            const response = await fetch(url,{
+                headers :{
+                    'Authorization': "Bearer "
+                }
+            });
+            const code = await response.text();
+            const parsedCode = JSON.parse(code);
+            const codeContent = atob(parsedCode.content);
+
+            const blob = new Blob([codeContent], { type: 'text/javascript' })
+            const bloburl = await URL.createObjectURL(blob)
+            const customFunctionModule = await import(/*webpackIgnore: true*/ bloburl)
+
+
+            const keys = Object.keys(customFunctionModule);
+            const functions = [];
+            for (const name of keys) {
+                const funcDef = customFunctionModule[name];
+                if (typeof funcDef === 'function') {
+                    functions[name] = funcDef;
+                }
+            }
+            FunctionRuntime.registerFunctions(functions);
+        } catch (e) {
+            if(window.console){
+                console.error("error in loading custom functions from url "+url+" with message "+e.message);
+            }
         }
     }
 }
