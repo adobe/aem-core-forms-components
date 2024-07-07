@@ -263,19 +263,46 @@ describe("setFocus on the first invalid field on submission", () => {
     });
 
     it("check if invalid field gets focus on submit button click", () => {
-        cy.get('button').last().should('be.visible').click().then(() => {
+        cy.get('button').should('be.visible').click().then(() => {
             cy.get('#textinput-5e96ac215d').invoke('attr','data-cmp-valid').should('equal', 'false');
             cy.get('#textinput-5e96ac215d').invoke('attr','data-cmp-active').should('equal', 'true');
             cy.get('#textinput-5e96ac215d-widget').should('be.focused');
 
             cy.get('#textinput-5e96ac215d-widget').type("abc").blur().then(() => {
-                cy.get('button').last().click().then(() => {
+                cy.get('button').click().then(() => {
                     cy.get('#numberinput-2eb1840996').invoke('attr','data-cmp-valid').should('equal', 'false');
                     cy.get('#numberinput-2eb1840996').invoke('attr','data-cmp-active').should('equal', 'true');
                     cy.get('#numberinput-2eb1840996-widget').should('be.focused');
                 })
             })
 
+        });
+    });
+
+});
+
+describe("date picker calendar icon pop up inside tabs", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/tabsontop/datepicker.html";
+    let formContainer = null;
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    const tabSelector = 'ol li';
+    const lastTab = () => {
+        return cy.get(tabSelector).last();
+    }
+
+    it(" should be visible on first click ", () => {
+        lastTab().click().then(() => {
+            // check if first click on date picker calendar opens the pope
+            cy.get('#datepicker-3a195924d8').find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+                cy.get(".dp-clear").should("be.visible");
+            });
         });
     });
 });

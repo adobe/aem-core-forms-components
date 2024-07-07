@@ -295,7 +295,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
     const checkAddRemoveButton = (instanceManager, count, buttonId) => {
         let resolution = undefined;
         const promise = new Cypress.Promise((resolve, reject) => {resolution = resolve;});
-        cy.get(`#${buttonId}-widget`).click().then(() => {
+        cy.get(`#${buttonId} button`).click().then(() => {
             const e = checkInstanceHTML(instanceManager, count);
             resolution(e);
         });
@@ -616,7 +616,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                                     expect(result.data.data).to.equal(JSON.stringify(outputData));
                                 });
                                 //check reset button
-                                cy.get(`#${resetButtonId}-widget`).click().then(() => {
+                                cy.get(`#${resetButtonId} button`).click().then(() => {
 
                                     //check instances with min occur
                                     checkInstanceHTML(witnessIM, 2);
