@@ -46,16 +46,16 @@ describe("Form Runtime with Custom Text Input", () => {
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
         const value = state.value == null ? '' : state.value;
         cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
+        .should(passVisibleCheck)
+        .invoke('attr', 'data-cmp-visible')
+        .should('eq', visible.toString());
         cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
+        .invoke('attr', 'data-cmp-enabled')
+        .should('eq', state.enabled.toString());
         return cy.get(`#${id}`).within((root) => {
             cy.get('*').should(passVisibleCheck)
             cy.get('input')
-                .should(passDisabledAttributeCheck, 'disabled');
+            .should(passDisabledAttributeCheck, 'disabled');
             cy.get('input').should('have.value', value)
         })
     }

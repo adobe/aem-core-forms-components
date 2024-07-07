@@ -398,8 +398,8 @@ class FormFieldBase extends FormField {
      * @private
      */
     #showHideLongDescriptionDiv(show) {
-        if (this.description) {
-            this.toggleAttribute(this.description, show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+        if (this.getDescription()) {
+            this.toggleAttribute(this.getDescription(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
         }
     }
 
@@ -604,24 +604,43 @@ class FormFieldBase extends FormField {
 
     /**
      * Updates the HTML state based on the description state of the field.
-     * @param {string} description - The description.
+     * @param {string} descriptionText - The description.
      */
-    updateDescription(description) {
-        if (this.description) {
-            if (description) {
-                if (!this.description.querySelector("p")) {
+    updateDescription(descriptionText) {
+        if (descriptionText !== undefined) {
+            if (this.getDescription()) {
+                if (!this.getDescription().querySelector("p")) {
                     // If the description is updated via rule then it might not have <p> tags
-                    this.description.appendChild(document.createElement('p'));
+                    this.getDescription().appendChild(document.createElement('p'));
                 }
-                this.description.querySelector("p").innerHTML = description;
-                const questionMarkDiv = this.getQuestionMarkDiv();
-                 if (questionMarkDiv) {
-                     questionMarkDiv.style.display = "block";
-                 }
+            } else {
+                this.#addDescriptionInRuntime();
             }
-        } else {
-            //TODO: handle the case when description is not present initially.
+            this.getDescription().querySelector("p").innerHTML = descriptionText;
         }
+    }
+
+    #addDescriptionInRuntime() {
+        console.log('adding description in runtime')
+        // add question mark icon
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+        const qmButton = document.createElement('button');
+        qmButton.className = `${bemClass}__questionmark`;
+        qmButton.title = 'Help text';
+        this.element.querySelector(`.${bemClass}__label-container`).appendChild(qmButton);
+
+        // add description div
+        const descriptionDiv = document.createElement('div');
+        descriptionDiv.className = `${bemClass}__longdescription`;
+        descriptionDiv.id = `${this.getId()}__longdescription`;
+        descriptionDiv.setAttribute('aria-live', 'polite');
+        descriptionDiv.setAttribute('data-cmp-visible', false);
+        descriptionDiv.appendChild(document.createElement('p'))
+        var errorDiv = this.getErrorDiv();
+        this.element.insertBefore(descriptionDiv, errorDiv);
+
+        // attach event handler for question mark icon
+        this.#addHelpIconHandler();
     }
 
 
@@ -633,8 +652,8 @@ class FormFieldBase extends FormField {
      * @private
      */
     #addHelpIconHandler(state) {
-        const questionMarkDiv = this.qm,
-            descriptionDiv = this.description,
+        const questionMarkDiv = this.getQuestionMarkDiv(),
+            descriptionDiv = this.getDescription(),
             tooltipAlwaysVisible = this.#isTooltipAlwaysVisible();
         const self = this;
         if (questionMarkDiv && descriptionDiv) {

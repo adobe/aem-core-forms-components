@@ -36,23 +36,23 @@ describe("Form with Dropdown", () => {
         const passDisabledAttributeCheck = `${state.enabled === false || state.readOnly === true ? "" : "not."}have.attr`;
         const value = state.value;
         cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
+        .should(passVisibleCheck)
+        .invoke('attr', 'data-cmp-visible')
+        .should('eq', visible.toString());
         cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
+        .invoke('attr', 'data-cmp-enabled')
+        .should('eq', state.enabled.toString());
         return cy.get(`#${id}`).within((root) => {
             if(isMultiSelect) {
                 cy.get("select")
-                    .should(passVisibleCheck)
-                    .find(':selected').each((option) => {
-                        expect(parseInt(option.val())).to.be.oneOf(value);
+                .should(passVisibleCheck)
+                .find(':selected').each((option) => {
+                    expect(parseInt(option.val())).to.be.oneOf(value);
                 });
             } else {
                 cy.get("select")
-                    .should(passVisibleCheck)
-                    .find(':selected').should("have.value", value)
+                .should(passVisibleCheck)
+                .find(':selected').should("have.value", value)
             }
         })
     }
@@ -214,16 +214,16 @@ describe("Form with Dropdown", () => {
     })
 
     it("should add filled/empty class at container div", () => {
-      const id = formContainer?._model?._children[9]?._jsonModel?.id;
-      const model = formContainer._model.getElement(id);
-      cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-dropdown--empty');
-      cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
-      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
-      cy.get(`#${id} select`).select("Item 1").then(x => {
-          expect(model.value).to.equal('1');
-          cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-dropdown--filled');
-      });
-  });
+        const id = formContainer?._model?._children[9]?._jsonModel?.id;
+        const model = formContainer._model.getElement(id);
+        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-dropdown--empty');
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+        cy.get(`#${id} select`).select("Item 1").then(x => {
+            expect(model.value).to.equal('1');
+            cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-dropdown--filled');
+        });
+    });
 
     it("should have empty placeholder checked when default option is not configured", () => {
         const [idDropdown, fieldView1] = Object.entries(formContainer._fields)[9];

@@ -31,7 +31,7 @@ describe("Form Runtime with Text Input", () => {
     let toggle_array = [];
 
     beforeEach(() => {
-         if (Cypress.mocha.getRunner().suite.ctx.currentTest.title  !== "should show different localised default error messages on different constraints") {
+        if (Cypress.mocha.getRunner().suite.ctx.currentTest.title  !== "should show different localised default error messages on different constraints") {
             cy.previewForm(pagePath).then(p => {
                 formContainer = p;
             })
@@ -49,16 +49,16 @@ describe("Form Runtime with Text Input", () => {
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
         const value = state.value == null ? '' : state.value;
         cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
+        .should(passVisibleCheck)
+        .invoke('attr', 'data-cmp-visible')
+        .should('eq', visible.toString());
         cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
+        .invoke('attr', 'data-cmp-enabled')
+        .should('eq', state.enabled.toString());
         return cy.get(`#${id}`).within((root) => {
             cy.get('*').should(passVisibleCheck)
             cy.get('input')
-                .should(passDisabledAttributeCheck, 'disabled');
+            .should(passDisabledAttributeCheck, 'disabled');
             cy.get('input').should('have.value', value)
         })
     }
@@ -278,11 +278,11 @@ describe("Form Runtime with Text Input", () => {
         const [textbox9, textBox9FieldView] = Object.entries(formContainer._fields)[8];
         const [textbox10, textBox10FieldView] = Object.entries(formContainer._fields)[9];
         cy.get(`#${textbox9}`).find("input")
-            .invoke('attr', 'autocomplete')
-            .should("eq", "off");
+        .invoke('attr', 'autocomplete')
+        .should("eq", "off");
         cy.get(`#${textbox10}`).find("input")
-            .invoke('attr', 'autocomplete')
-            .should("eq", "given-name");
+        .invoke('attr', 'autocomplete')
+        .should("eq", "given-name");
     })
 
     it(" should support display value expression", () => {
@@ -325,41 +325,40 @@ describe("Form Runtime with Text Input For Different locale", () => {
 
 describe("setFocus on text field via rules", () => {
 
-  const pagePath = "content/forms/af/core-components-it/samples/textinput/focus.html"
-  let formContainer = null
+    const pagePath = "content/forms/af/core-components-it/samples/textinput/focus.html"
+    let formContainer = null
 
-  beforeEach(() => {
-    cy.previewForm(pagePath).then(p => {
-        formContainer = p;
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("should focus text field when click on radio button", () => {
+        const [textField] = Object.entries(formContainer._fields)[0];
+        const [radioButton] = Object.entries(formContainer._fields)[1];
+
+        cy.get(`#${textField}`).find("input").should('not.have.focus');
+
+        cy.get(`#${radioButton}`).find("input").eq(0).click().then(x => {
+            cy.get(`#${textField}`).find("input").should('have.focus');
+
+            cy.get(`#${radioButton}`).find("input").eq(1).click().then(x => {
+                cy.get(`#${textField}`).find("input").should('have.focus');
+            });
+        });
     })
-  });
 
-  it("should focus text field when click on radio button", () => {
-    const [textField] = Object.entries(formContainer._fields)[0];
-    const [radioButton] = Object.entries(formContainer._fields)[1];
-
-    cy.get(`#${textField}`).find("input").should('not.have.focus');
-
-    cy.get(`#${radioButton}`).find("input").eq(0).click().then(x => {
-      cy.get(`#${textField}`).find("input").should('have.focus');
-
-      cy.get(`#${radioButton}`).find("input").eq(1).click().then(x => {
-        cy.get(`#${textField}`).find("input").should('have.focus');
-      });
+    it(" should add filled/empty class at container div ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        const input = "value";
+        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-textinput--empty');
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+        cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
+            expect(model.getState().value).to.equal(input);
+            cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-textinput--filled');
+        });
     });
-  })
-
-  it(" should add filled/empty class at container div ", () => {
-    const [id, fieldView] = Object.entries(formContainer._fields)[0]
-    const model = formContainer._model.getElement(id)
-    const input = "value";
-    cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-textinput--empty');
-    cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
-      cy.get(`#${id}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
-    cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
-        expect(model.getState().value).to.equal(input);
-        cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-textinput--filled');
-    });
-  });
 })
-

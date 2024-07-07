@@ -1,4 +1,4 @@
 <template data-sly-template.questionMark="${@ componentId, longDescription, bemBlock}">
-  <button class="${bemBlock}__questionmark" style="${longDescription ? '' : 'display:none;'} title="Help text">
+  <button class="${bemBlock}__questionmark" data-sly-test="${longDescription}" title="Help text">
   </button>
 </template>

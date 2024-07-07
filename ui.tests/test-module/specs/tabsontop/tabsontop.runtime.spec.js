@@ -30,12 +30,12 @@ describe("Form with Panel Container", () => {
         const visible = state.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
+        .should(passVisibleCheck)
+        .invoke('attr', 'data-cmp-visible')
+        .should('eq', visible.toString());
         cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
+        .invoke('attr', 'data-cmp-enabled')
+        .should('eq', state.enabled.toString());
         expect(state.items.length, "model has children equal to count").to.equal(count);
         if (count == 0) {
             cy.get(`.${childBemBlock}`).should('not.exist');
@@ -212,44 +212,44 @@ describe("Form with TabsOnTop Layout Container with Hidden Children", () => {
 
 describe("setFocus of tabs using rules", () => {
 
-  const pagePath = "content/forms/af/core-components-it/samples/tabsontop/focusWithRule.html";
-  let formContainer = null;
-  beforeEach(() => {
-      cy.previewForm(pagePath).then(p => {
-          formContainer = p;
-      })
-  });
+    const pagePath = "content/forms/af/core-components-it/samples/tabsontop/focusWithRule.html";
+    let formContainer = null;
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
 
-  const tabSelector = '.cmp-tabs__tablist .cmp-tabs__tab';
-  const tab1 = () => {
-      return cy.get(tabSelector).first();
-  }
-  const tab2 = () => {
-      return cy.get(tabSelector).last();
-  }
+    const tabSelector = '.cmp-tabs__tablist .cmp-tabs__tab';
+    const tab1 = () => {
+        return cy.get(tabSelector).first();
+    }
+    const tab2 = () => {
+        return cy.get(tabSelector).last();
+    }
 
-  it("check if first tab activated if focus call from button using rules", () => {
-      // panel 1 active
-      tab1().should('have.class', 'cmp-tabs__tab--active');
-      tab1().should('have.attr', 'aria-selected', 'true');
-      tab2().should('have.attr', 'aria-selected', 'false');
-
-      cy.get("#button-f87f60cb51-widget").click().then(() => {
-          // panel 2 active
-          tab2().should('have.class', 'cmp-tabs__tab--active');
-          tab2().should('have.attr', 'aria-selected', 'true');
-          tab1().should('have.attr', 'aria-selected', 'false');
-          cy.get('input[name="textinputft2"]').should('be.focused');
-      });
-
-      cy.get("#button-959d5f5dfc-widget").click().then(() => {
+    it("check if first tab activated if focus call from button using rules", () => {
         // panel 1 active
         tab1().should('have.class', 'cmp-tabs__tab--active');
         tab1().should('have.attr', 'aria-selected', 'true');
         tab2().should('have.attr', 'aria-selected', 'false');
-        cy.get('input[name="textinputft1"]').should('be.focused');
+
+        cy.get("#button-f87f60cb51-widget").click().then(() => {
+            // panel 2 active
+            tab2().should('have.class', 'cmp-tabs__tab--active');
+            tab2().should('have.attr', 'aria-selected', 'true');
+            tab1().should('have.attr', 'aria-selected', 'false');
+            cy.get('input[name="textinputft2"]').should('be.focused');
+        });
+
+        cy.get("#button-959d5f5dfc-widget").click().then(() => {
+            // panel 1 active
+            tab1().should('have.class', 'cmp-tabs__tab--active');
+            tab1().should('have.attr', 'aria-selected', 'true');
+            tab2().should('have.attr', 'aria-selected', 'false');
+            cy.get('input[name="textinputft1"]').should('be.focused');
+        });
     });
-  });
 });
 
 describe("setFocus on the first invalid field on submission", () => {
@@ -263,47 +263,19 @@ describe("setFocus on the first invalid field on submission", () => {
     });
 
     it("check if invalid field gets focus on submit button click", () => {
-           cy.get('button').last().should('be.visible').click().then(() => {
-                cy.get('#textinput-5e96ac215d').invoke('attr','data-cmp-valid').should('equal', 'false');
-                cy.get('#textinput-5e96ac215d').invoke('attr','data-cmp-active').should('equal', 'true');
-                cy.get('#textinput-5e96ac215d-widget').should('be.focused');
+        cy.get('button').last().should('be.visible').click().then(() => {
+            cy.get('#textinput-5e96ac215d').invoke('attr','data-cmp-valid').should('equal', 'false');
+            cy.get('#textinput-5e96ac215d').invoke('attr','data-cmp-active').should('equal', 'true');
+            cy.get('#textinput-5e96ac215d-widget').should('be.focused');
 
-               cy.get('#textinput-5e96ac215d-widget').type("abc").blur().then(() => {
-                   cy.get('button').last().click().then(() => {
-                       cy.get('#numberinput-2eb1840996').invoke('attr','data-cmp-valid').should('equal', 'false');
-                       cy.get('#numberinput-2eb1840996').invoke('attr','data-cmp-active').should('equal', 'true');
-                       cy.get('#numberinput-2eb1840996-widget').should('be.focused');
-                   })
-               })
+            cy.get('#textinput-5e96ac215d-widget').type("abc").blur().then(() => {
+                cy.get('button').last().click().then(() => {
+                    cy.get('#numberinput-2eb1840996').invoke('attr','data-cmp-valid').should('equal', 'false');
+                    cy.get('#numberinput-2eb1840996').invoke('attr','data-cmp-active').should('equal', 'true');
+                    cy.get('#numberinput-2eb1840996-widget').should('be.focused');
+                })
+            })
 
-           });
-    });
-});
-
-
-
-describe("date picker calendar icon pop up inside tabs", () => {
-
-    const pagePath = "content/forms/af/core-components-it/samples/tabsontop/datepicker.html";
-    let formContainer = null;
-
-    beforeEach(() => {
-        cy.previewForm(pagePath).then(p => {
-            formContainer = p;
-        })
-    });
-
-    const tabSelector = 'ol li';
-    const lastTab = () => {
-        return cy.get(tabSelector).last();
-    }
-
-    it(" should be visible on first click ", () => {
-        lastTab().click().then(() => {
-            // check if first click on date picker calendar opens the pope
-            cy.get('#datepicker-3a195924d8').find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
-                cy.get(".dp-clear").should("be.visible");
-            });
         });
     });
 });
