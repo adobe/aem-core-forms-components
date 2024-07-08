@@ -25,10 +25,14 @@
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <version>1.1.49-SNAPSHOT</version>
 =======
         <version>3.0.42</version>
 >>>>>>> 052a966d2 (@releng [maven-scm] :prepare release core-forms-components-reactor-3.0.42)
+=======
+        <version>3.0.43-SNAPSHOT</version>
+>>>>>>> 34042bd0e (@releng [maven-scm] :prepare for next development iteration)
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
