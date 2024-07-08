@@ -24,6 +24,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <version>1.1.49-SNAPSHOT</version>
 =======
         <version>3.0.42</version>
@@ -34,6 +35,9 @@
 =======
         <version>3.0.44</version>
 >>>>>>> 3b0194781 (@releng [maven-scm] :prepare release core-forms-components-reactor-3.0.44)
+=======
+        <version>3.0.45-SNAPSHOT</version>
+>>>>>>> b9ea4504d (@releng [maven-scm] :prepare for next development iteration)
         <relativePath>parent/pom.xml</relativePath>
     </parent>
 
@@ -89,7 +93,7 @@
         <connection>scm:git:https://github.com/adobe/aem-core-forms-components</connection>
         <developerConnection>scm:git:git@github.com:adobe/aem-core-forms-components.git</developerConnection>
         <url>https://github.com/adobe/aem-core-forms-components</url>
-        <tag>core-forms-components-reactor-3.0.44</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
