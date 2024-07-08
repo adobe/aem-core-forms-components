@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright 2020 Adobe. All rights reserved.
@@ -19,10 +19,14 @@
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <version>1.1.47-SNAPSHOT</version>
 =======
         <version>3.0.42</version>
 >>>>>>> 052a966d2 (@releng [maven-scm] :prepare release core-forms-components-reactor-3.0.42)
+=======
+        <version>3.0.43-SNAPSHOT</version>
+>>>>>>> 34042bd0e (@releng [maven-scm] :prepare for next development iteration)
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -36,7 +40,7 @@
         <connection>scm:git:https://github.com/adobe/aem-core-forms-components</connection>
         <developerConnection>scm:git:git@github.com:adobe/aem-core-forms-components.git</developerConnection>
         <url>https://github.com/adobe/aem-core-forms-components</url>
-        <tag>core-forms-components-reactor-3.0.42</tag>
+        <tag>HEAD</tag>
     </scm>
     <organization>
         <name>Adobe</name>
