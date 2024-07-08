@@ -56,7 +56,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     /**
      * Function to retrieve enum values and enum names paired together
-     * 
+     *
      * @return map containing enum values and enum names as key-value pairs
      */
     private Map<Object, String> getEnumPairs() {
@@ -106,7 +106,11 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
                 .map(p -> {
-                    return this.translate("enumNames", p);
+                    String value = this.translate("enumNames", p);
+                    if (value == null) {
+                        value = "";
+                    }
+                    return value;
                 })
                 .toArray(String[]::new);
         }

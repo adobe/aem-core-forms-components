@@ -17,10 +17,12 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -61,9 +63,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
@@ -277,6 +282,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         Map<String, Object> rulesProperties = getRulesProperties();
         if (rulesProperties.size() > 0) {
             properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
+        }
+        List<String> disabledScripts = getDisabledXFAScripts();
+        if (disabledScripts.size() > 0) {
+            properties.put("fd:disabledXfaScripts", disabledScripts);
         }
         return properties;
     }
@@ -505,5 +514,26 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             customDorProperties.put("dorBindRef", dorBindRef);
         }
         return customDorProperties;
+    }
+
+    private List<String> getDisabledXFAScripts() {
+        Set<String> disabledScripts = new HashSet<>();
+        String xfaScripts = resource.getValueMap().get("fd:xfaScripts", "");
+        if (StringUtils.isNotEmpty(xfaScripts)) {
+            // read string xfaScripts to jsonNode
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                ArrayNode node = (ArrayNode) mapper.readTree(xfaScripts);
+                // iterate through the array node and add the elements which have disabled property set to true
+                for (JsonNode jsonNode : node) {
+                    if (jsonNode.has("disabled") && jsonNode.get("disabled").asBoolean()) {
+                        disabledScripts.add(jsonNode.get("activity").asText());
+                    }
+                }
+            } catch (IOException e) {
+                logger.error("Error while parsing xfaScripts {} {}", e, resource.getPath());
+            }
+        }
+        return new ArrayList<>(disabledScripts);
     }
 }
