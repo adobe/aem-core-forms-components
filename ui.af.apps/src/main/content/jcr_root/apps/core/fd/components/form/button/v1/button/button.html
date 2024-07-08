@@ -23,8 +23,8 @@
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
 <div class="cmp-adaptiveform-button"
      id="${button.id}"
-     data-cmp-visible="${button.visible}"
-     data-cmp-enabled="${button.enabled}"
+     data-cmp-visible="${button.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${button.enabled ? 'true' : 'false'}"
      data-cmp-is="adaptiveFormButton"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
   <div class="cmp-adaptiveform-button__help-container">
