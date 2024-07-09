@@ -1,7 +1,7 @@
 {
   "fileinput" : {
     "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/fileinput/v1/fileinput",
+    "sling:resourceType"    : "core/fd/components/form/fileinput/v3/fileinput",
     "name" : "abc",
     "jcr:title" : "def",
     "buttonText" : "Attach",
@@ -15,7 +15,7 @@
   },
   "fileinput-customized" : {
     "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/fileinput/v1/fileinput",
+    "sling:resourceType"    : "core/fd/components/form/fileinput/v3/fileinput",
     "name" : "abc",
     "jcr:title" : "def",
     "hideTitle" : false,
@@ -35,7 +35,7 @@
   },
   "multiselect-fileinput" : {
     "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/fileinput/v1/fileinput",
+    "sling:resourceType"    : "core/fd/components/form/fileinput/v3/fileinput",
     "fieldType": "file-input",
     "name" : "abc",
     "jcr:title" : "def",
@@ -50,12 +50,12 @@
     "multiSelection" : true,
     "minItems" : 1,
     "maxItems" : 2,
-    "maxFileSize" : "4096",
+    "maxFileSize" : "4",
     "accept" : ["text/*", "application/pdf"]
   },
   "fileinput-datalayer": {
     "id": "fileinput-90881b3d31",
-    "sling:resourceType": "core/fd/components/form/fileinput/v1/fileinput",
+    "sling:resourceType": "core/fd/components/form/fileinput/v3/fileinput",
     "fieldType": "file-input",
     "description": "Upload your CV",
     "jcr:title" : "CV",
@@ -85,7 +85,7 @@
   },
   "multiselect-fileinput-withNoType": {
     "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/fileinput/v1/fileinput",
+    "sling:resourceType"    : "core/fd/components/form/fileinput/v3/fileinput",
     "fieldType": "file-input",
     "name" : "abc",
     "jcr:title" : "def",
