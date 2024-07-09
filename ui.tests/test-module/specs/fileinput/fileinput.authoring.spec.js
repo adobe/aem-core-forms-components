@@ -53,7 +53,7 @@ describe('Page - Authoring', function () {
     .should("exist");
     cy.get("[name='./accept']")
     .should("exist");
-    cy.get("[name='./dragDropText']").should("exist");
+    cy.get("[name='./fd:dragDropText']").should("exist");
     cy.contains("Validation").should("exist");
 
     // Checking some dynamic behaviours
