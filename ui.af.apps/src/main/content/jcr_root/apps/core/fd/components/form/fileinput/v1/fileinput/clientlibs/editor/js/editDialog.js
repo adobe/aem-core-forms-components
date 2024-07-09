@@ -17,22 +17,11 @@
     "use strict";
     let EDIT_DIALOG = ".cmp-adaptiveform-fileinput__editdialog",
         FILEINPUT_MULTISELECTION = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__multiselection",
-        FILEINPUT_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__type",
         FILEINPUT_MINITEMS = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__minimumFiles",
         FILEINPUT_MINITEMS_ERRMSG = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__minimumFilesMessage",
         FILEINPUT_MAXITEMS = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__maximumFiles",
         FILEINPUT_MAXITEMS_ERRMSG = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__maximumFilesMessage",
     Utils = window.CQ.FormsCoreComponents.Utils.v1;
-
-
-    function changeTypeProperty(component, fileinputType){
-        if (component.checked){
-            fileinputType.attributes.value.value="file[]";
-        }
-        else {
-            fileinputType.attributes.value.value="file";
-        }
-    }
 
     /**
      * Toggles the addition of multi selection, value of type on the checked state of
@@ -41,7 +30,6 @@
      */
     function handleMultiSelection(dialog) {
         let component = dialog.find(FILEINPUT_MULTISELECTION)[0];
-        let fileinputType=dialog.find(FILEINPUT_TYPE)[0];
         let fileinputMinItems=dialog.find(FILEINPUT_MINITEMS);
         let fileinputMinItemsMessage = dialog.find(FILEINPUT_MINITEMS_ERRMSG);
         let fileinputMaxItems=dialog.find(FILEINPUT_MAXITEMS);
@@ -56,9 +44,7 @@
         hideAndShowElements();
         component.on("change", function() {
             hideAndShowElements();
-            changeTypeProperty(component, fileinputType);
         });
-        changeTypeProperty(component, fileinputType);
     }
     Utils.initializeEditDialog(EDIT_DIALOG)(handleMultiSelection);
 

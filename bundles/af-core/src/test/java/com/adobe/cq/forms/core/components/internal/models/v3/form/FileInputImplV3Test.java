@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2022 Adobe
+ ~ Copyright 2024 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.internal.models.v2.form;
+package com.adobe.cq.forms.core.components.internal.models.v3.form;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -50,8 +50,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 @ExtendWith(AemContextExtension.class)
-public class FileInputImplV2Test {
-    private static final String BASE = "/form/fileinputv2";
+public class FileInputImplV3Test {
+    private static final String BASE = "/form/fileinputv3";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_FILEINPUT_CUSTOMIZED = CONTENT_ROOT + "/fileinput-customized";
 
@@ -70,7 +70,7 @@ public class FileInputImplV2Test {
     @Test
     void testExportedType() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
-        assertEquals(FormConstants.RT_FD_FORM_FILE_INPUT_V2, fileInput.getExportedType());
+        assertEquals(FormConstants.RT_FD_FORM_FILE_INPUT_V3, fileInput.getExportedType());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getExportedType()).thenCallRealMethod();
         assertEquals("", fileInputMock.getExportedType());
@@ -388,7 +388,7 @@ public class FileInputImplV2Test {
         FormComponentData dataObject = (FormComponentData) fileInput.getData();
         assert (dataObject != null);
         assert (dataObject.getId()).equals("fileinput-90881b3d31");
-        assert (dataObject.getType()).equals("core/fd/components/form/fileinput/v2/fileinput");
+        assert (dataObject.getType()).equals("core/fd/components/form/fileinput/v3/fileinput");
         assert (dataObject.getTitle()).equals("CV");
         assert (dataObject.getFieldType()).equals("file-input");
         assert (dataObject.getDescription()).equals("Upload your CV");

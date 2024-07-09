@@ -34,8 +34,9 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:buttonText": "Attach",
-    "fd:path": "/content/fileinput-customized"
+    "fd:path": "/content/fileinput-customized",
+    "fd:dragDropText":"Drag and Drop To Upload",
+    "fd:buttonText": "Attach"
   },
-  ":type": "core/fd/components/form/fileinput/v1/fileinput"
+  ":type": "core/fd/components/form/fileinput/v3/fileinput"
 }

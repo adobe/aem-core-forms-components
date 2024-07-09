@@ -82,5 +82,24 @@
       },
       "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/fileinput"
     }
+  },
+  "multiselect-fileinput-withNoType": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/fileinput/v2/fileinput",
+    "fieldType": "file-input",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "visible" : false,
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "multiSelection" : true,
+    "minItems" : 1,
+    "maxItems" : 2,
+    "maxFileSize" : "4096",
+    "accept" : ["text/*", "application/pdf"]
   }
 }
