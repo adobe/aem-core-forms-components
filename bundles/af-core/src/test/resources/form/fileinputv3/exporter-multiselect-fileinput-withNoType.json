@@ -1,0 +1,41 @@
+{
+    "id": "fileinput-4573ac70ac",
+    "dataRef": "a.b",
+    "fieldType": "file-input",
+    "name": "abc",
+    "visible": false,
+    "description": "dummy",
+    "tooltip": "test-short-description",
+    "minItems": 1,
+    "maxItems": 2,
+    "constraintMessages": {
+      "type": "incorrect type"
+    },
+    "maxFileSize": "4096MB",
+    "accept": [
+      "text/*",
+      "application/pdf"
+    ],
+    "screenReaderText": "'Custom screen reader text'",
+    "label": {
+      "value": "def"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "afs:layout": {
+        "tooltipVisible": false
+      },
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/multiselect-fileinput",
+      "fd:dragDropText":"Drag and Drop To Upload",
+      "fd:buttonText": "Attach"
+    },
+    ":type": "core/fd/components/form/fileinput/v3/fileinput"
+  }
+  
