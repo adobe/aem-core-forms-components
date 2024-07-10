@@ -29,6 +29,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.NumberInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
@@ -45,26 +46,26 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     // Lead Digits and Frac Digits is not implemented today, based on the use-case
     // it would be implemented on crispr spec, even locale would have to be handled**/
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUSIVE_MINIMUM)
     @Nullable
     @Default(booleanValues = false)
     protected Object exclusiveMinimum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUSIVE_MAXIMUM)
     @Nullable
     @Default(booleanValues = false)
     protected Object exclusiveMaximum;
 
     /** Adding this for backward compatibility, not to be changed anymore **/
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "excludeMaximumCheck")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUDE_MAXIMUM_CHECK)
     @Nullable
     private Boolean excludeMaximumCheck;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "excludeMinimumCheck")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUDE_MINIMUM_CHECK)
     @Nullable
     private Boolean excludeMinimumCheck;
     /** End **/
-    private Long exclusiveMinimumVaue;
+    private Long exclusiveMinimumValue;
     private Long exclusiveMaximumValue;
 
     @Override
@@ -88,7 +89,7 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @Override
     @Nullable
     public Long getExclusiveMinimum() {
-        return exclusiveMinimumVaue;
+        return exclusiveMinimumValue;
     }
 
     @Override
@@ -104,12 +105,12 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @PostConstruct
     private void initNumberInput() {
         exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, excludeMaximumCheck);
-        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, excludeMinimumCheck);
+        exclusiveMinimumValue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, excludeMinimumCheck);
         // in json either, exclusiveMaximum or maximum should be present
         if (exclusiveMaximumValue != null) {
             maximum = null;
         }
-        if (exclusiveMinimumVaue != null) {
+        if (exclusiveMinimumValue != null) {
             minimum = null;
         }
     }

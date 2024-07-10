@@ -23,13 +23,16 @@
     "fd:captcha": {
       "provider": "recaptcha",
       "config": {
+        "keyType": null,
         "siteKey": null,
         "uri": "https://www.recaptcha.net/recaptcha/api.js",
         "size": "compact",
         "theme": "light",
-        "type": "image"
+        "type": "image",
+        "version": null
       }
-    }
+    },
+    "customProp": "customPropValue"
   },
   ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
 }

@@ -15,12 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.Collections;
-import java.util.Map;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.util.*;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +32,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -59,6 +62,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-validationExpression";
     private static final String PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/textinput-displayValueExpression";
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
+    private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -368,6 +372,49 @@ public class TextInputImplTest {
     }
 
     @Test
+    public void testGetCustomProperties() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
+        Method method = AbstractFormComponentImpl.class.getDeclaredMethod("getCustomProperties");
+        method.setAccessible(true);
+        Map<String, Object> result = (Map<String, Object>) method.invoke(textInput);
+        Assertions.assertFalse(result.isEmpty());
+        Assertions.assertEquals("test-custom-string", result.get("customPropString"));
+        assertArrayEquals(new String[] { "a", "b" }, (Object[]) result.get("customPropStringArray"));
+        Assertions.assertEquals(true, result.get("customPropBool"));
+        Assertions.assertEquals(true, result.get("customPropBoolArray"));
+        Assertions.assertEquals(45L, result.get("customPropLong"));
+        assertArrayEquals(new Long[] { 345L, 576L }, (Object[]) result.get("customPropLongArray"));
+        Assertions.assertEquals(new BigDecimal("45.67"), (BigDecimal) result.get("customPropDecimal"));
+        assertArrayEquals(new BigDecimal[] { new BigDecimal("45.67"), new BigDecimal("90.34") }, (BigDecimal[]) result.get(
+            "customPropDecimalArray"));
+        Assertions.assertEquals(new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
+            {
+                set(Calendar.MILLISECOND, 0);
+                setTimeZone(TimeZone.getTimeZone("UTC"));
+            }
+        }, (Calendar) result.get("customPropDate"));
+        assertArrayEquals(
+            new Calendar[] {
+                new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
+                    {
+                        set(Calendar.MILLISECOND, 0);
+                        setTimeZone(TimeZone.getTimeZone("UTC"));
+                    }
+                },
+                new GregorianCalendar(2024, Calendar.JUNE, 22, 14, 0, 0) {
+                    {
+                        set(Calendar.MILLISECOND, 0);
+                        setTimeZone(TimeZone.getTimeZone("UTC"));
+                    }
+                }
+            },
+            (Calendar[]) result.get("customPropDateArray"));
+        Assertions.assertNull(result.get("fd:accidentalPrefix"));
+        Assertions.assertNull(result.get("sling:accidentalPrefix"));
+        Assertions.assertNull(result.get("jcr:accidentalPrefix"));
+    }
+
+    @Test
     void testGetProperties_should_return_empty_if_no_custom_properties() {
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getProperties()).thenCallRealMethod();
@@ -455,5 +502,12 @@ public class TextInputImplTest {
     void testJSONExportForDisplayValueExpression() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION));
+    }
+
+    @Test
+    void testExportTypeWithViewType() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_WITH_VIEWTYPE, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_WITH_VIEWTYPE));
+        assertEquals("some/custom/value", textInput.getExportedType());
     }
 }

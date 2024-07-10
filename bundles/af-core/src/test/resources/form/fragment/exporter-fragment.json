@@ -21,7 +21,8 @@
       "dorExcludeDescription": false
     },
     "fd:path": "/content/fragment",
-    "fd:fragment": true
+    "fd:fragment": true,
+    "customProp": "customPropValue"
   },
   ":itemsOrder": [
     "textinput"

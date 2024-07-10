@@ -30,6 +30,21 @@
                 sling:resourceType="forms-components-examples/components/form/textinput"
                 fieldType="text-input"
                 name="fragmenttextinput"/>
+            <textinput1
+                    jcr:created="{Date}2024-05-08T20:17:24.203+05:30"
+                    jcr:lastModified="{Date}2024-05-08T20:17:24.203+05:30"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Responsive Text Input"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input"
+                    name="textinput1715179644273">
+                <cq:responsive jcr:primaryType="nt:unstructured">
+                    <default
+                            jcr:primaryType="nt:unstructured"
+                            offset="1"
+                            width="9"/>
+                </cq:responsive>
+            </textinput1>
         </guideContainer>
     </jcr:content>
 </jcr:root>

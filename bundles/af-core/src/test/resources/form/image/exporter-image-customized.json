@@ -11,7 +11,10 @@
     ]
   },
   "properties": {
-    "fd:path": "/content/image-customized"
+    "fd:path": "/content/image-customized",
+    "fd:dor": {
+      "dorExclusion": false
+    }
   },
   ":type": "core/fd/components/form/image/v1/image"
 }

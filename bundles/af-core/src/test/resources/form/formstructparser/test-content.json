@@ -21,8 +21,10 @@
           "name": "abc",
           "jcr:title": "def",
           "hideTitle": false,
-          "description": "dummy",
-          "visible": false
+          "description": "<p>dummy</p>",
+          "tooltip": "<p>test-short-description</p>",
+          "visible": false,
+          "fieldType": "datepicker"
         },
         "container1": {
           "jcr:primaryType": "nt:unstructured",

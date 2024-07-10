@@ -166,12 +166,14 @@ describe("Form with Number Input", () => {
         cy.get(`#${numberInput4}`).find("input").clear().type(incorrectInput).blur().then(x => {
             cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"Please enter a valid value.")
             cy.get(`#${numberInput4} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${numberInput4}__errormessage`)
-            cy.get(`#${numberInput4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${numberInput4}__errormessage ${numberInput4}__shortdescription ${numberInput4}__longdescription`)
+            cy.get(`#${numberInput4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${numberInput4}__longdescription ${numberInput4}__shortdescription ${numberInput4}__errormessage`)
             cy.get(`#${numberInput4} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true')
         })
 
         cy.get(`#${numberInput4}`).find("input").clear().type(correctInput).blur().then(x => {
             cy.get(`#${numberInput4}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"")
+            cy.get(`#${numberInput4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${numberInput4}__longdescription ${numberInput4}__shortdescription`)
+            cy.get(`#${numberInput4} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'false')
         })
     })
 
@@ -247,4 +249,81 @@ describe("Form with Number Input", () => {
             })
         }
     });
+})
+
+describe("Form with Number Input Required Validation", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/numberinput/validation.html";
+    let formContainer = null;
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        });
+    });
+
+    const validateRequiredMessage = (id, submitButton, errorMessage) => {
+        cy.get(`#${submitButton}`).find("button").click();
+        cy.get(`#${id}`).find("input").then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',errorMessage);
+        });
+
+        cy.get(`#${id}`).find("input").clear().type("1234").blur().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"");
+        });
+
+        cy.get(`#${id}`).find("input").clear().blur().then(x => {
+            cy.get(`#${id}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',errorMessage);
+        });
+    }
+
+
+    it("integer type validation for required field", () => {
+        const [numberInput1] = Object.entries(formContainer._fields)[0];
+        const [numberInput2] = Object.entries(formContainer._fields)[1];
+        const [submitbutton] = Object.entries(formContainer._fields)[3];
+        validateRequiredMessage(numberInput1, submitbutton, "This is required numberinput");
+        validateRequiredMessage(numberInput2, submitbutton, "This is required integer numberinput");
+    });
+
+    it("check value entered before model initialization", () => {
+        const [numberInput3, numberInput3FieldView] = Object.entries(formContainer._fields)[2];
+        const input = "1212";
+        let model = numberInput3FieldView.getModel();
+        expect(Number(model.getState().value)).to.equal(Number(10));
+
+        cy.get(`#${numberInput3}`).find("input").clear().type(input).blur().then(x => {
+            expect(Number(model.getState().value)).to.equal(Number(input));
+        })
+    });
+})
+
+describe("Form with number input and language", () => {
+    const pagePath = "content/forms/af/core-components-it/samples/numberinput/basic.html"
+    const bemBlock = 'cmp-adaptiveform-numberinput'
+    const IS = "adaptiveFormNumberInput"
+    const selectors = {
+        numberinput : `[data-cmp-is="${IS}"]`
+    }
+
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath, {"params" : ["afAcceptLang=es"]}).then(p => {
+            formContainer = p;
+        })
+
+    });
+
+    it("display pattern on numeric input should update the display value based on field language", () => {
+        const [numberInput6, numberInput6FieldView] = Object.entries(formContainer._fields)[5];
+        const input = "121212";
+        let model = numberInput6FieldView.getModel();
+
+        cy.get(`#${numberInput6}`).find("input").clear().type(input).blur().then(x => {
+            expect(Number(model.getState().value)).to.equal(Number(input));
+// Assert that the input value contains "121" and "212,000" regardless of the space type
+                cy.get(`#${numberInput6}`).find('input').invoke('val').should('equal', '121\u202F212,000');
+        })
+    })
 })

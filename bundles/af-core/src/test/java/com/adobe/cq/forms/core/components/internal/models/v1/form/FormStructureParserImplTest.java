@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +25,7 @@ import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +36,9 @@ import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -83,6 +88,30 @@ public class FormStructureParserImplTest {
         String path = FORM_CONTAINER_PATH + "/datepicker";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
+    }
+
+    @Test
+    void testFormDefinition() throws JsonProcessingException {
+        String path = FORM_CONTAINER_PATH;
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        String formDef = formStructureParser.getFormDefinition();
+        HashMap<String, Object> formJson = (HashMap<String, Object>) new ObjectMapper().readValue(formDef,
+            new TypeReference<Map<String, Object>>() {});
+        assertNotNull(formStructureParser.getFormDefinition());
+        assertEquals(formJson.get("fieldType"), "form");
+    }
+
+    @Test
+    void testFormDefinitionWithHTMLEncoding() throws JsonProcessingException {
+        String path = FORM_CONTAINER_PATH;
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        String formDef = formStructureParser.getFormDefinition();
+        HashMap<String, Object> formJson = (HashMap<String, Object>) new ObjectMapper().readValue(formDef,
+            new TypeReference<Map<String, Object>>() {});
+        Assertions.assertNotNull(formStructureParser.getFormDefinition());
+        Map<String, Object> datepicker = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items")).get("datepicker");
+        Assertions.assertEquals(datepicker.get("description"), "&lt;p&gt;dummy&lt;/p&gt;");
+        Assertions.assertEquals(datepicker.get("tooltip"), "&lt;p&gt;test-short-description&lt;/p&gt;");
     }
 
     @Test

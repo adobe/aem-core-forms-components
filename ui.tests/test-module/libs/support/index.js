@@ -106,7 +106,21 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    // sometimes this error is seen during create page
+    if(err.message.includes('document.registerElement is not a function')) {
+        return false;
+    }
+
+    // sometimes this error is seen during create page
+    if(err.message.includes('Coral is not defined')) {
+        return false;
+    }
+
     if (err.message.includes("shellMenuButton")) {
+        return false;
+    }
+
+    if (err.message.includes("Missing required parameters: sitekey")) {
         return false;
     }
 

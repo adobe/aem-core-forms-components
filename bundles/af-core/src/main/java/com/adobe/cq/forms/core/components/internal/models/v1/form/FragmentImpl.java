@@ -38,6 +38,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
@@ -61,7 +62,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @OSGiService
     private ModelFactory modelFactory;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FRAGMENT_PATH)
     private String fragmentPath;
 
     private Resource fragmentContainer;
@@ -122,6 +123,11 @@ public class FragmentImpl extends PanelImpl implements Fragment {
             filteredChildComponents = getFilteredChildrenResources(fragmentContainer);
         }
         return filteredChildComponents;
+    }
+
+    @JsonIgnore
+    public Resource getFragmentContainer() {
+        return fragmentContainer;
     }
 
     @JsonIgnore

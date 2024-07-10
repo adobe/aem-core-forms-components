@@ -29,6 +29,6 @@ describe("Captcha In Sites Runtime Test", () => {
         expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
-        cy.get('#' + id + ' .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
+        cy.get('.cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
     })
 })

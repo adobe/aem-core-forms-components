@@ -31,6 +31,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.Heading;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.wcm.core.components.models.Title;
@@ -60,7 +61,7 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
     @Nullable
     private Style currentStyle;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TYPE)
     @Nullable
     private String type;
 
@@ -82,7 +83,7 @@ public class TitleImpl extends AbstractComponentImpl implements Title {
         if (StringUtils.isBlank(title)) {
             Resource formContainerResource = ComponentUtils.getFormContainer(resource);
             if (formContainerResource != null) {
-                title = formContainerResource.getValueMap().get("title", String.class);
+                title = formContainerResource.getValueMap().get(ReservedProperties.PN_TITLE, String.class);
             }
         }
         if (heading == null) {

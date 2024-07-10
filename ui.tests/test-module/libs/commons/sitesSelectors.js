@@ -181,6 +181,14 @@ var selectors = {
             self : ".editor-EmulatorBar",
             deviceList : ".js-editor-EmulatorDeviceList"
         }
+    },
+    locale : {
+        shell : {
+            userProperties : '[data-foundation-toggleable-control-src*="/shell/userproperties.html"]',
+            userPreferences : '[data-foundation-toggleable-control-src*="/shell/userpreferences.html"]'
+        },
+        language : 'coral-select[name="language"]',
+        accept : '[trackingelement="accept"]'
     }
 };
 

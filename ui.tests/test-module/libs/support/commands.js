@@ -41,7 +41,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import 'cypress-file-upload';
-import {recurse} from 'cypress-recurse'
+import { recurse } from 'cypress-recurse';
 
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
@@ -352,20 +352,19 @@ Cypress.Commands.add("initializeEventHandlerOnWindow", (eventName) => {
   return cy.wrap(isEventComplete); // return a chainable object
 });
 
-
 const waitForFormInit = () => {
-  const INIT_EVENT = "AF_FormContainerInitialised"
-  return cy.document().then(document => {
-    cy.get('form').then(($form) => {
-      const promise = new Cypress.Promise((resolve, reject) => {
-        const listener1 = e => {
-          if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
-            const isReady = () => {
-              const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
-              if (container &&
-                  e.detail._path === $form.data("cmp-path") &&
-                  !container.classList.contains("cmp-adaptiveform-container--loading")) {
-
+    const INIT_EVENT = "AF_FormContainerInitialised"
+    return cy.document().then(document => {
+        cy.get('form').then(($form) => {
+            const promise = new Cypress.Promise((resolve, reject) => {
+                const listener1 = e => {
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']")?.classList.contains("cmp-adaptiveform-container--loading")){
+                        const isReady = () => {
+                            const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                            if (container &&
+                                e.detail._path === $form.data("cmp-path") &&
+                                !container.classList.contains("cmp-adaptiveform-container--loading")) {
+                                  
                 resolve(e.detail);
               }
               setTimeout(isReady, 0)
@@ -380,35 +379,48 @@ const waitForFormInit = () => {
   })
 }
 
-const waitForFormInitMultipleContiners = () => {
-  const INIT_EVENT = "AF_FormContainerInitialised"
-  return cy.document().then(document => {
-    const promiseArray = []
-    cy.get('form').each(($form) => {
-      const promise = new Cypress.Promise((resolve, reject) => {
-        const listener1 = e => {
-          if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']").classList.contains("cmp-adaptiveform-container--loading")){
-            const isReady = () => {
-              const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
-              if (container &&
-                  e.detail._path === $form.data("cmp-path") &&
-                  !container.classList.contains("cmp-adaptiveform-container--loading")) {
+const waitForFormInitMultipleContiners = (multipleEmbedContainers) => {
+    const INIT_EVENT = "AF_FormContainerInitialised"
+    return cy.document().then(document => {
+        const promiseArray = []
+        cy.get('form').each(($form) => {
+            const promise = new Cypress.Promise((resolve, reject) => {
+                const listener1 = e => {
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']")?.classList.contains("cmp-adaptiveform-container--loading")){
+                        const isReady = () => {
+                            const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                            if (container &&
+                                e.detail._path === $form.data("cmp-path") &&
+                                !container.classList.contains("cmp-adaptiveform-container--loading")) {
 
-                resolve(e.detail);
-              }
-              setTimeout(isReady, 0)
-            }
-            isReady();
-          }
+                                resolve(e.detail);
+                            }
+                            setTimeout(isReady, 0)
+                        }
+                        isReady();
+                    }
+                }
+                document.addEventListener(INIT_EVENT, listener1);
+            })
+        if(typeof multipleEmbedContainers == "boolean" && multipleEmbedContainers){
+            promiseArray.push(new Cypress.Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(promise);
+                }, 1000);
+            }));
+        } else {
+            promiseArray.push(promise)
         }
-        document.addEventListener(INIT_EVENT, listener1);
-      })
-
-      promiseArray.push(promise)
-    }).then(($lis) => {
-      return Promise.all(promiseArray)
-    });
-  })
+        }).then(($lis) => {
+            if(typeof multipleEmbedContainers == "boolean" && multipleEmbedContainers) {
+                setTimeout(() => {
+                    return Promise.all(promiseArray);
+                }, 1000);
+            } else {
+                return Promise.all(promiseArray)
+            }
+        });
+    })
 }
 
 const waitForChildViewAddition = () => {
@@ -747,4 +759,16 @@ Cypress.Commands.add("getRuleEditorIframe", () => {
         .get('iframe#af-rule-editor')
         .its('0.contentDocument.body').should('not.be.empty')
         .then(cy.wrap)
+});
+
+/**
+ * This function is used to change language.
+ */
+Cypress.Commands.add("changeLanguage", (str) => {
+    cy.openPage('/aem/forms.html/content/dam/formsanddocuments');
+    cy.get(siteSelectors.locale.shell.userProperties).click();
+    cy.get(siteSelectors.locale.shell.userPreferences).click();
+    cy.get(siteSelectors.locale.language).first().click();
+    cy.get(`coral-selectlist-item[value=${str}]`).click({force: true});
+    cy.get(siteSelectors.locale.accept).click();
 });

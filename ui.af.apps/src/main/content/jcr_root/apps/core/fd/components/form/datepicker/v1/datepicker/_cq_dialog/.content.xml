@@ -83,7 +83,8 @@
                                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
                                                     fieldLabel="Minimum date"
                                                     emptyText="YYYY-MM-DD"
-                                                    name="./minimumDate"/>
+                                                    name="./minimumDate"
+                                                    valueFormat="YYYY-MM-DD[T]HH:mm:ss.000-00:00"/> <!-- Enforce UTC timezone to be timezone agnostic -->
                                             <minimumMessage
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
@@ -110,7 +111,8 @@
                                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
                                                     fieldLabel="Maximum date"
                                                     emptyText="YYYY-MM-DD"
-                                                    name="./maximumDate"/>
+                                                    name="./maximumDate"
+                                                    valueFormat="YYYY-MM-DD[T]HH:mm:ss.000-00:00"/> <!-- Enforce UTC timezone to be timezone agnostic -->
                                             <maximumMessage
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
@@ -224,6 +226,35 @@
                                                             name="./formatMessage"/>
                                                 </items>
                                             </editPatternGroup>
+                                            <langGroup
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Language"
+                                                    title="Language"
+                                                    fieldDescription="The language to use for formatting the field."
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <langDisplayValue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-datepicker__langdisplayvalue"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldDescription="The language to use for formatting the field."
+                                                            fieldLabel="Type"
+                                                            name="./langDisplayValue">
+                                                        <datasource
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                                type="lang"/>
+                                                    </langDisplayValue>
+                                                    <langSaveValue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-datepicker__lang"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="The language to use for formatting the field."
+                                                            fieldLabel="IETF BCP 47 language tag"
+                                                            name="./lang">
+                                                    </langSaveValue>
+                                                </items>
+                                            </langGroup>
                                         </items>
                                     </column>
                                 </items>

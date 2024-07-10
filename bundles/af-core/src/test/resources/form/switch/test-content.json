@@ -26,7 +26,8 @@
     },
     "fd:events" : {
       "jcr:primaryType": "nt:unstructured"
-    }
+    },
+    "customProp": "customPropValue"
   },
   "switch-customized" : {
     "jcr:primaryType": "nt:unstructured",

@@ -16,7 +16,9 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.io.IOException;
+import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.jcr.RepositoryException;
 
@@ -31,6 +33,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.day.cq.wcm.foundation.Image;
@@ -45,22 +48,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class StaticImageImpl extends AbstractFormComponentImpl implements StaticImage {
 
+    public static final String DAM_REPO_PATH = "fd:repoPath";
+
     private Image image;
 
     @SlingObject
     private Resource resource;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ALT_TEXT)
     @Nullable
     protected String altText;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_IMAGE_SRC)
     @Nullable
     protected String imageSrc;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "description")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DESCRIPTION)
     @org.jetbrains.annotations.Nullable
     protected String description; // long description as per current spec
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FILE_REF)
+    @Nullable
+    protected String fileReference;
 
     /**
      * Returns the source where the image is present.
@@ -119,5 +128,14 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
         } catch (RepositoryException | IOException e) {
             return null;
         }
+    }
+
+    @Override
+    public @Nonnull Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        if (fileReference != null && fileReference.length() > 0) {
+            properties.put(DAM_REPO_PATH, fileReference);
+        }
+        return properties;
     }
 }
