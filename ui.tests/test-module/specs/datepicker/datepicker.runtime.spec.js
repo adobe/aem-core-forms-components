@@ -24,37 +24,13 @@ describe("Form Runtime with Date Picker", () => {
     const themeRef = 'input[name="./jcr:content/metadata/themeRef"]'
     const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
 
-    // Define a function to perform the setup
-    const ensureThemeIsSet = function(retryCount = 0) {
-        const maxRetries = 5; // Set a max retry limit to prevent infinite loop
-        cy.openPage(fmPropertiesUI).then(() => {
-            cy.get(themeRef).invoke('val').then((currentValue) => {
-                if (currentValue !== '/libs/fd/af/themes/canvas') {
-                    cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
-                        cy.get(propertiesSaveBtn).click().then(() => {
-                            // Check if the theme is set correctly, if not, retry
-                            cy.get(themeRef).invoke('val').then((newValue) => {
-                                if (newValue !== '/libs/fd/af/themes/canvas' && retryCount < maxRetries) {
-                                    cy.log(`Attempt ${retryCount + 1}: Theme not set. Retrying...`);
-                                    ensureThemeIsSet(retryCount + 1);
-                                } else if (retryCount >= maxRetries) {
-                                    cy.log('Max retries reached. Unable to set theme.');
-                                } else {
-                                    cy.log('Theme is successfully set to the desired state.');
-                                }
-                            });
-                        });
-                    });
-                } else {
-                    // Theme is already set, no need to reapply
-                    cy.log('Theme is already set to the desired state, skipping setup.');
-                }
-            });
-        });
-    };
     // enabling theme for this test case as without theme there is a bug in custom widget css
     before(() => {
-        ensureThemeIsSet();
+        cy.openPage(fmPropertiesUI).then(() => {
+            cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
+                cy.get(propertiesSaveBtn).click();
+            })
+        })
     })
 
     beforeEach(() => {
@@ -240,7 +216,7 @@ describe("Form Runtime with Date Picker", () => {
         });
 
         // choose a different date and check if its persisted
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get("#li-day-11").should("be.visible").should("have.class", "dp-selected"); // first check for the original date selection
             cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
             cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023");
@@ -249,7 +225,7 @@ describe("Form Runtime with Date Picker", () => {
         });
 
         // check clear option
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-clear").click();
         });
 
@@ -258,7 +234,7 @@ describe("Form Runtime with Date Picker", () => {
 
     it("Test order of the days", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".header").invoke("text").should("eq", 'SunMonTueWedThuFriSat');
         });
     });
@@ -332,7 +308,7 @@ describe("Form Runtime with Date Picker", () => {
         const date = '2/8/2023'; // since it has edit format, the date should be in the edit format only
         cy.get(`#${datePicker7}`).find("input").clear().type(date).blur().then(x => {
             expect(model.getState().value).to.equal('2023-08-02'); // model always has YYYY-MM-DD value
-            cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+            cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
                 cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023")
                 .then(() => {
@@ -350,7 +326,7 @@ describe("Form Runtime with Date Picker", () => {
         cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
             expect(model.getState().value).to.equal(input);
         });
-        cy.get(`#${id}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${id}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             let todayDate = new Date();
             let todayYear = todayDate.getFullYear() + "";
             cy.get(".dp-caption").should('include.text', todayYear);
