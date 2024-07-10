@@ -23,13 +23,38 @@ describe("Form Runtime with Date Picker", () => {
     const fmPropertiesUI = "/libs/fd/fm/gui/content/forms/formmetadataeditor.html/content/dam/formsanddocuments/core-components-it/samples/datepicker/basic"
     const themeRef = 'input[name="./jcr:content/metadata/themeRef"]'
     const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
+
+    // Define a function to perform the setup
+    const ensureThemeIsSet = function(retryCount = 0) {
+        const maxRetries = 5; // Set a max retry limit to prevent infinite loop
+        cy.openPage(fmPropertiesUI).then(() => {
+            cy.get(themeRef).invoke('val').then((currentValue) => {
+                if (currentValue !== '/libs/fd/af/themes/canvas') {
+                    cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
+                        cy.get(propertiesSaveBtn).click().then(() => {
+                            // Check if the theme is set correctly, if not, retry
+                            cy.get(themeRef).invoke('val').then((newValue) => {
+                                if (newValue !== '/libs/fd/af/themes/canvas' && retryCount < maxRetries) {
+                                    cy.log(`Attempt ${retryCount + 1}: Theme not set. Retrying...`);
+                                    ensureThemeIsSet(retryCount + 1);
+                                } else if (retryCount >= maxRetries) {
+                                    cy.log('Max retries reached. Unable to set theme.');
+                                } else {
+                                    cy.log('Theme is successfully set to the desired state.');
+                                }
+                            });
+                        });
+                    });
+                } else {
+                    // Theme is already set, no need to reapply
+                    cy.log('Theme is already set to the desired state, skipping setup.');
+                }
+            });
+        });
+    };
     // enabling theme for this test case as without theme there is a bug in custom widget css
     before(() => {
-        cy.openPage(fmPropertiesUI).then(() => {
-            cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
-                cy.get(propertiesSaveBtn).click();
-            })
-        })
+        ensureThemeIsSet();
     })
 
     beforeEach(() => {
