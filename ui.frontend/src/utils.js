@@ -308,13 +308,13 @@ class Utils {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
                 const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
-                let _formJson
+                let _formJson, callback;
                 if (loader) {
                     const path = loader.getAttribute('data-cmp-adaptiveform-container-loader');
                     const response = await fetch(`/adobe/forms/af/${path}`)
                     _formJson = (await response.json()).afModelDefinition;
-                    window.formJson = _formJson
-                    loadXfa(_formJson.formdom, _formJson.xfaRenderContext);
+                    //window.formJson = _formJson
+                    callback = loadXfa(_formJson.formdom, _formJson.xfaRenderContext);
                 } else {
                     _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 }
@@ -334,6 +334,9 @@ class Utils {
                     _path,
                     _element: elements[i]
                 });
+                if (typeof callback === 'function') {
+                    callback(formContainer.getModel());
+                }
                 Utils.initializeAllFields(formContainer);
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
