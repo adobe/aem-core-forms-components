@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.models.form.CheckBoxGroup;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
@@ -44,7 +45,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class CheckBoxGroupImpl extends AbstractOptionsFieldImpl implements CheckBoxGroup {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "orientation")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ORIENTATION)
     @Nullable
     protected String orientationJcr;
     private CheckBox.Orientation orientation;

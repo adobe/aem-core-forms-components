@@ -23,7 +23,8 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/radiobutton"
+    "fd:path": "/content/radiobutton",
+    "customProp": "customPropValue"
   },
   "enum": [
     "0",

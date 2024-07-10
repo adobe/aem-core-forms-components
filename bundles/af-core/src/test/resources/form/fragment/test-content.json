@@ -11,7 +11,8 @@
     "repeatable": true,
     "sling:resourceType": "core/fd/components/form/fragment/v1/fragment",
     "fieldType": "panel",
-    "fragmentPath": "/content/affragment"
+    "fragmentPath": "/content/affragment",
+    "customProp": "customPropValue"
   },
   "fragment-dampath": {
     "jcr:primaryType": "nt:unstructured",

@@ -6,6 +6,7 @@
     "jcr:title" : "def",
     "description" : "dummy",
     "assistPriority" : "custom",
+    "customProp": "customPropValue",
     "dataRef" : "a.b",
     "custom" : "Custom screen reader text",
     "typeMessage" : "incorrect type",

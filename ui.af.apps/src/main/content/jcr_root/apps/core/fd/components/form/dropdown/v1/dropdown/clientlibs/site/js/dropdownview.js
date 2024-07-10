@@ -138,40 +138,42 @@
             }
         }
 
+        /**
+         * @override
+         * Method for updating the saved value in the option field.
+         * It contains the logic for updating the 'enum' value.
+         *
+         * @param {Array} newEnums - An array of primitive values to be saved in the option field.
+         */
         updateEnum(newEnums) {
             let options = this.getOptions();
             let currentEnumSize = options.length;
+            let startIndex = options[0] && options[0].value === '' ? 1 : 0; // Check if the first option is a blank option
 
-            if(currentEnumSize === 0) { // case 1: create option with new enums
-                newEnums.forEach(value => {
+            // Update existing options and add new options in the same loop
+            newEnums.forEach((value, index) => {
+                if (index + startIndex < currentEnumSize) {
+                    // Update existing option
+                    options[index + startIndex].value = value;
+                } else {
+                    // Add new option
                     this.getWidget().add(this.#createDropDownOptions(value, value));
-                });
-            } else if(newEnums.length === 0) {  // case 2: remove all options
-                this.#removeAllOptions();
-            } else if(currentEnumSize === newEnums.length) { // case 3: replace existing enums
-                options.forEach((option, index) => {
-                    option.value = newEnums[index];
-                });
-            } else if(currentEnumSize < newEnums.length) {  // case 4: replace existing enums and create new options with remaining
-                options.forEach((option, index) => {
-                    option.value = newEnums[index];
-                });
-                newEnums.forEach((value, index) => {
-                    if(index > currentEnumSize - 1) {
-                        this.getWidget().add(this.#createDropDownOptions(value, value));
-                    }
-                });
-            } else {
-                options.forEach((option, index) => {    // case 5: replace existing enums and remove extra options
-                    if(index < newEnums.length) {
-                        option.value = newEnums[index];
-                    } else {
-                        this.getWidget().remove(index + 1); // accounting for the blank option in dropdown
-                    }
-                });
+                }
+            });
+
+            // Remove extra options, but never remove the first option
+            while (currentEnumSize > newEnums.length + startIndex) {
+                this.getWidget().remove(currentEnumSize--);
             }
         }
 
+        /**
+         * @override
+         * Method for updating the display value in the option field.
+         * It contains the logic for updating the 'enumNames' value.
+         *
+         * @param {Array} newEnumNames - An array of primitive values to be displayed in the option field.
+         */
         updateEnumNames(newEnumNames) {
             let options = this.getOptions();
             let currentEnumNameSize = options.length;

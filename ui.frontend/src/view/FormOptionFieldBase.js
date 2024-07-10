@@ -25,6 +25,45 @@ class FormOptionFieldBase extends FormFieldBase {
         super(params);
     }
 
+
+    /**
+     * Placeholder method for updating the saved value in the option field.
+     * This method is intended to be overridden by the child class.
+     * The overriding method should contain the logic for updating the 'enum' value.
+     *
+     * @param {Array} enums - An array of primitive values to be saved in the option field.
+     */
+    updateEnum(enums) {
+        // Placeholder method, needs to be overridden by the child class
+    }
+
+    /**
+     * Placeholder method for updating the display value in the option field.
+     * This method is intended to be overridden by the child class.
+     * The overriding method should contain the logic for updating the 'enumNames' value.
+     *
+     * @param {Array} enumNames - An array of display values for the option field.
+     */
+    updateEnumNames(enumNames) {
+        // Placeholder method, needs to be overridden by the child class
+    }
+
+
+    /**
+     * Applies the full state of the field to the HTML.
+     * Generally done just after the model is bound to the field.
+     * @param {Object} state - The state object.
+     */
+    applyState(state) {
+        super.applyState(state);
+        if (state?.enum) {
+            this.updateEnum(state.enum)
+        }
+        if (state?.enumNames) {
+            this.updateEnumNames(state.enumNames)
+        }
+    }
+
     /**
      * Common method to update the enums of checkbox and radiobutton
      * @param {Array} newEnums - updated enum values
@@ -77,16 +116,13 @@ class FormOptionFieldBase extends FormFieldBase {
             [...this.getOptions()].forEach((option, index) => {
                 let span = option.querySelector('span');
                 let input = option.querySelector('input');
-                if(index < newEnumNames.length) {
-                    span.textContent = newEnumNames[index];
-                } else {
-                    span.textContent = input.value;
-                }
+                let valueToSet = index < newEnumNames.length ? newEnumNames[index] : input.value;
+                span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(valueToSet) : valueToSet;
             });
         } else {
             [...this.getOptions()].forEach((option, index) => {
                 let span = option.querySelector('span');
-                span.textContent = newEnumNames[index];
+                span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(newEnumNames[index]) : newEnumNames[index];
             });
         }
     }

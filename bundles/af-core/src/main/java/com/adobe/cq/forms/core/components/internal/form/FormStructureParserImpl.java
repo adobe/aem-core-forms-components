@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.form;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -33,7 +32,10 @@ import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.components.views.Views;
+import com.fasterxml.jackson.core.SerializableString;
+import com.fasterxml.jackson.core.io.CharacterEscapes;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -117,14 +119,42 @@ public class FormStructureParserImpl implements FormStructureParser {
         String result = null;
         FormContainer formContainer = resource.adaptTo(FormContainer.class);
         try {
+            HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
             ObjectMapper mapper = new ObjectMapper();
             Writer writer = new StringWriter();
+            ObjectWriter objectWriter = mapper.writerWithView(Views.Publish.class);
+            objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
             // return publish view specific properties only for runtime
-            mapper.writerWithView(Views.Publish.class).writeValue(writer, formContainer);
+            objectWriter.writeValue(writer, formContainer);
             result = writer.toString();
-        } catch (IOException e) {
-            logger.error("Unable to generate json from resource");
+        } catch (Exception e) {
+            logger.error("Unable to generate json from resource", e);
         }
         return result;
+    }
+
+    private static final class HTMLCharacterEscapes extends CharacterEscapes {
+        private final int[] asciiEscapes;
+
+        public HTMLCharacterEscapes() {
+            // start with set of characters known to require escaping (double-quote, backslash etc)
+            int[] esc = CharacterEscapes.standardAsciiEscapesForJSON();
+            // and force escaping of a few others:
+            esc['<'] = CharacterEscapes.ESCAPE_STANDARD;
+            esc['>'] = CharacterEscapes.ESCAPE_STANDARD;
+            esc['&'] = CharacterEscapes.ESCAPE_STANDARD;
+            esc['\''] = CharacterEscapes.ESCAPE_STANDARD;
+            asciiEscapes = esc;
+        }
+
+        @Override
+        public int[] getEscapeCodesForAscii() {
+            return asciiEscapes;
+        }
+
+        @Override
+        public SerializableString getEscapeSequence(int ch) {
+            return null;
+        }
     }
 }

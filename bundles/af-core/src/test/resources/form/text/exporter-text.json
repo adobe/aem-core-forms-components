@@ -9,7 +9,8 @@
     "fd:path":"/content/text",
     "fd:dor": {
       "dorExclusion": false
-    }
+    },
+    "customProp": "customPropValue"
   },
   "events": {
     "custom:setProperty": [

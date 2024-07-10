@@ -15,7 +15,8 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/numberinput"
+    "fd:path": "/content/numberinput",
+    "customProp": "customPropValue"
   },
   ":type": "core/fd/components/form/numberinput/v1/numberinput"
 }

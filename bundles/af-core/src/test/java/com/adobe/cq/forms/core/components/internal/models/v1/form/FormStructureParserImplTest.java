@@ -15,16 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -98,6 +96,28 @@ public class FormStructureParserImplTest {
             new TypeReference<Map<String, Object>>() {});
         assertNotNull(formStructureParser.getFormDefinition());
         assertEquals(formJson.get("fieldType"), "form");
+    }
+
+    @Test
+    void testFormDefinitionWithHTMLEncoding() throws JsonProcessingException {
+        String path = FORM_CONTAINER_PATH;
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
+        String formDef = formStructureParser.getFormDefinition();
+        HashMap<String, Object> formJson = (HashMap<String, Object>) new ObjectMapper().readValue(formDef,
+            new TypeReference<Map<String, Object>>() {});
+        Assertions.assertNotNull(formStructureParser.getFormDefinition());
+        Map<String, Object> datepicker = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items")).get("datepicker");
+        Assertions.assertEquals(datepicker.get("description"), "<p>dummy</p>");
+        Assertions.assertEquals(datepicker.get("tooltip"), "<p>test-short-description</p>");
+        Map<String, Object> textinput = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items")).get("textinput");
+        Assertions.assertEquals(textinput.get("description"),
+            "&lt;ul>&#xa;&lt;li style=&quot;font-weight: bold;&quot;>&lt;strong>abc&lt;/strong>&lt;/li>&#xa;&lt;li style=&quot;font-weight: bold;&quot;>&lt;strong>def&lt;/strong>&lt;/li>&#xa;&lt;li style=&quot;font-weight: bold;&quot;>&lt;strong>xyz&lt;/strong>&lt;/li>&#xa;&lt;/ul>");
+        Assertions.assertEquals(textinput.get("pattern"),
+            "^(([^&lt;>()[]\\.,;:s@&quot;]+(.[^&lt;>()[]\\.,;:s@&quot;]+)*)|(&quot;.+&quot;))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$");
+        Map<String, Object> events = (Map<String, Object>) textinput.get("events");
+        String changeEvent = ((ArrayList<String>) events.get("change")).get(0);
+        Assertions.assertEquals(changeEvent,
+            "[if(contains($event.payload.changes[].propertyName, 'value'), if(!(!($field.$value)), request(externalize('/content/forms/af/secur-bank-sfdc/secur-bank-credit-card-application-eds/jcr:content/guideContainer.af.dermis'),'POST', {operationName:'GET Person /Peoples',input:toString({UserName: $field.$value}),functionToExecute:'invokeFDMOperation',apiVersion:'2',formDataModelId:'/content/dam/formsanddocuments-fdm/wknd-vacations/wknd-vacations-triprwodata-di',runValidation:'false',guideNodePath:'/content/forms/af/secur-bank-sfdc/secur-bank-credit-card-application-eds/jcr:content/guideContainer/panelcontainer_877002065/verticaltabs/panel_copy/textinput'}, {&quot;Content-Type&quot; : 'application/x-www-form-urlencoded'}, 'custom:wsdlSuccess_1719466874036','custom:wsdlError_1719466874036'), {}), {})]");
     }
 
     @Test

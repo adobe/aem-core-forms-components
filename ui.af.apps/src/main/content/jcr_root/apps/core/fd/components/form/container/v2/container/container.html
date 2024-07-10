@@ -21,9 +21,9 @@
      data-sly-test.isEdgeDeliveryRequest="${formUtil.edgeDeliveryRequest}">
     <div>
         <div>
-      <pre>
-          <code>${formstructparser.formDefinition}</code>
-      </pre>
+            <pre>
+                <code>"${formstructparser.formDefinition @ context='jsonString'}"</code>
+            </pre>
         </div>
     </div>
 </div>
@@ -31,6 +31,7 @@
 <sly data-sly-test="${wcmmode.edit}" data-sly-use.allowed="com.day.cq.wcm.foundation.AllowedComponentList"></sly>
 
 <form data-sly-use.configurationProvider="com.adobe.cq.forms.core.components.models.form.FormConfigurationProvider"
+     role="${container.roleAttribute}"
       data-sly-use.grid="com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid"
       data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
       action="${container.metadata.action}"
