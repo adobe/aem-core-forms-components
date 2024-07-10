@@ -9,10 +9,11 @@
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="Adaptive Form V2 (IT)"
-        sling:resourceType="forms-components-examples/components/page">
+        sling:resourceType="forms-components-examples/components/page"
+        cq:conf="/conf/core-components-it/samples/recaptcha/basic">
         <guideContainer
             title="Adaptive Form V2 (IT)"
-            fd:version="2.0"
+            fd:version="2.1"
             fieldType="form"
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/container">

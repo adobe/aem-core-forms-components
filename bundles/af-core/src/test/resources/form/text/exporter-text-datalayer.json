@@ -1,6 +1,7 @@
 {
   "id": "text-cfbea91bba",
   "fieldType": "plain-text",
+  "dataRef": null,
   "name": "text1680491190398",
   "value": "This is an AF",
   "richText": false,
@@ -10,6 +11,9 @@
     ]
   },
   "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
     "fd:path": "/content/text-datalayer"
   },
   ":type": "core/fd/components/form/text/v1/text",

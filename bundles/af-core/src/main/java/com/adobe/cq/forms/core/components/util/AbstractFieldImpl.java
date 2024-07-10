@@ -18,8 +18,6 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -30,9 +28,10 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Field;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Abstract class which can be used as base class for {@link Field} implementations.
@@ -40,104 +39,94 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Field {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractFieldImpl.class);
-    private static final String PN_PLACEHOLDER = "placeholder";
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_READ_ONLY)
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean readOnly;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DEFAULT_VALUE)
     @Nullable
     protected Object[] defaultValue;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_PLACEHOLDER)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_PLACEHOLDER)
     @Nullable
     protected String placeholder;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "displayFormat")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DISPLAY_FORMAT)
     @Nullable
     protected String displayFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "editFormat")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EDIT_FORMAT)
     @Nullable
     protected String editFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataFormat")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DISPLAY_VALUE_EXPRESSION)
+    @Nullable
+    protected String displayValueExpression;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATA_FORMAT)
     @Nullable
     protected String dataFormat;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minLength")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MIN_LENGTH)
     @Nullable
     protected Integer minLength;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maxLength")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAX_LENGTH)
     @Nullable
     protected Integer maxLength;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximum")
-    @Nullable
-    protected Long maximum;
+    /** number and date constraint **/
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimum")
-    @Nullable
-    protected Long minimum;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "minimumDate")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MINIMUM_DATE)
     @Nullable
     protected Date minimumDate;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "maximumDate")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAXIMUM_DATE)
     @Nullable
     protected Date maximumDate;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAXIMUM)
     @Nullable
-    protected Long exclusiveMinimum;
+    protected Long maximum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MINIMUM)
     @Nullable
-    protected Long exclusiveMaximum;
+    protected Long minimum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMinimumDate")
-    @Nullable
-    protected Date exclusiveMinimumDate;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "exclusiveMaximumDate")
-    @Nullable
-    protected Date exclusiveMaximumDate;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorExclusion")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUSIVE_MINIMUM)
     @Default(booleanValues = false)
-    protected boolean dorExclusion;
+    protected boolean exclusiveMinimum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorColspan")
-    @Nullable
-    protected String dorColspan;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUSIVE_MAXIMUM)
+    @Default(booleanValues = false)
+    protected boolean exclusiveMaximum;
 
-    /**
-     * Returns dorBindRef of the form field
-     *
-     * @return dorBindRef of the field
-     * @since com.adobe.cq.forms.core.components.util 2.1.0
-     */
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dorBindRef")
-    @Nullable
-    protected String dorBindRef;
+    /** number and date constraint **/
 
     @SlingObject
     private Resource resource;
 
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isReadOnly() {
+        return readOnly != null ? readOnly : Boolean.FALSE;
+    }
+
+    @JsonProperty("readOnly")
+    public Boolean getReadOnlyIfPresent() {
         return readOnly;
     }
 
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isRequired() {
+        return required != null ? required : Boolean.FALSE;
+    }
+
+    @JsonProperty("required")
+    public Boolean getRequiredIfPresent() {
         return required;
     }
 
@@ -160,7 +149,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Override
     @Nullable
     public String getPlaceHolder() {
-        return translate(PN_PLACEHOLDER, placeholder);
+        return translate(ReservedProperties.PN_PLACEHOLDER, placeholder);
     }
 
     @Override
@@ -177,22 +166,14 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
 
     @Override
     @Nullable
-    public String getDataFormat() {
-        return dataFormat;
+    public String getDisplayValueExpression() {
+        return displayValueExpression;
     }
 
     @Override
-    @JsonIgnore
-    public Map<String, Object> getDorProperties() {
-        Map<String, Object> customDorProperties = new LinkedHashMap<>();
-        customDorProperties.put("dorExclusion", dorExclusion);
-        if (dorColspan != null) {
-            customDorProperties.put("dorColspan", dorColspan);
-        }
-        if (dorBindRef != null) {
-            customDorProperties.put("dorBindRef", dorBindRef);
-        }
-        return customDorProperties;
+    @Nullable
+    public String getDataFormat() {
+        return dataFormat;
     }
 
 }

@@ -58,6 +58,7 @@ public class FileInputImplV2Test {
     private static final String PATH_FILEINPUT = CONTENT_ROOT + "/fileinput";
     private static final String PATH_FILEINPUT_DATALAYER = CONTENT_ROOT + "/fileinput-datalayer";
     private static final String PATH_MULTISELECT_FILEINPUT = CONTENT_ROOT + "/multiselect-fileinput";
+    private static final String PATH_MULTISELECT_FILEINPUT_WITHNOTYPE = CONTENT_ROOT + "/multiselect-fileinput-withNoType";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -79,6 +80,12 @@ public class FileInputImplV2Test {
     void testFieldType() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(FieldType.FILE_INPUT.getValue(), fileInput.getFieldType());
+    }
+
+    @Test
+    void testType() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_MULTISELECT_FILEINPUT_WITHNOTYPE, FileInput.class, context);
+        assertEquals(fileInput.getType(), fileInput.getType());
     }
 
     @Test
@@ -137,7 +144,7 @@ public class FileInputImplV2Test {
     @Test
     void testIsVisible() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        assertEquals(null, fileInput.isVisible());
+        assertEquals(true, fileInput.isVisible());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isVisible()).thenCallRealMethod();
         assertEquals(null, fileInputMock.isVisible());
@@ -155,7 +162,7 @@ public class FileInputImplV2Test {
     @Test
     void testIsEnabled() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        assertEquals(null, fileInput.isEnabled());
+        assertEquals(true, fileInput.isEnabled());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, fileInputMock.isEnabled());
@@ -173,7 +180,7 @@ public class FileInputImplV2Test {
     @Test
     void testIsRequired() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        assertEquals(null, fileInput.isRequired());
+        assertEquals(false, fileInput.isRequired());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isRequired()).thenCallRealMethod();
         assertEquals(null, fileInputMock.isRequired());
@@ -191,7 +198,7 @@ public class FileInputImplV2Test {
     @Test
     void testIsReadOnly() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT, FileInput.class, context);
-        assertEquals(null, fileInput.isReadOnly());
+        assertEquals(false, fileInput.isReadOnly());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, fileInputMock.isReadOnly());

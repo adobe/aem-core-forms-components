@@ -97,9 +97,16 @@ describe("Form with Radio Button Input", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0];
         formContainer._model.validate();
         cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"This is a required radiobutton");
+        cy.get(`#${id}`).should('have.attr', 'data-cmp-valid', 'false')
+        cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`);
+        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.attr', 'aria-describedby', `${id}__errormessage`);
+        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('have.attr', 'aria-invalid', 'true');
 
         cy.get(`#${id}`).find("input").eq(1).click().then(x => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"");
+            cy.get(`#${id}`).should('have.attr', 'data-cmp-valid', 'true')
+            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('have.attr', 'aria-invalid', 'false');
+            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.attr', 'aria-describedby', '');
         });
     });
 
@@ -172,6 +179,14 @@ describe("Form with Radio Button Input", () => {
 
     })
 
+    it("rich text should render correctly", () => {
+        const [radioButton9, radioButton9FieldView] = Object.entries(formContainer._fields)[8];
+        cy.get(`#${radioButton9}`).find(".cmp-adaptiveform-radiobutton__option").should('have.length', 2);
+        cy.get(`#${radioButton9}`).find(".cmp-adaptiveform-radiobutton__label").contains('Select Animal').should('have.css', 'font-weight', '700');
+        cy.get(`#${radioButton9}`).find(".cmp-adaptiveform-radiobutton__option-label span").contains('Dog').should('have.css', 'font-style', 'italic');
+        cy.get(`#${radioButton9}`).find(".cmp-adaptiveform-radiobutton__option-label span").contains('Cat').should('have.css', 'text-decoration', 'underline solid rgb(50, 50, 50)');
+    });
+
     it("decoration element should not have same class name", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         cy.wrap().then(() => {
@@ -200,6 +215,14 @@ describe("Form with Radio Button Input", () => {
             cy.get(`#${radioButton8}`).find('input[value="false"]').should("be.checked");
         })
     })
+
+    it("test if required property updated in model is reflected in view", () => {
+        const [id, radioButtonView] = Object.entries(formContainer._fields)[7];
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'false').then(() => {
+            radioButtonView._model.required = true;
+        })
+        cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
+    })
 })
 
 describe("setFocus on radiobutton via rules", () => {
@@ -220,5 +243,81 @@ describe("setFocus on radiobutton via rules", () => {
         cy.get(`#${button}-widget`).click().then(() => {
             cy.get(`#${radioButton}`).find("input").eq(0).should('have.focus')
         })
+    })
+})
+
+describe(" radiobutton repeatability ", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/radiobutton/radiorepeatability.html"
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    const clickRadio = function (panelModel, index) {
+        const panelId = panelModel.id;
+        // panel only has radio button hence just searching for individual inputs of radio button
+        cy.get(`#${panelId}`).find("input").eq(index).click().then(() => {
+            // in this case radio button input index is same as value
+            checkRepeatablePanel(panelModel, index);
+        });
+    }
+
+    const checkRepeatablePanel = function (panelModel, radioButtonValue) {
+        const panelId = panelModel.id;
+        const radioButtonModel = panelModel.items[0];
+        expect(radioButtonModel.value).to.equal(radioButtonValue);
+        //Repeatable panel HTML should exist
+        cy.get(`#${panelId}`).should('exist');
+        cy.get(`#${radioButtonModel.id}`).should('exist').then(() => {
+            //Repeatable panel should have radio button
+            cy.get(`#${radioButtonModel.id}`).find("input").should('have.length', 2);
+            //Repeatable panel should have radio button with value 0 checked
+            cy.get(`#${radioButtonModel.id}`).find("input").eq(0).should(radioButtonValue === 0 ? 'be.checked' : 'not.be.checked');
+            //Repeatable panel should have radio button with value 1 unchecked
+            cy.get(`#${radioButtonModel.id}`).find("input").eq(1).should(radioButtonValue === 1 ? 'be.checked' : 'not.be.checked');
+        });
+    }
+
+    it("radio button inside the panel should repeat and data is set for repeatable instance", () => {
+        const initialData = '{"panelcontainer1716541354700":[{}]}';
+        cy.getFormData().then((result) => {
+            expect(result.data.data).to.equal(initialData);
+        });
+
+        const formModel = formContainer.getModel();
+        const panelInstanceMangerModel = formModel.items[0];
+        const firstPanelModel = panelInstanceMangerModel.items[0];
+        const repeatButtonId = formModel.items[1].id;
+        const resetButtonId = formModel.items[2].id;
+        //Check First repeatable panel on initial render
+        checkRepeatablePanel(firstPanelModel, null);
+        clickRadio(firstPanelModel, 1);
+
+        cy.get(`#${repeatButtonId}-widget`).click().then(() => {
+            const secondPanelModel = panelInstanceMangerModel.items[1];
+            //Check Second repeatable panel on repeat, initially
+            checkRepeatablePanel(secondPanelModel, null);
+            clickRadio(secondPanelModel, 0);
+            //now check first panel again, there should not be syncing of radio buttons across repeatable panels
+            checkRepeatablePanel(firstPanelModel, 1);
+
+            cy.getFormData().then((result) => {
+                const expectedData = '{"panelcontainer1716541354700":[{"radiobutton1716541359617":1},{"radiobutton1716541359617":0}]}';
+                expect(result.data.data).to.equal(expectedData);
+            });
+
+            // Do a reset and then check data
+            cy.get(`#${resetButtonId}-widget`).click().then(() => {
+                cy.getFormData().then((result) => {
+                    expect(result.data.data).to.equal(initialData);
+                });
+            });
+        });
+
+
     })
 })

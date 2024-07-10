@@ -40,7 +40,8 @@
       "dorExcludeTitle": false,
       "dorExcludeDescription": false
     },
-    "fd:path": "/content/panelcontainer"
+    "fd:path": "/content/panelcontainer",
+    "customProp": "customPropValue"
   },
   ":type": "core/fd/components/form/panelcontainer/v1/panelcontainer"
 }

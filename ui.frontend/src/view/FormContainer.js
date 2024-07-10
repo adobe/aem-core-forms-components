@@ -66,13 +66,12 @@ class FormContainer {
         return id ? this._model.getElement(id) : this._model;
     }
 
-    // todo: fix this once exposed in af-core
     /**
      * Returns the language code of the form.
      * @returns {string} The language code (e.g., "en").
      */
     getLang() {
-        return this._model._jsonModel.lang || "en";
+        return this._model.lang || "en";
     }
 
     /**
@@ -82,7 +81,11 @@ class FormContainer {
      */
     getParentFormElementId(model) {
         const parentModel = (model.fieldType && model.repeatable) ? model.parent.parent : model.parent;
-        return parentModel.id;
+        if (parentModel.fieldType === 'form') {
+            return '$form';
+        } else {
+            return parentModel.id;
+        }
     }
 
     /**
@@ -194,6 +197,11 @@ class FormContainer {
       this.setFocus(activeChild?._activeChild?.id || activeChild?.id);
     }
 
+    #focusOnFirstInvalidField(invalidFields) {
+        const id = invalidFields[0].fieldName;
+        this.setFocus(id);
+    }
+
     /**
        * Subscribes to model changes and updates the corresponding properties in the view.
        * @override
@@ -212,6 +220,12 @@ class FormContainer {
                 }
             })
         });
+
+        this._model.subscribe((action) => {
+            if(action.payload.length > 0) {
+                this.#focusOnFirstInvalidField(action.payload)
+            }
+        }, 'validationComplete');
     }
 }
 

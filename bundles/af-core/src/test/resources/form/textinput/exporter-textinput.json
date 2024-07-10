@@ -15,7 +15,17 @@
    "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/textinput"
+    "fd:path": "/content/textinput",
+    "customPropString": "test-custom-string",
+    "customPropStringArray": ["a", "b"],
+    "customPropBool": true,
+    "customPropBoolArray": true,
+    "customPropLong": 45,
+    "customPropLongArray": [345, 576],
+    "customPropDecimal": 45.67,
+    "customPropDecimalArray": [45.67, 90.34],
+    "customPropDate": 1663059600000,
+    "customPropDateArray": [1663059600000, 1719064800000]
   },
   ":type": "core/fd/components/form/textinput/v1/textinput"
 }

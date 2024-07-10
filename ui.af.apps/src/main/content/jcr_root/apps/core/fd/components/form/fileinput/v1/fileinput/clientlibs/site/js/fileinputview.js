@@ -89,6 +89,20 @@
             super.updateEmptyStatus();
         }
 
+        updateEnabled(enabled, state) {
+            if (this.widget) {
+                this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
+                const isDisabled = !enabled || state.readOnly;
+                if (isDisabled) {
+                    this.widget.setAttribute("disabled", "disabled");
+                    this.widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
+                } else {
+                    this.widget.removeAttribute("disabled");
+                    this.widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
+                }
+            }
+        }
+
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {

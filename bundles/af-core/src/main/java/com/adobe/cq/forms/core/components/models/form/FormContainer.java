@@ -64,7 +64,7 @@ public interface FormContainer extends Container {
      */
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
-    String DEFAULT_FORMS_SPEC_VERSION = "0.12.1";
+    String DEFAULT_FORMS_SPEC_VERSION = "0.14.0";
 
     /**
      * Returns form metadata {@link FormMetaData}
@@ -89,7 +89,7 @@ public interface FormContainer extends Container {
      * Returns schema reference
      *
      * @return reference to schema
-     * 
+     *
      * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable
@@ -294,7 +294,7 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 4.0.0
      */
     default String getLang() {
-        return "en-US";
+        return Base.DEFAULT_LANGUAGE;
     }
 
     /**
@@ -362,5 +362,4 @@ public interface FormContainer extends Container {
     default String getParentPagePath() {
         return null;
     }
-
 }

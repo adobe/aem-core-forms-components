@@ -19,7 +19,6 @@ import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core'
 
-
 /**
  * @module FormView
  */
@@ -36,11 +35,17 @@ class Utils {
      */
     static #contextPath = "";
     /**
-     * The array of field creator sets.
+     * Object of field creator sets.
      * @private
-     * @type {Object[]}
      */
-    static #fieldCreatorSets = [];
+    static #fieldCreatorSets = {};
+    /**
+     * The array of field creator order.
+     * This is to store the insertion order
+     * @private
+     * @type {String[]}
+     */
+    static #fieldCreatorOrder = [];
 
     /**
      * Returns the data attributes of the specific element.
@@ -136,7 +141,8 @@ class Utils {
      * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static createFieldsForAddedElement(addedElement, formContainer) {
-        Utils.#fieldCreatorSets.forEach(function (fieldCreatorSet) {
+        Object.values(Utils.#fieldCreatorOrder).forEach(function (fieldSelector) {
+            let fieldCreatorSet = Utils.#fieldCreatorSets[fieldSelector];
             const fieldElements = addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']);
             Utils.#createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
         });
@@ -149,21 +155,28 @@ class Utils {
      * @param {string} fieldClass - The data attribute to read the field data from.
      */
     static setupField(fieldCreator, fieldSelector, fieldClass) {
-        const onInit = (e) => {
-            console.debug("FormContainerInitialised Received", e.detail);
-            let formContainer =  e.detail;
-            let fieldElements = document.querySelectorAll(fieldSelector);
-            Utils.#createFormContainerFields(fieldElements, fieldCreator, formContainer);
-            Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
+        // there should be only one view for each fieldSelector in case of multiple view registrations in case of extension
+        // if customer needs to create two views for each field selector, they need to do it via themservles
+        if (!(fieldSelector in Utils.#fieldCreatorSets)) {
+            Utils.#fieldCreatorOrder.push(fieldSelector);
         }
-        Utils.#fieldCreatorSets.push({
+        Utils.#fieldCreatorSets[fieldSelector] = {
             fieldCreator,
             fieldSelector,
             fieldClass
-        });
-        document.addEventListener(Constants.FORM_CONTAINER_INITIALISED, onInit);
+        };
     }
 
+    static initializeAllFields(formContainer) {
+        console.debug("Initializing field views ", formContainer);
+        Object.values(Utils.#fieldCreatorOrder).forEach(function (fieldSelectorInCreator) {
+            const {fieldSelector, fieldCreator, fieldClass} = Utils.#fieldCreatorSets[fieldSelectorInCreator];
+            console.debug("Initializing all fields of field selector ", fieldSelector);
+            let fieldElements = document.querySelectorAll(fieldSelector);
+            Utils.#createFormContainerFields(fieldElements, fieldCreator, formContainer);
+            Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
+        });
+    }
     /**
      * Removes field reference from form container.
      * @private
@@ -285,6 +298,7 @@ class Utils {
         let elements = document.querySelectorAll(formContainerSelector);
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);
+            const customFunctionUrl = dataset["customFunctionsModuleUrl"];
             const _path = dataset["path"];
             const _pageLang = dataset["pageLang"];
             if ('contextPath' in dataset) {
@@ -296,6 +310,7 @@ class Utils {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
                 await this.registerCustomFunctions(_formJson.id);
+                await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
@@ -310,8 +325,32 @@ class Utils {
                     _path,
                     _element: elements[i]
                 });
+                Utils.initializeAllFields(formContainer);
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
+            }
+        }
+    }
+
+    static async registerCustomFunctionsByUrl(url) {
+        try {
+            if (url != null && url.trim().length > 0) {
+                // webpack ignore is added because webpack was converting this to a static import upon bundling resulting in error.
+                //This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.
+                const customFunctionModule = await import(/*webpackIgnore: true*/ url);
+                const keys = Object.keys(customFunctionModule);
+                const functions = [];
+                for (const name of keys) {
+                    const funcDef = customFunctionModule[name];
+                    if (typeof funcDef === 'function') {
+                        functions[name] = funcDef;
+                    }
+                }
+                FunctionRuntime.registerFunctions(functions);
+            }
+        } catch (e) {
+            if(window.console){
+                console.error("error in loading custom functions from url "+url+" with message "+e.message);
             }
         }
     }

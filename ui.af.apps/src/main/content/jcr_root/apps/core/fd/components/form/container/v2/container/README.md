@@ -63,8 +63,20 @@ BLOCK cmp-adaptiveform-container
     ELEMENT cmp-adaptiveform-container__wrapper
 ```
 
+In edit mode, the BEM structure includes a modifier for the cmp-adaptiveform-container block,
+
+```
+BLOCK cmp-adaptiveform-container
+    MODIFIER cmp-adaptiveform-container--edit
+    ELEMENT cmp-adaptiveform-container__wrapper
+```
+
+
 ## JavaScript Data Attribute Bindings
 
 Apply a `data-cmp-is="adaptiveFormContainer"` attribute to the `cmp-adaptiveform-container` block to enable initialization of the JavaScript component.
 
 Applying `data-cmp-adaptiveform-container-loader` attribute to the div specifically for applying the loader class on it, it is to ensure that the loading icon should not appear over components.
+
+Applying `data-cmp-custom-functions-module-url` attribute to the div to point to the edge delivery URL of the custom functions file. Custom Functions exported from this file will be registered in Function Runtime. 
+This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.

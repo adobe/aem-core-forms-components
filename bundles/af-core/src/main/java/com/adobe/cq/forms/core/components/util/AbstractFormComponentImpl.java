@@ -16,11 +16,15 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -49,6 +53,7 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -59,39 +64,60 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATAREF)
     @Nullable
     protected String dataRef;
 
     // mandatory property else adapt should fail for adaptive form components
-    @ValueMapValue(name = "fieldType")
+    @ValueMapValue(name = ReservedProperties.PN_FIELDTYPE)
     protected String fieldTypeJcr;
     private FieldType fieldType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_NAME)
     @Nullable
     protected String name;
 
-    @ValueMapValue
+    @ValueMapValue(name = ReservedProperties.PN_VALUE)
     @Default(values = "")
     protected String value;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VISIBLE)
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean visible;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_UNBOUND_FORM_ELEMENT)
     @Nullable
     protected Boolean unboundFormElement;
 
     @SlingObject
     private Resource resource;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUSION)
+    @Default(booleanValues = false)
+    protected boolean dorExclusion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_COLSPAN)
+    @Nullable
+    protected String dorColspan;
+
+    /**
+     * Returns dorBindRef of the form field
+     *
+     * @return dorBindRef of the field
+     * @since com.adobe.cq.forms.core.components.util 4.0.0
+     */
+    @JsonIgnore
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_BINDREF)
+    @Nullable
+    protected String dorBindRef;
 
     /**
      * Flag indicating if the data layer is enabled.
@@ -191,15 +217,17 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isVisible() {
-        if (getEditMode()) {
-            return true;
-        }
+        return visible == null || visible;
+    }
+
+    @JsonProperty("visible")
+    public Boolean getVisibleIfPresent() {
         return visible;
     }
 
+    // API kept for backward compatibility, this is not to be used anymore
     @JsonIgnore
     protected boolean getEditMode() {
         boolean editMode = false;
@@ -240,7 +268,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = new LinkedHashMap<>();
-        Map<String, String> customProperties = getCustomProperties();
+        Map<String, Object> customProperties = getCustomProperties();
         if (customProperties.size() > 0) {
             customProperties.forEach(properties::putIfAbsent);
         }
@@ -438,7 +466,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     private static class DataRefSerializer extends JsonSerializer<String> {
-
         @Override
         public void serialize(String s, JsonGenerator jsonGenerator,
             SerializerProvider serializerProvider) throws IOException {
@@ -455,19 +482,56 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
     }
 
+    private boolean isAllowedType(Object value) {
+        return value instanceof String || value instanceof String[] || value instanceof Boolean || value instanceof Boolean[]
+            || value instanceof Calendar || value instanceof Calendar[] || value instanceof BigDecimal
+            || value instanceof BigDecimal[] || value instanceof Long || value instanceof Long[];
+    }
+
     /**
      * Fetches all the custom properties associated with a given component's instance (including additional custom properties)
      *
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
-    private Map<String, String> getCustomProperties() {
+    private Map<String, Object> getCustomProperties() {
+        Map<String, Object> customProperties = new HashMap<>();
+        Map<String, String> templateBasedCustomProperties;
+        List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
+        Set<String> reservedProperties = ReservedProperties.getReservedProperties();
+
+        ValueMap resourceMap = resource.getValueMap();
+        Map<String, Object> nodeBasedCustomProperties = resourceMap.entrySet()
+            .stream()
+            .filter(entry -> isAllowedType(entry.getValue())
+                && !reservedProperties.contains(entry.getKey())
+                && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        nodeBasedCustomProperties.forEach(customProperties::putIfAbsent);
         try {
-            return Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
+            templateBasedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
                 .map(CustomPropertyInfo::getProperties)
                 .orElse(Collections.emptyMap());
         } catch (NoClassDefFoundError e) {
-            logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon. Returning an empty map.");
-            return Collections.emptyMap();
+            logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon.");
+            templateBasedCustomProperties = Collections.emptyMap();
         }
+        if (!templateBasedCustomProperties.isEmpty()) {
+            templateBasedCustomProperties.forEach(customProperties::putIfAbsent);
+        }
+        return customProperties;
+    }
+
+    @Override
+    @JsonIgnore
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        customDorProperties.put("dorExclusion", dorExclusion);
+        if (dorColspan != null) {
+            customDorProperties.put("dorColspan", dorColspan);
+        }
+        if (dorBindRef != null) {
+            customDorProperties.put("dorBindRef", dorBindRef);
+        }
+        return customDorProperties;
     }
 }

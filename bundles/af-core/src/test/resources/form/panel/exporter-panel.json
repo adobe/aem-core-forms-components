@@ -16,7 +16,8 @@
       "dorExcludeTitle": false,
       "dorExcludeDescription": false
     },
-    "fd:path": "/content/panel"
+    "fd:path": "/content/panel",
+    "customProp": "customPropValue"
   },
   ":itemsOrder": [
     "textinput"

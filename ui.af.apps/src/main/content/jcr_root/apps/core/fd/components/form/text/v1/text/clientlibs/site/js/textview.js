@@ -70,7 +70,7 @@
                 // since there is no widget for textview, the innerHTML is being changed
                 this.element.children[0].innerHTML = actualValue;
             }
-        }
+    }
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new Text({element, formContainer})

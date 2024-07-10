@@ -19,6 +19,17 @@ describe("Form Runtime with Date Picker", () => {
     const bemBlock = 'cmp-adaptiveform-datepicker'
 
     let formContainer = null
+    const fmPropertiesUI = "/libs/fd/fm/gui/content/forms/formmetadataeditor.html/content/dam/formsanddocuments/core-components-it/samples/datepicker/basic"
+    const themeRef = 'input[name="./jcr:content/metadata/themeRef"]'
+    const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
+    // enabling theme for this test case as without theme there is a bug in custom widget css
+    before(() => {
+        cy.openPage(fmPropertiesUI).then(() => {
+            cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
+                cy.get(propertiesSaveBtn).click();
+            })
+        })
+    })
 
     beforeEach(() => {
         cy.previewForm(pagePath, {"params" : ["afAcceptLang=th"]}).then(p => {
@@ -29,7 +40,7 @@ describe("Form Runtime with Date Picker", () => {
    // Year should be in Buddhist calendar year for Thai language
    it("Test localisation for date picker for thai", () => {
        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-       cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+       cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({ force: true }).then(() => {
            let todayDate = new Date();
 
            const dateFormat = new Intl.DateTimeFormat('th', {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2024-04-11T20:29:59.973+05:30"
+        cq:lastModifiedBy="admin"
+        jcr:lastModified="{Date}2024-04-11T20:29:59.952+05:30"
+        jcr:lastModifiedBy="admin"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="alwaysChallenge"
+        sling:resourceType="fd/af/cloudservices/hcaptcha/page"
+        clientJsUrl="https://js.hcaptcha.com/1/api.js"
+        name="alwayschallenge"
+        secretKey="\{491d063e8bc644fba2402d0ef8a148d168d8396aa37c6bc1ccdd514ff609c3646ede61971c44e44efc4d48e413673de2a6120362fcfcae609ade80882fe893ad}"
+        serverValidationUrl="https://api.hcaptcha.com/siteverify"
+        siteKey="10000000-ffff-ffff-ffff-000000000001"/>
+</jcr:root>

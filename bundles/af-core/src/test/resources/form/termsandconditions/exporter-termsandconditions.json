@@ -10,7 +10,8 @@
       "dorExcludeDescription": false
     },
     "fd:path": "/content/termsandconditions",
-    "fd:tnc": true
+    "fd:tnc": true,
+    "customProp": "customPropValue"
   },
   "label": {
     "value": "Terms And Conditions"
@@ -31,13 +32,17 @@
       "name": "consenttext",
       "value": "Text related to the terms and conditions come here",
       "richText": false,
+      "dataRef": null,
       "events": {
         "custom:setProperty": [
           "$event.payload"
         ]
       },
       "properties": {
-        "fd:path": "/content/termsandconditions/text"
+        "fd:path": "/content/termsandconditions/text",
+        "fd:dor": {
+          "dorExclusion": false
+        }
       },
       ":type": "core/fd/components/form/text/v1/text"
     },

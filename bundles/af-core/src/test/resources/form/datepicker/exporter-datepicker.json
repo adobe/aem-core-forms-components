@@ -15,7 +15,8 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/datepicker"
+    "fd:path": "/content/datepicker",
+    "customProp": "customPropValue"
   },
   "format": "date",
   ":type": "core/fd/components/form/datepicker/v1/datepicker"

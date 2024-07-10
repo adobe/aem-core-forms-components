@@ -33,7 +33,7 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[numberinput.id, 'widget']}">
     <div class="cmp-adaptiveform-numberinput__label-container">
-      <div data-sly-call="${label.label @componentId=widgetId, labelValue=numberinput.label.value, labelVisible=numberinput.label.visible, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=numberinput.label.value, labelVisible=numberinput.label.visible, labelRichText=numberinput.label.richText, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
       <div data-sly-call="${questionMark.questionMark @componentId=numberinput.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
     </div>
     <input

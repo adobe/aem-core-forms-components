@@ -2,6 +2,22 @@
   "enabledToggles":[
     "ft-cq-4324864",
     "FT_FORMS-3512",
-    "FT_FORMS-2494"
+    "FT_FORMS-2494",
+    "FT_SKYOPS-60870",
+    "FT_FORMS-8965",
+    "FT_FORMS-9244",
+    "FT_FORMS-13193",
+    "FT_FORMS-11541",
+    "FT_FORMS-12407",
+    "FT_FORMS-11269",
+    "FT_FORMS-11714",
+    "FT_FORMS-11756",
+    "FT_FORMS-12160",
+    "FT_FORMS-12570",
+    "FT_FORMS-12052",
+    "FT_FORMS-13209",
+    "FT_FORMS-11581",
+    "FT_FORMS-14545",
+    "FT_SITES-19631"
   ]
 }

@@ -602,6 +602,139 @@
                               width="12"/>
                         </cq:responsive>
                     </teaser_wizard>
+                    <teaser_checkbox
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/checkbox.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/checkbox"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_checkbox>
+                    <teaser_fragment
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/fragment.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/fragment"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_fragment>
+                    <teaser_recaptcha
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/recaptcha.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/recaptcha"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_recaptcha>
+                    <teaser_verticaltabs
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/verticaltabs.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/verticaltabs"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_verticaltabs>
+                    <teaser_termsandconditions
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/termsandconditions.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/termsandconditions"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_termsandconditions>
+                    <teaser_switch
+                      cq:styleIds="[1547060090076]"
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/teaser"
+                      actionsEnabled="false"
+                      descriptionFromPage="true"
+                      fileReference="/content/dam/core-components-examples/library/forms-components/switch.svg"
+                      linkURL="/content/core-components-examples/library/adaptive-form/switch"
+                      textIsRich="true"
+                      titleFromPage="true">
+                        <cq:responsive jcr:primaryType="nt:unstructured">
+                            <default
+                              jcr:primaryType="nt:unstructured"
+                              width="3"/>
+                            <small
+                              jcr:primaryType="nt:unstructured"
+                              width="4"/>
+                            <extrasmall
+                              jcr:primaryType="nt:unstructured"
+                              width="12"/>
+                        </cq:responsive>
+                    </teaser_switch>
+
                 </container_1789240808>
 
             </responsivegrid>

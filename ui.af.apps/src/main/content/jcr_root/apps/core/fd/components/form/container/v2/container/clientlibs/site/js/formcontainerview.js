@@ -30,24 +30,48 @@
             let self = this;
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                let body = action.payload?.body;
-                if (body) {
-                    if (body.redirectUrl) {
-                        window.location.href = encodeURI(body.redirectUrl);
-                    } else if (body.thankYouMessage) {
-                        let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
-                        let thankYouMessage = document.createElement("div");
-                        thankYouMessage.setAttribute("class", "tyMessage");
-                        thankYouMessage.innerHTML = body.thankYouMessage;
-                        formContainerElement.replaceWith(thankYouMessage);
-                    }
+                // execute the handler only if there are no rules configured on submitSuccess event.
+                if (!state.events.submitSuccess || state.events.submitSuccess.length === 0) {
+                    const globals = {
+                        form: self.getModel().getRuleNode(),
+                        event: {
+                            type: action.type,
+                            payload: action.payload,
+                        }
+                    };
+                    FormView.customFunctions.defaultSubmitSuccessHandler(globals);
                 }
             }, "submitSuccess");
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
-                window.alert(defaultSubmissionError);
+                // execute the handler only if there are no rules configured on submitError event.
+                if (!state.events.submitError || state.events.submitError.length === 0) {
+                    let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(self.getLang(), "InternalFormSubmissionError");
+                    const globals = {
+                        form: self.getModel().getRuleNode(),
+                        event: {
+                            type: action.type,
+                            payload: action.payload,
+                        }
+                    };
+                    FormView.customFunctions.defaultSubmitErrorHandler(defaultSubmissionError, globals);
+                }
             }, "submitError");
+            this._model.subscribe((action) => {
+                let state = action.target.getState();
+                // execute the handler only if there are no rules configured on custom:saveSuccess event.
+                if (!state.events['custom:saveSuccess'] || state.events['custom:saveSuccess'].length === 0) {
+                    console.log("Draft id = " + action?.payload?.body?.draftId);
+                    window.alert("Draft has been saved successfully");
+                }
+            }, "saveSuccess");
+            this._model.subscribe((action) => {
+                let state = action.target.getState();
+                // execute the handler only if there are no rules configured on custom:saveError event.
+                if (!state.events['custom:saveError'] || state.events['custom:saveError'].length === 0) {
+                    window.alert("Issue while saving draft");
+                }
+            }, "saveError");
         }
     }
 

@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Base;
 
 /**
@@ -29,13 +30,13 @@ public abstract class AbstractCheckboxImpl extends AbstractOptionsFieldImpl {
 
     // when a checkbox is not checked, it will still have a value representing its unchecked state, rather than having
     // a null value. This configuration allows for a distinct value when the checkbox is in an unchecked state.
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enableUncheckedValue")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENABLE_UNCHECKED_VALUE)
     protected Boolean enableUncheckedValue;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CHECKED_VALUE)
     private String checkedValue;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_UNCHECKED_VALUE)
     private String uncheckedValue;
 
     @PostConstruct

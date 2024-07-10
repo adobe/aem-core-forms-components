@@ -25,6 +25,7 @@ import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Optional;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
@@ -35,8 +36,8 @@ import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.models.v1.AbstractComponentImpl;
 import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
-import com.adobe.cq.wcm.core.components.util.AbstractComponentImpl;
 import com.day.cq.commons.LanguageUtil;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
@@ -55,15 +56,19 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     private static final Logger LOGGER = LoggerFactory.getLogger(AEMFormImpl.class);
 
     @ScriptVariable
+    @Optional
     protected PageManager pageManager;
 
     @ScriptVariable
+    @Optional
     private Page currentPage;
 
     @ScriptVariable
+    @Optional
     protected Style currentStyle;
 
     @ScriptVariable
+    @Optional
     protected ValueMap properties;
 
     @ValueMapValue(name = AEMForm.PN_THANK_YOU_PAGE, injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -118,6 +123,10 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
     @Default(values = "false")
     private String usePageLocale;
 
+    @ValueMapValue(name = AEMForm.PN_ROLEATTRIBUTE, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String roleAttribute;
+
     protected String getClientLibCategory(String themePath) {
         String clientLibCategory = "";
         if (StringUtils.isNotBlank(themePath)) {
@@ -151,6 +160,12 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
         } else {
             return formRef;
         }
+    }
+
+    @Nullable
+    @Override
+    public String getRoleAttribute() {
+        return roleAttribute;
     }
 
     @Override

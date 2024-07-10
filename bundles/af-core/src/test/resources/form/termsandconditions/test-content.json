@@ -8,6 +8,7 @@
     "sling:resourceType": "core/fd/components/form/termsandconditions/v1/termsandconditions",
     "wrapData": true,
     "fieldType": "panel",
+    "customProp": "customPropValue",
     "text": {
       "jcr:primaryType": "nt:unstructured",
       "jcr:title": "",

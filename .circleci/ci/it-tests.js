@@ -37,7 +37,9 @@ try {
     ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
     ci.sh(`docker cp ${qpContainerId}:/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/ /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/`);
 
-    let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
+    //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
+    //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
+    let wcmVersion = "2.25.4";
     ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
         // Connect to QP
@@ -111,6 +113,25 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        if (AEM && AEM.includes("addon")) {
+            // explicitly add the rum bundle, since it is only available on publish tier
+            // upload webvitals and disable api region
+            const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
+            ci.sh(disableApiRegion);
+            const installWebVitalBundle = `curl -u admin:admin \
+                                            -F bundlefile=@'${buildPath}/it/core/src/main/resources/com.adobe.granite.webvitals-1.2.2.jar' \
+                                            -F name='com.adobe.granite.webvitals' \
+                                            -F action=install \
+                                            http://localhost:4502/system/console/bundles`;
+            ci.sh(installWebVitalBundle);
+            // get the bundle id
+            const webVitalBundleId = ci.sh("curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r '.data | map(select(.symbolicName == \"com.adobe.granite.webvitals\")) | .[0].id'", true);
+            console.log("Web Vital Bundle Id " + webVitalBundleId);
+            if (webVitalBundleId) {
+                // start the web vital bundle
+                ci.sh(`curl -u admin:admin -F action=start http://localhost:4502/system/console/bundles/${webVitalBundleId}`)
+            }
+        }
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
         // start running the tests
