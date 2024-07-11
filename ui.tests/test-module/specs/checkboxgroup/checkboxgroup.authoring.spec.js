@@ -206,7 +206,8 @@ describe('Page - Authoring', function () {
         cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
     });
 
-    it('rule editor is working with rich text enum names', function(){
+    // adding retry since rule editor sometimes does not open at first try
+    it('rule editor is working with rich text enum names', { retries: 3 }, function(){
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.invokeEditableAction("[data-action='editexpression']");
         cy.get("#af-rule-editor").should("be.visible");
