@@ -70,6 +70,23 @@ module.exports = class CI {
         }
     };
 
+    fetchLatestArtifactVersion(groupId, artifactId, repoUrl = 'https://artifactory-uw2.adobeitc.com/artifactory/maven-aemforms-release') {
+        const curlCommand = `curl -u ${process.env.DOCKER_USER}:${process.env.DOCKER_PASS} "${repoUrl}?g=${groupId}&a=${artifactId}"`;
+        try {
+            const output = e.execSync(curlCommand).toString().trim();
+            const versions = JSON.parse(output).results.map(result => result.version);
+            const latestVersion = versions
+                .filter(version => version.startsWith('6.0.'))
+                .sort((a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'}))
+                .pop();
+            console.log("Latest version: " + latestVersion);
+            return latestVersion;
+        } catch (error) {
+            console.error("Error fetching the latest version: " + error);
+            return null;
+        }
+    }
+
     /**
      * Return value of given environment variable.
      */

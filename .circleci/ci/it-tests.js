@@ -24,7 +24,9 @@ console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env;
-const classicFormAddonVersion = '6.0.1256' // 'LATEST'; // 6.6.0 packages are published to same artifactory, once fixed use latest here
+ // 6.6.0 packages are published to same artifactory, once fixed use latest here
+const latestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg');
+const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.1256'; // Use the latest version if available, otherwise default to '6.0.1256'
 // this value is for 6.5.21.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
 const classicFormReleasedAddonVersion = '6.0.1244';
 
