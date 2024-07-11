@@ -71,7 +71,7 @@ module.exports = class CI {
     };
 
     fetchLatestArtifactVersion(groupId, artifactId, repoUrl = 'https://artifactory-uw2.adobeitc.com/artifactory/maven-aemforms-release') {
-       const curlCommand = `curl -u ${process.env.DOCKER_USER}:${process.env.DOCKER_PASS} "${repoUrl}?g=${groupId}&a=${artifactId}"`;
+        const curlCommand = `curl -v -u ${process.env.DOCKER_USER}:${process.env.DOCKER_PASS} "${repoUrl}?g=${groupId}&a=${artifactId}"`;
         console.log("Executing curl command:", curlCommand); // Log the curl command for debugging
         try {
             const output = e.execSync(curlCommand).toString().trim();
