@@ -71,18 +71,27 @@ module.exports = class CI {
     };
 
     fetchLatestArtifactVersion(groupId, artifactId, repoUrl = 'https://artifactory-uw2.adobeitc.com/artifactory/maven-aemforms-release') {
-        const curlCommand = `curl -u ${process.env.DOCKER_USER}:${process.env.DOCKER_PASS} "${repoUrl}?g=${groupId}&a=${artifactId}"`;
+       const curlCommand = `curl -u ${process.env.DOCKER_USER}:${process.env.DOCKER_PASS} "${repoUrl}?g=${groupId}&a=${artifactId}"`;
+        console.log("Executing curl command:", curlCommand); // Log the curl command for debugging
         try {
             const output = e.execSync(curlCommand).toString().trim();
-            const versions = JSON.parse(output).results.map(result => result.version);
-            const latestVersion = versions
-                .filter(version => version.startsWith('6.0.'))
-                .sort((a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'}))
-                .pop();
-            console.log("Latest version: " + latestVersion);
-            return latestVersion;
+            console.log("Curl command output:", output); // Log the raw output of the curl command
+            // Check if output is valid JSON
+            if (output.startsWith('{') && output.endsWith('}')) {
+                const versions = JSON.parse(output).results.map(result => result.version);
+                const latestVersion = versions
+                    .filter(version => version.startsWith('6.0.'))
+                    .sort((a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'}))
+                    .pop();
+                console.log("Latest version: " + latestVersion);
+                return latestVersion;
+            } else {
+                // Output is not valid JSON, log for debugging
+                console.error("Invalid JSON output: " + output);
+                return null;
+            }
         } catch (error) {
-            console.error("Error fetching the latest version: " + error);
+            console.error("Error executing curl command:", error);
             return null;
         }
     }
