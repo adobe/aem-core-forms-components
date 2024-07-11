@@ -66,7 +66,7 @@ describe("Custom Properties Tests", () => {
                 // Advanced Tab in dialog
                 cy.get(tabSelector).contains("Advanced").click({force: true});
                 cy.get(".fd-CustomProperties-select").click();
-                cy.get("coral-selectlist-item[role='option']").contains("Group 1").click();
+                cy.get("coral-selectlist-item[role='option']").contains("Group 1").click({force: true});
                 cy.get(".fd-CustomProperties-select").click(); // does the job of blur
 
                 cy.get(".fd-CustomProperties-additionalCustomPropertiesCheck").click();

@@ -96,7 +96,7 @@ describe('Test UpdateEnum, UpdateEnumName for dropdown', () => {
             })
         });
 
-        it ('add three and then reduce to two', () => {
+        it ('add three, reduce to two, add three back and reduce again', () => {
             cy.get(addBothBtn1).click().then(() => {
                 cy.get(dropdown1).should('have.length', 4);
                 cy.get(reduceBothBtn1).click().then(() => {
@@ -107,6 +107,12 @@ describe('Test UpdateEnum, UpdateEnumName for dropdown', () => {
                             expect(option.text()).to.be.eq(enumNames1[index - 1]);
                         }
                     });
+                    cy.get(addBothBtn1).click().then(() => {
+                        cy.get(dropdown1).should('have.length', 4);
+                        cy.get(reduceBothBtn1).click().then(() => {
+                            cy.get(dropdown1).should('have.length', 3);
+                        })
+                    })
                 })
             })
 

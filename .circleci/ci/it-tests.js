@@ -24,7 +24,7 @@ console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env;
-const classicFormAddonVersion = 'LATEST';
+const classicFormAddonVersion = '6.0.1256' // 'LATEST'; // 6.6.0 packages are published to same artifactory, once fixed use latest here
 // this value is for 6.5.21.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
 const classicFormReleasedAddonVersion = '6.0.1244';
 
@@ -105,12 +105,12 @@ try {
 
         if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
             // add a sleep for 10 mins, add-on takes times to come up
-            ci.sh(`sleep 12m`);
+            ci.sh(`sleep 8m`);
             // restart the AEM insatnce
             ci.sh(`./qp.sh stop --id author`);
             ci.sh(`./qp.sh start --id author`);
             // add a sleep for 7 mins, add-on takes times to come up
-            ci.sh(`sleep 12m`);
+            ci.sh(`sleep 8m`);
         }
     });
 
