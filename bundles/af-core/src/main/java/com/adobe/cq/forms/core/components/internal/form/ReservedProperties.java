@@ -146,6 +146,7 @@ public final class ReservedProperties {
     public static final String PN_DESIGN_DEFAULT_TYPE = Title.PN_DESIGN_DEFAULT_TYPE;
     public static final String PN_TITLE_LINK_DISABLED = Title.PN_TITLE_LINK_DISABLED;
     public static final String PN_DRAG_DROP_TEXT = "dragDropText";
+    public static final String PN_DRAG_DROP_TEXT_V3 = "fd:dragDropText";
     public static final String PN_CLIENTLIB_REF = "clientLibRef";
     public static final String PN_REDIRECT = "redirect";
     public static final String PN_PREFILL_SERVICE = "prefillService";
