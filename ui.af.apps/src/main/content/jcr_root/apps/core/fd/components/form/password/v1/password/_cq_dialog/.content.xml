@@ -36,8 +36,7 @@
                                                 fieldLabel="Default value"
                                                 name="./default"
                                                 sling:hideResource="{Boolean}true"
-                                                wrapperClass="cmp-adaptiveform-password__value"/>
-                                                                                           
+                                                wrapperClass="cmp-adaptiveform-password__value"/>                                                                                           
                                         </items>
                                     </column>
                                 </items>

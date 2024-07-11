@@ -14,31 +14,15 @@
  * limitations under the License.
  ******************************************************************************/
 
- .cmp-adaptiveform-password {
+$(document).ready(function() {
+     $(document).on('click', '.ssnField .fisheye', function() {
+         var type = $(".ssnField").find("input").attr("type");
+         if (type == "text") {
+             $(".ssnField").find("input").attr("type", "password");
+         }
 
- }
- 
- .cmp-adaptiveform-password__widget {
- 
- }
- .cmp-adaptiveform-password__widget{
-   
- }
- 
- .cmp-adaptiveform-password__label {
- 
- }
- .cmp-adaptiveform-password__label-container{
-   
- }
- 
- .cmp-adaptiveform-password__longdescription {
- }
- 
- .cmp-adaptiveform-password__shortdescription {
- }
- 
- .cmp-adaptiveform-password__questionmark {
- 
- }
- 
+         if (type == "password") {
+             $(".ssnField").find("input").attr("type", "text");
+         }
+     });
+ });

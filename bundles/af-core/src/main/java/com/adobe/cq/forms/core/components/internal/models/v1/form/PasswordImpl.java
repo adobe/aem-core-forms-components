@@ -47,7 +47,7 @@ public class PasswordImpl extends AbstractFieldImpl implements Password {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    private String validationPattern;
+    private String pattern;
 
     @Override
     public String getFieldType() {
@@ -65,37 +65,17 @@ public class PasswordImpl extends AbstractFieldImpl implements Password {
     }
 
     @Override
-    public Long getMinimum() {
-        return minimum;
-    }
-
-    @Override
-    public Long getMaximum() {
-        return maximum;
-    }
-
-    @Override
     public String getFormat() {
         return displayFormat;
     }
 
     @Override
-    public String getValidationPattern() {
-        return validationPattern;
-    }
-
-    @Override
-    public Long getExclusiveMaximum() {
-        return (Long) exclusiveMaximumValue;
-    }
-
-    @Override
-    public Long getExclusiveMinimum() {
-        return (Long) exclusiveMinimumVaue;
+    public String getPattern() {
+        return pattern;
     }
 
     @PostConstruct
-    private void initTextInput() {
+    private void initPassword() {
         exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, null);
         exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, null);
         // in json either, exclusiveMaximum or maximum should be present
