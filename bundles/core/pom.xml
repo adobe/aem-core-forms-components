@@ -20,11 +20,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-<<<<<<< HEAD
         <version>1.1.47-SNAPSHOT</version>
-=======
-        <version>3.0.47-SNAPSHOT</version>
->>>>>>> 615b6c86c (@releng [maven-scm] :prepare for next development iteration)
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 

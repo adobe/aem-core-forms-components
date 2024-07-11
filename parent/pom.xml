@@ -21,11 +21,7 @@
     <groupId>com.adobe.aem</groupId>
     <artifactId>core-forms-components-parent</artifactId>
     <packaging>pom</packaging>
-<<<<<<< HEAD
     <version>1.1.47-SNAPSHOT</version>
-=======
-    <version>3.0.47-SNAPSHOT</version>
->>>>>>> 615b6c86c (@releng [maven-scm] :prepare for next development iteration)
 
     <name>AEM Forms Core Components - Parent</name>
     <description>Parent POM for AEM Forms Core Components</description>
