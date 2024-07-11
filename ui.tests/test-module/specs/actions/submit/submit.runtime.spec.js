@@ -69,6 +69,10 @@ describe("Form with Submit Button", () => {
             url: '**/adobe/forms/af/submit/*',
         }).as('afSubmission')
 
+        Object.entries(formContainer._fields).forEach(([id, field]) => {
+            fillField(id); // mark all the fields with some value
+        });
+
         cy.get(`.cmp-adaptiveform-button__widget`).click()
         cy.wait('@afSubmission').then(({ response}) => {
             expect(response.statusCode).to.equal(200);
@@ -85,10 +89,6 @@ describe("Form with Submit Button", () => {
             method: 'POST',
             url: '**/adobe/forms/af/submit/*',
         }).as('afSubmission')
-
-        Object.entries(formContainer._fields).forEach(([id, field]) => {
-            fillField(id); // mark all the fields with some value
-        });
 
         cy.get(`.cmp-adaptiveform-button__widget`).click()
         cy.wait('@afSubmission').then(({ response}) => {
