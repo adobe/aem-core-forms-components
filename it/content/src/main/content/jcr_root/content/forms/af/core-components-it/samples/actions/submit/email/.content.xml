@@ -21,11 +21,23 @@
                 fieldType="form"
                 textIsRich="true"
                 useExternalEmailTemplate="false"
+                template="Thanks you ${firstName}"
                 from="abc@def.com"
                 mailto="[abc@abc.om]"
                 thankYouMessage="Thank you for submitting the form."
                 thankYouOption="message"
                 themeRef="/libs/fd/af/themes/canvas">
+            <textinput
+                    jcr:lastModified="{Date}2023-01-18T17:47:33.769+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    autocomplete="off"
+                    enabled="{Boolean}true"
+                    fieldType="text-input"
+                    name="firstName"
+                    visible="{Boolean}true"/>
             <submit
                     jcr:created="{Date}2022-11-23T12:16:03.945+05:30"
                     jcr:createdBy="admin"
