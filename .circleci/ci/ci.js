@@ -71,13 +71,13 @@ module.exports = class CI {
     };
 
     fetchLatestArtifactVersion(groupId, artifactId) {
-       const curlCommand = `curl -v -u ${process.env.DOCKER_USER}:${process.env.DOCKER_PASS} "https://artifactory-uw2.adobeitc.com/artifactory/api/search/versions?g=${groupId}&a=${artifactId}&repos=maven-aemforms-release"`;
+      const curlCommand = `curl -v -u ${process.env.DOCKER_USER}:${process.env.DOCKER_PASS} "https://artifactory-uw2.adobeitc.com/artifactory/api/search/versions?g=${groupId}&a=${artifactId}&repos=maven-aemforms-release"`;
         console.log("Executing curl command:", curlCommand); // Log the curl command for debugging
         try {
             const output = e.execSync(curlCommand).toString().trim();
-            console.log("Curl command output:", output); // Log the raw output of the curl command
             // Parse the output as JSON and extract versions
-            const versions = JSON.parse(output).map(item => item.version);
+            const jsonResponse = JSON.parse(output);
+            const versions = jsonResponse.results.map(item => item.version);
             // Filter versions starting with "6.0.", sort them, and find the latest
             const latestVersion = versions
                 .filter(version => version.startsWith('6.0.'))
