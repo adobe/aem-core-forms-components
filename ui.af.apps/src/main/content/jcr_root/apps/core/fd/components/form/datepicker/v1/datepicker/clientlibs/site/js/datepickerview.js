@@ -97,6 +97,7 @@
                     this._model.value = this.widgetObject.getValue();
                     //setDisplayValue is required for cases where value remains same while focussing in and out.
                     this.widgetObject.setDisplayValue(this._model.value);
+                    this.widgetObject.setCalendarWidgetValue(this._model.value);
                     this.setInactive();
                 }, this.getWidget());
                 this.widgetObject.addEventListener('focus', (e) => {

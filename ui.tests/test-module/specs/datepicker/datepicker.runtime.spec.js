@@ -224,6 +224,14 @@ describe("Form Runtime with Date Picker", () => {
 
         });
 
+        date = '15/8/2020';
+        cy.get(`#${datePicker7}`).find("input").clear().type(date).then(() => {
+            cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
+                cy.get("#li-day-16").should("be.visible").should("have.class", "dp-selected"); // first check for the original date selection
+                cy.get(".dp-caption").should("be.visible").should("contain.text", "2020");
+            });
+        });
+
         // check clear option
         cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-clear").click();
