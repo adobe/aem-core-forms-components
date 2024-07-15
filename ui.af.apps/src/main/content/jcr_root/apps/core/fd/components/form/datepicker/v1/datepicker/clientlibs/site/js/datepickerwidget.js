@@ -1158,6 +1158,16 @@ if (typeof window.DatePickerWidget === 'undefined') {
       }
     }
 
+    setCalendarWidgetValue(value) {
+      if (this.#curInstance === null && this.#widget != null) {
+        this.#curInstance = window.afCache.get(this.#widget, "datetimepicker");
+      }
+      if (this.#curInstance != null) {
+        // also change the date of the calendar widget
+        this.#curInstance.selectedDate = value;
+      }
+    }
+
     /**
      * Sets the formatted edit value on the widget
      * @param value
