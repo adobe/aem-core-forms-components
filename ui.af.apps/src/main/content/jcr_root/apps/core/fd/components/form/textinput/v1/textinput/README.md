@@ -42,6 +42,16 @@ The following properties are written to JCR for this Form Text component and are
 8.  `./readOnly` - if set to `true`, the filed will be read only
 9.  `./maxLength` - defines the maximum length of input allowed for the field.
 10. `./minLength` - defines the minimum length of input allowed for the field.
+11. `./maxLengthMessage` - defines the maximum length error message for the field.
+12. `./minLengthMessage` - defines the minimum length error message for the field.
+
+
+### Handling `maxLength` and `maxLengthMessage` in Custom Widgets
+
+The `maxLength` property in HTML5 compliant fields, such as those used in the Adaptive Form Text Input component, restricts users from typing more characters than specified. This restriction aligns with HTML5 standards to ensure the input length does not exceed the defined maximum. However, there are scenarios, particularly in custom widgets or headless implementations, where it might be necessary to allow input beyond the `maxLength`.
+
+To accommodate such use-cases, while still adhering to HTML5 compliance within the core component, the `maxLengthMessage` property is provided. This property allows developers to define a custom error message that is displayed when the input exceeds the `maxLength`, offering a way to guide users even when custom logic permits them to enter more characters than the standard limit.
+
 
 ## Client Libraries
 The component provides a `core.forms.components.textinput.v1.runtime` client library category that contains the Javascript runtime for the component. 
