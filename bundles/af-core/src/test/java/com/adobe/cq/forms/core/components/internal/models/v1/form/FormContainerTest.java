@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Collections;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -23,9 +25,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
-import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertEquals;
+import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 @ExtendWith(AemContextExtension.class)
 public class FormContainerTest {
