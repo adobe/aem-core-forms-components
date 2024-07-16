@@ -15,6 +15,16 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import static org.apache.jackrabbit.JcrConstants.JCR_CONTENT;
+import static org.apache.jackrabbit.JcrConstants.JCR_DATA;
+import static org.apache.jackrabbit.JcrConstants.JCR_MIMETYPE;
+import static org.apache.jackrabbit.JcrConstants.JCR_PRIMARYTYPE;
+import static org.apache.jackrabbit.JcrConstants.NT_RESOURCE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
@@ -42,17 +52,9 @@ import com.day.cq.dam.api.Asset;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
 import com.google.common.collect.ImmutableMap;
+
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
-
-import static org.apache.jackrabbit.JcrConstants.JCR_CONTENT;
-import static org.apache.jackrabbit.JcrConstants.JCR_DATA;
-import static org.apache.jackrabbit.JcrConstants.JCR_MIMETYPE;
-import static org.apache.jackrabbit.JcrConstants.JCR_PRIMARYTYPE;
-import static org.apache.jackrabbit.JcrConstants.NT_RESOURCE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 @ExtendWith(AemContextExtension.class)
 public class FormContainerImplTest {
@@ -197,5 +199,11 @@ public class FormContainerImplTest {
     void testGetName() throws Exception {
         FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
         assertNull(formContainer.getName());
+    }
+
+    @Test
+    void testGetHamburgerMenu() throws Exception {
+        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        assertFalse(formContainer.getHamburgerMenu());
     }
 }

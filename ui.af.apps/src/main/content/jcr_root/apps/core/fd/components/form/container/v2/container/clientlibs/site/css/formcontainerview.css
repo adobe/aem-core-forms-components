@@ -1,5 +1,6 @@
+
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2024 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,4 +20,156 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 }
 .cmp-adaptiveform-container--loading{
   
+}
+
+.cmp-adaptiveform-container [data-cmp-visible="false"] {
+    display: none !important;
+}
+.menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+    list-style: none; /* Remove bullet points */
+}
+
+.menu > li {
+    position: relative; /* Ensure that submenus are positioned relative to their parent li */
+}
+
+.menu a {
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.menu a:hover {
+    background-color: #f0f0f0;
+    text-decoration: none;
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    /* width: 30px; */
+    margin: 5px;
+    z-index: 1001;
+    float: right;
+    width:30px;
+    height:30px;
+    background:no-repeat;
+    background-size:30px 30px; 
+    background-image:url('../resources/images/menu.png');
+}
+
+.hamburgerClose {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    /* width: 30px; */
+    margin: 5px;
+    z-index: 1001;
+    float: right;
+    width:30px;
+    height:30px;
+    background:no-repeat;
+    background-size:30px 30px; 
+    background-image:url('../resources/images/closeIcon.svg');
+}
+
+.hamburger div {
+    height: 4px;
+    background-color: black;
+    margin: 5px 0;
+}
+
+.submenu {
+    display: none;
+    flex-direction: column;
+    position: relative; /* Use relative positioning to affect the flow of the parent menu */
+    background-color: white;
+    padding: 0;
+    margin: 0;
+    list-style: none; /* Remove bullet points */
+    width: 100%; /* Ensure submenu is the same width as parent menu */
+}
+
+.submenu li {
+    box-sizing: border-box;
+    border-bottom: 1px solid #ddd;
+}
+
+.submenu a {
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding-left: 15px;
+}
+
+.submenu a:hover {
+    background-color: #f0f0f0;
+}
+
+.active {
+    background-color: #f0f0f0;
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .hamburger {
+        display: none;
+    }
+}
+
+.left-nav-button {
+    width:30px;
+    cursor: pointer;
+    width: 2.0rem;
+    height: 2.0rem;
+    background:no-repeat;
+    background-size:30px 30px;
+    margin: 5px;
+    background-image:url('../resources/images/leftArrow.png');
+    border-radius: 1.5rem;
+    border: 1px solid #555555;
+    padding: 2px;
+    background-position: center;
+}
+
+.right-nav-button {
+    width:30px;
+    cursor: pointer;
+    width: 2.0rem;
+    height: 2.0rem;
+    background:no-repeat;
+    background-position: center;
+    background-size:30px 30px;
+    margin: 5px;
+    background-image:url('../resources/images/rightArrow.png');
+    border-radius: 1.5rem;
+    border: 1px solid #555555;
+    padding: 2px;
+}
+
+.right-nav-button:hover {
+    opacity: 0.5;
+}
+
+.left-nav-button:hover {
+    opacity: 0.5;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-around;
 }
