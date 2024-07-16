@@ -46,7 +46,7 @@ The following properties are written to JCR for this Form Text component and are
 12. `./minLengthMessage` - defines the minimum length error message for the field.
 
 
-### Handling `maxLength` and `maxLengthMessage` in Custom Widgets
+### Behavior of `maxLength` and `maxLengthMessage`
 
 The `maxLength` property in HTML5 compliant fields, such as those used in the Adaptive Form Text Input component, restricts users from typing more characters than specified. This restriction aligns with HTML5 standards to ensure the input length does not exceed the defined maximum. However, there are scenarios, particularly in custom widgets or headless implementations, where it might be necessary to allow input beyond the `maxLength`.
 
