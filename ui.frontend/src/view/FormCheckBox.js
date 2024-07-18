@@ -46,9 +46,11 @@ class FormCheckBox extends FormFieldBase {
         this._offValue = this._model._jsonModel.enum[1];
         this.widget.addEventListener('change', (e) => {
             if (this.widget.checked) {
-                this._model.value = this._onValue;
+                //this._model.value = this._onValue;
+                this.setModelValue(this._onValue);
             } else {
-                this._model.value = this._offValue;
+                //this._model.value = this._offValue;
+                this.setModelValue(this._offValue);
             }
         })
 

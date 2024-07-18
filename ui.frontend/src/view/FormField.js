@@ -130,6 +130,12 @@ class FormField {
         }
     }
 
+    setModelValue(value) {
+        this._model._eventSource = "ui";
+        this._model.value = value;
+        this._model._eventSource = "code";
+    }
+
     /**
      * Updates the HTML with the respective model.
      * This is for the markup that is generated on the client-side (e.g., repeatable panel).

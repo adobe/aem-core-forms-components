@@ -107,7 +107,8 @@
                 }
             }, this);
             if (value.length !== 0 || this._model.value != null) {
-                this._model.value = value;
+                this.setModelValue(value)
+                //this._model.value = value;
             }
         }
 
@@ -116,7 +117,7 @@
             let widgets = this.widget;
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
             widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
-        }    
+        }
 
         updateValue(modelValue) {
             modelValue = [].concat(modelValue);
