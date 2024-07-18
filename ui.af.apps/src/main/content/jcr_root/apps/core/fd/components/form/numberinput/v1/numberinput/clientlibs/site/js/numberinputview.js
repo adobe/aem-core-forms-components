@@ -94,10 +94,12 @@
                 }
             } else {
                 if (this.widget.value !== '') {
-                    this._model.value = this.widget.value;
+                    //this._model.value = this.widget.value;
+                    this.setModelValue(this.widget.value);
                 }
                 this.getWidget().addEventListener('blur', (e) => {
-                    this._model.value = e.target.value;
+                    //this._model.value = e.target.value;
+                    this.setModelValue(e.target.value);
                     if(this.element) {
                         this.setInactive();
                     }

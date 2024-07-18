@@ -72,7 +72,8 @@
                     this.initializeWidget();
             } else {
                 if (this.widget.value !== '') {
-                    this._model.value = this.widget.value;
+                    //this._model.value = this.widget.value;
+                    this.setModelValue(this.widget.value);
                 }
             }
         }

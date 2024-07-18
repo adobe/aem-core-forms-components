@@ -82,7 +82,8 @@
             let widgets = this.widget;
             widgets.forEach(widget => {
                 widget.addEventListener('change', (e) => {
-                    this._model.value = e.target.value;
+                    //this._model.value = e.target.value;
+                    this.setModelValue(e.target.value);
                 });
                 widget.addEventListener('focus', (e) => {
                     this.setActive();
@@ -116,7 +117,7 @@
                 if (readonly === true) {
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
                 } else {
-                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED); 
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
                 }
             });
         }
@@ -126,7 +127,7 @@
             let widgets = this.widget;
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
             widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
-        } 
+        }
 
         updateValue(modelValue) {
             this.widget.forEach(widget => {
