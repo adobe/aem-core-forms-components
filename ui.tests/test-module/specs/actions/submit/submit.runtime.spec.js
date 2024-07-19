@@ -20,6 +20,7 @@ describe("Form with Submit Button", () => {
     const customSubmitPagePathRequestParameters = "content/forms/af/core-components-it/samples/actions/submit/customsubmit/basicwithrequestparameters.html"
     const externalPagePathSubmit = "content/forms/af/core-components-it/samples/actions/submit/external.html"
     const submitSuccessRulePagePath = "content/forms/af/core-components-it/samples/actions/submit/submitsuccessrule.html"
+    const emailPagePath = "content/forms/af/core-components-it/samples/actions/submit/email.html"
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
@@ -71,6 +72,23 @@ describe("Form with Submit Button", () => {
         Object.entries(formContainer._fields).forEach(([id, field]) => {
             fillField(id); // mark all the fields with some value
         });
+
+        cy.get(`.cmp-adaptiveform-button__widget`).click()
+        cy.wait('@afSubmission').then(({ response}) => {
+            expect(response.statusCode).to.equal(200);
+            expect(response.body).to.be.not.null;
+            expect(response.body.thankYouMessage).to.be.not.null;
+            expect(response.body.thankYouMessage).to.equal("Thank you for submitting the form.");
+        })
+    });
+
+    // actual email won't trigger, but in case of any error, the test case would fail
+    it("Clicking the button should trigger email submission of the form", () => {
+        cy.previewForm(emailPagePath);
+        cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+        }).as('afSubmission')
 
         cy.get(`.cmp-adaptiveform-button__widget`).click()
         cy.wait('@afSubmission').then(({ response}) => {
