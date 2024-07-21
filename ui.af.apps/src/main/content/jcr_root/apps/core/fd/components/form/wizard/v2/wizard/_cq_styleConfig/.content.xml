@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="panel">
+    <items jcr:primaryType="nt:unstructured">
+        <wizardPanel
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Wizard"
+            id="af_wizard"
+            cssSelector=".cmp-adaptiveform-wizard--v2"
+            longTitle="Wizard Panel Container"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <wizardPanelNavigationGroup
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Wizard Navigation Group"
+                    id="af_wizardnavgrp"
+                    cssSelector=".cmp-adaptiveform-wizard__tabs-container"
+                    longTitle="Wizard Panel Navigation Group"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <wizardNavigationItem
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Title"
+                            id="af_wizardnavitemtitle"
+                            cssSelector=".cmp-adaptiveform-wizard__tab"
+                            longTitle="Wizard Navigation Item Title"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <active
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Active"
+                                    cssSelector=".cmp-adaptiveform-wizard__tab:active"/>
+                                <stepped
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Visited"
+                                    cssSelector=".cmp-adaptiveform-wizard__tab.stepped"/>
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-wizard__tab:hover"/>
+                            </states>
+                        </wizardNavigationItem>
+                    </items>
+                </wizardPanelNavigationGroup>
+                <wizardPanelDescription
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Description"
+                    id="af_wizarddescription"
+                    cssSelector=".cmp-adaptiveform-wizard__wizardpanel .cmp-container__label"
+                    longTitle="Wizard Panel Description"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                <contentArea
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content Area"
+                        id="af_wizardcontentarea"
+                        cssSelector=".cmp-adaptiveform-wizard__wizardpanel .cmp-container"
+                        longTitle="Wizard Content Area"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                <wizardPanelScrollers
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Scrollers">
+                    <items jcr:primaryType="nt:unstructured">
+                        <panelNextScroll
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Panel Next Scroll"
+                            id="af_wizardpanelnextscroll"
+                            cssSelector=".cmp-adaptiveform-wizard__nav--next"
+                            longTitle="Wizard Panel Next Scroll"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-wizard__nav--next:hover"/>
+                            </states>
+                        </panelNextScroll>
+                        <panelPreviousScroll
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Panel Previous Scroll"
+                            id="af_wizardpanelprevscroll"
+                            cssSelector=".cmp-adaptiveform-wizard__nav--previous"
+                            longTitle="Wizard Panel Previous Scroll"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-wizard__nav--previous:hover"/>
+                            </states>
+                        </panelPreviousScroll>
+                    </items>
+                </wizardPanelScrollers>
+            </items>
+        </wizardPanel>
+    </items>
+</jcr:root>

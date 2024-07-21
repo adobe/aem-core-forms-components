@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Button">
+    <items jcr:primaryType="nt:unstructured">
+        <button
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Reset"
+            id="af_resetbutton"
+            cssSelector=".reset .cmp-adaptiveform-button__widget"
+            longTitle="Reset Button"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+            secondarySelectors="af_guideContainer:af_button">
+            <items jcr:primaryType="nt:unstructured">
+                <buttonText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Reset Button Text"
+                    id="af_resetbuttontext"
+                    cssSelector=".reset .cmp-adaptiveform-button__text"
+                    longTitle="Reset Button Text"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af_guideContainer:af_buttontext">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".reset .cmp-adaptiveform-button__text:focus"/>
+                        <active
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Down"
+                                cssSelector=".reset .cmp-adaptiveform-button__text:active"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".reset .cmp-adaptiveform-button__text:disabled"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".reset .cmp-adaptiveform-button__text:hover"/>
+                    </states>
+                </buttonText>
+            </items>
+            <states jcr:primaryType="nt:unstructured">
+                <focus
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Focus"
+                        cssSelector=".reset .cmp-adaptiveform-button__widget:focus"/>
+                <active
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Down"
+                        cssSelector=".reset .cmp-adaptiveform-button__widget:active"/>
+                <disabled
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Disabled"
+                        cssSelector=".reset .cmp-adaptiveform-button__widget:disabled"/>
+                <hover
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Hover"
+                        cssSelector=".reset .cmp-adaptiveform-button__widget:hover"/>
+            </states>
+        </button>
+    </items>
+</jcr:root>
