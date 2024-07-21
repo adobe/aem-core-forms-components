@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="panel">
+    <items jcr:primaryType="nt:unstructured">
+        <accordionPanel
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Accordion"
+            id="af_accordionpanel"
+            cssSelector=".cmp-accordion"
+            longTitle="Accordion Panel Container"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <accordionBar
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Header"
+                    id="af_accordionpanelheader"
+                    cssSelector=".cmp-accordion__header"
+                    longTitle="Accordion Header Bar"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <active
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Active"
+                            cssSelector=".cmp-accordion__header:active"/>
+                        <stepped
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Visited"
+                            cssSelector=".cmp-accordion__header.stepped"/>
+                        <hover
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Hover"
+                            cssSelector=".cmp-accordion__header:hover"/>
+                    </states>
+                    <items jcr:primaryType="nt:unstructured">
+                        <accordionPanelTitle
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Title"
+                            id="af_accordionpaneltitle"
+                            cssSelector=".cmp-accordion__button"
+                            longTitle="Accordion Panel Title"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <active
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Active"
+                                    cssSelector=".cmp-accordion__button:active"/>
+                                <stepped
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Visited"
+                                    cssSelector=".cmp-accordion__button.stepped"/>
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-accordion__button:hover"/>
+                            </states>
+                        </accordionPanelTitle>
+                    </items>
+                </accordionBar>
+                <accordionPanelDescription
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Description"
+                    id="af_accordionpaneldescription"
+                    cssSelector=".cmp-accordion__panel .cmp-container__label"
+                    longTitle="Accordion Panel Description"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                <contentArea
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Content Area"
+                        id="af_accordionpanelcontentarea"
+                        cssSelector=".cmp-accordion__panel"
+                        longTitle="Accordion Content Area"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+            </items>
+        </accordionPanel>
+    </items>
+</jcr:root>

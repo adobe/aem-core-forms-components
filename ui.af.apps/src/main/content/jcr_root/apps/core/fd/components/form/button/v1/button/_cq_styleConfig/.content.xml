@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Button">
+    <items jcr:primaryType="nt:unstructured">
+        <field
+            jcr:primaryType="nt:unstructured"
+            sling:hideResource="true"/>
+        <button
+            jcr:primaryType="nt:unstructured"
+            jcr:title="All Buttons"
+            id="af_button"
+            cssSelector=".cmp-adaptiveform-button__widget"
+            longTitle="Button"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <buttonText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Button Text"
+                    id="af_buttontext"
+                    cssSelector=".cmp-adaptiveform-button__text"
+                    longTitle="Button Text"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Focus"
+                            cssSelector=".cmp-adaptiveform-button__text:focus"/>
+                        <active
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Down"
+                            cssSelector=".cmp-adaptiveform-button__text:active"/>
+                        <disabled
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Disabled"
+                            cssSelector=".cmp-adaptiveform-button__text:disabled"/>
+                        <hover
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Hover"
+                            cssSelector=".cmp-adaptiveform-button__text:hover"/>
+                    </states>
+                </buttonText>
+            </items>
+            <states jcr:primaryType="nt:unstructured">
+                <focus
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Focus"
+                    cssSelector=".cmp-adaptiveform-button__widget:focus"/>
+                <active
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Down"
+                    cssSelector=".cmp-adaptiveform-button__widget:active"/>
+                <disabled
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Disabled"
+                    cssSelector=".cmp-adaptiveform-button__widget:disabled"/>
+                <hover
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Hover"
+                    cssSelector=".cmp-adaptiveform-button__widget:hover"/>
+            </states>
+        </button>
+    </items>
+</jcr:root>
