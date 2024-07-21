@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="pageHeader">
+    <items jcr:primaryType="nt:unstructured">
+        <header
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Header"
+            id="af_header"
+            cssSelector=".cmp-adaptiveform-pageheader"
+            longTitle="Header"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <logoImage
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Logo"
+                    id="af_headerlogo"
+                    cssSelector=".cmp-adaptiveform-pageheader .cmp-image img"
+                    longTitle="Header Logo"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <hover
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Hover"
+                            cssSelector=".cmp-adaptiveform-pageheader .cmp-image img:hover"/>
+                    </states>
+                </logoImage>
+                <headerText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text"
+                    id="af_headertext"
+                    cssSelector=".cmp-adaptiveform-pageheader .cq-Editable-dom p"
+                    longTitle="Header Text"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <hover
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Hover"
+                            cssSelector=".cmp-adaptiveform-pageheader .cq-Editable-dom p:hover"/>
+                    </states>
+                </headerText>
+            </items>
+            <states jcr:primaryType="nt:unstructured">
+                <hover
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Hover"
+                    cssSelector=".cmp-adaptiveform-pageheader:hover"/>
+            </states>
+        </header>
+    </items>
+</jcr:root>
