@@ -67,7 +67,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Error Message"
                     id="af_baseerrormessage"
-                    cssSelector=".[class$='__errormessage']"
+                    cssSelector="[class$='__errormessage']"
                     longTitle="Base Error Message"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
             </items>
