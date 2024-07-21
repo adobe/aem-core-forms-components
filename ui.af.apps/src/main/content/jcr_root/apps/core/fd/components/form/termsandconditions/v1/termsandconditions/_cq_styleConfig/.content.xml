@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="TermsAndConditions">
+    <items jcr:primaryType="nt:unstructured">
+        <field
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Base"
+            id="af_tnc"
+            longTitle="Base"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <widgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Terms And Conditions"
+                    id="af_tncwidgetandtext"
+                    cssSelector=".cmp-adaptiveform-termsandcondition"
+                    longTitle="Terms And Conditions Widget"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                    <items jcr:primaryType="nt:unstructured">
+                        <tncContent
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Content"
+                            id="af_tnccontent"
+                            cssSelector=".cmp-adaptiveform-termsandcondition__content-container"
+                            longTitle="Terms And Conditions Content"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-termsandcondition__content-container:hover"/>
+                            </states>
+                        </tncContent>
+                        <tncConsentArea
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Consent Area"
+                            id="af_tncconsentarea"
+                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container"
+                            longTitle="Terms And Conditions Consent Area"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <tncCheckbox
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Checkbox"
+                                    id="af_tncconsentcheckbox"
+                                    cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']"
+                                    longTitle="Terms And Conditions Checkbox"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:focus"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:hover"/>
+                                        <checked
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Selected"
+                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:checked"/>
+                                    </states>
+                                </tncCheckbox>
+                                <tncCheckBoxLabel
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Checkbox Label"
+                                    id="af_tnccheckboxlabel"
+                                    cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__label"
+                                    longTitle="Terms And Conditions Checkbox Label"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:disabled + .cmp-adaptiveform-checkbox__label"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__label:hover"/>
+                                        <checked
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Selected"
+                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:checked + .cmp-adaptiveform-checkbox__label"/>
+                                        <mandatory
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Mandatory"
+                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox[data-cmp-required='true'] .cmp-adaptiveform-checkbox__label"/>
+                                    </states>
+                                </tncCheckBoxLabel>
+                            </items>
+                        </tncConsentArea>
+                    </items>
+                    <states
+                        jcr:primaryType="nt:unstructured"
+                        sling:hideResource="{Boolean}true"/>
+                </widgetAndText>
+            </items>
+        </field>
+    </items>
+</jcr:root>
