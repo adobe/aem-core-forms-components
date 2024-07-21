@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Base">
+    <items jcr:primaryType="nt:unstructured">
+        <field jcr:primaryType="nt:unstructured">
+            <items jcr:primaryType="nt:unstructured">
+                <widgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Email"
+                    cssSelector=".cmp-adaptiveform-emailinput__widget"
+                    id="af_emailwidgetandtext"
+                    longTitle="Email Widget"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Focus"
+                            cssSelector=".cmp-adaptiveform-emailinput__widget:focus"/>
+                        <disabled
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Disabled"
+                            cssSelector=".cmp-adaptiveform-emailinput__widget:disabled"/>
+                        <hover
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Hover"
+                            cssSelector=".cmp-adaptiveform-emailinput__widget:hover"/>
+                        <mandatory
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Mandatory"
+                            cssSelector=".cmp-adaptiveform-emailinput__widget:required"/>
+                    </states>
+                </widgetAndText>
+                <textAreaWidgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    sling:hideResource="{Boolean}true"/>
+            </items>
+        </field>
+    </items>
+</jcr:root>

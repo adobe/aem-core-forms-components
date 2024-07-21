@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="footer">
+    <items jcr:primaryType="nt:unstructured">
+        <footer
+            longTitle="Footer"
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Footer"
+            id="af_footer"
+            cssSelector=".cmp-adaptiveform-footer"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <footerText
+                    longTitle="Footer Text"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Footer Text"
+                    id="af_footertext"
+                    cssSelector=".cmp-adaptiveform-footer__text p"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <hover
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Hover"
+                            cssSelector=".cmp-adaptiveform-footer__text:hover"/>
+                    </states>
+                </footerText>
+            </items>
+            <states jcr:primaryType="nt:unstructured">
+                <hover
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Hover"
+                    cssSelector=".cmp-adaptiveform-footer:hover"/>
+            </states>
+        </footer>
+    </items>
+</jcr:root>
