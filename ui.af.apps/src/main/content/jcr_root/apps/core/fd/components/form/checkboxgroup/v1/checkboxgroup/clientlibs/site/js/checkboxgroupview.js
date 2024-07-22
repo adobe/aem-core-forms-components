@@ -108,7 +108,6 @@
             }, this);
             if (value.length !== 0 || this._model.value != null) {
                 this.setModelValue(value)
-                //this._model.value = value;
             }
         }
 

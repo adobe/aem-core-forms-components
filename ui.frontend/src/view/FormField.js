@@ -131,9 +131,7 @@ class FormField {
     }
 
     setModelValue(value) {
-        this._model._eventSource = "ui";
-        this._model.value = value;
-        this._model._eventSource = "code";
+        this._model.dispatch(new FormView.Actions.UIChange({'value': value}));
     }
 
     /**

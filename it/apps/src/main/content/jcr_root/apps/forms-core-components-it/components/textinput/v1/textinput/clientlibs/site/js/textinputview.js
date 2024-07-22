@@ -72,7 +72,6 @@
             }
             this.widget.addEventListener('blur', (e) => {
                 this.setModelValue(e.target.value);
-                //this._model.value = e.target.value;
                 this.setWidgetValueToDisplayValue();
                 this.setInactive();
             });

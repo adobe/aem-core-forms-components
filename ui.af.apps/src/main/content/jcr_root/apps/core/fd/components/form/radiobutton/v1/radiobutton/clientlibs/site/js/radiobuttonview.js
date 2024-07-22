@@ -82,7 +82,6 @@
             let widgets = this.widget;
             widgets.forEach(widget => {
                 widget.addEventListener('change', (e) => {
-                    //this._model.value = e.target.value;
                     this.setModelValue(e.target.value);
                 });
                 widget.addEventListener('focus', (e) => {

@@ -45,13 +45,8 @@ class FormCheckBox extends FormFieldBase {
         this._onValue = this._model._jsonModel.enum[0];
         this._offValue = this._model._jsonModel.enum[1];
         this.widget.addEventListener('change', (e) => {
-            if (this.widget.checked) {
-                //this._model.value = this._onValue;
-                this.setModelValue(this._onValue);
-            } else {
-                //this._model.value = this._offValue;
-                this.setModelValue(this._offValue);
-            }
+            const value = this.widget.checked ? this._onValue : this._offValue;
+            this._model.dispatch(new FormView.Actions.UIChange({'value': value}));
         })
 
     }
