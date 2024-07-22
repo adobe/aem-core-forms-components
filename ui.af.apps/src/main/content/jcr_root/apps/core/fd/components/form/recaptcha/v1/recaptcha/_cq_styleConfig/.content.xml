@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Base">
+    <items jcr:primaryType="nt:unstructured">
+        <field jcr:primaryType="nt:unstructured">
+            <items jcr:primaryType="nt:unstructured">
+                <captcha
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Captcha"
+                        id="af_recaptchawidget"
+                        cssSelector=".cmp-adaptiveform-recaptcha label"
+                        longTitle="reCaptcha Widget"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-recaptcha label:focus"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector="\[data-cmp-enabled = 'false'].cmp-adaptiveform-recaptcha label"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-recaptcha label:hover"/>
+                    </states>
+                </captcha>
+            </items>
+        </field>
+    </items>
+</jcr:root>
