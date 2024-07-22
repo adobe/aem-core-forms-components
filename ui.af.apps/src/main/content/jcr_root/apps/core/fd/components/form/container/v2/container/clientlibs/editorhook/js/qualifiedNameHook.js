@@ -96,9 +96,8 @@
                 var row = document.createElement('coral-table-row');
 
                 var nameCell = document.createElement('coral-table-cell');
-                nameCell.textContent = script.activity;
+                nameCell.textContent = script.runAt === "server" ? `${script.activity}(server)` : script.activity;
                 var contentCell = document.createElement('coral-table-cell');
-                debugger;
                 contentCell.innerHTML = script.value.replaceAll("\n", "<br />");
 
                 var checkboxCell = document.createElement('coral-table-cell');
@@ -109,7 +108,9 @@
                 });
                 checkboxCell.appendChild(checkbox);
                 checkbox.checked = !!script.disabled;
-
+                if (script.runAt === "server") {
+                    checkbox.disabled = true;
+                }
                 row.appendChild(nameCell);
                 row.appendChild(contentCell);
                 row.appendChild(checkboxCell);

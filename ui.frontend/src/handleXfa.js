@@ -16,6 +16,7 @@
 
 export function loadXfa(formdom, renderContext) {
     if (window.xfalib) {
+        formBridge.registerConfig("disabledServerScripts", ["initialize", "$formready", "$layoutready"])
         const xfaJson = JSON.parse(JSON.parse(JSON.stringify(formdom)));
         xfalib.runtime.renderContext = JSON.parse(JSON.parse(JSON.stringify(renderContext)));
         xfalib.script.XfaModelRegistry.prototype.createModel(xfaJson);
