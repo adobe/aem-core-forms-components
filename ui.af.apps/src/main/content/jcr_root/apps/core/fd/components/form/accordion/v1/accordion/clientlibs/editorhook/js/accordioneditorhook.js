@@ -24,7 +24,8 @@
                 selector: ".cmp-accordion",
                 wrapperSelector: '[data-panelcontainer="adaptiveFormAccordion"]',
                 itemSelector: "[data-cmp-hook-adaptiveFormAccordion='panel']",
-                itemActiveSelector: "[data-cmp-hook-adaptiveFormAccordion='item'][data-cmp-expanded] [data-cmp-hook-adaptiveFormAccordion='panel']"
+                itemActiveSelector: "[data-cmp-hook-adaptiveFormAccordion='item'][data-cmp-expanded] [data-cmp-hook-adaptiveFormAccordion='panel']",
+                itemSelectorWrapper: ".cmp-accordion__item"
             });
         }
     });
