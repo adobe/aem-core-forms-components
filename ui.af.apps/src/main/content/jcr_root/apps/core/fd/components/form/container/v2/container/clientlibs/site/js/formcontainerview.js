@@ -153,27 +153,42 @@
 
     function hoverHandler(e) {
         // const id = e.target.parentElement.getAttribute('data-cmp-id') ? e.target.parentElement.getAttribute('data-cmp-id') : activeItemId;
-        const listItems = document.querySelectorAll('.menu li');
+        const listItems = document.querySelectorAll('.cmp-adaptiveform-container-hamburgerMenu li');
         listItems.forEach(item => {
             item.addEventListener('mouseover', () => {
-            listItems.forEach(li => {
-                li.classList.remove('active');
-                const subMenu = li.querySelector('.submenu');
-                if (subMenu) {
-                    subMenu.style.display = 'none';
+                listItems.forEach(li => {
+                    const subMenu = li.querySelector('.cmp-adaptiveform-container-submenu');
+                    if (subMenu) {
+                        subMenu.style.display = 'none';
+                    }
+                });
+
+                let currentItem = event.target.closest('li');
+                while (currentItem) {
+                    const subMenu = currentItem.querySelector('.cmp-adaptiveform-container-submenu');
+                    if (subMenu) {
+                        subMenu.style.display = 'block';
+                    }
+                    currentItem = currentItem.parentElement.closest('li');
                 }
             });
-        
-            let currentItem = event.target.closest('li');
-            while (currentItem) {
-                const subMenu = currentItem.querySelector('.submenu');
-                if (subMenu) {
-                    subMenu.style.display = 'block';
-                }
-                currentItem = currentItem.parentElement.closest('li');
-            }
         });
-    });
+    }
+
+    function getNonPanelChild(json) {
+        if(json?.items?.length > 0) {
+            const items = json?.items;
+            for (let index = 0; index < items.length; index++) {
+                const it = items[index];
+                if(it?.items?.length) {
+                    getNonPanelChild(it?.items);
+                } else {
+                    return it.id;
+                }
+            }
+        } else {
+            return json?.[0]?.id;
+        }
     }
 
     function clickHandler(e) {
@@ -181,154 +196,188 @@
         e.stopPropagation();
         const id = e.target.parentElement.getAttribute('data-cmp-id') ? e.target.parentElement.getAttribute('data-cmp-id') : activeItemId;
         formContainer.setFocus(id);
+        const newID = getNonPanelChild(formContainer.getModel(id));
+
+        const listItems = document.querySelectorAll('.cmp-adaptiveform-container-hamburgerMenu li');
+        listItems.forEach(item => {
+            item.addEventListener('click', () => {
+                listItems.forEach(li => {
+                    li.classList.remove('active');
+                });
+            });
+        });
+
+
         //   const el = document.getElementById(id);
         //   el.scrollIntoView();
-
-        var ref = document.getElementById(id);
+        // let firstActiveChild = document.getElementById(newID);
+        // firstActiveChild.focus();
+        // var ref = document.getElementById(id);
         setTimeout(function () {
-            ref.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
+            formContainer.setFocus(newID);
+            // formContainer.setFocus(id);
+            // ref.scrollIntoView({
+            //     behavior: "smooth",
+            //     block: "start",
+            // });
         }, 100);
-        // window.scrollTo({
-        //   top: document.getElementById(id).offsetTop,
-        //   behavior: 'smooth'
-        // });
         e.target.closest('li')?.classList?.add('active');
     }
 
     function createHamburgerMenu(formContainer, items) {
-        const ul = document.createElement('ul');
-        items.forEach((item) => {
-            if (item?.fieldType === "panel") {
-                if(isRepeatable(item)) {
-                    const subMenu = createHamburgerMenu(formContainer, item.items);
-                    subMenu.childNodes.forEach(child => {
-                        ul.appendChild(child);
-                    });
-                } else {
-                const li = document.createElement('li');
-                const link = document.createElement('a');
-                link.href = "#";
-                link.textContent = item?.label?.value;
-                link.style.visibility = item?.label?.visible ? 'visible' : 'hidden';
-                li.appendChild(link);;
-                li.setAttribute('data-cmp-id', item?.id);
-                li.setAttribute('data-cmp-visible', item?.visible);
-                if (Array.isArray(item.items) && item.items.length > 0) {
-                    const subMenu = createHamburgerMenu(formContainer, item.items);
-                    subMenu.classList.add('submenu');
-                    li.appendChild(subMenu);
-                    // Toggle submenu visibility on link click
-                    link.addEventListener('click', (e) => {
-                        if (subMenu.style.display === 'flex') {
-                            subMenu.style.display = 'none';
-                        } else {
-                            subMenu.style.display = 'flex';
+        if(items?.length > 0) {
+            const ul = document.createElement('ul');
+            items.forEach((item) => {
+                if (item?.fieldType === "panel") {
+                    if(isRepeatable(item)) {
+                        const subMenu = createHamburgerMenu(formContainer, item.items);
+                        subMenu.childNodes.forEach(child => {
+                            ul.appendChild(child);
+                        });
+                    } else {
+                    const li = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = "#";
+                    link.textContent = item?.label?.value;
+                    link.style.visibility = item?.label?.visible ? 'visible' : 'hidden';
+                    li.appendChild(link);
+                    li.setAttribute('data-cmp-id', item?.id);
+                    li.setAttribute('data-cmp-visible', item?.visible);
+                    if (Array.isArray(item.items) && item.items.length > 0) {
+                        const subMenu = createHamburgerMenu(formContainer, item.items);
+                        if(subMenu?.childNodes?.length){ 
+                            subMenu.classList.add('cmp-adaptiveform-container-submenu');
+                            li.appendChild(subMenu);
                         }
-                    });
+                        // Toggle submenu visibility on link click
+                        link.addEventListener('click', (e) => {
+                            if (subMenu.style.display === 'flex') {
+                                subMenu.style.display = 'none';
+                            } else {
+                                subMenu.style.display = 'flex';
+                            }
+                        });
+                    }
+                    ul.appendChild(li);
                 }
-                ul.appendChild(li);
             }
+            });
+            return ul;
         }
-        });
-        return ul;
     }
 
-
-
-
-    function hideIndividualComponentsNavigation() {
-        // hide all the horizontal tabs list
-        const tabsLists = document.getElementsByClassName('cmp-tabs__tablist');
-        Array.from(tabsLists).forEach(tabsList => {
-            tabsList.style.display = 'none';
-        });
-
-        // hide all the vertical tabs list
-        const verticalTabsLists = document.getElementsByClassName('cmp-verticaltabs__tablist');
-        Array.from(verticalTabsLists).forEach(tabsList => {
-            tabsList.style.display = 'none';
-        });
-        // hide all the vertical tabs list
-        const wizardTabsLists = document.getElementsByClassName('cmp-adaptiveform-wizard__tabList');
-        Array.from(wizardTabsLists).forEach(tabsList => {
-            tabsList.style.display = 'none';
-        });
-    }
-
-  // Function to find the currently active li
-  function findActiveLi() {
-    
-    return document.querySelector('.menu').querySelector('.active');
+  function hideIndividualComponentsNavigation() {
+      // hide all the horizontal tabs list
+      const tabsLists = document.getElementsByClassName('cmp-tabs__tablist');
+      Array.from(tabsLists).forEach(tabsList => {
+          tabsList.style.display = 'none';
+      });
+  
+      // hide all the vertical tabs list
+      const verticalTabsLists = document.getElementsByClassName('cmp-verticaltabs__tablist');
+      Array.from(verticalTabsLists).forEach(tabsList => {
+          tabsList.style.display = 'none';
+      });
+      // hide all the vertical tabs list
+      const wizardTabsLists = document.getElementsByClassName('cmp-adaptiveform-wizard__tabList');
+      Array.from(wizardTabsLists).forEach(tabsList => {
+          tabsList.style.display = 'none';
+      });
   }
 
-  // Function to move to the previous li
-  function movePrev(menuListItems, formContainer) {
-    const currentActive = findActiveLi();
-    if (!currentActive) return; // No active item found
-    let newActiveItemIndex = "";
-    menuListItems.forEach((item, index) => {
-        if(item.getAttribute('data-cmp-id') === currentActive.getAttribute('data-cmp-id')) {
-            newActiveItemIndex = index-1;
-        }
-    });
-    if(newActiveItemIndex <= 0){
-        newActiveItemIndex = 0;
+    // Function to find the currently active li
+    function findActiveLi() {
+        return document.querySelector('.active');
+        // return document.querySelector('.cmp-adaptiveform-container-hamburgerMenu').querySelector('.active');
     }
-    const newActiveItem =  menuListItems[newActiveItemIndex];
-    activeItemId = newActiveItem.getAttribute('data-cmp-id');
-    console.log({ newActiveItem });
-    newActiveItem.click();
-    newActiveItem.classList.remove('active');
-    newActiveItem.classList.add('active');
-  }
 
-  // Function to move to the next li
-  function moveNext(menuListItems, formContainer) {
-    const currentActive = findActiveLi();
-    if (!currentActive) return; // No active item found
-    let newActiveItemIndex = "";
-    menuListItems.forEach((item, index) => {
-        if(item.getAttribute('data-cmp-id') === currentActive.getAttribute('data-cmp-id')) {
-            newActiveItemIndex = index+1;
+
+    function isVisible(element) {
+        if (element.getAttribute('data-cmp-visible') === 'false') {
+            return false;
+        } else if (element.parentNode && element.parentNode !== document) {
+            return isVisible(element.parentNode);
+        } else {
+            return true;
         }
-    });
-    if(menuListItems.length === newActiveItemIndex){
-        newActiveItemIndex = 0;
     }
-    const newActiveItem =  menuListItems[newActiveItemIndex];
-    activeItemId = newActiveItem.getAttribute('data-cmp-id');
-    console.log({ newActiveItem });
-    newActiveItem.click();
-    newActiveItem.classList.remove('active');
-    newActiveItem.classList.add('active');
-  }
+
+    // Function to move to the previous li
+    function movePrev(menuListItems, formContainer) {
+        const currentActive = findActiveLi();
+        if (!currentActive) return; // No active item found
+        let newActiveItemIndex = "";
+        menuListItems.forEach((item, index) => {
+            if(item.getAttribute('data-cmp-id') === currentActive.getAttribute('data-cmp-id')) {
+                newActiveItemIndex = index-1;
+            }
+        });
+        if(newActiveItemIndex <= 0){
+            newActiveItemIndex = 0;
+        }
+        // Find the next visible item
+        while (!isVisible(menuListItems[newActiveItemIndex])) {
+            newActiveItemIndex = (newActiveItemIndex - 1) % menuListItems.length;
+        }
+        const newActiveItem =  menuListItems[newActiveItemIndex];
+        activeItemId = newActiveItem.getAttribute('data-cmp-id');
+        console.log({ newActiveItem });
+        newActiveItem.click();
+        newActiveItem.classList.remove('active');
+        newActiveItem.classList.add('active');
+    }
+
+    // Function to move to the next li
+    function moveNext(menuListItems, formContainer) {
+        const currentActive = findActiveLi();
+        if (!currentActive) return; // No active item found
+        let newActiveItemIndex = "";
+        menuListItems.forEach((item, index) => {
+            if(item.getAttribute('data-cmp-id') === currentActive.getAttribute('data-cmp-id')) {
+                newActiveItemIndex = index+1;
+            }
+        });
+        if(menuListItems.length === newActiveItemIndex){
+            newActiveItemIndex = 0;
+        }
+        // Find the next visible item
+        while (!isVisible(menuListItems[newActiveItemIndex])) {
+            newActiveItemIndex = (newActiveItemIndex + 1) % menuListItems.length;
+        }
+
+        const newActiveItem =  menuListItems[newActiveItemIndex];
+        activeItemId = newActiveItem.getAttribute('data-cmp-id');
+        console.log({ newActiveItem });
+
+        newActiveItem.click();
+        newActiveItem.classList.remove('active');
+        newActiveItem.classList.add('active');
+      }
 
     function addNavigationButtons(menu, formContainer) {
         const div = document.createElement('div');
-        div.classList.add('nav-buttons');
-        // li.addEventListener('click', (e) => {
-        //     e.stopPropagation();
-        //     console.log('navbuttons clicked');
-        //     const activeItem = document.querySelector('.menu').querySelector('.active');
-
-        // });
+        div.classList.add('cmp-adaptiveform-container-nav-buttons');
         const leftNavButton = document.createElement('div');
-        leftNavButton.classList.add('left-nav-button');
+        leftNavButton.classList.add('cmp-adaptiveform-container-left-nav-button');
 
         const rightNavButton = document.createElement('div');
-        rightNavButton.classList.add('right-nav-button');
+        rightNavButton.classList.add('cmp-adaptiveform-container-right-nav-button');
 
         div.appendChild(leftNavButton);
         div.appendChild(rightNavButton);
-        const menuListItems = document.querySelector('.menu').querySelectorAll('li');
+        const menuListItems = document.querySelector('.cmp-adaptiveform-container-hamburgerMenu').querySelectorAll('li');
+        const newMenuList = Array.from(menuListItems).filter(item=> {
+            let computedStyle = window.getComputedStyle(item);
+    
+            // Check if the element is explicitly hidden
+            // Check for display: none, visibility: hidden, or opacity: 0
+            if (computedStyle.display !== 'none') {
+                return true;
+            }
+        })
 
-        leftNavButton.addEventListener('click', () => movePrev(menuListItems,formContainer));
-        rightNavButton.addEventListener('click', () => moveNext(menuListItems, formContainer));
-
-        // const activeItem = document.querySelector('.menu').querySelector('.active');
+        leftNavButton.addEventListener('click', () => movePrev(newMenuList,formContainer));
+        rightNavButton.addEventListener('click', () => moveNext(menuListItems,formContainer));
 
         menu.insertBefore(div, menu.firstChild);
     }
@@ -336,10 +385,10 @@
     function renderHamburgerItems(panels, formContainer) {
         const parentContainer = document.querySelector(".cmp-adaptiveform-container");
         const hamburgerMenuIcon = document.querySelector(".hamburger");
-        //creating the hamburger icon
+        // Creating the hamburger icon
         if(!hamburgerMenuIcon) {
             const hamburger = document.createElement('div');
-            hamburger.classList.add('hamburger');
+            hamburger.classList.add('cmp-adaptiveform-container-hamburger');
             hideIndividualComponentsNavigation();
 
             // Create the menu
@@ -347,9 +396,6 @@
             menu.addEventListener('click', (e) => {
                 clickHandler(e);
             })
-            // menu.addEventListener('mouseover', (e) => {
-            //     hoverHandler(e);
-            // });
 
             // Check if the device supports touch events
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
@@ -368,12 +414,10 @@
                 menu.addEventListener('mouseover', hoverOrTouchHandler);
             }
 
-
-            menu.classList.add('menu');
-
+            menu.classList.add('cmp-adaptiveform-container-hamburgerMenu');
             parentContainer.insertBefore(hamburger, parentContainer.firstChild);
             parentContainer.appendChild(menu);
-        
+
             // Toggle menu visibility on hamburger click
             hamburger.addEventListener('click', (e) => {
                 hamburger.classList.toggle('hamburgerClose');
@@ -384,11 +428,11 @@
                 }
             });
 
-            const rootListItems = menu.querySelectorAll('.menu > li')
             // adding padding to each level of submenu
+            const rootListItems = menu.querySelectorAll('.cmp-adaptiveform-container-hamburgerMenu > li')
             rootListItems.forEach((item) => {
                 let padding = 15;
-                const submenus = item.querySelectorAll('.submenu');
+                const submenus = item.querySelectorAll('.cmp-adaptiveform-container-submenu');
                 submenus.forEach((submenu) => {
                     const links = submenu.querySelectorAll('a');
                     links.forEach((link) => {
@@ -408,39 +452,12 @@
                 }
             });
         }
-        // attaching the mutation observer for handling the dynamic rending of menu items
-        // attachMutationObserver();
     }
     
     function structureMenuData(data) {
         const panels = data.filter(item => item?.fieldType ===  "panel");
         return panels;
     }
-
-    // function handleMutation(mutationsList) {
-    //     mutationsList.forEach((mutation) => {
-    //       const { type, target, attributeName } = mutation;
-    //       if (type === 'attributes' && (attributeName === 'data-cmp-visible' || attributeName === 'data-cmp-enabled')) {
-    //         const menuItems = document.querySelectorAll(`[data-cmp-id="${target?.id}"]`);
-    //         menuItems.forEach(item => item.setAttribute(attributeName, target?.attributes?.[attributeName]?.value));
-    //       }
-    //     });
-    //   }
-
-    // function attachMutationObserver() {
-    //   const children = document.querySelectorAll('.panelcontainer > div');
-    //   // Options for the observer (attributes to observe for)
-    //   const config = { attributes: true, subtree: false, attributeFilter: ['data-cmp-visible', 'data-cmp-enabled'] };
-    //   // Create an observer instance linked to the callback function
-    //   const observer = new MutationObserver((mutationsList) => {
-    //     handleMutation(mutationsList);
-    //   });
-    //   // Start observing each target node for configured mutations
-    //   children.forEach((targetNode) => {
-    //     observer.observe(targetNode, config);
-    //   });
-    // }
-    
 
     async function onDocumentReady() {
         const startTime = new Date().getTime();
