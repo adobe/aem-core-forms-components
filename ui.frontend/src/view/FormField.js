@@ -130,6 +130,10 @@ class FormField {
         }
     }
 
+    setModelValue(value) {
+        this._model.dispatch(new FormView.Actions.UIChange({'value': value}));
+    }
+
     /**
      * Updates the HTML with the respective model.
      * This is for the markup that is generated on the client-side (e.g., repeatable panel).
