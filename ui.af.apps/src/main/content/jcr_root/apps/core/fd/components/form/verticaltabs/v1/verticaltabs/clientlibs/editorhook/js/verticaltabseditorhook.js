@@ -23,8 +23,9 @@
                 name: "cmp-verticaltabs",
                 selector: ".cmp-verticaltabs",
                 wrapperSelector: '[data-panelcontainer="verticaltabs"]',
-                itemSelector: "[data-cmp-hook-adaptiveFormVerticalTabs='tab']",
-                itemActiveSelector: ".cmp-verticaltabs__tabpanel--active"
+                itemSelector: "[data-cmp-hook-adaptiveFormVerticalTabs='tabpanel']",
+                itemActiveSelector: ".cmp-verticaltabs__tabpanel--active",
+                itemSelectorWrapper: ".cmp-verticaltabs__tabs-container"
             });
         }
     });
