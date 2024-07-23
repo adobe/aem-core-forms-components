@@ -6,7 +6,8 @@ const pagePath = "content/forms/af/core-components-it/samples/formcontainer/basi
 const bemBlock = 'cmp-adaptiveform-fragment'
 const IS = "adaptiveFormFragment"
 const selectors = {
-    textinput : `[data-cmp-is="${IS}"]`
+    hamburgerIcon : `.cmp-adaptiveform-container-hamburger`,
+    hamburgerMenu : `.cmp-adaptiveform-container-hamburgerMenu`
 }
 let formContainer = null
 
@@ -36,35 +37,55 @@ let formContainer = null
         })
     }
 
-    const checkInstanceHTML = (instanceManager, count) => {
-        expect(instanceManager.children.length, " instance manager view has children equal to count ").to.equal(count);
-        expect(instanceManager.getModel().items.length, " instance manager model has items equal to count ").to.equal(count);
-        const checkChild = (childView) => {
-            checkHTML(childView.getId(), childView.getModel(), childView);
-        }
-        instanceManager.children.forEach(checkChild);
-        return cy.get('[data-cmp-is="adaptiveFormContainer"]');
-    };
+    // const checkInstanceHTML = (instanceManager, count) => {
+    //     expect(instanceManager.children.length, " instance manager view has children equal to count ").to.equal(count);
+    //     expect(instanceManager.getModel().items.length, " instance manager model has items equal to count ").to.equal(count);
+    //     const checkChild = (childView) => {
+    //         checkHTML(childView.getId(), childView.getModel(), childView);
+    //     }
+    //     instanceManager.children.forEach(checkChild);
+    //     return cy.get('[data-cmp-is="adaptiveFormContainer"]');
+    // };
 
     it(" should get model and view initialized properly ", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
+    })
 
-        // const fields = formContainer.getAllFields();
-        // const fragmentId = formContainer._model.items[0].items[0].id;
-        // const textInputId = formContainer._model.items[0].items[0].items[0].id;
-        // const fragmentView = fields[fragmentId];
-        // const textInputView = fields[textInputId];
 
-        // expect(fragmentView, "fragment view is created").to.not.be.null;
-        // expect(textInputView, "fragment child view is created").to.not.be.null;
-        // expect(fragmentView.children.length, `fragment has ${fragmentChildCount} child`).to.equal(fragmentChildCount);
-        // expect(fragmentView.children[0].id, "fragment has reference to child view").to.equal(textInputId);
-        // expect(textInputView.parentView.id, "text input has reference to parent panel view").to.equal(fragmentId);
+    it(`Test hamburger menu support to open on icon click`, () => {
+        cy.viewport('iphone-x');
+        cy.get(selectors.hamburgerIcon).click();
+        cy.get(selectors.hamburgerIcon).should("be.visible");
+        cy.get(selectors.hamburgerMenu).should("be.visible");
+    })
 
-        // Object.entries(formContainer._fields).forEach(([id, field]) => {
-        //     expect(field.getId()).to.equal(id)
-        //     expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
-        // });
+    it(`Test hamburger menu support is not available in web view`, () => {
+        cy.get(selectors.hamburgerIcon).should("not.be.visible");
+        cy.get(selectors.hamburgerMenu).should("not.be.visible");
+    })
+
+    it(`Test hamburger menu should render exact number of items`, () => {
+        cy.viewport('iphone-x');
+        cy.get(selectors.hamburgerIcon).click();
+        cy.get(selectors.hamburgerMenu+ ' > li').should('have.length', 3);
+    })
+
+    it(`Test hamburger menu item click and check first non panel field to be in focus`, () => {
+        cy.viewport('iphone-x');
+        // Click on the hamburger icon
+        cy.get(selectors.hamburgerIcon).click();
+        cy.get(selectors.hamburgerMenu+ ' > li').eq(0).trigger('click');
+        cy.get(selectors.hamburgerMenu+ ' > li').find('li').eq(0).trigger('click');
+
+        let inputId = ''
+        cy.contains('label', 'Accordion Panel 1 Text Input').should(($label) => {
+            inputId = $label.attr('for');
+            if (inputId) {
+                console.log(`#${inputId}`);
+                // cy.get(`#${inputId}`).as('panel1Input');
+                cy.get(`#${inputId}`).should('be.focused'); // Example: assert input value
+            }
+        });
     })
 
 })

@@ -25,7 +25,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 .cmp-adaptiveform-container [data-cmp-visible="false"] {
     display: none !important;
 }
-.menu {
+.cmp-adaptiveform-container-hamburgerMenu {
     display: none;
     flex-direction: column;
     position: absolute;
@@ -40,23 +40,23 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     list-style: none; /* Remove bullet points */
 }
 
-.menu > li {
+.cmp-adaptiveform-container-hamburgerMenu > li {
     position: relative; /* Ensure that submenus are positioned relative to their parent li */
 }
 
-.menu a {
+.cmp-adaptiveform-container-hamburgerMenu a {
     padding: 10px;
     text-decoration: none;
     color: black;
     display: block;
 }
 
-.menu a:hover {
+.cmp-adaptiveform-container-hamburgerMenu a:hover {
     background-color: #f0f0f0;
     text-decoration: none;
 }
 
-.hamburger {
+.cmp-adaptiveform-container-hamburger {
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -71,7 +71,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     background-image:url('../resources/images/menu.png');
 }
 
-.hamburgerClose {
+.cmp-adaptiveform-container-hamburgerClose {
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -86,13 +86,13 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     background-image:url('../resources/images/closeIcon.svg');
 }
 
-.hamburger div {
+.cmp-adaptiveform-container-hamburger div {
     height: 4px;
     background-color: black;
     margin: 5px 0;
 }
 
-.submenu {
+.cmp-adaptiveform-container-submenu {
     display: none;
     flex-direction: column;
     position: relative; /* Use relative positioning to affect the flow of the parent menu */
@@ -103,12 +103,16 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     width: 100%; /* Ensure submenu is the same width as parent menu */
 }
 
-.submenu li {
+.cmp-adaptiveform-container-submenu li {
     box-sizing: border-box;
     border-bottom: 1px solid #ddd;
 }
 
-.submenu a {
+.cmp-adaptiveform-container-submenu li:hover {
+    background-color: #f0f0f0;
+}
+
+.cmp-adaptiveform-container-submenu a {
     padding: 10px;
     text-decoration: none;
     color: black;
@@ -116,7 +120,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     padding-left: 15px;
 }
 
-.submenu a:hover {
+.cmp-adaptiveform-container-submenu a:hover {
     background-color: #f0f0f0;
 }
 
@@ -126,12 +130,12 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 }
 
 @media (min-width: 768px) {
-    .hamburger {
+    .cmp-adaptiveform-container-hamburger {
         display: none;
     }
 }
 
-.left-nav-button {
+.cmp-adaptiveform-container-left-nav-button {
     width:30px;
     cursor: pointer;
     width: 2.0rem;
@@ -146,7 +150,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     background-position: center;
 }
 
-.right-nav-button {
+.cmp-adaptiveform-container-right-nav-button {
     width:30px;
     cursor: pointer;
     width: 2.0rem;
@@ -161,15 +165,15 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     padding: 2px;
 }
 
-.right-nav-button:hover {
+.cmp-adaptiveform-container-right-nav-button:hover {
     opacity: 0.5;
 }
 
-.left-nav-button:hover {
+.cmp-adaptiveform-container-left-nav-button:hover {
     opacity: 0.5;
 }
 
-.nav-buttons {
+.cmp-adaptiveform-container-nav-buttons {
     display: flex;
     justify-content: space-around;
 }

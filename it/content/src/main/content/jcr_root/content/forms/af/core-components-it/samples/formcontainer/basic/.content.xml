@@ -68,7 +68,7 @@
                         jcr:lastModified="{Date}2024-07-11T10:53:12.996+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
+                        jcr:title="Accordion Panel 1 Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
                         name="textinput1720675393573"/>
