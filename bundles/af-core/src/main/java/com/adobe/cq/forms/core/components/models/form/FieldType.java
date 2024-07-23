@@ -33,6 +33,7 @@ public enum FieldType {
     CHECKBOX("checkbox"),
     BUTTON("button"),
     PANEL("panel"),
+    DYNAMIC_FIELDSET("dynamic-fieldset"),
     FORM("form"),
     CHECKBOX_GROUP("checkbox-group"),
     IMAGE("image");

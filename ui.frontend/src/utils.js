@@ -86,14 +86,16 @@ class Utils {
         let observer = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
                 // needed for IE
-                var nodesArray = [].slice.call(mutation.addedNodes);
-                if (nodesArray.length > 0) {
-                    nodesArray.forEach(function (addedNode) {
-                        if (addedNode.querySelectorAll) {
-                            var elementsArray = [].slice.call(addedNode.querySelectorAll(fieldSelector));
-                            Utils.#createFormContainerFields(elementsArray, fieldCreator, formContainer);
-                        }
-                    });
+                if(mutation.target.dataset['cmpIs'] !== 'adaptiveFormDynamicContainer' && mutation.type !== 'childList') {
+                    var nodesArray = [].slice.call(mutation.addedNodes);
+                    if (nodesArray.length > 0) {
+                        nodesArray.forEach(function (addedNode) {
+                            if (addedNode.querySelectorAll) {
+                                var elementsArray = [].slice.call(addedNode.querySelectorAll(fieldSelector));
+                                Utils.#createFormContainerFields(elementsArray, fieldCreator, formContainer);
+                            }
+                        });
+                    }
                 }
             });
         });
@@ -139,6 +141,14 @@ class Utils {
         Utils.#fieldCreatorSets.forEach(function (fieldCreatorSet) {
             const fieldElements = addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']);
             Utils.#createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
+        });
+    }
+
+    static createViewAndRegisterMutationObservers(addedElement, formContainer) {
+        Utils.#fieldCreatorSets.forEach(function (fieldCreatorSet) {
+            const fieldElements = addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']);
+            Utils.#createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
+            Utils.registerMutationObserver(formContainer, fieldCreatorSet['fieldCreator'], fieldCreatorSet['fieldSelector'], fieldCreatorSet['fieldClass']);
         });
     }
 
