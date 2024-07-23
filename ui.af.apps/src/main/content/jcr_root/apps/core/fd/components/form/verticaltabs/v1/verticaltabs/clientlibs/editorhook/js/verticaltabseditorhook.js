@@ -20,11 +20,11 @@
         if (window.CQ && window.CQ.CoreComponents && window.CQ.CoreComponents.panelcontainer &&
             window.CQ.CoreComponents.panelcontainer.v1 && window.CQ.CoreComponents.panelcontainer.v1.registry) {
             window.CQ.CoreComponents.panelcontainer.v1.registry.register({
-                name: "cmp-adaptiveform-verticaltabs",
-                selector: ".cmp-adaptiveform-verticaltabs",
+                name: "cmp-verticaltabs",
+                selector: ".cmp-verticaltabs",
                 wrapperSelector: '[data-panelcontainer="verticaltabs"]',
-                itemSelector: "[data-cmp-hook-adaptiveFormVerticalTabs='tabpanel']",
-                itemActiveSelector: ".cmp-adaptiveform-verticaltabs__tabpanel--active"
+                itemSelector: "[data-cmp-hook-adaptiveFormVerticalTabs='tab']",
+                itemActiveSelector: ".cmp-verticaltabs__tabpanel--active"
             });
         }
     });
