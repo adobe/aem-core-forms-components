@@ -310,9 +310,10 @@ class Utils {
                 const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
                 let _formJson, callback;
                 if (loader) {
-                    const path = loader.getAttribute('data-cmp-adaptiveform-container-loader');
-                    const response = await fetch(`/adobe/forms/af/${path}`)
+                    const id = loader.getAttribute('data-cmp-adaptiveform-container-loader');
+                    const response = await fetch(`/adobe/forms/af/${id}`)
                     _formJson = (await response.json()).afModelDefinition;
+                    _formJson.id = id;
                     //window.formJson = _formJson
                     callback = loadXfa(_formJson.formdom, _formJson.xfaRenderContext);
                 } else {
