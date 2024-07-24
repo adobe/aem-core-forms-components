@@ -51,6 +51,31 @@ function getEnumNames1() {
     return enumNames;
 }
 
+
+/**
+ * Returns 2 enum values
+ * @name getEnum2 Get_Enum_2
+ * @return {OPTIONS}
+ */
+function getEnum2() {
+    var enums = [];
+    enums[0] = 'one';
+    enums[1] = 'two';
+    return enums;
+}
+
+/**
+ * Return 2 enum Name values
+ * @name getEnumNames2 Get_Enum_Names_2
+ * @return {OPTIONS}
+ */
+function getEnumNames2() {
+    var enumNames = [];
+    enumNames[0] = 'one';
+    enumNames[1] = 'two';
+    return enumNames;
+}
+
 /**
  * clears the enums
  * @name clearEnums clear_enum
@@ -130,5 +155,70 @@ function formatTelephoneInput(field)
     return phoneNumber;
 }
 
+/**
+ * Tests import data
+ * @name testImportData
+ * @param {scope} globals
+ */
+function testImportData(globals)
+{
+    globals.functions.importData(Object.fromEntries([['textinput_12605243111716188337417','abc']]));
+}
 
+/**
+ * Tests set focus
+ * @name testSetFocus
+ * @param {object} emailField
+ * @param {scope} globals
+ */
+function testSetFocus(emailField, globals)
+{
+    globals.functions.setFocus(emailField);
+}
 
+/**
+ * Tests set focus with focusOption
+ * @name testSetFocusWithFocusOption
+ * @param {object} emailField
+ * @param {string} focusOption
+ * @param {scope} globals
+ */
+function testSetFocusWithFocusOption(emailField, focusOption, globals)
+{
+    globals.functions.setFocus(emailField, focusOption);
+}
+
+/**
+ * Tests add instance with dispatchEvent
+ * @name testAddInstance
+ * @param {scope} globals
+ */
+function testAddInstance(globals)
+{
+    var repeatablePanel = globals.form.panelcontainer2;
+    globals.functions.dispatchEvent(repeatablePanel, 'addInstance');
+}
+
+/**
+ * Tests remove instance with dispatchEvent
+ * @name testRemoveInstance
+ * @param {scope} globals
+ */
+function testRemoveInstance(globals)
+{
+    var repeatablePanel = globals.form.panelcontainer2;
+    globals.functions.dispatchEvent(repeatablePanel, 'removeInstance');
+}
+
+/**
+ * clearValueCustomFunction
+ * @name clearValueCustomFunction
+ * @param {object} field field whose value to be cleared
+ * @param {scope} globals
+ **/
+function clearValueCustomFunction(field, globals) {
+    // only clear data if change was done by user from the UI.
+    if (globals.event.payload.eventSource == "ui") {
+        globals.functions.setProperty(field, {value: null});
+    }
+}

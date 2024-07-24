@@ -44,6 +44,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
@@ -53,6 +54,7 @@ import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.commons.LanguageUtil;
+import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -72,43 +74,48 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
+    public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private SlingHttpServletRequest request;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_THANK_YOU_MSG_V2)
     @Nullable
     private String thankYouMessage;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_THANK_YOU_OPTION)
     @Nullable
     private String thankYouOption;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CLIENTLIB_REF)
     @Nullable
     private String clientLibRef;
 
     protected String contextPath = StringUtils.EMPTY;
     private boolean formDataEnabled = false;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TITLE)
     @Nullable
     private String title;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_REDIRECT)
     @Nullable
     private String redirect;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_PREFILL_SERVICE)
     @Nullable
     private String prefillService;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(name = FD_ROLE_ATTRIBUTE, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String roleAttribute;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATA)
     @Nullable
     private String data;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
 
@@ -209,14 +216,16 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getId() {
-        if (getCurrentPage() != null) {
-            if (GuideWCMUtils.isForms(getCurrentPage().getPath())) {
-                return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
-            } else {
-                return ComponentUtils.getEncodedPath(getPath());
-            }
+        String parentPagePath = getParentPagePath();
+        if (GuideWCMUtils.isForms(parentPagePath)) {
+            return ComponentUtils.getEncodedPath(parentPagePath);
         } else {
-            return super.getId();
+            // handling use-case when AF is used in iframe mode inside embed form component
+            if (request != null && request.getAttribute("formRenderingInsideEmbedContainer") != null) {
+                return ComponentUtils.getEncodedPath(StringUtils.replace(getPath(), "/" + JcrConstants.JCR_CONTENT + "/"
+                    + GuideConstants.GUIDE_CONTAINER_NODE_NAME, ""));
+            }
+            return ComponentUtils.getEncodedPath(getPath());
         }
     }
 
@@ -238,24 +247,19 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     }
 
     @Override
+    public String getRoleAttribute() {
+        return roleAttribute;
+    }
+
+    @Override
     public String getAction() {
-        if (getCurrentPage() != null) {
-            return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
-        } else {
-            return null;
-        }
+        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
     }
 
     @Override
     @JsonIgnore
     public String getDataUrl() {
-        if (getCurrentPage() != null) {
-            return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + ComponentUtils.getEncodedPath(
-                getCurrentPage()
-                    .getPath());
-        } else {
-            return null;
-        }
+        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId();
     }
 
     @Override
@@ -308,6 +312,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF)))) {
             formDataEnabled = true;
         }
+        properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         return properties;
     }

@@ -68,6 +68,9 @@ public final class FormConstants {
     /** The resource type for file input v2 */
     public static final String RT_FD_FORM_FILE_INPUT_V2 = RT_FD_FORM_PREFIX + "fileinput/v2/fileinput";
 
+    /** The resource type for file input v3 */
+    public static final String RT_FD_FORM_FILE_INPUT_V3 = RT_FD_FORM_PREFIX + "fileinput/v3/fileinput";
+
     /** The resource type for check box group v1 */
     public static final String RT_FD_FORM_CHECKBOX_GROUP_V1 = RT_FD_FORM_PREFIX + "checkboxgroup/v1/checkboxgroup";
 

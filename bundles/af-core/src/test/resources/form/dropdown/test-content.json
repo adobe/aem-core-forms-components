@@ -6,7 +6,8 @@
     "jcr:title" : "def",
     "fieldType": "drop-down",
     "enum" : [0, 1, 2],
-    "enumNames" : ["m", "f", "o"]
+    "enumNames" : ["m", "f", "o"],
+    "customProp": "customPropValue"
   },
   "dropdown-1" : {
     "jcr:primaryType": "nt:unstructured",
@@ -100,8 +101,7 @@
     "enum": [
       "Owl",
       "Wolf"
-    ],
-    ":type": "forms-components-examples/components/form/dropdown"
+    ]
   },
   "dropdown-duplicate-enum": {
     "id": "dropdown-076f3bd737",

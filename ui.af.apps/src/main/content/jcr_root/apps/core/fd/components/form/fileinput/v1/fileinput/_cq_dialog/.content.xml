@@ -63,14 +63,6 @@
                                                     fieldLabel="Button title"
                                                     name="./buttonText">
                                             </buttonText>
-                                            <type jcr:primaryType="nt:unstructured"
-                                                  wrapperClass="cmp-adaptiveform-fileinput__type"
-                                                  granite:class="cmp-adaptiveform-fileinput__type"
-                                                  sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                  fieldLabel="Type of the field"
-                                                  name="./type"
-                                                  value="file">
-                                            </type>
                                             <showComment
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true">

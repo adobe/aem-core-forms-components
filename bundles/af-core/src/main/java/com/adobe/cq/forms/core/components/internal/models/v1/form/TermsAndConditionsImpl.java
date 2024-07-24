@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,20 +47,18 @@ public class TermsAndConditionsImpl extends PanelImpl implements TermsAndConditi
 
     private static final String CUSTOM_TNC_PROPERTY = "fd:tnc";
 
-    private static final String FIELD_TYPE = "fieldType";
-
     @JsonIgnore
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SHOW_APPROVAL_OPTION)
     @Default(booleanValues = true)
     private boolean showApprovalOption;
 
     @JsonIgnore
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SHOW_LINK)
     @Default(booleanValues = false)
     private boolean showLink;
 
     @JsonIgnore
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SHOW_AS_POPUP)
     @Default(booleanValues = false)
     private boolean showAsPopup;
 
@@ -97,10 +96,12 @@ public class TermsAndConditionsImpl extends PanelImpl implements TermsAndConditi
         List<Resource> childResources = getFilteredChildrenResources(resource);
         // the tnc component will either have links or consent text based upon showLink value
         if (showLink) {
-            childResources.removeIf(child -> FieldType.PLAIN_TEXT.getValue().equals(child.getValueMap().get(FIELD_TYPE)));
+            childResources.removeIf(child -> FieldType.PLAIN_TEXT.getValue().equals(child.getValueMap().get(
+                ReservedProperties.PN_FIELDTYPE)));
 
         } else {
-            childResources.removeIf(child -> FieldType.CHECKBOX_GROUP.getValue().equals(child.getValueMap().get(FIELD_TYPE)));
+            childResources.removeIf(child -> FieldType.CHECKBOX_GROUP.getValue().equals(child.getValueMap().get(
+                ReservedProperties.PN_FIELDTYPE)));
         }
         return childResources;
     }

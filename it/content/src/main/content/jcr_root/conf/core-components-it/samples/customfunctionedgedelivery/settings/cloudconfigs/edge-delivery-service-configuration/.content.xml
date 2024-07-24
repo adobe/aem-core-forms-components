@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2024-04-22T09:56:19.511+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/libs/core/franklin/shell/components/configuration/page/template"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Edge Delivery Service Configuration"
+        sling:configPropertyInherit="true"
+        sling:resourceType="core/franklin/shell/components/configuration/page"
+        auxiliaryScripts="[https://cdn.jsdelivr.net/gh/adobe/universal-editor-cors@latest/dist/universal-editor-embedded.js,module:scripts/editor-support.js]"
+        edgeHost="preview"
+        owner="adobe-rnd"
+        repo="aem-boilerplate-forms"/>
+</jcr:root>

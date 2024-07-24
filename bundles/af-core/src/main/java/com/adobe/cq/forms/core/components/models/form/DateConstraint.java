@@ -39,7 +39,7 @@ public interface DateConstraint extends FormatConstraint {
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("minimum")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER, timezone = "UTC")
     Date getMinimumDate();
 
     /**
@@ -50,7 +50,7 @@ public interface DateConstraint extends FormatConstraint {
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("maximum")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER, timezone = "UTC")
     Date getMaximumDate();
 
     /**
@@ -61,7 +61,7 @@ public interface DateConstraint extends FormatConstraint {
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("exclusiveMaximum")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER, timezone = "UTC")
     Date getExclusiveMaximumDate();
 
     /**
@@ -72,7 +72,7 @@ public interface DateConstraint extends FormatConstraint {
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("exclusiveMinimum")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER, timezone = "UTC")
     Date getExclusiveMinimumDate();
 
     default String getFormat() {

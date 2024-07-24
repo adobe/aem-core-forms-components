@@ -32,7 +32,8 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/switch"
+    "fd:path": "/content/switch",
+    "customProp": "customPropValue"
   },
   "screenReaderText": "'Custom screen reader text'",
   "tooltip": "test-short-description",

@@ -139,7 +139,11 @@ class FormTabs extends FormPanel {
                 var _self = this;
                 (function (index) {
                     tabs[index].addEventListener("click", function (event) {
-                        _self.navigateAndFocusTab(tabs[index].id);
+                        // Check if the clicked element is the tab itself
+                        if (event?.target?.id === tabs[index].id) {
+                            _self.navigateAndFocusTab(tabs[index].id);
+                        }
+
                     });
                 }(i));
                 tabs[i].addEventListener("keydown", function (event) {
@@ -240,9 +244,14 @@ class FormTabs extends FormPanel {
      * @param {string} tabId - The ID of the tab to navigate to.
      */
     navigateAndFocusTab(tabId) {
-        this.navigate(tabId);
-        this.focusWithoutScroll(this.#getTabNavElementById(tabId));
+        this.setActive();
+        // if current active tab and the new tabId is not same, only then set the new tab as active
+        if (this.#_active !== tabId) {
+            this.navigate(tabId);
+            this.focusWithoutScroll(this.#getTabNavElementById(tabId));
+        }
     }
+
 
 
     #getTabNavElementById(tabId) {
@@ -464,7 +473,10 @@ class FormTabs extends FormPanel {
         var tabs = this.#getCachedTabs();
         var index = this.#getTabIndexById(tabId);
         tabs[index].addEventListener("click", function (event) {
-            _self.navigateAndFocusTab(tabId);
+            // Check if the clicked element is the tab itself
+            if (event?.target?.id === tabId) {
+                _self.navigateAndFocusTab(tabId);
+            }
         });
         tabs[index].addEventListener("keydown", function (event) {
             _self.#onKeyDown(event);

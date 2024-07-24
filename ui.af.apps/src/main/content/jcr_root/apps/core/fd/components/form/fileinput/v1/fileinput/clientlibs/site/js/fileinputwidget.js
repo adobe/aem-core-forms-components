@@ -19,7 +19,7 @@
  * file list, handling invalid file size, file name, file mime type functionality
  */
 if (typeof window.FileInputWidget === 'undefined') {
-    window.FileInputWidget = class extends FormView.FormFileInputWidget {
+    window.FileInputWidget = class extends FormView.FormFileInputWidgetBase {
         constructor(params) {
             super(params);
         }

@@ -19,6 +19,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Label;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.i18n.I18n;
@@ -26,9 +27,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class LabelImpl implements Label {
 
-    private static final String PN_HIDE_TITLE = "hideTitle";
     private static final String PN_TITLE = JcrConstants.JCR_TITLE;
-    private static final String PN_IS_TITLE_RICH_TEXT = "isTitleRichText";
 
     private ValueMap properties;
     private String defaultTitle;
@@ -50,7 +49,7 @@ public class LabelImpl implements Label {
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean isRichText() {
-        return properties.get(PN_IS_TITLE_RICH_TEXT, Boolean.class);
+        return properties.get(ReservedProperties.PN_IS_TITLE_RICH_TEXT, Boolean.class);
     }
 
     /**
@@ -63,7 +62,7 @@ public class LabelImpl implements Label {
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean isVisible() {
-        Boolean hideTitle = properties.get(PN_HIDE_TITLE, Boolean.class);
+        Boolean hideTitle = properties.get(ReservedProperties.PN_HIDE_TITLE, Boolean.class);
         if (hideTitle != null) {
             return !hideTitle;
         }

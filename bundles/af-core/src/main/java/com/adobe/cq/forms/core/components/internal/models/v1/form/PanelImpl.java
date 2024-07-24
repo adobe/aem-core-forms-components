@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Panel;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,39 +56,39 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     private static String DOR_NUM_COLS = "dorNumCols";
     private static String DOR_LAYOUT_TYPE = "dorLayoutType";
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUDE_TITLE)
     @Nullable
     protected boolean dorExcludeTitle;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUSION)
     @Nullable
     protected boolean dorExclusion;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUDE_DESC)
     @Nullable
     protected boolean dorExcludeDescription;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_BREAK_BEFORE_TEXT)
     @Nullable
     protected String breakBeforeText;
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_BREAK_AFTER_TEXT)
     @Nullable
     protected String breakAfterText;
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_OVERFLOW_TEXT)
     @Nullable
     protected String overflowText;
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_NUM_COLS)
     @Nullable
     protected String dorNumCols;
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_LAYOUT_TYPE)
     @Nullable
     protected String dorLayoutType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "wrapData")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_WRAP_DATA)
     @JsonIgnore
     protected boolean wrapData;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_READ_ONLY)
     @Nullable
     protected Boolean readOnly;
 

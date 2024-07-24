@@ -17,6 +17,7 @@
     "sling:resourceType": "core/fd/components/form/hcaptcha/v1/hcaptcha",
     "fieldType": "captcha",
     "textIsRich": "true",
-    "unboundFormElement": false
+    "unboundFormElement": false,
+    "customProp": "customPropValue"
   }
 }
