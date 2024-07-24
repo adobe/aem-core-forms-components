@@ -16,7 +16,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Footer Text"
                     id="af_footertext"
-                    cssSelector=".cmp-adaptiveform-footer__text p"
+                    cssSelector=".cmp-adaptiveform-footer__text .cq-Editable-dom"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <hover
