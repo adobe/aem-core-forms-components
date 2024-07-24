@@ -209,3 +209,16 @@ function testRemoveInstance(globals)
     var repeatablePanel = globals.form.panelcontainer2;
     globals.functions.dispatchEvent(repeatablePanel, 'removeInstance');
 }
+
+/**
+ * clearValueCustomFunction
+ * @name clearValueCustomFunction
+ * @param {object} field field whose value to be cleared
+ * @param {scope} globals
+ **/
+function clearValueCustomFunction(field, globals) {
+    // only clear data if change was done by user from the UI.
+    if (globals.event.payload.eventSource == "ui") {
+        globals.functions.setProperty(field, {value: null});
+    }
+}
