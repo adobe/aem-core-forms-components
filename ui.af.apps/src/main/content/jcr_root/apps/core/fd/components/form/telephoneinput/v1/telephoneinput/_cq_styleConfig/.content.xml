@@ -6,31 +6,151 @@
         <field jcr:primaryType="nt:unstructured">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Telephone"
-                    cssSelector=".cmp-adaptiveform-telephoneinput__widget"
-                    id="af_telwidgetandtext"
-                    longTitle="Telephone Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                    secondarySelectors="af_guideContainer:af_widgetAndText">
-                    <states jcr:primaryType="nt:unstructured">
-                        <focus
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Focus"
-                            cssSelector=".cmp-adaptiveform-telephoneinput__widget:focus"/>
-                        <disabled
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Disabled"
-                            cssSelector=".cmp-adaptiveform-telephoneinput__widget:disabled"/>
-                        <hover
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Hover"
-                            cssSelector=".cmp-adaptiveform-telephoneinput__widget:hover"/>
-                        <mandatory
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Mandatory"
-                            cssSelector=".cmp-adaptiveform-telephoneinput__widget:required"/>
-                    </states>
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Telephone Input"
+                        id="af_telephonewidgetandtext"
+                        cssSelector=".cmp-adaptiveform-telephoneinput"
+                        longTitle="Telephone Input Widget"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                        secondarySelectors="af_guideContainer:af_widgetAndText">
+                        <items jcr:primaryType="nt:unstructured">
+                            <telephoneinputLabelContainer
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Label Container"
+                                    id="af_telephoneinputlabelcontainer"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput__label-container"
+                                    longTitle="Telephone Input Label Container"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <telephoneinputLabel
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Label"
+                                            id="af_telephoneinputlabel"
+                                            cssSelector=".cmp-adaptiveform-telephoneinput__label"
+                                            longTitle="Telephone Input Label"
+                                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        <states jcr:primaryType="nt:unstructured">
+                                            <hover
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Hover"
+                                                    cssSelector=".cmp-adaptiveform-telephoneinput__label:hover"/>
+                                            <focus
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Focus"
+                                                    cssSelector=".cmp-adaptiveform-telephoneinput__label:focus"/>
+                                        </states>
+                                    </telephoneinputLabel>
+                                    <telephoneinputHelpIcon
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Help Icon"
+                                            id="af_telephoneinputhelpicon"
+                                            cssSelector=".cmp-adaptiveform-telephoneinput__questionmark"
+                                            longTitle="Telephone Input Help Icon"
+                                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                            secondarySelectors="af_guideContainer:af_helpicon">
+                                        <states jcr:primaryType="nt:unstructured">
+                                            <focus
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Focus"
+                                                    cssSelector=".cmp-adaptiveform-telephoneinput__questionmark:focus"/>
+                                            <hover
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Hover"
+                                                    cssSelector=".cmp-adaptiveform-telephoneinput__questionmark:hover"/>
+                                            <disabled
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Disabled"
+                                                    cssSelector=".cmp-adaptiveform-telephoneinput__questionmark:disabled"/>
+                                        </states>
+                                    </telephoneinputHelpIcon>
+                                </items>
+                                <states jcr:primaryType="nt:unstructured">
+                                    <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector="cmp-adaptiveform-telephoneinput__label-container:disabled"/>
+                                    <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector="cmp-adaptiveform-telephoneinput__label-container:hover"/>
+                                    <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector="cmp-adaptiveform-telephoneinput__label-container:focus"/>
+                                </states>
+                            </telephoneinputLabelContainer>
+                            <telephoneinputWidgetAndText
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Telephone Input"
+                                    id="af_telephoneinputwidgetandtext"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput__widget"
+                                    longTitle="Telephone Input Widget"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                                <states jcr:primaryType="nt:unstructured">
+                                    <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-telephoneinput__widget:focus"/>
+                                    <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-telephoneinput__widget:hover"/>
+                                    <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector=".cmp-adaptiveform-telephoneinput__widget:disabled"/>
+                                    <mandatory
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Mandatory"
+                                            cssSelector=".cmp-adaptiveform-telephoneinput__widget:required"/>
+                                </states>
+                            </telephoneinputWidgetAndText>
+                            <telephoneinputDescriptionShort
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Short Description"
+                                    id="af_telephoneinputdescriptionshort"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput__shortdescription"
+                                    longTitle="Telephone Input Short Description"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            </telephoneinputDescriptionShort>
+                            <telephoneinputDescriptionLong
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Long Description"
+                                    id="af_telephoneinputdescriptionlong"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput__longdescription"
+                                    longTitle="Telephone Input Long Description"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                <states jcr:primaryType="nt:unstructured">
+                                    <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-telephoneinput__longdescription:focus"/>
+                                    <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-telephoneinput__longdescription:hover"/>
+                                </states>
+                            </telephoneinputDescriptionLong>
+                        </items>
+                        <states jcr:primaryType="nt:unstructured">
+                            <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-telephoneinput:focus"/>
+                            <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-telephoneinput:disabled"/>
+                            <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-telephoneinput:hover"/>
+                            <mandatory
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".cmp-adaptiveform-telephoneinput:required"/>
+                        </states>
                 </widgetAndText>
                 <textAreaWidgetAndText
                     jcr:primaryType="nt:unstructured"

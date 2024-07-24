@@ -94,13 +94,13 @@ For languages not listed above, such as `es-CO` (Spanish - Colombia), the curren
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-numberinput
-    ELEMENT cmp-adaptiveform-numberinput
     ELEMENT cmp-adaptiveform-numberinput__label
     ELEMENT cmp-adaptiveform-numberinput__label-container
     ELEMENT cmp-adaptiveform-numberinput__widget
     ELEMENT cmp-adaptiveform-numberinput__questionmark
     ELEMENT cmp-adaptiveform-numberinput__shortdescription
     ELEMENT cmp-adaptiveform-numberinput__longdescription
+    ELEMENT cmp-adaptiveform-numberinput__errormessage
 ```
 
 ### Note
