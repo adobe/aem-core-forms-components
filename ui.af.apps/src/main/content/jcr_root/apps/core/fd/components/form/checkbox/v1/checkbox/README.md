@@ -53,7 +53,7 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-checkbox
-    ELEMENT cmp-adaptiveform-checkbox__label
+    ELEMENT cmp-adaptiveform-checkbox__widget-container
     ELEMENT cmp-adaptiveform-checkbox__widget
     ELEMENT cmp-adaptiveform-checkbox__label
     ELEMENT cmp-adaptiveform-checkbox__help-container
