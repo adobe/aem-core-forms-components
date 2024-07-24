@@ -39,6 +39,69 @@
                                 cssSelector=".reset .cmp-adaptiveform-button__text:hover"/>
                     </states>
                 </buttonText>
+                <buttonDescriptionShort
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Short Description"
+                        id="af_resetbuttondescriptionshort"
+                        cssSelector=".reset .cmp-adaptiveform-button__shortdescription"
+                        longTitle="Reset Button Short Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                </buttonDescriptionShort>
+                <buttonDescriptionLong
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Long Description"
+                        id="af_resetbuttondescriptionlong"
+                        cssSelector=".reset .cmp-adaptiveform-button__longdescription"
+                        longTitle="Reset Button Long Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".reset .cmp-adaptiveform-button__longdescription:focus"/>
+                        <mandatory
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".reset .cmp-adaptiveform-button__longdescription:required"/>
+                    </states>
+                </buttonDescriptionLong>
+                <buttonHelpContainer
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Help Container"
+                        id="af_resetbuttonhelpcontainer"
+                        cssSelector=".reset .cmp-adaptiveform-button__help-container"
+                        longTitle="Reset Button Help Container"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".reset .cmp-adaptiveform-button__help-container:focus"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".reset .cmp-adaptiveform-button__help-container:hover"/>
+                    </states>
+                </buttonHelpContainer>
+                <buttonHelpIcon
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Help Icon"
+                        id="af_resetbuttonhelpicon"
+                        cssSelector=".reset .cmp-adaptiveform-button__questionmark"
+                        longTitle="Reset Button Help Icon"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                        secondarySelectors="af_guideContainer:af_helpicon">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".reset .cmp-adaptiveform-button__questionmark:focus"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".reset .cmp-adaptiveform-button__questionmark:hover"/>
+                    </states>
+                </buttonHelpIcon>
             </items>
             <states jcr:primaryType="nt:unstructured">
                 <focus
