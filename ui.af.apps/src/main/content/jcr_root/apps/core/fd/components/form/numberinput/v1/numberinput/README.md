@@ -58,13 +58,13 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-numberinput
-    ELEMENT cmp-adaptiveform-numberinput
     ELEMENT cmp-adaptiveform-numberinput__label
     ELEMENT cmp-adaptiveform-numberinput__label-container
     ELEMENT cmp-adaptiveform-numberinput__widget
     ELEMENT cmp-adaptiveform-numberinput__questionmark
     ELEMENT cmp-adaptiveform-numberinput__shortdescription
     ELEMENT cmp-adaptiveform-numberinput__longdescription
+    ELEMENT cmp-adaptiveform-numberinput__errormessage
 ```
 
 ### Note
