@@ -251,7 +251,6 @@ describe("Form with Number Input", () => {
     });
 
     it("check minimum, maximum, exclusiveMinimum and exclusiveMaximum constraints ", () => {
-        debugger;
         const [numberInput9, numberInput9FieldView] = Object.entries(formContainer._fields)[8];
         const input = "1212";
         let model = numberInput9FieldView.getModel();
