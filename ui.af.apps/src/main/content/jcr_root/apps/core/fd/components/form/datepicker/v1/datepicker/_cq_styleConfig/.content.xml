@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    jcr:title="DatePicker">
+    jcr:title="Datepicker">
     <items jcr:primaryType="nt:unstructured">
         <field
             jcr:primaryType="nt:unstructured"
@@ -13,28 +13,148 @@
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Date Picker"
-                    id="af_datepickerwidgetandtext"
-                    cssSelector=".cmp-adaptiveform-datepicker__widget"
+                    id="af_dateinputwidgetandtext"
+                    cssSelector=".cmp-adaptiveform-datepicker"
                     longTitle="Date Picker Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                     secondarySelectors="af_guideContainer:af_widgetAndText">
+                    <items jcr:primaryType="nt:unstructured">
+                        <datepickerLabelContainer
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Label Container"
+                                id="af_datepickerlabelcontainer"
+                                cssSelector=".cmp-adaptiveform-datepicker__label-container"
+                                longTitle="Datepicker Label Container"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <datepickerLabel
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Label"
+                                        id="af_datepickerlabel"
+                                        cssSelector=".cmp-adaptiveform-datepicker__label"
+                                        longTitle="Datepicker Label"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-datepicker__label:hover"/>
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-datepicker__label:focus"/>
+                                    </states>
+                                </datepickerLabel>
+                                <datepickerHelpIcon
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Help Icon"
+                                        id="af_datepickerhelpicon"
+                                        cssSelector=".cmp-adaptiveform-datepicker__questionmark"
+                                        longTitle="Datepicker Help Icon"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        secondarySelectors="af_guideContainer:af_helpicon">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-datepicker__questionmark:focus"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-datepicker__questionmark:hover"/>
+                                        <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-datepicker__questionmark:disabled"/>
+                                    </states>
+                                </datepickerHelpIcon>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector="cmp-adaptiveform-datepicker__label-container:disabled"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector="cmp-adaptiveform-datepicker__label-container:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector="cmp-adaptiveform-datepicker__label-container:focus"/>
+                            </states>
+                        </datepickerLabelContainer>
+                        <datepickerWidgetAndText
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Datepicker"
+                                id="af_datepickerwidgetandtext"
+                                cssSelector=".cmp-adaptiveform-datepicker__widget"
+                                longTitle="Datepicker Widget"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                secondarySelectors="af_guideContainer:af_widgetAndText">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-datepicker__widget:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-datepicker__widget:hover"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-datepicker__widget:disabled"/>
+                                <mandatory
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Mandatory"
+                                        cssSelector=".cmp-adaptiveform-datepicker__widget:required"/>
+                            </states>
+                        </datepickerWidgetAndText>
+                        <datepickerDescriptionShort
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Short Description"
+                                id="af_datepickerdescriptionshort"
+                                cssSelector=".cmp-adaptiveform-datepicker__shortdescription"
+                                longTitle="Datepicker Short Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </datepickerDescriptionShort>
+                        <datepickerDescriptionLong
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description"
+                                id="af_datepickerdescriptionlong"
+                                cssSelector=".cmp-adaptiveform-datepicker__longdescription"
+                                longTitle="Datepicker Long Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-datepicker__longdescription:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-datepicker__longdescription:hover"/>
+                            </states>
+                        </datepickerDescriptionLong>
+                    </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Focus"
-                            cssSelector=".cmp-adaptiveform-datepicker__widget:focus"/>
+                            cssSelector=".cmp-adaptiveform-datepicker:focus"/>
                         <disabled
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Disabled"
-                            cssSelector=".cmp-adaptiveform-datepicker__widget:disabled"/>
+                            cssSelector=".cmp-adaptiveform-datepicker:disabled"/>
                         <hover
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Hover"
-                            cssSelector=".cmp-adaptiveform-datepicker__widget:hover"/>
+                            cssSelector=".cmp-adaptiveform-datepicker:hover"/>
                         <mandatory
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Mandatory"
-                            cssSelector=".cmp-adaptiveform-datepicker__widget:required"/>
+                            cssSelector=".cmp-adaptiveform-datepicker:required"/>
                     </states>
                 </widgetAndText>
             </items>
