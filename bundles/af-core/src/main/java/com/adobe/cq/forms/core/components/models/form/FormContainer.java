@@ -362,4 +362,24 @@ public interface FormContainer extends Container {
     default String getParentPagePath() {
         return null;
     }
+
+    @JsonProperty("enableAutoSave")
+    default boolean isEnableAutoSave() {
+        return false;
+    }
+
+    @JsonProperty("autoSaveStrategyType")
+    default String getAutoSaveStrategyType() {
+        return "";
+    }
+
+    @JsonProperty("autoSaveInternal")
+    default String getAutoSaveInterval() {
+        return "";
+    }
+
+    @JsonProperty("autoSaveEvent")
+    default String getAutoSaveEvent() {
+        return "";
+    }
 }

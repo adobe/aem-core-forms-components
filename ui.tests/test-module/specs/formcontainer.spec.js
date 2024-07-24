@@ -65,6 +65,19 @@ describe('Page/Form Authoring', function () {
             cy.get("[name='./title'").should("have.value", "Adaptive Form V2 (IT)");
         }
 
+    const checkAutoSaveTab = function(formContainerEditPathSelector) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        // Open auto save tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Auto-save').click({force:true});
+        cy.get("[name='./enableAutoSave']").should("exist");
+        cy.get("[name='./enableAutoSave']").click({force:true});
+        cy.get("[name='./autoSaveStrategyType']").should("exist");
+        cy.get("[name='./autoSaveInterval']").should("exist");
+    }
+
+
+
     const checkAndSaveSubmitAction = function(formContainerEditPathSelector) {
         // click configure action on adaptive form container component
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
@@ -195,7 +208,12 @@ describe('Page/Form Authoring', function () {
             it ('check title in edit dialog', {retries: 3}, function() {
                 checkTitleInEditDialog(formContainerEditPathSelector);
                 cy.get('.cq-dialog-cancel').click();
-            })
+            });
+
+            it('open edit dialog, verify auto save tab in container edit dialog box', {retries: 3},function () {
+                checkAutoSaveTab(formContainerEditPathSelector);
+            });
+
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test

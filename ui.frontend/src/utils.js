@@ -17,7 +17,7 @@
 import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
-import {FunctionRuntime} from '@aemforms/af-core'
+import {FunctionRuntime, Save} from '@aemforms/af-core'
 
 /**
  * @module FormView
@@ -46,6 +46,13 @@ class Utils {
      * @type {String[]}
      */
     static #fieldCreatorOrder = [];
+
+    /**
+     * The autoSaveIntervalId - to stop setting setInterval multiple times
+     * @private
+     * @type {number}
+     */
+    static #autoSaveIntervalId = -1;
 
     /**
      * Returns the data attributes of the specific element.
@@ -177,6 +184,32 @@ class Utils {
             Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
         });
     }
+
+    /**
+     * Register time based auto save
+     * @param {module:FormView~FormContainer} formContainer - The form container.
+     * @param autoSaveProperties
+     */
+    static setupAutoSave(formContainer, autoSaveProperties) {
+        const enableAutoSave = autoSaveProperties['fd:enableAutoSave'];
+        if (enableAutoSave) {
+            const autoSaveStrategyType = autoSaveProperties['fd:autoSaveStrategyType'];
+            const autoSaveInterval = autoSaveProperties['fd:autoSaveInterval'];
+            const formModel = formContainer.getModel();
+            const saveEndPoint = Utils.getContextPath() + '/adobe/forms/af/save/' + formModel.id;
+            if (autoSaveStrategyType === 'time' && autoSaveInterval) {
+                if (Utils.#autoSaveIntervalId === -1) {
+                    console.log("Registering time based auto save");
+                    Utils.#autoSaveIntervalId = setInterval(() => {
+                        formModel.dispatch(new Save({
+                            'action': saveEndPoint
+                        }));
+                    }, parseInt(autoSaveInterval) * 1000);
+                }
+            }
+        }
+    }
+
     /**
      * Removes field reference from form container.
      * @private
@@ -326,6 +359,10 @@ class Utils {
                     _element: elements[i]
                 });
                 Utils.initializeAllFields(formContainer);
+                const autoSaveProperties = _formJson.properties?.['fd:autoSave'];
+                if (window.Granite && !window.Granite.author && autoSaveProperties) {
+                    Utils.setupAutoSave(formContainer, autoSaveProperties);
+                }
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }

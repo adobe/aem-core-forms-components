@@ -41,6 +41,7 @@
         REST_ENDPOINT = ".rest",
         FDM = ".fdm",
         EMAIL = ".email",
+        ENABLE_AUTO_SAVE = ".enableAutoSave",
 
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
@@ -419,6 +420,31 @@
         }
     }
 
+    function showHideAutoSave(dialog) {
+        var enableAutoSave = dialog.find(ENABLE_AUTO_SAVE);
+        if (enableAutoSave[0]) {
+            var autoSaveStrategyContainer = dialog.find('.autoSaveStrategyContainer');
+            if (autoSaveStrategyContainer) {
+                if (enableAutoSave[0].checked) {
+                    autoSaveStrategyContainer.show();
+                } else {
+                    autoSaveStrategyContainer.hide();
+                }
+            }
+        }
+    }
+
+    function registerAutoSaveDialogAction(dialog) {
+        var $subDialogContent = dialog.find(SUB_DIALOG_CONTENT);
+        $subDialogContent.on('foundation-contentloaded', function() {
+            showHideAutoSave(dialog);
+        });
+        showHideAutoSave(dialog);
+        $(document).on('change', ENABLE_AUTO_SAVE).on('change', ENABLE_AUTO_SAVE, function () {
+            showHideAutoSave(dialog);
+        });
+    }
+
     $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
         selector : "[data-validation~='datamodel.config']",
         validate : function (el) {
@@ -430,7 +456,7 @@
     });
 
     Utils.initializeEditDialog(EDIT_DIALOG_FORM)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
-        registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel);
+        registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel, registerAutoSaveDialogAction);
 
     Utils.initializeEditDialog(EDIT_DIALOG_FRAGMENT)(initialiseDataModel);
 
