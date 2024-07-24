@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2024 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -131,7 +131,6 @@
                         }
                     });
                 }
-                console.log('field Changed triggered', action.payload);
             }, "fieldChanged");
         }
     }
@@ -151,8 +150,7 @@
         return state.items || [];
     }
 
-    function hoverHandler(e) {
-        // const id = e.target.parentElement.getAttribute('data-cmp-id') ? e.target.parentElement.getAttribute('data-cmp-id') : activeItemId;
+    function hoverHandler() {
         const listItems = document.querySelectorAll('.cmp-adaptiveform-container-hamburgerMenu li');
         listItems.forEach(item => {
             item.addEventListener('mouseover', () => {
@@ -175,13 +173,13 @@
         });
     }
 
-    function getNonPanelChild(json) {
+    function getFirstNonPanelChild(json) {
         if(json?.items?.length > 0) {
             const items = json?.items;
             for (let index = 0; index < items.length; index++) {
                 const it = items[index];
                 if(it?.items?.length) {
-                    getNonPanelChild(it?.items);
+                    getFirstNonPanelChild(it?.items);
                 } else {
                     return it.id;
                 }
@@ -196,7 +194,7 @@
         e.stopPropagation();
         const id = e.target.parentElement.getAttribute('data-cmp-id') ? e.target.parentElement.getAttribute('data-cmp-id') : activeItemId;
         formContainer.setFocus(id);
-        const newID = getNonPanelChild(formContainer.getModel(id));
+        const newID = getFirstNonPanelChild(formContainer.getModel(id));
 
         const listItems = document.querySelectorAll('.cmp-adaptiveform-container-hamburgerMenu li');
         listItems.forEach(item => {
@@ -206,20 +204,8 @@
                 });
             });
         });
-
-
-        //   const el = document.getElementById(id);
-        //   el.scrollIntoView();
-        // let firstActiveChild = document.getElementById(newID);
-        // firstActiveChild.focus();
-        // var ref = document.getElementById(id);
         setTimeout(function () {
             formContainer.setFocus(newID);
-            // formContainer.setFocus(id);
-            // ref.scrollIntoView({
-            //     behavior: "smooth",
-            //     block: "start",
-            // });
         }, 100);
         e.target.closest('li')?.classList?.add('active');
     }
@@ -278,7 +264,7 @@
       Array.from(verticalTabsLists).forEach(tabsList => {
           tabsList.style.display = 'none';
       });
-      // hide all the vertical tabs list
+      // hide all the wizard tabs list
       const wizardTabsLists = document.getElementsByClassName('cmp-adaptiveform-wizard__tabList');
       Array.from(wizardTabsLists).forEach(tabsList => {
           tabsList.style.display = 'none';
@@ -288,7 +274,6 @@
     // Function to find the currently active li
     function findActiveLi() {
         return document.querySelector('.active');
-        // return document.querySelector('.cmp-adaptiveform-container-hamburgerMenu').querySelector('.active');
     }
 
 
@@ -321,7 +306,6 @@
         }
         const newActiveItem =  menuListItems[newActiveItemIndex];
         activeItemId = newActiveItem.getAttribute('data-cmp-id');
-        console.log({ newActiveItem });
         newActiveItem.click();
         newActiveItem.classList.remove('active');
         newActiveItem.classList.add('active');
@@ -347,8 +331,6 @@
 
         const newActiveItem =  menuListItems[newActiveItemIndex];
         activeItemId = newActiveItem.getAttribute('data-cmp-id');
-        console.log({ newActiveItem });
-
         newActiveItem.click();
         newActiveItem.classList.remove('active');
         newActiveItem.classList.add('active');
@@ -366,17 +348,8 @@
         div.appendChild(leftNavButton);
         div.appendChild(rightNavButton);
         const menuListItems = document.querySelector('.cmp-adaptiveform-container-hamburgerMenu').querySelectorAll('li');
-        const newMenuList = Array.from(menuListItems).filter(item=> {
-            let computedStyle = window.getComputedStyle(item);
-    
-            // Check if the element is explicitly hidden
-            // Check for display: none, visibility: hidden, or opacity: 0
-            if (computedStyle.display !== 'none') {
-                return true;
-            }
-        })
 
-        leftNavButton.addEventListener('click', () => movePrev(newMenuList,formContainer));
+        leftNavButton.addEventListener('click', () => movePrev(menuListItems,formContainer));
         rightNavButton.addEventListener('click', () => moveNext(menuListItems,formContainer));
 
         menu.insertBefore(div, menu.firstChild);
@@ -401,8 +374,8 @@
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 
             // Function to handle hover or equivalent touch event
-            const hoverOrTouchHandler = (e) => {
-                hoverHandler(e); // Replace hoverHandler with your actual handler function
+            const hoverOrTouchHandler = () => {
+                hoverHandler();
             };
 
             // Add event listener based on device type
