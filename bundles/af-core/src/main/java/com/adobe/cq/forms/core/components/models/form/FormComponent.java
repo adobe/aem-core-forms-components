@@ -77,6 +77,17 @@ public interface FormComponent extends Component {
     }
 
     /**
+     * Custom Autosave Properties
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 2.1.0
+     */
+    @JsonView(Views.Author.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    default Map<String, Object> getAutoSaveProperties() {
+        return Collections.emptyMap();
+    }
+
+    /**
      * Returns getPath of the form field
      *
      * @return getPath of the field

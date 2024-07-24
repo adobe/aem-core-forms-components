@@ -267,6 +267,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
+
         Map<String, Object> properties = new LinkedHashMap<>();
         Map<String, Object> customProperties = getCustomProperties();
         if (customProperties.size() > 0) {
