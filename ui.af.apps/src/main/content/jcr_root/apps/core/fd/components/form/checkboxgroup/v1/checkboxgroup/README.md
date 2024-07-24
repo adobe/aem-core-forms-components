@@ -55,8 +55,8 @@ BLOCK cmp-adaptiveform-checkboxgroup
     ELEMENT cmp-adaptiveform-checkboxgroup__label
     ELEMENT cmp-adaptiveform-checkboxgroup__label-container
     ELEMENT cmp-adaptiveform-checkboxgroup__widget
-    ELEMENT cmp-adaptiveform-checkbox__widget
-    ELEMENT cmp-adaptiveform-checkbox__label
+    ELEMENT cmp-adaptiveform-checkboxgroup-item
+    ELEMENT cmp-adaptiveform-checkboxgroup__option-label
     ELEMENT cmp-adaptiveform-checkboxgroup__questionmark
     ELEMENT cmp-adaptiveform-checkboxgroup__shortdescription
     ELEMENT cmp-adaptiveform-checkboxgroup__longdescription
