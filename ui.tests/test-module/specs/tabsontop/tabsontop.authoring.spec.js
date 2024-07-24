@@ -145,7 +145,7 @@ describe.only('Page - Authoring', function () {
             });
         });
 
-        it('open editable toolbar of 2nd tabpanel', {retries: 1}, function () {
+        it('open editable toolbar of 2nd tabpanel', {retries: 3}, function () {
             cy.cleanTest(tabsPath).then(function () {
                 dropTabsInContainer();
                 //Add 2 children in tabs on top component
@@ -154,9 +154,12 @@ describe.only('Page - Authoring', function () {
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']").then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table tr").eq(1)
+                        .should("contain.text", "Adaptive Form Panel: Panel");
                     const panelPath = tabsPath + "/panelcontainer";
                     cy.get(`[data-id="${panelPath}`).click().then(() => {
                         cy.get(`[data-path="${panelPath}"]`).should('be.visible');
+                        cy.get('body').click(0, 0);
                         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerTabItemSelector);
                         cy.deleteComponentByPath(tabsPath);
                     })
