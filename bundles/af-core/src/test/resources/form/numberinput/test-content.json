@@ -133,6 +133,33 @@
       "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/accordion/item_2/numberinput"
     }
   },
+  "numberinput-backwardcompatible-2": {
+    "id": "numberinput-57e5de6073",
+    "sling:resourceType": "core/fd/components/form/numberinput/v1/numberinput",
+    "fieldType": "number-input",
+    "description": "Enter your phone number.",
+    "name": "Phone Number",
+    "jcr:title" : "Phone Number",
+    "type": "string",
+    "label": {
+      "value": "Phone Number"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "excludeMinimumCheck" : true,
+    "excludeMaximumCheck" : true,
+    "minimum" : 10002,
+    "maximum" : 2000002,
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/forms/af/af2/jcr:content/guideContainer/accordion/item_2/numberinput"
+    }
+  },
   "numberinput-backwardcompatible-string": {
     "sling:resourceType": "core/fd/components/form/numberinput/v1/numberinput",
     "fieldType": "number-input",

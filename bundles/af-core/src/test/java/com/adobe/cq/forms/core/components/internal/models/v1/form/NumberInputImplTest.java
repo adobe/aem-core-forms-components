@@ -51,6 +51,7 @@ public class NumberInputImplTest {
     private static final String PATH_NUMBER_INPUT_INTEGER_TYPE = CONTENT_ROOT + "/numberinput-integer-type";
     private static final String PATH_NUMBER_INPUT_CONSTRAINTS = CONTENT_ROOT + "/numberinput-exclusive";
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/numberinput-backwardcompatible";
+    private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_2 = CONTENT_ROOT + "/numberinput-backwardcompatible-2";
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING = CONTENT_ROOT + "/numberinput-backwardcompatible-string";
     private static final String PATH_NUMBER_INPUT = CONTENT_ROOT + "/numberinput";
     private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
@@ -265,6 +266,12 @@ public class NumberInputImplTest {
     void testJSONExportBackwardCompatible() throws Exception {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE, NumberInput.class, context);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE));
+    }
+
+    @Test
+    void testJSONExportBackwardCompatible2() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_2, NumberInput.class, context);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_2));
     }
 
     @Test

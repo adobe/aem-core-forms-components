@@ -167,6 +167,9 @@ public class ComponentUtils {
             } else {
                 return null;
             }
+        } else if (Boolean.TRUE.equals(exclusiveValueCheck) && value != null) { // backward compatibility case // not to be changed
+            // If so, return the value
+            return (T) value;
         } else {
             // Handle other cases or return null if desired
             return null;
