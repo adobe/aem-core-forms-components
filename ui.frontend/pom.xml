@@ -23,6 +23,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <version>1.1.49-SNAPSHOT</version>
 =======
         <version>3.0.42</version>
@@ -45,6 +46,9 @@
 =======
         <version>3.0.49-SNAPSHOT</version>
 >>>>>>> 8afc73384 (@releng [maven-scm] :prepare for next development iteration)
+=======
+        <version>3.0.50</version>
+>>>>>>> d9b93d6d2 (@releng [maven-scm] :prepare release core-forms-components-reactor-3.0.50)
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
