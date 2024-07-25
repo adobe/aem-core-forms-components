@@ -87,6 +87,8 @@ public final class ReservedProperties {
     public static final String PN_MINIMUM = "minimum";
     public static final String PN_EXCLUSIVE_MINIMUM = "exclusiveMinimum";
     public static final String PN_EXCLUSIVE_MAXIMUM = "exclusiveMaximum";
+    public static final String PN_EXCLUDE_MINIMUM = "excludeMinimum";
+    public static final String PN_EXCLUDE_MAXIMUM = "excludeMaximum";
     public static final String PN_EXCLUDE_MINIMUM_CHECK = "excludeMinimumCheck";
     public static final String PN_EXCLUDE_MAXIMUM_CHECK = "excludeMaximumCheck";
     public static final String PN_ENFORCE_ENUM = "enforceEnum";

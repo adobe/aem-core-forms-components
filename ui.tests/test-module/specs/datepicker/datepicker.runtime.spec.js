@@ -340,4 +340,19 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(".dp-caption").should('include.text', todayYear);
         });
     });
+
+    it("check minimum, maximum, exclusiveMinimum and exclusiveMaximum constraints ", () => {
+        const [dateInput10, dateInput10FieldView] = Object.entries(formContainer._fields)[10];
+        const input = "2024-07-10";
+        let model = dateInput10FieldView.getModel();
+        cy.get(`#${dateInput10}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${dateInput10}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Value must be greater than 2024-07-10.");
+            cy.get(`#${dateInput10}`).find("input").clear().type("2024-07-12").blur().then(x => {
+                cy.get(`#${dateInput10}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"");
+                cy.get(`#${dateInput10}`).find("input").clear().type("2024-07-26").blur().then(x => {
+                    cy.get(`#${dateInput10}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Value must be less than 2024-07-23.");
+                })
+            })
+        })
+    });
 })
