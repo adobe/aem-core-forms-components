@@ -22,14 +22,18 @@ import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.DatePicker;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
@@ -45,6 +49,16 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
 
     @SlingObject
     private Resource resource;
+
+    /*** Not to be changed, kept for backward compatibility **/
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUDE_MINIMUM)
+    @Default(booleanValues = false)
+    protected boolean excludeMinimum;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUDE_MAXIMUM)
+    @Default(booleanValues = false)
+    protected boolean excludeMaximum;
+    /*** end of Not to be changed **/
 
     private Date exclusiveMinimumVaue;
     private Date exclusiveMaximumValue;
@@ -84,8 +98,8 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
 
     @PostConstruct
     private void initDatePicker() {
-        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximumDate, null);
-        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimumDate, null);
+        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximumDate, excludeMaximum);
+        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimumDate, excludeMinimum);
         // in json either, exclusiveMaximum or maximum should be present
         if (exclusiveMaximumValue != null) {
             maximumDate = null;
