@@ -10,23 +10,61 @@
                 <captcha
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Captcha"
-                        id="af_recaptchawidget"
-                        cssSelector=".cmp-adaptiveform-recaptcha label"
-                        longTitle="reCaptcha Widget"
+                        id="af_recaptchacontainer"
+                        cssSelector=".cmp-adaptiveform-recaptcha"
+                        longTitle="reCaptcha Widget and Text"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <captchaLabel
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Captcha Label"
+                                id="af_recaptchawidgetlabel"
+                                cssSelector=".cmp-adaptiveform-recaptcha__label"
+                                longTitle="reCaptcha Label"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-recaptcha__label:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-recaptcha__label:hover"/>
+                            </states>
+                        </captchaLabel>
+                        <captchaWidget
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Captcha Widget"
+                                id="af_recaptchawidget"
+                                cssSelector=".cmp-adaptiveform-recaptcha__widget"
+                                longTitle="reCaptcha Widget"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-recaptcha__widget:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-recaptcha__widget:hover"/>
+                            </states>
+                        </captchaWidget>
+                    </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Focus"
-                                cssSelector=".cmp-adaptiveform-recaptcha label:focus"/>
-                        <disabled
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Disabled"
-                                cssSelector="\[data-cmp-enabled = 'false'].cmp-adaptiveform-recaptcha label"/>
+                                cssSelector=".cmp-adaptiveform-recaptcha:focus"/>
                         <hover
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Hover"
-                                cssSelector=".cmp-adaptiveform-recaptcha label:hover"/>
+                                cssSelector=".cmp-adaptiveform-recaptcha:hover"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector="\[data-cmp-enabled = 'false'].cmp-adaptiveform-recaptcha"/>
                     </states>
                 </captcha>
             </items>
