@@ -18,43 +18,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         <version>1.1.49-SNAPSHOT</version>
-=======
-        <version>3.0.42</version>
->>>>>>> 052a966d2 (@releng [maven-scm] :prepare release core-forms-components-reactor-3.0.42)
-=======
-        <version>3.0.43-SNAPSHOT</version>
->>>>>>> 34042bd0e (@releng [maven-scm] :prepare for next development iteration)
-=======
-        <version>3.0.44</version>
->>>>>>> 3b0194781 (@releng [maven-scm] :prepare release core-forms-components-reactor-3.0.44)
-=======
-        <version>3.0.45-SNAPSHOT</version>
->>>>>>> b9ea4504d (@releng [maven-scm] :prepare for next development iteration)
-=======
-        <version>3.0.47-SNAPSHOT</version>
->>>>>>> 615b6c86c (@releng [maven-scm] :prepare for next development iteration)
-=======
-        <version>3.0.48</version>
->>>>>>> e82508aa7 (@releng [maven-scm] :prepare release core-forms-components-reactor-3.0.48)
-=======
-        <version>3.0.49-SNAPSHOT</version>
->>>>>>> 8afc73384 (@releng [maven-scm] :prepare for next development iteration)
-=======
-        <version>3.0.50</version>
->>>>>>> d9b93d6d2 (@releng [maven-scm] :prepare release core-forms-components-reactor-3.0.50)
-=======
-        <version>3.0.51-SNAPSHOT</version>
->>>>>>> c05c42134 (@releng [maven-scm] :prepare for next development iteration)
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
