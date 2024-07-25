@@ -223,10 +223,10 @@
                     }
                 });
                 if (valueArray.length !== 0 || this._model.value != null) {
-                    this._model.value = valueArray;
+                    this.setModelValue(valueArray);
                 }
             } else {
-                this._model.value = widget.value;
+                this.setModelValue(widget.value);
             }
         }
     }
