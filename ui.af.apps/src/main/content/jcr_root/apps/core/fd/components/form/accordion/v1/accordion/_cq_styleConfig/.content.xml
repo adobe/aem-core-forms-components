@@ -11,66 +11,209 @@
             longTitle="Accordion Panel Container"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
-                <accordionBar
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Header"
-                    id="af_accordionpanelheader"
-                    cssSelector=".cmp-accordion__header"
-                    longTitle="Accordion Header Bar"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
-                    <states jcr:primaryType="nt:unstructured">
-                        <active
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Active"
-                            cssSelector=".cmp-accordion__header:active"/>
-                        <stepped
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Visited"
-                            cssSelector=".cmp-accordion__header.stepped"/>
-                        <hover
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Hover"
-                            cssSelector=".cmp-accordion__header:hover"/>
-                    </states>
+                <accordionLabelContainer
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Label Container"
+                        id="af_accordionlabelcontainer"
+                        cssSelector=".cmp-accordion__label-container"
+                        longTitle="Accordion Label Container"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
-                        <accordionPanelTitle
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Title"
-                            id="af_accordionpaneltitle"
-                            cssSelector=".cmp-accordion__button"
-                            longTitle="Accordion Panel Title"
-                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        <accordionLabel
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Label"
+                                id="af_accordionlabel"
+                                cssSelector=".cmp-accordion__label"
+                                longTitle="Accordion Label"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-accordion__label:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-accordion__label:focus"/>
+                            </states>
+                        </accordionLabel>
+                        <accordionHelpIcon
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Help Icon"
+                                id="af_accordionhelpicon"
+                                cssSelector=".cmp-accordion__questionmark"
+                                longTitle="Accordion Help Icon"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                secondarySelectors="af_guideContainer:af_helpicon">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-accordion__questionmark:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-accordion__questionmark:hover"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-accordion__questionmark:disabled"/>
+                            </states>
+                        </accordionHelpIcon>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-accordion__label-container:disabled"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-accordion__label-container:hover"/>
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-accordion__label-container:focus"/>
+                    </states>
+                </accordionLabelContainer>
+                <accordionDescriptionShort
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Short Description"
+                        id="af_accordiondescriptionshort"
+                        cssSelector=".cmp-accordion__shortdescription"
+                        longTitle="Accordion Short Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                </accordionDescriptionShort>
+                <accordionDescriptionLong
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Long Description"
+                        id="af_accordiondescriptionlong"
+                        cssSelector=".cmp-accordion__longdescription"
+                        longTitle="Accordion Long Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-accordion__longdescription:focus"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-accordion__longdescription:hover"/>
+                    </states>
+                </accordionDescriptionLong>
+                <accordionPanelItem
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Panel Item"
+                    id="af_accordionpanelitem"
+                    cssSelector=".cmp-accordion__item"
+                    longTitle="Accordion Panel Item"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <accordionHeader
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Header"
+                                id="af_accordionpanelheader"
+                                cssSelector=".cmp-accordion__header"
+                                longTitle="Accordion Header"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <active
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Active"
-                                    cssSelector=".cmp-accordion__button:active"/>
-                                <stepped
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Visited"
-                                    cssSelector=".cmp-accordion__button.stepped"/>
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Active"
+                                        cssSelector=".cmp-accordion__header:active"/>
                                 <hover
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Hover"
-                                    cssSelector=".cmp-accordion__button:hover"/>
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-accordion__header:hover"/>
                             </states>
-                        </accordionPanelTitle>
+                        </accordionHeader>
+                        <accordionHeaderButton
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Header Button"
+                            id="af_accordionheaderbutton"
+                            cssSelector=".cmp-accordion__button"
+                            longTitle="Accordion Header Button"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <accordionHeaderTitle
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Title"
+                                        id="af_accordionheadertitle"
+                                        cssSelector=".cmp-accordion__title"
+                                        longTitle="Accordion Header Title"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <active
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Active"
+                                                cssSelector=".cmp-accordion__title:active"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-accordion__title:hover"/>
+                                    </states>
+                                </accordionHeaderTitle>
+                                <accordionHeaderIcon
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Icon"
+                                        id="af_accordionheadericon"
+                                        cssSelector=".cmp-accordion__icon"
+                                        longTitle="Accordion Header Icon"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <active
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Active"
+                                                cssSelector=".cmp-accordion__icon:active"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-accordion__icon:hover"/>
+                                    </states>
+                                </accordionHeaderIcon>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <active
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Active"
+                                        cssSelector=".cmp-accordion__button:active"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-accordion__button:hover"/>
+                            </states>
+                        </accordionHeaderButton>
+                        <accordionPanelWidget
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Widget"
+                                id="af_accordionpanelwidget"
+                                cssSelector=".cmp-accordion__panel"
+                                longTitle="Accordion Panel Widget"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <active
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Active"
+                                        cssSelector=".cmp-accordion__panel:active"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-accordion__panel:hover"/>
+                            </states>
+                        </accordionPanelWidget>
                     </items>
-                </accordionBar>
-                <accordionPanelDescription
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Description"
-                    id="af_accordionpaneldescription"
-                    cssSelector=".cmp-accordion__panel .cmp-container__label"
-                    longTitle="Accordion Panel Description"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
-                <contentArea
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Content Area"
-                        id="af_accordionpanelcontentarea"
-                        cssSelector=".cmp-accordion__panel"
-                        longTitle="Accordion Content Area"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    <states jcr:primaryType="nt:unstructured">
+                        <active
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Active"
+                                cssSelector=".cmp-accordion__item:active"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-accordion__item:hover"/>
+                    </states>
+                </accordionPanelItem>
             </items>
         </accordionPanel>
     </items>
