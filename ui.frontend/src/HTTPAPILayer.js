@@ -49,9 +49,10 @@ class HTTPAPILayer {
     /**
      * Retrieves the form definition for the specified form container path using the json exporter API
      * @param {string} formContainerPath - The path of the form container.
+     * @param {string} pageLang - Language of the containing sites page
      * @returns {Promise<Object>} - A Promise that resolves to the form definition.
      */
-    static async getFormDefinition(formContainerPath) {
+    static async getFormDefinition(formContainerPath, pageLang) {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlSearchParams.entries());
         let lang = null;
@@ -63,6 +64,10 @@ class HTTPAPILayer {
             if (parts?.length >= 3) {
                 lang = `${parts[parts.length - 2]}`;
             }
+        }
+        // If 'afAcceptLang' is not set and URL selector is not present, use sites page language
+        if (lang === null && pageLang != null) {
+            lang = pageLang;
         }
         return await this.getJson(`${formContainerPath}.model.${lang !== null ? `${lang}.` : ""}json`);
     }
