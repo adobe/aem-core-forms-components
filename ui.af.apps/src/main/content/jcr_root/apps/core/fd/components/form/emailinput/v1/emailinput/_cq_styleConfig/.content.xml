@@ -68,15 +68,15 @@
                                 <disabled
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Disabled"
-                                    cssSelector="cmp-adaptiveform-emailinput__label-container:disabled"/>
+                                    cssSelector=".cmp-adaptiveform-emailinput__label-container:disabled"/>
                                 <hover
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Hover"
-                                    cssSelector="cmp-adaptiveform-emailinput__label-container:hover"/>
+                                    cssSelector=".cmp-adaptiveform-emailinput__label-container:hover"/>
                                 <focus
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Focus"
-                                    cssSelector="cmp-adaptiveform-emailinput__label-container:focus"/>
+                                    cssSelector=".cmp-adaptiveform-emailinput__label-container:focus"/>
                             </states>
                         </emailLabelContainer>
                         <emailWidgetAndText
