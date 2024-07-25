@@ -139,12 +139,27 @@
                     displayValueExpression="formatCreditCardNumber($field)"
                     fieldType="number-input"
                     name="numberinput1710483567726">
-                <fd:rules
-                        fd:format="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FORMAT_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput1710483567726&quot;\,&quot;type&quot;:&quot;NUMBER&quot;\,&quot;name&quot;:&quot;numberinput1710483567726&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;NUMBER_FORMAT_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;NUMBER_FORMAT_EXPRESSION&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;formatCreditCardNumber&quot;\,&quot;displayName&quot;:&quot;Formats Credit Card Number&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;OBJECT|AFCOMPONENT&quot;\,&quot;name&quot;:&quot;field&quot;\,&quot;description&quot;:&quot;field whose value to be formatted&quot;}]\,&quot;impl&quot;:&quot;$0($1)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput1710483567726&quot;\,&quot;displayName&quot;:&quot;Number Input&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Number Input/&quot;\,&quot;name&quot;:&quot;numberinput1710483567726&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}]}}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;formatCreditCardNumber($field)&quot;\,&quot;eventName&quot;:&quot;Format&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                        jcr:primaryType="nt:unstructured"
-                        validationStatus="valid"/>
-                <fd:events jcr:primaryType="nt:unstructured"/>
+                    <fd:rules
+                            fd:format="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FORMAT_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput1710483567726&quot;\,&quot;type&quot;:&quot;NUMBER&quot;\,&quot;name&quot;:&quot;numberinput1710483567726&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;NUMBER_FORMAT_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;NUMBER_FORMAT_EXPRESSION&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;formatCreditCardNumber&quot;\,&quot;displayName&quot;:&quot;Formats Credit Card Number&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;OBJECT|AFCOMPONENT&quot;\,&quot;name&quot;:&quot;field&quot;\,&quot;description&quot;:&quot;field whose value to be formatted&quot;}]\,&quot;impl&quot;:&quot;$0($1)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.numberinput1710483567726&quot;\,&quot;displayName&quot;:&quot;Number Input&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Number Input/&quot;\,&quot;name&quot;:&quot;numberinput1710483567726&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}]}}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;formatCreditCardNumber($field)&quot;\,&quot;eventName&quot;:&quot;Format&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                            jcr:primaryType="nt:unstructured"
+                            validationStatus="valid"/>
+                    <fd:events jcr:primaryType="nt:unstructured"/>
             </numberinput>
+            <numberinput9
+                    jcr:lastModified="{Date}2023-01-30T15:58:08.713+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Number Input 9"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    enabled="{Boolean}true"
+                    fieldType="number-input"
+                    name="numberinput9"
+                    excludeMinimumCheck="{Boolean}true"
+                    maximum="100"
+                    minimum="10"
+                    minimumMessage="Minimum value should be 10"
+                    type="integer"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

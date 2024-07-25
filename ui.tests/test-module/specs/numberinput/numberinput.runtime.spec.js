@@ -249,6 +249,18 @@ describe("Form with Number Input", () => {
             })
         }
     });
+
+    it("check minimum, maximum, exclusiveMinimum and exclusiveMaximum constraints ", () => {
+        const [numberInput9, numberInput9FieldView] = Object.entries(formContainer._fields)[8];
+        const input = "1212";
+        let model = numberInput9FieldView.getModel();
+        cy.get(`#${numberInput9}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${numberInput9}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"Value must be less than or equal to 100.");
+            cy.get(`#${numberInput9}`).find("input").clear().type("10").blur().then(x => {
+                cy.get(`#${numberInput9}`).find(".cmp-adaptiveform-numberinput__errormessage").should('have.text',"Minimum value should be 10");
+            })
+        })
+    });
 })
 
 describe("Form with Number Input Required Validation", () => {

@@ -47,6 +47,7 @@ public class DatePickerImplTest {
     private static final String PATH_DATEPICKER = CONTENT_ROOT + "/datepicker";
     private static final String PATH_DATEPICKER_DATALAYER = CONTENT_ROOT + "/datepicker-datalayer";
     private static final String PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/datepicker-displayValueExpression";
+    private static final String PATH_DATEPICKER_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/datepicker-backwardcompatible";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -239,6 +240,12 @@ public class DatePickerImplTest {
     void testJSONExport() throws Exception {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER));
+    }
+
+    @Test
+    void testJSONExportBackwardCompatibility() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_BACKWARD_COMPATIBLE, DatePicker.class, context);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_BACKWARD_COMPATIBLE));
     }
 
     @Test
