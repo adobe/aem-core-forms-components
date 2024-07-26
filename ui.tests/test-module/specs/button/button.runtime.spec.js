@@ -23,10 +23,51 @@ describe("Form Runtime with Button Input", () => {
     }
 
     let formContainer = null
+    let toggle_array = [];
 
     beforeEach(() => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
+        })
+
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
+
+    const checkHTML = (id, state) => {
+        const visible = state.visible;
+        const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
+        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
+        const value = state.value == null ? '' : state.value;
+        cy.get(`#${id}`)
+            .should(passVisibleCheck)
+            .invoke('attr', 'data-cmp-visible')
+            .should('eq', visible.toString());
+        cy.get(`#${id}`)
+            .invoke('attr', 'data-cmp-enabled')
+            .should('eq', state.enabled.toString());
+        return cy.get(`#${id}`).within((root) => {
+            cy.get('*').should(passVisibleCheck)
+            cy.get('button')
+                .should(passDisabledAttributeCheck, 'disabled')
+            cy.get('button')
+                .should('have.value', value);
+        })
+    }
+
+    it(" model's changes are reflected in the html ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0]
+        const model = formContainer._model.getElement(id)
+        model.value = "some other value"
+        checkHTML(model.id, model.getState()).then(() => {
+            model.visible = false
+            return checkHTML(model.id, model.getState())
+        }).then(() => {
+            model.enabled = false
+            return checkHTML(model.id, model.getState())
         })
     });
 
