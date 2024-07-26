@@ -82,9 +82,22 @@
                 <configuration>
                     <filters>
                         <filter>
-                            <root>/apps/core/fd/components</root>
+                            <root>/apps/core/fd/components/aemform</root>
+                        </filter>
+                        <filter>
+                            <root>/apps/core/fd/components/commons</root>
+                        </filter>
+                        <filter>
+                            <root>/apps/core/fd/components/formsportal</root>
                         </filter>
                     </filters>
+                    <validatorsSettings>
+                        <jackrabbit-filter>
+                            <options>
+                                <validRoots>/apps/core/fd/components</validRoots>
+                            </options>
+                        </jackrabbit-filter>
+                    </validatorsSettings>
                     <packageType>application</packageType>
                     <group>${vault.package.group}</group>
                     <dependencies>
@@ -292,10 +305,13 @@
                                 <configuration>
                                     <filters>
                                         <filter>
-                                            <root>/libs/core/fd/components</root>
+                                            <root>/libs/core/fd/components/aemform</root>
+                                        </filter>
+                                         <filter>
+                                            <root>/libs/core/fd/components/commons</root>
                                         </filter>
                                         <filter>
-                                            <root>/libs/core/fd/clientlibs</root>
+                                            <root>/libs/core/fd/components/formsportal</root>
                                         </filter>
                                     </filters>
                                     <classifier>cloud</classifier>

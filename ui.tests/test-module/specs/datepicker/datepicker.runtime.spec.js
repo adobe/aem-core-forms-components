@@ -224,6 +224,14 @@ describe("Form Runtime with Date Picker", () => {
 
         });
 
+        date = '15/8/2020';
+        cy.get(`#${datePicker7}`).find("input").clear().type(date).then(() => {
+            cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
+                cy.get("#li-day-16").should("be.visible").should("have.class", "dp-selected"); // first check for the original date selection
+                cy.get(".dp-caption").should("be.visible").should("contain.text", "2020");
+            });
+        });
+
         // check clear option
         cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-clear").click();
@@ -331,5 +339,20 @@ describe("Form Runtime with Date Picker", () => {
             let todayYear = todayDate.getFullYear() + "";
             cy.get(".dp-caption").should('include.text', todayYear);
         });
+    });
+
+    it("check minimum, maximum, exclusiveMinimum and exclusiveMaximum constraints ", () => {
+        const [dateInput10, dateInput10FieldView] = Object.entries(formContainer._fields)[10];
+        const input = "2024-07-10";
+        let model = dateInput10FieldView.getModel();
+        cy.get(`#${dateInput10}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${dateInput10}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Value must be greater than 2024-07-10.");
+            cy.get(`#${dateInput10}`).find("input").clear().type("2024-07-12").blur().then(x => {
+                cy.get(`#${dateInput10}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"");
+                cy.get(`#${dateInput10}`).find("input").clear().type("2024-07-26").blur().then(x => {
+                    cy.get(`#${dateInput10}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Value must be less than 2024-07-23.");
+                })
+            })
+        })
     });
 })
