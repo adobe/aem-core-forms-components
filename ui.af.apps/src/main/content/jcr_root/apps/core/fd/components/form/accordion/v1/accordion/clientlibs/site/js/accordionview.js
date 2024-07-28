@@ -509,7 +509,7 @@
                     result.parentElement = this.element;
                 }
             } else {
-                var previousInstanceElement = this.#getRepeatableElementAt(instanceManager, instanceIndex - 1);
+                let previousInstanceElement = this.#getRepeatableElementAt(instanceManager, instanceIndex - 1);
                 result.beforeViewElement = previousInstanceElement;
             }
             return result;
