@@ -147,26 +147,23 @@
             jcr:primaryType="nt:unstructured"
             jcr:title="Panel">
             <items jcr:primaryType="nt:unstructured">
-<!--                <responsivePanel-->
-<!--                    jcr:primaryType="nt:unstructured"-->
-<!--                    target="/mnt/override/libs/fd/af/components/panel/cq:styleConfig/items/responsivePanel"/>-->
+                <responsivePanel
+                    jcr:primaryType="nt:unstructured"
+                    target="/mnt/override/apps/core/fd/components/form/panelcontainer/v1/panelcontainer/cq:styleConfig/items/responsivePanel"/>
                 <accordionPanel
                     jcr:primaryType="nt:unstructured"
                     target="/mnt/override/apps/core/fd/components/form/accordion/v1/accordion/cq:styleConfig/items/accordionPanel"/>
-<!--                <tabsOnLeftPanel-->
-<!--                    jcr:primaryType="nt:unstructured"-->
-<!--                    target="/mnt/override/libs/fd/af/components/panel/cq:styleConfig/items/tabsOnLeftPanel"/>-->
-<!--                <tabsOnTopPanel-->
-<!--                    jcr:primaryType="nt:unstructured"-->
-<!--                    target="/mnt/override/libs/fd/af/components/panel/cq:styleConfig/items/tabsOnTopPanel"/>-->
+                <tabsOnLeftPanel
+                    jcr:primaryType="nt:unstructured"
+                    target="/mnt/override/apps/core/fd/components/form/verticaltabs/v1/verticaltabs/cq:styleConfig/items/tabsOnLeftPanel"/>
+                <tabsOnTopPanel
+                    jcr:primaryType="nt:unstructured"
+                    target="/mnt/override/apps/core/fd/components/form/tabsontop/v1/tabsontop/cq:styleConfig/items/tabsOnTopPanel"/>
                 <wizardPanel
                     jcr:primaryType="nt:unstructured"
                     target="/mnt/override/apps/core/fd/components/form/wizard/v2/wizard/cq:styleConfig/items/wizardPanel"/>
             </items>
         </panel>
-<!--        <panelHelp-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/panel/cq:styleConfig/items/panelHelp"/>-->
 <!--        <mobileMenu-->
 <!--            jcr:primaryType="nt:unstructured"-->
 <!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileMenu"/>-->
@@ -176,37 +173,6 @@
 <!--        <mobileScrollIndicator-->
 <!--            jcr:primaryType="nt:unstructured"-->
 <!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileScrollIndicator"/>-->
-<!--        <table-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/table/cq:styleConfig/items/table"/>-->
-<!--        <helpIcon-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            jcr:title="Help Icon"-->
-<!--            id="af_helpicon"-->
-<!--            cssSelector=".guideHelpQuestionMark"-->
-<!--            longTitle="Help Icon"-->
-<!--            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">-->
-<!--            <items jcr:primaryType="nt:unstructured">-->
-<!--                <panelHelpIcon-->
-<!--                    jcr:primaryType="nt:unstructured"-->
-<!--                    target="/mnt/override/libs/fd/af/components/panel/cq:styleConfig/items/panelHelpIcon"/>-->
-<!--                <fieldHelpIcon-->
-<!--                    jcr:primaryType="nt:unstructured"-->
-<!--                    target="/mnt/override/libs/fd/af/components/guidefield/cq:styleConfig/items/field/items/fieldHelpIcon"/>-->
-<!--            </items>-->
-<!--            <states jcr:primaryType="nt:unstructured">-->
-<!--                <hover-->
-<!--                    jcr:primaryType="nt:unstructured"-->
-<!--                    jcr:title="Hover"-->
-<!--                    cssSelector=".guideHelpQuestionMark:hover"/>-->
-<!--            </states>-->
-<!--        </helpIcon>-->
-<!--        <toolbar-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/toolbar/cq:styleConfig/items/toolbar"/>-->
-<!--        <staticText-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guidetextdraw/cq:styleConfig/items/staticText"/>-->
         <Image
             jcr:primaryType="nt:unstructured"
             target="/mnt/override/apps/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image"/>
@@ -216,39 +182,5 @@
         <recaptcha
                 jcr:primaryType="nt:unstructured"
                 target="/mnt/override/apps/core/fd/components/form/recaptcha/v1/recaptcha/cq:styleConfig/items/field/items/captcha"/>
-<!--        <chart-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guidechart/cq:styleConfig/items/chart"/>-->
-<!--        <separator-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideseparator/cq:styleConfig/items/separator"/>-->
-<!--        <tooltip-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/tooltip"/>-->
-<!--        <summary-->
-<!--                jcr:primaryType="nt:unstructured"-->
-<!--                target="/mnt/override/libs/fd/afaddon/components/summary/cq:styleConfig/items/summary"/>-->
-<!--        <verify-->
-<!--                jcr:primaryType="nt:unstructured"-->
-<!--                target="/mnt/override/libs/fd/afaddon/components/verify/cq:styleConfig/items/verify"/>-->
-<!--        <esign-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/afaddon/components/esign/cq:styleConfig/items/esign"/>-->
-<!--        <adobeSignBlock-->
-<!--                jcr:primaryType="nt:unstructured"-->
-<!--                target="/mnt/override/libs/fd/afaddon/components/adobeSignBlock/cq:styleConfig/items/adobeSignBlock"/>-->
-<!--        <thankyoumessage-->
-<!--                jcr:primaryType="nt:unstructured"-->
-<!--                jcr:title="Thankyou Message"-->
-<!--                id="af_thankyoumessage"-->
-<!--                cssSelector=".tyMessage"-->
-<!--                longTitle="Thankyou Message"-->
-<!--                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>-->
-<!--        <documentFragment-->
-<!--                jcr:primaryType="nt:unstructured"-->
-<!--                target="/mnt/override/libs/fd/ccm/web-channel/components/documentFragment/v1/documentFragment/cq:styleConfig/items/documentFragment"/>-->
-<!--        <documentFragmentGroup-->
-<!--                jcr:primaryType="nt:unstructured"-->
-<!--                target="/mnt/override/libs/fd/ccm/web-channel/components/documentFragmentGroup/v1/documentFragmentGroup/cq:styleConfig/items/documentFragmentGroup"/>-->
     </items>
 </jcr:root>
