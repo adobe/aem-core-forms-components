@@ -60,16 +60,9 @@
                         <mandatory
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Mandatory"
-                            cssSelector="label.required"/>
+                            cssSelector="label:required"/>
                     </states>
                 </fieldLabel>
-                <errorMessage
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Error Message"
-                    id="af_baseerrormessage"
-                    cssSelector="[class$='__errormessage']"
-                    longTitle="Base Error Message"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
             </items>
             <states jcr:primaryType="nt:unstructured">
                 <focus
@@ -87,7 +80,7 @@
                 <mandatory
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Mandatory"
-                    cssSelector=".base:mandatory"/>
+                    cssSelector=".base:required"/>
             </states>
         </field>
     </items>
