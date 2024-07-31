@@ -356,6 +356,6 @@ export const Constants = {
      * Prefix path for all AF HTTP APIs.
      * @type {string}
      */
-    API_PATH_PREFIX : "/adobe/forms/af"
+    API_PATH_PREFIX : "/adobe/forms/af",
 };
 
