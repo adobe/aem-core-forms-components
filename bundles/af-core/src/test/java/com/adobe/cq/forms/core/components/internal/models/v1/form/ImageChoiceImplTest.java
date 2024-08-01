@@ -127,7 +127,7 @@ public class ImageChoiceImplTest {
     @Test
     void testIsVisible() {
         ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE);
-        assertEquals(null, imageChoice.isVisible());
+        assertEquals(true, imageChoice.isVisible());
         ImageChoice imageChoiceMock = Mockito.mock(ImageChoice.class);
         Mockito.when(imageChoiceMock.isVisible()).thenCallRealMethod();
         assertEquals(null, imageChoiceMock.isVisible());
@@ -145,7 +145,7 @@ public class ImageChoiceImplTest {
     @Test
     void testIsEnabled() {
         ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE);
-        assertEquals(null, imageChoice.isEnabled());
+        assertEquals(true, imageChoice.isEnabled());
         ImageChoice imageChoiceMock = Mockito.mock(ImageChoice.class);
         Mockito.when(imageChoiceMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, imageChoiceMock.isEnabled());
@@ -163,7 +163,7 @@ public class ImageChoiceImplTest {
     @Test
     void testIsReadOnly() {
         ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE);
-        assertEquals(null, imageChoice.isReadOnly());
+        assertEquals(false, imageChoice.isReadOnly());
         ImageChoice imageChoiceMock = Mockito.mock(ImageChoice.class);
         Mockito.when(imageChoiceMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, imageChoiceMock.isReadOnly());
