@@ -47,7 +47,7 @@ public class PasswordImpl extends AbstractFieldImpl implements Password {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    private String validationPattern;
+    private String pattern;
 
     @Override
     public String getFieldType() {
@@ -80,8 +80,8 @@ public class PasswordImpl extends AbstractFieldImpl implements Password {
     }
 
     @Override
-    public String getValidationPattern() {
-        return validationPattern;
+    public String getPattern() {
+        return pattern;
     }
 
     @Override

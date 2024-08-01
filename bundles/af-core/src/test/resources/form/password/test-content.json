@@ -29,7 +29,7 @@
       "typeMessage" : "incorrect type",
       "tooltip": "test-short-description",
       "placeholder": "Enter valid password",
-      "validationPattern": "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",
+      "pattern": "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",
       "default" : "password",
       "fieldType": "password",
       "label": {

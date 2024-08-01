@@ -115,7 +115,7 @@
                                     placeholder="Enter valid password"
                                     tooltip="&lt;p>This is a short description.&lt;/p>"
                                     tooltipVisible="true"
-                                    validationPattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&amp;+=])(?=\\S+$).{8,20}$"/>
+                                    pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&amp;+=])(?=\\S+$).{8,20}$"/>
                             </container>
                             <password_217420522
                                 jcr:created="{Date}2024-03-12T11:39:01.858+05:30"

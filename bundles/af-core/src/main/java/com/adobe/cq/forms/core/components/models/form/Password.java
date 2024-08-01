@@ -32,6 +32,6 @@ public interface Password extends Field, StringConstraint, NumberConstraint {
      * @return the validation pattern
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
-    String getValidationPattern();
+    String getPattern();
 
 }

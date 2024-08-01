@@ -96,9 +96,9 @@ public class PasswordImplTest {
     }
 
     @Test
-    void testGetValidationPattern() {
+    void testGetPattern() {
         Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
-        assertEquals("/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/", password.getValidationPattern());
+        assertEquals("/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/", password.getPattern());
 
     }
 
