@@ -110,7 +110,7 @@
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                         fieldDescription="Regular Expression is permitted."
                                                         fieldLabel="Pattern"
-                                                        name="./validationPattern"/>
+                                                        name="./pattern"/>
                                                     <validatePictureClauseMessage
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
