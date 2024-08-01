@@ -40,7 +40,9 @@
     </div>
     <div class="cmp-adaptiveform-imagechoice__widget ${imagechoice.orientation}" id="${widgetId}">
         <div data-sly-list.option="${imagechoice.options}" data-sly-unwrap>
-            <div class="cmp-adaptiveform-imagechoice__option ${imagechoice.name}">
+            <div class="cmp-adaptiveform-imagechoice__option ${imagechoice.name}"
+                 style="background-image: url('${imagechoice.options[optionList.index].imageSrc @ context='uri'}')">
+
                 <label class="cmp-adaptiveform-imagechoice__option-label" title="${imagechoice.tooltipVisible ? '' : imagechoice.tooltipText}">
                     <input class="cmp-adaptiveform-imagechoice__option__widget"
                            type="${imagechoice.selectionType == 'multiple' ? 'checkbox' : 'radio'}"
@@ -49,7 +51,7 @@
                            checked="${imagechoice.options[optionList.index].imageValue in imagechoice.default }"
                            disabled="${!imagechoice.enabled || imagechoice.readOnly}"
                            aria-readonly="${imagechoice.readOnly ? 'true' : ''}">
-                    <img class ="cmp-adaptiveform-imagechoice__option__widget__image" src="${imagechoice.options[optionList.index].imageSrc}" alt="${imagechoice.options[optionList.index].altText || true}">
+                    <img class ="cmp-adaptiveform-imagechoice__option__widget__image">
                 </label>
             </div>
         </div>
