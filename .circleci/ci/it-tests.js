@@ -23,7 +23,7 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE, FT } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CORE_COMPONENTS } = process.env;
 const isLatestAddon = AEM === 'addon-latest';
 const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/org.jacoco.agent-0.8.3-runtime.jar';
 
@@ -67,6 +67,11 @@ try {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
+        if (CORE_COMPONENTS) {
+            // enable specific core component version
+            extras += ` --bundle com.adobe.aem:core-forms-components-all:${CORE_COMPONENTS}:zip`;
+            extras += ` --bundle com.adobe.aem:core-forms-components-examples-all:${CORE_COMPONENTS}:zip`;
+        }
     }
 
     if (FT === 'true') {
@@ -84,12 +89,12 @@ try {
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
             ${extras} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */)} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */)} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-core']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-apps']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-content']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-core']) : ''} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-config'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
