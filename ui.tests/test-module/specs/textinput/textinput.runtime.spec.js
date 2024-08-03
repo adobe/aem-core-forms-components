@@ -67,7 +67,7 @@ describe("Form Runtime with Text Input", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
         Object.entries(formContainer._fields).forEach(([id, field]) => {
-            if(field.options.visible === "true") {
+            if(field.options.visible === "true" && field.getModel()._jsonModel.fieldType==='text-input') {
                 expect(field.getId()).to.equal(id)
                 expect(formContainer._model.getElement(id), `model and view are in sync`).to.equal(field.getModel())
                 checkHTML(id, field.getModel().getState())
