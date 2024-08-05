@@ -18,6 +18,6 @@
     jcr:primaryType="cq:ClientLibraryFolder"
     allowProxy="{Boolean}true"
     categories="[core.forms.components.wizard.v1.runtime]"
-    jsProcessor="[default:none,min:gcc;languageIn=ECMASCRIPT_2018;languageOut=ECMASCRIPT_2018]"
+    jsProcessor="[default:none,min:gcc;languageIn=ECMASCRIPT_2020;languageOut=ECMASCRIPT_2020]"
     dependencies="[core.forms.components.runtime.base,core.forms.components.container.v2.runtime,core.wcm.components.commons.site.container]"
     />
