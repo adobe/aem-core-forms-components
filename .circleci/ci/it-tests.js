@@ -152,7 +152,7 @@ try {
         ci.dir('ui.tests', () => {
             let command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
             if (CORE_COMPONENTS) {
-                command += ` -DCORE_COMPONENTS=${CORE_COMPONENTS}`;
+                command += ` -DCORE_COMPONENTS=true`;
             }
             ci.sh(command);
         });
