@@ -23,7 +23,7 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE, FT, CORE_COMPONENTS } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CORE_COMPONENTS, WCM_COMPONENTS} = process.env;
 const isLatestAddon = AEM === 'addon-latest';
 const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/org.jacoco.agent-0.8.3-runtime.jar';
 
@@ -39,7 +39,7 @@ try {
 
     //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
     //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
-    let wcmVersion = "2.25.4";
+    let wcmVersion = WCM_COMPONENTS ? WCM_COMPONENTS : "2.25.4";
     ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
         // Connect to QP
@@ -62,7 +62,6 @@ try {
         // Download latest add-on release from artifactory
         ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemfd -DartifactId=aem-forms-cloud-ready-pkg -Dversion=LATEST -Dclassifier=feature-archive -Dtype=far -DoutputDirectory=${buildPath} -DoutputFileName=forms-latest-addon.far`);
         extras += ` --install-file ${buildPath}/forms-latest-addon.far`;
-        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
         if (PRERELEASE === 'true') {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
@@ -72,6 +71,7 @@ try {
             extras += ` --bundle com.adobe.aem:core-forms-components-all:${CORE_COMPONENTS}:zip`;
             extras += ` --bundle com.adobe.aem:core-forms-components-examples-all:${CORE_COMPONENTS}:zip`;
         }
+        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
     }
 
     if (FT === 'true') {
