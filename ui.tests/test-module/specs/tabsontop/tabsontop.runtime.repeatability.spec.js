@@ -131,5 +131,18 @@ describe("Form with TabsOnTop Container", () => {
         })
     })
 
+    it('test adding panel programmatically', () => {
+        getTabs().should('have.length', 4);
+        getTabPanels().should('have.length', 4);
+        cy.wrap(null).then(() => {
+            const instanceManager = formContainer._model.items[0].items[0];
+            for(let i=0; i<5; i++){
+                instanceManager.dispatch({type: "addItem"})
+            }
+        }).then(() => {
+            getTabs().should('have.length', 7);
+            getTabPanels().should('have.length', 7);
+        })
+    });
 
 })
