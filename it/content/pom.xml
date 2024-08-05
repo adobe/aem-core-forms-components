@@ -88,12 +88,14 @@
                         <dependency>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>core-forms-components-examples-content</artifactId>
-                            <version>${project.version}</version>
+                            <!-- Keeping version range to allow testing of current test content with old components -->
+                            <version>[3.0.0,)</version>
                         </dependency>
                         <dependency>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>core-forms-components-examples-apps</artifactId>
-                            <version>${project.version}</version>
+                            <!-- Keeping version range to allow testing of current test content with old components -->
+                            <version>[3.0.0,)</version>
                         </dependency>
                     </dependencies>
                 </configuration>
