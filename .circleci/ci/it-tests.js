@@ -80,6 +80,7 @@ try {
     if (CORE_COMPONENTS) {
         // enable specific core component version
         extras += ` --bundle com.adobe.aem:core-forms-components-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-core:${CORE_COMPONENTS}:jar`;
         extras += ` --bundle com.adobe.aem:core-forms-components-af-apps:${CORE_COMPONENTS}:zip`;
         extras += ` --bundle com.adobe.aem:core-forms-components-af-core:${CORE_COMPONENTS}:jar`;
         extras += ` --bundle com.adobe.aem:core-forms-components-examples-apps:${CORE_COMPONENTS}:zip`;
@@ -149,7 +150,10 @@ try {
         }
         // start running the tests
         ci.dir('ui.tests', () => {
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
+            let command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
+            if (CORE_COMPONENTS) {
+                command += ` -DCORE_COMPONENTS=${CORE_COMPONENTS}`;
+            }
             ci.sh(command);
         });
     }
