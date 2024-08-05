@@ -66,11 +66,6 @@ try {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
-        if (CORE_COMPONENTS) {
-            // enable specific core component version
-            extras += ` --bundle com.adobe.aem:core-forms-components-all:${CORE_COMPONENTS}:zip`;
-            extras += ` --bundle com.adobe.aem:core-forms-components-examples-all:${CORE_COMPONENTS}:zip`;
-        }
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
     }
 
@@ -82,6 +77,15 @@ try {
     // Set an environment variable indicating test was executed
     // this is used in case of re-run failed test scenario
     ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt");
+    if (CORE_COMPONENTS) {
+        // enable specific core component version
+        extras += ` --bundle com.adobe.aem:core-forms-components-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-af-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-af-core:${CORE_COMPONENTS}:jar`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-examples-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-examples-content:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-examples-core:${CORE_COMPONENTS}:jar`;
+    }
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
