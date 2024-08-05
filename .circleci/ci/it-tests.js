@@ -105,12 +105,6 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${jacocoAgent}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
-
-    if (CORE_COMPONENTS) {
-        // restart the AEM instance if a specific core component version is installed
-        ci.sh(`./qp.sh stop --id author`);
-        ci.sh(`./qp.sh start --id author`);
-    }
 });
 
     // Run integration tests
