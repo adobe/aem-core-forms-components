@@ -94,13 +94,13 @@
                             <group>${vault.package.group}</group>
                             <name>core-forms-components-af-apps</name>
                             <!-- Keeping version range to allow testing of current test content with old components -->
-                            <version>[3.0.0,)</version>
+                            <version>[1.0.0,)</version>
                         </dependency>
                         <dependency>
                             <group>${vault.package.group}</group>
                             <name>core-forms-components-apps</name>
                             <!-- Keeping version range to allow testing of current test content with old components -->
-                            <version>[3.0.0,)</version>
+                            <version>[1.0.0,)</version>
                         </dependency>
                     </dependencies>
                 </configuration>
