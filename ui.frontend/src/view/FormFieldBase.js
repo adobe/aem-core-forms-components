@@ -607,44 +607,56 @@ class FormFieldBase extends FormField {
      * @param {string} descriptionText - The description.
      */
     updateDescription(descriptionText) {
-        if (descriptionText !== undefined) {
-            if (this.getDescription()) {
-                if (!this.getDescription().querySelector("p")) {
+        if (typeof descriptionText !== 'undefined') {
+            const sanitizedDescriptionText = window.DOMPurify ?  window.DOMPurify.sanitize(descriptionText) : descriptionText;
+            let descriptionElement = this.getDescription();
+            if (descriptionElement) {
+                let pElement = descriptionElement.querySelector("p");
+                if (!pElement) {
                     // If the description is updated via rule then it might not have <p> tags
-                    this.getDescription().appendChild(document.createElement('p'));
+                    pElement = document.createElement('p');
+                    descriptionElement.appendChild(pElement);
                 }
+                pElement.textContent = sanitizedDescriptionText;
             } else {
-                this.#addDescriptionInRuntime();
+                // If no description was set during authoring
+                this.#addDescriptionInRuntime(sanitizedDescriptionText);
             }
-            this.getDescription().querySelector("p").innerHTML = descriptionText;
         }
     }
 
-    #addDescriptionInRuntime() {
-        console.log('adding description in runtime')
+    #addDescriptionInRuntime(descriptionText) {
         // add question mark icon
         const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
-        const qmButton = document.createElement('button');
-        qmButton.className = `${bemClass}__questionmark`;
-        qmButton.title = 'Help text';
-        this.element.querySelector(`.${bemClass}__label-container`).appendChild(qmButton);
-
+        const labelContainer = this.element.querySelector(`.${bemClass}__label-container`);
+        if (labelContainer) {
+            const qmButton = document.createElement('button');
+            qmButton.className = `${bemClass}__questionmark`;
+            qmButton.title = 'Help text';
+            labelContainer.appendChild(qmButton);
+        } else {
+            console.error('label container not found');
+            return;
+        }
         // add description div
         const descriptionDiv = document.createElement('div');
         descriptionDiv.className = `${bemClass}__longdescription`;
         descriptionDiv.id = `${this.getId()}__longdescription`;
         descriptionDiv.setAttribute('aria-live', 'polite');
         descriptionDiv.setAttribute('data-cmp-visible', false);
-        descriptionDiv.appendChild(document.createElement('p'))
+        const pElement = document.createElement('p');
+        pElement.textContent = descriptionText;
+        descriptionDiv.appendChild(pElement)
         var errorDiv = this.getErrorDiv();
-        this.element.insertBefore(descriptionDiv, errorDiv);
-
+        if (errorDiv) {
+            this.element.insertBefore(descriptionDiv, errorDiv);
+        } else {
+            console.log('error div not found');
+            return;
+        }
         // attach event handler for question mark icon
         this.#addHelpIconHandler();
     }
-
-
-
 
     /**
      * Adds an event listener for the '?' icon click.
