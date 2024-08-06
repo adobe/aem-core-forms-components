@@ -222,7 +222,7 @@ jobs:
       PRERELEASE: 'true'
       FT: 'true'
       CORE_COMPONENTS: '3.0.34'
-      WCM_COMPONENTS: '2.24.6'
+      WCM_COMPONENTS: '2.25.4'
     resource_class: xlarge
     working_directory: /home/circleci/build
     parallelism: 8
