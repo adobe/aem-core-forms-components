@@ -56,10 +56,13 @@ describe('Page - Authoring', function () {
             editDialogNavigationPanelSelector = "[data-action='PANEL_SELECT']",
             textInputPath = wizardLayoutDrop + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             numberInputPath = wizardLayoutDrop + "/" + afConstants.components.forms.resourceType.formnumberinput.split("/").pop(),
+            panelcontainerPath = wizardLayoutDrop + "/" + afConstants.components.forms.resourceType.panelcontainer.split("/").pop(),
             textInputDataId = "[data-id='" + textInputPath + "']",
             numberInputDataId = "[data-id='" + numberInputPath + "']",
+            panelcontainerDataId = "[data-id='" + panelcontainerPath + "']",
             textInputDataPath = "[data-path='" + textInputPath + "']",
             numberInputDataPath = "[data-path='" + numberInputPath + "']",
+            panelcontainerDataPath = "[data-path='" + panelcontainerPath + "']",
             editDialogConfigurationSelector = "[data-action='CONFIGURE']";
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -108,6 +111,23 @@ describe('Page - Authoring', function () {
                     cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
                     cy.get('div' + textInputDataPath).should('not.be.visible');
+                    cy.deleteComponentByPath(wizardLayoutDrop);
+                });
+            });
+        });
+
+        it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
+            cy.cleanTest(wizardLayoutDrop).then(function () {
+                dropWizardInContainer();
+                addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
+                addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
+                cy.invokeEditableAction(editDialogNavigationPanelSelector);
+                cy.wait(2000).then(() => {
+                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
+                    cy.get('body').click(0, 0);
+                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerDataPath);
                     cy.deleteComponentByPath(wizardLayoutDrop);
                 });
             });
