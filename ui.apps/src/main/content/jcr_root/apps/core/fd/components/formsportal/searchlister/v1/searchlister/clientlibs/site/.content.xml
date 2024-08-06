@@ -20,4 +20,4 @@
           categories="[core.forms.components.formsportal.searchlister.v1]"
           embed="[core.forms.components.commons.v1.clientlibs.layouts.iteminjector]"
           dependencies="[jquery]"
-          jsProcessor="[default:none,min:gcc;languageIn=ECMASCRIPT_2020;languageOut=ECMASCRIPT_2020]"/>
+          jsProcessor="[default:none,min:gcc;languageIn=ECMASCRIPT_2021;languageOut=ECMASCRIPT_2021]"/>

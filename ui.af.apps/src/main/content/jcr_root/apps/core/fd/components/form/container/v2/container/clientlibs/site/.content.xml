@@ -3,5 +3,5 @@
     jcr:primaryType="cq:ClientLibraryFolder"
     allowProxy="{Boolean}true"
     categories="[core.forms.components.container.v2.runtime]"
-    jsProcessor="[default:none,min:gcc;languageIn=ECMASCRIPT_NEXT;languageOut=ECMASCRIPT_2020]"
+    jsProcessor="[default:none,min:gcc;languageIn=UNSTABLE;languageOut=ECMASCRIPT_2020]"
     dependencies="[core.forms.components.runtime.base]"/>
