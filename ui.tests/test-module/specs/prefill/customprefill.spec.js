@@ -25,9 +25,9 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
 describe('Custom Prefill Test', function () {
     const pagePath = "content/forms/af/core-components-it/samples/prefill/basic.html";
     const nameTextBox = "input[name='name']",
-        dobDropdown = "input[name='dob']",
-        genderRadioButton = "input[name='radiobutton-c8c660bac8_name']",
-        jobDropdown = "select[name='job']";
+          dobDropdown = "input[name='dob']",
+          jobDropdown = "select[name='job']";
+    let genderRadioButton = "input[name='radiobutton-c8c660bac8_name']";
     let formContainer = null;
 
     beforeEach(() => {
@@ -39,6 +39,7 @@ describe('Custom Prefill Test', function () {
             method: 'POST',
             url: '**/adobe/forms/af/submit/*',
         }).as('afSubmission')
+
     });
 
     const validatePrefill = (prefillId, customService) => {
@@ -53,7 +54,11 @@ describe('Custom Prefill Test', function () {
             cy.previewForm(pagePath, {"params" : [`prefillId=${prefillId}`]});
             // validating the prefilled data
             cy.get(nameTextBox).should("have.value", "John Doe");
-            cy.get(dobDropdown).should("have.value", "10 October, 1999");
+            if (cy.af.isOldCoreComponent()) { // don't change this, this might fail if we upgrade core component version
+                cy.get(dobDropdown).should("have.value", "1999-10-10");
+            } else {
+                cy.get(dobDropdown).should("have.value", "10 October, 1999");
+            }
             cy.get(genderRadioButton).should("have.value", "0");
             cy.get(jobDropdown).should("have.value", "1");
         }
@@ -61,6 +66,11 @@ describe('Custom Prefill Test', function () {
     }
 
     it('', function() {
+        debugger;
+        
+        if (cy.af.isOldCoreComponent()) {
+            genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
+        }
         // filling the form
         cy.get(nameTextBox).type("John Doe");
         cy.get(dobDropdown).type("1999-10-10");
@@ -83,6 +93,9 @@ describe('Custom Prefill Test', function () {
     });
 
     it('prefill using service in dataRef', function() {
+        if (cy.af.isOldCoreComponent()) {
+            genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
+        }
         // filling the form
         cy.get(nameTextBox).type("John Doe");
         cy.get(dobDropdown).type("1999-10-10");
