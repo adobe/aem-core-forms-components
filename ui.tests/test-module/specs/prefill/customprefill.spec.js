@@ -26,8 +26,8 @@ describe('Custom Prefill Test', function () {
     const pagePath = "content/forms/af/core-components-it/samples/prefill/basic.html";
     const nameTextBox = "input[name='name']",
           dobDropdown = "input[name='dob']",
-          genderRadioButton = "input[name='gender']",
           jobDropdown = "select[name='job']";
+    let genderRadioButton = "input[name='radiobutton-c8c660bac8_name']";
     let formContainer = null;
 
     beforeEach(() => {
@@ -39,6 +39,10 @@ describe('Custom Prefill Test', function () {
             method: 'POST',
             url: '**/adobe/forms/af/submit/*',
         }).as('afSubmission')
+
+        if (cy.af.isOldCoreComponent()) {
+            genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
+        }
     });
 
     const validatePrefill = (prefillId, customService) => {
