@@ -25,9 +25,9 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
 describe('Custom Prefill Test', function () {
     const pagePath = "content/forms/af/core-components-it/samples/prefill/basic.html";
     const nameTextBox = "input[name='name']",
-          dobDropdown = "input[name='dob']",
-          genderRadioButton = "input[name='radiobutton-c8c660bac8_name']",
-          jobDropdown = "select[name='job']";
+        dobDropdown = "input[name='dob']",
+        genderRadioButton = "input[name='radiobutton-c8c660bac8_name']",
+        jobDropdown = "select[name='job']";
     let formContainer = null;
 
     beforeEach(() => {

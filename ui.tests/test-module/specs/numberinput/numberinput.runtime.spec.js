@@ -43,16 +43,16 @@ describe("Form with Number Input", () => {
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
         const value = state.displayValue == null ? '' : state.displayValue;
         cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
+        .should(passVisibleCheck)
+        .invoke('attr', 'data-cmp-visible')
+        .should('eq', visible.toString());
         cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
+        .invoke('attr', 'data-cmp-enabled')
+        .should('eq', state.enabled.toString());
         return cy.get(`#${id}`).within((root) => {
             cy.get('*').should(passVisibleCheck)
             cy.get('input')
-                .should(passDisabledAttributeCheck, 'disabled');
+            .should(passDisabledAttributeCheck, 'disabled');
             cy.get('input').should('have.value', value)
         })
     }
@@ -114,11 +114,11 @@ describe("Form with Number Input", () => {
             expect(model.getState().value).to.equal("")
             input = "23" // in case of valid input, paste works
             cy.get(`#${id}`)
-                .find("input")
-                .clear()
-                .paste({pasteType: 'text/plain', pastePayload: `${input}`}) // dispatch paste event
-                .type(input) // typing explicitly since synthetic paste event does not affect document content
-                .blur().then(x => {
+            .find("input")
+            .clear()
+            .paste({pasteType: 'text/plain', pastePayload: `${input}`}) // dispatch paste event
+            .type(input) // typing explicitly since synthetic paste event does not affect document content
+            .blur().then(x => {
                 expect(Number(model.getState().value)).to.equal(Number(input));
             })
         })
@@ -223,16 +223,16 @@ describe("Form with Number Input", () => {
     })
 
     it(" should add filled/empty class at container div ", () => {
-      const [numberInput7, numberInput7FieldView] = Object.entries(formContainer._fields)[6];
-      const input = "11.22";
-      let model = numberInput7FieldView.getModel();
-      cy.get(`#${numberInput7}`).should('have.class', 'cmp-adaptiveform-numberinput--empty');
-      cy.get(`#${numberInput7}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
-      cy.get(`#${numberInput7}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
-      cy.get(`#${numberInput7}`).find("input").clear().type(input).blur().then(x => {
-          expect(Number(model.getState().value)).to.equal(Number(1122));
-          cy.get(`#${numberInput7}`).should('have.class', 'cmp-adaptiveform-numberinput--filled');
-      });
+        const [numberInput7, numberInput7FieldView] = Object.entries(formContainer._fields)[6];
+        const input = "11.22";
+        let model = numberInput7FieldView.getModel();
+        cy.get(`#${numberInput7}`).should('have.class', 'cmp-adaptiveform-numberinput--empty');
+        cy.get(`#${numberInput7}`).invoke('attr', 'data-cmp-required').should('eq', 'false');
+        cy.get(`#${numberInput7}`).invoke('attr', 'data-cmp-readonly').should('eq', 'false');
+        cy.get(`#${numberInput7}`).find("input").clear().type(input).blur().then(x => {
+            expect(Number(model.getState().value)).to.equal(Number(1122));
+            cy.get(`#${numberInput7}`).should('have.class', 'cmp-adaptiveform-numberinput--filled');
+        });
     });
 
     it(" should support display value expression", () => {
@@ -335,7 +335,7 @@ describe("Form with number input and language", () => {
         cy.get(`#${numberInput6}`).find("input").clear().type(input).blur().then(x => {
             expect(Number(model.getState().value)).to.equal(Number(input));
 // Assert that the input value contains "121" and "212,000" regardless of the space type
-                cy.get(`#${numberInput6}`).find('input').invoke('val').should('equal', '121\u202F212,000');
+            cy.get(`#${numberInput6}`).find('input').invoke('val').should('equal', '121\u202F212,000');
         })
     })
 })
