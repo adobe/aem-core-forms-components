@@ -27,7 +27,7 @@ cy.af = {
 
     isOldCoreComponent : () => {
         // if not defined always return true for local execution to pass
-        return Cypress.env("core.components.version") != null;
+        return Cypress.env("core.components.version") != null && Cypress.env("core.components.version") !== "${CORE_COMPONENTS}";
     },
 
     isReleasedAddon : () => {
