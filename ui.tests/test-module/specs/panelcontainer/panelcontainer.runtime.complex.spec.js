@@ -147,12 +147,12 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
         const visible = model.visible;
         const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
         cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
+        .should(passVisibleCheck)
+        .invoke('attr', 'data-cmp-visible')
+        .should('eq', visible.toString());
         cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', model.enabled.toString());
+        .invoke('attr', 'data-cmp-enabled')
+        .should('eq', model.enabled.toString());
         expect(computeModelLength(model.items), " model and view children should have equal count ").to.equal(computeViewLength(view.children));
         return cy.get('[data-cmp-is="adaptiveFormContainer"]');
     };
@@ -190,16 +190,16 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                 const allFields = formContainer.getAllFields();
                 const innerInstanceManager = allFields[innerInstanceManagerModel.id];
                 checkInstanceHTML(innerInstanceManager, 2)
+                .then(() => {
+                    checkAddRemoveInstance(innerInstanceManager, 3, true)
                     .then(() => {
-                        checkAddRemoveInstance(innerInstanceManager, 3, true)
-                            .then(() => {
-                                checkAddRemoveInstance(innerInstanceManager, 2)
-                                    .then(() => {
-                                        //min is 2, can't go below this
-                                        checkAddRemoveInstance(innerInstanceManager, 2);
-                                    });
-                            });
+                        checkAddRemoveInstance(innerInstanceManager, 2)
+                        .then(() => {
+                            //min is 2, can't go below this
+                            checkAddRemoveInstance(innerInstanceManager, 2);
+                        });
                     });
+                });
             });
         });
 
@@ -373,16 +373,16 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
                         }
                         expect(outerInstancesView.length, " Number of instances view to equal Number of instances model ").to.equal(outerInstancesModel.length);
                         checkInstanceHTML(outerInstanceManagerView, 3)
+                        .then(() => {
+                            checkAddRemoveInstance(outerInstanceManagerView, 4, true)
                             .then(() => {
-                                checkAddRemoveInstance(outerInstanceManagerView, 4, true)
-                                    .then(() => {
-                                        checkAddRemoveInstance(outerInstanceManagerView, 3)
-                                            .then(() => {
-                                                //min is 3, can't go below this
-                                                checkAddRemoveInstance(outerInstanceManagerView, 3);
-                                            });
-                                    });
+                                checkAddRemoveInstance(outerInstanceManagerView, 3)
+                                .then(() => {
+                                    //min is 3, can't go below this
+                                    checkAddRemoveInstance(outerInstanceManagerView, 3);
+                                });
                             });
+                        });
                     });
                 });
             });

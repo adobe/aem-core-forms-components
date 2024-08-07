@@ -198,3 +198,37 @@ describe("Rule editor save handler runtime", () => {
         }
     })
 })
+
+
+describe('Rule editor properties on form initialize test', () => {
+    const pagePath = "content/forms/af/core-components-it/samples/ruleeditor/set_property_test.html"
+    let formContainer = null;
+
+    before(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("Check properties are properly set on form initialize", () => {
+        const [checkBoxId, checkBoxFieldView] = Object.entries(formContainer._fields)[0]
+        const [fileInputId, fileInputView] = Object.entries(formContainer._fields)[1]
+
+        const checkProperties = (id, bemBlock, labelSelector, expectedLabel, expectedDescription) => {
+            cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
+            cy.get(`#${id} ${labelSelector}`)
+            .should('have.text', expectedLabel);
+            // cy.get(`#${id}__longdescription p`)
+            // .should('have.text', expectedDescription);
+
+            cy.get(`#${id}`).find(`.${bemBlock}__questionmark`).click();
+            // long description should be shown
+            cy.get(`#${id}`).find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
+            .should('not.exist');
+            cy.get(`#${id}`).find(`.${bemBlock}__longdescription`)
+            .should('contain.text', expectedDescription);
+        }
+        checkProperties(checkBoxId, 'cmp-adaptiveform-checkboxgroup', '.cmp-adaptiveform-checkboxgroup__label', 'Updated CheckBox', 'This is a long description of checkboxgroup');
+        checkProperties(fileInputId, 'cmp-adaptiveform-fileinput', '.cmp-adaptiveform-fileinput__label', 'Updated File Input Label', 'File Input Description');
+    });
+})

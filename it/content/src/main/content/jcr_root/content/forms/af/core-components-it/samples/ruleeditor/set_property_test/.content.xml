@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2024-06-25T12:19:31.490+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="set_property_test"
+        sling:configRef="/conf/forms/core-components-it/samples/ruleeditor/set_property_test/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="set_property_test">
+            <checkboxgroup
+                jcr:created="{Date}2024-06-18T13:30:57.797+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-06-24T17:27:26.602+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Check Box Group"
+                sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                enabled="{Boolean}true"
+                enum="[0,1]"
+                enumNames="[Item 1, Item 2]"
+                fieldType="checkbox-group"
+                hideTitle="false"
+                mandatoryMessage="This field is required"
+                name="checkboxgroup1718697659084"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                required="true"
+                textIsRich="[true,true,true,true,true]"
+                type="number[]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <fileinput
+                jcr:created="{Date}2024-06-18T14:18:51.339+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-06-24T17:27:35.009+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="File Attachment"
+                sling:resourceType="forms-components-examples/components/form/fileinput"
+                accept="[audio/*, video/*, image/*, text/*, application/pdf]"
+                buttonText="Attach"
+                dragDropText="Drag and drop to Upload"
+                enabled="{Boolean}true"
+                fieldType="file-input"
+                hideTitle="false"
+                name="fileinput1718700533373"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true,true,true]"
+                type="file"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <fd:rules
+                fd:init="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form&quot;\,&quot;type&quot;:&quot;FORM&quot;\,&quot;name&quot;:&quot;FORM&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is initialized&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;required&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1718697659084&quot;\,&quot;displayName&quot;:&quot;Check Box Group&quot;\,&quot;type&quot;:&quot;FIELD|CHECK BOX&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group/&quot;\,&quot;name&quot;:&quot;checkboxgroup1718697659084&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_LITERAL&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;True&quot;\,&quot;value&quot;:null}}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;label.value&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1718697659084&quot;\,&quot;displayName&quot;:&quot;Check Box Group&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|CHECK BOX&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group/&quot;\,&quot;name&quot;:&quot;checkboxgroup1718697659084&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Updated CheckBox&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;description&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1718697659084&quot;\,&quot;displayName&quot;:&quot;Check Box Group&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|CHECK BOX&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group/&quot;\,&quot;name&quot;:&quot;checkboxgroup1718697659084&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;This is a long description of checkboxgroup&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(checkboxgroup1718697659084\, 'custom:setProperty'\, {required : true()\, label : {value : 'Updated CheckBox'}\, description : 'This is a long description of checkboxgroup'})&quot;]\,&quot;eventName&quot;:&quot;Initialize&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form&quot;\,&quot;type&quot;:&quot;FORM&quot;\,&quot;name&quot;:&quot;FORM&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is initialized&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;label.value&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.fileinput1718700533373&quot;\,&quot;displayName&quot;:&quot;File Attachment&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/File Attachment/&quot;\,&quot;name&quot;:&quot;fileinput1718700533373&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;Updated File Input Label&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;required&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.fileinput1718700533373&quot;\,&quot;displayName&quot;:&quot;File Attachment&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/File Attachment/&quot;\,&quot;name&quot;:&quot;fileinput1718700533373&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_LITERAL&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;True&quot;\,&quot;value&quot;:null}}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;description&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.fileinput1718700533373&quot;\,&quot;displayName&quot;:&quot;File Attachment&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/File Attachment/&quot;\,&quot;name&quot;:&quot;fileinput1718700533373&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;File Input Description&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(fileinput1718700533373\, 'custom:setProperty'\, {label : {value : 'Updated File Input Label'}\, required : true()\, description : 'File Input Description'})&quot;]\,&quot;eventName&quot;:&quot;Initialize&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                jcr:primaryType="nt:unstructured"
+                validationStatus="valid"/>
+            <fd:events
+                jcr:primaryType="nt:unstructured"
+                initialize="[dispatchEvent(checkboxgroup1718697659084\, 'custom:setProperty'\, {required : true()\, label : {value : 'Updated CheckBox'}\, description : 'This is a long description of checkboxgroup'}),dispatchEvent(fileinput1718700533373\, 'custom:setProperty'\, {label : {value : 'Updated File Input Label'}\, required : true()\, description : 'File Input Description'})]"/>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>
