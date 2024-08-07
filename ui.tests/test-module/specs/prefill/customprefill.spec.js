@@ -40,9 +40,6 @@ describe('Custom Prefill Test', function () {
             url: '**/adobe/forms/af/submit/*',
         }).as('afSubmission')
 
-        if (cy.af.isOldCoreComponent()) {
-            genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
-        }
     });
 
     const validatePrefill = (prefillId, customService) => {
@@ -69,6 +66,9 @@ describe('Custom Prefill Test', function () {
     }
 
     it('', function() {
+        if (cy.af.isOldCoreComponent()) {
+            genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
+        }
         // filling the form
         cy.get(nameTextBox).type("John Doe");
         cy.get(dobDropdown).type("1999-10-10");
@@ -91,6 +91,9 @@ describe('Custom Prefill Test', function () {
     });
 
     it('prefill using service in dataRef', function() {
+        if (cy.af.isOldCoreComponent()) {
+            genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
+        }
         // filling the form
         cy.get(nameTextBox).type("John Doe");
         cy.get(dobDropdown).type("1999-10-10");
