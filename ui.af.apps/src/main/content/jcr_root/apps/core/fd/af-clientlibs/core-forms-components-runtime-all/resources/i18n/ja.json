@@ -1,28 +1,28 @@
 {
-  "FileCloseAccessText"         :   "ファイルを削除するには Enter を押します ",
-  "FileSizeGreater"             :   "ファイル「${0}」は予期されたサイズを超えています :${1} MB。",
-  "FileNameInvalid"             :   "${0} ファイルの名前に無効な文字が含まれています。サポートされるのは英数字のみになります",
-  "FileMimeTypeInvalid"         :   "${0} ファイルの形式はサポートされていません",
-  "InternalFormSubmissionError" :   "フォームを送信中に内部エラーが発生しました。",
-  "type"                        :   "Please enter a valid value.",
-  "required"                    :   "Please fill in this field.",
-  "minimum"                     :   "Value must be greater than or equal to ${0}.",
-  "maximum"                     :   "Value must be less than or equal to ${0}.",
-  "minLength"                   :   "Please lengthen this text to ${0} characters or more.",
-  "maxLength"                   :   "Please shorten this text to ${0} characters or less.",
-  "step"                        :   "Please enter a valid value.",
-  "format"                      :   "Specify the value in allowed format : ${0}.",
-  "pattern"                     :   "Please match the format requested.",
-  "minItems"                    :   "Specify a number of items equal to or greater than ${0}.",
-  "maxItems"                    :   "Specify a number of items equal to or less than ${0}.",
-  "uniqueItems"                 :   "All the items must be unique.",
-  "validationExpression"        :   "Please enter a valid value.",
-  "maxFileSize"                 :   "File too large. Reduce size and try again.",
-  "accept"                      :   "The specified file type not supported.",
-  "defaultError"                :   "There is an error in the field",
-  "clearText"                   :   "消去",
-  "calendarSymbols" : {
-    "monthNames" : [
+  "FileCloseAccessText": "tk_Press Enter to delete the file ",
+  "FileSizeGreater": "tk_File(s) ${0} are greater than the expected size: ${1}MB.",
+  "FileNameInvalid": "tk_Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
+  "FileMimeTypeInvalid": "tk_File(s) ${0} are unsupported file types",
+  "InternalFormSubmissionError": "tk_Encountered an internal error while submitting the form.",
+  "type": "tk_Please enter a valid value.",
+  "required": "tk_Please fill in this field.",
+  "minimum": "tk_Value must be greater than or equal to ${0}.",
+  "maximum": "tk_Value must be less than or equal to ${0}.",
+  "minLength": "tk_Please lengthen this text to ${0} characters or more.",
+  "maxLength": "tk_Please shorten this text to ${0} characters or less.",
+  "step": "tk_Please enter a valid value.",
+  "format": "tk_Specify the value in allowed format : ${0}.",
+  "pattern": "tk_Please match the format requested.",
+  "minItems": "tk_Specify a number of items equal to or greater than ${0}.",
+  "maxItems": "tk_Specify a number of items equal to or less than ${0}.",
+  "uniqueItems": "tk_All the items must be unique.",
+  "validationExpression": "tk_Please enter a valid value.",
+  "maxFileSize": "tk_File too large. Reduce size and try again.",
+  "accept": "tk_The specified file type not supported.",
+  "defaultError": "tk_There is an error in the field",
+  "clearText": "クリア",
+  "calendarSymbols": {
+    "monthNames": [
       "1月",
       "2月",
       "3月",
@@ -36,7 +36,7 @@
       "11月",
       "12月"
     ],
-    "abbrmonthNames" : [
+    "abbrmonthNames": [
       "1月",
       "2月",
       "3月",
@@ -50,7 +50,7 @@
       "11月",
       "12月"
     ],
-    "dayNames" : [
+    "dayNames": [
       "日曜日",
       "月曜日",
       "火曜日",
@@ -59,7 +59,7 @@
       "金曜日",
       "土曜日"
     ],
-    "abbrdayNames" : [
+    "abbrdayNames": [
       "日",
       "月",
       "火",
@@ -68,21 +68,21 @@
       "金",
       "土"
     ],
-    "meridiemNames" : [
+    "meridiemNames": [
       "午前",
       "午後"
     ],
-    "eraNames" : [
+    "eraNames": [
       "紀元前",
       "西暦"
     ],
-    "day": "day",
-    "days": "days",
-    "month": "month",
-    "months": "months",
-    "year": "year",
-    "years": "years",
-    "more": "more",
-    "less": "less"
+    "day": "日",
+    "days": "日",
+    "month": "月",
+    "months": "月",
+    "year": "年",
+    "years": "年",
+    "more": "さらに表示",
+    "less": "表示を減らす"
   }
 }

@@ -1,28 +1,28 @@
 {
-  "FileCloseAccessText"         :   "Appuyer sur Entrée pour supprimer le fichier ",
-  "FileSizeGreater"             :   "FLes fichiers ${0} font plus que la taille attendue : ${1} Mo.",
-  "FileNameInvalid"             :   "Le nom du ou des fichiers ${0} comportent des caractères non valides. Seuls les caractères alphanumériques sont pris en charge",
-  "FileMimeTypeInvalid"         :   "Le ou les fichiers ${0} sont des types de fichiers non pris en charge",
-  "InternalFormSubmissionError" :   "Une erreur interne s'est produite lors de l'envoi du formulaire.",
-  "type"                        :   "Please enter a valid value.",
-  "required"                    :   "Please fill in this field.",
-  "minimum"                     :   "Value must be greater than or equal to ${0}.",
-  "maximum"                     :   "Value must be less than or equal to ${0}.",
-  "minLength"                   :   "Please lengthen this text to ${0} characters or more.",
-  "maxLength"                   :   "Please shorten this text to ${0} characters or less.",
-  "step"                        :   "Please enter a valid value.",
-  "format"                      :   "Specify the value in allowed format : ${0}.",
-  "pattern"                     :   "Please match the format requested.",
-  "minItems"                    :   "Specify a number of items equal to or greater than ${0}.",
-  "maxItems"                    :   "Specify a number of items equal to or less than ${0}.",
-  "uniqueItems"                 :   "All the items must be unique.",
-  "validationExpression"        :   "Please enter a valid value.",
-  "maxFileSize"                 :   "File too large. Reduce size and try again.",
-  "accept"                      :   "The specified file type not supported.",
-  "defaultError"                :   "There is an error in the field",
-  "clearText"                   :   "Effacer",
-  "calendarSymbols" : {
-    "monthNames" : [
+  "FileCloseAccessText": "tk_Press Enter to delete the file ",
+  "FileSizeGreater": "tk_File(s) ${0} are greater than the expected size: ${1}MB.",
+  "FileNameInvalid": "tk_Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
+  "FileMimeTypeInvalid": "tk_File(s) ${0} are unsupported file types",
+  "InternalFormSubmissionError": "tk_Encountered an internal error while submitting the form.",
+  "type": "tk_Please enter a valid value.",
+  "required": "tk_Please fill in this field.",
+  "minimum": "tk_Value must be greater than or equal to ${0}.",
+  "maximum": "tk_Value must be less than or equal to ${0}.",
+  "minLength": "tk_Please lengthen this text to ${0} characters or more.",
+  "maxLength": "tk_Please shorten this text to ${0} characters or less.",
+  "step": "tk_Please enter a valid value.",
+  "format": "tk_Specify the value in allowed format : ${0}.",
+  "pattern": "tk_Please match the format requested.",
+  "minItems": "tk_Specify a number of items equal to or greater than ${0}.",
+  "maxItems": "tk_Specify a number of items equal to or less than ${0}.",
+  "uniqueItems": "tk_All the items must be unique.",
+  "validationExpression": "tk_Please enter a valid value.",
+  "maxFileSize": "tk_File too large. Reduce size and try again.",
+  "accept": "tk_The specified file type not supported.",
+  "defaultError": "tk_There is an error in the field",
+  "clearText": "Effacer",
+  "calendarSymbols": {
+    "monthNames": [
       "janvier",
       "février",
       "mars",
@@ -36,7 +36,7 @@
       "novembre",
       "décembre"
     ],
-    "abbrmonthNames" : [
+    "abbrmonthNames": [
       "janv.",
       "févr.",
       "mars",
@@ -50,7 +50,7 @@
       "nov.",
       "déc."
     ],
-    "dayNames" : [
+    "dayNames": [
       "dimanche",
       "lundi",
       "mardi",
@@ -59,7 +59,7 @@
       "vendredi",
       "samedi"
     ],
-    "abbrdayNames" : [
+    "abbrdayNames": [
       "dim.",
       "lun.",
       "mar.",
@@ -68,21 +68,21 @@
       "ven.",
       "sam."
     ],
-    "meridiemNames" : [
+    "meridiemNames": [
       "AM",
       "PM"
     ],
-    "eraNames" : [
+    "eraNames": [
       "av. J.-C.",
       "ap. J.-C."
     ],
-    "day": "day",
-    "days": "days",
-    "month": "month",
-    "months": "months",
-    "year": "year",
-    "years": "years",
-    "more": "more",
-    "less": "less"
+    "day": "jour",
+    "days": "jours",
+    "month": "mois",
+    "months": "mois",
+    "year": "année",
+    "years": "années",
+    "more": "plus",
+    "less": "moins"
   }
 }
