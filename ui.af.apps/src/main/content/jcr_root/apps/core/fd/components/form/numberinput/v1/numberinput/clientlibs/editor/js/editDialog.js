@@ -61,7 +61,7 @@
             var minField = dialog.find(NUMERICINPUT_MINIMUM)[0];
             var maxField = dialog.find(NUMERICINPUT_MAXIMUM)[0];
             // update step property to 0.01 for minField and maxField
-            if(typeDropdownComponent.value === 'decimal'){
+            if(typeDropdownComponent.value === 'number'){
                 minField.setAttribute("step", "0.01");
                 maxField.setAttribute("step", "0.01");
             } else {
