@@ -100,7 +100,7 @@ describe('Page - Authoring', function () {
         })
 
         it('verify Minimum and Maximum fields in edit dialog of NumberInput', function () {
-          dropNumberInputInContainer()
+            dropNumberInputInContainer()
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector)
             cy.invokeEditableAction(editDialogConfigurationSelector)
             cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
