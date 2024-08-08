@@ -1,5 +1,6 @@
+
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2024 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,4 +20,160 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 }
 .cmp-adaptiveform-container--loading{
   
+}
+
+.cmp-adaptiveform-container [data-cmp-visible="false"] {
+    display: none !important;
+}
+.cmp-adaptiveform-container-hamburgerMenu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+    list-style: none; /* Remove bullet points */
+}
+
+.cmp-adaptiveform-container-hamburgerMenu > li {
+    position: relative; /* Ensure that submenus are positioned relative to their parent li */
+}
+
+.cmp-adaptiveform-container-hamburgerMenu a {
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.cmp-adaptiveform-container-hamburgerMenu a:hover {
+    background-color: #f0f0f0;
+    text-decoration: none;
+}
+
+.cmp-adaptiveform-container-hamburger {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    /* width: 30px; */
+    margin: 5px;
+    z-index: 1001;
+    float: right;
+    width:30px;
+    height:30px;
+    background:no-repeat;
+    background-size:30px 30px; 
+    background-image:url('../resources/images/menu.png');
+}
+
+.cmp-adaptiveform-container-hamburgerClose {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    /* width: 30px; */
+    margin: 5px;
+    z-index: 1001;
+    float: right;
+    width:30px;
+    height:30px;
+    background:no-repeat;
+    background-size:30px 30px; 
+    background-image:url('../resources/images/closeIcon.svg');
+}
+
+.cmp-adaptiveform-container-hamburger div {
+    height: 4px;
+    background-color: black;
+    margin: 5px 0;
+}
+
+.cmp-adaptiveform-container-submenu {
+    display: none;
+    flex-direction: column;
+    position: relative; /* Use relative positioning to affect the flow of the parent menu */
+    background-color: white;
+    padding: 0;
+    margin: 0;
+    list-style: none; /* Remove bullet points */
+    width: 100%; /* Ensure submenu is the same width as parent menu */
+}
+
+.cmp-adaptiveform-container-submenu li {
+    box-sizing: border-box;
+    border-bottom: 1px solid #ddd;
+}
+
+.cmp-adaptiveform-container-submenu li:hover {
+    background-color: #f0f0f0;
+}
+
+.cmp-adaptiveform-container-submenu a {
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding-left: 15px;
+}
+
+.cmp-adaptiveform-container-submenu a:hover {
+    background-color: #f0f0f0;
+}
+
+.active {
+    background-color: #f0f0f0;
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .cmp-adaptiveform-container-hamburger {
+        display: none;
+    }
+}
+
+.cmp-adaptiveform-container-left-nav-button {
+    width:30px;
+    cursor: pointer;
+    width: 2.0rem;
+    height: 2.0rem;
+    background:no-repeat;
+    background-size:30px 30px;
+    margin: 5px;
+    background-image:url('../resources/images/leftArrow.png');
+    border-radius: 1.5rem;
+    border: 1px solid #555555;
+    padding: 2px;
+    background-position: center;
+}
+
+.cmp-adaptiveform-container-right-nav-button {
+    width:30px;
+    cursor: pointer;
+    width: 2.0rem;
+    height: 2.0rem;
+    background:no-repeat;
+    background-position: center;
+    background-size:30px 30px;
+    margin: 5px;
+    background-image:url('../resources/images/rightArrow.png');
+    border-radius: 1.5rem;
+    border: 1px solid #555555;
+    padding: 2px;
+}
+
+.cmp-adaptiveform-container-right-nav-button:hover {
+    opacity: 0.5;
+}
+
+.cmp-adaptiveform-container-left-nav-button:hover {
+    opacity: 0.5;
+}
+
+.cmp-adaptiveform-container-nav-buttons {
+    display: flex;
+    justify-content: space-around;
 }

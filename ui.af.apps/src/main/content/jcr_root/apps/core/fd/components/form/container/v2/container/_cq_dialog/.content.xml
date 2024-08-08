@@ -84,6 +84,12 @@
                                         ignoreData="{Boolean}true"
                                         name="./specVersion"
                                         value="0.14.0"/>
+                                    <hamburgerMenu
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                      name="./fd:hamburgerMenu"
+                                      text="Add Hamburger Menu Support"
+                                      value="{Boolean}true"/>
                                 </items>
                             </container>
                         </items>

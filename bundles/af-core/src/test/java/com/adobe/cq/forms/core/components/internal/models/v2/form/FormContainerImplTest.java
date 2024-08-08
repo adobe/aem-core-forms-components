@@ -477,4 +477,9 @@ public class FormContainerImplTest {
         assertEquals("ltr", formContainer.getLanguageDirection());
     }
 
+    @Test
+    public void testGetHamburgerMenu() {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertFalse(Boolean.valueOf(formContainer.getHamburgerMenu().toString()));
+    }
 }

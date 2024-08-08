@@ -145,6 +145,17 @@ public interface FormContainer extends Container {
         return true;
     }
 
+    /**
+     * Returns the language in which the form was authored
+     *
+     * @return the language of the form
+     * @since com.adobe.cq.forms.core.components.models.form 4.5.0
+     */
+    default Boolean getHamburgerMenu() {
+        // explicitly setting true, since form container does not have enabled property, but other containers like panel have enabled
+        return false;
+    }
+
     @Override
     @JsonIgnore
     default Label getLabel() {
