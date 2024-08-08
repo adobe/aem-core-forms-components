@@ -99,6 +99,31 @@ describe('Page - Authoring', function () {
             });
         })
 
+        it('verify Minimum and Maximum fields in edit dialog of NumberInput', function () {
+          dropNumberInputInContainer()
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector)
+            cy.invokeEditableAction(editDialogConfigurationSelector)
+            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
+                // get the minimum and maximum fields
+                cy.get(numberInputBlockBemSelector + "__minimum").should('be.visible')
+                cy.get(numberInputBlockBemSelector + "__maximum").should('be.visible')
+                // check the step attribute
+                cy.get(numberInputBlockBemSelector + "__minimum").should('have.attr', 'step', '0.01')
+                cy.get(numberInputBlockBemSelector + "__maximum").should('have.attr', 'step', '0.01')
+                // click on the basic tab and update the type field
+                cy.get(numberInputBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
+                    cy.get(numberInputBlockBemSelector + "__type").children('._coral-Dropdown-trigger').click()
+                    cy.get("._coral-Menu-itemLabel").contains('Integer').should('be.visible').click()
+                    // check the step attribute
+                    cy.get(numberInputBlockBemSelector + "__minimum").should('have.attr', 'step', '1')
+                    cy.get(numberInputBlockBemSelector + "__maximum").should('have.attr', 'step', '1')
+                    cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                        cy.deleteComponentByPath(numberInputDrop)
+                    })
+                })
+            })
+        })
+
         // todo: leadDigits and fracDigits are not supported as of today
         it.skip('verify editFormat Value Getting saved correctly', function () {
             dropNumberInputInContainer();

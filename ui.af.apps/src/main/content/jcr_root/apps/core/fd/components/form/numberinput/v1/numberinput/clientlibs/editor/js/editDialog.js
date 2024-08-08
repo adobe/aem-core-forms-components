@@ -52,6 +52,26 @@
     }
      **/
 
+    function handleTypeDropdown(dialog) {
+        var typeDropdownComponent = dialog.find(NUMERICINPUT_TYPE)[0];
+        manageMinAndMaxValidation();
+        typeDropdownComponent.addEventListener("change", manageMinAndMaxValidation );
+
+        function manageMinAndMaxValidation() {
+            var minField = dialog.find(NUMERICINPUT_MINIMUM)[0];
+            var maxField = dialog.find(NUMERICINPUT_MAXIMUM)[0];
+            // update step property to 0.01 for minField and maxField
+            if(typeDropdownComponent.value === 'decimal'){
+                minField.setAttribute("step", "0.01");
+                maxField.setAttribute("step", "0.01");
+            } else {
+                minField.removeAttribute("step");
+                maxField.removeAttribute("step");
+            }
+        }
+
+    }
+
     function handleDisplayPatternDropDown(dialog) {
         Utils.handlePatternDropDown(dialog,NUMERICINPUT_DISPLAYPATTERN,NUMERICINPUT_DISPLAYFORMAT);
     }
@@ -65,5 +85,5 @@
         Utils.handlePatternFormat(dialog,NUMERICINPUT_LANGDISPLAYVALUE,NUMERICINPUT_LANG);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleLang);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleLang, handleTypeDropdown);
 })(jQuery);
