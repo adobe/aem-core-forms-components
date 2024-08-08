@@ -72,6 +72,29 @@
                     window.alert("Issue while saving draft");
                 }
             }, "saveError");
+            this.#setupAutoSave(self.getModel());
+        }
+
+        /**
+         * Register time based auto save
+         * @param formModel.
+         */
+         #setupAutoSave(formModel) {
+            const autoSaveProperties = formModel?.properties?.['fd:autoSave'];
+            const enableAutoSave = autoSaveProperties?.['fd:enableAutoSave'];
+            if (enableAutoSave) {
+                const autoSaveStrategyType = autoSaveProperties['fd:autoSaveStrategyType'];
+                const autoSaveInterval = autoSaveProperties['fd:autoSaveInterval'];
+                const saveEndPoint = FormView.Utils.getContextPath() + '/adobe/forms/af/save/' + formModel.id;
+                if (autoSaveStrategyType === 'time' && autoSaveInterval) {
+                    console.log("Registering time based auto save");
+                    setInterval(() => {
+                        formModel.dispatch(new FormView.Actions.Save({
+                            'action': saveEndPoint
+                        }));
+                    }, parseInt(autoSaveInterval) * 1000);
+                }
+            }
         }
     }
 
