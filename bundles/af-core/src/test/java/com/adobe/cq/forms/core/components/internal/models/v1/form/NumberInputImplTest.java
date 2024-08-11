@@ -309,24 +309,27 @@ public class NumberInputImplTest {
     void testGetMinimum() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
         assertEquals(10000L, numberInput.getMinimum().longValue());
+        assertEquals(10000L, numberInput.getMinimumNumber().longValue());
     }
 
     @Test
     void testGetMaximum() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
+        assertEquals(2000000, numberInput.getMaximumNumber().longValue());
         assertEquals(2000000, numberInput.getMaximum().longValue());
     }
 
     @Test
     void testGetExclusiveMinimum() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CONSTRAINTS, NumberInput.class, context);
-        assertEquals(10002L, numberInput.getExclusiveMinimum().longValue());
+        assertEquals(10002L, numberInput.getExclusiveMinimumNumber().longValue());
     }
 
     @Test
     void testGetExclusiveMaximum() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CONSTRAINTS, NumberInput.class, context);
         assertEquals(2000002, numberInput.getExclusiveMaximum().longValue());
+        assertEquals(2000002, numberInput.getExclusiveMaximumNumber().longValue());
     }
 
     @Test
@@ -334,6 +337,7 @@ public class NumberInputImplTest {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING, NumberInput.class, context);
         assertNull(numberInput.getMinimum());
         assertEquals(10002L, numberInput.getExclusiveMinimum().longValue());
+        assertEquals(10002L, numberInput.getExclusiveMinimumNumber().longValue());
     }
 
     @Test
@@ -341,6 +345,7 @@ public class NumberInputImplTest {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING, NumberInput.class, context);
         assertNull(numberInput.getMaximum());
         assertEquals(2000002, numberInput.getExclusiveMaximum().longValue());
+        assertEquals(2000002, numberInput.getExclusiveMaximumNumber().longValue());
     }
 
     @Test

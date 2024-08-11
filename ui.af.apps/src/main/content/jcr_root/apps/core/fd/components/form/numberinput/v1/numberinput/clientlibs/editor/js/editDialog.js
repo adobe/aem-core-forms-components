@@ -53,20 +53,31 @@
      **/
 
     function handleTypeDropdown(dialog) {
-        var typeDropdownComponent = dialog.find(NUMERICINPUT_TYPE)[0];
+        let typeDropdownComponent = dialog.find(NUMERICINPUT_TYPE)[0];
         manageMinAndMaxValidation();
         typeDropdownComponent.addEventListener("change", manageMinAndMaxValidation );
 
         function manageMinAndMaxValidation() {
-            var minField = dialog.find(NUMERICINPUT_MINIMUM)[0];
-            var maxField = dialog.find(NUMERICINPUT_MAXIMUM)[0];
+            let minField = dialog.find(NUMERICINPUT_MINIMUM)[0];
+            let maxField = dialog.find(NUMERICINPUT_MAXIMUM)[0];
+            let minInput = minField.querySelector('input');
+            let maxInput = maxField.querySelector('input');
             // update step property to 0.01 for minField and maxField
             if(typeDropdownComponent.value === 'number'){
-                minField.setAttribute("step", "0.01");
-                maxField.setAttribute("step", "0.01");
+                minField.step = "0.01";
+                maxField.step = "0.01";
             } else {
-                minField.removeAttribute("step");
-                maxField.removeAttribute("step");
+                minField.step = "1";
+                maxField.step = "1";
+                // Reset value if it is a decimal
+                if (minInput.value.includes('.')) {
+                    minInput.value = Math.floor(minInput.value);
+                    minInput.setAttribute('value', minInput.value);
+                }
+                if (maxInput.value.includes('.')) {
+                    maxInput.value = Math.floor(maxInput.value);
+                    maxInput.setAttribute('value', maxInput.value);
+                }
             }
         }
 
