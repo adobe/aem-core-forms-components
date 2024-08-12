@@ -48,12 +48,12 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it.skip('insert NumberInput in form container', function () {
+        it('insert NumberInput in form container', function () {
             dropNumberInputInContainer();
             cy.deleteComponentByPath(numberInputDrop);
         });
 
-        it.skip('verify Basic tab in edit dialog of NumberInput', function () {
+        it('verify Basic tab in edit dialog of NumberInput', function () {
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
@@ -83,7 +83,7 @@ describe('Page - Authoring', function () {
             });
         });
 
-        it.skip(' type dropdown in Basic tab in edit dialog of NumberInput', function () {
+        it(' type dropdown in Basic tab in edit dialog of NumberInput', function () {
             dropNumberInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
