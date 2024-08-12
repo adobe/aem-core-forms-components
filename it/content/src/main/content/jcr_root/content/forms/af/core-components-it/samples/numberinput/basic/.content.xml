@@ -160,6 +160,20 @@
                     minimumMessage="Minimum value should be 10"
                     type="integer"
                     visible="{Boolean}true"/>
+            <numberinput10
+                    jcr:lastModified="{Date}2023-01-30T15:58:08.713+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Number Input 10"
+                    sling:resourceType="forms-components-examples/components/form/numberinput"
+                    enabled="{Boolean}true"
+                    fieldType="number-input"
+                    name="numberinput10"
+                    excludeMinimumCheck="{Boolean}true"
+                    maximum="10.5"
+                    minimum="10.2"
+                    type="number"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
