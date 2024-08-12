@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2022 Adobe
+ ~ Copyright 2024 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -17,40 +17,38 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ProviderType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * A interface which specifies the different form number type constraints
+ * An interface which specifies the different form number type constraints with Number type.
  *
- * @deprecated Use {@link NumberConstraintV2} instead.
- * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+ * @since com.adobe.cq.forms.core.components.models.form 5.6.4
  */
-@Deprecated
 @ProviderType
-public interface NumberConstraint {
+public interface NumberConstraintV2 extends NumberConstraint {
 
     /**
-     * Returns the minimum value for the number. The constraint is applicable only for field with type number
+     * Returns the minimum value for the number. The constraint is applicable only for field with type number.
      *
      * @return minimum value for the number
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 5.6.4
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonIgnore
-    default Long getMinimum() {
+    @JsonProperty("minimum")
+    default Number getMinimumNumber() {
         return null;
     }
 
     /**
-     * Returns the maximum value for the number. The constraint is applicable only for field with type number
+     * Returns the maximum value for the number. The constraint is applicable only for field with type number.
      *
      * @return maximum value for the number
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 5.6.4
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonIgnore
-    default Long getMaximum() {
+    @JsonProperty("maximum")
+    default Number getMaximumNumber() {
         return null;
     }
 
@@ -58,11 +56,11 @@ public interface NumberConstraint {
      * Returns the Maximum value (exclusive) that can be entered by the user.
      *
      * @return maximum value (exclusive) for the number
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 5.6.4
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonIgnore
-    default Long getExclusiveMaximum() {
+    @JsonProperty("exclusiveMaximum")
+    default Number getExclusiveMaximumNumber() {
         return null;
     }
 
@@ -70,12 +68,11 @@ public interface NumberConstraint {
      * Returns the minimum value (exclusive) that can be entered by the user.
      *
      * @return minimum value (exclusive) for the number
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 5.6.4
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonIgnore
-    default Long getExclusiveMinimum() {
+    @JsonProperty("exclusiveMinimum")
+    default Number getExclusiveMinimumNumber() {
         return null;
     }
-
 }
