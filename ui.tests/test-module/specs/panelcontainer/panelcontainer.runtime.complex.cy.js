@@ -72,7 +72,7 @@ describe( "Form Runtime with Panel Container complex repeatability use cases ", 
     ];
 
     const fillInput = (fieldModel, fillValue) => {
-        cy.get(`#${fieldModel.id}`).find("input").focus().type(fillValue).blur().then(x => {
+        cy.get(`#${fieldModel.id}`).find("input").focus().type(fillValue).focus().blur().then(x => {
             expect(fieldModel.getState().value.toString()).to.equal(fillValue.toString());
         });
     };
