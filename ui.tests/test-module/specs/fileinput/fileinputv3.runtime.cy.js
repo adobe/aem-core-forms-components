@@ -118,7 +118,7 @@ describe("Form with File Input V-3 - Basic Tests", () => {
     it(" after attaching the file widget value is reset to allow duplicate file ", () => {
         const sampleFileName = 'sample2.txt', fileInput = "input[name='fileinput1']";
         cy.get(fileInput).should('have.value', "");
-        cy.get(fileInput).attachFile(sampleFileName).then(() => {
+        cy.attachFile(fileInput, [sampleFileName]).then(() => {
             cy.get(".cmp-adaptiveform-fileinput__filename").contains(sampleFileName);
             cy.get(fileInput).should(($element) => {
                 const actualValue = $element.val();
@@ -126,7 +126,7 @@ describe("Form with File Input V-3 - Basic Tests", () => {
             })
         });
         // attaching the same file again to check duplicate file attachment
-        cy.get(fileInput).attachFile(sampleFileName).then(() => {
+        cy.attachFile(fileInput, [sampleFileName]).then(() => {
             cy.get(".cmp-adaptiveform-fileinput__filename").should('have.length', 2);
             cy.get(fileInput).should(($element) => {
                 const actualValue = $element.val();
@@ -169,7 +169,7 @@ describe("Form with File Input V-3 - Basic Tests", () => {
                     } else {
                         cy.get(`#${id}`).should('have.attr', 'data-cmp-readonly', 'false');
                     }
-                    cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
+                    cy.attachFile(`#${id} input`, [fileName]).then(x => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
                         cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--filled');
@@ -222,7 +222,7 @@ describe('Click on button tag (V-3)', () => {
         const sampleFileName = 'sample2.txt'
         const [id, fieldView] = Object.entries(formContainer._fields)[2]
         cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__dragarea > .${bemBlock}__widgetlabel`).should('exist').click().then(() => {
-            cy.get('input[type="file"]').attachFile(sampleFileName).then(() => {
+            cy.attachFile('input[type="file"]', [sampleFileName]).then(() => {
                 cy.get('.cmp-adaptiveform-fileinput__filename').should('contain', sampleFileName);
         });
     });

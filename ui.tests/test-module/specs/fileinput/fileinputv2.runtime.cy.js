@@ -137,7 +137,7 @@ describe("Form with File Input V-2 - Basic Tests", () => {
     it(" after attaching the file widget value is reset to allow duplicate file ", () => {
         const sampleFileName = 'sample2.txt', fileInput = "input[name='fileinput1']";
         cy.get(fileInput).should('have.value', "");
-        cy.get(fileInput).attachFile(sampleFileName).then(() => {
+        cy.attachFile(fileInput, [sampleFileName]).then(() => {
             cy.get(".cmp-adaptiveform-fileinput__filename").contains(sampleFileName);
             cy.get(fileInput).should(($element) => {
                 const actualValue = $element.val();
@@ -145,7 +145,7 @@ describe("Form with File Input V-2 - Basic Tests", () => {
             })
         });
         // attaching the same file again to check duplicate file attachment
-        cy.get(fileInput).attachFile(sampleFileName).then(() => {
+        cy.attachFile(fileInput, [sampleFileName]).then(() => {
             cy.get(".cmp-adaptiveform-fileinput__filename").should('have.length', 2);
             cy.get(fileInput).should(($element) => {
                 const actualValue = $element.val();
@@ -188,7 +188,7 @@ describe("Form with File Input V-2 - Basic Tests", () => {
                     } else {
                         cy.get(`#${id}`).should('have.attr', 'data-cmp-readonly', 'false');
                     }
-                    cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
+                    cy.attachFile(`#${id} input`, [fileName]).then(x => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
                         cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--filled');
@@ -215,9 +215,9 @@ describe("Form with File Input V-2 - Basic Tests", () => {
     it("check preview and delete functionality of files", () => {
         let sampleFileNames = ['sample2.txt','sample.txt','empty.pdf'];
         const fileInput = "input[name='fileinput1']";
-        cy.get(fileInput).attachFile(sampleFileNames[0]);
-        cy.get(fileInput).attachFile(sampleFileNames[1]);
-        cy.get(fileInput).attachFile(sampleFileNames[2]);
+        cy.attachFile(fileInput,[sampleFileNames[0]]);
+        cy.attachFile(fileInput,[sampleFileNames[1]]);
+        cy.attachFile(fileInput,[sampleFileNames[2]]);
 
         checkFilePreviewInFileAttachment(fileInput);
 
@@ -268,9 +268,10 @@ describe("V-2 drag and drop functionality", () => {
             });
 
             // attach the file
-            cy.get(fileInput.selector).attachFile(fileInput.fileNames, { subjectType: 'drag-n-drop', events: ['dragover', 'drop'] });
+            cy.attachFile(fileInput.selector, fileInput.fileNames);
+            //cy.get(fileInput.selector).selectFile(fileInput.fileNames, { subjectType: 'drag-n-drop', events: ['dragover', 'drop'] });
             if(fileInput.multiple)
-                cy.get(fileInput.selector).attachFile('sample2.txt');
+                cy.attachFile(fileInput.selector,['sample2.txt']);
 
             // check for successful attachment of file in the view
             checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);

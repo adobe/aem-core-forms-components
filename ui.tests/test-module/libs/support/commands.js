@@ -40,7 +40,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import 'cypress-file-upload';
+
 import { recurse } from 'cypress-recurse';
 
 const commons = require('../commons/commons'),
@@ -758,4 +758,32 @@ Cypress.Commands.add("changeLanguage", (str) => {
     cy.get(siteSelectors.locale.language).first().click();
     cy.get(`coral-selectlist-item[value=${str}]`).click({force: true});
     cy.get(siteSelectors.locale.accept).click();
+});
+
+
+const mimeTypes = {
+    'pdf': 'application/pdf',
+    'txt': 'text/plain',
+    'bat': 'application/x-msdos-program',
+    'msg': 'application/vnd.ms-outlook',
+    // Add more mappings as needed
+};
+
+const getMimeType = (fileName) => {
+    const extension = fileName.split('.').pop();
+    return mimeTypes[extension] || 'application/octet-stream';
+};
+
+Cypress.Commands.add("attachFile", (fileInput, fileNames) => {
+    const uploads = fileNames.map(fileName => {
+        const mimeType = getMimeType(fileName);
+        return cy.fixture(fileName, { encoding: null }).then(fileContent => {
+            return cy.get(fileInput).selectFile({
+                contents: fileContent,
+                fileName: fileName,
+                mimeType: mimeType
+            }, { force: true });
+        });
+    });
+    return cy.wrap(uploads);
 });
