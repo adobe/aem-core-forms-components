@@ -16,7 +16,7 @@ common:
     steps:
       - checkout
       - browser-tools/install-browser-tools:
-          chrome-version: 116.0.5845.96 # TODO: remove when chromedriver downloads are fixed
+          chrome-version: latest
       - run:
           command: |
             google-chrome --version
@@ -213,6 +213,21 @@ jobs:
     parallelism: 8
     <<: *cypress_test_steps
 
+  cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
+    executor: test_executor_cloudready
+    environment:
+      AEM: addon-latest
+      TYPE: cypress
+      BROWSER: chrome
+      PRERELEASE: 'true'
+      FT: 'true'
+      CORE_COMPONENTS: '3.0.0'
+      WCM_COMPONENTS: '2.25.4'
+    resource_class: xlarge
+    working_directory: /home/circleci/build
+    parallelism: 8
+    <<: *cypress_test_steps
+
   jsdocs-deploy:
     docker:
       - image: node:8.10.0
@@ -398,10 +413,19 @@ workflows:
               ignore: /.*/
             tags:
               only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+      - cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
+          filters:
+#            branches:
+#              ignore: /.*/
+            tags:
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+          requires:
+            - build-java-11
       - release:
           requires:
             - build-java-11
             - jsdocs-deploy
+            - cypress-chrome-cloudready-with-latest-addon-and-old-core-components
           filters:
             branches:
               ignore: /.*/

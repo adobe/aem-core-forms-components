@@ -110,5 +110,25 @@ describe("Form Runtime with Terms and Conditions", () => {
             })
         })
     });
-})
 
+    it('checkbox should be required by default', () => {
+        const tncWithLinksID = formContainer._model.items[1].id;
+        const model = formContainer._model.getElement(tncWithLinksID)
+        expect(model.getState().items[0].enabled).to.equal(false);
+        cy.get(`#${tncWithLinksID}`).get('a').click()
+        .then(() => {
+            expect(model.getState().items[0].enabled).to.equal(true);
+            cy.get(`#${tncWithLinksID} .cmp-adaptiveform-checkbox`).invoke('attr', 'data-cmp-enabled')
+            .should('eq', 'true'); 
+            cy.get(`#${tncWithLinksID} .cmp-adaptiveform-checkbox`).click()
+            .then(() => {
+                cy.get(`#${tncWithLinksID} .cmp-adaptiveform-checkbox__errormessage`).should('be.empty');
+            }) 
+            cy.get(`#${tncWithLinksID} .cmp-adaptiveform-checkbox`).dblclick().should('not.be.checked')
+            .then(() => {
+                cy.get(`#${tncWithLinksID} .cmp-adaptiveform-checkbox__errormessage`).should('not.be.null');
+            })      
+        })
+      })
+
+ })

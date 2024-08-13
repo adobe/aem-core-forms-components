@@ -505,11 +505,21 @@
                     result.beforeViewElement = this.getPreviousButtonDiv();
                 }
             } else {
+<<<<<<< HEAD
                 let previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
                 let previousInstanceWizardPanelIndex = this.#getTabIndexById(previousInstanceElement.id + Wizard.#tabIdSuffix);
                 result.beforeViewElement = this.getCachedWizardPanels()[previousInstanceWizardPanelIndex];
+=======
+                let previousInstanceElement = this.#getRepeatableElementAt(instanceManager, instanceIndex - 1)
+                result.beforeViewElement = previousInstanceElement;
+>>>>>>> 30da9587f69e38e93e19fcce20f30b66b4aeb185
             }
             return result;
+        }
+
+        #getRepeatableElementAt(instanceManager, index) {
+            let childId = instanceManager._model.items.find((model) => model.index === index)?.id;
+            return this.element.querySelector(`#${childId}${Wizard.#wizardPanelIdSuffix}`);
         }
 
         updateChildVisibility(visible, state) {

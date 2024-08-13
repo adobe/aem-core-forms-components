@@ -138,7 +138,19 @@ describe("Form with Wizard Container", () => {
         cy.expectNoConsoleErrors();
     })
 
-
+    it('test adding panel programmatically', () => {
+        getTabs().should('have.length', 4);
+        getWizardPanels().should('have.length', 4);
+        cy.wrap(null).then(() => {
+            const instanceManager = formContainer._model.items[0].items[0];
+            for(let i=0; i<5; i++){
+                instanceManager.dispatch({type: "addItem"})
+            }
+        }).then(() => {
+            getTabs().should('have.length', 6);
+            getWizardPanels().should('have.length', 6);
+        })
+    });
 })
 
 describe('visibility of navigation buttons', function () {

@@ -209,7 +209,10 @@ class FormFieldBase extends FormField {
             
         if (widgetElement) {
            if (this.getDescription()) {
-            appendDescription('longdescription', this.getId());
+            const descriptionDiv = this.getDescription();
+            if (!(descriptionDiv.innerHTML.trim() === '' || descriptionDiv.children.length === 0)) {
+                appendDescription('longdescription', this.getId());
+            }
           }
           
            if (this.getTooltipDiv()) {
@@ -266,10 +269,13 @@ class FormFieldBase extends FormField {
         if (state.value) {
             this.updateValue(state.value);
         }
-        this.updateVisible(state.visible)
+        this.updateVisible(state.visible, state)
         this.updateReadOnly(state.readOnly)
         this.updateEnabled(state.enabled, state)
         this.initializeHelpContent(state);
+        this.updateLabel(state.label);
+        this.updateRequired(state.required, state);
+        this.updateDescription(state.description);
     }
 
     /**
@@ -392,8 +398,8 @@ class FormFieldBase extends FormField {
      * @private
      */
     #showHideLongDescriptionDiv(show) {
-        if (this.description) {
-            this.toggleAttribute(this.description, show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+        if (this.getDescription()) {
+            this.toggleAttribute(this.getDescription(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
         }
     }
 
@@ -598,18 +604,59 @@ class FormFieldBase extends FormField {
 
     /**
      * Updates the HTML state based on the description state of the field.
-     * @param {string} description - The description.
+     * @param {string} descriptionText - The description.
      */
-    updateDescription(description) {
-        if (this.description) {
-            this.description.querySelector("p").innerHTML = description;
-        } else {
-            //TODO: handle the case when description is not present initially.
+    updateDescription(descriptionText) {
+        if (typeof descriptionText !== 'undefined') {
+            const sanitizedDescriptionText = window.DOMPurify ?  window.DOMPurify.sanitize(descriptionText) : descriptionText;
+            let descriptionElement = this.getDescription();
+            if (descriptionElement) {
+                let pElement = descriptionElement.querySelector("p");
+                if (!pElement) {
+                    // If the description is updated via rule then it might not have <p> tags
+                    pElement = document.createElement('p');
+                    descriptionElement.appendChild(pElement);
+                }
+                pElement.textContent = sanitizedDescriptionText;
+            } else {
+                // If no description was set during authoring
+                this.#addDescriptionInRuntime(sanitizedDescriptionText);
+            }
         }
     }
 
-
-
+    #addDescriptionInRuntime(descriptionText) {
+        // add question mark icon
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+        const labelContainer = this.element.querySelector(`.${bemClass}__label-container`);
+        if (labelContainer) {
+            const qmButton = document.createElement('button');
+            qmButton.className = `${bemClass}__questionmark`;
+            qmButton.title = 'Help text';
+            labelContainer.appendChild(qmButton);
+        } else {
+            console.error('label container not found');
+            return;
+        }
+        // add description div
+        const descriptionDiv = document.createElement('div');
+        descriptionDiv.className = `${bemClass}__longdescription`;
+        descriptionDiv.id = `${this.getId()}__longdescription`;
+        descriptionDiv.setAttribute('aria-live', 'polite');
+        descriptionDiv.setAttribute('data-cmp-visible', false);
+        const pElement = document.createElement('p');
+        pElement.textContent = descriptionText;
+        descriptionDiv.appendChild(pElement)
+        var errorDiv = this.getErrorDiv();
+        if (errorDiv) {
+            this.element.insertBefore(descriptionDiv, errorDiv);
+        } else {
+            console.log('error div not found');
+            return;
+        }
+        // attach event handler for question mark icon
+        this.#addHelpIconHandler();
+    }
 
     /**
      * Adds an event listener for the '?' icon click.
@@ -617,8 +664,8 @@ class FormFieldBase extends FormField {
      * @private
      */
     #addHelpIconHandler(state) {
-        const questionMarkDiv = this.qm,
-            descriptionDiv = this.description,
+        const questionMarkDiv = this.getQuestionMarkDiv(),
+            descriptionDiv = this.getDescription(),
             tooltipAlwaysVisible = this.#isTooltipAlwaysVisible();
         const self = this;
         if (questionMarkDiv && descriptionDiv) {
