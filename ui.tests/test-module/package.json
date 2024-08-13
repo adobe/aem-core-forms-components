@@ -39,7 +39,7 @@
     "pretest-cloud": "npm run lint",
     "clean": "rm -rf node_modules reports",
     "cypress:open": "./node_modules/.bin/cypress open",
-    "cypress:run": "./node_modules/.bin/cypress run --browser chrome --headless --reporter cypress-multi-reporters --reporter-options configFile=cypress.json",
+    "cypress:run": "./node_modules/.bin/cypress run --browser chrome --headless --reporter cypress-multi-reporters --reporter-options configFile=cypress.config.js",
     "cypress:run:specific": "npm run cypress:run -- --spec",
     "cypress:run:file": "npm run cypress:run:specific",
     "delete:reports": "rm target/reports/* || true",

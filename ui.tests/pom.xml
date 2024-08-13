@@ -368,7 +368,7 @@
                                         <argument>--reporter</argument>
                                         <argument>cypress-multi-reporters</argument>
                                         <argument>--reporter-options</argument>
-                                        <argument>configFile=cypress.json</argument>
+                                        <argument>configFile=cypress.config.js</argument>
                                         <argument>--env</argument>
                                         <!-- value of forms.far is addon or addon-latest -->
                                         <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR},core.components.version=${CORE_COMPONENTS}</argument>
