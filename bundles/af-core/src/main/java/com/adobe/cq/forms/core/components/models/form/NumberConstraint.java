@@ -17,13 +17,16 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ProviderType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * A interface which specifies the different form number type constraints
  *
+ * @deprecated Use {@link NumberConstraintV2} instead.
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
+@Deprecated
 @ProviderType
 public interface NumberConstraint {
 
@@ -34,7 +37,10 @@ public interface NumberConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    Long getMinimum();
+    @JsonIgnore
+    default Long getMinimum() {
+        return null;
+    }
 
     /**
      * Returns the maximum value for the number. The constraint is applicable only for field with type number
@@ -43,7 +49,10 @@ public interface NumberConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    Long getMaximum();
+    @JsonIgnore
+    default Long getMaximum() {
+        return null;
+    }
 
     /**
      * Returns the Maximum value (exclusive) that can be entered by the user.
@@ -52,7 +61,10 @@ public interface NumberConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    Long getExclusiveMaximum();
+    @JsonIgnore
+    default Long getExclusiveMaximum() {
+        return null;
+    }
 
     /**
      * Returns the minimum value (exclusive) that can be entered by the user.
@@ -61,6 +73,9 @@ public interface NumberConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    Long getExclusiveMinimum();
+    @JsonIgnore
+    default Long getExclusiveMinimum() {
+        return null;
+    }
 
 }

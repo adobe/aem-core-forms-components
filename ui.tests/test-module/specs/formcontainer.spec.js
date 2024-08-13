@@ -65,6 +65,19 @@ describe('Page/Form Authoring', function () {
             cy.get("[name='./title'").should("have.value", "Adaptive Form V2 (IT)");
         }
 
+    const checkAutoSaveTab = function(formContainerEditPathSelector) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        // Open auto save tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Auto-save').click({force:true});
+        cy.get("coral-checkbox[name='./fd:enableAutoSave']").should("exist");
+        cy.get("coral-checkbox[name='./fd:enableAutoSave']").click({force:true});
+        cy.get("coral-select[name='./fd:autoSaveStrategyType']").should("exist");
+        cy.get("coral-numberinput[name='./fd:autoSaveInterval']").should("exist");
+    }
+
+
+
     const checkAndSaveSubmitAction = function(formContainerEditPathSelector) {
         // click configure action on adaptive form container component
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
@@ -195,7 +208,14 @@ describe('Page/Form Authoring', function () {
             it ('check title in edit dialog', {retries: 3}, function() {
                 checkTitleInEditDialog(formContainerEditPathSelector);
                 cy.get('.cq-dialog-cancel').click();
-            })
+            });
+
+            it('open edit dialog, verify auto save tab in container edit dialog box', {retries: 3},function () {
+                if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-14255")) {
+                    checkAutoSaveTab(formContainerEditPathSelector);
+                }
+            });
+
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
