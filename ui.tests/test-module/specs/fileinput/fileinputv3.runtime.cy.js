@@ -219,10 +219,10 @@ describe('Click on button tag (V-3)', () => {
         });
     });
     it('should handle click event on attach button', () => {
-        const sampleFileName = 'sample2.txt'
+        const sampleFileName = 'empty.pdf'; // only pdf is alllowed
         const [id, fieldView] = Object.entries(formContainer._fields)[2]
         cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__dragarea > .${bemBlock}__widgetlabel`).should('exist').click().then(() => {
-            cy.attachFile('input[type="file"]', [sampleFileName]).then(() => {
+            cy.attachFile(`#${id} input[type="file"]`, [sampleFileName]).then(() => {
                 cy.get('.cmp-adaptiveform-fileinput__filename').should('contain', sampleFileName);
         });
     });

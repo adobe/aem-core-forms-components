@@ -67,9 +67,9 @@ describe('Button - Authoring', function () {
         cy.get("[name='./readOnly']")
             .should("not.exist");
 
-
         // Checking some dynamic behaviours
         cy.get('.cq-dialog-cancel').click();
+        cy.get('.cq-dialog-cancel').should('not.exist');
         cy.deleteComponentByPath(buttonDrop);
     }
 
@@ -154,8 +154,10 @@ describe('Button - Authoring', function () {
             cy.deleteComponentByPath(buttonDrop);
         });
 
-        it('open edit dialog of aem forms Button', function() {
-            testButtonBehaviour(buttonEditPathSelector, buttonDrop, true);
+        it('open edit dialog of aem forms Button', { retries: 3 }, function() {
+            cy.cleanTest(buttonDrop).then(function() {
+                testButtonBehaviour(buttonEditPathSelector, buttonDrop, true);
+            });
         });
 
     });

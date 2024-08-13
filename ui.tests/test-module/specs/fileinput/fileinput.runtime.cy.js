@@ -288,11 +288,16 @@ describe("Form with File Input - Prefill & Submit tests", () => {
             // attach the file
             cy.attachFile(fileInput.selector, fileInput.fileNames);
 
-            // check for successful attachment of file in the view
-            checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
-
-            // check preview of the file
-            checkFilePreviewInFileAttachment(fileInput.selector);
+            if (idx === 0) {
+                cy.on('window:alert', (str) => {
+                    expect(str).to.equal('File(s) $test.bat are unsupported file types');
+                });
+            } else {
+                // check for successful attachment of file in the view
+                checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
+                // check preview of the file
+                checkFilePreviewInFileAttachment(fileInput.selector);
+            }
         })
     })
 
