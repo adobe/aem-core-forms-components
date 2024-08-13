@@ -1031,7 +1031,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
     }
 
     #clearDate(view) {
-      this.#model.value = "";
+      this.#model.dispatch(new FormView.Actions.UIChange({'value': ''}));
       let existingSelectedItem = this['$' + view.toLowerCase()].getElementsByClassName("dp-selected")[0];
       if (existingSelectedItem) {
         existingSelectedItem.classList.remove("dp-selected");
@@ -1068,7 +1068,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
           this.selectedYear = this.currentYear;
           this.selectedDay = val;
           this.setValue(this.toString());
-          this.#model.value = this.toString(); // updating model value to the latest when calender is changed
+          this.#model.dispatch(new FormView.Actions.UIChange({'value': this.toString()})); // updating model value to the latest when calender is changed
           this.#curInstance.$field.focus();
           let existingSelectedElement = this['$'
           + this.view.toLowerCase()].getElementsByClassName("dp-selected")[0];
@@ -1155,6 +1155,16 @@ if (typeof window.DatePickerWidget === 'undefined') {
             this.toString()) || value;
       } else {
         this.#widget.value = this.#model.displayValue || value;
+      }
+    }
+
+    setCalendarWidgetValue(value) {
+      if (this.#curInstance === null && this.#widget != null) {
+        this.#curInstance = window.afCache.get(this.#widget, "datetimepicker");
+      }
+      if (this.#curInstance != null) {
+        // also change the date of the calendar widget
+        this.#curInstance.selectedDate = value;
       }
     }
 

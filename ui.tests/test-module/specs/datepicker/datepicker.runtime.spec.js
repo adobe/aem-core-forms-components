@@ -23,6 +23,7 @@ describe("Form Runtime with Date Picker", () => {
     const fmPropertiesUI = "/libs/fd/fm/gui/content/forms/formmetadataeditor.html/content/dam/formsanddocuments/core-components-it/samples/datepicker/basic"
     const themeRef = 'input[name="./jcr:content/metadata/themeRef"]'
     const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
+
     // enabling theme for this test case as without theme there is a bug in custom widget css
     before(() => {
         cy.openPage(fmPropertiesUI).then(() => {
@@ -215,7 +216,7 @@ describe("Form Runtime with Date Picker", () => {
         });
 
         // choose a different date and check if its persisted
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get("#li-day-11").should("be.visible").should("have.class", "dp-selected"); // first check for the original date selection
             cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
             cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023");
@@ -223,8 +224,16 @@ describe("Form Runtime with Date Picker", () => {
 
         });
 
+        date = '15/8/2020';
+        cy.get(`#${datePicker7}`).find("input").clear().type(date).then(() => {
+            cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
+                cy.get("#li-day-16").should("be.visible").should("have.class", "dp-selected"); // first check for the original date selection
+                cy.get(".dp-caption").should("be.visible").should("contain.text", "2020");
+            });
+        });
+
         // check clear option
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-clear").click();
         });
 
@@ -233,7 +242,7 @@ describe("Form Runtime with Date Picker", () => {
 
     it("Test order of the days", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".header").invoke("text").should("eq", 'SunMonTueWedThuFriSat');
         });
     });
@@ -276,7 +285,7 @@ describe("Form Runtime with Date Picker", () => {
 
     it("Test custom error message when incorrect date format is entered", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
-        const incorrectInputs = ["adfasdfa", "2023/11/08", "1-1-2023"];
+        const incorrectInputs = ["adfasdfa", "2023/11/08", "1-1-2023", "10/2" ];
         incorrectInputs.forEach(incorrectInput => {
             cy.get(`#${datePicker7}`).find("input").should('have.attr',"type", "text");
             cy.get(`#${datePicker7}`).find("input").clear().wait(1000).type(incorrectInput).trigger('input').blur()
@@ -307,7 +316,7 @@ describe("Form Runtime with Date Picker", () => {
         const date = '2/8/2023'; // since it has edit format, the date should be in the edit format only
         cy.get(`#${datePicker7}`).find("input").clear().type(date).blur().then(x => {
             expect(model.getState().value).to.equal('2023-08-02'); // model always has YYYY-MM-DD value
-            cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+            cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
                 cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value","Wednesday, 2 August, 2023")
                 .then(() => {
@@ -325,7 +334,7 @@ describe("Form Runtime with Date Picker", () => {
         cy.get(`#${id}`).find("input").clear().type(input).blur().then(x => {
             expect(model.getState().value).to.equal(input);
         });
-        cy.get(`#${id}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${id}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             let todayDate = new Date();
             let todayYear = todayDate.getFullYear() + "";
             cy.get(".dp-caption").should('include.text', todayYear);

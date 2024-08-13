@@ -47,7 +47,9 @@
         setFocus(id) {
             super.setFocus(id);
             this.setActive();
-            this.navigateAndFocusTab(id + '__tab');
+            if (id) {
+                this.navigateAndFocusTab(id + '__tab');
+            }
         }
 
         getWidget() {
