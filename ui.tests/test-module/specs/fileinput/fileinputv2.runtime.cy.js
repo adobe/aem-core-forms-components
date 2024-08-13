@@ -41,10 +41,13 @@ const checkFileNamesInFileAttachmentView = (component, fileNames) => {
 }
 
 const checkFilePreviewInFileAttachment = (component) => {
+    cy.window().then((win) => {
+        cy.stub(win, 'open').as('open')
+    })
     cy.get(component).then(() => {
         cy.get(".cmp-adaptiveform-fileinput__filename").each(($file) => {
             cy.wrap($file).click();
-            cy.window().its('open').should('be.called');
+            cy.get('@open').should('be.called');
         })
     });
 };

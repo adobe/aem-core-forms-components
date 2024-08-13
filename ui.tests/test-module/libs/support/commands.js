@@ -702,7 +702,8 @@ Cypress.Commands.add("attachConsoleErrorSpy", () => {
  */
 Cypress.Commands.add("expectNoConsoleErrors", () => {
     return cy.window().then(win => {
-        expect(win.console.error).to.have.callCount(0);
+        const spy = cy.spy(win.console, 'error');
+        cy.wrap(spy).should('have.callCount', 0);
     });
 });
 
