@@ -28,6 +28,7 @@ import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +47,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
+import com.adobe.cq.forms.core.components.models.form.AutoSaveConfiguration;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
@@ -118,6 +120,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
+
+    @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private AutoSaveConfiguration autoSaveConfig;
 
     @PostConstruct
     protected void initFormContainerModel() {
@@ -314,6 +319,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
+        properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
         return properties;
     }
 

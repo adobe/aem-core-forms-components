@@ -176,6 +176,26 @@ public class ComponentUtils {
         }
     }
 
+    /**
+     * Parses a given string value into a Number.
+     * The method attempts to parse the string as a Long first, and if that fails,
+     * it attempts to parse it as a Float. If both parsing attempts fail, it returns null.
+     *
+     * @param value the string value to be parsed, can be null
+     * @return the parsed Number (Long or Float), or null if the value cannot be parsed
+     */
+    public static Number parseNumber(@Nullable String value) {
+        try {
+            return value != null ? Long.parseLong(value) : null;
+        } catch (NumberFormatException e) {
+            try {
+                return Float.parseFloat(value);
+            } catch (NumberFormatException ex) {
+                return null;
+            }
+        }
+    }
+
     @NotNull
     public static Object[] coerce(@NotNull BaseConstraint.Type type, @NotNull Object[] objArr) {
         if (type.equals(type.NUMBER) || type.equals(type.NUMBER_ARRAY)) {

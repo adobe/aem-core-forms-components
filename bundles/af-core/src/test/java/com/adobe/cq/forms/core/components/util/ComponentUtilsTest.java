@@ -84,4 +84,16 @@ public class ComponentUtilsTest {
         assertFalse(ComponentUtils.isFragmentComponent(resource));
     }
 
+    @Test
+    public void testParseNumber() {
+        // Test valid long string
+        assertEquals(123L, ComponentUtils.parseNumber("123"));
+        // Test valid float string
+        assertEquals(123.45f, ComponentUtils.parseNumber("123.45"));
+        // Test invalid number string
+        assertNull(ComponentUtils.parseNumber("abc"));
+        // Test null input
+        assertNull(ComponentUtils.parseNumber(null));
+    }
+
 }

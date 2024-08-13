@@ -177,6 +177,12 @@
                             </formmodel>
                         </items>
                     </dataModel>
+                    <autosave
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Auto-save"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="fd/af/authoring/content/autosave"
+                            resouceType="granite/ui/components/coral/foundation/container"/>
                     <submitActions
                       jcr:primaryType="nt:unstructured"
                       jcr:title="Submission"
