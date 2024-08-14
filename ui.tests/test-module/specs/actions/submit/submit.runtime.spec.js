@@ -30,7 +30,7 @@ describe("Form with Submit Button", () => {
 
     let formContainer = null;
 
-    it.skip("should get model and view initialized properly ", () => {
+    it("should get model and view initialized properly ", () => {
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
@@ -63,7 +63,7 @@ describe("Form with Submit Button", () => {
         }
     };
 
-    it.skip("Clicking the button should submit the form", () => {
+    it("Clicking the button should submit the form", () => {
         cy.previewForm(pagePath);
         cy.intercept({
             method: 'POST',
@@ -84,7 +84,7 @@ describe("Form with Submit Button", () => {
     });
 
     // actual email won't trigger, but in case of any error, the test case would fail
-    it.skip("Clicking the button should trigger email submission of the form", () => {
+    it("Clicking the button should trigger email submission of the form", () => {
         cy.previewForm(emailPagePath);
         cy.intercept({
             method: 'POST',
@@ -101,7 +101,7 @@ describe("Form with Submit Button", () => {
     });
 
 
-    it.skip("Form submit should show validation errors", () => {
+    it("Form submit should show validation errors", () => {
             cy.previewForm(pagePath);
             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
                 Object.entries(formContainer._fields).forEach(([id, field]) => {
@@ -114,7 +114,7 @@ describe("Form with Submit Button", () => {
     });
 
 
-    it.skip("Custom Submit Action Test", () => {
+    it("Custom Submit Action Test", () => {
         cy.previewForm(customSubmitPagePath);
         cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
             cy.get('body').should('contain', "Thank you for submitting the form.\n")
@@ -123,7 +123,7 @@ describe("Form with Submit Button", () => {
 
 
     if (cy.af.isLatestAddon()) {
-        it.skip("Custom Submit Action With Redirect Parameter test", () => {
+        it("Custom Submit Action With Redirect Parameter test", () => {
             cy.previewForm(customSubmitPagePathRequestParameters);
             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
                 cy.url().should('include', '?prefillId');
@@ -132,7 +132,7 @@ describe("Form with Submit Button", () => {
     }
 
 
-    it.skip("Submit Action test without passing any custom submit event", () => {
+    it("Submit Action test without passing any custom submit event", () => {
         cy.previewForm(submitSuccessRulePagePath).then(p => {
             formContainer = p;
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
@@ -144,7 +144,7 @@ describe("Form with Submit Button", () => {
         })
     })
 
-    it.skip("External redirectURL post submit redirects to external page.", () => {
+    it("External redirectURL post submit redirects to external page.", () => {
         cy.previewForm(externalPagePathSubmit).then(p => {
             formContainer = p;
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
