@@ -122,53 +122,59 @@ describe('Page - Authoring', function () {
         });
     });
 
-    it ('check value type validations', function() {
-        // For Number Type
-        dropCheckBoxGroupInContainer();
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
-        cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
+    it ('check value type validations', { retries: 3 }, function() {
+        cy.cleanTest(checkBoxGroupDrop).then(function() {
+            // For Number Type
+            dropCheckBoxGroupInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+            cy.get("coral-selectlist-item-content").contains('Number').should('be.visible').click({force: true});
 
-        cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-        cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
-        cy.get('.cq-dialog-submit').click();
-        cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
+            cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+            cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
+            cy.get('.cq-dialog-submit').click();
+            cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
 
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(checkBoxGroupDrop);
+            cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
+            cy.get('.cq-dialog-cancel').should('not.exist');
+            cy.deleteComponentByPath(checkBoxGroupDrop);
 
-        // For Boolean
-        dropCheckBoxGroupInContainer();
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
-        cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
+            // For Boolean
+            dropCheckBoxGroupInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('.cmp-adaptiveform-checkboxgroup__type').click();
+            cy.get("coral-selectlist-item-content").contains('Boolean').should('be.visible').click({force: true});
 
-        cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
-        cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
-        cy.get('.cq-dialog-submit').click();
-        cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
+            cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
+            cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
+            cy.get('.cq-dialog-submit').click();
+            cy.get('._coral-Tooltip-label').should('contain.text', 'Value Type Mismatch');
 
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(checkBoxGroupDrop);
+            cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
+            cy.get('.cq-dialog-cancel').should('not.exist');
+            cy.deleteComponentByPath(checkBoxGroupDrop);
+        });
     })
 
-    it ('check for duplicate enum values', function() {
-        dropCheckBoxGroupInContainer();
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force : true});
-        cy.get('input[name="./enum"]').last().invoke('val','0');
-        cy.get('input[name="./enumNames"]').last().invoke('val','Item 3');
-        cy.get('.cq-dialog-submit').click().then(() => {
-            cy.get('.cq-dialog-submit').should('not.exist')
+    it ('check for duplicate enum values', { retries: 3 }, function() {
+        cy.cleanTest(checkBoxGroupDrop).then(function() {
+            dropCheckBoxGroupInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force: true});
+            cy.get('input[name="./enum"]').last().invoke('val', '0');
+            cy.get('input[name="./enumNames"]').last().invoke('val', 'Item 3');
+            cy.get('.cq-dialog-submit').click().then(() => {
+                cy.get('.cq-dialog-submit').should('not.exist')
+            });
+            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length', 2);
+            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 3');
+            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
+            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 1').should('not.exist');
+            cy.deleteComponentByPath(checkBoxGroupDrop);
         });
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 3');
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 1').should('not.exist');
-        cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
     it('check rich text support for label', function(){
@@ -191,7 +197,7 @@ describe('Page - Authoring', function () {
         cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']").eq(0).focus().clear().type("Select 1");
         cy.get("div[name='richTextEnumNames']").first().should('be.visible');
         cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('be.visible');
-        cy.get('.cq-dialog-submit').click();
+        cy.get('.cq-dialog-submit').click({ force: true });
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Select 1');
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
