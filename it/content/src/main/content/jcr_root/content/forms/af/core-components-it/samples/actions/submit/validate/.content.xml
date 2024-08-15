@@ -32,7 +32,7 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Text Input"
                     required="true"
-                    sling:resourceType="mysite/components/adaptiveForm/textinput"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
                     fieldType="text-input"
                     name="textinput1723459830487">
                 <fd:rules
@@ -50,7 +50,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Submit"
-                    sling:resourceType="mysite/components/adaptiveForm/actions/submit"
+                    sling:resourceType="forms-components-examples/components/form/actions/submit"
                     buttonType="submit"
                     dorExclusion="true"
                     fieldType="button"
