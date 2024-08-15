@@ -1,28 +1,28 @@
 {
-  "FileCloseAccessText"         :   "Appuyer sur Entrée pour supprimer le fichier ",
-  "FileSizeGreater"             :   "FLes fichiers ${0} font plus que la taille attendue : ${1} Mo.",
-  "FileNameInvalid"             :   "Le nom du ou des fichiers ${0} comportent des caractères non valides. Seuls les caractères alphanumériques sont pris en charge",
-  "FileMimeTypeInvalid"         :   "Le ou les fichiers ${0} sont des types de fichiers non pris en charge",
-  "InternalFormSubmissionError" :   "Une erreur interne s'est produite lors de l'envoi du formulaire.",
-  "type"                        :   "Please enter a valid value.",
-  "required"                    :   "Please fill in this field.",
-  "minimum"                     :   "Value must be greater than or equal to ${0}.",
-  "maximum"                     :   "Value must be less than or equal to ${0}.",
-  "minLength"                   :   "Please lengthen this text to ${0} characters or more.",
-  "maxLength"                   :   "Please shorten this text to ${0} characters or less.",
-  "step"                        :   "Please enter a valid value.",
-  "format"                      :   "Specify the value in allowed format : ${0}.",
-  "pattern"                     :   "Please match the format requested.",
-  "minItems"                    :   "Specify a number of items equal to or greater than ${0}.",
-  "maxItems"                    :   "Specify a number of items equal to or less than ${0}.",
-  "uniqueItems"                 :   "All the items must be unique.",
-  "validationExpression"        :   "Please enter a valid value.",
-  "maxFileSize"                 :   "File too large. Reduce size and try again.",
-  "accept"                      :   "The specified file type not supported.",
-  "defaultError"                :   "There is an error in the field",
-  "clearText"                   :   "Effacer",
-  "calendarSymbols" : {
-    "monthNames" : [
+  "FileCloseAccessText": "Appuyer sur Entrée pour supprimer le fichier ",
+  "FileSizeGreater": "${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.",
+  "FileNameInvalid": "Ne joignez pas de fichiers dont le nom commence par (.), contient \\ / : * ?  \" < > | ; % $, ou est un mot-clé réservé comme nul, prn, con, lpt ou com.",
+  "FileMimeTypeInvalid": "Le ou les fichiers ${0} sont des types de fichiers non pris en charge",
+  "InternalFormSubmissionError": "Une erreur interne s'est produite lors de l'envoi du formulaire.",
+  "type": "Saisissez une valeur valide.",
+  "required": "Remplissez ce champ.",
+  "minimum": "La valeur doit être supérieure ou égale à ${0}.",
+  "maximum": "La valeur doit être supérieure ou égale à ${0}.",
+  "minLength": "Allongez ce texte à ${0} caractères minimum.",
+  "maxLength": "Réduisez ce texte à ${0} caractères maximum.",
+  "step": "Saisissez une valeur valide.",
+  "format": "Spécifiez la valeur au format autorisé : ${0}.",
+  "pattern": "Veuillez respecter le format demandé.",
+  "minItems": "Spécifiez un nombre d'éléments supérieur ou égal à ${0}.",
+  "maxItems": "Spécifiez un nombre d'éléments inférieur ou égal à ${0}.",
+  "uniqueItems": "Tous les éléments doivent être uniques.",
+  "validationExpression": "Saisissez une valeur valide.",
+  "maxFileSize": "Fichier trop volumineux. Réduisez la taille et réessayez.",
+  "accept": "Le type de fichier spécifié n’est pas pris en charge.",
+  "defaultError": "Le champ contient une erreur.",
+  "clearText": "Effacer",
+  "calendarSymbols": {
+    "monthNames": [
       "janvier",
       "février",
       "mars",
@@ -36,7 +36,7 @@
       "novembre",
       "décembre"
     ],
-    "abbrmonthNames" : [
+    "abbrmonthNames": [
       "janv.",
       "févr.",
       "mars",
@@ -50,7 +50,7 @@
       "nov.",
       "déc."
     ],
-    "dayNames" : [
+    "dayNames": [
       "dimanche",
       "lundi",
       "mardi",
@@ -59,7 +59,7 @@
       "vendredi",
       "samedi"
     ],
-    "abbrdayNames" : [
+    "abbrdayNames": [
       "dim.",
       "lun.",
       "mar.",
@@ -68,21 +68,21 @@
       "ven.",
       "sam."
     ],
-    "meridiemNames" : [
+    "meridiemNames": [
       "AM",
       "PM"
     ],
-    "eraNames" : [
+    "eraNames": [
       "av. J.-C.",
       "ap. J.-C."
     ],
-    "day": "day",
-    "days": "days",
-    "month": "month",
-    "months": "months",
-    "year": "year",
-    "years": "years",
-    "more": "more",
-    "less": "less"
+    "day": "jour",
+    "days": "jours",
+    "month": "mois",
+    "months": "mois",
+    "year": "année",
+    "years": "années",
+    "more": "plus",
+    "less": "moins"
   }
 }
