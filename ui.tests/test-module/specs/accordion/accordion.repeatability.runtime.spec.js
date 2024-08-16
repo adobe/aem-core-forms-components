@@ -196,6 +196,22 @@ describe("Form with Accordion Container with repeatable elements", () => {
         })
         cy.expectNoConsoleErrors();
     })
+
+    it('test adding panel programmatically', () => {
+        getItemDivs().should('have.length', 5);
+        getAccordionPanels().should('have.length', 5);
+        getAccordionButtons().should('have.length', 5);
+        cy.wrap(null).then(() => {
+            const instanceManager = formContainer._model.items[0].items[0];
+            for(let i=0; i<4; i++){
+                instanceManager.dispatch({type: "addItem"})
+            }
+        }).then(() => {
+            getItemDivs().should('have.length', 8);
+            getAccordionPanels().should('have.length', 8);
+            getAccordionButtons().should('have.length', 8);
+        })
+    });
 })
 
 describe("Form with Accordion Container with nested repeatable elements", () => {

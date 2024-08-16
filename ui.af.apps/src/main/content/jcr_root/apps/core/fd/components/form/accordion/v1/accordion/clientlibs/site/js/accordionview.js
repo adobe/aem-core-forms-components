@@ -509,11 +509,15 @@
                     result.parentElement = this.element;
                 }
             } else {
-                var previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
-                var previousInstanceItemDiv = this.#getItemById(previousInstanceElement.id + Accordion.idSuffixes.item);
-                result.beforeViewElement = previousInstanceItemDiv;
+                let previousInstanceElement = this.#getRepeatableElementAt(instanceManager, instanceIndex - 1);
+                result.beforeViewElement = previousInstanceElement;
             }
             return result;
+        }
+
+        #getRepeatableElementAt(instanceManager, index) {
+            let childId = instanceManager._model.items.find((model) => model.index === index)?.id;
+            return this.element.querySelector(`#${childId}${Accordion.idSuffixes.item}`);
         }
 
         #prepareAccordionMarkupToBeAdded(instanceManager, addedModel, htmlElement) {
