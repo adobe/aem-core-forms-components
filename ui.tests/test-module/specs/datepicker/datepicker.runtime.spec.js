@@ -51,7 +51,7 @@ describe("Form Runtime with Date Picker", () => {
         const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
         const passReadOnlyAttributeCheck = `${state.readOnly === true ? "" : "not."}have.attr`;
         let value = state.value == null ? '' : state.value;
-        debugger;
+
         let useDisplayValue = state.displayFormat !== 'date|short';
         if (useDisplayValue && value) {
             value = state.displayValue;

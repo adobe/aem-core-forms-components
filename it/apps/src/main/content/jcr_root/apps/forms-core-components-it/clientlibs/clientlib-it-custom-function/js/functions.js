@@ -222,3 +222,19 @@ function clearValueCustomFunction(field, globals) {
         globals.functions.setProperty(field, {value: null});
     }
 }
+
+/**
+ * customMessageUsingInvalidApi
+ * @name customMessageUsingInvalidApi
+ * @param {object} field
+ * @param {scope} globals
+ */
+function customMessageUsingInvalidApi(field, globals) {
+    const minLength = 15;
+    const comments = field.$value.trim();
+    if (comments.length < minLength) {
+        globals.functions.setProperty(field, {valid: false, errorMessage : "Comments must be at least 15 characters long."});
+    } else {
+        globals.functions.setProperty(field, {valid : true});
+    }
+}
