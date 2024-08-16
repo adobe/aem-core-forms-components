@@ -66,8 +66,6 @@ describe('Custom Prefill Test', function () {
     }
 
     it('', function() {
-        debugger;
-        
         if (cy.af.isOldCoreComponent()) {
             genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
         }
