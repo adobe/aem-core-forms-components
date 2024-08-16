@@ -267,4 +267,27 @@ describe('Page/Form Authoring', function () {
             });
 
         });
+
+        context("Check default behaviour in Form Editor", function () {
+            const pagePath = "/content/forms/af/core-components-it/samples/emailinput/basic.html";
+
+            beforeEach(function () {
+                cy.previewForm(pagePath);
+            });
+
+            it('check the preventDefaultSubmit method by simulating keydown event on the form', function () {
+                cy.get('.cmp-adaptiveform-container').then((formContainer) => {
+                    cy.stub(formContainer[0], 'onsubmit').as('submit');
+                    cy.get('form').trigger('keydown', {key: 'Enter'});
+                    cy.get('@submit').should('not.be.called');
+                });
+            });
+
+            it('should prevent form submission by default', function () {
+                cy.get('.cmp-adaptiveform-container').then((formContainer) => {
+                    cy.get('.cmp-adaptiveform-emailinput__widget').eq(0).type('{enter}');
+                    cy.get('.cmp-adaptiveform-emailinput__widget').eq(0).should('be.visible');
+                });
+            });
+        });
 });
