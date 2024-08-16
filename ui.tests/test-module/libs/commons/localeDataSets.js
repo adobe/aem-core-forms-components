@@ -231,7 +231,7 @@ const languages = [
             "FileCloseAccessText"   :       "Enter 키를 눌러 파일 삭제",
             "FileSizeGreater"       :        "파일 ${0}이(가) 예상 크기 ${1}MB를 초과합니다.",
             "FileNameInvalid"       :       '파일 이름이 (.)으로 시작하거나, \\ / : * ? " < > | ; % $를 포함하거나, nul, prn, con, lpt 또는 com과 같이 예약된 키워드인 파일은 첨부하지 마십시오.',
-            "FileMimeTypeInvalid"   :       "파일 ${0}은(는) 지원되지 않는 파일 유형입니다.",
+            "FileMimeTypeInvalid"   :       "File(s) ${0} are unsupported file types",
             "InternalFormSubmissionError" :  "양식을 제출하는 중 내부 오류가 발생했습니다."
         }
     }, {
