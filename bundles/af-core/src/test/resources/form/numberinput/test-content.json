@@ -5,7 +5,9 @@
     "name" : "abc",
     "jcr:title" : "def",
     "fieldType": "number-input",
-    "customProp": "customPropValue"
+    "customProp": "customPropValue",
+    "minimum" : "100.22",
+    "maximum" : "102.44"
   },
   "numberinput-displayvalueExpression" : {
     "jcr:primaryType": "nt:unstructured",
