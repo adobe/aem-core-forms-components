@@ -289,7 +289,7 @@ describe('Page/Form Authoring', function () {
         });
 
         context("Check default behaviour in Form Editor", function () {
-            const pagePath = "/content/forms/af/core-components-it/samples/emailinput/basic.html";
+            const pagePath = "/content/forms/af/core-components-it/samples/numberinput/validation.html";
 
             beforeEach(function () {
                 cy.previewForm(pagePath);
@@ -305,8 +305,17 @@ describe('Page/Form Authoring', function () {
 
             it('should prevent form submission by default', function () {
                 cy.get('.cmp-adaptiveform-container').then((formContainer) => {
-                    cy.get('.cmp-adaptiveform-emailinput__widget').eq(0).type('{enter}');
-                    cy.get('.cmp-adaptiveform-emailinput__widget').eq(0).should('be.visible');
+                    // Trigger enter on button
+                    cy.get('.cmp-adaptiveform-container button').eq(0).type('{enter}');
+                    cy.get('.cmp-adaptiveform-container button').eq(0).should('be.visible');
+
+                    // Trigger enter on first input where display:none is not present
+                    cy.get('.cmp-adaptiveform-container input').eq(3).type('{enter}');
+                    cy.get('.cmp-adaptiveform-container input').eq(3).should('be.visible');
+
+                    // Trigger enter on numberinput widget
+                    cy.get('.cmp-adaptiveform-numberinput__widget').eq(0).type('{enter}');
+                    cy.get('.cmp-adaptiveform-numberinput__widget').eq(0).should('be.visible');
                 });
             });
         });
