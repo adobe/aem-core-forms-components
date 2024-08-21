@@ -104,4 +104,8 @@ describe("Form Runtime with Button Input", () => {
         });
     });
 
+    it(`should have type as button`, () => {
+        cy.get('.cmp-adaptiveform-button__widget').eq(0).should('have.attr', 'type', 'button');
+    });
+
 })

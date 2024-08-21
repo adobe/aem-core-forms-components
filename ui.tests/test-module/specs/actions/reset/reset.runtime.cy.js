@@ -107,4 +107,8 @@ describe("Form with Reset Button", () => {
             cy.get(`[data-cmp-is="${coreComponent}"]`).then(instance => checkIfReset(instance, coreComponent));
         });
     });
+
+    it(`should have type as reset`, () => {
+        cy.get(selectors.reset).find("button").should('have.attr', 'type', 'reset');
+    });
 });
