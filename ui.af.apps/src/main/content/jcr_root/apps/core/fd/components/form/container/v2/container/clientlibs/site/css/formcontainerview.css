@@ -18,6 +18,12 @@
 form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     display: none !important;
 }
+
+
+form:not(.cmp-adaptiveform-container--edit) [data-cmp-enabled="false"] {
+    pointer-events: none;
+    opacity: 0.4;
+}
 .cmp-adaptiveform-container--loading{
   
 }
@@ -25,71 +31,63 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 .cmp-adaptiveform-container [data-cmp-visible="false"] {
     display: none !important;
 }
+
+.cmp-adaptiveform-container [data-cmp-enabled="false"] {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
 .cmp-adaptiveform-container-hamburgerMenu {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 50px;
-    right: 10px;
+    top: 52px;
+    inset-inline-end: 10px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 200px;
+    inline-size: 200px;
     z-index: 1000;
     padding: 0;
     margin: 0;
-    list-style: none; /* Remove bullet points */
+    list-style: none;
+    border-radius: 5px;
+    width: 205px;
 }
 
 .cmp-adaptiveform-container-hamburgerMenu > li {
-    position: relative; /* Ensure that submenus are positioned relative to their parent li */
+    position: relative;
+    border: none;
+    margin: 2px 0px;
 }
 
-.cmp-adaptiveform-container-hamburgerMenu a {
-    padding: 10px;
-    text-decoration: none;
-    color: black;
-    display: block;
-}
-
-.cmp-adaptiveform-container-hamburgerMenu a:hover {
-    background-color: #f0f0f0;
-    text-decoration: none;
-}
-
-.cmp-adaptiveform-container-hamburger {
+.cmp-adaptiveform-container-hamburger-icon {
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    /* width: 30px; */
-    margin: 5px;
+    margin: 5px 0px;
     z-index: 1001;
-    float: right;
-    width:30px;
-    height:30px;
-    background:no-repeat;
-    background-size:30px 30px; 
+    float: inline-end;
+    width: 30px;
+    height: 30px;
+    background: no-repeat;
+    background-size: 30px 30px;
     background-image:url('../resources/images/menu.png');
 }
 
-.cmp-adaptiveform-container-hamburgerClose {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    /* width: 30px; */
-    margin: 5px;
-    z-index: 1001;
-    float: right;
-    width:30px;
-    height:30px;
-    background:no-repeat;
-    background-size:30px 30px; 
-    background-image:url('../resources/images/closeIcon.svg');
-}
-
-.cmp-adaptiveform-container-hamburger div {
+.cmp-adaptiveform-container-hamburger-icon div {
     height: 4px;
     background-color: black;
     margin: 5px 0;
+}
+
+.cmp-adaptiveform-container-hamburgerMenuTitle {
+    padding: 10px;
+    border: none;
+    margin: 2px 0px;
+    height: 20px;
+    width: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .cmp-adaptiveform-container-submenu {
@@ -105,75 +103,140 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 
 .cmp-adaptiveform-container-submenu li {
     box-sizing: border-box;
-    border-bottom: 1px solid #ddd;
+    /* border-radius: 5px; */
+    border: none;
+    margin: 2px 0px;
 }
 
-.cmp-adaptiveform-container-submenu li:hover {
-    background-color: #f0f0f0;
+
+a:hover {
+    text-decoration: none !important;
 }
 
-.cmp-adaptiveform-container-submenu a {
-    padding: 10px;
-    text-decoration: none;
-    color: black;
-    display: block;
-    padding-left: 15px;
+.cmp-adaptiveform-container-hamburger-menu-item-active {
+    background-color: #B1B1B1 !important;
 }
 
-.cmp-adaptiveform-container-submenu a:hover {
-    background-color: #f0f0f0;
-}
-
-.active {
-    background-color: #f0f0f0;
-    text-decoration: none;
-}
-
-@media (min-width: 768px) {
-    .cmp-adaptiveform-container-hamburger {
+@media (min-width: 767px) {
+    .cmp-adaptiveform-container-hamburger-icon {
+        display: none;
+    }
+    .cmp-adaptiveform-container-top-container {
         display: none;
     }
 }
 
-.cmp-adaptiveform-container-left-nav-button {
-    width:30px;
+.cmp-adaptiveform-container-nav-title {
+    font-size: 20px;
+}
+
+.cmp-adaptiveform-container-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    height: 57px;
+    background: #fafafa;
+    border: 1px solid #e6e6e6;
+    /* width: 100%; */
+}
+
+.cmp-adaptiveform-container-top-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    width: 100%;
+}
+
+.cmp-adaptiveform-container-nav-link {
+    display: flex !important;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    border-radius: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.cmp-adaptiveform-container-menu {
+    border-bottom: 2px solid #D3D3D3;
+}
+
+.cmp-adaptiveform-container-nav-button-left {
+    width: 20px;
     cursor: pointer;
-    width: 2.0rem;
-    height: 2.0rem;
-    background:no-repeat;
-    background-size:30px 30px;
-    margin: 5px;
-    background-image:url('../resources/images/leftArrow.png');
-    border-radius: 1.5rem;
-    border: 1px solid #555555;
-    padding: 2px;
+    background: no-repeat;
     background-position: center;
+    background-size:20px 24px;
+    margin: 5px;
+    height: 2.0rem;
+    border: 0;
+    background-image:url('../resources/images/leftChevron.svg');
 }
 
-.cmp-adaptiveform-container-right-nav-button {
-    width:30px;
+.cmp-adaptiveform-container-nav-button-right {
+    width: 20px;
     cursor: pointer;
-    width: 2.0rem;
-    height: 2.0rem;
-    background:no-repeat;
+    background: no-repeat;
     background-position: center;
-    background-size:30px 30px;
+    height: 2.0rem;
+    background-size: 20px 24px;
     margin: 5px;
-    background-image:url('../resources/images/rightArrow.png');
-    border-radius: 1.5rem;
-    border: 1px solid #555555;
-    padding: 2px;
+    border: 0;
+    background-image: url('../resources/images/rightChevron.svg');
 }
 
-.cmp-adaptiveform-container-right-nav-button:hover {
-    opacity: 0.5;
+[dir="rtl"] .cmp-adaptiveform-container-nav-button-left {
+    transform: rotate(180deg);
 }
 
-.cmp-adaptiveform-container-left-nav-button:hover {
-    opacity: 0.5;
+[dir="rtl"] .cmp-adaptiveform-container-nav-button-right {
+    transform: rotate(180deg);
 }
+
+.cmp-adaptiveform-container-nav-button-down {
+    width: 20px;
+    cursor: pointer;
+    background: no-repeat;
+    background-position: center;
+    height: 1.0rem;
+    background-size: 20px 24px;
+    margin: 5px;
+    border: 0;
+    background-image: url('../resources/images/downChevron.svg');
+}
+
+.cmp-adaptiveform-container-nav-button-up {
+    width: 20px;
+    cursor: pointer;
+    background: no-repeat;
+    background-position: center;
+    height: 1.0rem;
+    background-size: 20px 24px;
+    margin: 5px;
+    border: 0;
+    background-image: url('../resources/images/upChevron.svg');
+}
+
+.cmp-adaptiveform-container-hamburgerMenuContainer {
+    display: flex;
+    float: inline-end;
+}
+
 
 .cmp-adaptiveform-container-nav-buttons {
     display: flex;
     justify-content: space-around;
+}
+
+.cmp-adaptiveform-container-hamburger-menu-item-activeparent {
+    background-color: #E6E6E6;
+}
+
+a:active {
+    text-decoration: none;
+    outline: none;
 }
