@@ -51,6 +51,20 @@
     <input type="hidden" name=":formstart" value="${resource.path}"/>
     <input type="hidden" name="_charset_" value="utf-8"/>
     <input data-sly-test="${container.redirectUrl}" type="hidden" name=":redirect" value="${container.redirectUrl}"/>
+    <div data-sly-test="${container.properties['fd:hamburgerMenu']}" class="cmp-adaptiveform-container-top-container">
+        <div class="cmp-adaptiveform-container-menu">
+            <div class="cmp-adaptiveform-container-hamburgerMenuContainer">
+                <div class="cmp-adaptiveform-container-hamburger-icon"></div>
+            </div>
+        </div>
+        <div class="cmp-adaptiveform-container-nav-bar">
+            <div class="cmp-adaptiveform-container-nav-title"></div>
+            <div class="cmp-adaptiveform-container-nav-buttons">
+                <button class="cmp-adaptiveform-container-nav-button-left" type="button"></button>
+                <button class="cmp-adaptiveform-container-nav-button-right" type="button"></button>
+            </div>
+        </div>
+    </div>
     <div id="${container.id}-wrapper"
          class="cmp-adaptiveform-container__wrapper ${grid.cssClass} ${allowed.cssClass}">
         <sly data-sly-test="${!isAllowedApplicable}" data-sly-repeat.paragraph="${grid.paragraphs}"
