@@ -118,18 +118,20 @@
                 const tabs = this.getCachedTabs();
                 if (wizardPanels) {
                     for (let i = 0; i < wizardPanels.length; i++) {
-                        if (i === parseInt(this._active)) {
-                            wizardPanels[i].classList.add(this.constructor.selectors.active.wizardpanel);
-                            wizardPanels[i].removeAttribute("aria-hidden");
-                            tabs[i].classList.add(this.constructor.selectors.active.tab);
-                            tabs[i].setAttribute("aria-selected", true);
-                            tabs[i].setAttribute("tabindex", "0");
-                        } else {
-                            wizardPanels[i].classList.remove(this.constructor.selectors.active.wizardpanel);
-                            wizardPanels[i].setAttribute("aria-hidden", true);
-                            tabs[i].classList.remove(this.constructor.selectors.active.tab);
-                            tabs[i].setAttribute("aria-selected", false);
-                            tabs[i].setAttribute("tabindex", "-1");
+                        if( wizardPanels[i] && tabs[i]) {
+                            if (i === parseInt(this._active)) {
+                                wizardPanels[i].classList.add(this.constructor.selectors.active.wizardpanel);
+                                wizardPanels[i].removeAttribute("aria-hidden");
+                                tabs[i].classList.add(this.constructor.selectors.active.tab);
+                                tabs[i].setAttribute("aria-selected", true);
+                                tabs[i].setAttribute("tabindex", "0");
+                            } else {
+                                wizardPanels[i].classList.remove(this.constructor.selectors.active.wizardpanel);
+                                wizardPanels[i].setAttribute("aria-hidden", true);
+                                tabs[i].classList.remove(this.constructor.selectors.active.tab);
+                                tabs[i].setAttribute("aria-selected", false);
+                                tabs[i].setAttribute("tabindex", "-1");
+                            }
                         }
                     }
                 }
