@@ -22,6 +22,7 @@
         static IS = "adaptiveFormContainer";
         static bemBlock = 'cmp-adaptiveform-container';
         static hamburgerSupport = false;
+        static nestingSupport = 3;
 
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
@@ -275,9 +276,9 @@
         const field = formContainer.getField(itemId);
         console.log({field});
         console.log({form});
-        // if (form && field && field._model) {
-        //   form.setFocus(field._model);
-        // }
+        if (form && field && field._model) {
+          form.setFocus(field._model);
+        }
         const menu = document.querySelector(FormContainerV2.selectors.hamburgerMenu);
         menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
@@ -310,7 +311,10 @@
         return downArrowButton;
     }
 
-    function createHamburgerMenu(formContainer, items) {
+    function createHamburgerMenu(formContainer, items, counter = 0) {
+        if (counter >= FormContainerV2.nestingSupport) {
+            return;
+        }
         if (!items?.length) return;
     
         const ul = document.createElement('ul');
@@ -343,10 +347,10 @@
             link.classList.add(FormContainerV2.cssClasses.navLink);
     
             if (isRepeatable(item)) {
-                const subMenu = createHamburgerMenu(formContainer, item.items);
+                const subMenu = createHamburgerMenu(formContainer, item.items, counter + 1);
                 subMenu?.childNodes.forEach(child => ul.appendChild(child));
             } else if (Array.isArray(item.items) && item.items.length > 0) {
-                const subMenu = createHamburgerMenu(formContainer, item.items);
+                const subMenu = createHamburgerMenu(formContainer, item.items, counter + 1);
                 if (subMenu?.childNodes?.length) {
                     subMenu.classList.add(FormContainerV2.cssClasses.hamburgerSubMenu);
                     li.appendChild(subMenu);
