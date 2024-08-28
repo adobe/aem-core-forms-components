@@ -93,8 +93,10 @@
         createListItem(item) {
             const li = document.createElement('li');
             const link = document.createElement('a');
+            const textSpan = document.createElement('span');
             link.href = "#";
-            link.textContent = item?.label?.value;
+            textSpan.textContent = item?.label?.value;
+            link.appendChild(textSpan);
             li.appendChild(link);
             li.setAttribute('data-cmp-id', item?.id);
             li.setAttribute('data-cmp-visible', item?.visible);
@@ -237,7 +239,7 @@
     
         const targetElement = event.target.closest('li');
 
-        if(targetElement.getAttribute('data-cmp-enabled') === false) {
+        if(targetElement.getAttribute('data-cmp-enabled') === 'false') {
             return;
         }
 
@@ -271,9 +273,11 @@
 
         const form = formContainer.getModel();;
         const field = formContainer.getField(itemId);
-        if (form && field) {
-          form.setFocus(field._model);
-        }
+        console.log({field});
+        console.log({form});
+        // if (form && field && field._model) {
+        //   form.setFocus(field._model);
+        // }
         const menu = document.querySelector(FormContainerV2.selectors.hamburgerMenu);
         menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
@@ -286,7 +290,7 @@
             const link = item.querySelector('a');
             link.querySelector('button').classList.remove(FormContainerV2.cssClasses.upNavButton);
             link.querySelector('button').classList.add(FormContainerV2.cssClasses.downNavButton);
-            link.classList.remove(FormContainerV2.cssClasses.active, FormContainerV2.selectors.activeParent);
+            link.classList.remove(FormContainerV2.cssClasses.active, FormContainerV2.cssClasses.activeParent);
             link.style.fontWeight = 'normal';
         });
     }
@@ -317,14 +321,18 @@
 
             if (!navTitleUpdated) {
                 const navTitle = document.querySelector(FormContainerV2.selectors.navTitle);
-                navTitle.innerText = item?.label?.value;
-                navTitleUpdated = true;
+                if(navTitle) {
+                    navTitle.innerText = item?.label?.value;
+                    navTitleUpdated = true;
+                }
             }
     
             const li = document.createElement('li');
             const link = document.createElement('a');
+            const textSpan = document.createElement('span');
             link.href = "#";
-            link.textContent = item?.label?.value;
+            textSpan.textContent = item?.label?.value;
+            link.appendChild(textSpan);
             link.style.visibility = item?.label?.visible ? 'visible' : 'hidden';
             li.appendChild(link);
             link.insertBefore(createDownArrowButton(), link.firstChild);
@@ -400,12 +408,11 @@
         highlightMenuTree(closestLI.parentElement);
     }
 
-    // to check the visibility of the element and its parent
-    function isVisible(element) {
-        if (element.getAttribute('data-cmp-visible') === 'false') {
+    function isEligible(element) {
+        if (element.getAttribute('data-cmp-visible') === 'false' || element.getAttribute('data-cmp-enabled') === 'false') {
             return false;
         } else if (element.parentNode && element.parentNode !== document) {
-            return isVisible(element.parentNode);
+            return isEligible(element.parentNode);
         } else {
             return true;
         }
@@ -428,7 +435,7 @@
         }
     
         // Find the next visible item
-        while (!isVisible(menuListItems[newActiveItemIndex])) {
+        while (!isEligible(menuListItems[newActiveItemIndex])) {
             newActiveItemIndex = direction === 'prev' 
                 ? (newActiveItemIndex - 1 + menuListItems.length) % menuListItems.length 
                 : (newActiveItemIndex + 1) % menuListItems.length;
@@ -438,7 +445,7 @@
         activeItemId = newActiveItem.getAttribute('data-cmp-id');
         newActiveItem.click();
     }
-    
+
     function movePrev(menuListItems) {
         moveTo(menuListItems, 'prev');
     }
@@ -478,9 +485,9 @@
             addEventsToNavigationButtons();
             const rootListItems = menu.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' > li');
 
-            let deeplyNestedFirstLi = findDeeplyNestedFirstLi(rootListItems[0]);
-            if (deeplyNestedFirstLi) {
-                deeplyNestedFirstLi.click();
+            // let deeplyNestedFirstLi = findDeeplyNestedFirstLi(rootListItems[0]);
+            if (rootListItems[0] && rootListItems[0].tagName === 'LI') {
+                rootListItems[0].click();
                 menu.style.display = 'none';
             }
         }
@@ -495,8 +502,8 @@
         const toggleMenuVisibility = () => {
             menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
         };
-        hamburgerIcon.addEventListener('click', toggleMenuVisibility);
-        hamburgerIcon.addEventListener('ontouchstart', toggleMenuVisibility);
+        hamburgerIcon?.addEventListener('click', toggleMenuVisibility);
+        hamburgerIcon?.addEventListener('ontouchstart', toggleMenuVisibility);
     }
     
     function styleSubmenuItems(menu) {
@@ -542,7 +549,9 @@
             formContainerGlobal = formContainer;
             const items = getAllItems(formContainer);
             const menuData = structureMenuData(items);
-            renderHamburgerItems(menuData, formContainer);
+            if(formContainer?.getModel()?.properties?.['fd:hamburgerMenu']) {
+                renderHamburgerItems(menuData, formContainer);
+            }
             let formEl = formContainer.getFormElement();
             setTimeout(() => {
                 let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
