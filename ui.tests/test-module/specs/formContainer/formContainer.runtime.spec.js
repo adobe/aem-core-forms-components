@@ -3,12 +3,24 @@
 
 describe("Form Runtime with Fragment", () => {
 const pagePath = "content/forms/af/core-components-it/samples/formcontainer/basic.html"
-const bemBlock = 'cmp-adaptiveform-fragment'
-const IS = "adaptiveFormFragment"
+
 const selectors = {
-    hamburgerIcon : `.cmp-adaptiveform-container-hamburger`,
-    hamburgerMenu : `.cmp-adaptiveform-container-hamburgerMenu`
+    hamburgerIcon : `.cmp-adaptiveform-container-hamburger-icon`,
+    hamburgerMenu : `.cmp-adaptiveform-container-hamburgerMenu`,
+    hamburgerMenuNavBar: `.cmp-adaptiveform-container-nav-bar`,
+    hamburgerMenuNavLeft: `.cmp-adaptiveform-container-nav-button-left`,
+    hamburgerMenuNavRight: `.cmp-adaptiveform-container-nav-button-right`,
+    hamburgerMenuNavTitle: `.cmp-adaptiveform-container-nav-title`,
+    hamburgerMenuTopContainer: `.cmp-adaptiveform-container-top-container`
 }
+
+const cssClasses = {
+    hamburgerMenuActive: 'cmp-adaptiveform-container-hamburger-menu-item-active',
+    hamburgerMenuActiveParent: 'cmp-adaptiveform-container-hamburger-menu-item-activeparent',
+    hamburgerMenuNavDown: `cmp-adaptiveform-container-nav-button-down`,
+    hamburgerMenuNavUp: `cmp-adaptiveform-container-nav-button-up`,
+}
+
 let formContainer = null
 
     beforeEach(() => {
@@ -16,36 +28,6 @@ let formContainer = null
             formContainer = p;
         })
     });
-
-    const checkHTML = (id, state) => {
-        const visible = state.visible;
-        const passVisibleCheck = `${visible === true ? "" : "not."}be.visible`;
-        const passDisabledAttributeCheck = `${state.enabled === false ? "" : "not."}have.attr`;
-        const value = state.value == null ? '' : state.value;
-        cy.get(`#${id}`)
-            .should(passVisibleCheck)
-            .invoke('attr', 'data-cmp-visible')
-            .should('eq', visible.toString());
-        cy.get(`#${id}`)
-            .invoke('attr', 'data-cmp-enabled')
-            .should('eq', state.enabled.toString());
-        return cy.get(`#${id}`).within((root) => {
-            cy.get('*').should(passVisibleCheck)
-            cy.get('input')
-                .should(passDisabledAttributeCheck, 'disabled');
-            cy.get('input').should('have.value', value)
-        })
-    }
-
-    // const checkInstanceHTML = (instanceManager, count) => {
-    //     expect(instanceManager.children.length, " instance manager view has children equal to count ").to.equal(count);
-    //     expect(instanceManager.getModel().items.length, " instance manager model has items equal to count ").to.equal(count);
-    //     const checkChild = (childView) => {
-    //         checkHTML(childView.getId(), childView.getModel(), childView);
-    //     }
-    //     instanceManager.children.forEach(checkChild);
-    //     return cy.get('[data-cmp-is="adaptiveFormContainer"]');
-    // };
 
     it(" should get model and view initialized properly ", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
@@ -59,34 +41,68 @@ let formContainer = null
         cy.get(selectors.hamburgerMenu).should("be.visible");
     })
 
-    it(`Test hamburger menu support is not available in web view`, () => {
-        cy.get(selectors.hamburgerIcon).should("not.be.visible");
-        cy.get(selectors.hamburgerMenu).should("not.be.visible");
+    it(`Test hamburger menu and nav bar support should not available in web view`, () => {
+        cy.get(selectors.hamburgerIcon).should('have.css', 'display', 'none');
+        cy.get(selectors.hamburgerMenu).should('have.css', 'display', 'none');
+        cy.get(selectors.hamburgerMenuTopContainer).should('have.css', 'display', 'none');
     })
 
     it(`Test hamburger menu should render exact number of items`, () => {
         cy.viewport('iphone-x');
         cy.get(selectors.hamburgerIcon).click();
-        cy.get(selectors.hamburgerMenu+ ' > li').should('have.length', 3);
+        cy.get(selectors.hamburgerMenu+ ' > li').should('have.length', 2);
     })
 
-    it(`Test hamburger menu item click and check first non panel field to be in focus`, () => {
+    it(`Test hamburger menu should render navigation bar`, () => {
         cy.viewport('iphone-x');
-        // Click on the hamburger icon
         cy.get(selectors.hamburgerIcon).click();
-        cy.get(selectors.hamburgerMenu+ ' > li').eq(0).trigger('click');
-        cy.get(selectors.hamburgerMenu+ ' > li').find('li').eq(0).trigger('click');
+        cy.get(selectors.hamburgerMenuNavBar).should('be.visible');
+    });
 
-        let inputId = ''
-        cy.contains('label', 'Accordion Panel 1 Text Input').should(($label) => {
-            inputId = $label.attr('for');
-            if (inputId) {
-                console.log(`#${inputId}`);
-                // cy.get(`#${inputId}`).as('panel1Input');
-                cy.get(`#${inputId}`).should('be.focused'); // Example: assert input value
-            }
-        });
-    })
+    it(`Test hamburger menu initial state where first item is selected along with the hierarchy`, () => {
+        cy.viewport('iphone-x');
+        cy.get(selectors.hamburgerIcon).click();
+        cy.get(selectors.hamburgerMenu+ ' > li > a').first().should('have.class', cssClasses.hamburgerMenuActiveParent);
+        cy.get(selectors.hamburgerMenu+ ' > li > ul > li > a').first().should('have.class', cssClasses.hamburgerMenuActive);
+    });
+
+    it(`Test hamburger menu should render navigation bar along with title`, () => {
+        cy.viewport('iphone-x');
+        cy.get(selectors.hamburgerIcon).click();
+        cy.get(selectors.hamburgerMenuNavBar).should('be.visible');
+        cy.get(selectors.hamburgerMenuNavBar + ' > ' + selectors.hamburgerMenuNavTitle).should('be.visible').and('have.text', 'Panel 1');;
+    });
+
+    it(`Test hamburger menu initial state where first item is selected along with the hierarchy`, () => {
+        cy.viewport('iphone-x');
+        cy.get(selectors.hamburgerIcon).click();
+        cy.get(selectors.hamburgerMenu+ ' > li > a').first().should('have.class', cssClasses.hamburgerMenuActiveParent);
+        cy.get(selectors.hamburgerMenu+ ' > li > ul > li > a').first().should('have.class', cssClasses.hamburgerMenuActive);
+    });
+
+    it(`Test hamburger menu check all nav buttons`, () => {
+        cy.viewport('iphone-x');
+
+        // Checking the initial state
+        cy.get(selectors.hamburgerIcon).click();
+        cy.get(selectors.hamburgerMenu + ' > li > a').first().should('have.class', cssClasses.hamburgerMenuActiveParent);
+        cy.get(selectors.hamburgerMenu + ' > li > ul > li > a').first().should('have.class', cssClasses.hamburgerMenuActive);
+        cy.get(selectors.hamburgerIcon).click();
+
+        // Checking the right navigation
+        cy.get(selectors.hamburgerMenuNavRight).click();
+        cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a').should('have.class', cssClasses.hamburgerMenuActiveParent);
+        cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a').should('have.class', cssClasses.hamburgerMenuActive);
+        cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a > button').should('have.class', cssClasses.hamburgerMenuNavDown);
+
+
+        // Checking the left navigation
+        cy.get(selectors.hamburgerMenuNavLeft).click();
+        cy.get(selectors.hamburgerMenu + ' > li > a').first().should('have.class', cssClasses.hamburgerMenuActiveParent);
+        cy.get(selectors.hamburgerMenu + ' > li > ul > li > a').first().should('have.class', cssClasses.hamburgerMenuActive);
+        cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a > button').should('have.class', cssClasses.hamburgerMenuNavDown);
+        
+    });
 
 })
 

@@ -3,9 +3,10 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2024-07-16T11:46:09.405+05:30"
+        cq:lastModified="{Date}2024-08-26T10:43:07.987+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        fd:translationIds="\{&quot;jcr:title&quot;:&quot;jcr:title##7810&quot;}"
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="hamburgerMenuForm"
@@ -13,504 +14,27 @@
         sling:resourceType="forms-components-examples/components/page">
         <guideContainer
             fd:hamburgerMenu="true"
+            fd:hamburgerMenuTitle="Menun"
+            fd:translationIds="\{&quot;thankYouMessage&quot;:&quot;guideContainer##thankYouMessage##7404&quot;}"
             fd:version="2.1"
-            jcr:lastModified="{Date}2024-07-11T11:24:23.345+05:30"
+            jcr:lastModified="{Date}2024-08-22T16:36:00.252+05:30"
             jcr:lastModifiedBy="admin"
             jcr:primaryType="nt:unstructured"
             sling:resourceType="forms-components-examples/components/form/container"
             dorType="none"
             fieldType="form"
             schemaType="none"
-            specVersion="0.13.0"
+            specVersion="0.14.0"
             textIsRich="true"
             thankYouMessage="Thank you for submitting the form."
             thankYouOption="page"
             themeRef="/libs/fd/af/themes/canvas"
             title="hamburgerMenuForm">
-            <wizard_copy_12038449
-                jcr:created="{Date}2024-07-11T10:52:09.520+05:30"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2024-07-11T12:51:21.464+05:30"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                jcr:title="Accordion Root"
-                sling:resourceType="forms-components-examples/components/form/accordion"
-                enabled="{Boolean}true"
-                fieldType="panel"
-                hideTitle="false"
-                name="wizard1720675330424_copy_2"
-                readOnly="{Boolean}false"
-                repeatable="false"
-                textIsRich="[true,true,true]"
-                visible="{Boolean}true"
-                wrapData="{Boolean}false">
-                <panelcontainer
-                    cq:panelTitle="Panel 1"
-                    jcr:created="{Date}2024-07-11T10:52:26.333+05:30"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:32.887+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Panel 1"
-                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                    enabled="{Boolean}true"
-                    fieldType="panel"
-                    hideTitle="false"
-                    name="panelcontainer1720675346990"
-                    readOnly="{Boolean}false"
-                    repeatable="false"
-                    textIsRich="[true,true,true]"
-                    visible="{Boolean}true"
-                    wrapData="{Boolean}false">
-                    <textinput
-                        jcr:created="{Date}2024-07-11T10:53:12.996+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:53:12.996+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Accordion Panel 1 Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675393573"/>
-                    <textinput_989369936
-                        jcr:created="{Date}2024-07-11T10:53:16.925+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:53:16.925+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_9893699361720675397231"/>
-                    <textinput_986325234
-                        jcr:created="{Date}2024-07-11T10:53:25.056+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:53:25.056+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_9863252341720675405375"/>
-                </panelcontainer>
-                <panelcontainer_1404583825
-                    cq:panelTitle="Panel 2"
-                    jcr:created="{Date}2024-07-11T10:52:33.762+05:30"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-12T12:01:44.376+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Panel 2"
-                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                    enabled="{Boolean}true"
-                    fieldType="panel"
-                    hideTitle="false"
-                    name="panelcontainer_14045838251720675354103"
-                    readOnly="{Boolean}false"
-                    repeatable="false"
-                    textIsRich="[true,true,true]"
-                    visible="{Boolean}false"
-                    wrapData="{Boolean}false">
-                    <tabsontop
-                        jcr:created="{Date}2024-07-11T10:54:58.185+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:54:58.185+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Tabs on top"
-                        sling:resourceType="forms-components-examples/components/form/tabsontop"
-                        fieldType="panel"
-                        name="tabsontop1720675498983">
-                        <panelcontainer
-                            jcr:created="{Date}2024-07-11T10:55:04.464+05:30"
-                            jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:55:44.313+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Panel 2 - Tab 1 "
-                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                            enabled="{Boolean}true"
-                            fieldType="panel"
-                            hideTitle="false"
-                            name="panelcontainer1720675504844"
-                            readOnly="{Boolean}false"
-                            repeatable="false"
-                            textIsRich="[true,true,true]"
-                            visible="{Boolean}true"
-                            wrapData="{Boolean}false">
-                            <panelcontainer
-                                jcr:created="{Date}2024-07-11T11:04:53.290+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:04:53.290+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Panel"
-                                sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                                fieldType="panel"
-                                name="panelcontainer1720676093465">
-                                <numberinput
-                                    jcr:created="{Date}2024-07-11T11:04:59.001+05:30"
-                                    jcr:createdBy="admin"
-                                    jcr:lastModified="{Date}2024-07-11T11:04:59.001+05:30"
-                                    jcr:lastModifiedBy="admin"
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Number Input"
-                                    sling:resourceType="forms-components-examples/components/form/numberinput"
-                                    fieldType="number-input"
-                                    name="numberinput1720676099512"/>
-                                <submit
-                                    jcr:created="{Date}2024-07-11T11:05:05.092+05:30"
-                                    jcr:createdBy="admin"
-                                    jcr:lastModified="{Date}2024-07-11T11:05:05.092+05:30"
-                                    jcr:lastModifiedBy="admin"
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Submit"
-                                    sling:resourceType="forms-components-examples/components/form/actions/submit"
-                                    buttonType="submit"
-                                    dorExclusion="true"
-                                    fieldType="button"
-                                    name="submit1720676105376">
-                                    <fd:rules
-                                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                                        jcr:primaryType="nt:unstructured"/>
-                                    <fd:events
-                                        jcr:primaryType="nt:unstructured"
-                                        click="[submitForm()]"/>
-                                </submit>
-                            </panelcontainer>
-                        </panelcontainer>
-                        <panelcontainer_381967827
-                            jcr:created="{Date}2024-07-11T10:55:12.353+05:30"
-                            jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:55:49.912+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Panel 2 - Tab 2"
-                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                            enabled="{Boolean}true"
-                            fieldType="panel"
-                            hideTitle="false"
-                            name="panelcontainer_3819678271720675512525"
-                            readOnly="{Boolean}false"
-                            repeatable="false"
-                            textIsRich="[true,true,true]"
-                            visible="{Boolean}true"
-                            wrapData="{Boolean}false">
-                            <checkbox
-                                jcr:created="{Date}2024-07-11T11:05:25.004+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:05:25.004+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Check Box"
-                                sling:resourceType="forms-components-examples/components/form/checkbox"
-                                checkedValue="on"
-                                fieldType="checkbox"
-                                name="checkbox1720676125520"
-                                uncheckedValue="off"/>
-                            <datepicker
-                                jcr:created="{Date}2024-07-11T11:05:30.838+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:05:30.838+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Date Input"
-                                sling:resourceType="forms-components-examples/components/form/datepicker"
-                                fieldType="date-input"
-                                name="datepicker1720676131290"/>
-                        </panelcontainer_381967827>
-                        <panelcontainer_1812136097
-                            jcr:created="{Date}2024-07-11T10:55:18.835+05:30"
-                            jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:55:59.487+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Panel 2 - Tab 3"
-                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                            enabled="{Boolean}true"
-                            fieldType="panel"
-                            hideTitle="false"
-                            name="panelcontainer_18121360971720675519145"
-                            readOnly="{Boolean}false"
-                            repeatable="false"
-                            textIsRich="[true,true,true]"
-                            visible="{Boolean}true"
-                            wrapData="{Boolean}false">
-                            <checkboxgroup
-                                jcr:created="{Date}2024-07-11T11:05:49.964+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:05:49.964+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Check Box Group"
-                                sling:resourceType="forms-components-examples/components/form/checkboxgroup"
-                                enum="[0,1]"
-                                enumNames="[Item 1, Item 2]"
-                                fieldType="checkbox-group"
-                                name="checkboxgroup1720676150880"
-                                type="number[]"/>
-                        </panelcontainer_1812136097>
-                        <panelcontainer_1057582223
-                            jcr:created="{Date}2024-07-11T10:55:27.503+05:30"
-                            jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:56:06.225+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Panel 2 - Tab 4"
-                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                            enabled="{Boolean}true"
-                            fieldType="panel"
-                            hideTitle="false"
-                            name="panelcontainer_10575822231720675527815"
-                            readOnly="{Boolean}false"
-                            repeatable="false"
-                            textIsRich="[true,true,true]"
-                            visible="{Boolean}true"
-                            wrapData="{Boolean}false">
-                            <textinput
-                                jcr:created="{Date}2024-07-11T11:06:01.698+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:06:01.698+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Text Input"
-                                sling:resourceType="forms-components-examples/components/form/textinput"
-                                fieldType="text-input"
-                                name="textinput1720676161844"/>
-                            <datepicker
-                                jcr:created="{Date}2024-07-11T11:06:07.060+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:06:07.060+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Date Input"
-                                sling:resourceType="forms-components-examples/components/form/datepicker"
-                                fieldType="date-input"
-                                name="datepicker1720676167212"/>
-                            <submit
-                                jcr:created="{Date}2024-07-11T11:06:15.744+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:06:15.744+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Submit"
-                                sling:resourceType="forms-components-examples/components/form/actions/submit"
-                                buttonType="submit"
-                                dorExclusion="true"
-                                fieldType="button"
-                                name="submit1720676175880">
-                                <fd:rules
-                                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                                    jcr:primaryType="nt:unstructured"/>
-                                <fd:events
-                                    jcr:primaryType="nt:unstructured"
-                                    click="[submitForm()]"/>
-                            </submit>
-                        </panelcontainer_1057582223>
-                    </tabsontop>
-                </panelcontainer_1404583825>
-                <panelcontainer_964865105
-                    cq:panelTitle="Panel 3"
-                    jcr:created="{Date}2024-07-11T10:52:39.153+05:30"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:37.985+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Panel 3"
-                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                    enabled="{Boolean}true"
-                    fieldType="panel"
-                    hideTitle="false"
-                    name="panelcontainer_9648651051720675359859"
-                    readOnly="{Boolean}false"
-                    repeatable="false"
-                    textIsRich="[true,true,true]"
-                    visible="{Boolean}true"
-                    wrapData="{Boolean}false">
-                    <textinput
-                        jcr:created="{Date}2024-07-11T10:57:03.660+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:03.660+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675623895"/>
-                    <textinput_1429704941
-                        jcr:created="{Date}2024-07-11T10:57:07.383+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:07.383+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_14297049411720675627589"/>
-                    <submit
-                        jcr:created="{Date}2024-07-11T10:57:12.481+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:12.481+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Submit"
-                        sling:resourceType="forms-components-examples/components/form/actions/submit"
-                        buttonType="submit"
-                        dorExclusion="true"
-                        fieldType="button"
-                        name="submit1720675633437">
-                        <fd:rules
-                            fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                            jcr:primaryType="nt:unstructured"/>
-                        <fd:events
-                            jcr:primaryType="nt:unstructured"
-                            click="[submitForm()]"/>
-                    </submit>
-                </panelcontainer_964865105>
-                <panelcontainer_2141492184
-                    cq:panelTitle="Panel 4"
-                    jcr:created="{Date}2024-07-11T10:52:57.214+05:30"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:43.114+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Panel 4"
-                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                    enabled="{Boolean}true"
-                    fieldType="panel"
-                    hideTitle="false"
-                    name="panelcontainer_21414921841720675377442"
-                    readOnly="{Boolean}false"
-                    repeatable="false"
-                    textIsRich="[true,true,true]"
-                    visible="{Boolean}true"
-                    wrapData="{Boolean}false">
-                    <textinput
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675643185"/>
-                    <textinput_1193927501
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097"/>
-                    <textinput_539082016
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055"/>
-                    <textinput_539082016_
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055_copy_1"/>
-                    <textinput_1193927501_1713300862
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097_copy_1"/>
-                    <textinput_copy
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675643185_copy_1"/>
-                    <textinput_539082016__2119230074
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055_copy_2"/>
-                    <textinput_1193927501_662701086
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097_copy_2"/>
-                    <textinput_copy_72456960
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675643185_copy_2"/>
-                    <textinput_539082016__1079360595
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055_copy_3"/>
-                    <textinput_1193927501_1182944658
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097_copy_3"/>
-                    <textinput_copy_341549789
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675643185_copy_3"/>
-                </panelcontainer_2141492184>
-            </wizard_copy_12038449>
             <wizard
-                jcr:created="{Date}2024-07-11T10:52:09.520+05:30"
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##jcr:title##8276&quot;}"
+                jcr:created="{Date}2024-07-10T14:34:10.070+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2024-07-11T11:03:59.729+05:30"
+                jcr:lastModified="{Date}2024-08-14T11:48:47.774+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Root Wizard"
@@ -518,7 +42,7 @@
                 enabled="{Boolean}true"
                 fieldType="panel"
                 hideTitle="false"
-                name="wizard1720675330424"
+                name="wizard1720602250683"
                 readOnly="{Boolean}false"
                 repeatable="false"
                 textIsRich="[true,true]"
@@ -526,9 +50,10 @@
                 wrapData="{Boolean}false">
                 <panelcontainer
                     cq:panelTitle="Panel 1"
-                    jcr:created="{Date}2024-07-11T10:52:26.333+05:30"
+                    fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##jcr:title##1476&quot;}"
+                    jcr:created="{Date}2024-07-10T14:34:15.199+05:30"
                     jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:32.887+05:30"
+                    jcr:lastModified="{Date}2024-08-20T12:37:45.133+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Panel 1"
@@ -536,48 +61,196 @@
                     enabled="{Boolean}true"
                     fieldType="panel"
                     hideTitle="false"
-                    name="panelcontainer1720675346990"
+                    name="panelcontainer1720602255490"
                     readOnly="{Boolean}false"
                     repeatable="false"
                     textIsRich="[true,true,true]"
                     visible="{Boolean}true"
                     wrapData="{Boolean}false">
                     <textinput
-                        jcr:created="{Date}2024-07-11T10:53:12.996+05:30"
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput##jcr:title##1622&quot;}"
+                        jcr:created="{Date}2024-07-10T14:34:49.387+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:53:12.996+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:34:49.387+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput1720675393573"/>
-                    <textinput_989369936
-                        jcr:created="{Date}2024-07-11T10:53:16.925+05:30"
+                        name="textinput1720602290283"/>
+                    <submit
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##submit##jcr:title##7908&quot;}"
+                        jcr:created="{Date}2024-07-10T14:34:56.770+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:53:16.925+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:34:56.770+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Submit"
+                        sling:resourceType="forms-components-examples/components/form/actions/submit"
+                        buttonType="submit"
+                        dorExclusion="true"
+                        fieldType="button"
+                        name="submit1720602297719">
+                        <fd:rules
+                            fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                            jcr:primaryType="nt:unstructured"/>
+                        <fd:events
+                            jcr:primaryType="nt:unstructured"
+                            click="[submitForm()]"/>
+                    </submit>
+                    <textinput_copy_copy
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_copy##jcr:title##3735&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput_9893699361720675397231"/>
-                    <textinput_986325234
-                        jcr:created="{Date}2024-07-11T10:53:25.056+05:30"
+                        name="textinput1720602413081_copy_1"/>
+                    <textinput_copy
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy##jcr:title##3438&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:53:25.056+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput_9863252341720675405375"/>
+                        name="textinput1720602290283_copy_1"/>
+                    <textinput_copy_copy_1638083532
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_copy_1638083532##jcr:title##7175&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_1_copy_1"/>
+                    <textinput_copy_672656754
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_672656754##jcr:title##2768&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_2"/>
+                    <textinput_copy_copy_1856614040
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_copy_1856614040##jcr:title##7910&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_1_copy_2"/>
+                    <textinput_copy_1789574423
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_1789574423##jcr:title##8530&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_3"/>
+                    <textinput_copy_copy_720855824
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_copy_720855824##jcr:title##2738&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_1_copy_3"/>
+                    <textinput_copy_2045908835
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_2045908835##jcr:title##8063&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_4"/>
+                    <textinput_copy_copy_73828837
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_copy_73828837##jcr:title##1053&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-08-26T10:43:07.954+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        assistPriority="label"
+                        enabled="{Boolean}true"
+                        fieldType="text-input"
+                        hideTitle="false"
+                        name="textinput1720602290283_copy_1_copy_4"
+                        readOnly="{Boolean}false"
+                        textIsRich="[true,true,true]"
+                        unboundFormElement="{Boolean}false"
+                        visible="{Boolean}true"/>
+                    <checkbox
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##checkbox##jcr:title##5058&quot;}"
+                        jcr:created="{Date}2024-08-22T22:02:25.964+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-08-26T10:42:14.319+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Check Box"
+                        sling:resourceType="forms-components-examples/components/form/checkbox"
+                        assistPriority="caption"
+                        checkedValue="on"
+                        enabled="{Boolean}true"
+                        enableUncheckedValue="{Boolean}false"
+                        fieldType="checkbox"
+                        hideTitle="false"
+                        name="checkbox1724344347198"
+                        textIsRich="[true,true,true]"
+                        type="string"
+                        unboundFormElement="{Boolean}false"
+                        uncheckedValue="off"
+                        visible="{Boolean}true">
+                        <fd:rules
+                            fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.wizard1720602250683.panelcontainer1720602255490.checkbox1724344347198&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;checkbox1724344347198&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;on&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.wizard1720602250683_copy_1.panelcontainer1720602255490&quot;\,&quot;displayName&quot;:&quot;Panel&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Root Tabs on top/Panel/&quot;\,&quot;name&quot;:&quot;panelcontainer1720602255490&quot;\,&quot;parent&quot;:&quot;$form.wizard1720602250683_copy_1&quot;}}]}}]}\,{&quot;nodeName&quot;:&quot;Else&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.wizard1720602250683_copy_1.panelcontainer1720602255490&quot;\,&quot;displayName&quot;:&quot;Panel&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Root Tabs on top/Panel/&quot;\,&quot;name&quot;:&quot;panelcontainer1720602255490&quot;\,&quot;parent&quot;:&quot;$form.wizard1720602250683_copy_1&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field.$value == 'on'\, dispatchEvent($form.wizard1720602250683_copy_1.panelcontainer1720602255490\, 'custom:setProperty'\, {visible : false()})\, {})&quot;\,&quot;if(!($field.$value == 'on')\, dispatchEvent($form.wizard1720602250683_copy_1.panelcontainer1720602255490\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.wizard1720602250683.panelcontainer1720602255490.checkbox1724344347198&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;checkbox1724344347198&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;on&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.wizard1720602250683_copy_1.panelcontainer_20627561841720602267857&quot;\,&quot;displayName&quot;:&quot;Panel 3&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Root Tabs on top/Panel 3/&quot;\,&quot;name&quot;:&quot;panelcontainer_20627561841720602267857&quot;\,&quot;parent&quot;:&quot;$form.wizard1720602250683_copy_1&quot;}}]}}]}\,{&quot;nodeName&quot;:&quot;Else&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.wizard1720602250683_copy_1.panelcontainer_20627561841720602267857&quot;\,&quot;displayName&quot;:&quot;Panel 3&quot;\,&quot;type&quot;:&quot;PANEL&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Root Tabs on top/Panel 3/&quot;\,&quot;name&quot;:&quot;panelcontainer_20627561841720602267857&quot;\,&quot;parent&quot;:&quot;$form.wizard1720602250683_copy_1&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field.$value == 'on'\, dispatchEvent($form.wizard1720602250683_copy_1.panelcontainer_20627561841720602267857\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;\,&quot;if(!($field.$value == 'on')\, dispatchEvent($form.wizard1720602250683_copy_1.panelcontainer_20627561841720602267857\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                            jcr:primaryType="nt:unstructured"
+                            validationStatus="valid"/>
+                        <fd:events
+                            jcr:primaryType="nt:unstructured"
+                            change="[if(contains($event.payload.changes[].propertyName\, 'value')\, if($field.$value == 'on'\, dispatchEvent($form.wizard1720602250683_copy_1.panelcontainer1720602255490\, 'custom:setProperty'\, {visible : false()})\, {})\, {}),if(contains($event.payload.changes[].propertyName\, 'value')\, if(!($field.$value == 'on')\, dispatchEvent($form.wizard1720602250683_copy_1.panelcontainer1720602255490\, 'custom:setProperty'\, {visible : true()})\, {})\, {}),if(contains($event.payload.changes[].propertyName\, 'value')\, if($field.$value == 'on'\, dispatchEvent($form.wizard1720602250683_copy_1.panelcontainer_20627561841720602267857\, 'custom:setProperty'\, {enabled : false()})\, {})\, {}),if(contains($event.payload.changes[].propertyName\, 'value')\, if(!($field.$value == 'on')\, dispatchEvent($form.wizard1720602250683_copy_1.panelcontainer_20627561841720602267857\, 'custom:setProperty'\, {enabled : true()})\, {})\, {})]"/>
+                    </checkbox>
+                    <textinput_copy_813548878
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_813548878##jcr:title##8693&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_5"/>
                 </panelcontainer>
-                <panelcontainer_1404583825
+                <panelcontainer_126720495
                     cq:panelTitle="Panel 2"
-                    jcr:created="{Date}2024-07-11T10:52:33.762+05:30"
+                    fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##jcr:title##9039&quot;}"
+                    jcr:created="{Date}2024-07-10T14:34:20.441+05:30"
                     jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:27.058+05:30"
+                    jcr:lastModified="{Date}2024-07-10T14:43:24.082+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Panel 2"
@@ -585,26 +258,28 @@
                     enabled="{Boolean}true"
                     fieldType="panel"
                     hideTitle="false"
-                    name="panelcontainer_14045838251720675354103"
+                    name="panelcontainer_1267204951720602261149"
                     readOnly="{Boolean}false"
                     repeatable="false"
                     textIsRich="[true,true,true]"
                     visible="{Boolean}true"
                     wrapData="{Boolean}false">
                     <tabsontop
-                        jcr:created="{Date}2024-07-11T10:54:58.185+05:30"
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##jcr:title##658&quot;}"
+                        jcr:created="{Date}2024-07-10T14:35:10.064+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:54:58.185+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:35:10.064+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Tabs on top"
                         sling:resourceType="forms-components-examples/components/form/tabsontop"
                         fieldType="panel"
-                        name="tabsontop1720675498983">
+                        name="tabsontop1720602310299">
                         <panelcontainer
-                            jcr:created="{Date}2024-07-11T10:55:04.464+05:30"
+                            fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer##jcr:title##8112&quot;}"
+                            jcr:created="{Date}2024-07-10T14:35:24.042+05:30"
                             jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:55:44.313+05:30"
+                            jcr:lastModified="{Date}2024-07-10T14:45:15.756+05:30"
                             jcr:lastModifiedBy="admin"
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Panel 2 - Tab 1 "
@@ -612,496 +287,40 @@
                             enabled="{Boolean}true"
                             fieldType="panel"
                             hideTitle="false"
-                            name="panelcontainer1720675504844"
-                            readOnly="{Boolean}false"
-                            repeatable="false"
-                            textIsRich="[true,true,true]"
-                            visible="{Boolean}true"
-                            wrapData="{Boolean}false">
-                            <panelcontainer
-                                jcr:created="{Date}2024-07-11T11:04:53.290+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:04:53.290+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Panel"
-                                sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                                fieldType="panel"
-                                name="panelcontainer1720676093465">
-                                <numberinput
-                                    jcr:created="{Date}2024-07-11T11:04:59.001+05:30"
-                                    jcr:createdBy="admin"
-                                    jcr:lastModified="{Date}2024-07-11T11:04:59.001+05:30"
-                                    jcr:lastModifiedBy="admin"
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Number Input"
-                                    sling:resourceType="forms-components-examples/components/form/numberinput"
-                                    fieldType="number-input"
-                                    name="numberinput1720676099512"/>
-                                <submit
-                                    jcr:created="{Date}2024-07-11T11:05:05.092+05:30"
-                                    jcr:createdBy="admin"
-                                    jcr:lastModified="{Date}2024-07-11T11:05:05.092+05:30"
-                                    jcr:lastModifiedBy="admin"
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Submit"
-                                    sling:resourceType="forms-components-examples/components/form/actions/submit"
-                                    buttonType="submit"
-                                    dorExclusion="true"
-                                    fieldType="button"
-                                    name="submit1720676105376">
-                                    <fd:rules
-                                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                                        jcr:primaryType="nt:unstructured"/>
-                                    <fd:events
-                                        jcr:primaryType="nt:unstructured"
-                                        click="[submitForm()]"/>
-                                </submit>
-                            </panelcontainer>
-                        </panelcontainer>
-                        <panelcontainer_381967827
-                            jcr:created="{Date}2024-07-11T10:55:12.353+05:30"
-                            jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:55:49.912+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Panel 2 - Tab 2"
-                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                            enabled="{Boolean}true"
-                            fieldType="panel"
-                            hideTitle="false"
-                            name="panelcontainer_3819678271720675512525"
-                            readOnly="{Boolean}false"
-                            repeatable="false"
-                            textIsRich="[true,true,true]"
-                            visible="{Boolean}true"
-                            wrapData="{Boolean}false">
-                            <checkbox
-                                jcr:created="{Date}2024-07-11T11:05:25.004+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:05:25.004+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Check Box"
-                                sling:resourceType="forms-components-examples/components/form/checkbox"
-                                checkedValue="on"
-                                fieldType="checkbox"
-                                name="checkbox1720676125520"
-                                uncheckedValue="off"/>
-                            <datepicker
-                                jcr:created="{Date}2024-07-11T11:05:30.838+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:05:30.838+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Date Input"
-                                sling:resourceType="forms-components-examples/components/form/datepicker"
-                                fieldType="date-input"
-                                name="datepicker1720676131290"/>
-                        </panelcontainer_381967827>
-                        <panelcontainer_1812136097
-                            jcr:created="{Date}2024-07-11T10:55:18.835+05:30"
-                            jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:55:59.487+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Panel 2 - Tab 3"
-                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                            enabled="{Boolean}true"
-                            fieldType="panel"
-                            hideTitle="false"
-                            name="panelcontainer_18121360971720675519145"
-                            readOnly="{Boolean}false"
-                            repeatable="false"
-                            textIsRich="[true,true,true]"
-                            visible="{Boolean}true"
-                            wrapData="{Boolean}false">
-                            <checkboxgroup
-                                jcr:created="{Date}2024-07-11T11:05:49.964+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:05:49.964+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Check Box Group"
-                                sling:resourceType="forms-components-examples/components/form/checkboxgroup"
-                                enum="[0,1]"
-                                enumNames="[Item 1, Item 2]"
-                                fieldType="checkbox-group"
-                                name="checkboxgroup1720676150880"
-                                type="number[]"/>
-                        </panelcontainer_1812136097>
-                        <panelcontainer_1057582223
-                            jcr:created="{Date}2024-07-11T10:55:27.503+05:30"
-                            jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:56:06.225+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Panel 2 - Tab 4"
-                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                            enabled="{Boolean}true"
-                            fieldType="panel"
-                            hideTitle="false"
-                            name="panelcontainer_10575822231720675527815"
+                            name="panelcontainer1720602324269"
                             readOnly="{Boolean}false"
                             repeatable="false"
                             textIsRich="[true,true,true]"
                             visible="{Boolean}true"
                             wrapData="{Boolean}false">
                             <textinput
-                                jcr:created="{Date}2024-07-11T11:06:01.698+05:30"
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer##textinput##jcr:title##1942&quot;}"
+                                jcr:created="{Date}2024-07-10T14:46:16.089+05:30"
                                 jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:06:01.698+05:30"
+                                jcr:lastModified="{Date}2024-07-10T14:46:16.089+05:30"
                                 jcr:lastModifiedBy="admin"
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Text Input"
                                 sling:resourceType="forms-components-examples/components/form/textinput"
                                 fieldType="text-input"
-                                name="textinput1720676161844"/>
-                            <datepicker
-                                jcr:created="{Date}2024-07-11T11:06:07.060+05:30"
+                                name="textinput1720602976271"/>
+                            <textinput_1399814142
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer##textinput_1399814142##jcr:title##4263&quot;}"
+                                jcr:created="{Date}2024-07-10T14:46:21.585+05:30"
                                 jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:06:07.060+05:30"
+                                jcr:lastModified="{Date}2024-07-10T14:46:21.585+05:30"
                                 jcr:lastModifiedBy="admin"
                                 jcr:primaryType="nt:unstructured"
-                                jcr:title="Date Input"
-                                sling:resourceType="forms-components-examples/components/form/datepicker"
-                                fieldType="date-input"
-                                name="datepicker1720676167212"/>
-                            <submit
-                                jcr:created="{Date}2024-07-11T11:06:15.744+05:30"
-                                jcr:createdBy="admin"
-                                jcr:lastModified="{Date}2024-07-11T11:06:15.744+05:30"
-                                jcr:lastModifiedBy="admin"
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Submit"
-                                sling:resourceType="forms-components-examples/components/form/actions/submit"
-                                buttonType="submit"
-                                dorExclusion="true"
-                                fieldType="button"
-                                name="submit1720676175880">
-                                <fd:rules
-                                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                                    jcr:primaryType="nt:unstructured"/>
-                                <fd:events
-                                    jcr:primaryType="nt:unstructured"
-                                    click="[submitForm()]"/>
-                            </submit>
-                        </panelcontainer_1057582223>
-                    </tabsontop>
-                </panelcontainer_1404583825>
-                <panelcontainer_964865105
-                    cq:panelTitle="Panel 3"
-                    jcr:created="{Date}2024-07-11T10:52:39.153+05:30"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:37.985+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Panel 3"
-                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                    enabled="{Boolean}true"
-                    fieldType="panel"
-                    hideTitle="false"
-                    name="panelcontainer_9648651051720675359859"
-                    readOnly="{Boolean}false"
-                    repeatable="false"
-                    textIsRich="[true,true,true]"
-                    visible="{Boolean}true"
-                    wrapData="{Boolean}false">
-                    <textinput
-                        jcr:created="{Date}2024-07-11T10:57:03.660+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:03.660+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675623895"/>
-                    <textinput_1429704941
-                        jcr:created="{Date}2024-07-11T10:57:07.383+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:07.383+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_14297049411720675627589"/>
-                    <submit
-                        jcr:created="{Date}2024-07-11T10:57:12.481+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:12.481+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Submit"
-                        sling:resourceType="forms-components-examples/components/form/actions/submit"
-                        buttonType="submit"
-                        dorExclusion="true"
-                        fieldType="button"
-                        name="submit1720675633437">
-                        <fd:rules
-                            fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                            jcr:primaryType="nt:unstructured"/>
-                        <fd:events
-                            jcr:primaryType="nt:unstructured"
-                            click="[submitForm()]"/>
-                    </submit>
-                </panelcontainer_964865105>
-                <panelcontainer_2141492184
-                    cq:panelTitle="Panel 4"
-                    jcr:created="{Date}2024-07-11T10:52:57.214+05:30"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:43.114+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Panel 4"
-                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                    enabled="{Boolean}true"
-                    fieldType="panel"
-                    hideTitle="false"
-                    name="panelcontainer_21414921841720675377442"
-                    readOnly="{Boolean}false"
-                    repeatable="false"
-                    textIsRich="[true,true,true]"
-                    visible="{Boolean}true"
-                    wrapData="{Boolean}false">
-                    <textinput
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675643185"/>
-                    <textinput_1193927501
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097"/>
-                    <textinput_539082016
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055"/>
-                    <textinput_539082016_
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055_copy_1"/>
-                    <textinput_1193927501_1713300862
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097_copy_1"/>
-                    <textinput_copy
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675643185_copy_1"/>
-                    <textinput_539082016__2119230074
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055_copy_2"/>
-                    <textinput_1193927501_662701086
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097_copy_2"/>
-                    <textinput_copy_72456960
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675643185_copy_2"/>
-                    <textinput_539082016__1079360595
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055_copy_3"/>
-                    <textinput_1193927501_1182944658
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097_copy_3"/>
-                    <textinput_copy_341549789
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675643185_copy_3"/>
-                </panelcontainer_2141492184>
-            </wizard>
-            <wizard_copy
-                jcr:created="{Date}2024-07-11T10:52:09.520+05:30"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2024-07-11T10:58:42.745+05:30"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                jcr:title="Tabs On Top Root"
-                sling:resourceType="forms-components-examples/components/form/tabsontop"
-                enabled="{Boolean}true"
-                fieldType="panel"
-                hideTitle="false"
-                name="wizard1720675330424_copy_1"
-                readOnly="{Boolean}false"
-                repeatable="false"
-                textIsRich="[true,true,true]"
-                visible="{Boolean}true"
-                wrapData="{Boolean}false">
-                <panelcontainer
-                    cq:panelTitle="Panel 1"
-                    jcr:created="{Date}2024-07-11T10:52:26.333+05:30"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:32.887+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Panel 1"
-                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                    enabled="{Boolean}true"
-                    fieldType="panel"
-                    hideTitle="false"
-                    name="panelcontainer1720675346990"
-                    readOnly="{Boolean}false"
-                    repeatable="false"
-                    textIsRich="[true,true,true]"
-                    visible="{Boolean}true"
-                    wrapData="{Boolean}false">
-                    <textinput
-                        jcr:created="{Date}2024-07-11T10:53:12.996+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:53:12.996+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput1720675393573"/>
-                    <textinput_989369936
-                        jcr:created="{Date}2024-07-11T10:53:16.925+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:53:16.925+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_9893699361720675397231"/>
-                    <textinput_986325234
-                        jcr:created="{Date}2024-07-11T10:53:25.056+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:53:25.056+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_9863252341720675405375"/>
-                </panelcontainer>
-                <panelcontainer_1404583825
-                    cq:panelTitle="Panel 2"
-                    jcr:created="{Date}2024-07-11T10:52:33.762+05:30"
-                    jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:27.058+05:30"
-                    jcr:lastModifiedBy="admin"
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Panel 2"
-                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                    enabled="{Boolean}true"
-                    fieldType="panel"
-                    hideTitle="false"
-                    name="panelcontainer_14045838251720675354103"
-                    readOnly="{Boolean}false"
-                    repeatable="false"
-                    textIsRich="[true,true,true]"
-                    visible="{Boolean}true"
-                    wrapData="{Boolean}false">
-                    <tabsontop
-                        jcr:created="{Date}2024-07-11T10:54:58.185+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:54:58.185+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Tabs on top"
-                        sling:resourceType="forms-components-examples/components/form/tabsontop"
-                        fieldType="panel"
-                        name="tabsontop1720675498983">
-                        <panelcontainer
-                            jcr:created="{Date}2024-07-11T10:55:04.464+05:30"
+                                jcr:title="Text Input"
+                                sling:resourceType="forms-components-examples/components/form/textinput"
+                                fieldType="text-input"
+                                name="textinput_13998141421720602981751"/>
+                        </panelcontainer>
+                        <panelcontainer_943044469
+                            fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer_943044469##jcr:title##1212&quot;}"
+                            jcr:created="{Date}2024-07-10T14:35:33.175+05:30"
                             jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:55:44.313+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Panel 2 - Tab 1 "
-                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                            enabled="{Boolean}true"
-                            fieldType="panel"
-                            hideTitle="false"
-                            name="panelcontainer1720675504844"
-                            readOnly="{Boolean}false"
-                            repeatable="false"
-                            textIsRich="[true,true,true]"
-                            visible="{Boolean}true"
-                            wrapData="{Boolean}false"/>
-                        <panelcontainer_381967827
-                            jcr:created="{Date}2024-07-11T10:55:12.353+05:30"
-                            jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:55:49.912+05:30"
+                            jcr:lastModified="{Date}2024-07-10T14:45:27.559+05:30"
                             jcr:lastModifiedBy="admin"
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Panel 2 - Tab 2"
@@ -1109,16 +328,52 @@
                             enabled="{Boolean}true"
                             fieldType="panel"
                             hideTitle="false"
-                            name="panelcontainer_3819678271720675512525"
+                            name="panelcontainer_9430444691720602333384"
                             readOnly="{Boolean}false"
                             repeatable="false"
                             textIsRich="[true,true,true]"
                             visible="{Boolean}true"
-                            wrapData="{Boolean}false"/>
-                        <panelcontainer_1812136097
-                            jcr:created="{Date}2024-07-11T10:55:18.835+05:30"
+                            wrapData="{Boolean}false">
+                            <textinput
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer_943044469##textinput##jcr:title##7031&quot;}"
+                                jcr:created="{Date}2024-07-10T14:47:11.008+05:30"
+                                jcr:createdBy="admin"
+                                jcr:lastModified="{Date}2024-07-10T14:47:11.008+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text Input"
+                                sling:resourceType="forms-components-examples/components/form/textinput"
+                                fieldType="text-input"
+                                name="textinput1720603031242"/>
+                            <textinput_339931575
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer_943044469##textinput_339931575##jcr:title##4487&quot;}"
+                                jcr:created="{Date}2024-07-10T14:47:16.121+05:30"
+                                jcr:createdBy="admin"
+                                jcr:lastModified="{Date}2024-07-10T14:48:26.023+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text Input"
+                                sling:resourceType="forms-components-examples/components/form/textinput"
+                                fieldType="text-input"
+                                name="textinput_3399315751720603036243"/>
+                            <button
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer_943044469##button##jcr:title##2370&quot;}"
+                                jcr:created="{Date}2024-07-10T14:48:38.267+05:30"
+                                jcr:createdBy="admin"
+                                jcr:lastModified="{Date}2024-07-10T14:48:38.267+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Button"
+                                sling:resourceType="forms-components-examples/components/form/button"
+                                dorExclusion="true"
+                                fieldType="button"
+                                name="button1720603118399"/>
+                        </panelcontainer_943044469>
+                        <panelcontainer_1974894950
+                            fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer_1974894950##jcr:title##5187&quot;}"
+                            jcr:created="{Date}2024-07-10T14:35:37.432+05:30"
                             jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:55:59.487+05:30"
+                            jcr:lastModified="{Date}2024-07-10T14:45:45.535+05:30"
                             jcr:lastModifiedBy="admin"
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Panel 2 - Tab 3"
@@ -1126,36 +381,44 @@
                             enabled="{Boolean}true"
                             fieldType="panel"
                             hideTitle="false"
-                            name="panelcontainer_18121360971720675519145"
+                            name="panelcontainer_19748949501720602337653"
                             readOnly="{Boolean}false"
                             repeatable="false"
                             textIsRich="[true,true,true]"
                             visible="{Boolean}true"
-                            wrapData="{Boolean}false"/>
-                        <panelcontainer_1057582223
-                            jcr:created="{Date}2024-07-11T10:55:27.503+05:30"
-                            jcr:createdBy="admin"
-                            jcr:lastModified="{Date}2024-07-11T10:56:06.225+05:30"
-                            jcr:lastModifiedBy="admin"
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Panel 2 - Tab 4"
-                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
-                            enabled="{Boolean}true"
-                            fieldType="panel"
-                            hideTitle="false"
-                            name="panelcontainer_10575822231720675527815"
-                            readOnly="{Boolean}false"
-                            repeatable="false"
-                            textIsRich="[true,true,true]"
-                            visible="{Boolean}true"
-                            wrapData="{Boolean}false"/>
+                            wrapData="{Boolean}false">
+                            <textinput
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer_1974894950##textinput##jcr:title##2946&quot;}"
+                                jcr:created="{Date}2024-07-10T14:47:27.010+05:30"
+                                jcr:createdBy="admin"
+                                jcr:lastModified="{Date}2024-07-10T14:47:27.010+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text Input"
+                                sling:resourceType="forms-components-examples/components/form/textinput"
+                                fieldType="text-input"
+                                name="textinput1720603047258"/>
+                            <button
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer_1974894950##button##jcr:title##2103&quot;}"
+                                jcr:created="{Date}2024-07-10T14:47:31.723+05:30"
+                                jcr:createdBy="admin"
+                                jcr:lastModified="{Date}2024-07-10T14:47:31.723+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Button"
+                                sling:resourceType="forms-components-examples/components/form/button"
+                                dorExclusion="true"
+                                fieldType="button"
+                                name="button1720603051955"/>
+                        </panelcontainer_1974894950>
                     </tabsontop>
-                </panelcontainer_1404583825>
-                <panelcontainer_964865105
+                </panelcontainer_126720495>
+                <panelcontainer_2062756184
                     cq:panelTitle="Panel 3"
-                    jcr:created="{Date}2024-07-11T10:52:39.153+05:30"
+                    fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_2062756184##jcr:title##3598&quot;}"
+                    jcr:created="{Date}2024-07-10T14:34:27.520+05:30"
                     jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:37.985+05:30"
+                    jcr:lastModified="{Date}2024-07-10T14:43:31.827+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Panel 3"
@@ -1163,36 +426,155 @@
                     enabled="{Boolean}true"
                     fieldType="panel"
                     hideTitle="false"
-                    name="panelcontainer_9648651051720675359859"
+                    name="panelcontainer_20627561841720602267857"
                     readOnly="{Boolean}false"
                     repeatable="false"
                     textIsRich="[true,true,true]"
                     visible="{Boolean}true"
                     wrapData="{Boolean}false">
                     <textinput
-                        jcr:created="{Date}2024-07-11T10:57:03.660+05:30"
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_2062756184##textinput##jcr:title##8279&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:03.660+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput1720675623895"/>
-                    <textinput_1429704941
-                        jcr:created="{Date}2024-07-11T10:57:07.383+05:30"
+                        name="textinput1720602413081"/>
+                    <textinput_copy
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_2062756184##textinput_copy##jcr:title##8099&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:07.383+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput_14297049411720675627589"/>
+                        name="textinput1720602413081_copy_1"/>
+                    <textinput_copy_copy
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_2062756184##textinput_copy_copy##jcr:title##5835&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602413081_copy_1_copy_1"/>
+                    <textinput_copy_1818285665
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_2062756184##textinput_copy_1818285665##jcr:title##8003&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602413081_copy_2"/>
+                    <textinput_copy_copy_1731323011
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_2062756184##textinput_copy_copy_1731323011##jcr:title##5161&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602413081_copy_1_copy_2"/>
+                    <textinput_copy_1679513284
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_2062756184##textinput_copy_1679513284##jcr:title##976&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602413081_copy_3"/>
+                    <textinput_copy_copy_2023781835
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_2062756184##textinput_copy_copy_2023781835##jcr:title##1157&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602413081_copy_1_copy_3"/>
+                    <textinput_copy_931613817
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_2062756184##textinput_copy_931613817##jcr:title##9782&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602413081_copy_4"/>
+                </panelcontainer_2062756184>
+            </wizard>
+            <wizard_copy
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##jcr:title##5509&quot;}"
+                jcr:created="{Date}2024-07-10T14:34:10.070+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2024-08-14T11:49:07.521+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Root Tabs on top"
+                sling:resourceType="forms-components-examples/components/form/tabsontop"
+                enabled="{Boolean}true"
+                fieldType="panel"
+                hideTitle="false"
+                name="wizard1720602250683_copy_1"
+                readOnly="{Boolean}false"
+                repeatable="false"
+                textIsRich="[true,true,true]"
+                visible="{Boolean}true"
+                wrapData="{Boolean}false">
+                <panelcontainer
+                    cq:panelTitle="Panel"
+                    fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##jcr:title##6485&quot;}"
+                    jcr:created="{Date}2024-07-10T14:34:15.199+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-08-21T11:06:11.473+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Panel"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    hideTitle="false"
+                    name="panelcontainer1720602255490"
+                    readOnly="{Boolean}false"
+                    repeatable="false"
+                    textIsRich="[true,true,true]"
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}false">
+                    <textinput
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput##jcr:title##7076&quot;}"
+                        jcr:created="{Date}2024-07-10T14:34:49.387+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:34:49.387+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283"/>
                     <submit
-                        jcr:created="{Date}2024-07-11T10:57:12.481+05:30"
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##submit##jcr:title##2405&quot;}"
+                        jcr:created="{Date}2024-07-10T14:34:56.770+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:12.481+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:34:56.770+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Submit"
@@ -1200,7 +582,7 @@
                         buttonType="submit"
                         dorExclusion="true"
                         fieldType="button"
-                        name="submit1720675633437">
+                        name="submit1720602297719">
                         <fd:rules
                             fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
                             jcr:primaryType="nt:unstructured"/>
@@ -1208,168 +590,348 @@
                             jcr:primaryType="nt:unstructured"
                             click="[submitForm()]"/>
                     </submit>
-                </panelcontainer_964865105>
-                <panelcontainer_2141492184
-                    cq:panelTitle="Panel 4"
-                    jcr:created="{Date}2024-07-11T10:52:57.214+05:30"
+                    <textinput_copy_copy
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy_copy##jcr:title##3909&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602413081_copy_1"/>
+                    <textinput_copy
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy##jcr:title##8371&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_1"/>
+                    <textinput_copy_copy_1638083532
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy_copy_1638083532##jcr:title##189&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_1_copy_1"/>
+                    <textinput_copy_672656754
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy_672656754##jcr:title##2441&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_2"/>
+                    <textinput_copy_copy_1856614040
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy_copy_1856614040##jcr:title##1416&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_1_copy_2"/>
+                    <textinput_copy_1789574423
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy_1789574423##jcr:title##1845&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_3"/>
+                    <textinput_copy_copy_720855824
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy_copy_720855824##jcr:title##6782&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_1_copy_3"/>
+                    <textinput_copy_2045908835
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy_2045908835##jcr:title##888&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_4"/>
+                    <textinput_copy_copy_73828837
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy_copy_73828837##jcr:title##968&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_1_copy_4"/>
+                    <textinput_copy_813548878
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer##textinput_copy_813548878##jcr:title##8028&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinput1720602290283_copy_5"/>
+                </panelcontainer>
+                <panelcontainer_126720495
+                    cq:panelTitle="Panel"
+                    fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_126720495##jcr:title##9411&quot;}"
+                    jcr:created="{Date}2024-07-10T14:34:20.441+05:30"
                     jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-07-11T10:56:43.114+05:30"
+                    jcr:lastModified="{Date}2024-08-20T12:37:07.189+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
-                    jcr:title="Panel 4"
+                    jcr:title="Panel 2"
                     sling:resourceType="forms-components-examples/components/form/panelcontainer"
                     enabled="{Boolean}true"
                     fieldType="panel"
                     hideTitle="false"
-                    name="panelcontainer_21414921841720675377442"
+                    name="panelcontainer_1267204951720602261149"
+                    readOnly="{Boolean}false"
+                    repeatable="false"
+                    textIsRich="[true,true,true]"
+                    visible="{Boolean}true"
+                    wrapData="{Boolean}false">
+                    <tabsontop
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_126720495##tabsontop##jcr:title##9557&quot;}"
+                        jcr:created="{Date}2024-07-10T14:35:10.064+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-07-10T14:35:10.064+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Tabs on top"
+                        sling:resourceType="forms-components-examples/components/form/tabsontop"
+                        fieldType="panel"
+                        name="tabsontop1720602310299">
+                        <panelcontainer
+                            fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_126720495##tabsontop##panelcontainer##jcr:title##3671&quot;}"
+                            jcr:created="{Date}2024-07-10T14:35:24.042+05:30"
+                            jcr:createdBy="admin"
+                            jcr:lastModified="{Date}2024-08-14T15:14:28.269+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Panel 1"
+                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                            enabled="{Boolean}true"
+                            fieldType="panel"
+                            hideTitle="false"
+                            name="panelcontainer1720602324269"
+                            readOnly="{Boolean}false"
+                            repeatable="false"
+                            textIsRich="[true,true,true]"
+                            visible="{Boolean}true"
+                            wrapData="{Boolean}false">
+                            <textinput
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_126720495##tabsontop##panelcontainer##textinput##jcr:title##8210&quot;}"
+                                jcr:created="{Date}2024-08-14T15:12:09.117+05:30"
+                                jcr:createdBy="admin"
+                                jcr:lastModified="{Date}2024-08-14T15:12:09.117+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text Input"
+                                sling:resourceType="forms-components-examples/components/form/textinput"
+                                fieldType="text-input"
+                                name="textinput1723628529734"/>
+                        </panelcontainer>
+                        <panelcontainer_943044469
+                            fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_126720495##tabsontop##panelcontainer_943044469##jcr:title##3087&quot;}"
+                            jcr:created="{Date}2024-07-10T14:35:33.175+05:30"
+                            jcr:createdBy="admin"
+                            jcr:lastModified="{Date}2024-08-26T10:01:33.117+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Panel 2"
+                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                            enabled="{Boolean}false"
+                            fieldType="panel"
+                            hideTitle="false"
+                            name="panelcontainer_9430444691720602333384"
+                            readOnly="{Boolean}false"
+                            repeatable="false"
+                            textIsRich="[true,true,true]"
+                            visible="{Boolean}true"
+                            wrapData="{Boolean}false">
+                            <textinput
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_126720495##tabsontop##panelcontainer_943044469##textinput##jcr:title##6687&quot;}"
+                                jcr:created="{Date}2024-08-14T15:12:51.308+05:30"
+                                jcr:createdBy="admin"
+                                jcr:lastModified="{Date}2024-08-14T15:12:51.308+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text Input"
+                                sling:resourceType="forms-components-examples/components/form/textinput"
+                                fieldType="text-input"
+                                name="textinput1723628571545"/>
+                        </panelcontainer_943044469>
+                        <panelcontainer_1974894950
+                            fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_126720495##tabsontop##panelcontainer_1974894950##jcr:title##8028&quot;}"
+                            jcr:created="{Date}2024-07-10T14:35:37.432+05:30"
+                            jcr:createdBy="admin"
+                            jcr:lastModified="{Date}2024-08-14T15:14:38.287+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Panel 3"
+                            sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                            enabled="{Boolean}true"
+                            fieldType="panel"
+                            hideTitle="false"
+                            name="panelcontainer_19748949501720602337653"
+                            readOnly="{Boolean}false"
+                            repeatable="false"
+                            textIsRich="[true,true,true]"
+                            visible="{Boolean}true"
+                            wrapData="{Boolean}false">
+                            <textinput
+                                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_126720495##tabsontop##panelcontainer_1974894950##textinput##jcr:title##5157&quot;}"
+                                jcr:created="{Date}2024-08-14T15:13:02.328+05:30"
+                                jcr:createdBy="admin"
+                                jcr:lastModified="{Date}2024-08-14T15:13:02.328+05:30"
+                                jcr:lastModifiedBy="admin"
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text Input"
+                                sling:resourceType="forms-components-examples/components/form/textinput"
+                                fieldType="text-input"
+                                name="textinput1723628582531"/>
+                        </panelcontainer_1974894950>
+                    </tabsontop>
+                </panelcontainer_126720495>
+                <panelcontainer_2062756184
+                    cq:panelTitle="Panel"
+                    fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_2062756184##jcr:title##201&quot;}"
+                    jcr:created="{Date}2024-07-10T14:34:27.520+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-08-26T10:01:20.677+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Panel 3"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    hideTitle="false"
+                    name="panelcontainer_20627561841720602267857"
                     readOnly="{Boolean}false"
                     repeatable="false"
                     textIsRich="[true,true,true]"
                     visible="{Boolean}true"
                     wrapData="{Boolean}false">
                     <textinput
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_2062756184##textinput##jcr:title##291&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput1720675643185"/>
-                    <textinput_1193927501
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097"/>
-                    <textinput_539082016
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055"/>
-                    <textinput_539082016_
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_5390820161720675649055_copy_1"/>
-                    <textinput_1193927501_1713300862
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
-                        jcr:lastModifiedBy="admin"
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Text Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
-                        fieldType="text-input"
-                        name="textinput_11939275011720675646097_copy_1"/>
+                        name="textinput1720602413081"/>
                     <textinput_copy
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_2062756184##textinput_copy##jcr:title##9608&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput1720675643185_copy_1"/>
-                    <textinput_539082016__2119230074
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
+                        name="textinput1720602413081_copy_1"/>
+                    <textinput_copy_copy
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_2062756184##textinput_copy_copy##jcr:title##748&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput_5390820161720675649055_copy_2"/>
-                    <textinput_1193927501_662701086
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
+                        name="textinput1720602413081_copy_1_copy_1"/>
+                    <textinput_copy_1818285665
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_2062756184##textinput_copy_1818285665##jcr:title##2599&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput_11939275011720675646097_copy_2"/>
-                    <textinput_copy_72456960
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
+                        name="textinput1720602413081_copy_2"/>
+                    <textinput_copy_copy_1731323011
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_2062756184##textinput_copy_copy_1731323011##jcr:title##9968&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput1720675643185_copy_2"/>
-                    <textinput_539082016__1079360595
-                        jcr:created="{Date}2024-07-11T10:57:28.888+05:30"
+                        name="textinput1720602413081_copy_1_copy_2"/>
+                    <textinput_copy_1679513284
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_2062756184##textinput_copy_1679513284##jcr:title##4335&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:28.888+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput_5390820161720675649055_copy_3"/>
-                    <textinput_1193927501_1182944658
-                        jcr:created="{Date}2024-07-11T10:57:25.902+05:30"
+                        name="textinput1720602413081_copy_3"/>
+                    <textinput_copy_copy_2023781835
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_2062756184##textinput_copy_copy_2023781835##jcr:title##4061&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:25.902+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput_11939275011720675646097_copy_3"/>
-                    <textinput_copy_341549789
-                        jcr:created="{Date}2024-07-11T10:57:23.032+05:30"
+                        name="textinput1720602413081_copy_1_copy_3"/>
+                    <textinput_copy_931613817
+                        fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard_copy##panelcontainer_2062756184##textinput_copy_931613817##jcr:title##3868&quot;}"
+                        jcr:created="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:createdBy="admin"
-                        jcr:lastModified="{Date}2024-07-11T10:57:23.032+05:30"
+                        jcr:lastModified="{Date}2024-07-10T14:36:52.802+05:30"
                         jcr:lastModifiedBy="admin"
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Text Input"
                         sling:resourceType="forms-components-examples/components/form/textinput"
                         fieldType="text-input"
-                        name="textinput1720675643185_copy_3"/>
-                </panelcontainer_2141492184>
-                <fd:rules
-                    fd:visible="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VISIBLE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.wizard1720675330424_copy_1&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;wizard1720675330424_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;When&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITIONORALWAYS&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.switch1720766823831&quot;\,&quot;displayName&quot;:&quot;Switch&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;displayPath&quot;:&quot;FORM/Switch/&quot;\,&quot;name&quot;:&quot;switch1720766823831&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}}\,{&quot;nodeName&quot;:&quot;Else&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;DONOTHING_OR_SHOW&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;Show&quot;\,&quot;value&quot;:null}}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;!(switch1720766823831.$value == '1')&quot;\,&quot;eventName&quot;:&quot;Visibility&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                    jcr:primaryType="nt:unstructured"
-                    validationStatus="valid"
-                    visible="!(switch1720766823831.$value == '1')"/>
-                <fd:events jcr:primaryType="nt:unstructured"/>
+                        name="textinput1720602413081_copy_4"/>
+                </panelcontainer_2062756184>
             </wizard_copy>
-            <switch
-                jcr:created="{Date}2024-07-12T12:17:03.266+05:30"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2024-07-12T12:17:03.266+05:30"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                jcr:title="Switch"
-                sling:resourceType="forms-components-examples/components/form/switch"
-                enum="[1,0]"
-                enumNames="[ON,OFF]"
-                fieldType="checkbox"
-                name="switch1720766823831">
-                <fd:rules jcr:primaryType="nt:unstructured"/>
-                <fd:events jcr:primaryType="nt:unstructured"/>
-            </switch>
         </guideContainer>
     </jcr:content>
 </jcr:root>

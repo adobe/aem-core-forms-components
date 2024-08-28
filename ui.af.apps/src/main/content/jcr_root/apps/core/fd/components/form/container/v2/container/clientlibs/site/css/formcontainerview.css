@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright 2024 Adobe
  *
@@ -21,7 +20,6 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 
 
 form:not(.cmp-adaptiveform-container--edit) [data-cmp-enabled="false"] {
-    pointer-events: none;
     opacity: 0.4;
 }
 .cmp-adaptiveform-container--loading{
@@ -33,7 +31,6 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-enabled="false"] {
 }
 
 .cmp-adaptiveform-container [data-cmp-enabled="false"] {
-    pointer-events: none;
     opacity: 0.4;
 }
 
@@ -51,7 +48,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-enabled="false"] {
     margin: 0;
     list-style: none;
     border-radius: 5px;
-    width: 205px;
+    width: 215px;
 }
 
 .cmp-adaptiveform-container-hamburgerMenu > li {
@@ -93,12 +90,12 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-enabled="false"] {
 .cmp-adaptiveform-container-submenu {
     display: none;
     flex-direction: column;
-    position: relative; /* Use relative positioning to affect the flow of the parent menu */
+    position: relative;
     background-color: white;
     padding: 0;
     margin: 0;
-    list-style: none; /* Remove bullet points */
-    width: 100%; /* Ensure submenu is the same width as parent menu */
+    list-style: none;
+    width: 100%;
 }
 
 .cmp-adaptiveform-container-submenu li {
@@ -115,6 +112,14 @@ a:hover {
 
 .cmp-adaptiveform-container-hamburger-menu-item-active {
     background-color: #B1B1B1 !important;
+}
+
+
+.cmp-adaptiveform-container-top-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    width: 100%;
 }
 
 @media (min-width: 767px) {
@@ -138,27 +143,6 @@ a:hover {
     height: 57px;
     background: #fafafa;
     border: 1px solid #e6e6e6;
-    /* width: 100%; */
-}
-
-.cmp-adaptiveform-container-top-container {
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    width: 100%;
-}
-
-.cmp-adaptiveform-container-nav-link {
-    display: flex !important;
-    padding: 10px;
-    text-decoration: none;
-    color: black;
-    display: block;
-    border-radius: 5px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    justify-content: space-between;
 }
 
 .cmp-adaptiveform-container-menu {
@@ -236,7 +220,27 @@ a:hover {
     background-color: #E6E6E6;
 }
 
-a:active {
+.cmp-adaptiveform-container-nav-link {
+    display: flex !important;
+    padding: 10px;
     text-decoration: none;
-    outline: none;
+    color: black;
+    border-radius: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cmp-adaptiveform-container-nav-link button {
+    flex-shrink: 0;
+}
+
+.cmp-adaptiveform-container-nav-link span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
 }
