@@ -45,7 +45,7 @@ describe("Form Runtime with Date Picker", () => {
 
         cy.get(`#${datePicker5}`).find("input").should('have.attr',"type", "text");
         cy.get(`#${datePicker5}`).find("input").clear().type(incorrectInput).blur().then(x => {
-            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text', 'Spécifiez la valeur au format autorisé : date.')
+            cy.get(`#${datePicker5}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text', 'Sp\u00e9cifiez la valeur au format autoris\u00e9 : date.')
         })
 
         cy.get(`#${datePicker5}`).find("input").clear().type(correctInput).blur().then(x => {
