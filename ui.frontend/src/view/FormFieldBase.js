@@ -208,6 +208,7 @@ class FormFieldBase extends FormField {
          }
             
         if (widgetElement) {
+
            if (this.getDescription()) {
             const descriptionDiv = this.getDescription();
             if (!(descriptionDiv.innerHTML.trim() === '' || descriptionDiv.children.length === 0)) {
@@ -222,10 +223,27 @@ class FormFieldBase extends FormField {
            if (this.getErrorDiv() && this.getErrorDiv().innerHTML) {
             appendDescription('errormessage', this.getId());
           }
+
             widgetElement.setAttribute('aria-describedby', ariaDescribedby);
         }
     }
 
+    #syncAriaLabel() {
+        let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+        let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+        widgetElement = widgetElements || widgetElement;
+        const model = this.getModel?.();    
+    
+        if (widgetElement && model?.screenReaderText) {
+            // Use DOMPurify to sanitize and strip HTML tags
+            const screenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(model.screenReaderText, { ALLOWED_TAGS: [] }) : model.screenReaderText;
+            widgetElement.setAttribute('aria-label', screenReaderText);
+        }
+    }
+
+    
+
+    
     /**
      * Synchronizes the markup with the model.
      * @method
@@ -237,6 +255,7 @@ class FormFieldBase extends FormField {
         this. #syncLongDesc()
         this.#syncAriaDescribedBy()
         this.#syncError()
+        this.#syncAriaLabel()
     }
 
     /**
@@ -606,19 +625,34 @@ class FormFieldBase extends FormField {
      * Updates the HTML state based on the description state of the field.
      * @param {string} descriptionText - The description.
      */
+   
     updateDescription(descriptionText) {
         if (typeof descriptionText !== 'undefined') {
-            const sanitizedDescriptionText = window.DOMPurify ?  window.DOMPurify.sanitize(descriptionText) : descriptionText;
+            const sanitizedDescriptionText = window.DOMPurify ? window.DOMPurify.sanitize(descriptionText, { ALLOWED_TAGS: [] }).trim() : descriptionText;
             let descriptionElement = this.getDescription();
+
             if (descriptionElement) {
-                let pElement = descriptionElement.querySelector("p");
-                if (!pElement) {
-                    // If the description is updated via rule then it might not have <p> tags
+                 // Check if the content inside the descriptionElement needs updating
+                 let currentTextContent = descriptionElement.innerText.trim();
+
+                 if (currentTextContent === sanitizedDescriptionText) {
+                   // No update needed if the text content already matches
+                   return;
+               }
+                 
+                // Find the existing <p> element
+                let pElement = descriptionElement.querySelector('p');
+
+                if (!pElement)  {
+                    // If no <p> tag exists, create one and set it as the content
                     pElement = document.createElement('p');
+                    descriptionElement.innerHTML = ''; // Clear existing content
                     descriptionElement.appendChild(pElement);
                 }
-                pElement.textContent = sanitizedDescriptionText;
-            } else {
+
+                // Update the <p> element's content with sanitized content
+                pElement.innerHTML = sanitizedDescriptionText;
+            } else {    
                 // If no description was set during authoring
                 this.#addDescriptionInRuntime(sanitizedDescriptionText);
             }
