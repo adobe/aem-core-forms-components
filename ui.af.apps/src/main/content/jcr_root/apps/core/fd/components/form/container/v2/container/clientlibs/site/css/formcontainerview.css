@@ -244,3 +244,21 @@ a:hover {
     text-overflow: ellipsis;
     flex-grow: 1;
 }
+
+.cmp-adaptiveform-container-breadcrumbs-container {
+
+}
+
+.cmp-adaptiveform-container-breadcrumbs-container {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    overflow: scroll;
+    height: 48px;
+    font-size: 1.2rem;
+    text-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+    scrollbar-width: none;
+}
