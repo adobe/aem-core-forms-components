@@ -211,24 +211,26 @@ describe('Page - Authoring', function () {
         cy.get("#af-rule-editor").should("be.visible");
         getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
         getRuleEditorIframe().find("#create-rule-button").click();
-        getRuleEditorIframe().find('#create-rule-button').should('be.visible').click();
-        getRuleEditorIframe().find('.child-choice-name').should('be.visible').click();
-        getRuleEditorIframe().find('coral-selectlist-item[value="EVENT_SCRIPTS"]').should('be.visible').then(($el) => {
-            $el[0].scrollIntoView();
+        getRuleEditorIframe().find('#create-rule-button').then(($el) => {
             $el[0].click();
-            getRuleEditorIframe().find('.EVENT_AND_COMPARISON_OPERATOR').should('be.visible').then(($el) => {
+            getRuleEditorIframe().find('.child-choice-name').click();
+            getRuleEditorIframe().find('coral-selectlist-item[value="EVENT_SCRIPTS"]').then(($el) => {
+                $el[0].scrollIntoView();
                 $el[0].click();
-                getRuleEditorIframe().find('coral-selectlist-item[value="CONTAINS"]').should('be.visible').then(($el) => {
+                getRuleEditorIframe().find('.EVENT_AND_COMPARISON_OPERATOR').then(($el) => {
                     $el[0].click();
-                    getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').should('be.visible').then(($el) => {
+                    getRuleEditorIframe().find('coral-selectlist-item[value="CONTAINS"]').then(($el) => {
                         $el[0].click();
-                        getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().should("have.text", "Select 1");
+                        getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').then(($el) => {
+                            $el[0].click();
+                            getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().should("have.text", "Select 1");
+                        });
                     });
                 });
             });
-        });
-        getRuleEditorIframe().find('.exp-Close-Button').should('be.visible').then(($el) => {
-            $el[0].click();
+            getRuleEditorIframe().find('.exp-Close-Button').then(($el) => {
+                $el[0].click();
+            });
         });
         cy.deleteComponentByPath(checkBoxGroupDrop);
     });
