@@ -14,6 +14,7 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm"
+     data-sly-use.wcmInit="initwcm.js"
      data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
 <script>
     // Editor evaluates this script and if the clientlib is not loaded by then, it will fail. Hence triggering an
@@ -69,8 +70,9 @@
 <sly data-sly-test.useIframe="${form.useIframe != 'false'}">
     <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
     <sly data-sly-set.dataRef="${request.requestParameterMap['dataRef'] ? request.requestParameterMap['dataRef'][0].toString :'' @ context='attribute'}"/>
-    <sly data-sly-set.wcmmode="${!wcmmode.edit?'wcmmode=DISABLED':''}"/>
-    <sly data-sly-set.formUrlParams="${wcmmode ? '?':''}${wcmmode}${dataRef ? '&dataRef=' :''}${dataRef}"/>
+    <sly data-sly-set.existingWcmMode="${request.requestParameterMap['wcmmode'] ? request.requestParameterMap['wcmmode'][0].toString : '' @ context='attribute'}"/>
+    <sly data-sly-set.wcmmode1="${wcmInit.isAuthoring && !wcmmode.edit ?'wcmmode=DISABLED': existingWcmMode}"/>
+    <sly data-sly-set.formUrlParams="${wcmmode1 ? '?':''}${wcmmode1}${dataRef ? '&dataRef=' :''}${dataRef}"/>
      <iframe title="${form.title}"
              role="${form.roleAttribute || ''}"
              class="cmp-aemform__iframecontent"
