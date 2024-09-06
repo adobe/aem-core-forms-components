@@ -22,7 +22,7 @@
         static IS = "adaptiveFormContainer";
         static bemBlock = 'cmp-adaptiveform-container';
         static hamburgerSupport = false;
-        static nestingSupport = 3;
+        static nestingSupport = 5;
 
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
@@ -42,6 +42,7 @@
             rightNavButton: `.${FormContainerV2.bemBlock}-nav-button-right`,
             navButtonsContainer: `.${FormContainerV2.bemBlock}-nav-buttons`,
             active: `.${FormContainerV2.bemBlock}-hamburger-menu-item-active`,
+            breadCrumbsContainer: `.${FormContainerV2.bemBlock}-breadcrumbs-container`
         };
 
         static cssClasses = {
@@ -55,10 +56,23 @@
         }
 
         handleActiveItem(field) {
+            const menu = document.querySelector(FormContainerV2.selectors.hamburgerMenu);
+            const formContainer = formContainerGlobal;
             if (field !== null && field) {
                 const activeListItem = document.querySelector(`[data-cmp-id='${field.id}']`);
                 if(activeListItem && activeListItem.tagName === 'LI') {
-                    // activeListItem.querySelector('a').click();
+                    const menuItems = document.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' li');
+                    const fieldModel = formContainer?.getField(activeListItem?.getAttribute('data-cmp-id'))?.getModel();
+                    const elementID = checkFirstNonPanel(fieldModel)
+                    const targetElement = menu.querySelector("[data-cmp-id='"+ elementID + "']");
+                    resetMenuItems(menuItems);
+                    activateCurrentItem(targetElement);
+                    const anchorElement = targetElement?.querySelector('a');
+                    anchorElement?.classList.add(FormContainerV2.cssClasses.active);
+                    anchorElement?.querySelector('button')?.classList?.toggle(FormContainerV2.cssClasses.upNavButton);
+                    updateSelectedPanelTitle(anchorElement);
+                    highlightMenuTree(anchorElement);
+                    renderBreadCrumbs(menu);
                 }
             }
         }
@@ -180,13 +194,13 @@
                 const { payload } = action;
                 const { changes, field } = payload;
                 const { items } = field;
-                console.log('action changed log: ', action);
+                // console.log('action changed log: ', action);
                 if (changes && changes.length > 0) {
                     changes.forEach((change) => {
                         switch (change.propertyName) {
-                            // case "activeChild":
-                            //     this.handleActiveItem(field);
-                            //     break;
+                            case "activeChild":
+                                this.handleActiveItem(field, change);
+                                break;
                             case "items":
                                 this.handleItemsChange(change, items);
                                 break;
@@ -229,70 +243,67 @@
     }
 
     function updateSelectedPanelTitle(anchorElement) {
-        const navTitleText = anchorElement.innerText;
+        const navTitleText = anchorElement?.innerText;
         const navTitle = document.querySelector(FormContainerV2.selectors.navTitle);
         navTitle.innerText = navTitleText;
     }
 
+    function checkFirstNonPanel(fieldModel) {
+        if(fieldModel && fieldModel._children && fieldModel?._children[0]) {
+            if(fieldModel._children[0]?.fieldType !== 'panel') {
+                return fieldModel._children[0].parent.id;
+            }
+            return checkFirstNonPanel(fieldModel?._children[0])
+        }
+        return fieldModel.id;
+    }
+
+
     function clickHandler(event) {
         const formContainer = formContainerGlobal;
-        event.stopPropagation();
-    
-        const targetElement = event.target.closest('li');
-
+        const menu = document.querySelector(FormContainerV2.selectors.hamburgerMenu);
+        event.stopPropagation(); 
+        let targetElement = event.target.closest('li');    
         if(targetElement.getAttribute('data-cmp-enabled') === 'false') {
             return;
         }
-
         if(event.target.tagName === "BUTTON")  {
             event.target.classList.toggle(FormContainerV2.cssClasses.upNavButton);
             return;
         }
-        const itemId = targetElement.getAttribute('data-cmp-id') || activeItemId;
-        const rootListItems = document.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' > li');
         const menuItems = document.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' li');
-
-        if (Array.from(rootListItems).includes(targetElement)) {
-            let deeplyNestedFirstLi = targetElement.querySelector('li');
-            resetMenuItems(menuItems);
-            deeplyNestedFirstLi = findDeeplyNestedFirstLi(targetElement);
-            if (deeplyNestedFirstLi) {
-                activateCurrentItem(deeplyNestedFirstLi);
-                highlightMenuTree(deeplyNestedFirstLi.querySelector('a'));
-                updateSelectedPanelTitle(deeplyNestedFirstLi.querySelector('a'));
-                deeplyNestedFirstLi.querySelector('a')?.classList.add(FormContainerV2.cssClasses.active);
-            }
-        } else {
-            resetMenuItems(menuItems);
-            activateCurrentItem(event.target.closest('li'));
-            const anchorElement = targetElement.querySelector('a');
-            anchorElement?.classList.add(FormContainerV2.cssClasses.active);
-            anchorElement?.querySelector('button').classList.toggle(FormContainerV2.cssClasses.upNavButton);
-            updateSelectedPanelTitle(anchorElement);
-            highlightMenuTree(event.target);
-        }
-
+        const fieldModel = formContainer?.getField(targetElement?.getAttribute('data-cmp-id'))?.getModel();
+        const elementID = checkFirstNonPanel(fieldModel)
+        targetElement = menu.querySelector("[data-cmp-id='"+ elementID + "']");
+        resetMenuItems(menuItems);
+        activateCurrentItem(targetElement);
+        const anchorElement = targetElement?.querySelector('a');
+        anchorElement?.classList.add(FormContainerV2.cssClasses.active);
+        anchorElement?.querySelector('button')?.classList?.toggle(FormContainerV2.cssClasses.upNavButton);
+        updateSelectedPanelTitle(anchorElement);
+        highlightMenuTree(anchorElement);
+                    
+        const itemId = targetElement.getAttribute('data-cmp-id') || activeItemId;
         const form = formContainer.getModel();;
         const field = formContainer.getField(itemId);
-        console.log({field});
-        console.log({form});
+        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
         if (form && field && field._model) {
           form.setFocus(field._model);
         }
-        const menu = document.querySelector(FormContainerV2.selectors.hamburgerMenu);
-        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        renderBreadCrumbs(menu);
     }
-    
+
     function resetMenuItems(menuItems) {
         menuItems.forEach(item => {
             const subMenu = item.querySelector(FormContainerV2.selectors.hamburgerSubMenu);
             if (subMenu) subMenu.style.display = 'none';
-    
             const link = item.querySelector('a');
-            link.querySelector('button').classList.remove(FormContainerV2.cssClasses.upNavButton);
-            link.querySelector('button').classList.add(FormContainerV2.cssClasses.downNavButton);
-            link.classList.remove(FormContainerV2.cssClasses.active, FormContainerV2.cssClasses.activeParent);
-            link.style.fontWeight = 'normal';
+            if(link) {
+                link?.querySelector('button')?.classList.remove(FormContainerV2.cssClasses.upNavButton);
+                link?.querySelector('button')?.classList.add(FormContainerV2.cssClasses.downNavButton);
+                link?.classList.remove(FormContainerV2.cssClasses.active, FormContainerV2.cssClasses.activeParent);
+                link.style.fontWeight = 'normal';
+            }
         });
     }
     
@@ -318,6 +329,7 @@
         if (!items?.length) return;
     
         const ul = document.createElement('ul');
+        ul.classList.add('cmp-adaptiveform-container-breadcrumbs-container-list');
         let navTitleUpdated = false;
         
         items.forEach((item) => {
@@ -339,13 +351,26 @@
             link.appendChild(textSpan);
             link.style.visibility = item?.label?.visible ? 'visible' : 'hidden';
             li.appendChild(link);
-            link.insertBefore(createDownArrowButton(), link.firstChild);
+            
             li.setAttribute('data-cmp-id', item?.id);
             li.setAttribute('data-cmp-visible', item?.visible);
             li.setAttribute('data-cmp-enabled', item?.enabled);
+            const children = formContainer?.getField(item.id)?._model?._children;
+            let flag = false;
+            if(children) {
+                for(let i = 0; i< children.length; i++) {
+                    if(children[i].fieldType !== 'panel') {
+                        flag = true;
+                    }
+                }
+            }
+
+            if(flag) {
+                li.setAttribute('data-cmp-has-input', flag);
+            }
 
             link.classList.add(FormContainerV2.cssClasses.navLink);
-    
+
             if (isRepeatable(item)) {
                 const subMenu = createHamburgerMenu(formContainer, item.items, counter + 1);
                 subMenu?.childNodes.forEach(child => ul.appendChild(child));
@@ -354,8 +379,12 @@
                 if (subMenu?.childNodes?.length) {
                     subMenu.classList.add(FormContainerV2.cssClasses.hamburgerSubMenu);
                     li.appendChild(subMenu);
+                    link.insertBefore(createDownArrowButton(), link.firstChild);
                     link.addEventListener('click', () => {
                         event.preventDefault();
+                        if (li.getAttribute('data-cmp-enabled') === 'false') {
+                            return;
+                        }
                         if (subMenu.style.display === 'flex' || subMenu.style.display === 'block') {
                             subMenu.style.display = 'none';
                         } else {
@@ -364,7 +393,6 @@
                     });
                 }
             }
-    
             ul.appendChild(li);
         });
     
@@ -386,7 +414,7 @@
         // hide all the wizard tabs list
         const wizardTabsLists = document.getElementsByClassName('cmp-adaptiveform-wizard__tabList');
         const wizardTabsNavButton = document.querySelector('.cmp-adaptiveform-wizard__containerNav');
-        wizardTabsNavButton.style.display = 'none';
+        if(wizardTabsNavButton) wizardTabsNavButton.style.display = 'none';
         Array.from(wizardTabsLists).forEach(tabsList => {
             tabsList.style.display = 'none';
         });
@@ -404,18 +432,20 @@
             return;
         }
         let anchorElement = closestLI.querySelector('a');
-        anchorElement.classList.add(FormContainerV2.cssClasses.activeParent);
-        anchorElement.querySelector('button').classList.add(FormContainerV2.cssClasses.upNavButton);
-        if(closestLI.parentElement.classList.contains(FormContainerV2.cssClasses.hamburgerMenu)) {
-            anchorElement.style.fontWeight = 'bold'
+        if(anchorElement) {
+            anchorElement?.classList.add(FormContainerV2.cssClasses.activeParent);
+            anchorElement?.querySelector('button')?.classList.add(FormContainerV2.cssClasses.upNavButton);
+            if(closestLI.parentElement.classList.contains(FormContainerV2.cssClasses.hamburgerMenu)) {
+                anchorElement.style.fontWeight = 'bold'
+            }
+            highlightMenuTree(closestLI.parentElement);
         }
-        highlightMenuTree(closestLI.parentElement);
     }
 
-    function isEligible(element) {
-        if (element.getAttribute('data-cmp-visible') === 'false' || element.getAttribute('data-cmp-enabled') === 'false') {
+    function isEligible(element, direction) {
+        if (element && element?.getAttribute('data-cmp-visible') === 'false' || element?.getAttribute('data-cmp-enabled') === 'false' || (direction === 'prev' && element?.getAttribute('data-cmp-has-input') !== 'true')) {
             return false;
-        } else if (element.parentNode && element.parentNode !== document) {
+        } else if (element && element.parentNode && element.parentNode !== document) {
             return isEligible(element.parentNode);
         } else {
             return true;
@@ -434,20 +464,21 @@
     
         if (direction === 'prev' && newActiveItemIndex < 0) {
             newActiveItemIndex = menuListItems.length - 1;
-        } else if (direction === 'next' && newActiveItemIndex >= menuListItems.length) {
-            newActiveItemIndex = 0;
-        }
-    
+        } 
+        // else if (direction === 'next' && newActiveItemIndex >= menuListItems.length) {
+        //     newActiveItemIndex = 0;
+        // }
+
         // Find the next visible item
-        while (!isEligible(menuListItems[newActiveItemIndex])) {
+        while (!isEligible(menuListItems[newActiveItemIndex], direction)) {
             newActiveItemIndex = direction === 'prev' 
                 ? (newActiveItemIndex - 1 + menuListItems.length) % menuListItems.length 
                 : (newActiveItemIndex + 1) % menuListItems.length;
         }
     
         const newActiveItem = menuListItems[newActiveItemIndex];
-        activeItemId = newActiveItem.getAttribute('data-cmp-id');
-        newActiveItem.click();
+        activeItemId = newActiveItem?.getAttribute('data-cmp-id');
+        newActiveItem?.click();
     }
 
     function movePrev(menuListItems) {
@@ -464,6 +495,45 @@
         const menuListItems = document.querySelector(FormContainerV2.selectors.hamburgerMenu).querySelectorAll('li');
         leftNavButton.addEventListener('click', () => movePrev(menuListItems));
         rightNavButton.addEventListener('click', () => moveNext(menuListItems));
+    }
+
+    function generateBreadcrumbs(breadcrumbs) {
+        const container = document.createElement('nav');
+        container.setAttribute('aria-label', 'Breadcrumb');
+        const list = document.createElement('ul');
+        list.style.listStyleType = 'none';
+        list.style.padding = '0';
+        list.style.margin = '0';
+        if(breadcrumbs && breadcrumbs.length) {
+            [...breadcrumbs].forEach((breadcrumb, index) => {
+                const listItem = document.createElement('li');
+                listItem.style.display = 'inline';
+                const span = document.createElement('span');
+                span.textContent = breadcrumb.innerText;
+                listItem.appendChild(span);
+                if (index < breadcrumbs.length - 1) {
+                    const separator = document.createElement('span');
+                    separator.textContent = ' > ';
+                    separator.style.margin = '0 5px';
+                    listItem.appendChild(separator);
+                }
+                if(index  ===  breadcrumbs?.length-1) {
+                    listItem.style.fontWeight = 'bold';
+                }
+                list.appendChild(listItem);
+            });
+        }
+        container.appendChild(list);
+        return container;
+    }
+
+    function renderBreadCrumbs(menu) {
+        const selectedPanels = menu.getElementsByClassName(FormContainerV2.cssClasses.activeParent);
+        const breadCrumbsContainer = document.querySelector(FormContainerV2.selectors.breadCrumbsContainer);
+        breadCrumbsContainer.innerHTML = '';
+        const breadCrumbs = generateBreadcrumbs(selectedPanels)
+        breadCrumbsContainer.appendChild(breadCrumbs);
+        breadCrumbsContainer.scrollLeft = breadCrumbs.scrollWidth;
     }
 
     function renderHamburgerItems(panels, formContainer) {
@@ -496,7 +566,7 @@
             }
         }
     }
-    
+
     function setupMenuEventListeners(menu) {
         menu.addEventListener('click', clickHandler);
         menu.addEventListener('ontouchstart', clickHandler);
@@ -518,13 +588,17 @@
             submenus.forEach((submenu) => {
                 const links = submenu.querySelectorAll('a');
                 links.forEach((link) => {
-                    link.style.paddingInlineStart = `${padding}px`;
+                    if(link.querySelector('button')) {
+                         link.style.paddingInlineStart = `${padding}px`;
+                    } else {
+                        link.style.paddingInlineStart = `${padding + 30}px`;
+                    }
                 });
                 padding += 15;
             });
         });
     }
-    
+
     function setupOutsideClickListener(hamburger, menu) {
         window.addEventListener('click', (e) => {
             if (!hamburger.contains(e.target) && !menu.contains(e.target) && menu.style.display === 'flex') {
