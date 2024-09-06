@@ -19,4 +19,4 @@
           allowProxy="{Boolean}true"
           categories="[core.forms.components.accordion.v1.runtime]"
           jsProcessor="[default:none,min:none]"
-          dependencies="[core.wcm.components.commons.site.container,core.forms.components.runtime.base,core.forms.components.container.v2.runtime,core.forms.components.accordion.v1.commons]"/>
+          dependencies="[core.wcm.components.commons.site.container,core.forms.components.runtime.base,core.forms.components.accordion.v1.commons]"/>
