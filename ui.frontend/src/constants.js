@@ -37,7 +37,7 @@ export const Constants = {
      * @property {object} event - The event object.
      * @property {object} event.detail - Instance of FormContainer that is initialized.
      * @example
-     * document.on("AF_FormContainerInitialised" , function(event) {
+     * document.addEventListener("AF_FormContainerInitialised" , function(event) {
      *      var formContainer = event.detail;
      *      // Handle the event
      * });
@@ -50,10 +50,15 @@ export const Constants = {
      * @property {object} event - The event object.
      * @property {object} event.detail - Instance of child view that is added.
      * @example
-     * formcontainer.getFormElement().on("AF_PanelInstanceAdded" , function(event) {
-     *      var childView = event.detail;
+     * document.addEventListener("AF_FormContainerInitialised" , function(event) {
+     *      var formContainer = event.detail;
      *      // Handle the event
+     *      formcontainer.getFormElement().addEventListener("AF_PanelInstanceAdded" , function(event) {
+     *          var childView = event.detail;
+     *          // Handle the event
+     *       });
      * });
+     *
      */
     PANEL_INSTANCE_ADDED : "AF_PanelInstanceAdded",
 
@@ -63,9 +68,13 @@ export const Constants = {
      * @property {object} event - The event object.
      * @property {object} event.detail - Instance of child view that was removed.
      * @example
-     * formcontainer.getFormElement().on("AF_PanelInstanceRemoved" , function(event) {
-     *      var childView = event.detail;
+     * document.addEventListener("AF_FormContainerInitialised" , function(event) {
+     *      var formContainer = event.detail;
      *      // Handle the event
+     *      formcontainer.getFormElement().addEventListener("AF_PanelInstanceRemoved" , function(event) {
+     *          var childView = event.detail;
+     *          // Handle the event
+     *      });
      * });
      */
     PANEL_INSTANCE_REMOVED : "AF_PanelInstanceRemoved",
@@ -76,7 +85,7 @@ export const Constants = {
      * @property {object} event - The event object.
      * @property {object} event.detail - The locale that has loaded.
      * @example
-     * document.on("AF_LanguageInitialised" , function(event) {
+     * document.addEventListener("AF_LanguageInitialised" , function(event) {
      *      var locale = event.detail;
      *      // Handle the event
      * });
