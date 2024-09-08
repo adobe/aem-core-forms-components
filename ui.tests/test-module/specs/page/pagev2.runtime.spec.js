@@ -50,7 +50,6 @@ describe("Form with Page component version 2 for eds rendering", () => {
             expect(formJson).to.have.property("action");
             expect(formJson["action"]).to.equal("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvY29yZS1jb21wb25lbnRzLWl0L3NhbXBsZXMvcGFnZS9hZnYy");
 
-
         })
     })
 })
