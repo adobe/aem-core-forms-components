@@ -1647,7 +1647,7 @@ Value true for active, value false for inactive.</p>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">document.on(&quot;AF_FormContainerInitialised&quot; , function(event) {
+    <pre class="sunlight-highlight-javascript">document.addEventListener(&quot;AF_FormContainerInitialised&quot; , function(event) {
      var formContainer = event.detail;
      // Handle the event
 });</pre>
@@ -1836,9 +1836,13 @@ Value true for active, value false for inactive.</p>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">formcontainer.getFormElement().on(&quot;AF_PanelInstanceAdded&quot; , function(event) {
-     var childView = event.detail;
+    <pre class="sunlight-highlight-javascript">document.addEventListener(&quot;AF_FormContainerInitialised&quot; , function(event) {
+     var formContainer = event.detail;
      // Handle the event
+     formcontainer.getFormElement().addEventListener(&quot;AF_PanelInstanceAdded&quot; , function(event) {
+         var childView = event.detail;
+         // Handle the event
+      });
 });</pre>
 
 
@@ -2025,9 +2029,13 @@ Value true for active, value false for inactive.</p>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">formcontainer.getFormElement().on(&quot;AF_PanelInstanceRemoved&quot; , function(event) {
-     var childView = event.detail;
+    <pre class="sunlight-highlight-javascript">document.addEventListener(&quot;AF_FormContainerInitialised&quot; , function(event) {
+     var formContainer = event.detail;
      // Handle the event
+     formcontainer.getFormElement().addEventListener(&quot;AF_PanelInstanceRemoved&quot; , function(event) {
+         var childView = event.detail;
+         // Handle the event
+     });
 });</pre>
 
 
@@ -2214,7 +2222,7 @@ Value true for active, value false for inactive.</p>
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">document.on(&quot;AF_LanguageInitialised&quot; , function(event) {
+    <pre class="sunlight-highlight-javascript">document.addEventListener(&quot;AF_LanguageInitialised&quot; , function(event) {
      var locale = event.detail;
      // Handle the event
 });</pre>
