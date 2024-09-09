@@ -257,4 +257,11 @@
     window.Forms.CoreComponentsCommons = window.Forms.CoreComponentsCommons || {};
     window.Forms.CoreComponentsCommons.AccordionMixin = AccordionMixin;
 
+    const event = new CustomEvent('AccordionMixinLoaded', {
+        detail: {
+            AccordionMixin: AccordionMixin
+        }
+    });
+    window.dispatchEvent(event);
+
 }());
