@@ -101,5 +101,10 @@
             document.addEventListener("DOMContentLoaded", onDocumentReady);
         }
     }
-    window.addEventListener('AccordionMixinLoaded', onAccordionMixinLoaded);
+
+    if (window.Forms && window.Forms.CoreComponentsCommons && window.Forms.CoreComponentsCommons.AccordionMixin) {
+        onAccordionMixinLoaded({ detail: { AccordionMixin: window.Forms.CoreComponentsCommons.AccordionMixin } });
+    } else {
+        window.addEventListener('AccordionMixinLoaded', onAccordionMixinLoaded);
+    }
 }());
