@@ -146,4 +146,11 @@
     window.Forms.CoreComponentsCommons = window.Forms.CoreComponentsCommons || {};
     window.Forms.CoreComponentsCommons.WizardMixin = WizardMixin;
 
+    const event = new CustomEvent('WizardMixinLoaded', {
+        detail: {
+            WizardMixin: WizardMixin
+        }
+    });
+    window.dispatchEvent(event);
+
 }());

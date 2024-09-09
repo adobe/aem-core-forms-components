@@ -19,5 +19,5 @@
     allowProxy="{Boolean}true"
     categories="[core.forms.components.wizard.v1.runtime]"
     jsProcessor="[default:none,min:none]"
-    dependencies="[core.forms.components.runtime.base,core.forms.components.container.v2.runtime,core.wcm.components.commons.site.container,core.forms.components.wizard.v1.commons]"
+    dependencies="[core.forms.components.runtime.base,core.wcm.components.commons.site.container,core.forms.components.wizard.v1.commons]"
     />
