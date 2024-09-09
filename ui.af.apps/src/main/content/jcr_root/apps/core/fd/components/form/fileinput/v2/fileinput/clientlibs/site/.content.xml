@@ -4,4 +4,4 @@
     allowProxy="{Boolean}true"
     categories="[core.forms.components.fileinput.v2.runtime]"
     jsProcessor="[default:none,min:none]"
-    dependencies="[core.forms.components.runtime.base,core.forms.components.container.v2.runtime]"/>
+    dependencies="[core.forms.components.runtime.base]"/>
