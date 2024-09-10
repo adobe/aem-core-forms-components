@@ -134,7 +134,7 @@ describe("Form Runtime with Fragment", () => {
             .should('have.class', 'aem-GridColumn--offset--default--1');
     })
 
-    it.skip(" add instance and remove instance of model is reflected in html ", () => {
+    it(" add instance and remove instance of model is reflected in html ", () => {
 
         const fragmentId = formContainer._model.items[0].items[0].id;
         const fragmentModel = formContainer._model.getElement(fragmentId);
