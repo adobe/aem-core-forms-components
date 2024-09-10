@@ -60,7 +60,7 @@
                     sling:resourceType="forms-components-examples/components/form/panelcontainer"
                     enabled="{Boolean}true"
                     fieldType="panel"
-                    hideTitle="false"
+                    hideTitle="true"
                     name="panelcontainer1684928145531"
                     readOnly="{Boolean}false"
                     repeatable="false"

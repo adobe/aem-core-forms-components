@@ -69,7 +69,7 @@ describe('Page/Form Authoring', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         // Open auto save tab
-        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Auto-save').click({force:true});
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Drafts').click({force:true});
         cy.get("coral-checkbox[name='./fd:enableAutoSave']").should("exist");
         cy.get("coral-checkbox[name='./fd:enableAutoSave']").click({force:true});
         cy.get("coral-select[name='./fd:autoSaveStrategyType']").should("exist");
