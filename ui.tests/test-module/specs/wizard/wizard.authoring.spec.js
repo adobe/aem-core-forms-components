@@ -46,6 +46,14 @@ describe('Page - Authoring', function () {
         cy.get('body').click(0, 0);
     }
 
+    const addComponentInWizardOfSites = function (componentString, componentType) {
+        const dataPath = "/content/core-components-examples/library/adaptive-form/wizard/jcr:content/root/responsivegrid/demo/component/guideContainer/wizard/*",
+            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
+        cy.selectLayer("Edit");
+        cy.insertComponent(responsiveGridDropZoneSelector, componentString, componentType);
+        cy.get('body').click(0, 0);
+    }
+
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
@@ -154,7 +162,10 @@ describe('Page - Authoring', function () {
             wizardEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/wizard",
             wizardBlockBemSelector = '.cmp-adaptiveform-wizard',
             editDialogConfigurationSelector = "[data-action='CONFIGURE']",
-            wizardEditPathSelector = "[data-path='" + wizardEditPath + "']";
+            wizardEditPathSelector = "[data-path='" + wizardEditPath + "']",
+            panelcontainerPath = wizardEditPath + "/" + afConstants.components.forms.resourceType.panelcontainer.split("/").pop(),
+            panelcontainerDataId = "[data-id='" + panelcontainerPath + "']",
+            panelcontainerDataPath = "[data-path='" + panelcontainerPath + "']";
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -186,6 +197,23 @@ describe('Page - Authoring', function () {
                     cy.deleteComponentByPath(wizardEditPath);
                 })
 
+            });
+        });
+
+        it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
+            cy.cleanTest(wizardEditPath).then(function () {
+                dropWizardInSites();
+                addComponentInWizardOfSites("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
+                addComponentInWizardOfSites("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
+                cy.invokeEditableAction(editDialogConfigurationSelector);
+                cy.wait(2000).then(() => {
+                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
+                    cy.get('body').click(0, 0);
+                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerDataPath);
+                    cy.deleteComponentByPath(wizardEditPath);
+                });
             });
         });
 
