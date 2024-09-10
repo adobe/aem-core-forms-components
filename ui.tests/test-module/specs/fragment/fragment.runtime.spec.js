@@ -186,10 +186,9 @@ describe("Form Runtime with Fragment", () => {
         const [idPanel, panelView] = Object.entries(formContainer._fields)[2];
         const input = "abc";
         const model = formContainer._model.getElement(idPanel);
-        debugger;
         cy.get(`#${idTextBox}`).find("input").clear().type(input).blur().then(x => {
             cy.get(`#${idTextBox} input`).invoke('val').then(val => {
-                expect(val, "Actual value of unselected dropdown").to.equal(input);
+                expect(val, "rules inside fragment (when included in form) did not work").to.equal(input);
             })
         })
 
