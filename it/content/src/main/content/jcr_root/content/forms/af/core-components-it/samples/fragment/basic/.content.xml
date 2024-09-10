@@ -30,6 +30,19 @@
                 name="fragment1685689465369"
                 repeatable="{Boolean}true"
                 wrapData="{Boolean}true"/>
+            <fragment1
+                    jcr:lastModified="{Date}2023-06-02T12:34:24.990+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Fragment 1"
+                    sling:resourceType="forms-components-examples/components/form/fragment"
+                    fieldType="panel"
+                    fragmentPath="/content/forms/af/core-components-it/samples/fragment/test-fragment"
+                    maxOccur="4"
+                    minOccur="0"
+                    name="fragment16856894653691"
+                    repeatable="{Boolean}true"
+                    wrapData="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
