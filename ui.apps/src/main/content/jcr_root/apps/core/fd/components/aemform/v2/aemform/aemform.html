@@ -70,8 +70,10 @@
     <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
         <iframe title="${form.title}"
                 role="${form.roleAttribute || ''}"
+                dataRef="${['dataRef=', request.requestParameterMap['dataRef'][0].toString] @ join=''}"
                 class="cmp-aemform__iframecontent"
-            src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?${request.requestParameterMap['dataRef'] != null ? 'dataRef=' + request.requestParameterMap['dataRef'][0].toString : '' @ context='attribute'}"
+                src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?${request.requestParameterMap['dataRef'] != null ? dataRef : '' @ context='attribute'}${!wcmmode.edit ? '&wcmmode={0}':'' @ format=[wcmmode.toString]}"
+         width="100%;"
             width="100%;"
             data-form-page-path="${form.formEditPagePath}"></iframe>
     <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}"
