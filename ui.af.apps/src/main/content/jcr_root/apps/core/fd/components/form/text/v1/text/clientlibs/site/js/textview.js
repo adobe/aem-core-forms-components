@@ -66,9 +66,15 @@
             updateValue(value) {
                 // html sets undefined value as undefined string in input value, hence this check is added
                 let actualValue = typeof value === "undefined" ? "" :  value;
-
+                const sanitizedValue = window.DOMPurify ? window.DOMPurify.sanitize(actualValue) : actualValue;
                 // since there is no widget for textview, the innerHTML is being changed
-                this.element.children[0].innerHTML = actualValue;
+                // Check if children[0] exists
+                if (this.element.children[0]) {
+                    this.element.children[0].innerHTML = sanitizedValue;
+                } else {
+                    // Create a new child element if it does not exist
+                    this.element.innerHTML = sanitizedValue;
+                }
             }
     }
 
