@@ -72,7 +72,7 @@
                 role="${form.roleAttribute || ''}"
                 dataRef="${['dataRef=', request.requestParameterMap['dataRef'][0].toString] @ join=''}"
                 class="cmp-aemform__iframecontent"
-                src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?${request.requestParameterMap['dataRef'] != null ? dataRef : '' @ context='attribute'}${!wcmmode.edit ? '&wcmmode={0}':'' @ format=[wcmmode.toString]}"
+                src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?${request.requestParameterMap['dataRef'] != null ? dataRef : '' @ context='attribute'}"
          width="100%;"
             width="100%;"
             data-form-page-path="${form.formEditPagePath}"></iframe>
