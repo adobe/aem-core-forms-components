@@ -46,17 +46,19 @@ describe('Page - Authoring', function () {
             .should("exist")
             .scrollIntoView();
         cy.get("[name='./dataRef']").should("have.value", "");
+        cy.get("[name='./dataRef'] + .bindRefSelectorButtonGroup .bindRefSelectorButton").should('be.visible').click({force: true}).then(() => {
+            cy.get("coral-dialog.is-open coral-tree [data-value='$.firstName']")
+                .should("exist")
+                .should('be.visible')
+                .click({force: true});
+            cy.get(".selected-schema").next("div").contains('button:nth-child(2)', 'Select')
+                .should('be.visible')
+                .should("be.enabled")
+                .click();
+            cy.get("[name='./dataRef']").should("have.value", "$.firstName");
+            cy.get(".cq-dialog-submit").should('be.visible').click();
+        })
 
-        cy.get("[name='./dataRef'] + .bindRefSelectorButtonGroup .bindRefSelectorButton").click({force: true});
-        cy.get("coral-dialog.is-open coral-tree [data-value='$.firstName']")
-            .should("exist")
-            .click({force:true});
-        cy.get(".tree-dialog-ok")
-            .should("be.enabled")
-            .click();
-
-        cy.get("[name='./dataRef']").should("have.value", "$.firstName");
-        cy.get(".cq-dialog-submit").click();
     }
 
     const testBindingPersistence = (textInputEditPathSelector) => {
@@ -66,27 +68,27 @@ describe('Page - Authoring', function () {
             .should("exist")
             .scrollIntoView();
         cy.get("[name='./dataRef']").should("have.value", "$.firstName");
-        cy.get('.cq-dialog-cancel').click();
+        cy.get('.cq-dialog-cancel').should('be.visible').click();
     }
 
     const configureDataModel = (formContainerEditPathSelector) => {
-         // click configure action on adaptive form container component
-         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
-         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
- 
-         //open data model tab
-         cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
-         cy.get("[name='./schemaType']").should("exist");
- 
-         //select data model
-         cy.get(".cmp-adaptiveform-container__selectformmodel").click();
-         cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
-         cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
- 
-         //select json schema and save it
-         cy.get(".cmp-adaptiveform-container__schemaselectorcontainer").should("be.visible").click();
-         cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments/core-components-it/samples/databinding/sample.schema.json']").contains('sample.schema.json').should('be.visible').click();
-         cy.get(".cq-dialog-submit").click();
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open data model tab
+        cy.get('.cmp-adaptiveform-container' + '__editdialog').contains('Data Model').click({force: true});
+        cy.get("[name='./schemaType']").should("exist");
+
+        //select data model
+        cy.get(".cmp-adaptiveform-container__selectformmodel").should('be.visible').click();
+        cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
+        cy.get("coral-selectlist-item[value='jsonschema']").contains('Schema').should('be.visible').click();
+
+        //select json schema and save it
+        cy.get(".cmp-adaptiveform-container__schemaselectorcontainer").should("be.visible").click();
+        cy.get("coral-selectlist-item[value='/content/dam/formsanddocuments/core-components-it/samples/databinding/sample.schema.json']").contains('sample.schema.json').should('be.visible').click();
+        cy.get(".cq-dialog-submit").should("be.visible").click();
     }
 
     context('Open Forms Editor', function() {

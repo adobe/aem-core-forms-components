@@ -18,7 +18,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>3.0.57-SNAPSHOT</version>
+        <version>1.1.51-SNAPSHOT</version>
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -82,10 +82,15 @@
                         <!-- Enable processing of OSGI metatype annotations -->
                         <_metatypeannotations>*</_metatypeannotations>
                         <Import-Package>
-                            javax.annotation;version=0.0.0,
-                            com.adobe.cq.wcm.core.components.models;version="[12.0.0,13.0.0)",
+                            <!--                            javax.annotation;version=0.0.0,-->
+                            <!-- https://github.com/jhy/jsoup/issues/1616 -->
+                            javax.annotation;version=!;resolution:=optional,javax.annotation.meta;version=!;resolution:=optional,
+                            <!-- com.adobe.cq.wcm.core.components.models;version="[12.0.0,13.0.0)", -->
                             *
                         </Import-Package>
+                        <Embed-Dependency>
+                            jsoup;
+                        </Embed-Dependency>
                     </instructions>
                 </configuration>
                 <dependencies>
@@ -123,6 +128,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.3</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.adobe.cq</groupId>
             <artifactId>core.wcm.components.core</artifactId>
             <scope>provided</scope>
@@ -138,13 +149,14 @@
         </dependency>
         <!-- AEM SDK API -->
         <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-sdk-api</artifactId>
+            <groupId>com.adobe.aemfd</groupId>
+            <artifactId>aemfd-client-sdk</artifactId>
+            <version>6.0.1192</version>
         </dependency>
         <!-- AEM Forms SDK APi -->
         <dependency>
             <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-forms-sdk-api</artifactId>
+            <artifactId>uber-jar</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>

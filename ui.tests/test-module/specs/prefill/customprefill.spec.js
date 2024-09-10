@@ -47,8 +47,8 @@ describe('Custom Prefill Test', function () {
             cy.intercept('GET', '**/af/data/**').as('afPrefill');
             // preview the form by passing the prefillId parameter in the URL
             cy.previewForm(pagePath, {"params" : [`prefillId=${prefillId}`, `dataRef=service://${customService}`]});
-            // this test ensures that the prefill service is called, returns 500 since service does not exist on server
-            cy.wait('@afPrefill').its('response.statusCode').should('eq', 500);
+            // this test ensures that the prefill service passed in dataRef is called
+            cy.wait('@afPrefill').its('response.statusCode').should('eq', 200);
         } else {
             // preview the form by passing the prefillId parameter in the URL
             cy.previewForm(pagePath, {"params" : [`prefillId=${prefillId}`]});
