@@ -283,9 +283,7 @@ describe(" radiobutton repeatability ", () => {
     }
 
     it("radio button inside the panel should repeat and data is set for repeatable instance", () => {
-        // todo: check later
-        // const initialData = '{"panelcontainer1716541354700":[{}]}';
-        const initialData = '{"panelcontainer1716541354700":[]}';
+        const initialData = '{"panelcontainer1716541354700":[{}]}';
         cy.getFormData().then((result) => {
             expect(result.data.data).to.equal(initialData);
         });
