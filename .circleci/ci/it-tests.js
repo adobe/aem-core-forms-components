@@ -137,10 +137,6 @@ try {
         }
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
-        if (CORE_COMPONENTS) {
-            // we run only some test suites for older core components
-            testSuites = "specs/prefill/customprefill.spec.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.spec.js,specs/actions/submit/submit.runtime.spec.js,specs/actions/render/render_with_openapi.spec.js";
-        }
         // start running the tests
         ci.dir('ui.tests', () => {
             const contextPathOption = CONTEXTPATH ? `-Daem.contextPath=/${CONTEXTPATH}` : '';

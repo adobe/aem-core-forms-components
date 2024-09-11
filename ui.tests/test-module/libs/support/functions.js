@@ -30,11 +30,6 @@ cy.af = {
         return Cypress.env("forms.far") === "classic-latest-cp";
     },
 
-    isOldCoreComponent : () => {
-        // if not defined always return true for local execution to pass
-        return Cypress.env("core.components.version") != null && Cypress.env("core.components.version") !== "${CORE_COMPONENTS}";
-    },
-
     isReleasedAddon : () => {
         // if not defined always return true for local execution to pass
         return Cypress.env("forms.far") == null || Cypress.env("forms.far") === "classic";
