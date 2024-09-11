@@ -79,13 +79,13 @@
 
         handleItemsChange(change, items) {
             if (change?.prevValue !== null) {
-                document.querySelector(`[data-cmp-id='${change.prevValue.id}']`).remove();
+                document.querySelector(`[data-cmp-id='${change?.prevValue?.id}']`)?.remove();
             } else {
                 items.forEach((item) => {
                     if (item.id === change.currentValue.id) {
-                        const prevListItem = document.querySelector(`[data-cmp-id='${items[change.currentValue.index - 1].id}']`);
-                        const newListItem = createListItem(change.currentValue);
-                        prevListItem.parentNode.insertBefore(newListItem, prevListItem.nextSibling);
+                        const prevListItem = document.querySelector(`[data-cmp-id='${items[change.currentValue.index - 1]?.id}']`);
+                        const newListItem = this.createListItem(change.currentValue);
+                        prevListItem?.parentNode?.insertBefore(newListItem, prevListItem.nextSibling);
                     }
                 });
             }
@@ -93,7 +93,7 @@
 
         updateAttribute(id, attributeName, value) {
             const element = document.querySelector(`[data-cmp-id='${id}']`);
-            if (attributeName === 'data-cmp-enabled') {
+            if (attributeName === 'data-cmp-enabled' && element) {
                 if (value === 'false') {
                     element.setAttribute('disabled', 'true');
                 } else {
