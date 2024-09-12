@@ -22,7 +22,7 @@
         static IS = "adaptiveFormContainer";
         static bemBlock = 'cmp-adaptiveform-container';
         static hamburgerSupport = false;
-        static nestingSupport = 5;
+        static nestingSupport = 3;
 
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
@@ -230,16 +230,6 @@
           state = state.items[0];
         }
         return state.items || [];
-    }
-
-    function findDeeplyNestedFirstLi(rootListItem) {
-        // Base case: if the current item has no children, return it
-        const firstChildLi = rootListItem.querySelector('li');
-        if (!firstChildLi) {
-            return rootListItem;
-        }
-        // Recursive case: continue searching in the first child
-        return findDeeplyNestedFirstLi(firstChildLi);
     }
 
     function updateSelectedPanelTitle(anchorElement) {
@@ -464,18 +454,12 @@
     
         if (direction === 'prev' && newActiveItemIndex < 0) {
             newActiveItemIndex = menuListItems.length - 1;
-        } 
-        // else if (direction === 'next' && newActiveItemIndex >= menuListItems.length) {
-        //     newActiveItemIndex = 0;
-        // }
-
-        // Find the next visible item
+        }
         while (!isEligible(menuListItems[newActiveItemIndex], direction)) {
             newActiveItemIndex = direction === 'prev' 
                 ? (newActiveItemIndex - 1 + menuListItems.length) % menuListItems.length 
                 : (newActiveItemIndex + 1) % menuListItems.length;
         }
-    
         const newActiveItem = menuListItems[newActiveItemIndex];
         activeItemId = newActiveItem?.getAttribute('data-cmp-id');
         newActiveItem?.click();
@@ -559,7 +543,6 @@
             addEventsToNavigationButtons();
             const rootListItems = menu.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' > li');
 
-            // let deeplyNestedFirstLi = findDeeplyNestedFirstLi(rootListItems[0]);
             if (rootListItems[0] && rootListItems[0].tagName === 'LI') {
                 rootListItems[0].click();
                 menu.style.display = 'none';
@@ -664,5 +647,4 @@
     } else {
         document.addEventListener("DOMContentLoaded", onDocumentReady);
     }
-
 })();
