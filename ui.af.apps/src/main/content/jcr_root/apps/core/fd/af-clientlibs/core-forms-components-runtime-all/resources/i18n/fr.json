@@ -84,5 +84,7 @@
     "years": "années",
     "more": "plus",
     "less": "moins"
-  }
+  },
+  "saveDraftSuccessMessage"     :   "Le brouillon est enregistré avec succès.",
+  "saveDraftErrorMessage"       :   "Une erreur s'est produite nous empêchant d'enregistrer votre brouillon. Veuillez réessayer."
 }
