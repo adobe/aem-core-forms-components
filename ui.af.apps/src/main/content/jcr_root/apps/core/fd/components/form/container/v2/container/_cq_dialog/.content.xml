@@ -88,7 +88,7 @@
                                       jcr:primaryType="nt:unstructured"
                                       sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                       name="./fd:hamburgerMenu"
-                                      text="Add Hamburger Menu Support"
+                                      text="Add hamburger menu support"
                                       value="{Boolean}true"/>
                                 </items>
                             </container>
