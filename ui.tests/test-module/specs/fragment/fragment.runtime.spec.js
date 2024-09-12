@@ -178,4 +178,35 @@ describe("Form Runtime with Fragment", () => {
                     });
             });
     });
+
+
+    it("rules inside fragment should work when included in form", () => {
+        const [idTextBox, fieldView] = Object.entries(formContainer._fields)[0];
+        const [idTextBox1, fieldView1] = Object.entries(formContainer._fields)[1];
+        const [idPanel, panelView] = Object.entries(formContainer._fields)[4];
+        const input = "abc";
+        const model = formContainer._model.getElement(idPanel);
+        cy.get(`#${idTextBox}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${idTextBox1} input`).invoke('val').then(val => {
+                expect(val, "rules inside fragment (when included in form) did not work").to.equal(input);
+            })
+        })
+
+        cy.get(`#${model.items[0].id}`).should('have.text', 'Thanks');
+    });
+
+    it("same fragment referred twice should have unique ids", () => {
+        const [idTextBox, fieldView] = Object.entries(formContainer._fields)[2];
+        const [idTextBox1, fieldView1] = Object.entries(formContainer._fields)[3];
+        const [idPanel, panelView] = Object.entries(formContainer._fields)[5];
+        const input = "abc";
+        const model = formContainer._model.getElement(idPanel);
+        cy.get(`#${idTextBox}`).find("input").clear().type(input).blur().then(x => {
+            cy.get(`#${idTextBox1} input`).invoke('val').then(val => {
+                expect(val, "rules inside fragment (when included in form) did not work").to.equal(input);
+            })
+        })
+
+        cy.get(`#${model.items[0].id}`).should('have.text', 'Thanks');
+    });
 })
