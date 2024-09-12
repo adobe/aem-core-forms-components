@@ -11,7 +11,8 @@ const selectors = {
     hamburgerMenuNavLeft: `.cmp-adaptiveform-container-nav-button-left`,
     hamburgerMenuNavRight: `.cmp-adaptiveform-container-nav-button-right`,
     hamburgerMenuNavTitle: `.cmp-adaptiveform-container-nav-title`,
-    hamburgerMenuTopContainer: `.cmp-adaptiveform-container-top-container`
+    hamburgerMenuTopContainer: `.cmp-adaptiveform-container-top-container`,
+    hamburgerMenuBreadCrumbsContainer: `.cmp-adaptiveform-container-breadcrumbs-container`
 }
 
 const cssClasses = {
@@ -53,6 +54,11 @@ let formContainer = null
         cy.get(selectors.hamburgerMenu+ ' > li').should('have.length', 2);
     })
 
+    it(`Test hamburger menu should render breadcrumb container`, () => {
+        cy.viewport('iphone-x');
+        cy.get(selectors.hamburgerMenuBreadCrumbsContainer).should('be.visible');
+    })
+
     it(`Test hamburger menu should render navigation bar`, () => {
         cy.viewport('iphone-x');
         cy.get(selectors.hamburgerIcon).click();
@@ -64,6 +70,13 @@ let formContainer = null
         cy.get(selectors.hamburgerIcon).click();
         cy.get(selectors.hamburgerMenu+ ' > li > a').first().should('have.class', cssClasses.hamburgerMenuActiveParent);
         cy.get(selectors.hamburgerMenu+ ' > li > ul > li > a').first().should('have.class', cssClasses.hamburgerMenuActive);
+    });
+
+    it(`Test hamburger menu should render navigation bar along with title`, () => {
+        cy.viewport('iphone-x');
+        cy.get(selectors.hamburgerIcon).click();
+        cy.get(selectors.hamburgerMenuNavBar).should('be.visible');
+        cy.get(selectors.hamburgerMenuNavBar + ' > ' + selectors.hamburgerMenuNavTitle).should('be.visible').and('have.text', 'Panel 1');;
     });
 
     it(`Test hamburger menu should render navigation bar along with title`, () => {
