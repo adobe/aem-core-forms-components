@@ -119,7 +119,7 @@ describe('Page - Authoring', function () {
           cy.openAuthoring(templateDataPath + ".html");
         });
     
-        it.only('Selecting default pattern from the policy and it should be selected by default', function () {
+        it('Selecting default pattern from the policy and it should be selected by default', function () {
           const getPreviewFrame = () => {
             return cy
             .get('iframe#PreviewFrame')
