@@ -84,5 +84,7 @@
     "years": "anos",
     "more": "mais",
     "less": "menos"
-  }
+  },
+  "saveDraftSuccessMessage"     :   "O rascunho foi salvo com sucesso.",
+  "saveDraftErrorMessage"       :   "Ocorreu um erro que nos impediu de salvar seu rascunho. Por favor, tente novamente."
 }

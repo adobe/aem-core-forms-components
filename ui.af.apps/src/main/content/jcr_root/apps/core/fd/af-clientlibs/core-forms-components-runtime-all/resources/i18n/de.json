@@ -84,5 +84,7 @@
     "years": "Jahre",
     "more": "mehr",
     "less": "weniger"
-  }
+  },
+  "saveDraftSuccessMessage"     :   "Der Entwurf wurde erfolgreich gespeichert.",
+  "saveDraftErrorMessage"       :   "Es ist ein Fehler aufgetreten, der uns daran gehindert hat, Ihren Entwurf zu speichern. Bitte versuchen Sie es erneut."
 }
