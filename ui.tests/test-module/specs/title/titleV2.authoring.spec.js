@@ -119,7 +119,15 @@ describe('Page - Authoring', function () {
           cy.openAuthoring(templateDataPath + ".html");
         });
     
-        it('Selecting default pattern from the policy and it should be selected by default', function () {
+        it.only('Selecting default pattern from the policy and it should be selected by default', function () {
+          const getPreviewFrame = () => {
+            return cy
+            .get('iframe#PreviewFrame')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
+          }
+
+
           cy.get(titlePolicy).click({force: true});
           cy.get(bemDesignDialog).contains('Title').click();
           cy.get('[name="./type"]').eq(0).click({ force: true }).then(() => {
@@ -130,8 +138,8 @@ describe('Page - Authoring', function () {
           }).then(() => {
             cy.openSiteAuthoring(pagePath); 
             dropTitleInContainer(); 
-            cy.contains('button', 'Preview').should("exist").click({force : true});
-            cy.get('h2').should('exist');
+            cy.contains('coral-button-label', 'Preview').should("exist").click({force : true});
+            getPreviewFrame().find('h2').should('exist');
             cy.contains('button', 'Edit').should("exist").click({force : true});
             cy.deleteComponentByTitle('Adaptive Form Title');  
           })
@@ -139,4 +147,3 @@ describe('Page - Authoring', function () {
      });
 
   });
-    

@@ -167,7 +167,7 @@ describe("Form with Submit Button", () => {
         cy.url().should('include', 'abc.html');
     })
 
-    if (!cy.af.isOldCoreComponent()) { // don't run this test for old core components
+    if (true) { // don't run this test for old core components
         it("invalid field marked using API should not submit the form", () => {
             cy.previewForm(invalidApiPagePath).then(p => {
                 let formContainer = p;

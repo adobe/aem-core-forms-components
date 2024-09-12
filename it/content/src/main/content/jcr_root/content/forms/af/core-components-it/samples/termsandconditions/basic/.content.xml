@@ -117,7 +117,7 @@
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="core/fd/components/form/toggleablelink/v1/toggleablelink"
                     enabled="{Boolean}true"
-                    enum="http://localhost"
+                    enum="https://aemcomponents.dev"
                     enumNames="label for the link"
                     fieldType="checkbox-group"
                     hideTitle="false"

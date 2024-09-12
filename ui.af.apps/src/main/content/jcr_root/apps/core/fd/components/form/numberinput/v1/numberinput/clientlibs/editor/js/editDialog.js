@@ -64,11 +64,11 @@
             let maxInput = maxField.querySelector('input');
             // update step property to 0.01 for minField and maxField
             if(typeDropdownComponent.value === 'number'){
-                minField.step = "0.01";
-                maxField.step = "0.01";
+                minField.setAttribute("step", "0.01")
+                maxField.setAttribute("step", "0.01")
             } else {
-                minField.step = "1";
-                maxField.step = "1";
+                minField.setAttribute("step", "1")
+                maxField.setAttribute("step", "1")
                 // Reset value if it is a decimal
                 if (minInput.value.includes('.')) {
                     minInput.value = Math.floor(minInput.value);
