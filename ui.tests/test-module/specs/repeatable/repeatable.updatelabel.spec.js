@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe( "Form Runtime with Panel Container", () => {
-
+describe("Form Runtime with Panel Container", () => {
     const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/repeatability-tests/repeatedpanelcount.html";
     let formContainer = null;
 
@@ -24,17 +23,35 @@ describe( "Form Runtime with Panel Container", () => {
         });
     });
 
-    it(" add instance should add instance at correct index and label should be correctly updated ", () => {
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        const [id, fieldView] = Object.entries(formContainer._fields)[2];
-        const labelSelector = ".cmp-adaptiveform-panelcontainer__label";
-        // click the button with navigate
-        cy.get(`#${id}`).find("button").click().then(x => {
-            const [id, fieldView] = Object.entries(formContainer._fields)[2]
-            // check if instance is added and label is set correctly
-            cy.get(`#${id} ${labelSelector}`)
-                .should('have.text', 'text input 1');
-        });
-    })
+    const checkLabelText = (textInputId, panelId, textInputLabel, panelLabel) => {
+        const panelLabelSelector = ".cmp-container__label";
+        const textInputLabelSelector = ".cmp-adaptiveform-textinput__label";
+        cy.get(`#${textInputId} ${textInputLabelSelector}`).should('have.text', textInputLabel);
+        cy.get(`#${panelId} ${panelLabelSelector}`).should('have.text', panelLabel);
+    };
 
-})
+    it("add instance should add instance at correct index and label should be correctly updated", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        const [buttonid, fieldView] = Object.entries(formContainer._fields)[3];
+        const [textinputid, fieldView1] = Object.entries(formContainer._fields)[0];
+        const [panelid, fieldView2] = Object.entries(formContainer._fields)[1];
+
+        checkLabelText(textinputid, panelid, 'Text Input1', 'Panel1');
+
+        cy.get(`#${buttonid}`).find("button").click().then(() => {
+            const [textinputid1, fieldView3] = Object.entries(formContainer._fields)[4];
+            const [panelid1, fieldView4] = Object.entries(formContainer._fields)[5];
+            const [buttonid1, fieldView5] = Object.entries(formContainer._fields)[3];
+
+            checkLabelText(textinputid1, panelid1, 'Text Input2', 'Panel2');
+
+            cy.get(`#${buttonid1}`).find("button").click().then(() => {
+                const [textinputid2, fieldView6] = Object.entries(formContainer._fields)[7];
+                const [panelid2, fieldView7] = Object.entries(formContainer._fields)[8];
+
+                checkLabelText(textinputid1, panelid1, 'Text Input3', 'Panel3');
+                checkLabelText(textinputid2, panelid2, 'Text Input2', 'Panel2');
+            });
+        });
+    });
+});
