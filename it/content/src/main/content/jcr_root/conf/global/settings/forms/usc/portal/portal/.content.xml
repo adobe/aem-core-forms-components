@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2024-06-11T19:20:44.087+05:30"
+        cq:lastModifiedBy="admin"
+        jcr:primaryType="cq:PageContent"
+        cloud-config-path="/conf/global/settings/cloudconfigs/azurestorage/AzureConfig"
+        storage="azure"/>
+</jcr:root>

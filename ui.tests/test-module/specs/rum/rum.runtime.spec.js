@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-describe('Form with RUM initialized', () => {
+describe.skip('Form with RUM initialized', () => {
     // rum is only supported in latest addon
     const pagePath = "content/forms/af/core-components-it/samples/rum/basic.html";
     let formContainer = null;

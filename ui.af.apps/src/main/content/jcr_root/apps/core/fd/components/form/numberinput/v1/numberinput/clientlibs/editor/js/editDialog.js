@@ -52,6 +52,37 @@
     }
      **/
 
+    function handleTypeDropdown(dialog) {
+        let typeDropdownComponent = dialog.find(NUMERICINPUT_TYPE)[0];
+        manageMinAndMaxValidation();
+        typeDropdownComponent.addEventListener("change", manageMinAndMaxValidation );
+
+        function manageMinAndMaxValidation() {
+            let minField = dialog.find(NUMERICINPUT_MINIMUM)[0];
+            let maxField = dialog.find(NUMERICINPUT_MAXIMUM)[0];
+            let minInput = minField.querySelector('input');
+            let maxInput = maxField.querySelector('input');
+            // update step property to 0.01 for minField and maxField
+            if(typeDropdownComponent.value === 'number'){
+                minField.setAttribute("step", "0.01")
+                maxField.setAttribute("step", "0.01")
+            } else {
+                minField.setAttribute("step", "1")
+                maxField.setAttribute("step", "1")
+                // Reset value if it is a decimal
+                if (minInput.value.includes('.')) {
+                    minInput.value = Math.floor(minInput.value);
+                    minInput.setAttribute('value', minInput.value);
+                }
+                if (maxInput.value.includes('.')) {
+                    maxInput.value = Math.floor(maxInput.value);
+                    maxInput.setAttribute('value', maxInput.value);
+                }
+            }
+        }
+
+    }
+
     function handleDisplayPatternDropDown(dialog) {
         Utils.handlePatternDropDown(dialog,NUMERICINPUT_DISPLAYPATTERN,NUMERICINPUT_DISPLAYFORMAT);
     }
@@ -65,5 +96,5 @@
         Utils.handlePatternFormat(dialog,NUMERICINPUT_LANGDISPLAYVALUE,NUMERICINPUT_LANG);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleLang);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleLang, handleTypeDropdown);
 })(jQuery);

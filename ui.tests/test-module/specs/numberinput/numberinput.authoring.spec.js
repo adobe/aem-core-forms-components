@@ -99,6 +99,39 @@ describe('Page - Authoring', function () {
             });
         })
 
+       it('verify Minimum and Maximum fields in edit dialog of NumberInput', function () {
+            dropNumberInputInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
+            cy.invokeEditableAction(editDialogConfigurationSelector);
+            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
+                // get the minimum and maximum fields
+                cy.get(numberInputBlockBemSelector + "__minimum").scrollIntoView().should('be.visible');
+                cy.get(numberInputBlockBemSelector + "__maximum").scrollIntoView().should('be.visible');
+                // check the step attribute
+                cy.get(numberInputBlockBemSelector + "__minimum").should('have.attr', 'step', '0.01');
+                cy.get(numberInputBlockBemSelector + "__maximum").should('have.attr', 'step', '0.01');
+                // set the minimum and maximum fields
+                cy.get(numberInputBlockBemSelector + "__minimum").clear().type('10.2');
+                cy.get(numberInputBlockBemSelector + "__maximum").clear().type('11.5');
+                // click on the basic tab and update the type field
+                cy.get(numberInputBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
+                    cy.get(numberInputBlockBemSelector + "__type").children('button').click();
+                    cy.get(".coral3-SelectList-item").contains('Integer').should('be.visible').click();
+                    // check the step attribute
+                    cy.get(numberInputBlockBemSelector + "__minimum").scrollIntoView().should('have.attr', 'step', '1');
+                    cy.get(numberInputBlockBemSelector + "__maximum").scrollIntoView().should('have.attr', 'step', '1');
+                    // verify the values in the DOM
+                    cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
+                        cy.get(numberInputBlockBemSelector + "__minimum input").should('have.attr', 'value', '10');
+                        cy.get(numberInputBlockBemSelector + "__maximum input").should('have.attr', 'value', '11');
+                        cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                            cy.deleteComponentByPath(numberInputDrop);
+                        });
+                    })
+                });
+        });
+});
+
         // todo: leadDigits and fracDigits are not supported as of today
         it.skip('verify editFormat Value Getting saved correctly', function () {
             dropNumberInputInContainer();

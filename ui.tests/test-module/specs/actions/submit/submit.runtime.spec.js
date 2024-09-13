@@ -21,6 +21,7 @@ describe("Form with Submit Button", () => {
     const externalPagePathSubmit = "content/forms/af/core-components-it/samples/actions/submit/external.html"
     const submitSuccessRulePagePath = "content/forms/af/core-components-it/samples/actions/submit/submitsuccessrule.html"
     const emailPagePath = "content/forms/af/core-components-it/samples/actions/submit/email.html"
+    const invalidApiPagePath = "content/forms/af/core-components-it/samples/actions/submit/validate.html"
     const bemBlock = 'cmp-button'
     const IS = "adaptiveFormButton"
     const selectors = {
@@ -131,7 +132,7 @@ describe("Form with Submit Button", () => {
                 cy.url().should('include', '?prefillId');
             });
         })
-    }    
+    }
 
 
     it("Submit Action test without passing any custom submit event", () => {
@@ -159,11 +160,37 @@ describe("Form with Submit Button", () => {
         cy.intercept('POST', '**af/submit**').as('formSubmit');
 
         cy.get(`.cmp-adaptiveform-button__widget`).click();
-
         // Wait for the form submission interception to occur
         //cy.wait('@formSubmit');
 
         // Assert that the URL has changed after form submission
         cy.url().should('include', 'abc.html');
     })
+
+    if (true) { // don't run this test for old core components
+        it("invalid field marked using API should not submit the form", () => {
+            cy.previewForm(invalidApiPagePath).then(p => {
+                let formContainer = p;
+                expect(formContainer, "formcontainer is initialized").to.not.be.null;
+                const [textInput, textInputFieldView] = Object.entries(formContainer._fields)[0];
+                const incorrectInput = "aaa";
+                const correctInput = "bbbbbbbbbbbbbbbb";
+                cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                    cy.get(`#${textInput}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Please fill in this field.")
+                    cy.get(`#${textInput}`).find("input").clear().type(incorrectInput).focus().blur().then(x => {
+                        cy.get(`#${textInput}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"Comments must be at least 15 characters long.");
+                        cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                            cy.get('body').should('not.contain', "Thank you for submitting the form.\n")
+                            cy.get(`#${textInput}`).find("input").clear().type(correctInput).focus().blur().then(x => {
+                                cy.get(`#${textInput}`).find(".cmp-adaptiveform-textinput__errormessage").should('have.text',"")
+                                cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                                    cy.get('body').should('contain', "Thank you for submitting the form.\n")
+                                });
+                            });
+                        });
+                    })
+                });
+            });
+        });
+    }
 })
