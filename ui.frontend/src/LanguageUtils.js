@@ -89,7 +89,7 @@ class LanguageUtils {
             translatedText = this.#langData[lang][key];
             if (snippets) {
                 //resolve message with snippet
-                translatedText = translatedText.replace(/{(\d+)}/g, function (match, number) {
+                translatedText = translatedText.replace(/\${(\d+)}/g, function (match, number) {
                     return typeof snippets[number] != 'undefined'
                         ? snippets[number]
                         : match;

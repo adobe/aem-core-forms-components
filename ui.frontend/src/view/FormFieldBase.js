@@ -232,9 +232,9 @@ class FormFieldBase extends FormField {
         let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
         let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
         widgetElement = widgetElements || widgetElement;
-        const model = this.getModel?.();    
+        const model = this.getModel?.();
     
-        if (widgetElement && model?.screenReaderText) {
+        if (widgetElement && model?.screenReaderText && model?.enabled) {
             // Use DOMPurify to sanitize and strip HTML tags
             const screenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(model.screenReaderText, { ALLOWED_TAGS: [] }) : model.screenReaderText;
             widgetElement.setAttribute('aria-label', screenReaderText);
