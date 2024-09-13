@@ -84,5 +84,7 @@
     "years": "년",
     "more": "기타",
     "less": "미만"
-  }
+  },
+  "saveDraftSuccessMessage"     :   "초안이 성공적으로 저장되었습니다.",
+  "saveDraftErrorMessage"       :   "초안을 저장하지 못하는 동안 오류가 발생했습니다. 다시 시도해 주세요."
 }

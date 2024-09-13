@@ -84,5 +84,7 @@
     "years": "年",
     "more": "更多",
     "less": "更少"
-  }
+  },
+  "saveDraftSuccessMessage"     :   "草稿保存成功。",
+  "saveDraftErrorMessage"       :   "出現錯誤，導致我們無法儲存您的草稿。請再試一次。"
 }
