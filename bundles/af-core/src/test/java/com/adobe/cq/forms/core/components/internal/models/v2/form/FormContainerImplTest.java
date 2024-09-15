@@ -46,6 +46,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
@@ -451,6 +452,30 @@ public class FormContainerImplTest {
         request.setParameterMap(tempMap);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
         assertTrue(Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
+        // reset the parameter map
+        request.setParameterMap(new HashMap<>());
+    }
+
+    @Test
+    void testDraftIdPropertyWhenDataRefIsSet() throws Exception {
+        MockSlingHttpServletRequest request = context.request();
+        Map<String, Object> tempMap = new HashMap<>();
+        tempMap.put(GuideConstants.AF_DATA_REF, "service://FP/draft/KH5DOFY2RMWVOOVREE324MRXIY");
+        request.setParameterMap(tempMap);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
+        assertEquals("KH5DOFY2RMWVOOVREE324MRXIY", formContainer.getProperties().get(ReservedProperties.FD_DRAFT_ID));
+        // reset the parameter map
+        request.setParameterMap(new HashMap<>());
+    }
+
+    @Test
+    void testDraftIdPropertyWhenDraftIdIsNotPresentInDataRef() throws Exception {
+        MockSlingHttpServletRequest request = context.request();
+        Map<String, Object> tempMap = new HashMap<>();
+        tempMap.put(GuideConstants.AF_DATA_REF, "service://FP/draft");
+        request.setParameterMap(tempMap);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
+        assertNull(formContainer.getProperties().get(ReservedProperties.FD_DRAFT_ID));
         // reset the parameter map
         request.setParameterMap(new HashMap<>());
     }
