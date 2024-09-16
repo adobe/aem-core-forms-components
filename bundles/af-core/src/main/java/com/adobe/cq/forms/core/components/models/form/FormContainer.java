@@ -122,6 +122,12 @@ public interface FormContainer extends Container {
         return null;
     }
 
+    @Nullable
+    @JsonIgnore
+    default String getThemeClientLibRef() {
+        return null;
+    }
+
     /**
      * Returns a unique identifier
      *

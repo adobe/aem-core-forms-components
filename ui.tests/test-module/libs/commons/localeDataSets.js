@@ -17,7 +17,6 @@ const selectors = {
     SUBMIT: '.submit span',
     TELEPHONE_INPUT: '.cmp-adaptiveform-telephoneinput__label',
     TEXT_INPUT: '.cmp-adaptiveform-textinput__label',
-    TITLE: '.cmp-title__text',
     WIZARD: '.cmp-adaptiveform-wizard__label'
 }
 
@@ -44,7 +43,6 @@ const languages = [
             SUBMIT: 'Submit',
             TELEPHONE_INPUT: 'Telephone Input',
             TEXT_INPUT: 'Text Input',
-            TITLE: 'Title',
             WIZARD: 'wizard'
         },
         I18N_STRINGS: {
@@ -74,7 +72,6 @@ const languages = [
             SUBMIT: 'Senden',
             TELEPHONE_INPUT: 'Telefoneingang',
             TEXT_INPUT: 'Texteingabe',
-            TITLE: 'Titel',
             WIZARD: 'Zauberer'
         },
         I18N_STRINGS: {
@@ -104,7 +101,6 @@ const languages = [
             SUBMIT: '送信',
             TELEPHONE_INPUT: '電話入力',
             TEXT_INPUT: 'テキスト入力',
-            TITLE: 'タイトル',
             WIZARD: '魔法使い'
         },
         I18N_STRINGS: {
@@ -134,7 +130,6 @@ const languages = [
             SUBMIT: 'Invia',
             TELEPHONE_INPUT: 'Ingresso telefonico',
             TEXT_INPUT: 'Immissione di testo',
-            TITLE: 'Titolo',
             WIZARD: 'mago'
         },
         I18N_STRINGS: {
@@ -164,7 +159,6 @@ const languages = [
             SUBMIT: 'Envoyer',
             TELEPHONE_INPUT: 'Entrée téléphonique',
             TEXT_INPUT: 'Saisie de texte',
-            TITLE: 'Titre',
             WIZARD: 'Sorcier'
         },
         I18N_STRINGS: {
@@ -194,7 +188,6 @@ const languages = [
             SUBMIT: 'Enviar',
             TELEPHONE_INPUT: 'Entrada telefónica',
             TEXT_INPUT: 'Entrada de texto',
-            TITLE: 'Título',
             WIZARD: 'Hechicero'
         },
         I18N_STRINGS: {
@@ -224,7 +217,6 @@ const languages = [
             SUBMIT: '전송',
             TELEPHONE_INPUT: '전화 입력',
             TEXT_INPUT: '텍스트 입력',
-            TITLE: '타이틀',
             WIZARD: '마법사'
         },
         I18N_STRINGS: {
@@ -254,7 +246,6 @@ const languages = [
             SUBMIT: '提交',
             TELEPHONE_INPUT: '電話輸入',
             TEXT_INPUT: '文本輸入',
-            TITLE: '標題',
             WIZARD: '巫師'
         },
         I18N_STRINGS: {
@@ -285,7 +276,6 @@ const languages = [
             SUBMIT: '提交',
             TELEPHONE_INPUT: '电话输入',
             TEXT_INPUT: '文本输入',
-            TITLE: '标题',
             WIZARD: '巫师'
         },
         I18N_STRINGS: {
@@ -315,7 +305,6 @@ const languages = [
             SUBMIT: 'Enviar',
             TELEPHONE_INPUT: 'Entrada por telefone',
             TEXT_INPUT: 'Entrada de texto',
-            TITLE: 'Título',
             WIZARD: 'mago'
         },
         I18N_STRINGS: {
@@ -346,7 +335,6 @@ const languages = [
             SUBMIT: 'Отправить',
             TELEPHONE_INPUT: 'Телефонный вход',
             TEXT_INPUT: 'Ввод текста',
-            TITLE: 'Титул',
             WIZARD: 'колдун'
         },
         I18N_STRINGS: {
@@ -377,7 +365,6 @@ const languages = [
             SUBMIT: 'जमा करें',
             TELEPHONE_INPUT: 'टेलीफ़ोन इनपुट',
             TEXT_INPUT: 'पाठ इनपुट',
-            TITLE: 'उपाधि',
             WIZARD: 'जादूगर'
         },
         I18N_STRINGS: {

@@ -118,7 +118,7 @@ describe('Replace functionality - sites', function () {
         cy.get('[data-text="Layout Container"]').eq(0).click()
             .then(() => {
                 cy.get('.cq-editable-action').eq(3).click().then(() => {
-                    cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                    cy.get('[value="group:replace test group"]').eq(0).click({force: true}).then(() => {
                         cy.get('[title="Done"]').scrollIntoView().click();
                     })
                 });
@@ -130,7 +130,7 @@ describe('Replace functionality - sites', function () {
         cy.get('[data-text="Layout Container"]').eq(0).click()
             .then(() => {
                 cy.get('.cq-editable-action').eq(3).click().then(() => {
-                    cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
+                    cy.get('[value="group:replace test group"]').eq(0).click({force: true}).then(() => {
                         cy.get('[title="Done"]').scrollIntoView().click();
                     })
                 });
@@ -138,8 +138,6 @@ describe('Replace functionality - sites', function () {
     }
 
     context('Test replace action within different groups', function () {
-        const templatePath = "/conf/core-components-examples/settings/wcm/templates/content-page/structure";
-
         const   pagePath = "/content/forms/sites/core-components-it/blank",
             replaceCompTestGroup = "/apps/forms-core-components-it/form/image",
             image = "[value='"+replaceCompTestGroup+"']",

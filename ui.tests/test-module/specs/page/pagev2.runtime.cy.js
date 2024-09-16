@@ -36,8 +36,8 @@ describe("Form with Page component version 2 for eds rendering", () => {
     beforeEach(() => {
         cy.openPage(pagePath);
     });
-
-    it(" form should get rendered with main tag in body and should have pre code tags ", () => {
+    //This servlet which is provided by wcm franklin is not available in 650. We can skip the test in 650.
+    it.skip(" form should get rendered with main tag in body and should have pre code tags ", () => {
         cy.get("html body main div div div pre code").should("exist");
         cy.get("html body main div div div pre code").then(($codeEle)=>{
             const encodedJson=$codeEle.get()[0].innerHTML;

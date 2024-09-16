@@ -27,22 +27,6 @@
         window.open(url);
     };
 
-    ns.aemform.v2.actions.openCreateFormWizard = function (editable) {
-        $.ajax({
-            url: Granite.HTTP.externalize(ns.aemform.v2.constants.AEM_FORM_WIZARD_LINK),
-            type: "GET",
-            success: function(data){
-                var wizardURL = new URL($(data).get(0).href);
-                wizardURL.searchParams.append('embedAt', btoa(editable.path));
-                wizardURL.searchParams.append('redirectUrl', btoa(window.location.href));
-                window.open(Granite.HTTP.externalize(wizardURL.href), "_top");
-            },
-            error: function (error) {
-                console.log("Error: " + error);
-            }
-        });
-    }
-
     ns.aemform.v2.actions.formExists = function (editable) {
         return $(ns.aemform.v2.constants.AEM_FORM_SELECTOR, editable.dom).addBack(ns.aemform.v2.constants.AEM_FORM_SELECTOR).length > 0;
     };
@@ -52,7 +36,7 @@
     };
 
     ns.aemform.v2.actions.featureEnabled = function (editable) {
-        return Granite.Toggles.isEnabled("FT_CQ-4343036");
+        return Granite.Toggles ? Granite.Toggles.isEnabled("FT_CQ-4343036") : true;
     };
 
 }(window.Granite, CQ.FormsCoreComponents));
