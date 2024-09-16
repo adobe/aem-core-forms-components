@@ -275,6 +275,17 @@
                         sling:resourceType="forms-components-examples/components/form/tabsontop"
                         fieldType="panel"
                         name="tabsontop1720602310299">
+                        <textinput_copy_813545878
+                            fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer##textinput_copy_813548878##jcr:title##8693&quot;}"
+                            jcr:created="{Date}2024-07-10T14:36:51.802+05:30"
+                            jcr:createdBy="admin"
+                            jcr:lastModified="{Date}2024-07-10T14:36:51.802+05:30"
+                            jcr:lastModifiedBy="admin"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Text Input"
+                            sling:resourceType="forms-components-examples/components/form/textinput"
+                            fieldType="text-input"
+                            name="textinput1720602290283_copy_20"/>
                         <panelcontainer
                             fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##wizard##panelcontainer_126720495##tabsontop##panelcontainer##jcr:title##8112&quot;}"
                             jcr:created="{Date}2024-07-10T14:35:24.042+05:30"

@@ -22,7 +22,7 @@
         static IS = "adaptiveFormContainer";
         static bemBlock = 'cmp-adaptiveform-container';
         static hamburgerSupport = false;
-        static nestingSupport = 5;
+        static nestingSupport = 3;
 
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
@@ -222,10 +222,11 @@
         return item.fieldType === 'panel' && item.type === 'array'
     }
 
-    function updateSelectedPanelTitle(anchorElement) {
+    function updateSelectedPanelTitle(anchorElement, clickedAnchorElement) {
         const navTitleText = anchorElement?.innerText;
+        const clickedAnchorElementText = clickedAnchorElement?.innerText;
         const navTitle = document.querySelector(FormContainerV2.selectors.navTitle);
-        navTitle.innerText = navTitleText;
+        navTitle.innerText = navTitleText || clickedAnchorElementText || '';
     }
 
     function checkFirstNonPanel(fieldModel) {
@@ -254,18 +255,19 @@
         const menuItems = document.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' li');
         const fieldModel = formContainer?.getField(targetElement?.getAttribute('data-cmp-id'))?.getModel();
         const elementID = checkFirstNonPanel(fieldModel) || targetElement?.getAttribute('data-cmp-id');
+        const clickedAnchorElement = targetElement?.querySelector('a');
         targetElement = menu.querySelector("[data-cmp-id='"+ elementID + "']");
         resetMenuItems(menuItems);
         activateCurrentItem(targetElement);
         const anchorElement = targetElement?.querySelector('a');
         anchorElement?.classList.add(FormContainerV2.cssClasses.active);
         anchorElement?.querySelector('button')?.classList?.toggle(FormContainerV2.cssClasses.closeNavButton);
-        updateSelectedPanelTitle(anchorElement);
-        highlightMenuTree(anchorElement);
+        updateSelectedPanelTitle(anchorElement, clickedAnchorElement);
+        highlightMenuTree(anchorElement, clickedAnchorElement);
                     
-        const itemId = targetElement.getAttribute('data-cmp-id') || activeItemId;
-        const form = formContainer.getModel();;
-        const field = formContainer.getField(itemId);
+        const itemId = targetElement?.getAttribute('data-cmp-id') || activeItemId;
+        const form = formContainer?.getModel();;
+        const field = formContainer?.getField(itemId);
         menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
         if (form && field && field._model) {
           form.setFocus(field._model);
@@ -322,7 +324,7 @@
                     navTitleUpdated = true;
                 }
             }
-    
+
             const li = document.createElement('li');
             const link = document.createElement('a');
             const textSpan = document.createElement('span');
@@ -402,20 +404,24 @@
         return document.querySelector(FormContainerV2.selectors.active).parentElement;
     }
 
-    function highlightMenuTree(element) {
-        const closestLI = element.closest('li');
+    function highlightMenuTree(element, clickedAnchorElement) {
+        const closestLI = element?.closest('li');
+        const clickedClosestLI = clickedAnchorElement?.closest('li');
+
+        const li = closestLI || clickedClosestLI;
     
-        if (!closestLI || closestLI === document.body) {
+        if (!li || li === document.body) {
             return;
         }
-        let anchorElement = closestLI.querySelector('a');
+        let anchorElement = li?.querySelector('a');
+
         if(anchorElement) {
             anchorElement?.classList.add(FormContainerV2.cssClasses.activeParent);
             anchorElement?.querySelector('button')?.classList.add(FormContainerV2.cssClasses.closeNavButton);
-            if(closestLI.parentElement.classList.contains(FormContainerV2.cssClasses.hamburgerMenu)) {
+            if(li.parentElement.classList.contains(FormContainerV2.cssClasses.hamburgerMenu)) {
                 anchorElement.style.fontWeight = 'bold'
             }
-            highlightMenuTree(closestLI.parentElement);
+            highlightMenuTree(li.parentElement);
         }
     }
 
