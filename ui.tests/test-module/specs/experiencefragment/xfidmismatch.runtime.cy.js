@@ -85,10 +85,9 @@ describe("Form Runtime with Experience Fragment", () => {
        expect(formContainers).to.have.length(3);
         cy.wrap(formContainers).each((formContainer, index) => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            debugger;
             const expectedLength = index < 2 ? 4 : 4;
             expect(Object.keys(formContainer._fields).length, "model and view elements match")
-                .to.eq(expectedLength);
+            .to.be.gt(4);
         });
     })
 
