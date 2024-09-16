@@ -238,3 +238,39 @@ function customMessageUsingInvalidApi(field, globals) {
         globals.functions.setProperty(field, {valid : true});
     }
 }
+
+
+/**
+ * updatePanelLabel
+ * @name updatePanelLabel
+ * @param {object} repeatablePanel
+ * @param {scope} globals
+ */
+function updatePanelLabel(repeatablePanel, globals) {
+    var label = globals.field.who_lives_name.$label.value;//field is current field
+    var panelLabel = globals.field.$label.value;
+    var currentIndex = globals.field.$index; // to prevent unnecessary dom update
+
+    globals.functions.setProperty(globals.field,{label : {"value" : panelLabel + (globals.field.$index+1)}}); // on initialize panel label not working right now, will be fixed soon
+    globals.functions.setProperty(globals.field.who_lives_name,{label : {"value" : label+"<b>"+(globals.field.$index+1)+"</b>"}});
+    // walk through other instances and update their label
+    repeatablePanel.$parent.forEach(panel => {
+        if (currentIndex != panel.$index) {
+            globals.functions.setProperty(panel,{label : {"value" : panelLabel + (panel.$index+1)}});
+            globals.functions.setProperty(panel.who_lives_name,{label : {"value" : label+"<b>"+(panel.$index+1)+"</b>"}});
+        }
+    });
+}
+
+
+
+/**
+ * Tests add instance with dispatchEvent
+ * @name addPanelInstance
+ * @param {object} panel
+ * @param {scope} globals
+ */
+function addPanelInstance(panel,globals)
+{
+    globals.functions.dispatchEvent(panel,'addInstance', globals.field.$parent.$index + 1);
+}

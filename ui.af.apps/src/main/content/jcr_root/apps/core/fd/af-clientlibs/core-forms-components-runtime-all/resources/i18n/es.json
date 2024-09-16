@@ -84,5 +84,7 @@
     "years": "años",
     "more": "más",
     "less": "menos"
-  }
+  },
+  "saveDraftSuccessMessage"     :   "El borrador se guarda correctamente.",
+  "saveDraftErrorMessage"       :   "Hubo un error que nos impidió guardar su borrador. Por favor inténtalo de nuevo."
 }
