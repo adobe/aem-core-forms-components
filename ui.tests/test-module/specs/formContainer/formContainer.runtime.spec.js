@@ -6,20 +6,20 @@ const pagePath = "content/forms/af/core-components-it/samples/formcontainer/basi
 
 const selectors = {
     hamburgerIcon : `.cmp-adaptiveform-container-hamburger-icon`,
-    hamburgerMenu : `.cmp-adaptiveform-container-hamburgerMenu`,
+    hamburgerMenu : `.cmp-adaptiveform-container-hamburger-menu`,
     hamburgerMenuNavBar: `.cmp-adaptiveform-container-nav-bar`,
-    hamburgerMenuNavLeft: `.cmp-adaptiveform-container-nav-button-left`,
-    hamburgerMenuNavRight: `.cmp-adaptiveform-container-nav-button-right`,
+    hamburgerMenuNavPrevious: `.cmp-adaptiveform-container-nav-button-previous`,
+    hamburgerMenuNavNext: `.cmp-adaptiveform-container-nav-button-next`,
     hamburgerMenuNavTitle: `.cmp-adaptiveform-container-nav-title`,
-    hamburgerMenuTopContainer: `.cmp-adaptiveform-container-top-container`,
+    hamburgerMenuContainer: `.cmp-adaptiveform-container-hamburger-menu-container`,
     hamburgerMenuBreadCrumbsContainer: `.cmp-adaptiveform-container-breadcrumbs-container`
 }
 
 const cssClasses = {
     hamburgerMenuActive: 'cmp-adaptiveform-container-hamburger-menu-item-active',
     hamburgerMenuActiveParent: 'cmp-adaptiveform-container-hamburger-menu-item-activeparent',
-    hamburgerMenuNavDown: `cmp-adaptiveform-container-nav-button-down`,
-    hamburgerMenuNavUp: `cmp-adaptiveform-container-nav-button-up`,
+    hamburgerMenuNavOpen: `cmp-adaptiveform-container-nav-button-open`,
+    hamburgerMenuNavClose: `cmp-adaptiveform-container-nav-button-Close`,
 }
 
 let formContainer = null
@@ -45,7 +45,7 @@ let formContainer = null
     it(`Test hamburger menu and nav bar support should not available in web view`, () => {
         cy.get(selectors.hamburgerIcon).should('have.css', 'display', 'none');
         cy.get(selectors.hamburgerMenu).should('have.css', 'display', 'none');
-        cy.get(selectors.hamburgerMenuTopContainer).should('have.css', 'display', 'none');
+        cy.get(selectors.hamburgerMenuContainer).should('have.css', 'display', 'none');
     })
 
     it(`Test hamburger menu should render exact number of items`, () => {
@@ -103,17 +103,17 @@ let formContainer = null
         cy.get(selectors.hamburgerIcon).click();
 
         // Checking the right navigation
-        cy.get(selectors.hamburgerMenuNavRight).click();
+        cy.get(selectors.hamburgerMenuNavNext).click();
         cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a').should('have.class', cssClasses.hamburgerMenuActiveParent);
         cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a').should('have.class', cssClasses.hamburgerMenuActive);
-        cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a > button').should('have.class', cssClasses.hamburgerMenuNavDown);
+        cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a > button').should('have.class', cssClasses.hamburgerMenuNavOpen);
 
 
         // Checking the left navigation
-        cy.get(selectors.hamburgerMenuNavLeft).click();
+        cy.get(selectors.hamburgerMenuNavPrevious).click();
         cy.get(selectors.hamburgerMenu + ' > li > a').first().should('have.class', cssClasses.hamburgerMenuActiveParent);
         cy.get(selectors.hamburgerMenu + ' > li > ul > li > a').first().should('have.class', cssClasses.hamburgerMenuActive);
-        cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a > button').should('have.class', cssClasses.hamburgerMenuNavDown);
+        cy.get(selectors.hamburgerMenu + ' > li > ul > li').eq(1).find('a > button').should('have.class', cssClasses.hamburgerMenuNavOpen);
         
     });
 
