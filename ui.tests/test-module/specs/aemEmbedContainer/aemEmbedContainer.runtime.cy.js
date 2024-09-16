@@ -49,7 +49,7 @@ describe("Sites with Aem Embed Container", () => {
             cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 11);
         })
 
-        it.only('Test iframe src with dataRef', () => {
+        it('Test iframe src with dataRef', () => {
             cy.get('.cmp-aemform__iframecontent').should('have.attr', 'src').should('not.include', "wcmmode");
         });
     })
