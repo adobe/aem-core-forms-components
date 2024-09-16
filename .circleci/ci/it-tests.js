@@ -146,7 +146,7 @@ try {
         let testSuites = params.join(',');
         if (CORE_COMPONENTS) {
             // we run only some test suites for older core components
-            testSuites = "specs/prefill/customprefill.spec.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.spec.js,specs/actions/submit/submit.runtime.spec.js,specs/actions/render/render_with_openapi.spec.js";
+            testSuites = "specs/prefill/customprefill.cy.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.cy.js,specs/actions/submit/submit.runtime.cy.js,specs/actions/render/render_with_openapi.cy.js";
         }
         // start running the tests
         ci.dir('ui.tests', () => {

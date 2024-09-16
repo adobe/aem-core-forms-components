@@ -98,7 +98,7 @@
 
             function onElementFocusChanged(event){
                 let fieldData = getCurrentFieldData(event.detail.fieldId, dataLayerContent);
-                if(fieldData[FIELD_TYPE] === 'button'){
+                if(fieldData && fieldData[FIELD_TYPE] === 'button'){
                     return;
                 }
                 dataLayer.push({
