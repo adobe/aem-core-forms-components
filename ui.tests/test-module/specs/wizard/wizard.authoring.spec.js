@@ -162,6 +162,7 @@ describe('Page - Authoring', function () {
             wizardEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/wizard",
             wizardBlockBemSelector = '.cmp-adaptiveform-wizard',
             editDialogConfigurationSelector = "[data-action='CONFIGURE']",
+            navigationPanelSelector = "[data-action='PANEL_SELECT']",
             wizardEditPathSelector = "[data-path='" + wizardEditPath + "']",
             panelcontainerPath = wizardEditPath + "/" + afConstants.components.forms.resourceType.panelcontainer.split("/").pop(),
             panelcontainerDataId = "[data-id='" + panelcontainerPath + "']",
@@ -206,7 +207,7 @@ describe('Page - Authoring', function () {
                 addComponentInWizardOfSites("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
                 addComponentInWizardOfSites("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-                cy.invokeEditableAction(editDialogConfigurationSelector);
+                cy.invokeEditableAction(navigationPanelSelector);
                 cy.wait(2000).then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
                     cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
