@@ -22,24 +22,23 @@
         static IS = "adaptiveFormContainer";
         static bemBlock = 'cmp-adaptiveform-container';
         static hamburgerSupport = false;
-        static nestingSupport = 3;
+        static nestingSupport = 5;
 
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             menu: `.${FormContainerV2.bemBlock}-menu`,
-            hamburgerMenu: `.${FormContainerV2.bemBlock}-hamburgerMenu`,
-            hamburgerMenuIcon: `.${FormContainerV2.bemBlock}-hamburger-icon`,
+            hamburgerMenuTopBar: `.${FormContainerV2.bemBlock}-hamburger-menu-top-bar`,
+            hamburgerMenu: `.${FormContainerV2.bemBlock}-hamburger-menu`,
             hamburgerSubMenu: `.${FormContainerV2.bemBlock}-submenu`,
-            hamburgerMenuContainer: `.${FormContainerV2.bemBlock}-hamburgerMenuContainer`,
-            topContainer: `.${FormContainerV2.bemBlock}-top-container`,
-            containerMenu: `.${FormContainerV2.bemBlock}-container-menu`,
+            hamburgerMenuIcon: `.${FormContainerV2.bemBlock}-hamburger-icon`,
+            topContainer: `.${FormContainerV2.bemBlock}-hamburger-menu-container`,
             navBar: `.${FormContainerV2.bemBlock}-nav-bar`,
             navTitle: `.${FormContainerV2.bemBlock}-nav-title`,
             navLink: `.${FormContainerV2.bemBlock}-nav-link`,
-            upNavButton: `.${FormContainerV2.bemBlock}-nav-button-up`,
-            downNavButton: `.${FormContainerV2.bemBlock}-nav-button-down`,
-            leftNavButton: `.${FormContainerV2.bemBlock}-nav-button-left`,
-            rightNavButton: `.${FormContainerV2.bemBlock}-nav-button-right`,
+            closeNavButton: `.${FormContainerV2.bemBlock}-nav-button-close`,
+            openNavButton: `.${FormContainerV2.bemBlock}-nav-button-open`,
+            previousNavButton: `.${FormContainerV2.bemBlock}-nav-button-previous`,
+            nextNavButton: `.${FormContainerV2.bemBlock}-nav-button-next`,
             navButtonsContainer: `.${FormContainerV2.bemBlock}-nav-buttons`,
             active: `.${FormContainerV2.bemBlock}-hamburger-menu-item-active`,
             breadCrumbsContainer: `.${FormContainerV2.bemBlock}-breadcrumbs-container`
@@ -48,9 +47,9 @@
         static cssClasses = {
             active: `${FormContainerV2.bemBlock}-hamburger-menu-item-active`,
             activeParent: `${FormContainerV2.bemBlock}-hamburger-menu-item-activeparent`,
-            hamburgerMenu: `${FormContainerV2.bemBlock}-hamburgerMenu`,
-            upNavButton: `${FormContainerV2.bemBlock}-nav-button-up`,
-            downNavButton: `${FormContainerV2.bemBlock}-nav-button-down`,
+            hamburgerMenu: `${FormContainerV2.bemBlock}-hamburger-menu`,
+            closeNavButton: `${FormContainerV2.bemBlock}-nav-button-close`,
+            openNavButton: `${FormContainerV2.bemBlock}-nav-button-open`,
             navLink: `${FormContainerV2.bemBlock}-nav-link`,
             hamburgerSubMenu: `${FormContainerV2.bemBlock}-submenu`,
         }
@@ -69,7 +68,7 @@
                     activateCurrentItem(targetElement);
                     const anchorElement = targetElement?.querySelector('a');
                     anchorElement?.classList.add(FormContainerV2.cssClasses.active);
-                    anchorElement?.querySelector('button')?.classList?.toggle(FormContainerV2.cssClasses.upNavButton);
+                    anchorElement?.querySelector('button')?.classList?.toggle(FormContainerV2.cssClasses.closeNavButton);
                     updateSelectedPanelTitle(anchorElement);
                     highlightMenuTree(anchorElement);
                     renderBreadCrumbs(menu);
@@ -194,7 +193,6 @@
                 const { payload } = action;
                 const { changes, field } = payload;
                 const { items } = field;
-                // console.log('action changed log: ', action);
                 if (changes && changes.length > 0) {
                     changes.forEach((change) => {
                         switch (change.propertyName) {
@@ -224,14 +222,6 @@
         return item.fieldType === 'panel' && item.type === 'array'
     }
 
-    function getAllItems(formContainer) {
-        let state = formContainer._model.getState(true);
-        while (state?.items?.length === 1) {
-          state = state.items[0];
-        }
-        return state.items || [];
-    }
-
     function updateSelectedPanelTitle(anchorElement) {
         const navTitleText = anchorElement?.innerText;
         const navTitle = document.querySelector(FormContainerV2.selectors.navTitle);
@@ -258,18 +248,18 @@
             return;
         }
         if(event.target.tagName === "BUTTON")  {
-            event.target.classList.toggle(FormContainerV2.cssClasses.upNavButton);
+            event.target.classList.toggle(FormContainerV2.cssClasses.closeNavButton);
             return;
         }
         const menuItems = document.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' li');
         const fieldModel = formContainer?.getField(targetElement?.getAttribute('data-cmp-id'))?.getModel();
-        const elementID = checkFirstNonPanel(fieldModel)
+        const elementID = checkFirstNonPanel(fieldModel) || targetElement?.getAttribute('data-cmp-id');
         targetElement = menu.querySelector("[data-cmp-id='"+ elementID + "']");
         resetMenuItems(menuItems);
         activateCurrentItem(targetElement);
         const anchorElement = targetElement?.querySelector('a');
         anchorElement?.classList.add(FormContainerV2.cssClasses.active);
-        anchorElement?.querySelector('button')?.classList?.toggle(FormContainerV2.cssClasses.upNavButton);
+        anchorElement?.querySelector('button')?.classList?.toggle(FormContainerV2.cssClasses.closeNavButton);
         updateSelectedPanelTitle(anchorElement);
         highlightMenuTree(anchorElement);
                     
@@ -289,8 +279,8 @@
             if (subMenu) subMenu.style.display = 'none';
             const link = item.querySelector('a');
             if(link) {
-                link?.querySelector('button')?.classList.remove(FormContainerV2.cssClasses.upNavButton);
-                link?.querySelector('button')?.classList.add(FormContainerV2.cssClasses.downNavButton);
+                link?.querySelector('button')?.classList.remove(FormContainerV2.cssClasses.closeNavButton);
+                link?.querySelector('button')?.classList.add(FormContainerV2.cssClasses.openNavButton);
                 link?.classList.remove(FormContainerV2.cssClasses.active, FormContainerV2.cssClasses.activeParent);
                 link.style.fontWeight = 'normal';
             }
@@ -308,7 +298,7 @@
     function createDownArrowButton() {
         const downArrowButton = document.createElement('button');
         downArrowButton.type='button';
-        downArrowButton.classList.add(FormContainerV2.cssClasses.downNavButton);
+        downArrowButton.classList.add(FormContainerV2.cssClasses.openNavButton);
         return downArrowButton;
     }
 
@@ -320,8 +310,8 @@
     
         const ul = document.createElement('ul');
         ul.classList.add('cmp-adaptiveform-container-breadcrumbs-container-list');
-        let navTitleUpdated = false;
         
+        let navTitleUpdated = false;
         items.forEach((item) => {
             if (item?.fieldType !== "panel") return;
 
@@ -354,13 +344,10 @@
                     }
                 }
             }
-
             if(flag) {
                 li.setAttribute('data-cmp-has-input', flag);
             }
-
             link.classList.add(FormContainerV2.cssClasses.navLink);
-
             if (isRepeatable(item)) {
                 const subMenu = createHamburgerMenu(formContainer, item.items, counter + 1);
                 subMenu?.childNodes.forEach(child => ul.appendChild(child));
@@ -424,7 +411,7 @@
         let anchorElement = closestLI.querySelector('a');
         if(anchorElement) {
             anchorElement?.classList.add(FormContainerV2.cssClasses.activeParent);
-            anchorElement?.querySelector('button')?.classList.add(FormContainerV2.cssClasses.upNavButton);
+            anchorElement?.querySelector('button')?.classList.add(FormContainerV2.cssClasses.closeNavButton);
             if(closestLI.parentElement.classList.contains(FormContainerV2.cssClasses.hamburgerMenu)) {
                 anchorElement.style.fontWeight = 'bold'
             }
@@ -474,11 +461,11 @@
     }
 
     function addEventsToNavigationButtons() {
-        const leftNavButton = document.querySelector(FormContainerV2.selectors.leftNavButton);
-        const rightNavButton = document.querySelector(FormContainerV2.selectors.rightNavButton);
+        const previousNavButton = document.querySelector(FormContainerV2.selectors.previousNavButton);
+        const nextNavButton = document.querySelector(FormContainerV2.selectors.nextNavButton);
         const menuListItems = document.querySelector(FormContainerV2.selectors.hamburgerMenu).querySelectorAll('li');
-        leftNavButton.addEventListener('click', () => movePrev(menuListItems));
-        rightNavButton.addEventListener('click', () => moveNext(menuListItems));
+        previousNavButton.addEventListener('click', () => movePrev(menuListItems));
+        nextNavButton.addEventListener('click', () => moveNext(menuListItems));
     }
 
     function generateBreadcrumbs(breadcrumbs) {
@@ -523,26 +510,27 @@
     function renderHamburgerItems(panels, formContainer) {
         const parentContainer = document.querySelector(FormContainerV2.selectors.menu);
         const hamburgerIcon = document.querySelector(FormContainerV2.selectors.hamburgerMenuIcon);
-        const hamburgerMenuContainer = document.querySelector(FormContainerV2.selectors.hamburgerMenuContainer);
+        const hamburgerMenuTopBar = document.querySelector(FormContainerV2.selectors.hamburgerMenuTopBar);
 
         const menu = createHamburgerMenu(formContainer, panels);
         if(menu) {
             menu.classList.add(FormContainerV2.cssClasses.hamburgerMenu);
 
-            setupHamburgerEventListeners(hamburgerIcon, menu);
-
-            setupOutsideClickListener(hamburgerIcon, menu);
+            attachHamburgerEventListeners(hamburgerIcon, menu);
+            attachOutsideClickHandler(hamburgerIcon, menu);
 
             hideIndividualComponentsNavigation();
-            setupMenuEventListeners(menu);
+            attachMenuEventListeners(menu);
             styleSubmenuItems(menu);
             parentContainer.innerHTML='';
-            parentContainer.appendChild(hamburgerMenuContainer);
+            parentContainer.appendChild(hamburgerMenuTopBar);
             parentContainer.appendChild(menu);
 
+            // Add events to navigation buttons
             addEventsToNavigationButtons();
-            const rootListItems = menu.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' > li');
 
+             // Automatically click the first root list item if it exists
+            const rootListItems = menu.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' > li');
             if (rootListItems[0] && rootListItems[0].tagName === 'LI') {
                 rootListItems[0].click();
                 menu.style.display = 'none';
@@ -550,12 +538,12 @@
         }
     }
 
-    function setupMenuEventListeners(menu) {
+    function attachMenuEventListeners(menu) {
         menu.addEventListener('click', clickHandler);
         menu.addEventListener('ontouchstart', clickHandler);
     }
 
-    function setupHamburgerEventListeners(hamburgerIcon, menu) {
+    function attachHamburgerEventListeners(hamburgerIcon, menu) {
         const toggleMenuVisibility = () => {
             menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
         };
@@ -582,7 +570,7 @@
         });
     }
 
-    function setupOutsideClickListener(hamburger, menu) {
+    function attachOutsideClickHandler(hamburger, menu) {
         window.addEventListener('click', (e) => {
             if (!hamburger.contains(e.target) && !menu.contains(e.target) && menu.style.display === 'flex') {
                 menu.style.display = 'none';
@@ -590,9 +578,21 @@
         });
     }
 
-    function structureMenuData(data) {
-        const panels = data.filter(item => item?.fieldType ===  "panel");
+    function getAllPanels(formContainer) {
+        let state = formContainer._model.getState(true);
+        while (state?.items?.length === 1) {
+          state = state.items[0];
+        }
+        const items = state.items || [];
+        const panels = items.filter(item => item?.fieldType ===  "panel");
         return panels;
+    }
+
+    function initializeHamburgerMenu(formContainer) {
+        const panels = getAllPanels(formContainer);
+        if(formContainer?.getModel()?.properties?.['fd:hamburgerMenu']) {
+            renderHamburgerItems(panels, formContainer);
+        }
     }
 
     async function onDocumentReady() {
@@ -608,11 +608,7 @@
         function onInit(e) {
             let formContainer =  e.detail;
             formContainerGlobal = formContainer;
-            const items = getAllItems(formContainer);
-            const menuData = structureMenuData(items);
-            if(formContainer?.getModel()?.properties?.['fd:hamburgerMenu']) {
-                renderHamburgerItems(menuData, formContainer);
-            }
+            initializeHamburgerMenu(formContainer);
             let formEl = formContainer.getFormElement();
             setTimeout(() => {
                 let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");

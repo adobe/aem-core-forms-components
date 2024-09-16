@@ -34,7 +34,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-enabled="false"] {
     opacity: 0.4;
 }
 
-.cmp-adaptiveform-container-hamburgerMenu {
+.cmp-adaptiveform-container-hamburger-menu {
     display: none;
     flex-direction: column;
     position: absolute;
@@ -51,7 +51,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-enabled="false"] {
     width: 215px;
 }
 
-.cmp-adaptiveform-container-hamburgerMenu > li {
+.cmp-adaptiveform-container-hamburger-menu > li {
     position: relative;
     border: none;
     margin: 2px 0px;
@@ -115,7 +115,7 @@ a:hover {
 }
 
 
-.cmp-adaptiveform-container-top-container {
+.cmp-adaptiveform-container-hamburger-menu-container {
     display: flex;
     flex-direction: column;
     margin: 10px;
@@ -126,7 +126,7 @@ a:hover {
     .cmp-adaptiveform-container-hamburger-icon {
         display: none;
     }
-    .cmp-adaptiveform-container-top-container {
+    .cmp-adaptiveform-container-hamburger-menu-container {
         display: none;
     }
 }
@@ -149,7 +149,7 @@ a:hover {
     border-bottom: 2px solid #D3D3D3;
 }
 
-.cmp-adaptiveform-container-nav-button-left {
+.cmp-adaptiveform-container-nav-button-previous {
     width: 20px;
     cursor: pointer;
     background: no-repeat;
@@ -161,7 +161,7 @@ a:hover {
     background-image:url('../resources/images/leftChevron.svg');
 }
 
-.cmp-adaptiveform-container-nav-button-right {
+.cmp-adaptiveform-container-nav-button-next {
     width: 20px;
     cursor: pointer;
     background: no-repeat;
@@ -173,15 +173,15 @@ a:hover {
     background-image: url('../resources/images/rightChevron.svg');
 }
 
-[dir="rtl"] .cmp-adaptiveform-container-nav-button-left {
+[dir="rtl"] .cmp-adaptiveform-container-nav-button-previous {
     transform: rotate(180deg);
 }
 
-[dir="rtl"] .cmp-adaptiveform-container-nav-button-right {
+[dir="rtl"] .cmp-adaptiveform-container-nav-button-next {
     transform: rotate(180deg);
 }
 
-.cmp-adaptiveform-container-nav-button-down {
+.cmp-adaptiveform-container-nav-button-open {
     width: 20px;
     cursor: pointer;
     background: no-repeat;
@@ -193,7 +193,7 @@ a:hover {
     background-image: url('../resources/images/downChevron.svg');
 }
 
-.cmp-adaptiveform-container-nav-button-up {
+.cmp-adaptiveform-container-nav-button-close {
     width: 20px;
     cursor: pointer;
     background: no-repeat;
@@ -205,7 +205,7 @@ a:hover {
     background-image: url('../resources/images/upChevron.svg');
 }
 
-.cmp-adaptiveform-container-hamburgerMenuContainer {
+.cmp-adaptiveform-container-hamburger-menu-top-bar {
     display: flex;
     float: inline-end;
 }
