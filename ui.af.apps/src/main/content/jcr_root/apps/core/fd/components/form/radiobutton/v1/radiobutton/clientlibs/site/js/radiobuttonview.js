@@ -133,11 +133,9 @@
                 if (modelValue != null && widget.value != null && (modelValue.toString() == widget.value.toString())) {
                     widget.checked = true;
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED);
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, true);
                 } else {
                     widget.checked = false;
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
             super.updateEmptyStatus();
