@@ -47,12 +47,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
-import com.adobe.cq.forms.core.components.models.form.AutoSaveConfiguration;
-import com.adobe.cq.forms.core.components.models.form.Container;
-import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
-import com.adobe.cq.forms.core.components.models.form.FormContainer;
-import com.adobe.cq.forms.core.components.models.form.FormMetaData;
-import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.commons.LanguageUtil;
@@ -123,6 +118,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
+
+    @Override
+    public String getFieldType() {
+        if (fieldTypeJcr == null) {
+            return FieldType.FORM.getValue();
+        }
+        return fieldType.getValue();
+    }
 
     @PostConstruct
     protected void initFormContainerModel() {

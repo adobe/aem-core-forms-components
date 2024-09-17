@@ -36,6 +36,7 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.DatePicker;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
@@ -81,6 +82,14 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
     @Override
     public Date getExclusiveMinimumDate() {
         return ComponentUtils.clone(exclusiveMinimumVaue);
+    }
+
+    @Override
+    public String getFieldType() {
+        if (fieldTypeJcr == null) {
+            return FieldType.DATE_INPUT.getValue();
+        }
+        return fieldType.getValue();
     }
 
     public @NotNull Map<ConstraintType, String> getConstraintMessages() {

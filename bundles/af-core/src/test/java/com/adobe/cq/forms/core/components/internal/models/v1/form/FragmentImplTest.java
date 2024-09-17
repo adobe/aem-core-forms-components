@@ -34,9 +34,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
-import com.adobe.cq.forms.core.components.models.form.Fragment;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -53,6 +51,7 @@ public class FragmentImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_FRAGMENT = CONTENT_ROOT + "/fragment";
     private static final String PATH_FRAGMENT_DAMPATH = CONTENT_ROOT + "/fragment-dampath";
+    private static final String PATH_FRAGMENT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/fragment-without-fieldtype";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -184,5 +183,11 @@ public class FragmentImplTest {
         FormClientLibManager formClientLibManager = context.request().adaptTo(FormClientLibManager.class);
         List<String> clientLibs = formClientLibManager.getClientLibRefList();
         assertEquals(1, clientLibs.size());
+    }
+
+    @Test
+    void testNoFieldType() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITHOUT_FIELDTYPE, Fragment.class, context);
+        assertEquals(FieldType.PANEL.getValue(), fragment.getFieldType());
     }
 }

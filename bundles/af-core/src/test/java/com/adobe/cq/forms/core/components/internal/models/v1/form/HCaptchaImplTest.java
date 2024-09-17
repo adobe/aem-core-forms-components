@@ -42,6 +42,7 @@ public class HCaptchaImplTest {
     private static final String BASE = "/form/hcaptcha";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_HCAPTCHA = CONTENT_ROOT + "/hcaptcha";
+    private static final String PATH_HCAPTCHA_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/hcaptcha-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -136,5 +137,11 @@ public class HCaptchaImplTest {
         Mockito.when(hCaptchaConfiguration.getSiteKey()).thenThrow(new GuideException("Error while fetching site key"));
         HCaptcha hcaptcha = Utils.getComponentUnderTest(PATH_HCAPTCHA, HCaptcha.class, context);
         assertNotNull(hcaptcha.getCaptchaProperties());
+    }
+
+    @Test
+    void testNoFieldType() {
+        HCaptcha hCaptcha = Utils.getComponentUnderTest(PATH_HCAPTCHA_WITHOUT_FIELDTYPE, HCaptcha.class, context);
+        assertEquals(FieldType.CAPTCHA.getValue(), hCaptcha.getFieldType());
     }
 }

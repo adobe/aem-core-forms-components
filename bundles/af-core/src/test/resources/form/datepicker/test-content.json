@@ -123,5 +123,12 @@
     "jcr:title" : "def",
     "fieldType": "date-input",
     "displayValueExpression": "($field.$value & abc)"
+  },
+  "datepicker-without-fieldtype" : {
+    "id": "datepicker-without-fieldtype1",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
+    "name" : "abc",
+    "jcr:title" : "def"
   }
 }

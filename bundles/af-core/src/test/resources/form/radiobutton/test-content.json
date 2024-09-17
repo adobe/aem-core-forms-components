@@ -334,5 +334,21 @@
       "true"
     ],
     "validateExpMessage": "Required Expression"
+  },
+  "radiobutton-without-fieldtype": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/radiobutton/v1/radiobutton",
+    "name": "radiobutton_12345",
+    "jcr:title": "Radio Button",
+    "orientation": "vertical",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "enumNames": [
+      "<p>Item 1</p>",
+      "<p>Item 2</p>"
+    ],
+    "fieldType": "radio-group"
   }
 }
