@@ -48,7 +48,7 @@ var formsConstants = {
                 "fragment": "/apps/forms-components-examples/components/form/fragment",
                 "fragmentcontainer": "/apps/forms-components-examples/components/form/fragmentcontainer",
                 "termsandconditions": "/apps/forms-components-examples/components/form/termsandconditions",
-                "password": "/apps/forms-components-examples/components/form/password"
+                "password": "/apps/forms-components-examples/components/form/password",
                 "submitButton": "/apps/forms-components-examples/components/form/actions/submit",
                 "password": "/apps/forms-components-examples/components/form/password"
             }

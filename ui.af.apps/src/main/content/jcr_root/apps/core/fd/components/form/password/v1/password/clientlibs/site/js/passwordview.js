@@ -93,8 +93,10 @@
                 const widget = this.getWidget();
                 if (widget.type === "password") {
                     widget.type = "text";
+                    this.getEyeIcon().classList.remove('close');
                     } else {
                      widget.type = "password";
+                     this.getEyeIcon().classList.add('close');
                     }
                 }            
         }       
