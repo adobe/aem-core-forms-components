@@ -84,7 +84,7 @@ describe("Form with Reset Button", () => {
                 cy.wrap(field).find("select").select(["Orange"]);
                 break;
             case "adaptiveFormFileInput":
-                cy.wrap(field).find("input").attachFile("empty.pdf");
+                cy.attachFile(`#${field[0].id} input`, ["empty.pdf"]);
                 break;
             case "adaptiveFormDatePicker":
                 cy.wrap(field).find("input").type("2022-12-23");

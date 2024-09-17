@@ -55,7 +55,7 @@ common:
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
             cd ui.tests/test-module
-            TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
+            TESTFILES=$(circleci tests glob "specs/**/*.cy.js")
             cd ../../
             echo "false" >> TEST_EXECUTION_STATUS.txt
              echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose --split-by=timings
@@ -94,6 +94,13 @@ common:
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
+      - run:
+          name: Move .cy.json files to target directory of cypress
+          command: |
+            mkdir -p ui.tests/test-module/target/cy-json
+            find ui.tests/test-module -name "*.cy.json" -exec mv {} ui.tests/test-module/target/cy-json/ \;
+      - store_artifacts:
+          path: ui.tests/test-module/target/cy-json
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs
