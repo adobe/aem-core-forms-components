@@ -20,6 +20,7 @@ jobs:
           git config --global user.name "ci-build"
 
       - name: Sync with Base Branch
+        if: ${{ github.event.pull_request.base.ref != 'master' }}
         run: |
           git fetch origin
           git checkout ${{ github.event.pull_request.base.ref }}
