@@ -84,5 +84,7 @@
     "years": "anni",
     "more": "più",
     "less": "meno"
-  }
+  },
+  "saveDraftSuccessMessage"     :   "La bozza è stata salvata con successo.",
+  "saveDraftErrorMessage"       :   "Si è verificato un errore che ci ha impedito di salvare la tua bozza. Per favore riprova."
 }

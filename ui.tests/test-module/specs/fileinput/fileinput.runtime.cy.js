@@ -40,10 +40,13 @@ const getFormObjTest = (fileList) => {
 };
 
 const checkFilePreviewInFileAttachment = (component) => {
+    cy.window().then((win) => {
+        cy.stub(win, 'open').as('open')
+    })
     cy.get(component).then(() => {
         cy.get(".cmp-adaptiveform-fileinput__filename").each(($file) => {
             cy.wrap($file).click();
-            cy.window().its('open').should('be.called');
+            cy.get('@open').should('be.called');
         })
     });
 };
@@ -150,21 +153,23 @@ describe("Form with File Input - Basic Tests", () => {
     it(" after attaching the file widget value is reset to allow duplicate file ", () => {
         const sampleFileName = 'sample2.txt', fileInput = "input[name='fileinput1']";
         cy.get(fileInput).should('have.value', "");
-        cy.get(fileInput).attachFile(sampleFileName).then(() => {
-            cy.get(".cmp-adaptiveform-fileinput__filename").contains(sampleFileName);
-            cy.get(fileInput).should(($element) => {
-                const actualValue = $element.val();
-                expect(actualValue.includes("")).to.be.true;
-            })
+        cy.attachFile(fileInput, [sampleFileName]).then(() => {
+                cy.get(".cmp-adaptiveform-fileinput__filename").contains(sampleFileName);
+                cy.get(fileInput).should(($element) => {
+                    const actualValue = $element.val();
+                    expect(actualValue.includes("")).to.be.true;
+                })
         });
+
         // attaching the same file again to check duplicate file attachment
-        cy.get(fileInput).attachFile(sampleFileName).then(() => {
+        cy.attachFile(fileInput, [sampleFileName]).then(() => {
             cy.get(".cmp-adaptiveform-fileinput__filename").should('have.length', 2);
             cy.get(fileInput).should(($element) => {
                 const actualValue = $element.val();
                 expect(actualValue.includes("")).to.be.true;
             })
         });
+
     });
 
     it(" model's changes are reflected in the html ", () => {
@@ -201,7 +206,7 @@ describe("Form with File Input - Basic Tests", () => {
                     } else {
                         cy.get(`#${id}`).should('have.attr', 'data-cmp-readonly', 'false');
                     }
-                    cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
+                    cy.attachFile(`#${id} input`, [fileName]).then(x => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
                         cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--filled');
@@ -228,9 +233,9 @@ describe("Form with File Input - Basic Tests", () => {
     it("check preview and delete functionality of duplicate files", () => {
         let sampleFileNames = ['sample2.txt','sample.txt','sample2.txt'];
         const fileInput = "input[name='fileinput1']";
-        cy.get(fileInput).attachFile(sampleFileNames[0]);
-        cy.get(fileInput).attachFile(sampleFileNames[1]);
-        cy.get(fileInput).attachFile(sampleFileNames[0]);
+        cy.attachFile(fileInput, [sampleFileNames[0]]);
+        cy.attachFile(fileInput, [sampleFileNames[1]]);
+        cy.attachFile(fileInput, [sampleFileNames[0]]);
 
         checkFilePreviewInFileAttachment(fileInput);
 
@@ -281,13 +286,18 @@ describe("Form with File Input - Prefill & Submit tests", () => {
             });
 
             // attach the file
-            cy.get(fileInput.selector).attachFile(fileInput.fileNames);
+            cy.attachFile(fileInput.selector, fileInput.fileNames);
 
-            // check for successful attachment of file in the view
-            checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
-
-            // check preview of the file
-            checkFilePreviewInFileAttachment(fileInput.selector);
+            if (idx === 0) {
+                cy.on('window:alert', (str) => {
+                    expect(str).to.equal('File(s) test.bat are unsupported file types');
+                });
+            } else {
+                // check for successful attachment of file in the view
+                checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
+                // check preview of the file
+                checkFilePreviewInFileAttachment(fileInput.selector);
+            }
         })
     })
 
@@ -300,9 +310,9 @@ describe("Form with File Input - Prefill & Submit tests", () => {
             });
 
             // attach the file
-            cy.get(fileInput.selector).attachFile(fileInput.fileNames);
+            cy.attachFile(fileInput.selector, fileInput.fileNames);
             if(fileInput.multiple)
-                cy.get(fileInput.selector).attachFile('sample2.txt');
+                cy.attachFile(fileInput.selector, ['sample2.txt']);
 
             // check for successful attachment of file in the view
             checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
@@ -341,7 +351,7 @@ describe("Form with File Input - Prefill & Submit tests", () => {
                 checkFilePreviewInFileAttachment(fileInput.selector);
 
                 // add new files after preview to both the component
-                cy.get(fileInput.selector).attachFile(['sample2.txt'])
+                cy.attachFile(fileInput.selector, ['sample2.txt'])
 
                 // check if guideBridge API returns correctly after prefill and attaching more files
                 getFormObjTest(['sample2.txt', ...(fileInput.multiple ? ['sample.txt', 'empty.pdf']: []) ]);

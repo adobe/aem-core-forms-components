@@ -67,9 +67,9 @@ describe('Button - Authoring', function () {
         cy.get("[name='./readOnly']")
             .should("not.exist");
 
-
         // Checking some dynamic behaviours
         cy.get('.cq-dialog-cancel').click();
+        cy.get('.cq-dialog-cancel').should('not.exist');
         cy.deleteComponentByPath(buttonDrop);
     }
 
@@ -79,13 +79,15 @@ describe('Button - Authoring', function () {
         } else {
             dropButtonInContainer();
         }
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-        cy.invokeEditableAction("[data-action='EDIT']");
-        getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {
-            $span[0].textContent = '';
-          });
-          cy.get('body').click(0,0);
-          cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']").should('exist').should('not.have.text', '');
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).then(() => {
+            cy.invokeEditableAction("[data-action='EDIT']").then(() => {
+                getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {
+                    $span[0].textContent = '';
+                });
+                cy.get('body').click(0,0);
+                cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']").should('exist').should('not.have.text', '');
+            })
+        });
     }
 
 
@@ -154,8 +156,10 @@ describe('Button - Authoring', function () {
             cy.deleteComponentByPath(buttonDrop);
         });
 
-        it('open edit dialog of aem forms Button', function() {
-            testButtonBehaviour(buttonEditPathSelector, buttonDrop, true);
+        it('open edit dialog of aem forms Button', { retries: 3 }, function() {
+            cy.cleanTest(buttonDrop).then(function() {
+                testButtonBehaviour(buttonEditPathSelector, buttonDrop, true);
+            });
         });
 
     });

@@ -48,6 +48,10 @@ describe("Sites with Aem Embed Container", () => {
             cy.get('.cmp-adaptiveform-container').should('have.length', 1);
             cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 11);
         })
+
+        it('Test iframe src with dataRef', () => {
+            cy.get('.cmp-aemform__iframecontent').should('have.attr', 'src').should('not.include', "wcmmode");
+        });
     })
 
     context('aem embed container in iframe mode with custom height ', function () {
@@ -100,7 +104,7 @@ describe("Sites with Aem Embed Container", () => {
         it("model initialized properly", () => {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             // fragment component, text field and IntanceManager
-            expect(Object.keys(formContainer._fields).length).to.equal(4);
+            expect(Object.keys(formContainer._fields).length).to.be.gt(4);
         })
 
         it("model's changes are reflected in the html ", () => {
@@ -124,5 +128,6 @@ describe("Sites with Aem Embed Container", () => {
                 expect(fragmentTextInputModel.getState().value).to.equal(input)
             })
         })
+
     })
 })

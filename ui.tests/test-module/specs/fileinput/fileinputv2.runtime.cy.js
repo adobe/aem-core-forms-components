@@ -13,6 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+
+const multiSelectFileInput1 = "input[name='fileinput1']";
+const singleSelectFileInput2 = "input[name='fileinput2']";
+const singleSelectFileInput4 = "input[name='fileinput4']";
+
+const fileInputs = [
+    {
+        type: "Single Select",
+        selector: singleSelectFileInput2,
+        fileNames: ['empty.pdf'], multiple: false
+    },
+    {
+        type: "Multi Select",
+        selector: multiSelectFileInput1,
+        fileNames: ['empty.pdf', 'sample.txt'], multiple: true
+    }
+];
+
 const checkFileNamesInFileAttachmentView = (component, fileNames) => {
     // check if file present in view
     cy.get(component).then(() => {
@@ -23,10 +41,13 @@ const checkFileNamesInFileAttachmentView = (component, fileNames) => {
 }
 
 const checkFilePreviewInFileAttachment = (component) => {
+    cy.window().then((win) => {
+        cy.stub(win, 'open').as('open')
+    })
     cy.get(component).then(() => {
         cy.get(".cmp-adaptiveform-fileinput__filename").each(($file) => {
             cy.wrap($file).click();
-            cy.window().its('open').should('be.called');
+            cy.get('@open').should('be.called');
         })
     });
 };
@@ -34,7 +55,8 @@ const checkFilePreviewInFileAttachment = (component) => {
 const deleteSelectedFiles = (component, fileNames) => {
     cy.get(component).then(() => {
         fileNames.forEach((fileName) => {
-            cy.get(".cmp-adaptiveform-fileinput__filename").contains(fileName).next().find('.cmp-adaptiveform-fileinput__filedelete').click();
+            cy.get(".cmp-adaptiveform-fileinput__filedelete").should('have.attr', 'role', 'button');
+            cy.get(".cmp-adaptiveform-fileinput__filename").should('be.visible').contains(fileName).next().find('.cmp-adaptiveform-fileinput__filedelete').click();
         })
     });
 };
@@ -64,9 +86,9 @@ const getFormObjTest = (fileList) => {
     });
 };
 
-describe("Form with File Input V-3 - Basic Tests", () => {
+describe("Form with File Input V-2 - Basic Tests", () => {
 
-    const pagePath = "/content/forms/af/core-components-it/samples/fileinput/fileinputv3/basic.html"
+    const pagePath = "/content/forms/af/core-components-it/samples/fileinput/fileinputv2/basic.html"
     const bemBlock = 'cmp-adaptiveform-fileinput'
     const IS = "adaptiveFormFileInput"
     const selectors = {
@@ -118,7 +140,7 @@ describe("Form with File Input V-3 - Basic Tests", () => {
     it(" after attaching the file widget value is reset to allow duplicate file ", () => {
         const sampleFileName = 'sample2.txt', fileInput = "input[name='fileinput1']";
         cy.get(fileInput).should('have.value', "");
-        cy.get(fileInput).attachFile(sampleFileName).then(() => {
+        cy.attachFile(fileInput, [sampleFileName]).then(() => {
             cy.get(".cmp-adaptiveform-fileinput__filename").contains(sampleFileName);
             cy.get(fileInput).should(($element) => {
                 const actualValue = $element.val();
@@ -126,7 +148,7 @@ describe("Form with File Input V-3 - Basic Tests", () => {
             })
         });
         // attaching the same file again to check duplicate file attachment
-        cy.get(fileInput).attachFile(sampleFileName).then(() => {
+        cy.attachFile(fileInput, [sampleFileName]).then(() => {
             cy.get(".cmp-adaptiveform-fileinput__filename").should('have.length', 2);
             cy.get(fileInput).should(($element) => {
                 const actualValue = $element.val();
@@ -169,7 +191,7 @@ describe("Form with File Input V-3 - Basic Tests", () => {
                     } else {
                         cy.get(`#${id}`).should('have.attr', 'data-cmp-readonly', 'false');
                     }
-                    cy.get(`#${id}`).find("input").attachFile(fileName).then(x => {
+                    cy.attachFile(`#${id} input`, [fileName]).then(x => {
                         let expectedFileName = Array.isArray(model.getState().value) ? model.getState().value[0].name : model.getState().value.name;
                         expect(expectedFileName).to.equal(fileName)
                         cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-fileinput--filled');
@@ -193,6 +215,20 @@ describe("Form with File Input V-3 - Basic Tests", () => {
         })
     })
 
+    it("check preview and delete functionality of files", () => {
+        let sampleFileNames = ['sample2.txt','sample.txt','empty.pdf'];
+        const fileInput = "input[name='fileinput1']";
+        cy.attachFile(fileInput,[sampleFileNames[0]]);
+        cy.attachFile(fileInput,[sampleFileNames[1]]);
+        cy.attachFile(fileInput,[sampleFileNames[2]]);
+
+        checkFilePreviewInFileAttachment(fileInput);
+
+        deleteSelectedFiles(fileInput, ['sample2.txt', 'sample.txt' , 'empty.pdf'])
+       
+    //     cy.get('.cmp-adaptiveform-fileinput__filelist').eq(0).children().should('have.length', 0);
+    })
+
     it(`fielinput is disabled when readonly property is true`, () => {
         const fileInput5 =  "input[name='fileinput5']";
         cy.get(fileInput5).should("have.attr", "disabled", "disabled"); 
@@ -200,31 +236,64 @@ describe("Form with File Input V-3 - Basic Tests", () => {
 
 })
 
-describe('Click on button tag (V-3)', () => {
-    const pagePath = "/content/forms/af/core-components-it/samples/fileinput/fileinputv3/basic.html"
-    const bemBlock = 'cmp-adaptiveform-fileinput'
-    const IS = "adaptiveFormFileInput"
-    const selectors = {
-        fileinput : `[data-cmp-is="${IS}"]`
-    }
-    let formContainer = null
+describe("V-2 drag and drop functionality", () => {
+    let prefillId;
+    const submitBtn = "submit1673953138924";
+    const pagePath = "/content/forms/af/core-components-it/samples/fileinput/fileinputv2/basic.html"
+
 
     beforeEach(() => {
-        cy.previewForm(pagePath, {
-            onBeforeLoad : (win) => {
-                cy.stub(win, 'open'); // creating a stub to check file preview
-            }
-        }).then(p => {
-            formContainer = p;
-        });
+        cy.wrap(prefillId).as('prefillId');
+        cy.intercept({
+            method: 'POST',
+            url: '**/adobe/forms/af/submit/*',
+        }).as('afSubmission')
     });
-    it('should handle click event on attach button', () => {
-        const sampleFileName = 'sample2.txt'
-        const [id, fieldView] = Object.entries(formContainer._fields)[2]
-        cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__dragarea > .${bemBlock}__widgetlabel`).should('exist').click().then(() => {
-            cy.get('input[type="file"]').attachFile(sampleFileName).then(() => {
-                cy.get('.cmp-adaptiveform-fileinput__filename').should('contain', sampleFileName);
-        });
-    });
-  }); 
-})
+
+    const submitTest = () => {
+        cy.wait('@afSubmission').then(({response}) => {
+            const { body } = response;
+            assert.equal(response.statusCode, 200, "submission failed since status code is not 200");
+            assert.equal(body.redirectUrl.indexOf("guideThankYouPage") !== -1, true, "url does not contain thank you page in submission response");
+            assert.isDefined(body?.thankYouMessage)
+            assert.isDefined(body?.metadata?.prefillId, "prefillId not present")
+            prefillId = body.metadata.prefillId;
+            cy.wrap(prefillId).as("prefillId");
+        })
+    };
+
+    fileInputs.forEach((fileInput, idx) => {
+        it(`${fileInput.type} - attach files using drag and drop, check model, view, preview attachment and submit the form`, () => {
+            cy.previewForm(pagePath, {
+                onBeforeLoad : (win) => {
+                    cy.stub(win, 'open'); // creating a stub to check file preview
+                }
+            });
+
+            // attach the file
+            cy.attachFile(fileInput.selector, fileInput.fileNames);
+            //cy.get(fileInput.selector).selectFile(fileInput.fileNames, { subjectType: 'drag-n-drop', events: ['dragover', 'drop'] });
+            if(fileInput.multiple)
+                cy.attachFile(fileInput.selector,['sample2.txt']);
+
+            // check for successful attachment of file in the view
+            checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
+            if(fileInput.multiple)
+                checkFileNamesInFileAttachmentView(fileInput.selector, ['sample2.txt']);
+
+            // check preview of the file
+            checkFilePreviewInFileAttachment(fileInput.selector);
+
+            if(fileInput.multiple)
+                deleteSelectedFiles(fileInput.selector, ['sample2.txt']);
+
+            // submit the form
+            cy.get(".cmp-adaptiveform-button__widget").click();
+
+            // check for successful submission
+            submitTest();
+        })
+    })
+
+});
+
