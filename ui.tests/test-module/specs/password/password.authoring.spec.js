@@ -53,7 +53,7 @@ describe('Page - Authoring', function () {
         cy.get(".cmp-adaptiveform-password__minlength").invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal', 'block');
         cy.get('.cmp-adaptiveform-password__editdialog').contains('Validation').click({force: true}).then(() => {
-            cy.get("[name='./validationPattern']").should('have.length', 1);
+            cy.get("[name='./pattern']").should('have.length', 1);
             cy.get("[name='./validatePictureClauseMessage']").should('have.length', 1);
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(passwordDrop);
