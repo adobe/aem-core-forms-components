@@ -17,17 +17,7 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -36,6 +26,9 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
@@ -289,6 +282,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (rulesProperties.size() > 0) {
             properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
         }
+        List<String> disabledScripts = getDisabledXFAScripts();
+        if (disabledScripts.size() > 0) {
+            properties.put("fd:disabledXfaScripts", disabledScripts);
+        }
         return properties;
     }
 
@@ -541,4 +538,24 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return customDorProperties;
     }
 
+    private List<String> getDisabledXFAScripts() {
+        Set<String> disabledScripts = new HashSet<>();
+        String xfaScripts = resource.getValueMap().get("fd:xfaScripts", "");
+        if (StringUtils.isNotEmpty(xfaScripts)) {
+            // read string xfaScripts to jsonNode
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                ArrayNode node = (ArrayNode) mapper.readTree(xfaScripts);
+                // iterate through the array node and add the elements which have disabled property set to true
+                for (JsonNode jsonNode : node) {
+                    if (jsonNode.has("disabled") && jsonNode.get("disabled").asBoolean()) {
+                        disabledScripts.add(jsonNode.get("activity").asText());
+                    }
+                }
+            } catch (IOException e) {
+                logger.error("Error while parsing xfaScripts {} {}", e, resource.getPath());
+            }
+        }
+        return new ArrayList<>(disabledScripts);
+    }
 }

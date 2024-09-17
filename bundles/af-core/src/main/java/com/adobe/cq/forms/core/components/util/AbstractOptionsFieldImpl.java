@@ -107,7 +107,11 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
                 .map(p -> {
-                    return this.translate(ReservedProperties.PN_ENUM_NAMES, p);
+                    String value = this.translate(ReservedProperties.PN_ENUM_NAMES, p);
+                    if (value == null) {
+                        value = "";
+                    }
+                    return value;
                 })
                 .toArray(String[]::new);
         }
