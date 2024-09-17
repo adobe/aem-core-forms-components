@@ -79,16 +79,15 @@ describe('Button - Authoring', function () {
         } else {
             dropButtonInContainer();
         }
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).then(() => {
-            cy.invokeEditableAction("[data-action='EDIT']").then(() => {
-                getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {
-                    $span[0].textContent = '';
-                });
-                cy.get('body').click(0,0);
-                cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']").should('exist').should('not.have.text', '');
-            })
-        });
-    }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+        cy.invokeEditableAction("[data-action='EDIT']").then(() => {
+            getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {
+                $span[0].textContent = '';
+            });
+            cy.get('body').click(0,0);
+            cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']").should('exist').should('not.have.text', '');
+        })
+    };
 
 
     context('Open Forms Editor', function() {
