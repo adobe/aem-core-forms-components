@@ -87,9 +87,6 @@ public class CheckBoxGroupImpl extends AbstractOptionsFieldImpl implements Check
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.CHECKBOX_GROUP.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.CHECKBOX_GROUP);
     }
 }

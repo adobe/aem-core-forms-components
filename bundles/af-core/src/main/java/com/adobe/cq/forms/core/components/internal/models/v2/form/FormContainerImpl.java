@@ -127,10 +127,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.FORM.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.FORM);
     }
 
     @PostConstruct

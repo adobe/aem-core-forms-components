@@ -82,10 +82,7 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.FILE_INPUT.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.FILE_INPUT);
     }
 
     @Override

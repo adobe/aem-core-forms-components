@@ -148,7 +148,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @PostConstruct
     protected void initBaseModel() {
         // first check if this is in the supported list of field type
-        fieldType = FieldType.fromString(fieldTypeJcr);
+        if (StringUtils.isNotEmpty(fieldTypeJcr)) {
+            fieldType = FieldType.fromString(fieldTypeJcr);
+        }
         if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
         }
@@ -213,6 +215,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     @Override
     public String getFieldType() {
+        return fieldType.getValue();
+    }
+
+    public String getFieldType(@Nonnull FieldType defaultFieldType) {
+        if (fieldType == null) {
+            return defaultFieldType.getValue();
+        }
         return fieldType.getValue();
     }
 

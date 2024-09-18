@@ -72,10 +72,7 @@ public class TitleImplV2 extends AbstractFormComponentImpl implements FormTitle 
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.PLAIN_TEXT.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.PLAIN_TEXT);
     }
 
     /**

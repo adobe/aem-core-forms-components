@@ -132,10 +132,7 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.NUMBER_INPUT.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.NUMBER_INPUT);
     }
 
     @PostConstruct

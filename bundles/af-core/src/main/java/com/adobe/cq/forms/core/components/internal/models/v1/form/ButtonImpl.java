@@ -90,10 +90,7 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.BUTTON.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.BUTTON);
     }
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUSION)

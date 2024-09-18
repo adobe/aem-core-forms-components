@@ -80,10 +80,7 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
         if (isMultiLine()) {
             return FieldType.MULTILINE_INPUT.getValue();
         }
-        if (fieldTypeJcr == null) {
-            return FieldType.TEXT_INPUT.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.TEXT_INPUT);
     }
 
     @Override

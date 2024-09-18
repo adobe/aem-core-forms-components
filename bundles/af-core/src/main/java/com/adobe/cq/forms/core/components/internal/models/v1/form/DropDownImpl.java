@@ -60,9 +60,6 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.DROP_DOWN.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.DROP_DOWN);
     }
 }

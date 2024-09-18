@@ -142,9 +142,6 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.IMAGE.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.IMAGE);
     }
 }

@@ -110,10 +110,7 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.PANEL.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.PANEL);
     }
 
     @Override

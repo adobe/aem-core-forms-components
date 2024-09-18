@@ -73,9 +73,6 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.PLAIN_TEXT.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.PLAIN_TEXT);
     }
 }

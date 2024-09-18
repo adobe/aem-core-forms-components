@@ -34,10 +34,7 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.CAPTCHA.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.CAPTCHA);
     }
 
     public abstract Map<String, Object> getCaptchaProperties();

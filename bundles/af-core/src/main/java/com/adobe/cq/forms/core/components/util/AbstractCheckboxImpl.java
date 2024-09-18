@@ -61,9 +61,6 @@ public abstract class AbstractCheckboxImpl extends AbstractOptionsFieldImpl {
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.CHECKBOX.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.CHECKBOX);
     }
 }

@@ -72,9 +72,6 @@ public class RadioButtonImpl extends AbstractOptionsFieldImpl implements RadioBu
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.RADIO_GROUP.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.RADIO_GROUP);
     }
 }

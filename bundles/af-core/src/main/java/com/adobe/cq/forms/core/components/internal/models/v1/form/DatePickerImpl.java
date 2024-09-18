@@ -86,10 +86,7 @@ public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
 
     @Override
     public String getFieldType() {
-        if (fieldTypeJcr == null) {
-            return FieldType.DATE_INPUT.getValue();
-        }
-        return fieldType.getValue();
+        return super.getFieldType(FieldType.DATE_INPUT);
     }
 
     public @NotNull Map<ConstraintType, String> getConstraintMessages() {
