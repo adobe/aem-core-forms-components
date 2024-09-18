@@ -218,7 +218,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return fieldType.getValue();
     }
 
-    public String getFieldType(@Nonnull FieldType defaultFieldType) {
+    protected String getFieldType(@Nonnull FieldType defaultFieldType) {
         if (fieldType == null) {
             return defaultFieldType.getValue();
         }
