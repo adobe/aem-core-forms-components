@@ -77,6 +77,11 @@ describe("Form Runtime with Button Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, id);
     });
 
+    it("Button should not have aria-disabled attribute if enable is false", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[2];
+        cy.get(`#${id} > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
+    });
+
 
     it("should open a new window on click of button", () => {
         cy.window().then((win) => {

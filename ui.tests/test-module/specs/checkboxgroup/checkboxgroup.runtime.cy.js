@@ -131,6 +131,11 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         })
     })
 
+    it("Checkbox group should not have aria-disabled attribute if enable is false", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__widget").should('not.have.attr', 'aria-disabled');
+    })
+
     it("should enable and disable components on certain checkbox input", () => {
         // Rule on checkbox4: When checkbox4 has Item 3 selected => Enable checkbox1 and Disable checkBox2
 

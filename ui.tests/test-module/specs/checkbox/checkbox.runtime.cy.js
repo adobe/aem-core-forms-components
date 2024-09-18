@@ -136,6 +136,11 @@ describe("Form Runtime with CheckBox Input", () => {
         })
     });
 
+    it("Checkbox should not have aria-disabled attribute if enable is false", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[6];
+        cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
+    })
+
     it("should toggle description and tooltip", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         cy.toggleDescriptionTooltip(bemBlock, id);
