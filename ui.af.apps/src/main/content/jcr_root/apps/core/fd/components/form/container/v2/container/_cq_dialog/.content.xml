@@ -88,7 +88,8 @@
                                       jcr:primaryType="nt:unstructured"
                                       sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                       name="./fd:hamburgerMenu"
-                                      text="Add hamburger menu support"
+                                      text="Enable the hamburger menu for mobile view"
+                                      fieldDescription="Select the option to display the hamburger menu for efficient navigation on mobile devices."
                                       value="{Boolean}true"/>
                                 </items>
                             </container>
