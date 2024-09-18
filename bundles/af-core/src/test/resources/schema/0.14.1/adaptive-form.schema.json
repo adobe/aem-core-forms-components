@@ -1,5 +1,5 @@
 {
-  "$id": "https://git.corp.adobe.com/pages/livecycle/af2-docs/schema/generated/adaptive-form.schema.json",
+  "$id": "classpath:/schema/generated/adaptive-form.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$defs": {
     "FormElement": {
