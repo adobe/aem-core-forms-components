@@ -53,16 +53,16 @@
     <input data-sly-test="${container.redirectUrl}" type="hidden" name=":redirect" value="${container.redirectUrl}"/>
     <div data-sly-test="${container.properties['fd:hamburgerMenu']}" class="cmp-adaptiveform-container-hamburger-menu-container">
         <div class="cmp-adaptiveform-container-menu">
-            <div class="cmp-adaptiveform-container-hamburger-menu-top-bar">
-                <div class="cmp-adaptiveform-container-hamburger-icon"></div>
+            <div role="navigation" aria-label="Toggle menu" class="cmp-adaptiveform-container-hamburger-menu-top-bar">
+                <button aria-controls="hamburger-menu" type="button" class="cmp-adaptiveform-container-hamburger-icon" aria-label="Toggle menu"></button>
             </div>
         </div>
-        <div class="cmp-adaptiveform-container-breadcrumbs-container"></div>
+        <div role="navigation" class="cmp-adaptiveform-container-breadcrumbs-container"></div>
         <div class="cmp-adaptiveform-container-nav-bar">
-            <div class="cmp-adaptiveform-container-nav-title"></div>
-            <div class="cmp-adaptiveform-container-nav-buttons">
-                <button class="cmp-adaptiveform-container-nav-button-previous" type="button"></button>
-                <button class="cmp-adaptiveform-container-nav-button-next" type="button"></button>
+            <div role="heading" class="cmp-adaptiveform-container-nav-title"></div>
+            <div role="navigation" aria-label="Navigation buttons" class="cmp-adaptiveform-container-nav-buttons">
+                <button class="cmp-adaptiveform-container-nav-button-previous" type="button" aria-label="Previous Item"></button>
+                <button class="cmp-adaptiveform-container-nav-button-next" type="button" aria-label="Next Item"></button>
             </div>
         </div>
     </div>

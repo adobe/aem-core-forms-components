@@ -59,6 +59,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-enabled="false"] {
 
 .cmp-adaptiveform-container-hamburger-icon {
     display: flex;
+    border: none;
     flex-direction: column;
     cursor: pointer;
     margin: 5px 0px;

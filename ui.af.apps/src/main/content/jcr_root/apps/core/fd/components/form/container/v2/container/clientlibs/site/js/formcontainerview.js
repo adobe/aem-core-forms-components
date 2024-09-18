@@ -110,6 +110,7 @@
             const textSpan = document.createElement('span');
             link.href = "#";
             textSpan.textContent = item?.label?.value;
+            textSpan.setAttribute('tabindex', "0");
             link.appendChild(textSpan);
             li.appendChild(link);
             li.setAttribute('data-cmp-id', item?.id);
@@ -248,8 +249,10 @@
         if(targetElement.getAttribute('data-cmp-enabled') === 'false') {
             return;
         }
-        if(event.target.tagName === "BUTTON")  {
+        if(event.target.tagName === "BUTTON" && (event.target.classList.contains(FormContainerV2.cssClasses.closeNavButton) || event.target.classList.contains(FormContainerV2.cssClasses.openNavButton)))  {
+            const isExpanded = event.target.getAttribute('aria-expanded') === 'true';
             event.target.classList.toggle(FormContainerV2.cssClasses.closeNavButton);
+            event.target.setAttribute('aria-expanded', !isExpanded);
             return;
         }
         const menuItems = document.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' li');
@@ -262,6 +265,8 @@
         const anchorElement = targetElement?.querySelector('a');
         anchorElement?.classList.add(FormContainerV2.cssClasses.active);
         anchorElement?.querySelector('button')?.classList?.toggle(FormContainerV2.cssClasses.closeNavButton);
+        const isExpanded = anchorElement?.querySelector('button')?.getAttribute('aria-expanded') === 'true';
+        anchorElement?.querySelector('button')?.setAttribute('aria-expanded', !isExpanded);
         updateSelectedPanelTitle(anchorElement, clickedAnchorElement);
         highlightMenuTree(anchorElement, clickedAnchorElement);
                     
@@ -278,7 +283,10 @@
     function resetMenuItems(menuItems) {
         menuItems.forEach(item => {
             const subMenu = item.querySelector(FormContainerV2.selectors.hamburgerSubMenu);
-            if (subMenu) subMenu.style.display = 'none';
+            if (subMenu)  {
+                subMenu.style.display = 'none';
+                subMenu.setAttribute('aria-hidden', true);
+            }
             const link = item.querySelector('a');
             if(link) {
                 link?.querySelector('button')?.classList.remove(FormContainerV2.cssClasses.closeNavButton);
@@ -292,8 +300,27 @@
     function activateCurrentItem(currentItem) {
         while (currentItem) {
             const subMenu = currentItem.querySelector(FormContainerV2.selectors.hamburgerSubMenu);
-            if (subMenu) subMenu.style.display = 'block';
+            if (subMenu)  {
+                subMenu.style.display = 'block';
+                subMenu.setAttribute('aria-hidden', false);
+            }
             currentItem = currentItem.parentElement.closest('li');
+        }
+    }
+
+    function menuItemClickHandler(event, subMenu, li, link) {
+        event.preventDefault();
+        if (li.getAttribute('data-cmp-enabled') === 'false') {
+            return;
+        }
+        const expanded = link.getAttribute('aria-expanded') === 'true';
+        link.setAttribute('aria-expanded', !expanded);
+        if (subMenu.style.display === 'flex' || subMenu.style.display === 'block') {
+            subMenu.style.display = 'none';
+            subMenu.setAttribute('aria-hidden', true);
+        } else {
+            subMenu.style.display = 'flex';
+            subMenu.setAttribute('aria-hidden', false);
         }
     }
 
@@ -301,6 +328,7 @@
         const downArrowButton = document.createElement('button');
         downArrowButton.type='button';
         downArrowButton.classList.add(FormContainerV2.cssClasses.openNavButton);
+        downArrowButton.setAttribute('aria-expanded', false);
         return downArrowButton;
     }
 
@@ -312,7 +340,7 @@
     
         const ul = document.createElement('ul');
         ul.classList.add('cmp-adaptiveform-container-breadcrumbs-container-list');
-        
+
         let navTitleUpdated = false;
         items.forEach((item) => {
             if (item?.fieldType !== "panel") return;
@@ -327,7 +355,10 @@
 
             const li = document.createElement('li');
             const link = document.createElement('a');
+            link.setAttribute('role', 'menuitem');
+            link.setAttribute('aria-expanded', 'false');
             const textSpan = document.createElement('span');
+            textSpan.setAttribute('tabindex', "0");
             link.href = "#";
             textSpan.textContent = item?.label?.value;
             link.appendChild(textSpan);
@@ -359,15 +390,12 @@
                     subMenu.classList.add(FormContainerV2.cssClasses.hamburgerSubMenu);
                     li.appendChild(subMenu);
                     link.insertBefore(createDownArrowButton(), link.firstChild);
-                    link.addEventListener('click', () => {
-                        event.preventDefault();
-                        if (li.getAttribute('data-cmp-enabled') === 'false') {
-                            return;
-                        }
-                        if (subMenu.style.display === 'flex' || subMenu.style.display === 'block') {
-                            subMenu.style.display = 'none';
-                        } else {
-                            subMenu.style.display = 'flex';
+                    link.addEventListener('click', (event) => {
+                        menuItemClickHandler(event, subMenu, li, link)
+                    });
+                    link.addEventListener('keydown', (event) => {
+                        if(event.key === 'Enter' || event.key === ' ') {
+                            menuItemClickHandler(event, subMenu, li, link);
                         }
                     });
                 }
@@ -418,6 +446,9 @@
         if(anchorElement) {
             anchorElement?.classList.add(FormContainerV2.cssClasses.activeParent);
             anchorElement?.querySelector('button')?.classList.add(FormContainerV2.cssClasses.closeNavButton);
+            if(anchorElement?.querySelector('button')?.classList.contains(FormContainerV2.cssClasses.closeNavButton)) {
+                anchorElement?.querySelector('button')?.setAttribute('aria-expanded', true);
+            }
             if(li.parentElement.classList.contains(FormContainerV2.cssClasses.hamburgerMenu)) {
                 anchorElement.style.fontWeight = 'bold'
             }
@@ -521,6 +552,8 @@
         const menu = createHamburgerMenu(formContainer, panels);
         if(menu) {
             menu.classList.add(FormContainerV2.cssClasses.hamburgerMenu);
+            menu.setAttribute('role', 'menu');
+            menu.setAttribute('id', 'hamburger-menu');
 
             attachHamburgerEventListeners(hamburgerIcon, menu);
             attachOutsideClickHandler(hamburgerIcon, menu);
@@ -546,6 +579,12 @@
 
     function attachMenuEventListeners(menu) {
         menu.addEventListener('click', clickHandler);
+        menu.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              clickHandler(event);
+            }
+          });
         menu.addEventListener('ontouchstart', clickHandler);
     }
 
