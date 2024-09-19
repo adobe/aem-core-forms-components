@@ -373,4 +373,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return FormContainer.super.getName();
     }
 
+    @JsonIgnore
+    @Override
+    public AutoSaveConfiguration getAutoSaveConfig() {
+        return autoSaveConfig;
+    }
+
 }

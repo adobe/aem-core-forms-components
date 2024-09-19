@@ -75,6 +75,8 @@ public class FormContainerImplTest {
     private static final String CONTENT_ROOT = CONTENT_PAGE_ROOT + "/jcr:content";
     private static final String CONTENT_DAM_ROOT = "/content/dam/formsanddocuments/demo";
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
+
+    private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
     private static final String PATH_FORM_1_WITHOUT_REDIRECT = CONTENT_ROOT + "/formcontainerv2WithoutRedirect";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
@@ -475,6 +477,14 @@ public class FormContainerImplTest {
 
         FormContainer formContainerLtr = getFormContainerWithLocaleUnderTest(PATH_FORM_1);
         assertEquals("ltr", formContainer.getLanguageDirection());
+    }
+
+    @Test
+    public void testGetAutoSaveProperties() throws Exception {
+        context.load().json(BASE + "/test-content-auto-save.json", PATH_FORM_WITH_AUTO_SAVE);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_AUTO_SAVE,
+            FormContainer.class, context);
+        assertNotNull(formContainer.getAutoSaveConfig());
     }
 
 }
