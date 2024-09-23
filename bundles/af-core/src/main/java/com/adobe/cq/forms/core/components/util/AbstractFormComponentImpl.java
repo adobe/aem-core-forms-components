@@ -80,7 +80,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     // mandatory property else adapt should fail for adaptive form components
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FIELDTYPE)
     protected String fieldTypeJcr;
-    protected FieldType fieldType;
+    private FieldType fieldType;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_NAME)
     @Nullable

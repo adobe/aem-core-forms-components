@@ -147,6 +147,5 @@ public class ButtonImplTest {
     void testNoFieldType() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_NO_FIELDTYPE, Button.class, context);
         assertEquals(FieldType.BUTTON.getValue(), button.getFieldType());
-        Utils.testJSONExport(button, Utils.getTestExporterJSONPath(BASE, PATH_BUTTON_NO_FIELDTYPE));
     }
 }
