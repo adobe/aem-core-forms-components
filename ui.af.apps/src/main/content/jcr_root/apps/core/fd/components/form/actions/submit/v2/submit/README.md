@@ -27,6 +27,7 @@ Adaptive Form Submit Button component written in HTL.
 ## Differences Between Versions
 
 * From version v1, the only difference is that the submit button now uses the native HTML type of button type submit.
+* The button is initially set to a disabled state and will only be enabled once the entire forms runtime client library has been fully loaded. This ensures that the form does not submit prematurely due to incomplete JavaScript initialization.
 
 ### Use Object
 The submit button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
@@ -72,7 +73,7 @@ The following are optional attributes that can be added to the component in the 
 6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
 
 ## Replace feature:
-We support replace feature that allows replacing Reset Button component to any of the below components:
+We support replace feature that allows replacing Submit Button component to any of the below components:
 
 * Button
 * Date Picker

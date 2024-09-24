@@ -27,6 +27,7 @@ Adaptive Form Reset Button component written in HTL.
 ## Differences Between Versions
 
 * From version v1, the only difference is that the reset button now uses the native HTML type of button type reset.
+* The button is initially set to a disabled state and will only be enabled once the entire forms runtime client library has been fully loaded. This ensures that the form does not reset prematurely due to incomplete JavaScript initialization.
 
 ### Use Object
 The reset button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.

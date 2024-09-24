@@ -42,9 +42,6 @@ describe('Custom form container with loader Test', () => {
         // fill the mandatory fields
         cy.get(`#${id}`).find('.cmp-adaptiveform-textinput__widget').focus().type('a').blur().then(() => {
 
-            // Click the button and verify that the loading icon is added
-            cy.get(`.cmp-adaptiveform-button__widget`).click();
-
             cy.get(`.cmp-adaptiveform-button__widget`).then(($button) => {
                 if (!$button.is(':disabled')) {
                     cy.wrap($button).click().then(() => {

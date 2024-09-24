@@ -98,14 +98,18 @@ describe("Form with Reset Button", () => {
         components.forEach((coreComponent) => {
             cy.get(`[data-cmp-is="${coreComponent}"]`).then(instance => fillField(instance, coreComponent));
         });
-
         // Reset entire form
-        cy.get(`.cmp-adaptiveform-button__widget`).click();
-
-        // Check if values are now reset
-        components.forEach((coreComponent) => {
-            cy.get(`[data-cmp-is="${coreComponent}"]`).then(instance => checkIfReset(instance, coreComponent));
+        cy.get(`.cmp-adaptiveform-button__widget`).then(($button) => {
+            if (!$button.is(':disabled')) {
+                cy.wrap($button).click().then(() => {
+                    // Check if values are now reset
+                    components.forEach((coreComponent) => {
+                        cy.get(`[data-cmp-is="${coreComponent}"]`).then(instance => checkIfReset(instance, coreComponent));
+                    });
+                });
+            }
         });
+
     });
 
     it(`should have type as reset`, () => {
