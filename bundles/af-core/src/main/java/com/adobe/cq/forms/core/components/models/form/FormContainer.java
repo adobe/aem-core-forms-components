@@ -155,16 +155,6 @@ public interface FormContainer extends Container {
         return false;
     }
 
-    /**
-     * Returns the level supported by hamburger menu
-     *
-     * @return the level supported by hamburger menu of the form
-     * @since com.adobe.cq.forms.core.components.models.form 4.5.0
-     */
-    default int getHamburgerNestingLevel() {
-        return 3;
-    }
-
     @Override
     @JsonIgnore
     default Label getLabel() {

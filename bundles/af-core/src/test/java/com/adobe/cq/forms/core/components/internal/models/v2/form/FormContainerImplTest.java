@@ -490,10 +490,4 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertFalse(Boolean.valueOf(formContainer.getHamburgerMenu().toString()));
     }
-
-    @Test
-    public void testGetHamburgerMenuNestingLevel() {
-        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        assertEquals(Integer.valueOf(3), Integer.valueOf(formContainer.getHamburgerNestingLevel()));
-    }
 }
