@@ -61,7 +61,6 @@ let formContainer = null
 
     it(`Test hamburger menu should render navigation bar`, () => {
         cy.viewport('iphone-x');
-        cy.get(selectors.hamburgerIcon).click();
         cy.get(selectors.hamburgerMenuNavBar).should('be.visible');
     });
 
@@ -74,21 +73,18 @@ let formContainer = null
 
     it(`Test hamburger menu should render navigation bar along with title`, () => {
         cy.viewport('iphone-x');
-        cy.get(selectors.hamburgerIcon).click();
         cy.get(selectors.hamburgerMenuNavBar).should('be.visible');
         cy.get(selectors.hamburgerMenuNavBar + ' > ' + selectors.hamburgerMenuNavTitle).should('be.visible').and('have.text', 'Panel 1');;
     });
 
     it(`Test hamburger menu should render navigation bar along with title`, () => {
         cy.viewport('iphone-x');
-        cy.get(selectors.hamburgerIcon).click();
         cy.get(selectors.hamburgerMenuNavBar).should('be.visible');
         cy.get(selectors.hamburgerMenuNavBar + ' > ' + selectors.hamburgerMenuNavTitle).should('be.visible').and('have.text', 'Panel 1');;
     });
 
     it(`Test hamburger menu initial state where first item is selected along with the hierarchy`, () => {
         cy.viewport('iphone-x');
-        cy.get(selectors.hamburgerIcon).click();
         cy.get(selectors.hamburgerMenu+ ' > li > a').first().should('have.class', cssClasses.hamburgerMenuActiveParent);
         cy.get(selectors.hamburgerMenu+ ' > li > ul > li > a').first().should('have.class', cssClasses.hamburgerMenuActive);
     });
