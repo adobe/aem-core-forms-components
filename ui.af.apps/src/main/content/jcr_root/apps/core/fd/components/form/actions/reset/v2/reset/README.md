@@ -24,6 +24,10 @@ Adaptive Form Reset Button component written in HTL.
 * Out of the box Reset rule in the button to reset the form
 * Allows replacing this component with other component (as mentioned below).
 
+## Differences Between Versions
+
+* From version v1, the only difference is that the reset button now uses the native HTML type of button type reset.
+
 ### Use Object
 The reset button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
 

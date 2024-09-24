@@ -24,6 +24,10 @@ Adaptive Form Submit Button component written in HTL.
 * Out of the box Submit rule in the button to submit the form
 * Allows replacing this component with other component (as mentioned below).
 
+## Differences Between Versions
+
+* From version v1, the only difference is that the submit button now uses the native HTML type of button type submit.
+
 ### Use Object
 The submit button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
 

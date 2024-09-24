@@ -23,6 +23,10 @@ Adaptive Form Button component written in HTL.
 * Custom description/tooltip for help
 * Allows replacing this component with other component (as mentioned below).
 
+## Differences Between Versions
+
+* From version v1, the only difference is that the button now uses the native HTML button type.
+
 ### Use Object
 The button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
 
