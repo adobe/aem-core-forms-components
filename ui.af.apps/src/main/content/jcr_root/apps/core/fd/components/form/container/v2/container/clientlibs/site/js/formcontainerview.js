@@ -22,7 +22,7 @@
         static IS = "adaptiveFormContainer";
         static bemBlock = 'cmp-adaptiveform-container';
         static hamburgerSupport = false;
-        static nestingSupport = 3;
+        static nestingSupport = 10;
 
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
