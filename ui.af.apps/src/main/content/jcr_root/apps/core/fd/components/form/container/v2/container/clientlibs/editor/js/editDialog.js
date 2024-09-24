@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2024 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-(function($, channel, Coral) {
+(function($) {
     "use strict";
+    let EDIT_DIALOG = ".cmp-adaptiveform-container__editdialog",
+    CONTAINER_HAMBURGERMENUSUPPORT = EDIT_DIALOG + ' .cmp-adaptiveform-container__hamburgerMenuSupport',
+    CONTAINER_HAMBURGERMENUNESTINGLEVEL = EDIT_DIALOG + " .cmp-adaptiveform-container__hamburgerMenuNestingLevel",
+    Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
-})(jQuery, jQuery(document), Coral);
+/**
+ * Toggles the support of hamburger menu, value of type on the checked state of
+ * the hamburger menu support checkbox
+ * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
+ */
+function handleHamburgerMenuNestingSelection(dialog) {
+    let component = dialog.find(CONTAINER_HAMBURGERMENUSUPPORT)[0];
+    let hamburgerMenuLevelSupport=dialog.find(CONTAINER_HAMBURGERMENUNESTINGLEVEL);
+    let listOfElements = [hamburgerMenuLevelSupport];
+    let isNotChecked = function() {return isChecked()};
+    let isChecked = function() {return component.checked};
+    let hideAndShowElements = function() {
+         // hide minItems elements
+        Utils.checkAndDisplay(listOfElements)(isNotChecked);
+    };
+    hideAndShowElements();
+    component.on("change", function() {
+        hideAndShowElements();
+    });
+}
+Utils.initializeEditDialog(EDIT_DIALOG)(handleHamburgerMenuNestingSelection);
+
+})(jQuery);

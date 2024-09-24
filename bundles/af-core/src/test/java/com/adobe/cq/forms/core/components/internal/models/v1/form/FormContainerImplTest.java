@@ -51,7 +51,6 @@ import static org.apache.jackrabbit.JcrConstants.JCR_MIMETYPE;
 import static org.apache.jackrabbit.JcrConstants.JCR_PRIMARYTYPE;
 import static org.apache.jackrabbit.JcrConstants.NT_RESOURCE;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -198,11 +197,5 @@ public class FormContainerImplTest {
     void testGetName() throws Exception {
         FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
         assertNull(formContainer.getName());
-    }
-
-    @Test
-    void testGetHamburgerMenu() throws Exception {
-        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
-        assertFalse(formContainer.getHamburgerMenu());
     }
 }

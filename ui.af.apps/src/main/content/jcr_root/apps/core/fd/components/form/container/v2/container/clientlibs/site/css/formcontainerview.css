@@ -38,7 +38,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-enabled="false"] {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 52px;
+    top: 36px;
     inset-inline-end: 10px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -121,6 +121,10 @@ a:hover {
     flex-direction: column;
     margin: 10px;
     width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
 }
 
 @media (min-width: 767px) {
@@ -261,5 +265,4 @@ a:hover {
     display: flex;
     align-items: center;
     padding: 0px 5px;
-    scrollbar-width: none;
 }

@@ -56,12 +56,11 @@
 
         handleActiveItem(field) {
             const menu = document.querySelector(FormContainerV2.selectors.hamburgerMenu);
-            const formContainer = formContainerGlobal;
             if (field !== null && field) {
                 const activeListItem = document.querySelector(`[data-cmp-id='${field.id}']`);
                 if(activeListItem && activeListItem.tagName === 'LI') {
                     const menuItems = document.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' li');
-                    const fieldModel = formContainer?.getField(activeListItem?.getAttribute('data-cmp-id'))?.getModel();
+                    const fieldModel = formContainerGlobal?.getField(activeListItem?.getAttribute('data-cmp-id'))?.getModel();
                     const elementID = checkFirstNonPanel(fieldModel)
                     const targetElement = menu.querySelector("[data-cmp-id='"+ elementID + "']");
                     resetMenuItems(menuItems);
@@ -84,7 +83,7 @@
                     if (item.id === change.currentValue.id) {
                         const prevListItem = document.querySelector(`[data-cmp-id='${items[change.currentValue.index - 1]?.id}']`);
                         const newListItem = this.createListItem(change.currentValue);
-                        prevListItem?.parentNode?.insertBefore(newListItem, prevListItem.nextSibling);
+                        prevListItem?.parentNode?.insertBefore(newListItem, prevListItem?.nextSibling);
                     }
                 });
             }
@@ -258,7 +257,7 @@
         const menuItems = document.querySelectorAll(FormContainerV2.selectors.hamburgerMenu + ' li');
         const fieldModel = formContainer?.getField(targetElement?.getAttribute('data-cmp-id'))?.getModel();
         const elementID = checkFirstNonPanel(fieldModel) || targetElement?.getAttribute('data-cmp-id');
-        const clickedAnchorElement = targetElement?.querySelector('a');
+        const parentAnchorElement = targetElement?.querySelector('a');
         targetElement = menu.querySelector("[data-cmp-id='"+ elementID + "']");
         resetMenuItems(menuItems);
         activateCurrentItem(targetElement);
@@ -267,17 +266,17 @@
         anchorElement?.querySelector('button')?.classList?.toggle(FormContainerV2.cssClasses.closeNavButton);
         const isExpanded = anchorElement?.querySelector('button')?.getAttribute('aria-expanded') === 'true';
         anchorElement?.querySelector('button')?.setAttribute('aria-expanded', !isExpanded);
-        updateSelectedPanelTitle(anchorElement, clickedAnchorElement);
-        highlightMenuTree(anchorElement, clickedAnchorElement);
-                    
+        updateSelectedPanelTitle(anchorElement, parentAnchorElement);
+        highlightMenuTree(anchorElement, parentAnchorElement);
+
         const itemId = targetElement?.getAttribute('data-cmp-id') || activeItemId;
         const form = formContainer?.getModel();;
         const field = formContainer?.getField(itemId);
         menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        renderBreadCrumbs(menu);
         if (form && field && field._model) {
           form.setFocus(field._model);
         }
-        renderBreadCrumbs(menu);
     }
 
     function resetMenuItems(menuItems) {
@@ -332,7 +331,7 @@
         return downArrowButton;
     }
 
-    function createHamburgerMenu(formContainer, items, counter = 0) {
+    function createHamburgerMenu(items, counter = 0) {
         if (counter >= FormContainerV2.nestingSupport) {
             return;
         }
@@ -368,8 +367,10 @@
             li.setAttribute('data-cmp-id', item?.id);
             li.setAttribute('data-cmp-visible', item?.visible);
             li.setAttribute('data-cmp-enabled', item?.enabled);
-            const children = formContainer?.getField(item.id)?._model?._children;
+            const children = formContainerGlobal?.getField(item.id)?._model?._children;
             let flag = false;
+
+            // setting an attibute(data-cmp-has-input) if the item is having an input field
             if(children) {
                 for(let i = 0; i< children.length; i++) {
                     if(children[i].fieldType !== 'panel') {
@@ -380,12 +381,13 @@
             if(flag) {
                 li.setAttribute('data-cmp-has-input', flag);
             }
+
             link.classList.add(FormContainerV2.cssClasses.navLink);
             if (isRepeatable(item)) {
-                const subMenu = createHamburgerMenu(formContainer, item.items, counter + 1);
+                const subMenu = createHamburgerMenu(item.items, counter + 1);
                 subMenu?.childNodes.forEach(child => ul.appendChild(child));
             } else if (Array.isArray(item.items) && item.items.length > 0) {
-                const subMenu = createHamburgerMenu(formContainer, item.items, counter + 1);
+                const subMenu = createHamburgerMenu(item.items, counter + 1);
                 if (subMenu?.childNodes?.length) {
                     subMenu.classList.add(FormContainerV2.cssClasses.hamburgerSubMenu);
                     li.appendChild(subMenu);
@@ -432,9 +434,9 @@
         return document.querySelector(FormContainerV2.selectors.active).parentElement;
     }
 
-    function highlightMenuTree(element, clickedAnchorElement) {
+    function highlightMenuTree(element, parentAnchorElement) {
         const closestLI = element?.closest('li');
-        const clickedClosestLI = clickedAnchorElement?.closest('li');
+        const clickedClosestLI = parentAnchorElement?.closest('li');
 
         const li = closestLI || clickedClosestLI;
     
@@ -480,9 +482,15 @@
             newActiveItemIndex = menuListItems.length - 1;
         }
         while (!isEligible(menuListItems[newActiveItemIndex], direction)) {
-            newActiveItemIndex = direction === 'prev' 
-                ? (newActiveItemIndex - 1 + menuListItems.length) % menuListItems.length 
-                : (newActiveItemIndex + 1) % menuListItems.length;
+            if(direction === 'prev') {
+                newActiveItemIndex = (newActiveItemIndex - 1) % menuListItems.length;
+                if(newActiveItemIndex<=0) {
+                    newActiveItemIndex = 0;
+                    break;
+                }
+            } else {
+                newActiveItemIndex = (newActiveItemIndex + 1) % menuListItems.length;
+            }
         }
         const newActiveItem = menuListItems[newActiveItemIndex];
         activeItemId = newActiveItem?.getAttribute('data-cmp-id');
@@ -544,12 +552,12 @@
         breadCrumbsContainer.scrollLeft = breadCrumbs.scrollWidth;
     }
 
-    function renderHamburgerItems(panels, formContainer) {
+    function renderHamburgerItems(panels) {
         const parentContainer = document.querySelector(FormContainerV2.selectors.menu);
         const hamburgerIcon = document.querySelector(FormContainerV2.selectors.hamburgerMenuIcon);
         const hamburgerMenuTopBar = document.querySelector(FormContainerV2.selectors.hamburgerMenuTopBar);
 
-        const menu = createHamburgerMenu(formContainer, panels);
+        const menu = createHamburgerMenu(panels);
         if(menu) {
             menu.classList.add(FormContainerV2.cssClasses.hamburgerMenu);
             menu.setAttribute('role', 'menu');
@@ -623,8 +631,8 @@
         });
     }
 
-    function getAllPanels(formContainer) {
-        let state = formContainer._model.getState(true);
+    function getAllPanels() {
+        let state = formContainerGlobal._model.getState(true);
         while (state?.items?.length === 1) {
           state = state.items[0];
         }
@@ -633,10 +641,11 @@
         return panels;
     }
 
-    function initializeHamburgerMenu(formContainer) {
-        const panels = getAllPanels(formContainer);
-        if(formContainer?.getModel()?.properties?.['fd:hamburgerMenu']) {
-            renderHamburgerItems(panels, formContainer);
+    function initializeHamburgerMenu() {
+        FormContainerV2.nestingSupport = formContainerGlobal?.getModel()?.properties?.['fd:hamburgerMenuNestingLevel'];
+        const panels = getAllPanels();
+        if(formContainerGlobal?.getModel()?.properties?.['fd:hamburgerMenu']) {
+            renderHamburgerItems(panels);
         }
     }
 
@@ -653,7 +662,7 @@
         function onInit(e) {
             let formContainer =  e.detail;
             formContainerGlobal = formContainer;
-            initializeHamburgerMenu(formContainer);
+            initializeHamburgerMenu();
             let formEl = formContainer.getFormElement();
             setTimeout(() => {
                 let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
