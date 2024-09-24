@@ -34,11 +34,10 @@
       type="${button.buttonType ? button.buttonType : 'button'}"
       value="${button.value}"
       class="cmp-adaptiveform-button__widget"
-      disabled="${!button.enabled}"
+      disabled="${!button.enabled || ((button.buttonType == 'submit' || button.buttonType == 'reset') ? 'true' : 'false')}"
       title="${button.tooltipVisible ? '' :   button.tooltipText}"
       data-cmp-data-layer="${button.data.json}"
-      aria-label="${button.label.visible != false ? '' : button.label.value}"
-      onclick="if (this.type === 'submit' || this.type === 'reset') event.preventDefault();">>
+      aria-label="${button.label.visible != false ? '' : button.label.value}">
     <sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
     <span data-sly-test="${button.label.value && button.label.visible != false}" class="cmp-adaptiveform-button__text" data-richtext="${button.label.richText}">${button.label.value @ context = button.label.richText ? 'html' : 'text'}</span>
   </button>

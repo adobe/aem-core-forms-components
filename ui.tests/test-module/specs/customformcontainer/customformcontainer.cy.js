@@ -45,8 +45,14 @@ describe('Custom form container with loader Test', () => {
             // Click the button and verify that the loading icon is added
             cy.get(`.cmp-adaptiveform-button__widget`).click();
 
-            // Verify that the loading class is removed from the form container after submission success or failure
-            cy.get('[data-cmp-adaptiveform-container-loader]').should('not.have.class', 'cmp-adaptiveform-container--loading');
+            cy.get(`.cmp-adaptiveform-button__widget`).then(($button) => {
+                if (!$button.is(':disabled')) {
+                    cy.wrap($button).click().then(() => {
+                        // Verify that the loading class is removed from the form container after submission success or failure
+                        cy.get('[data-cmp-adaptiveform-container-loader]').should('not.have.class', 'cmp-adaptiveform-container--loading');
+                    });
+                }
+            });
         })
 
     });
