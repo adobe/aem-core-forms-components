@@ -42,7 +42,7 @@ The following properties are written to JCR for this submit button component and
 The button has a default property of `buttonType` set to `submit` which is used to describe the type of the button.
 
 ## Client Libraries
-The component provides a `core.forms.components.button.v2.runtime` client library category that contains the Javascript runtime for the component. 
+The component provides a `core.forms.components.button.v1.runtime` client library category that contains the Javascript runtime for the component. 
 It should be added to a relevant site client library using the `embed` property.
 
 ## BEM Description
