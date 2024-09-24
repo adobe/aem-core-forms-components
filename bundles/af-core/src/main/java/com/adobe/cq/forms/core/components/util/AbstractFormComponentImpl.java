@@ -78,7 +78,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     protected String dataRef;
 
     // mandatory property else adapt should fail for adaptive form components
-    @ValueMapValue(name = ReservedProperties.PN_FIELDTYPE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FIELDTYPE)
     protected String fieldTypeJcr;
     private FieldType fieldType;
 
@@ -148,7 +148,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @PostConstruct
     protected void initBaseModel() {
         // first check if this is in the supported list of field type
-        fieldType = FieldType.fromString(fieldTypeJcr);
+        if (StringUtils.isNotEmpty(fieldTypeJcr)) {
+            fieldType = FieldType.fromString(fieldTypeJcr);
+        }
         if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
         }
@@ -213,6 +215,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     @Override
     public String getFieldType() {
+        return fieldType.getValue();
+    }
+
+    protected String getFieldType(@Nonnull FieldType defaultFieldType) {
+        if (fieldType == null) {
+            return defaultFieldType.getValue();
+        }
         return fieldType.getValue();
     }
 

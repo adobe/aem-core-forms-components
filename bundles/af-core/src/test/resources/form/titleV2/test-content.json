@@ -23,5 +23,11 @@
         "fd:htmlelementType": "h2",
         "fieldType": "plain-text",
         "sling:resourceType": "core/fd/components/form/title/v2/title"
+    },
+    "title-without-fieldtype" : {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Title",
+        "id": "abc",
+        "sling:resourceType": "core/fd/components/form/title/v1/title"
     }
 }
