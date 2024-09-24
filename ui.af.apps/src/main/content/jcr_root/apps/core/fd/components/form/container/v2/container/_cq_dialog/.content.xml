@@ -18,7 +18,7 @@
   jcr:primaryType="nt:unstructured"
   jcr:title="Adaptive Form Container"
   sling:resourceType="cq/gui/components/authoring/dialog"
-  extraClientlibs="[core.forms.components.container.v1.editor]"
+  extraClientlibs="[core.forms.components.container.v1.editor, core.forms.components.container.v2.editor]"
   helpPath="https://www.adobe.com/go/aem_af_cmp_container_v2"
   trackingFeature="core-components:adaptiveform-container:v2">
     <content
@@ -86,11 +86,22 @@
                                         value="0.14.2"/>
                                     <hamburgerMenu
                                       jcr:primaryType="nt:unstructured"
+                                      granite:class="cmp-adaptiveform-container__hamburgerMenuSupport"
                                       sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                       name="./fd:hamburgerMenu"
                                       text="Enable the hamburger menu for mobile view"
                                       fieldDescription="Select the option to display the hamburger menu for efficient navigation on mobile devices."
                                       value="{Boolean}true"/>
+                                    <hamburgerMenuNestingLevel
+                                      wrapperClass="cmp-adaptiveform-container__hamburgerMenuNestingLevel"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                      defaultValue="3"
+                                      fieldLabel="Hamburger menu nesting level support"
+                                      fieldDescription="Provide the number upto which hamburger menu level support is required."
+                                      min="1"
+                                      jcr:primaryType="nt:unstructured"
+                                      name="./fd:hamburgerMenuNestingLevel"
+                                    />
                                 </items>
                             </container>
                         </items>

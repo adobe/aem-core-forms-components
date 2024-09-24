@@ -30,6 +30,7 @@
       "clientLibRef": "abc",
       "customProp": "customPropValue",
       "fd:hamburgerMenu": "false",
+      "fd:hamburgerMenuNestingLevel": 3,
       "textinput" : {
         "jcr:primaryType": "nt:unstructured",
         "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",

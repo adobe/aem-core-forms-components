@@ -13,6 +13,7 @@
     },
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
     "fd:hamburgerMenu": false,
+    "fd:hamburgerMenuNestingLevel": 3,
     "fd:schemaType": "BASIC",
     "fd:formDataEnabled": true,
     "customProp": "customPropValue",

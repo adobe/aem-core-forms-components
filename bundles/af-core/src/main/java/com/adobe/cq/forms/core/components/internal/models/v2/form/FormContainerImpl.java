@@ -77,6 +77,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
     private static final String FD_HAMBURGER_MENU = "fd:hamburgerMenu";
+    private static final String FD_HAMBURGER_MENU_NESTING_LEVEL = "fd:hamburgerMenuNestingLevel";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
 
@@ -98,6 +99,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @ValueMapValue(name = FD_HAMBURGER_MENU, injectionStrategy = InjectionStrategy.OPTIONAL)
     private Boolean hamburgerMenu = false;
+
+    @ValueMapValue(name = FD_HAMBURGER_MENU_NESTING_LEVEL, injectionStrategy = InjectionStrategy.OPTIONAL)
+    private int hamburgerMenuNestingLevel = 3;
 
     protected String contextPath = StringUtils.EMPTY;
     private boolean formDataEnabled = false;
@@ -266,6 +270,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return hamburgerMenu;
     }
 
+    @JsonIgnore
+    public int getHamburgerMenuNestingLevel() {
+        return hamburgerMenuNestingLevel;
+    }
+
     @Override
     public String getRoleAttribute() {
         return roleAttribute;
@@ -327,6 +336,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             properties.put(FD_SCHEMA_REF, getSchemaRef());
         }
         properties.put(FD_HAMBURGER_MENU, getHamburgerMenu());
+        properties.put(FD_HAMBURGER_MENU_NESTING_LEVEL, getHamburgerMenuNestingLevel());
         // adding a custom property to know if form data is enabled
         // this is done so that an extra API call from the client can be avoided
         if (StringUtils.isNotBlank(getPrefillService()) ||
