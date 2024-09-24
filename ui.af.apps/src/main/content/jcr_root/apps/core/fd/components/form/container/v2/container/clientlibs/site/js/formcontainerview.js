@@ -642,7 +642,6 @@
     }
 
     function initializeHamburgerMenu() {
-        FormContainerV2.nestingSupport = formContainerGlobal?.getModel()?.properties?.['fd:hamburgerMenuNestingLevel'];
         const panels = getAllPanels();
         if(formContainerGlobal?.getModel()?.properties?.['fd:hamburgerMenu']) {
             renderHamburgerItems(panels);
