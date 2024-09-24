@@ -93,5 +93,29 @@
     "fd:events" : {
       "jcr:primaryType": "nt:unstructured"
     }
+  },
+  "checkbox-without-fieldtype" : {
+    "id": "checkbox-wo-fieldtype1",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/checkbox/v1/checkbox",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "assistPriority" : "custom",
+    "customProp": "customPropValue",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "type" : "string",
+    "checkedValue":  "on",
+    "uncheckedValue": "off",
+    "enableUncheckedValue": true,
+    "fd:rules" : {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events" : {
+      "jcr:primaryType": "nt:unstructured"
+    }
   }
 }

@@ -35,6 +35,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
@@ -89,6 +90,11 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
             return "data-url";
         }
         return null;
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.FILE_INPUT);
     }
 
     @Override

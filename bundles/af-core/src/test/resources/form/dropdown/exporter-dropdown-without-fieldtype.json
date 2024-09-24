@@ -1,0 +1,24 @@
+{
+  "id": "dropdown-without-fieldtype1",
+  "fieldType": "drop-down",
+  "name": "abc",
+  "type": "string",
+  "enforceEnum": true,
+  "enumNames": ["m", "f", "o"],
+  "enum": ["0", "1", "2"],
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/dropdown-without-fieldtype"
+  },
+  ":type": "core/fd/components/form/dropdown/v1/dropdown"
+}
