@@ -15,7 +15,7 @@
  ******************************************************************************/
 describe("Form Runtime with Button Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/button/basic.html"
+    const pagePath = "content/forms/af/core-components-it/samples/button/buttonv1/basic.html"
     const bemBlock = 'cmp-adaptiveform-button'
     const IS = "adaptiveFormButton"
     const selectors = {
@@ -102,6 +102,10 @@ describe("Form Runtime with Button Input", () => {
                 });
             });
         });
+    });
+
+    it(`should have type as button`, () => {
+        cy.get('.cmp-adaptiveform-button__widget').eq(0).should('have.attr', 'type', 'button');
     });
 
 })

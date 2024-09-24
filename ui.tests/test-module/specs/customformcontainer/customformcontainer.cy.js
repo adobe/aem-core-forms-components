@@ -34,5 +34,19 @@ describe('Custom form container with loader Test', () => {
 
         // Verify that the loading class is removed from the form container after submission success or failure
         cy.get('[data-cmp-adaptiveform-container-loader]').should('not.have.class', 'cmp-adaptiveform-container--loading');
+
+        // fill the mandatory fields
+        cy.get(`#${id}`).find('.cmp-adaptiveform-textinput__widget').focus().type('a').blur().then(() => {
+
+            cy.get(`.cmp-adaptiveform-button__widget`).then(($button) => {
+                if (!$button.is(':disabled')) {
+                    cy.wrap($button).click().then(() => {
+                        // Verify that the loading class is removed from the form container after submission success or failure
+                        cy.get('[data-cmp-adaptiveform-container-loader]').should('not.have.class', 'cmp-adaptiveform-container--loading');
+                    });
+                }
+            });
+        })
+
     });
 })
