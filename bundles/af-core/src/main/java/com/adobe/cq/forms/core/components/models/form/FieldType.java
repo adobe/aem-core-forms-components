@@ -39,7 +39,7 @@ public enum FieldType {
     TELEPHONE("tel"),
     PASSWORD("password"),
     RANGE("range"),
-    CUSTOM(null);
+    CUSTOM("");
 
     private String value;
 
