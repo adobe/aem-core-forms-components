@@ -30,6 +30,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Panel;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
@@ -48,6 +49,7 @@ public class PanelImplTest {
     private static final String PATH_ARRAY_PANEL = CONTENT_ROOT + "/array-panel";
     private static final String PATH_RULES_PANEL = CONTENT_ROOT + "/rules-panel";
     private static final String PATH_BOUND_PANEL = CONTENT_ROOT + "/bound-panel";
+    private static final String PATH_PANEL_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/panel-without-fieldtype";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -128,5 +130,11 @@ public class PanelImplTest {
     void testBoundPanelJSONExport() throws Exception {
         Panel panel = Utils.getComponentUnderTest(PATH_BOUND_PANEL, Panel.class, context);
         Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_BOUND_PANEL));
+    }
+
+    @Test
+    void testNoFieldType() {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_WITHOUT_FIELDTYPE, Panel.class, context);
+        assertEquals(FieldType.PANEL.getValue(), panel.getFieldType());
     }
 }

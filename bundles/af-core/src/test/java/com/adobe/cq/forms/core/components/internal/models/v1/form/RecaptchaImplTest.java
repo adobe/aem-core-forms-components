@@ -43,6 +43,7 @@ public class RecaptchaImplTest {
     private static final String BASE = "/form/recaptcha";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_RECAPTCHA = CONTENT_ROOT + "/recaptcha";
+    private static final String PATH_RECAPTCHA_WITHOUT_FEILDTYPE = CONTENT_ROOT + "/recaptcha-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -139,5 +140,11 @@ public class RecaptchaImplTest {
         Map<String, Object> captchaProps = recaptcha.getCaptchaProperties();
         String enterpriseUrl = (String) captchaProps.get("uri");
         assertEquals("https://www.recaptcha.net/recaptcha/enterprise.js", enterpriseUrl);
+    }
+
+    @Test
+    void testNoFieldType() {
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA_WITHOUT_FEILDTYPE, Captcha.class, context);
+        assertEquals(FieldType.CAPTCHA.getValue(), recaptcha.getFieldType());
     }
 }

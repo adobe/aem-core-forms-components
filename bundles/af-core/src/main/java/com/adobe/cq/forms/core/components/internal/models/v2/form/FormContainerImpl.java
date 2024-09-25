@@ -49,6 +49,7 @@ import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
 import com.adobe.cq.forms.core.components.models.form.AutoSaveConfiguration;
 import com.adobe.cq.forms.core.components.models.form.Container;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
@@ -123,6 +124,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.FORM);
+    }
 
     @PostConstruct
     protected void initFormContainerModel() {

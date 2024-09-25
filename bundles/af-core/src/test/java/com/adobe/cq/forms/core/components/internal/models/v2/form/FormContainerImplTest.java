@@ -45,6 +45,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
@@ -77,6 +78,7 @@ public class FormContainerImplTest {
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
 
     private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
+    private static final String PATH_FORM_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/formcontainerv2-without-fieldtype";
     private static final String PATH_FORM_1_WITHOUT_REDIRECT = CONTENT_ROOT + "/formcontainerv2WithoutRedirect";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
@@ -163,7 +165,7 @@ public class FormContainerImplTest {
     void testGetAdaptiveFormDefaultVersion() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNotNull(formContainer.getAdaptiveFormVersion());
-        assertEquals("0.14.0", formContainer.getAdaptiveFormVersion());
+        assertEquals("0.14.1", formContainer.getAdaptiveFormVersion());
     }
 
     @Test
@@ -487,4 +489,8 @@ public class FormContainerImplTest {
         assertNotNull(formContainer.getAutoSaveConfig());
     }
 
+    void testNoFieldType() {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_FIELDTYPE, FormContainer.class, context);
+        assertEquals(FieldType.FORM.getValue(), formContainer.getFieldType());
+    }
 }

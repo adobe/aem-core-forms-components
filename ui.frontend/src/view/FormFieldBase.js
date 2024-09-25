@@ -232,7 +232,7 @@ class FormFieldBase extends FormField {
         let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
         let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
         widgetElement = widgetElements || widgetElement;
-        const model = this.getModel?.();    
+        const model = this.getModel?.();
     
         if (widgetElement && model?.screenReaderText) {
             // Use DOMPurify to sanitize and strip HTML tags
@@ -241,9 +241,6 @@ class FormFieldBase extends FormField {
         }
     }
 
-    
-
-    
     /**
      * Synchronizes the markup with the model.
      * @method
@@ -444,7 +441,7 @@ class FormFieldBase extends FormField {
         }
     }
 
-    /**
+     /**
      * Updates the HTML state based on the enabled state of the field.
      * @param {boolean} enabled - The enabled state.
      * @param {Object} state - The state object.
@@ -454,10 +451,8 @@ class FormFieldBase extends FormField {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             if (enabled === false) {
                 this.widget.setAttribute("disabled", "disabled");
-                this.widget.setAttribute(Constants.ARIA_DISABLED, true);
             } else {
                 this.widget.removeAttribute("disabled");
-                this.widget.removeAttribute(Constants.ARIA_DISABLED);
             }
         }
     }

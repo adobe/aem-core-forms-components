@@ -34,17 +34,33 @@ const path = require('path');
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+    // `on` is used to hook into various events Cypress emits
+    // `config` is the resolved Cypress config
+
+    // Debugging: Log the values of config.fileServerFolder and config.env.specPattern
+    console.log('config.fileServerFolder:', config.fileServerFolder);
+    console.log('config.env.specPattern:', config.env.specPattern);
+
+    const specPattern = config.env.specPattern;
+    if (typeof specPattern !== 'string') {
+        throw new TypeError('The "to" argument must be of type string. Received ' + typeof specPattern);
+    }
+
+    const fileServerFolder = config.fileServerFolder;
+    if (typeof fileServerFolder !== 'string') {
+        throw new TypeError('The "to" argument must be of type string. Received ' + typeof fileServerFolder);
+    }
+
     const options = {
         outputRoot: config.projectRoot + '/target/',
         // Used to trim the base path of specs and reduce nesting in the
         // generated output directory.
-        specRoot: path.relative(config.fileServerFolder, config.integrationFolder),
+        specRoot: path.relative(fileServerFolder, specPattern),
         outputTarget: {
             'cypress-logs|json': 'json'
         }
     };
+
     require('cypress-terminal-report/src/installLogsPrinter')(on, options);
-    require('cypress-log-to-output').install(on)
+    require('cypress-log-to-output').install(on);
 };

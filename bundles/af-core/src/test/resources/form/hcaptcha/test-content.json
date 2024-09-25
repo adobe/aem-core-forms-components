@@ -19,5 +19,22 @@
     "textIsRich": "true",
     "unboundFormElement": false,
     "customProp": "customPropValue"
+  },
+  "hcaptcha-without-fieldtype": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:createdBy": "admin",
+    "jcr:title": "HCAPTCHA",
+    "enabled": true,
+    "jcr:lastModifiedBy": "admin",
+    "readOnly": false,
+    "required": true,
+    "jcr:created": "Thu Apr 11 2024 10:37:33 GMT+0530",
+    "name": "test-hcaptcha",
+    "size": "normal",
+    "cloudServicePath": "always-challenge",
+    "visible": true,
+    "hideTitle": "false",
+    "jcr:lastModified": "Thu Apr 11 2024 10:37:39 GMT+0530",
+    "sling:resourceType": "core/fd/components/form/hcaptcha/v1/hcaptcha"
   }
 }

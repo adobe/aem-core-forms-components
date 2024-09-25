@@ -39,7 +39,7 @@ try {
 
     //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
     //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
-    let wcmVersion = WCM_COMPONENTS ? WCM_COMPONENTS : "2.25.4";
+    let wcmVersion = "2.26.0";
     ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
         // Connect to QP
@@ -146,7 +146,7 @@ try {
         let testSuites = params.join(',');
         if (CORE_COMPONENTS) {
             // we run only some test suites for older core components
-            testSuites = "specs/prefill/customprefill.spec.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.spec.js,specs/actions/submit/submit.runtime.spec.js,specs/actions/render/render_with_openapi.spec.js";
+            testSuites = "specs/prefill/customprefill.cy.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.cy.js,specs/actions/submit/submit.runtime.cy.js,specs/actions/render/render_with_openapi.cy.js";
         }
         // start running the tests
         ci.dir('ui.tests', () => {

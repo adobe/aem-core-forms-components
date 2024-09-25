@@ -89,11 +89,9 @@
             if (enabled === false) {
                 if(state.readOnly === false){
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                    widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                 }
             } else if (state.readOnly === false) {
                 widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
             }
         }
 

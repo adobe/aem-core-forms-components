@@ -25,5 +25,16 @@
     "dataRef" : "test-button-ref",
     "tooltip": "test-short-description",
     "fieldType": "button"
+  },
+  "button-without-fieldtype" : {
+    "id": "button-112233",
+    "jcr:primaryType": "nt:unstructured",
+    "dorExclusion": true,
+    "sling:resourceType" : "core/fd/components/form/button/v1/button",
+    "name" : "no-fieldType-button",
+    "jcr:title" : "no-fieldType-button",
+    "description" : "test-description",
+    "dataRef" : "test-button-ref",
+    "tooltip": "test-short-description"
   }
 }

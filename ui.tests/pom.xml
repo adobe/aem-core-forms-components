@@ -35,7 +35,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <node.version>v10.0.0</node.version>
+        <node.version>v16.13.1</node.version>
         <npm.version>7.5.4</npm.version>
 
         <HEADLESS_BROWSER>false</HEADLESS_BROWSER>
@@ -123,6 +123,9 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
+                                <configuration>
+                                    <arguments>install --legacy-peer-deps</arguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -160,6 +163,9 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
+                                <configuration>
+                                    <arguments>install --legacy-peer-deps</arguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -235,6 +241,7 @@
                                 </goals>
                                 <configuration>
                                     <skip>${skipTests}</skip>
+                                    <arguments>install --legacy-peer-deps</arguments>
                                 </configuration>
                             </execution>
                         </executions>
@@ -300,6 +307,9 @@
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
+                                <configuration>
+                                    <arguments>install --legacy-peer-deps</arguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -358,7 +368,7 @@
                                         <argument>--reporter</argument>
                                         <argument>cypress-multi-reporters</argument>
                                         <argument>--reporter-options</argument>
-                                        <argument>configFile=cypress.json</argument>
+                                        <argument>configFile=cypress.config.js</argument>
                                         <argument>--env</argument>
                                         <!-- value of forms.far is addon or addon-latest -->
                                         <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR},core.components.version=${CORE_COMPONENTS}</argument>
