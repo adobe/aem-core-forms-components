@@ -38,7 +38,8 @@ public enum FieldType {
     IMAGE("image"),
     TELEPHONE("tel"),
     PASSWORD("password"),
-    RANGE("range");
+    RANGE("range"),
+    CUSTOM(null);
 
     private String value;
 
@@ -60,7 +61,8 @@ public enum FieldType {
                 return type;
             }
         }
-        return TEXT_INPUT;
+        CUSTOM.setValue(value);
+        return CUSTOM;
     }
 
     /**
@@ -71,6 +73,10 @@ public enum FieldType {
      */
     public String getValue() {
         return value;
+    }
+
+    private void setValue(String value) {
+        this.value = value;
     }
 
     @Override
