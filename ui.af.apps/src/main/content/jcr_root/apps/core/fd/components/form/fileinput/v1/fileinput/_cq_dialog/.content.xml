@@ -68,6 +68,7 @@
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                   granite:class="cmp-adaptiveform-radiobutton__type"
                                                   fieldLabel="Data type of submitted value"
+                                                  fieldDescription="Making type as string would increase the submit payload size by 30% and the file would be sent as data-url represented in string format"
                                                   required="{Boolean}true"
                                                   name="./type"
                                                   key="File"
