@@ -72,7 +72,11 @@ const singleSelectFileType = "input[name='fileinput3']";
 const multiSelectStringType = "input[name='fileinput4']";
 
 const fileInputs = [
-
+    {
+        type: "Single Select String Type",
+        selector: singleSelectStringType,
+        fileNames: ['empty.pdf'], multiple: false
+    },
     {
         type: "Multi Select String Type",
         selector: multiSelectStringType,
@@ -155,7 +159,6 @@ describe("Form with File Input - Prefill & Submit tests", () => {
                         })
                     });
                 });
-
 
             });
         });
