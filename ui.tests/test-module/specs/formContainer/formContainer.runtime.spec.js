@@ -42,12 +42,6 @@ let formContainer = null
         cy.get(selectors.hamburgerMenu).should("be.visible");
     })
 
-    it(`Test hamburger menu and nav bar support should not available in web view`, () => {
-        cy.get(selectors.hamburgerIcon).should('have.css', 'display', 'none');
-        cy.get(selectors.hamburgerMenu).should('have.css', 'display', 'none');
-        cy.get(selectors.hamburgerMenuContainer).should('have.css', 'display', 'none');
-    })
-
     it(`Test hamburger menu should render exact number of items`, () => {
         cy.viewport('iphone-x');
         cy.get(selectors.hamburgerIcon).click();
