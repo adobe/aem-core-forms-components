@@ -73,7 +73,7 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     @Override
     public Type getType() {
         Type superType = super.getType();
-        if (superType == null) {
+        if (superType == null || superType == Type.FILE) {
             return isMultiple() ? Type.FILE_ARRAY : Type.FILE;
         }
         if (isMultiple() && superType == Type.STRING) {

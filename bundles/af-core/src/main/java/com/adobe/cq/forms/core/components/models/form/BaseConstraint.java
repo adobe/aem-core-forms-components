@@ -35,7 +35,7 @@ public interface BaseConstraint {
      *
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
-    public enum type {
+    public enum Type {
         STRING("string"),
         STRING_ARRAY("string[]"),
         NUMBER("number"),
