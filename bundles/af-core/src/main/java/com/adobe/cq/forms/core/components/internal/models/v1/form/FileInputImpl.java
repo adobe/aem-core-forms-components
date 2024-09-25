@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -73,7 +74,7 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     @Override
     public Type getType() {
         Type superType = super.getType();
-        if (superType == null || superType == Type.FILE) {
+        if (superType == null || StringUtils.isBlank(typeJcr) || superType == Type.FILE) {
             return isMultiple() ? Type.FILE_ARRAY : Type.FILE;
         }
         if (isMultiple() && superType == Type.STRING) {

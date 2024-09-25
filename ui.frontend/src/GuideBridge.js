@@ -113,21 +113,22 @@ class GuideBridge {
      * @method
      * @memberof GuideBridge
      */
-    getFormDataString(options) {
+    async getFormDataString(options) {
         let formModel = this.getFormModel();
         if (!formModel) {
             throw new Error("formModel is not defined");
         }
-        let attachmentAsObj = formModel.getState().attachments;
-        let attachmentAsArray = Object.keys(attachmentAsObj).flatMap((key) => attachmentAsObj[key]);
-        let formData = new AfFormData({
-            "data": JSON.stringify(formModel.exportData()),
-            "attachments": attachmentAsArray
+        formModel.getState().attachments.then(attachmentAsObj => {
+            let attachmentAsArray = Object.keys(attachmentAsObj).flatMap((key) => attachmentAsObj[key]);
+            let formData = new AfFormData({
+                "data": JSON.stringify(formModel.exportData()),
+                "attachments": attachmentAsArray
+            });
+            let resultObject = new Response({"data": formData});
+            if (options && typeof options.success === 'function') {
+                options.success(resultObject);
+            }
         });
-        let resultObject = new Response({"data": formData});
-        if (options && typeof options.success === 'function') {
-            options.success(resultObject);
-        }
     }
 
 

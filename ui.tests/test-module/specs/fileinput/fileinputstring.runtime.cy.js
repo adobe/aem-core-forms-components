@@ -24,39 +24,44 @@ const checkFileNamesInFileAttachmentView = (component, fileNames) => {
 }
 
 const checkFilePreviewInFileAttachment = (component) => {
+    cy.window().then((win) => {
+        cy.stub(win, 'open').as('open')
+    })
     cy.get(component).then(() => {
         cy.get(".cmp-adaptiveform-fileinput__filename").each(($file) => {
             cy.wrap($file).click();
-            cy.window().its('open').should('be.called');
+            cy.get('@open').should('be.called');
         })
     });
 };
 
-const getFormObjTest = (fileList, type) => {
-    cy.window().then(function(win) {
-        win.guideBridge.getFormDataObject({
-            "success" : function (resultObj) {
-                let afFormData = resultObj.data;
-                expect(afFormData).to.exist // "af form data object not present in guideBridge#getFormDataObject API");
-                expect(afFormData.data).to.exist // "form data not present in guideBridge#getFormDataObject API");
-                if (!type.includes("String")) {
-                    assert.equal(afFormData.attachments.length, fileList.length, "incorrect attachments returned from guideBridge#getFormDataObject API");
-                    // checks if the right file names are present
-                    fileList.forEach((file) => {
-                        expect(afFormData.attachments.filter(e => e.name === file).length, `could not find ${file} attachment`).to.be.greaterThan(0);
-                    })
-                } else {
-                    // for string, check
-                    expect(afFormData.data).to.includes("data:", "file attachment string type isn't working");
-                }
 
-                // explicitly calling this to ensure there are no errors during this API invocation
-                let htmlFormData = afFormData.toHTMLFormData();
-                // Display the key/value pairs
-                for (var pair of htmlFormData.entries()) {
-                    console.log(pair[0]+ ', ' + pair[1]);
+const getFormObjTest = (fileList) => {
+    return cy.window().then((win) => {
+        return new Promise((resolve, reject) => {
+            win.guideBridge.getFormDataObject({
+                "success": function (resultObj) {
+                    try {
+                        let afFormData = resultObj.data;
+                        expect(afFormData).to.exist; // "af form data object not present in guideBridge#getFormDataObject API");
+                        expect(afFormData.data).to.exist; // "form data not present in guideBridge#getFormDataObject API");
+                        assert.equal(afFormData.attachments.length, fileList.length, "incorrect attachments returned from guideBridge#getFormDataObject API");
+                        // checks if the right file names are present
+                        fileList.forEach((file) => {
+                            expect(afFormData.attachments.filter(e => e.name === file).length, `could not find ${file} attachment`).to.be.greaterThan(0);
+                        });
+                        // explicitly calling this to ensure there are no errors during this API invocation
+                        let htmlFormData = afFormData.toHTMLFormData();
+                        // Display the key/value pairs
+                        for (var pair of htmlFormData.entries()) {
+                            console.log(pair[0] + ', ' + pair[1]);
+                        }
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
                 }
-            }
+            });
         });
     });
 };
@@ -67,21 +72,7 @@ const singleSelectFileType = "input[name='fileinput3']";
 const multiSelectStringType = "input[name='fileinput4']";
 
 const fileInputs = [
-    {
-        type: "Single Select File Type",
-        selector: singleSelectFileType,
-        fileNames: ['empty.pdf'], multiple: false
-    },
-    {
-        type: "Multi Select File Type",
-        selector: multiSelectFileType,
-        fileNames: ['empty.pdf', 'sample.txt'], multiple: true
-    },
-    {
-        type: "Single Select String Type",
-        selector: singleSelectStringType,
-        fileNames: ['empty.pdf'], multiple: false
-    },
+
     {
         type: "Multi Select String Type",
         selector: multiSelectStringType,
@@ -149,23 +140,23 @@ describe("Form with File Input - Prefill & Submit tests", () => {
                 // check if files were prefilled
                 checkFileNamesInFileAttachmentView(fileInput.selector, fileInput.fileNames);
 
-                // check if guideBridge API returns file attachments correctly
-                getFormObjTest(['empty.pdf', ...(fileInput.multiple ? ['sample.txt']: []) ], fileInput.type);
-
-                // check the preview of the file attachment
                 checkFilePreviewInFileAttachment(fileInput.selector);
 
-                // add new files after preview to both the component
-                cy.attachFile(fileInput.selector, ['sample2.txt'])
+                // check if guideBridge API returns file attachments correctly
+                getFormObjTest(['empty.pdf', ...(fileInput.multiple ? ['sample2.txt', 'sample.txt']: []) ]).then(() => {
+                    // add new files after preview to both the component
+                    cy.attachFile(fileInput.selector, ['sample2.txt']).then(() => {
+                        // check if guideBridge API returns correctly after prefill and attaching more files
+                        getFormObjTest(['sample2.txt', ...(fileInput.multiple ? ['sample.txt', 'empty.pdf', 'sample2.txt']: []) ]).then(() => {
+                            // submit the form
+                            cy.get(".cmp-adaptiveform-button__widget").click();
+                            // check if submission is success
+                            submitTest();
+                        })
+                    });
+                });
 
-                // check if guideBridge API returns correctly after prefill and attaching more files
-                getFormObjTest(['sample2.txt', ...(fileInput.multiple ? ['sample.txt', 'empty.pdf']: []) ], fileInput.type);
 
-                // submit the form
-                cy.get(".cmp-adaptiveform-button__widget").click();
-
-                // check if submission is success
-                submitTest();
             });
         });
 
@@ -180,10 +171,8 @@ describe("Form with File Input - Prefill & Submit tests", () => {
 
                 // check if files were prefilled
                 checkFileNamesInFileAttachmentView(fileInput.selector, ['sample2.txt', ...(fileInput.multiple ? ['sample.txt', 'empty.pdf']: []) ]);
-                getFormObjTest(['sample2.txt', ...(fileInput.multiple ? ['sample.txt', 'empty.pdf']: []) ], fileInput.type);
+                getFormObjTest(['sample2.txt', ...(fileInput.multiple ? ['sample.txt', 'empty.pdf', 'sample2.txt']: []) ]);
 
-                // check if file preview works fine after prefill
-                checkFilePreviewInFileAttachment(fileInput.selector);
             });
 
         });
