@@ -123,6 +123,8 @@ public class FormStructureParserImpl implements FormStructureParser {
         String result = null;
         FormContainer formContainer = resource.adaptTo(FormContainer.class);
         try {
+            // commenting the below line because this is causing problem in json encoding
+            // and solving this requires huge bump in 6.5
             // HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
             ObjectMapper mapper = new ObjectMapper();
             Writer writer = new StringWriter();
