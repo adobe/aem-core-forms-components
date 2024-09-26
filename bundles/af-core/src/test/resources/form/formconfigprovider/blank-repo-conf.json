@@ -1,0 +1,22 @@
+{
+  "jcr:primaryType": "cq:Page",
+  "jcr:createdBy": "admin",
+  "jcr:created": "Tue Feb 06 2024 11:06:16 GMT+0530",
+  "jcr:content": {
+    "jcr:primaryType": "cq:PageContent",
+    "jcr:createdBy": "admin",
+    "jcr:title": "Edge Delivery Service Configuration",
+    "cq:template": "/libs/core/franklin/shell/components/configuration/page/template",
+    "jcr:created": "Tue Feb 06 2024 11:06:16 GMT+0530",
+    "cq:lastModified": "Tue Feb 06 2024 11:06:34 GMT+0530",
+    "repo": "",
+    "owner": "abc",
+    "auxiliaryScripts": [
+      "https://cdn.jsdelivr.net/gh/adobe/universal-editor-cors@latest/dist/universal-editor-embedded.js",
+      "module:scripts/editor-support.js"
+    ],
+    "sling:resourceType": "core/franklin/shell/components/configuration/page",
+    "sling:configPropertyInherit": "true",
+    "cq:lastModifiedBy": "admin"
+  }
+}

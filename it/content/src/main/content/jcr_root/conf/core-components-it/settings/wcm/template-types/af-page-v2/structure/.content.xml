@@ -6,10 +6,12 @@
         jcr:primaryType="cq:PageContent"
             sling:resourceType="forms-components-examples/components/page"
             guideComponentType="fd/af/templates">
-        <parsys1
-            jcr:primaryType="nt:unstructured"
+        <container1
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Header"
                 editable="{Boolean}true"
-            sling:resourceType="wcm/foundation/components/responsivegrid"/>
+                sling:resourceType="core/wcm/components/container/v1/container"
+                layout="responsiveGrid"/>
         <guideContainer
             jcr:primaryType="nt:unstructured"
             editable="{Boolean}true"
@@ -17,10 +19,12 @@
                 fd:version="2.1"
                 sling:resourceType="forms-components-examples/components/form/container">
         </guideContainer>
-        <parsys2
-            jcr:primaryType="nt:unstructured"
+        <container2
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Footer"
                 editable="{Boolean}true"
-            sling:resourceType="wcm/foundation/components/responsivegrid"/>
+                sling:resourceType="core/wcm/components/container/v1/container"
+                layout="responsiveGrid"/>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
                 <smallScreen

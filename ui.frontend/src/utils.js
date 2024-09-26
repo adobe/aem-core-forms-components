@@ -19,16 +19,40 @@ import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core'
 
-export default class Utils {
+/**
+ * @module FormView
+ */
+
+/**
+ * Utility class with various helper functions.
+ * These functions provide various utility operations related to form model creation and management.
+ */
+class Utils {
+    /**
+     * The context path.
+     * @private
+     * @type {string}
+     */
     static #contextPath = "";
-    static #fieldCreatorSets = [];
+    /**
+     * Object of field creator sets.
+     * @private
+     */
+    static #fieldCreatorSets = {};
+    /**
+     * The array of field creator order.
+     * This is to store the insertion order
+     * @private
+     * @type {String[]}
+     */
+    static #fieldCreatorOrder = [];
 
     /**
      * Returns the data attributes of the specific element.
      * Ignores "data-cmp-is-*" and "data-cmp-hook-*" attributes.
-     * @param element
-     * @param clazz
-     * @returns {{}}
+     * @param {Element} element - The element to read data attributes from.
+     * @param {string} clazz - The class name.
+     * @returns {Object} The data attributes.
      */
     static readData(element, clazz) {
         const data = element.dataset;
@@ -56,11 +80,11 @@ export default class Utils {
     }
 
     /**
-     * Registers the mutation observer for a form component
-     * @param formContainer
-     * @param fieldCreator function to create a field
-     * @param fieldSelector
-     * @param dataAttributeClass
+     * Registers the mutation observer for a form component.
+     * @param {module:FormView~FormContainer} formContainer - The form container.
+     * @param {Function} fieldCreator - The function to create a field.
+     * @param {string} fieldSelector - The field selector.
+     * @param {string} dataAttributeClass - The data attribute class.
      */
     static registerMutationObserver(formContainer, fieldCreator, fieldSelector, dataAttributeClass) {
         let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
@@ -89,16 +113,19 @@ export default class Utils {
     }
 
     /**
-     * Creates fields from given elements of fieldCreator, for given form container
-     * @param fieldElements
-     * @param fieldCreator
-     * @param formContainer
+     * Creates fields from given elements of fieldCreator, for given form container.
+     * @private
+     * @param {Element[]} fieldElements - The field elements.
+     * @param {Function} fieldCreator - The function to create a field.
+     * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static #createFormContainerFields(fieldElements, fieldCreator, formContainer) {
         for (let i = 0; i < fieldElements.length; i++) {
             const elementId = fieldElements[i].id;
+            const formPathInField = fieldElements[i].getAttribute('data-cmp-adaptiveformcontainer-path');
+            const formPath = formContainer.getFormElement().getAttribute('data-cmp-path');
             //check if field is already created, to avoid creating a new field for same id
-            if (formContainer.getField(elementId) == null) {
+            if (formContainer.getField(elementId) == null && formPathInField == formPath) {
                 let field = fieldCreator({
                     "element" : fieldElements[i],
                     "formContainer" : formContainer
@@ -109,43 +136,52 @@ export default class Utils {
     }
 
     /**
-     * Creates fields from all registered fieldCreators present inside addedElement, for given form container
-     * @param addedElement
-     * @param formContainer
+     * Creates fields from all registered fieldCreators present inside addedElement, for given form container.
+     * @param {Element} addedElement - The added element.
+     * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static createFieldsForAddedElement(addedElement, formContainer) {
-        Utils.#fieldCreatorSets.forEach(function (fieldCreatorSet) {
+        Object.values(Utils.#fieldCreatorOrder).forEach(function (fieldSelector) {
+            let fieldCreatorSet = Utils.#fieldCreatorSets[fieldSelector];
             const fieldElements = addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']);
             Utils.#createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
         });
     }
 
     /**
-     * Execute a callback after the Form Container is initialized
-     * @param fieldCreator a function to return an instance of FormField
-     * @param fieldSelector {string} a css selector to identify the HTML Element.
-     * @param fieldClass data attribute to read the field data from
+     * Execute a callback after the Form Container is initialized.
+     * @param {Function} fieldCreator - The function to return an instance of FormField.
+     * @param {string} fieldSelector - The CSS selector to identify the HTML element.
+     * @param {string} fieldClass - The data attribute to read the field data from.
      */
     static setupField(fieldCreator, fieldSelector, fieldClass) {
-        const onInit = (e) => {
-            console.debug("FormContainerInitialised Received", e.detail);
-            let formContainer =  e.detail;
-            let fieldElements = document.querySelectorAll(fieldSelector);
-            Utils.#createFormContainerFields(fieldElements, fieldCreator, formContainer);
-            Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
+        // there should be only one view for each fieldSelector in case of multiple view registrations in case of extension
+        // if customer needs to create two views for each field selector, they need to do it via themservles
+        if (!(fieldSelector in Utils.#fieldCreatorSets)) {
+            Utils.#fieldCreatorOrder.push(fieldSelector);
         }
-        Utils.#fieldCreatorSets.push({
+        Utils.#fieldCreatorSets[fieldSelector] = {
             fieldCreator,
             fieldSelector,
             fieldClass
-        });
-        document.addEventListener(Constants.FORM_CONTAINER_INITIALISED, onInit);
+        };
     }
 
+    static initializeAllFields(formContainer) {
+        console.debug("Initializing field views ", formContainer);
+        Object.values(Utils.#fieldCreatorOrder).forEach(function (fieldSelectorInCreator) {
+            const {fieldSelector, fieldCreator, fieldClass} = Utils.#fieldCreatorSets[fieldSelectorInCreator];
+            console.debug("Initializing all fields of field selector ", fieldSelector);
+            let fieldElements = document.querySelectorAll(fieldSelector);
+            Utils.#createFormContainerFields(fieldElements, fieldCreator, formContainer);
+            Utils.registerMutationObserver(formContainer, fieldCreator, fieldSelector, fieldClass);
+        });
+    }
     /**
-     * Removes field reference from form container
-     * @param formContainer
-     * @param fieldId
+     * Removes field reference from form container.
+     * @private
+     * @param {module:FormView~FormContainer} formContainer - The form container.
+     * @param {string} fieldId - The field ID.
      */
     static #removeFieldId(formContainer, fieldId) {
         if (formContainer && formContainer.getAllFields()) {
@@ -154,9 +190,10 @@ export default class Utils {
     }
 
     /**
-     * Removes all child references (including instance manager) of field from views, Form Container
-     * @param fieldView
-     * @param formContainer
+     * Removes all child references (including instance manager) of field from views, Form Container.
+     * @private
+     * @param {Object} fieldView - The field view.
+     * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static #removeChildReferences(fieldView, formContainer) {
         let childViewList = fieldView.children;
@@ -173,9 +210,9 @@ export default class Utils {
     }
 
     /**
-     * Removes all references of field from views, Form Container
-     * @param fieldView
-     * @param formContainer
+     * Removes all references of field from views, Form Container.
+     * @param {Object} fieldView - The field view.
+     * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static removeFieldReferences(fieldView, formContainer) {
         let childViewList = fieldView.children;
@@ -188,10 +225,10 @@ export default class Utils {
     }
 
     /**
-     * Update the id inside the given html element
-     * @param htmlElement
-     * @param oldId
-     * @param newId
+     * Update the id inside the given html element.
+     * @param {Element} htmlElement - The HTML element.
+     * @param {string} oldId - The old ID.
+     * @param {string} newId - The new ID.
      */
     static updateId(htmlElement, oldId, newId) {
         let elementWithId = htmlElement.querySelectorAll("#" + oldId)[0];
@@ -201,8 +238,8 @@ export default class Utils {
     }
 
     /**
-     * API to set the context path. All external HTTP API calls would by default prefix with this context path
-     * @param contextPath   context path of the system
+     * API to set the context path. All external HTTP API calls would by default prefix with this context path.
+     * @param {string} contextPath - The context path of the system.
      */
     static setContextPath(contextPath) {
         if (Utils.#contextPath == null || Utils.#contextPath.length === 0) {
@@ -211,68 +248,117 @@ export default class Utils {
     }
 
     /**
-     * API to get the context path
-     * @returns context path of the system
+     * API to get the context path.
+     * @returns {string} - The context path of the system.
      */
     static getContextPath() {
         return Utils.#contextPath;
     }
 
     /**
-     * Registers handler on elements on hook
-     * @param parentElement
-     * @param hook
-     * @param handler
+     * Registers handler on elements on hook.
+     * @param {Element} parentElement - The parent element.
+     * @param {string} hook - The hook.
+     * @param {Function} handler - The event handler.
      */
     static registerClickHandler(parentElement, hook, handler) {
         const dataAttr = "[" + hook + "]";
         const buttons = parentElement.querySelectorAll(dataAttr);
         buttons.forEach(
-            (button) => button.addEventListener('click', handler));
+          (button) => button.addEventListener('click', handler));
     }
 
     /**
-     *
-     * @param createFormContainer
-     * @param formContainerSelector
+     * Registers custom functions from clientlibs.
+     * @param {string} formId - The form ID.
+     */
+    static async registerCustomFunctions(formId) {
+        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
+        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
+        if (funcConfig && funcConfig.customFunction) {
+            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
+                if (window[func.id]) {
+                    accumulator[func.id] = window[func.id];
+                }
+                return accumulator;
+            }, {});
+            FunctionRuntime.registerFunctions(funcObj);
+        }
+    }
+
+    /**
+     * Sets up the Form Container.
+     * @param {Function} createFormContainer - The function to create a form container.
+     * @param {string} formContainerSelector - The CSS selector to identify the form container.
+     * @param {string} formContainerClass - The form container class.
+     * @fires module:FormView~Constants#FORM_CONTAINER_INITIALISED
      */
     static async setupFormContainer(createFormContainer, formContainerSelector, formContainerClass) {
         FunctionRuntime.registerFunctions(customFunctions);
         let elements = document.querySelectorAll(formContainerSelector);
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);
+            const customFunctionUrl = dataset["customFunctionsModuleUrl"];
             const _path = dataset["path"];
+            const _pageLang = dataset["pageLang"];
             if ('contextPath' in dataset) {
                 Utils.setContextPath(dataset['contextPath']);
             }
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const _formJson = await HTTPAPILayer.getFormDefinition(_path);
+                const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
+                await this.registerCustomFunctions(_formJson.id);
+                await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
-                if (_formJson) {
+                if (_formJson?.properties?.['fd:formDataEnabled'] === true) {
+                    // only execute when fd:formDataEnabled is present and set to true
                     _prefillData = await HTTPAPILayer.getPrefillData(_formJson.id, params) || {};
                     _prefillData = Utils.stripIfWrapped(_prefillData);
                 }
-                const formContainer = createFormContainer({
+                const formContainer = await createFormContainer({
                     _formJson,
                     _prefillData,
                     _path,
                     _element: elements[i]
                 });
+                Utils.initializeAllFields(formContainer);
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }
         }
     }
 
+    static async registerCustomFunctionsByUrl(url) {
+        try {
+            if (url != null && url.trim().length > 0) {
+                // webpack ignore is added because webpack was converting this to a static import upon bundling resulting in error.
+                //This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.
+                const customFunctionModule = await import(/*webpackIgnore: true*/ url);
+                const keys = Object.keys(customFunctionModule);
+                const functions = [];
+                for (const name of keys) {
+                    const funcDef = customFunctionModule[name];
+                    if (typeof funcDef === 'function') {
+                        functions[name] = funcDef;
+                    }
+                }
+                FunctionRuntime.registerFunctions(functions);
+            }
+        } catch (e) {
+            if(window.console){
+                console.error("error in loading custom functions from url "+url+" with message "+e.message);
+            }
+        }
+    }
+
     /**
-     * for backward compatibility with older data formats of prefill services like FDM
-     * @param prefillJson
-     * @returns {{data}|*}
+     * For backward compatibility with older data formats of prefill services like FDM.
+     * @param {object} prefillJson - The prefill JSON object.
+     * @returns {object} - The stripped prefill JSON object.
      */
     static stripIfWrapped(prefillJson) {
         if (prefillJson && prefillJson.hasOwnProperty("data")) {
@@ -287,7 +373,11 @@ export default class Utils {
         return prefillJson;
     }
 
-    // Checks if the current browser matches with agentName passed
+    /**
+     * Checks if the current browser matches with the agentName passed.
+     * @param {string} agentName - The agent name to match with the browser's user agent.
+     * @returns {boolean} - True if the browser's user agent matches the agentName, otherwise false.
+     */
     static isUserAgent(agentName) {
         if(navigator.userAgent) {
             let regex = "^((?!chrome|android).)*" + agentName;
@@ -296,3 +386,5 @@ export default class Utils {
         }
     }
 }
+
+export default Utils;

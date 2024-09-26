@@ -15,6 +15,8 @@
  ******************************************************************************/
 (function(author){
 
+    "use strict";
+
     const FORM_CONTAINER_SELECTOR = ".cmp-adaptiveform-container";
 
     var _superPrepareCopyParagraph = author.persistence.PostRequest.prototype.prepareCopyParagraph;
@@ -40,7 +42,7 @@
         }
     };
 
-    getUniqueName = function (path, nodeNameToCopy) {
+    const getUniqueName = function (path, nodeNameToCopy) {
         var resourceExistSelector = ".fdResourceExists.json?childNodeName=" + nodeNameToCopy,
             url = path + resourceExistSelector,
             response = CQ.shared.HTTP.get(url);

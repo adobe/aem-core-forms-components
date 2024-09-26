@@ -53,6 +53,7 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-checkboxgroup
     ELEMENT cmp-adaptiveform-checkboxgroup__label
+    ELEMENT cmp-adaptiveform-checkboxgroup__label-container
     ELEMENT cmp-adaptiveform-checkboxgroup__widget
     ELEMENT cmp-adaptiveform-checkbox__widget
     ELEMENT cmp-adaptiveform-checkbox__label
@@ -62,11 +63,23 @@ BLOCK cmp-adaptiveform-checkboxgroup
     ELEMENT cmp-adaptiveform-checkboxgroup__errormessage
 ```
 
+### Note
+By placing the class names `cmp-adaptiveform-checkboxgroup__label` and `cmp-adaptiveform-checkboxgroup__questionmark` within the `cmp-adaptiveform-checkboxgroup__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+
 ## JavaScript Data Attribute Bindings
 
 The following attributes must be added for the initialization of the checkbox-group component in the form view:  
  1. `data-cmp-is="adaptiveFormCheckBoxGroup"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+
+The following are optional attributes that can be added to the component in the form view:
+1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
+2. `data-cmp-required` having a boolean value to indicate whether the field is currently required or not
+3. `data-cmp-readonly` having a boolean value to indicate whether the field is currently readonly or not
+4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not 
+5. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
+6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
 
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:

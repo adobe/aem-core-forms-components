@@ -27,11 +27,15 @@
      data-sly-use.file="com.adobe.cq.forms.core.components.models.form.FileInput"
      data-cmp-visible="${file.visible ? 'true' : 'false'}"
      data-cmp-enabled="${file.enabled ? 'true' : 'false'}"
+     data-cmp-required="${file.required ? 'true': 'false'}"
+     data-cmp-readonly="${file.readOnly ? 'true' : 'false'}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=file.id, labelValue=file.label.value, labelVisible=file.label.visible, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    <div class="cmp-adaptiveform-fileinput__label-container">
+      <div data-sly-call="${label.label @componentId=file.id, labelValue=file.label.value, labelVisible=file.label.visible, labelRichText=file.label.richText, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    </div>
     </br>
-    <label data-sly-test="${file.buttonText}" for="${file.id}_widget" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
+    <label data-sly-test="${file.buttonText}" for="${file.id}_widget" tabindex="0" role="button" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
     <input class="cmp-adaptiveform-fileinput__widget"
            data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"
            style="${file.buttonText ? 'display:none' : '' @ context='styleString'}"
@@ -42,6 +46,7 @@
            accept="${file.accept}"
            id="${file.id}_widget"
            type="file"
+           aria-describedby="${file.id}__errormessage ${file.id}__longdescription ${file.id}__shortdescription"
            data-cmp-data-layer="${file.data.json}"
     />
     <ul class="cmp-adaptiveform-fileinput__filelist"></ul>

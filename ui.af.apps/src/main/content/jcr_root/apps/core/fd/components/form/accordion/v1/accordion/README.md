@@ -52,6 +52,8 @@ handling for dialog interaction. It is already included by its edit and policy d
 ```
 BLOCK cmp-accordion
     ELEMENT cmp-accordion__item
+    ELEMENT cmp-accordion__label
+    ELEMENT cmp-accordion__label-container
     ELEMENT cmp-accordion__header
     ELEMENT cmp-accordion__button
         MOD cmp-accordion__button--expanded
@@ -64,6 +66,8 @@ BLOCK cmp-accordion
     ELEMENT cmp-accordion__shortdescription
     ELEMENT cmp-accordion__longdescription
 ```
+### Note
+By placing the class names `cmp-accordion__label` and `cmp-accordion__questionmark` within the `cmp-accordion__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 The following attributes must be added for the initialization of the accordion component in the form view:

@@ -27,13 +27,18 @@
      data-cmp-is="adaptiveFormNumberInput"
      data-cmp-visible="${numberinput.visible ? 'true' : 'false'}"
      data-cmp-enabled="${numberinput.enabled ? 'true' : 'false'}"
+     data-cmp-required="${numberinput.required ? 'true': 'false'}"
+     data-cmp-readonly="${numberinput.readOnly ? 'true' : 'false'}"
      id="${numberinput.id}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
-    <div data-sly-call="${label.label @componentId=numberinput.id, labelValue=numberinput.label.value, labelVisible=numberinput.label.visible, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
-    <div data-sly-call="${questionMark.questionMark @componentId=numberinput.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}"></div>
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[numberinput.id, 'widget']}">
+    <div class="cmp-adaptiveform-numberinput__label-container">
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=numberinput.label.value, labelVisible=numberinput.label.visible, labelRichText=numberinput.label.richText, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=numberinput.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>
+    </div>
     <input
             class="cmp-adaptiveform-numberinput__widget"
-            aria-label="${numberinput.label.visible && numberinput.label.value}"
+            id="${widgetId}"
             title="${numberinput.tooltipVisible ? '' : numberinput.tooltipText}"
             type="number"
             name="${numberinput.name}"
@@ -44,7 +49,8 @@
             disabled="${!numberinput.enabled}"
             readonly="${numberinput.readOnly}"
             required="${numberinput.required}"
-            placeholder="${numberinput.placeHolder}"/>
+            placeholder="${numberinput.placeHolder}"
+            dir="auto"/>
     <div data-sly-call="${shortDescription.shortDescription @componentId=numberinput.id, shortDescriptionVisible=numberinput.tooltipVisible, shortDescription=numberinput.tooltip, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=numberinput.id, longDescription=numberinput.description, bemBlock='cmp-adaptiveform-numberinput'}" data-sly-unwrap></div>

@@ -1,0 +1,5 @@
+// Configuration created by Apache Sling JCR Installer
+{
+  "rumScriptUrl":"https://rum.hlx.page/.rum/@adobe/helix-rum-js@^1/src/index.js",
+  "rumAPIPath":"https://rum.hlx.page"
+}

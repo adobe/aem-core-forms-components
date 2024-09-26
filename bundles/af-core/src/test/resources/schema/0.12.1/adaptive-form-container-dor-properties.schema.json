@@ -1,0 +1,41 @@
+{
+  "$id": "classpath:/schema/0.12.1/adaptive-form-container-dor-properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "dorType": {
+      "title": "DOR Type",
+      "description": "Describes the type of Document of Record (DOR)",
+      "type": "string",
+      "enum": [
+        "generate",
+        "select"
+      ],
+      "examples": [
+        {
+          "dorType": "generate"
+        }
+      ]
+    },
+    "dorTemplateRef": {
+      "title": "DOR Template Reference",
+      "description": "Reference to the template for the Document of Record (DOR).",
+      "type": "string",
+      "examples": [
+        {
+          "dorTemplateRef": "/content/dam/formsanddocuments/acro form conversion.pdf"
+        }
+      ]
+    },
+    "dorTemplateType": {
+      "title": "DOR Template Type",
+      "description": "Type of the template for the Document of Record (DOR).",
+      "enum": [
+        "acroform",
+        "xfa"
+      ],
+      "type": "string"
+    }
+  }
+}

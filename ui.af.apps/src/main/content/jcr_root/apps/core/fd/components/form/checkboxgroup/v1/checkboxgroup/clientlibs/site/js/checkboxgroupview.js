@@ -17,7 +17,7 @@
 
 
     "use strict";
-    class CheckBoxGroup extends FormView.FormFieldBase {
+    class CheckBoxGroup extends FormView.FormOptionFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -31,14 +31,16 @@
         static checkboxBemBlock = 'cmp-adaptiveform-checkbox'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widgets: `.${CheckBoxGroup.bemBlock}__widgets`,
+            widgets: `.${CheckBoxGroup.bemBlock}__widget`,
             widget: `.${CheckBoxGroup.bemBlock}__option__widget`,
             widgetLabel: `.${CheckBoxGroup.bemBlock}__label`,
             label: `.${CheckBoxGroup.bemBlock}__label`,
             description: `.${CheckBoxGroup.bemBlock}__longdescription`,
             qm: `.${CheckBoxGroup.bemBlock}__questionmark`,
             errorDiv: `.${CheckBoxGroup.bemBlock}__errormessage`,
-            tooltipDiv: `.${CheckBoxGroup.bemBlock}__shortdescription`
+            tooltipDiv: `.${CheckBoxGroup.bemBlock}__shortdescription`,
+            item:  `.${CheckBoxGroup.bemBlock}-item`,
+            optionLabel: `${CheckBoxGroup.bemBlock}__option-label`
         };
 
         constructor(params) {
@@ -47,8 +49,12 @@
             this.widgetLabel = this.element.querySelector(CheckBoxGroup.selectors.widgetLabel)
         }
 
+        getWidgets() {
+            return this.element.querySelector(CheckBoxGroup.selectors.widgets);
+        }
+
         getWidget() {
-            return this.element.querySelectorAll(CheckBoxGroup.selectors.widget);
+          return this.element.querySelectorAll(CheckBoxGroup.selectors.widget);
         }
 
         getDescription() {
@@ -71,6 +77,10 @@
             return this.element.querySelector(CheckBoxGroup.selectors.tooltipDiv);
         }
 
+        getOptions() {
+            return this.element.querySelectorAll(CheckBoxGroup.selectors.item);
+        }
+
         setModel(model) {
             super.setModel(model);
             let widgets = this.widget;
@@ -79,6 +89,12 @@
                 this.#updateModelValue(self);
                 widget.addEventListener('change', (e) => {
                     this.#updateModelValue(self);
+                });
+                widget.addEventListener('focus', (e) => {
+                    this.setActive();
+                });
+                widget.addEventListener('blur', (e) => {
+                    this.setInactive();
                 });
             })
         }
@@ -91,8 +107,15 @@
                 }
             }, this);
             if (value.length !== 0 || this._model.value != null) {
-                this._model.value = value;
+                this.setModelValue(value)
             }
+        }
+
+        updateValidity(validity) {
+            const valid = validity.valid ? validity.valid : false;
+            let widgets = this.widget;
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
+            widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
         }
 
         updateValue(modelValue) {
@@ -101,37 +124,53 @@
             this.widget.forEach(widget => {
                 if (selectedWidgetValues.includes((widget.value))) {
                     widget.checked = true
-                    widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED)
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, true)
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED);
                 } else {
                     widget.checked = false
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
             super.updateEmptyStatus();
         }
 
+        #createCheckBoxItem(value, itemLabel) {
+            const optionTemplate = `
+            <div class="${CheckBoxGroup.selectors.item.slice(1)}">
+                <label class="${CheckBoxGroup.selectors.optionLabel.slice(1)}">
+                    <input type="checkbox" class="${CheckBoxGroup.selectors.widget.slice(1)}" value="${value}">
+                    <span>${itemLabel}</span>
+                </label>
+            </div>`;
+
+            const container = document.createElement('div'); // Create a container element to hold the template
+            container.innerHTML = optionTemplate;
+            return container.firstElementChild; // Return the first child, which is the created option
+        }
+        updateEnum(newEnums) {
+            super.updateEnumForRadioButtonAndCheckbox(newEnums, this.#createCheckBoxItem);
+        }
+
+        updateEnumNames(newEnumNames) {
+            super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createCheckBoxItem);
+        }
+
         updateEnabled(enabled, state) {
-            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widgets = this.widget;
             widgets.forEach(widget => {
                 if (enabled === false) {
                     if(state.readOnly === false){
                         widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                        widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                     }
                 } else if (state.readOnly === false) {
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                    widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
             });
         }
 
         updateReadOnly(readonly) {
-            this.toggle(readonly, "aria-readonly", true);
             let widgets = this.widget;
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_READONLY, readonly);
             widgets.forEach(widget => {
                 if (readonly === true) {
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
@@ -142,8 +181,19 @@
                 }
             });
         }
-    }
+        updateRequired(required, state) {
+            if (this.widget) {
+                this.element.toggleAttribute("required", required);
+                this.element.setAttribute("data-cmp-required", required);
+            }
+        }
 
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
+            this.updateEnum(this._model.enum);
+            this.updateEnumNames(this._model.enumNames);
+        }
+    }
 
     FormView.Utils.setupField(({element, formContainer}) => {
         return new CheckBoxGroup({element, formContainer})

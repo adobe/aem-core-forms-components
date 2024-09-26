@@ -46,6 +46,9 @@ public class DatePickerImplTest {
 
     private static final String PATH_DATEPICKER = CONTENT_ROOT + "/datepicker";
     private static final String PATH_DATEPICKER_DATALAYER = CONTENT_ROOT + "/datepicker-datalayer";
+    private static final String PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/datepicker-displayValueExpression";
+    private static final String PATH_DATEPICKER_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/datepicker-backwardcompatible";
+    private static final String PATH_DATEPICKER_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/datepicker-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -125,7 +128,7 @@ public class DatePickerImplTest {
     @Test
     void testIsVisible() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
-        assertEquals(null, datePicker.isVisible());
+        assertEquals(true, datePicker.isVisible());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isVisible()).thenCallRealMethod();
         assertEquals(null, datePickerMock.isVisible());
@@ -143,7 +146,7 @@ public class DatePickerImplTest {
     @Test
     void testIsEnabled() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
-        assertEquals(null, datePicker.isEnabled());
+        assertEquals(true, datePicker.isEnabled());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, datePickerMock.isEnabled());
@@ -173,7 +176,7 @@ public class DatePickerImplTest {
     @Test
     void testIsReadOnly() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
-        assertEquals(null, datePicker.isReadOnly());
+        assertEquals(false, datePicker.isReadOnly());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, datePickerMock.isReadOnly());
@@ -241,6 +244,12 @@ public class DatePickerImplTest {
     }
 
     @Test
+    void testJSONExportBackwardCompatibility() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_BACKWARD_COMPATIBLE, DatePicker.class, context);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_BACKWARD_COMPATIBLE));
+    }
+
+    @Test
     void testJSONExportForCustomized() throws Exception {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_CUSTOMIZED));
@@ -291,5 +300,17 @@ public class DatePickerImplTest {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_DATALAYER, DatePicker.class, context);
         FieldUtils.writeField(datePicker, "dataLayerEnabled", true, true);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_DATALAYER));
+    }
+
+    @Test
+    void testJSONExportForDisplayValueExpression() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION, DatePicker.class, context);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION));
+    }
+
+    @Test
+    void testNoFieldType() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITHOUT_FIELDTYPE, DatePicker.class, context);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITHOUT_FIELDTYPE));
     }
 }

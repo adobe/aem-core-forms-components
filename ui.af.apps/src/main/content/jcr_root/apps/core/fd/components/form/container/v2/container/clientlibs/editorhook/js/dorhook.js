@@ -14,6 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 (function (ns, document) {
+    "use strict";
+
     var DOR_DIALOG_PATH = "fd/af/authoring/components/dor/dorPropertiesTabs",
          PRINT_NODE_RELATIVE_PATH = "/jcr:content/guideContainer/fd:view/print";
 

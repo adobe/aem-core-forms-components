@@ -26,42 +26,75 @@
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
         constructor(params) {
-            const triggerEventOnGuideBridge = () => {
-                const eventPayload = {
-                    formId: this.getFormId(),
-                    formTitle: this.getFormTitle(),
-                };
-                window.guideBridge.trigger("submitStart", eventPayload, this.getPath());
-            }
             super(params);
             let self = this;
             this._model.subscribe((action) => {
-                triggerEventOnGuideBridge();
                 let state = action.target.getState();
-                let body = action.payload?.body;
-                if (body) {
-                    if (body.redirectUrl) {
-                        let redirectURL = self._path + '.guideThankYouPage.html';  //default ThankYouPage Path
-                        let redirectElement = document.querySelector('[name=":redirect"]');
-                        // check to prevent tampering of redirectURL from client
-                        if(redirectElement && redirectElement.value === body.redirectUrl) {
-                            redirectURL = body.redirectUrl;
+                // execute the handler only if there are no rules configured on submitSuccess event.
+                if (!state.events.submitSuccess || state.events.submitSuccess.length === 0) {
+                    const globals = {
+                        form: self.getModel().getRuleNode(),
+                        event: {
+                            type: action.type,
+                            payload: action.payload,
                         }
-                        window.location.href = redirectURL;
-                    } else if (body.thankYouMessage) {
-                        let formContainerElement = document.querySelector("[data-cmp-path='"+ self._path +"']");
-                        let thankYouMessage = document.createElement("div");
-                        thankYouMessage.setAttribute("class", "tyMessage");
-                        thankYouMessage.innerHTML = body.thankYouMessage;
-                        formContainerElement.replaceWith(thankYouMessage);
-                    }
+                    };
+                    FormView.customFunctions.defaultSubmitSuccessHandler(globals);
                 }
             }, "submitSuccess");
             this._model.subscribe((action) => {
                 let state = action.target.getState();
-                let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(this.getLang(), "InternalFormSubmissionError");
-                window.alert(defaultSubmissionError);
+                // execute the handler only if there are no rules configured on submitError event.
+                if (!state.events.submitError || state.events.submitError.length === 0) {
+                    let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(self.getLang(), "InternalFormSubmissionError");
+                    const globals = {
+                        form: self.getModel().getRuleNode(),
+                        event: {
+                            type: action.type,
+                            payload: action.payload,
+                        }
+                    };
+                    FormView.customFunctions.defaultSubmitErrorHandler(defaultSubmissionError, globals);
+                }
             }, "submitError");
+            this._model.subscribe((action) => {
+                let state = action.target.getState();
+                // execute the handler only if there are no rules configured on custom:saveSuccess event.
+                if (!state.events['custom:saveSuccess'] || state.events['custom:saveSuccess'].length === 0) {
+                    console.log("Draft id = " + action?.payload?.body?.draftId);
+                    window.alert(FormView.LanguageUtils.getTranslatedString(self.getLang(), "saveDraftSuccessMessage"));
+                }
+            }, "saveSuccess");
+            this._model.subscribe((action) => {
+                let state = action.target.getState();
+                // execute the handler only if there are no rules configured on custom:saveError event.
+                if (!state.events['custom:saveError'] || state.events['custom:saveError'].length === 0) {
+                    window.alert(FormView.LanguageUtils.getTranslatedString(self.getLang(), "saveDraftErrorMessage"));
+                }
+            }, "saveError");
+            this.#setupAutoSave(self.getModel());
+        }
+
+        /**
+         * Register time based auto save
+         * @param formModel.
+         */
+         #setupAutoSave(formModel) {
+            const autoSaveProperties = formModel?.properties?.['fd:autoSave'];
+            const enableAutoSave = autoSaveProperties?.['fd:enableAutoSave'];
+            if (enableAutoSave) {
+                const autoSaveStrategyType = autoSaveProperties['fd:autoSaveStrategyType'];
+                const autoSaveInterval = autoSaveProperties['fd:autoSaveInterval'];
+                const saveEndPoint = FormView.Utils.getContextPath() + '/adobe/forms/af/save/' + formModel.id;
+                if (autoSaveStrategyType === 'time' && autoSaveInterval) {
+                    console.log("Registering time based auto save");
+                    setInterval(() => {
+                        formModel.dispatch(new FormView.Actions.Save({
+                            'action': saveEndPoint
+                        }));
+                    }, parseInt(autoSaveInterval) * 1000);
+                }
+            }
         }
     }
 
@@ -69,28 +102,43 @@
         const startTime = new Date().getTime();
         let elements = document.querySelectorAll(FormContainerV2.selectors.self);
         for (let i = 0; i < elements.length; i++) {
-            elements[i].classList.add(FormContainerV2.loadingClass);
+            let loaderToAdd = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ elements[i].id + "']");
+            if(loaderToAdd){
+                loaderToAdd.classList.add(FormContainerV2.loadingClass);
+            }
             console.debug("Form loading started", elements[i].id);
         }
         function onInit(e) {
             let formContainer =  e.detail;
             let formEl = formContainer.getFormElement();
             setTimeout(() => {
-                formEl.classList.remove(FormContainerV2.loadingClass);
+                let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
+                if(loaderToRemove){
+                    loaderToRemove.classList.remove(FormContainerV2.loadingClass);
+                }
                 const timeTaken = new Date().getTime() - startTime;
                 console.debug("Form loading complete", formEl.id, timeTaken);
                 }, 10);
         }
         document.addEventListener(FormView.Constants.FORM_CONTAINER_INITIALISED, onInit);
-        const formContainer = FormView.Utils.setupFormContainer(({
+        await FormView.Utils.setupFormContainer(async ({
             _formJson, _prefillData, _path, _element
         }) => {
-            return new FormContainerV2({_formJson, _prefillData, _path, _element});
-        }, FormContainerV2.selectors.self, FormContainerV2.IS)
+            let formContainer = new FormContainerV2({_formJson, _prefillData, _path, _element});
+            // before initializing the form container load all the locale specific json resources
+            // for runtime
+            const formLanguage = formContainer.getLang();
+            const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
+            await FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl, true);
+            formContainer.subscribe();
+            return formContainer;
+        }, FormContainerV2.selectors.self, FormContainerV2.IS);
     }
 
-
-
+    // This is to ensure that the there is no WCM Mode cookie when Form Container is rendered.
+    // max-age=0 ensures that the cookie is deleted.
+    document.cookie="wcmmode=disabled; max-age=0; path=/";
+    
     if (document.readyState !== "loading") {
         onDocumentReady();
     } else {

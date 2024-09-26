@@ -21,7 +21,7 @@
     <groupId>com.adobe.aem</groupId>
     <artifactId>core-forms-components-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.0.100-SNAPSHOT</version>
+    <version>3.0.100-SNAPSHOT</version>
 
     <name>AEM Forms Core Components - Parent</name>
     <description>Parent POM for AEM Forms Core Components</description>
@@ -88,8 +88,8 @@
         <slf4j.version>1.7.6</slf4j.version>
         <jacoco.version>0.7.9</jacoco.version>
 
-        <core.wcm.components.version>2.22.12</core.wcm.components.version>
-        <core.wcm.components.library.version>2.22.12</core.wcm.components.library.version>
+        <core.wcm.components.version>2.24.6</core.wcm.components.version>
+        <core.wcm.components.library.version>2.24.6</core.wcm.components.library.version>
 
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -808,7 +808,16 @@
                 <plugin>
                     <groupId>net.revelc.code</groupId>
                     <artifactId>impsort-maven-plugin</artifactId>
-                    <version>1.4.1</version>
+                    <version>1.6.2</version>
+                    <dependencies>
+                        <!-- Needed because of maven 3.9.0 backward compatibility issue,
+                             See : https://github.com/revelc/impsort-maven-plugin/issues/64 -->
+                        <dependency>
+                            <groupId>org.codehaus.plexus</groupId>
+                            <artifactId>plexus-utils</artifactId>
+                            <version>3.5.1</version>
+                        </dependency>
+                    </dependencies>
                     <configuration>
                         <groups>java, javax, org</groups>
                         <staticGroups>*</staticGroups>
@@ -1045,7 +1054,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
-                <version>4.1</version>
+                <version>4.4</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -1119,7 +1128,7 @@
             <dependency>
                 <groupId>com.adobe.aem</groupId>
                 <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2022.12.20.00-220900</version>
+                <version>2024.04.18.00-240300</version>
             </dependency>
 
             <dependency>

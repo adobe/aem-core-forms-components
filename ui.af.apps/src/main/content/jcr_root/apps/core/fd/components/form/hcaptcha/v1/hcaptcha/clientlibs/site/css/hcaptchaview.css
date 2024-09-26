@@ -1,0 +1,19 @@
+/**
+## BEM Description
+BLOCK cmp-adaptiveform-hcaptcha
+    ELEMENT cmp-adaptiveform-hcaptcha__label
+    ELEMENT cmp-adaptiveform-hcaptcha__widget
+    ELEMENT cmp-adaptiveform-hcaptcha__errormessage
+*/
+
+.cmp-adaptiveform-hcaptcha {
+
+}
+
+.cmp-adaptiveform-hcaptcha__widget {
+
+}
+
+.cmp-adaptiveform-hcaptcha__label {
+
+}

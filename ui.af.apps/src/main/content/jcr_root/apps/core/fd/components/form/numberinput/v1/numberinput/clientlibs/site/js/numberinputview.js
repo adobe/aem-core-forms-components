@@ -67,7 +67,7 @@
             this.widgetObject = new NumericInputWidget(this.getWidget(), this._model);
             this.getWidget().addEventListener('blur', (e) => {
                 if(this.element) {
-                    this.setActive(this.element, false);
+                    this.setInactive();
                 }
             });
         }
@@ -87,24 +87,25 @@
         setModel(model) {
             super.setModel(model);
             // only initialize if patterns are set
-            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || FormView.Utils.isUserAgent('safari')) {
+            if (this._model._jsonModel.editFormat || this._model._jsonModel.displayFormat || this._model._jsonModel.displayValueExpression
+                || this._model._jsonModel.type === 'integer' || FormView.Utils.isUserAgent('safari')) {
                 if (this.widgetObject == null) {
                     this.initializeWidget();
                 }
             } else {
                 if (this.widget.value !== '') {
-                    this._model.value = this.widget.value;
+                    this.setModelValue(this.widget.value);
                 }
                 this.getWidget().addEventListener('blur', (e) => {
-                    this._model.value = e.target.value;
+                    this.setModelValue(e.target.value);
                     if(this.element) {
-                        this.setActive(this.element, false);
+                        this.setInactive();
                     }
                 });
             }
             this.getWidget().addEventListener('focus', (e) => {
                 if (this.element) {
-                    this.setActive(this.element, true);
+                    this.setActive();
                 }
             });
         }

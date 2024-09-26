@@ -16,14 +16,20 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,18 +37,24 @@ import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -51,41 +63,67 @@ import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
+import com.day.cq.wcm.api.designer.Style;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "dataRef")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATAREF)
     @Nullable
     protected String dataRef;
 
     // mandatory property else adapt should fail for adaptive form components
-    @ValueMapValue(name = "fieldType")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FIELDTYPE)
     protected String fieldTypeJcr;
     private FieldType fieldType;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_NAME)
     @Nullable
     protected String name;
 
-    @ValueMapValue
+    @ValueMapValue(name = ReservedProperties.PN_VALUE)
     @Default(values = "")
     protected String value;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VISIBLE)
     @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean visible;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_UNBOUND_FORM_ELEMENT)
     @Nullable
     protected Boolean unboundFormElement;
 
     @SlingObject
     private Resource resource;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUSION)
+    @Default(booleanValues = false)
+    protected boolean dorExclusion;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_COLSPAN)
+    @Nullable
+    protected String dorColspan;
+
+    @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected Style currentStyle;
+
+    /**
+     * Returns dorBindRef of the form field
+     *
+     * @return dorBindRef of the field
+     * @since com.adobe.cq.forms.core.components.util 4.0.0
+     */
+    @JsonIgnore
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_BINDREF)
+    @Nullable
+    protected String dorBindRef;
 
     /**
      * Flag indicating if the data layer is enabled.
@@ -105,16 +143,21 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     private static final String NULL_DATA_REF = "null";
 
+    private static final Logger logger = LoggerFactory.getLogger(AbstractFormComponentImpl.class);
+
     @PostConstruct
     protected void initBaseModel() {
         // first check if this is in the supported list of field type
-        fieldType = FieldType.fromString(fieldTypeJcr);
+        if (StringUtils.isNotEmpty(fieldTypeJcr)) {
+            fieldType = FieldType.fromString(fieldTypeJcr);
+        }
         if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
         }
         if (Boolean.TRUE.equals(unboundFormElement)) {
             dataRef = NULL_DATA_REF;
         }
+        getName();
     }
 
     public void setI18n(@Nonnull I18n i18n) {
@@ -154,6 +197,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     public String getName() {
         if (name == null) {
+            // setting the default name if name is null.
             name = getDefaultName();
         }
         return name;
@@ -174,6 +218,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return fieldType.getValue();
     }
 
+    protected String getFieldType(@Nonnull FieldType defaultFieldType) {
+        if (fieldType == null) {
+            return defaultFieldType.getValue();
+        }
+        return fieldType.getValue();
+    }
+
     /**
      * Returns {@code true} if form field should be visible, otherwise {@code false}.
      *
@@ -181,22 +232,28 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Nullable
     public Boolean isVisible() {
-        if (getEditMode()) {
-            return true;
-        }
+        return visible == null || visible;
+    }
+
+    @JsonProperty("visible")
+    public Boolean getVisibleIfPresent() {
         return visible;
     }
 
+    // API kept for backward compatibility, this is not to be used anymore
     @JsonIgnore
     protected boolean getEditMode() {
         boolean editMode = false;
-        // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
-        // we anyways dont need to rely on wcmmode while fetching form definition.
-        if (request != null && request.getPathInfo() != null && !request.getPathInfo().endsWith("model.json")) {
-            editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+        if (request != null && request.getPathInfo() != null) {
+            String pathInfo = request.getPathInfo();
+            boolean matches = Pattern.matches(".+model.*\\.json$", pathInfo);
+            // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
+            // we anyways dont need to rely on wcmmode while fetching form definition.
+            if (!matches) {
+                editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+            }
         }
         return editMode;
     }
@@ -212,7 +269,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
-    public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
 
     /**
      * Predicate to check if a map entry is non empty
@@ -226,19 +282,23 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> customProperties = new LinkedHashMap<>();
+        Map<String, Object> properties = new LinkedHashMap<>();
+        Map<String, Object> customProperties = getCustomProperties();
+        if (customProperties.size() > 0) {
+            customProperties.forEach(properties::putIfAbsent);
+        }
         if (getCustomLayoutProperties().size() != 0) {
-            customProperties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
+            properties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
         }
         if (getDorProperties().size() > 0) {
-            customProperties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+            properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
-        customProperties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
+        properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
         Map<String, Object> rulesProperties = getRulesProperties();
         if (rulesProperties.size() > 0) {
-            customProperties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
+            properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
         }
-        return customProperties;
+        return properties;
     }
 
     @Override
@@ -311,7 +371,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return the updated event entry
      */
     private Stream<Map.Entry<String, String[]>> sanitizeEvent(Map.Entry<String, Object> entry) {
-        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change" };
+        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change", "submitSuccess", "submitError" };
 
         Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") ||
             Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
@@ -421,7 +481,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     private static class DataRefSerializer extends JsonSerializer<String> {
-
         @Override
         public void serialize(String s, JsonGenerator jsonGenerator,
             SerializerProvider serializerProvider) throws IOException {
@@ -431,6 +490,64 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                 jsonGenerator.writeString(s);
             }
         }
+
+        @Override
+        public boolean isEmpty(SerializerProvider provider, String value) {
+            return (StringUtils.isEmpty(value));
+        }
+    }
+
+    private boolean isAllowedType(Object value) {
+        return value instanceof String || value instanceof String[] || value instanceof Boolean || value instanceof Boolean[]
+            || value instanceof Calendar || value instanceof Calendar[] || value instanceof BigDecimal
+            || value instanceof BigDecimal[] || value instanceof Long || value instanceof Long[];
+    }
+
+    /**
+     * Fetches all the custom properties associated with a given component's instance (including additional custom properties)
+     *
+     * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
+     */
+    private Map<String, Object> getCustomProperties() {
+        Map<String, Object> customProperties = new HashMap<>();
+        Map<String, String> templateBasedCustomProperties;
+        List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
+        Set<String> reservedProperties = ReservedProperties.getReservedProperties();
+
+        ValueMap resourceMap = resource.getValueMap();
+        Map<String, Object> nodeBasedCustomProperties = resourceMap.entrySet()
+            .stream()
+            .filter(entry -> isAllowedType(entry.getValue())
+                && !reservedProperties.contains(entry.getKey())
+                && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        nodeBasedCustomProperties.forEach(customProperties::putIfAbsent);
+        try {
+            templateBasedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
+                .map(CustomPropertyInfo::getProperties)
+                .orElse(Collections.emptyMap());
+        } catch (NoClassDefFoundError e) {
+            logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon.");
+            templateBasedCustomProperties = Collections.emptyMap();
+        }
+        if (!templateBasedCustomProperties.isEmpty()) {
+            templateBasedCustomProperties.forEach(customProperties::putIfAbsent);
+        }
+        return customProperties;
+    }
+
+    @Override
+    @JsonIgnore
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> customDorProperties = new LinkedHashMap<>();
+        customDorProperties.put("dorExclusion", dorExclusion);
+        if (dorColspan != null) {
+            customDorProperties.put("dorColspan", dorColspan);
+        }
+        if (dorBindRef != null) {
+            customDorProperties.put("dorBindRef", dorBindRef);
+        }
+        return customDorProperties;
     }
 
 }

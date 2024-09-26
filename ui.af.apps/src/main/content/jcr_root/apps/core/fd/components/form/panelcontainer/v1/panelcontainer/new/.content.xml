@@ -17,5 +17,5 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="cq:Component"
     jcr:title="New Component - Container"
-    sling:resourceSuperType="wcm/foundation/components/parsys/newpar"
+    sling:resourceSuperType="core/wcm/components/container/v1/container/new"
     componentGroup=".hidden"/>

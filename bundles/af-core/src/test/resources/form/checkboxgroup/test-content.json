@@ -17,6 +17,7 @@
     "tooltip": "test-short-description",
     "type": "number[]",
     "multiSelect": true,
+    "customProp": "customPropValue",
     "default": [
       0,
       1
@@ -26,7 +27,7 @@
       1,
       2
     ],
-    "enforceEnum" : true,
+    "enforceEnum": true,
     "enumNames": [
       "m",
       "f",
@@ -34,18 +35,70 @@
     ],
     "minItems": 1,
     "maxItems": 2,
-    "fd:rules" : {
-      "xyz" : "abcd",
-      "visible" : 1,
+    "fd:rules": {
+      "xyz": "abcd",
+      "visible": 1,
       "jcr:primaryType": "nt:unstructured"
     },
-    "fd:events" : {
+    "fd:events": {
       "jcr:primaryType": "nt:unstructured",
-      "initialize" : 1,
-      "event1" : "invalid",
-      "change" : ["e1", "e2"],
+      "initialize": 1,
+      "event1": "invalid",
+      "change": [
+        "e1",
+        "e2"
+      ],
       "click": "e1",
-      "custom_event" : "e2"
+      "custom_event": "e2"
+    }
+  },
+  "checkboxgroup-boolean": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+    "name": "abc",
+    "jcr:title": "def",
+    "hideTitle": false,
+    "description": "dummy",
+    "visible": false,
+    "enabled": false,
+    "readOnly": true,
+    "assistPriority": "custom",
+    "dataRef": "a.b",
+    "custom": "Custom screen reader text",
+    "fieldType": "checkbox-group",
+    "typeMessage": "incorrect type",
+    "tooltip": "test-short-description",
+    "type": "boolean[]",
+    "multiSelect": true,
+    "default": [
+      false
+    ],
+    "enum": [
+      true,
+      false
+    ],
+    "enforceEnum": true,
+    "enumNames": [
+      "m",
+      "f"
+    ],
+    "minItems": 1,
+    "maxItems": 2,
+    "fd:rules": {
+      "xyz": "abcd",
+      "visible": 1,
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "fd:events": {
+      "jcr:primaryType": "nt:unstructured",
+      "initialize": 1,
+      "event1": "invalid",
+      "change": [
+        "e1",
+        "e2"
+      ],
+      "click": "e1",
+      "custom_event": "e2"
     }
   },
   "checkboxgroup-datalayer": {
@@ -84,8 +137,7 @@
     "enum": [
       0,
       1
-    ],
-    ":type": "forms-components-examples/components/form/checkboxgroup"
+    ]
   },
   "checkboxgroup-duplicate-enum": {
     "id": "checkboxgroup-9d6c474801",
@@ -200,5 +252,22 @@
       20
     ],
     ":type": "forms-components-examples/components/form/checkboxgroup"
+  },
+  "checkboxgroup-without-fieldtype": {
+    "id": "checkboxgroup-a484170b97",
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Check Box Group",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "name": "checkboxgroup1722332761006",
+    "type": "number[]",
+    "enumNames": [
+      "Item 1",
+      " Item 2"
+    ],
+    "jcr:lastModified": "Tue Jul 30 2024 15:16:00 GMT+0530",
+    "sling:resourceType": "forms-components-examples/components/form/checkboxgroup"
   }
 }

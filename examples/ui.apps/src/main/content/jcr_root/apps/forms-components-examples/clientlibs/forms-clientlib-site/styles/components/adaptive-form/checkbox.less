@@ -1,0 +1,17 @@
+.cmp-adaptiveform-checkbox {
+  .containerMixin();
+  .descriptionMixin();
+  .validInvalidMixin();
+  &__help-container {
+    flex-direction: row-reverse;
+    display: flex
+  }
+  &__widget-container {
+    flex-direction: row;
+    align-items: baseline;
+    display: flex
+  }
+  &__widget {
+    .itemWidgetMixin();
+  }
+}

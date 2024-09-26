@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class DropDown extends FormView.FormFieldBase {
+    class DropDown extends FormView.FormOptionFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -67,6 +67,10 @@
             return this.element.querySelector(DropDown.selectors.tooltipDiv);
         }
 
+        getOptions() {
+            return this.element.querySelectorAll(DropDown.selectors.options);
+        }
+
          #checkIfEqual = function(value, optionValue, multiSelect) {
             if(multiSelect) {
                 let isPresent = false;
@@ -80,23 +84,20 @@
         }
 
         updateEnabled(enabled, state) {
-            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widget = this.widget;
             if (enabled === false) {
                 if(state.readOnly === false){
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                    widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                 }
             } else if (state.readOnly === false) {
                 widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
             }
         }
 
         updateReadOnly(readonly) {
-            this.toggle(readonly, "aria-readonly", true);
             let widget = this.widget;
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_READONLY, readonly);
             if (readonly === true) {
                 widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
                 widget.setAttribute("aria-readonly", true);
@@ -113,15 +114,87 @@
             }
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
+                // clear of any selection, and re-add selection (otherwise HTML shows stale state if it already existed)
+                option.removeAttribute('selected');
                 if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
                     option.setAttribute('selected', 'selected');
-                } else {
-                    option.removeAttribute('selected');
                 }
             });
             super.updateEmptyStatus();
         }
 
+        #createDropDownOptions(value, label) {
+            const optionTemplate = `<option value="${value}" class="${DropDown.selectors.options.slice(1)}">${label}</option>`;
+            const container = document.createElement('div'); // Create a container element to hold the template
+            container.innerHTML = optionTemplate;
+            return container.firstElementChild; // Return the first child, which is the created option
+        }
+
+        #removeAllOptions() {
+            while(this.getOptions().length !== 0) {
+                this.getWidget().remove(this.getOptions().length) // not removing the blank option
+            }
+        }
+
+        /**
+         * @override
+         * Method for updating the saved value in the option field.
+         * It contains the logic for updating the 'enum' value.
+         *
+         * @param {Array} newEnums - An array of primitive values to be saved in the option field.
+         */
+        updateEnum(newEnums) {
+            let options = this.getOptions();
+            let currentEnumSize = options.length;
+            let startIndex = options[0] && options[0].value === '' ? 1 : 0; // Check if the first option is a blank option
+
+            // Update existing options and add new options in the same loop
+            newEnums.forEach((value, index) => {
+                if (index + startIndex < currentEnumSize) {
+                    // Update existing option
+                    options[index + startIndex].value = value;
+                } else {
+                    // Add new option
+                    this.getWidget().add(this.#createDropDownOptions(value, value));
+                }
+            });
+
+            // Remove extra options, but never remove the first option
+            while (currentEnumSize > newEnums.length + startIndex) {
+                this.getWidget().remove(currentEnumSize--);
+            }
+        }
+
+        /**
+         * @override
+         * Method for updating the display value in the option field.
+         * It contains the logic for updating the 'enumNames' value.
+         *
+         * @param {Array} newEnumNames - An array of primitive values to be displayed in the option field.
+         */
+        updateEnumNames(newEnumNames) {
+            let options = this.getOptions();
+            let currentEnumNameSize = options.length;
+            if(currentEnumNameSize === 0) {  // case 1: Create all dropdown new options
+                newEnumNames.forEach((value) => {
+                    this.getWidget().add(this.#createDropDownOptions(value, value));
+                })
+            } else if(currentEnumNameSize > newEnumNames.length) {  // case 2: Replace existing enumNames, remaining enumNames = enums
+                newEnumNames.forEach((value, index) => {
+                    options[index].text = value;
+                });
+
+                options.forEach((option, index) => {
+                    if(index >= newEnumNames.length) {
+                        option.text = option.value;
+                    }
+                })
+            } else {    // case 3: Replace all existing enumNames
+                options.forEach((option, index) => {
+                    option.text = newEnumNames[index];
+                });
+            }
+        }
 
         setModel(model) {
             super.setModel(model);
@@ -130,6 +203,12 @@
             }
             this.widget.addEventListener('change', (e) => {
                 this.#updateModelValue(e.target);
+            });
+            this.widget.addEventListener('focus', (e) => {
+                this.setActive();
+            });
+            this.widget.addEventListener('blur', (e) => {
+                this.setInactive();
             });
         }
 
@@ -142,10 +221,10 @@
                     }
                 });
                 if (valueArray.length !== 0 || this._model.value != null) {
-                    this._model.value = valueArray;
+                    this.setModelValue(valueArray);
                 }
             } else {
-                this._model.value = widget.value;
+                this.setModelValue(widget.value);
             }
         }
     }

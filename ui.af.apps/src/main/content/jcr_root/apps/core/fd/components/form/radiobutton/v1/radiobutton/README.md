@@ -59,8 +59,9 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-radiobutton
     ELEMENT cmp-adaptiveform-radiobutton__label
+    ELEMENT cmp-adaptiveform-radiobutton__label-container
     ELEMENT cmp-adaptiveform-radiobutton__option
-        ELEMENT cmp-adaptiveform-radiobutton__option__label
+        ELEMENT cmp-adaptiveform-radiobutton__option-label
         ELEMENT cmp-adaptiveform-radiobutton__option__widget
     ELEMENT cmp-adaptiveform-radiobutton__questionmark
     ELEMENT cmp-adaptiveform-radiobutton__shortdescription
@@ -68,11 +69,24 @@ BLOCK cmp-adaptiveform-radiobutton
     ELEMENT cmp-adaptiveform-radiobutton__errormessage
 ```
 
+### Note
+By placing the class names `cmp-adaptiveform-radiobutton__label` and `cmp-adaptiveform-radiobutton__questionmark` within the `cmp-adaptiveform-radiobutton__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+
 ## JavaScript Data Attribute Bindings
 
 The following attributes must be added for the initialization of the radio-button component in the form view:
 1. `data-cmp-is="adaptiveFormRadioButton"`
 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
+
+
+
+The following are optional attributes that can be added to the component in the form view:
+1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
+2. `data-cmp-required` having a boolean value to indicate whether the field is currently required or not
+3. `data-cmp-readonly` having a boolean value to indicate whether the field is currently readonly or not
+4. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not 
+5. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
+6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
 
 ## Replace feature:
 We support replace feature that allows replacing Reset Button component to any of the below components:

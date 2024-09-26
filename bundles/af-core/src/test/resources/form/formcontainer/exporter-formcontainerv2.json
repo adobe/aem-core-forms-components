@@ -8,9 +8,29 @@
       "dorType": "generate",
       "dorTemplateRef": "xyz"
     },
+    "fd:autoSave": {
+      "fd:enableAutoSave":false
+    },
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
-    "fd:schemaType": "BASIC"
+    "fd:schemaType": "BASIC",
+    "fd:formDataEnabled": true,
+    "customProp": "customPropValue",
+    "fd:roleAttribute":"test-role-attribute"
   },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":itemsOrder": [
+    "textinput"
+  ],
+  "adaptiveform": "0.14.1",
+  "metadata": {
+    "version": "1.0.0",
+    "grammar": "json-formula-1.0.0"
+  },
+  ":type": "core/fd/components/form/container/v2/container",
   ":items": {
     "textinput": {
       "id": "textinput-9a52c5fa93",
@@ -36,17 +56,5 @@
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
-  },
-  ":itemsOrder" : ["textinput"],
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  "metadata": {
-    "version": "1.0.0",
-    "grammar": "json-formula-1.0.0"
-  },
-  "adaptiveform": "0.12.0",
-  ":type": "core/fd/components/form/container/v2/container"
+  }
 }

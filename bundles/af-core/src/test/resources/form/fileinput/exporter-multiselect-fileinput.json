@@ -12,7 +12,7 @@
   "constraintMessages": {
     "type": "incorrect type"
   },
-  "maxFileSize": "4GB",
+  "maxFileSize": "4096MB",
   "accept": [
     "text/*",
     "application/pdf"
@@ -33,6 +33,7 @@
     "fd:dor": {
       "dorExclusion": false
     },
+    "fd:buttonText": "Attach",
     "fd:path": "/content/multiselect-fileinput"
   },
   ":type": "core/fd/components/form/fileinput/v1/fileinput"

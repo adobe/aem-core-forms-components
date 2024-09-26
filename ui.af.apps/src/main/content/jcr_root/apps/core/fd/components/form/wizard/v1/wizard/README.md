@@ -45,12 +45,17 @@ It is already included by its edit and policy dialogs.
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-wizard
+    ELEMENT cmp-adaptiveform-wizard__label
+    ELEMENT cmp-adaptiveform-wizard__label-container
     ELEMENT cmp-adaptiveform-wizard__tab
     ELEMENT cmp-adaptiveform-wizard__wizardpanel
     ELEMENT cmp-adaptiveform-wizard__previousNav
     ELEMENT cmp-adaptiveform-wizard__nextNav
     
 ```
+
+### Note
+By placing the class names `cmp-adaptiveform-wizard__label` and `cmp-adaptiveform-wizard__questionmark` within the `cmp-adaptiveform-wizard__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## JavaScript Data Attribute Bindings
 Apply a `data-cmp-is="adaptiveFormWizard"` attribute to the wrapper block to enable initialization of the JavaScript component.

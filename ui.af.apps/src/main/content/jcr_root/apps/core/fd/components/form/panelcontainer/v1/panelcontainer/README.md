@@ -24,7 +24,6 @@ Adaptive Form Panel Container component written in HTL.
     * Background images and colors can be enabled through policy configuration.
     * Color swatches for background color can be defined through policy configuration.
     * Background color can be restricted to only allow swatches through policy configuration.
-* Configurable HTML ID attribute.
 * Allowed components can be configured through policy configuration.
 * Style System support.
 * Allows replacing this component with other component (as mentioned below).
@@ -78,10 +77,15 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-container
   ELEMENT cmp-container__label
+  ELEMENT cmp-container__label-container
   ELEMENT cmp-container__questionmark
   ELEMENT cmp-container__shortdescription
   ELEMENT cmp-container__longdescription
 ```
+
+### Note
+By placing the class names `cmp-container__label` and `cmp-container__questionmark` within the `cmp-container__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+
 ## JavaScript Data Attribute Bindings
 The following attributes must be added for the initialization of the panel-container component in the form view:  
  1. `data-cmp-is="adaptiveFormPanel"`

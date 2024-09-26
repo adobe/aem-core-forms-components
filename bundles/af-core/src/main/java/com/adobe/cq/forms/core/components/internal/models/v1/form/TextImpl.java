@@ -27,6 +27,8 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Text;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,12 +41,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextImpl extends AbstractFormComponentImpl implements Text {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TEXT_IS_RICH)
     @Default(booleanValues = false)
     private boolean textIsRich;
 
     @SlingObject
     private Resource resource;
+
+    @Override
+    protected void initBaseModel() {
+        // Always make dataRef of Text component as null, for this we need to make unboundFormElement as true
+        unboundFormElement = Boolean.TRUE;
+        super.initBaseModel();
+    }
 
     @Override
     public String getValue() {
@@ -60,5 +69,10 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
     @JsonIgnore
     public String getText() {
         return getValue();
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.PLAIN_TEXT);
     }
 }

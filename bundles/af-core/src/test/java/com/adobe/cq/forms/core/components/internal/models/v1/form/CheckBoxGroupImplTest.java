@@ -55,6 +55,8 @@ public class CheckBoxGroupImplTest {
 
     private static final String PATH_CHECKBOX_GROUP_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/checkboxgroup-duplicate-enum";
     private static final String PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER = CONTENT_ROOT + "/checkboxgroup-insertion-order";
+    private static final String PATH_CHECKBOX_GROUP_FOR_BOOLEAN = CONTENT_ROOT + "/checkboxgroup-boolean";
+    private static final String PATH_CHECKBOX_GROUP_NO_FIELDTYPE = CONTENT_ROOT + "/checkboxgroup-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -345,7 +347,7 @@ public class CheckBoxGroupImplTest {
 
     @Test
     void testDataLayerProperties() throws IllegalAccessException {
-        CheckBox checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBox.class, context);
+        CheckBoxGroup checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBoxGroup.class, context);
         FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
         FormComponentData dataObject = (FormComponentData) checkBox.getData();
         assert (dataObject != null);
@@ -358,7 +360,7 @@ public class CheckBoxGroupImplTest {
 
     @Test
     void testJSONExportDataLayer() throws Exception {
-        CheckBox checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBox.class, context);
+        CheckBoxGroup checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBoxGroup.class, context);
         FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
         Utils.testJSONExport(checkBox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_GROUP_DATALAYER));
     }
@@ -372,10 +374,23 @@ public class CheckBoxGroupImplTest {
     }
 
     @Test
+    void testForBooleanType() {
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_BOOLEAN);
+        Set<Object> set = new LinkedHashSet<>(Arrays.asList(true, false));
+        assertArrayEquals(set.toArray(new Object[0]), checkboxGroup.getEnums());
+    }
+
+    @Test
     void testInsertionOrderForEnumNames() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER);
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), checkboxGroup.getEnumNames());
+    }
+
+    @Test
+    void testNoFieldType() {
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_NO_FIELDTYPE);
+        Utils.testJSONExport(checkboxGroup, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_GROUP_NO_FIELDTYPE));
     }
 }

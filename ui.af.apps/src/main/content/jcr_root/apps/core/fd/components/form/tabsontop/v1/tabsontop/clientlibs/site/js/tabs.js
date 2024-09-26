@@ -31,28 +31,12 @@
             description: `.${Tabs.bemBlock}__longdescription`,
             qm: `.${Tabs.bemBlock}__questionmark`,
             tooltipDiv: `.${Tabs.bemBlock}__shortdescription`,
-            olTabList: `.${Tabs.bemBlock}__tablist`
+            olTabList: `.${Tabs.bemBlock}__tablist`,
+            widget: `.${Tabs.bemBlock}__tablist`
         };
 
         constructor(params) {
             super(params, Tabs.NS, Tabs.IS, Tabs.selectors);
-            if (window.Granite && window.Granite.author && window.Granite.author.MessageChannel) {
-                /*
-                 * Editor message handling:
-                 * - subscribe to "cmp.panelcontainer" message requests sent by the editor frame
-                 * - check that the message data panel container type is correct and that the id (path) matches this specific Tabs component
-                 * - if so, route the "navigate" operation to enact a navigation of the Tabs based on index data
-                 */
-                CQ.CoreComponents.MESSAGE_CHANNEL = CQ.CoreComponents.MESSAGE_CHANNEL || new window.Granite.author.MessageChannel("cqauthor", window);
-                var _self = this;
-                CQ.CoreComponents.MESSAGE_CHANNEL.subscribeRequestMessage("cmp.panelcontainer", function (message) {
-                    if (message.data && message.data.type === "cmp-tabs" && message.data.id === _self._elements.self.dataset["cmpPanelcontainerId"]) {
-                        if (message.data.operation === "navigate" && _self._elements["tab"][message.data.index] != undefined) {
-                            _self.navigate(_self._elements["tab"][message.data.index].id);
-                        }
-                    }
-                });
-            }
         }
 
 
@@ -63,7 +47,9 @@
         setFocus(id) {
             super.setFocus(id);
             this.setActive();
-            this.navigateAndFocusTab(id + '__tab');
+            if (id) {
+                this.navigateAndFocusTab(id + '__tab');
+            }
         }
 
         getWidget() {

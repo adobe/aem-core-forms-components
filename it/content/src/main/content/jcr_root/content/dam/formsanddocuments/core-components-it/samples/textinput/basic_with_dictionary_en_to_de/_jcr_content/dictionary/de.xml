@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:language="de"
+    jcr:mixinTypes="[mix:language]"
+    jcr:primaryType="sling:OrderedFolder"
+    sling:basename="/content/dam/formsanddocuments/core-components-it/samples/textinput/basic_with_dictionary_en_to_de/jcr:content/dictionary">
+    <f51daf31-a9ea-45c6-92ae-866c059f187e
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="jcr:title##607"
+        sling:message="basic_with_dictionary_en_to_de"/>
+    <_x0037_5e3cca6-2834-4bd5-beb3-71546ac8c46f
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput##jcr:title##4491"
+        sling:message="Texteingabe 1"/>
+    <_x0033_81fee19-900a-4944-8785-21faab083b02
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput_944977664##jcr:title##6733"
+        sling:message="Texteingabe 6"/>
+    <_x0037_059822e-eded-496e-9563-43d510b0e8b5
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput_1993218058##jcr:title##8616"
+        sling:message="Texteingabe 7"/>
+    <d2b35802-a735-4f5c-b097-711640990757
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput_2041736021##jcr:title##3276"
+        sling:message="Texteingabe 8"/>
+    <_x0035_45e77b9-dbb4-49bd-9d3f-c6a091821936
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##submit##jcr:title##3364"
+        sling:message="Senden"/>
+</jcr:root>

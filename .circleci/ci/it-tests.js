@@ -23,14 +23,27 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CORE_COMPONENTS, WCM_COMPONENTS} = process.env;
+const isLatestAddon = AEM === 'addon-latest';
+const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/org.jacoco.agent-0.8.3-runtime.jar';
 
 try {
+    // # Define the image name
+    let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
+    let qpContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
+    console.log("container id for qp ", qpContainerId);
+
+    // moving the qp docker content and environment variable to host machine
+    ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
+    ci.sh(`docker cp ${qpContainerId}:/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/ /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/`);
+
+    //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
+    //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
+    let wcmVersion = "2.26.0";
     ci.stage("Integration Tests");
-    let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
     ci.dir(qpPath, () => {
         // Connect to QP
-        ci.sh('./qp.sh -v bind --server-hostname localhost --server-port 55555');
+        ci.sh(`./qp.sh -v bind --server-hostname localhost --server-port 55555`);
 
     let extras = ``, preleaseOpts = ``;
     if (AEM === 'classic') {
@@ -49,13 +62,31 @@ try {
         // Download latest add-on release from artifactory
         ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemfd -DartifactId=aem-forms-cloud-ready-pkg -Dversion=LATEST -Dclassifier=feature-archive -Dtype=far -DoutputDirectory=${buildPath} -DoutputFileName=forms-latest-addon.far`);
         extras += ` --install-file ${buildPath}/forms-latest-addon.far`;
-        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
         if (PRERELEASE === 'true') {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
+        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
     }
 
+    if (FT === 'true') {
+        // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
+        extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
+    }
+
+    // Set an environment variable indicating test was executed
+    // this is used in case of re-run failed test scenario
+    ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt");
+    if (CORE_COMPONENTS) {
+        // enable specific core component version
+        extras += ` --bundle com.adobe.aem:core-forms-components-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-core:${CORE_COMPONENTS}:jar`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-af-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-af-core:${CORE_COMPONENTS}:jar`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-examples-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-examples-content:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-examples-core:${CORE_COMPONENTS}:jar`;
+    }
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
@@ -63,17 +94,17 @@ try {
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
             ${extras} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-core']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-apps']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-content']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-core']) : ''} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-config'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
-            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
+            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${jacocoAgent}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
 });
 
@@ -92,9 +123,37 @@ try {
 
     // Run UI tests
     if (TYPE === 'cypress') {
+        if (AEM && AEM.includes("addon")) {
+            // explicitly add the rum bundle, since it is only available on publish tier
+            // upload webvitals and disable api region
+            const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
+            ci.sh(disableApiRegion);
+            const installWebVitalBundle = `curl -u admin:admin \
+                                            -F bundlefile=@'${buildPath}/it/core/src/main/resources/com.adobe.granite.webvitals-1.2.2.jar' \
+                                            -F name='com.adobe.granite.webvitals' \
+                                            -F action=install \
+                                            http://localhost:4502/system/console/bundles`;
+            ci.sh(installWebVitalBundle);
+            // get the bundle id
+            const webVitalBundleId = ci.sh("curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r '.data | map(select(.symbolicName == \"com.adobe.granite.webvitals\")) | .[0].id'", true);
+            console.log("Web Vital Bundle Id " + webVitalBundleId);
+            if (webVitalBundleId) {
+                // start the web vital bundle
+                ci.sh(`curl -u admin:admin -F action=start http://localhost:4502/system/console/bundles/${webVitalBundleId}`)
+            }
+        }
+        const [node, script, ...params] = process.argv;
+        let testSuites = params.join(',');
+        if (CORE_COMPONENTS) {
+            // we run only some test suites for older core components
+            testSuites = "specs/prefill/customprefill.cy.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.cy.js,specs/actions/submit/submit.runtime.cy.js,specs/actions/render/render_with_openapi.cy.js";
+        }
         // start running the tests
         ci.dir('ui.tests', () => {
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM}`;
+            let command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
+            if (CORE_COMPONENTS) {
+                command += ` -DCORE_COMPONENTS=true`;
+            }
             ci.sh(command);
         });
     }
@@ -123,7 +182,8 @@ try {
     ci.dir('bundles/core', createCoverageReport);
     ci.dir('examples/core', createCoverageReport);
 
-} finally { // Always download logs from AEM container
+} finally {
+    // Always download logs from AEM container
     ci.sh('mkdir logs');
     ci.dir('logs', () => {
         // A webserver running inside the AEM container exposes the logs folder, so we can download log files as needed.

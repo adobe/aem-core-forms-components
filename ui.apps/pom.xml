@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>2.0.100-SNAPSHOT</version>
+        <version>3.0.100-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
     <!-- ====================================================================== -->
@@ -82,9 +82,22 @@
                 <configuration>
                     <filters>
                         <filter>
-                            <root>/apps/core/fd/components</root>
+                            <root>/apps/core/fd/components/aemform</root>
+                        </filter>
+                        <filter>
+                            <root>/apps/core/fd/components/commons</root>
+                        </filter>
+                        <filter>
+                            <root>/apps/core/fd/components/formsportal</root>
                         </filter>
                     </filters>
+                    <validatorsSettings>
+                        <jackrabbit-filter>
+                            <options>
+                                <validRoots>/apps/core/fd/components</validRoots>
+                            </options>
+                        </jackrabbit-filter>
+                    </validatorsSettings>
                     <packageType>application</packageType>
                     <group>${vault.package.group}</group>
                     <dependencies>
@@ -264,11 +277,12 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
                         <executions>
                             <execution>
                                 <phase>prepare-package</phase>
                                 <configuration>
-                                    <tasks>
+                                    <target>
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v1/aemform/.content.xml" token=".core-forms" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/aemform/v2/aemform/.content.xml" token=".core-forms" value="Core Content" />
 
@@ -277,7 +291,7 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/link/v1/link/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
                                         <replace file="target/jcr_root/libs/core/fd/components/formsportal/link/v2/link/.content.xml" token=".core-forms-and-communications-portal" value="Forms And Communications Portal" />
-                                    </tasks>
+                                    </target>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>
@@ -297,10 +311,13 @@
                                 <configuration>
                                     <filters>
                                         <filter>
-                                            <root>/libs/core/fd/components</root>
+                                            <root>/libs/core/fd/components/aemform</root>
                                         </filter>
                                          <filter>
-                                            <root>/libs/core/fd/clientlibs</root>
+                                            <root>/libs/core/fd/components/commons</root>
+                                        </filter>
+                                        <filter>
+                                            <root>/libs/core/fd/components/formsportal</root>
                                         </filter>
                                     </filters>
                                     <classifier>cloud</classifier>

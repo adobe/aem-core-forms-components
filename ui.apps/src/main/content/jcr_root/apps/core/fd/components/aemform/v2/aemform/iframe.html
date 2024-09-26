@@ -14,10 +14,10 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm"
-         data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
+<sly data-sly-use.form="com.adobe.cq.forms.core.components.models.aemform.AEMForm"/>
+<html lang="${form.locale || 'en'}">
+<head>
+    <sly data-sly-use.templates="core/wcm/components/commons/v1/templates.html"/>
     <title data-sly-test="${form.isAdaptiveForm || form.isMCDocument}"><sly data-sly-use.af="com.adobe.aemds.guide.common.AdaptiveForm" />${af.formTitle @ context='html'}</title>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="robots" content="noindex, nofollow"/>

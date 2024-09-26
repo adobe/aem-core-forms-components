@@ -45,6 +45,8 @@ The following properties are written to JCR for this Accordion component and are
 ```
 BLOCK cmp-tabs
     ELEMENT cmp-tabs__it
+    ELEMENT cmp-tabs__label
+    ELEMENT cmp-tabs__label-container
     ELEMENT cmp-tabs__tablist
     ELEMENT cmp-tabs__tab
         MOD cmp-tabs__tab--active
@@ -55,6 +57,10 @@ BLOCK cmp-tabs
     ELEMENT cmp-tabs__longdescription
     ELEMENT cmp-tabs__questionmark
 ```
+
+### Note
+By placing the class names `cmp-tabs__label` and `cmp-tabs__questionmark` within the `cmp-tabs__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+
 ## Client Libraries
 The component provides a `core.forms.components.tabs.v1.runtime` client library category that contains a JavaScript
 component. It should be added to a relevant site client library using the `embed` property.

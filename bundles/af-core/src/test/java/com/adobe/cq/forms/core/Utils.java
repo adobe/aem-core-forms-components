@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 import javax.json.Json;
@@ -113,7 +114,7 @@ public class Utils {
 
     /**
      * The given model is validated against adaptive form specification
-     * 
+     *
      * @param model reference to the sling model
      */
     public static void testSchemaValidation(@NotNull Object model) {
@@ -124,14 +125,14 @@ public class Utils {
         // create an instance of the JsonSchemaFactory using version flag
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         try {
-            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/0.12.0/adaptive-form.schema.json");
+            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/0.14.1/adaptive-form.schema.json");
             JsonSchema schema = schemaFactory.getSchema(schemaStream);
             // read data from the stream and store it into JsonNode
             JsonNode json = objectMapper.readTree(jsonStream);
             // if there is a version bump of schema, then it needs to be validated against its corresponding sling model here
             // by explicitly checking the model implementation
             if (!(model instanceof FormContainerImpl)) {
-                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.12.0/form.json");
+                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.14.1/form.json");
                 JsonNode formContainerTemplateNode = objectMapper.readTree(formContainerTemplate);
                 ((ObjectNode) formContainerTemplateNode).putArray("items").add(json);
                 json = formContainerTemplateNode;
@@ -227,4 +228,13 @@ public class Utils {
         return request.adaptTo(clazz);
     }
 
+    public static Method getPrivateMethod(Class clazz, String privateMethodName) {
+        try {
+            Method method = clazz.getDeclaredMethod(privateMethodName);
+            method.setAccessible(true);
+            return method;
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
+    }
 }

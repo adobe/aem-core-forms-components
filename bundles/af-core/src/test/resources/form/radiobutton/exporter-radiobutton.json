@@ -5,8 +5,8 @@
   "type": "string",
   "enforceEnum": true,
   "enumNames": [
-    "Item 1",
-    "Item 2"
+    "<p>Item 1</p>",
+    "<p>Item 2</p>"
   ],
   "label": {
     "value": "Radio Button"
@@ -23,7 +23,8 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/radiobutton"
+    "fd:path": "/content/radiobutton",
+    "customProp": "customPropValue"
   },
   "enum": [
     "0",

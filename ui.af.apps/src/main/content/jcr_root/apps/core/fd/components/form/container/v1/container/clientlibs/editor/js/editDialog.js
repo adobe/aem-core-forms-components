@@ -17,6 +17,8 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-container__editdialog",
+        EDIT_DIALOG_FORM = ".cmp-adaptiveform-formcontainer__editdialog",
+        EDIT_DIALOG_FRAGMENT = ".cmp-adaptiveform-fragmentcontainer__editdialog",
         CONTAINER_ENABLEASYNCSUBMISSION = ".cmp-adaptiveform-container__enableasyncsubmission",
         CONTAINER_THANKYOUOPTION = ".cmp-adaptiveform-container__thankyouoption",
         CONTAINER_REDIRECT = ".cmp-adaptiveform-container__redirect",
@@ -39,6 +41,8 @@
         REST_ENDPOINT = ".rest",
         FDM = ".fdm",
         EMAIL = ".email",
+        ENABLE_AUTO_SAVE = "[name='./fd:enableAutoSave']",
+        AUTO_SAVE_STRATEGY_CONTAINER = ".cmp-adaptiveform-container__autoSaveStrategyContainer",
 
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
@@ -325,12 +329,31 @@
     }
 
     function showPostUrlTextField(dialog) {
-        var enableRestEndpointCheckboxElement = dialog.find(REST_END_POINT_POST_CHECK_BOX)[0],
-            restEndPointUrlTextbox = Utils.selectElement("input", './restEndpointPostUrl')[0];
+        let enableRestEndpointCheckboxElement = dialog.find(REST_END_POINT_POST_CHECK_BOX)[0],
+            restEndPointSource = Utils.selectElement("coral-radio", './restEndPointSource'), isPostUrlSelected = false,
+            restEndPointUrlTextBox = Utils.selectElement("input", './restEndpointPostUrl')[0],
+            restEndpointConfigPath = Utils.selectElement("input", './restEndpointConfigPath')[0];
+
         if (enableRestEndpointCheckboxElement != null && enableRestEndpointCheckboxElement.checked == true) {
-            Utils.showComponent(restEndPointUrlTextbox, 'div');
+            restEndPointSource.parent('div').parent('div').show();
+            Utils.showComponent(restEndPointSource, 'div');
+            restEndPointSource.each(function (i, obj) {
+                if (obj.checked && obj.value === "posturl") {
+                    isPostUrlSelected = true;
+                }
+            });
+            if(restEndPointSource.length == 0 || isPostUrlSelected){
+                Utils.showComponent(restEndPointUrlTextBox, 'div');
+                Utils.hideComponent(restEndpointConfigPath, 'div');
+            } else {
+                Utils.showComponent(restEndpointConfigPath, 'div');
+                Utils.hideComponent(restEndPointUrlTextBox, 'div');
+            }
         } else {
-            Utils.hideComponent(restEndPointUrlTextbox, 'div');
+            Utils.hideComponent(restEndPointSource, 'div');
+            Utils.hideComponent(restEndPointUrlTextBox, 'div');
+            Utils.hideComponent(restEndpointConfigPath, 'div');
+            restEndPointSource.parent('div').parent('div').hide();
         }
     }
 
@@ -398,6 +421,31 @@
         }
     }
 
+    function showHideAutoSave(dialog) {
+        var enableAutoSave = dialog.find(ENABLE_AUTO_SAVE);
+        if (enableAutoSave[0]) {
+            var autoSaveStrategyContainer = dialog.find(AUTO_SAVE_STRATEGY_CONTAINER);
+            if (autoSaveStrategyContainer) {
+                if (enableAutoSave[0].checked) {
+                    autoSaveStrategyContainer.show();
+                } else {
+                    autoSaveStrategyContainer.hide();
+                }
+            }
+        }
+    }
+
+    function registerAutoSaveDialogAction(dialog) {
+        var $subDialogContent = dialog.find(SUB_DIALOG_CONTENT);
+        $subDialogContent.on('foundation-contentloaded', function() {
+            showHideAutoSave(dialog);
+        });
+        showHideAutoSave(dialog);
+        $(document).on('change', ENABLE_AUTO_SAVE, function () {
+            showHideAutoSave(dialog);
+        });
+    }
+
     $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
         selector : "[data-validation~='datamodel.config']",
         validate : function (el) {
@@ -408,7 +456,9 @@
         }
     });
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
-        registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel);
+    Utils.initializeEditDialog(EDIT_DIALOG_FORM)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
+        registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel, registerAutoSaveDialogAction);
+
+    Utils.initializeEditDialog(EDIT_DIALOG_FRAGMENT)(initialiseDataModel);
 
 })(jQuery, Granite, jQuery(document), Coral);

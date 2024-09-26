@@ -23,10 +23,13 @@
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
 <div class="cmp-adaptiveform-button"
      id="${button.id}"
-     data-cmp-visible="${button.visible}"
-     data-cmp-enabled="${button.enabled}"
+     data-cmp-visible="${button.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${button.enabled ? 'true' : 'false'}"
      data-cmp-is="adaptiveFormButton"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+  <div class="cmp-adaptiveform-button__help-container">
+    <div data-sly-call="${questionMark.questionMark @componentId=button.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap></div>
+  </div>
   <button
       type="button"
       value="${button.value}"
@@ -34,11 +37,10 @@
       disabled="${!button.enabled}"
       title="${button.tooltipVisible ? '' :   button.tooltipText}"
       data-cmp-data-layer="${button.data.json}"
-      aria-label="${button.label.value}">
+      aria-label="${button.label.visible != false ? '' : button.label.value}">
     <sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
-    <span data-sly-test="${button.label.value}" class="cmp-adaptiveform-button__text">${button.label.value}</span>
+    <span data-sly-test="${button.label.value && button.label.visible != false}" class="cmp-adaptiveform-button__text" data-richtext="${button.label.richText}">${button.label.value @ context = button.label.richText ? 'html' : 'text'}</span>
   </button>
-  <div data-sly-call="${questionMark.questionMark @componentId=button.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap></div>
   <div data-sly-call="${shortDescription.shortDescription @componentId=button.id, shortDescriptionVisible=button.tooltipVisible, shortDescription=button.tooltip, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap>
   </div>
   <div data-sly-call="${longDescription.longDescription @componentId=button.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap></div>

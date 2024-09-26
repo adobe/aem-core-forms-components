@@ -21,87 +21,117 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.osgi.service.component.annotations.Reference;
 
+import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
+import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Recaptcha;
-import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.Captcha;
+import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Recaptcha.class,
+    adapters = { Captcha.class,
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class RecaptchaImpl extends AbstractFieldImpl implements Recaptcha {
+public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
     @Inject
     private ResourceResolver resourceResolver;
 
     private Resource resource;
 
+    @Reference
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Named("rcCloudServicePath")
+    private ReCaptchaConfigurationModel reCaptchaConfiguration;
+
+    @OSGiService
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private CloudConfigurationProvider cloudConfigurationProvider;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonIgnore
+    @Named(ReservedProperties.PN_RECAPTCHA_CLOUD_SERVICE_PATH)
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @Named("recaptchaSize")
+    @JsonIgnore
+    @Named(ReservedProperties.PN_RECAPTCHA_SIZE)
     protected String size;
 
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
-
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
-
+    public static final String RECAPTCHA_ENTERPRISE_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/enterprise.js";
     private static final String RECAPTCHA_SITE_KEY = "siteKey";
-
     private static final String RECAPTCHA_URI = "uri";
+    private static final String RECAPTCHA_SIZE = "size";
+    private static final String RECAPTCHA_THEME = "theme";
+    private static final String RECAPTCHA_TYPE = "type";
+    private static final String RECAPTCHA_VERSION = "version";
+    private static final String RECAPTCHA_KEYTYPE = "keyType";
 
-    @JsonIgnore
     @Override
+    @JsonIgnore
     public String getCloudServicePath() {
         return cloudServicePath;
     }
 
     @JsonIgnore
-    @Override
     public String getSize() {
         return size;
     }
 
+    @Override
+    public String getProvider() {
+        return "recaptcha";
+    }
+
     @JsonIgnore
-    public Map<String, Object> getRecaptchaProperties() throws GuideException {
+    @Override
+    public Map<String, Object> getCaptchaProperties() throws GuideException {
 
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
         String siteKey = null;
+        String version = null;
+        String keyType = null;
         resource = resourceResolver.getResource(this.getPath());
-        if (resource != null) {
-            // todo: Add cloud configuration provider service
-        }
-        return customCaptchaProperties;
-    }
-
-    @Override
-    public Map<String, Object> getProperties() {
-        Map<String, Object> properties = super.getProperties();
-        try {
-            Map<String, Object> customCaptchaProperties = getRecaptchaProperties();
-            if (customCaptchaProperties != null && customCaptchaProperties.size() > 0) {
-                properties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, getRecaptchaProperties());
+        if (resource != null && cloudConfigurationProvider != null) {
+            reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
+            if (reCaptchaConfiguration != null) {
+                siteKey = reCaptchaConfiguration.siteKey();
+                version = reCaptchaConfiguration.version();
+                keyType = reCaptchaConfiguration.keyType();
             }
-        } catch (GuideException e) {
-            throw new RuntimeException(e);
         }
-        return properties;
+        customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
+        if (StringUtils.isNotEmpty(version) && version.equals("enterprise")) {
+            customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_ENTERPRISE_DEFAULT_URL);
+        } else {
+            customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
+        }
+        customCaptchaProperties.put(RECAPTCHA_SIZE, getSize());
+        customCaptchaProperties.put(RECAPTCHA_THEME, "light");
+        customCaptchaProperties.put(RECAPTCHA_TYPE, "image");
+        customCaptchaProperties.put(RECAPTCHA_VERSION, version);
+        customCaptchaProperties.put(RECAPTCHA_KEYTYPE, keyType);
+
+        return customCaptchaProperties;
+
     }
 
 }

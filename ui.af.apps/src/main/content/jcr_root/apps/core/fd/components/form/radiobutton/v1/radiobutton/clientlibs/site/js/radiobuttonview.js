@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class RadioButton extends FormView.FormFieldBase {
+    class RadioButton extends FormView.FormOptionFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -29,12 +29,15 @@
         static bemBlock = 'cmp-adaptiveform-radiobutton';
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
+            widgets: `.${RadioButton.bemBlock}__widget`,
             widget: `.${RadioButton.bemBlock}__option__widget`,
             label: `.${RadioButton.bemBlock}__label`,
             description: `.${RadioButton.bemBlock}__longdescription`,
             qm: `.${RadioButton.bemBlock}__questionmark`,
             errorDiv: `.${RadioButton.bemBlock}__errormessage`,
-            tooltipDiv: `.${RadioButton.bemBlock}__shortdescription`
+            tooltipDiv: `.${RadioButton.bemBlock}__shortdescription`,
+            option: `.${RadioButton.bemBlock}__option`,
+            optionLabel: `.${RadioButton.bemBlock}__option-label`
         };
 
         constructor(params) {
@@ -42,8 +45,12 @@
             this.qm = this.element.querySelector(RadioButton.selectors.qm);
         }
 
+        getWidgets() {
+            return this.element.querySelector(RadioButton.selectors.widgets);
+        }
+
         getWidget() {
-            return this.element.querySelectorAll(RadioButton.selectors.widget);
+          return this.element.querySelectorAll(RadioButton.selectors.widget);
         }
 
         getDescription() {
@@ -66,62 +73,111 @@
             return this.element.querySelector(RadioButton.selectors.errorDiv);
         }
 
+        getOptions() {
+            return this.element.querySelectorAll(RadioButton.selectors.option);
+        }
+
         setModel(model) {
             super.setModel(model);
             let widgets = this.widget;
             widgets.forEach(widget => {
                 widget.addEventListener('change', (e) => {
-                    this._model.value = e.target.value;
+                    this.setModelValue(e.target.value);
+                });
+                widget.addEventListener('focus', (e) => {
+                    this.setActive();
+                });
+                widget.addEventListener('blur', (e) => {
+                    this.setInactive();
                 });
             });
         }
 
         updateEnabled(enabled, state) {
-            this.toggle(enabled, FormView.Constants.ARIA_DISABLED, true);
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             let widgets = this.widget;
             widgets.forEach(widget => {
                 if (enabled === false) {
                     if(state.readOnly === false){
                         widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                        widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                     }
                 } else if (state.readOnly === false) {
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                    widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
             });
         }
 
-        updateReadOnly(readonly, state) {
-            this.toggle(readonly, "aria-readonly", true);
+        updateReadOnly(readonly) {
             let widgets = this.widget;
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_READONLY, readonly);
             widgets.forEach(widget => {
                 if (readonly === true) {
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                    widget.setAttribute("aria-readonly", true);
                 } else {
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                    widget.removeAttribute("aria-readonly");
                 }
             });
+        }
+
+        updateValidity(validity) {
+            const valid = validity.valid ? validity.valid : false;
+            let widgets = this.widget;
+            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
+            widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
         }
 
         updateValue(modelValue) {
             this.widget.forEach(widget => {
-                if (modelValue && widget.value != null && modelValue.toString() == widget.value.toString()) {
+                if (modelValue != null && widget.value != null && (modelValue.toString() == widget.value.toString())) {
                     widget.checked = true;
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED);
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, true);
                 } else {
                     widget.checked = false;
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
             super.updateEmptyStatus();
         }
 
+        #createRadioOption(value, itemLabel) {
+            const optionTemplate = `
+            <div class="${RadioButton.selectors.option.slice(1)}">
+                <label class="${RadioButton.selectors.optionLabel.slice(1)}">
+                    <input type="checkbox" class="${RadioButton.selectors.widget.slice(1)}" value="${value}">
+                    <span>${itemLabel}</span>
+                </label>
+            </div>`;
+
+            const container = document.createElement('div'); // Create a container element to hold the template
+            container.innerHTML = optionTemplate;
+            return container.firstElementChild; // Return the first child, which is the created option
+        }
+
+        updateEnum(newEnums) {
+            super.updateEnumForRadioButtonAndCheckbox(newEnums, this.#createRadioOption);
+        }
+
+        updateEnumNames(newEnumNames) {
+            super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createRadioOption)
+        }
+
+        updateRequired(required, state) {
+            if (this.widget) {
+                this.element.toggleAttribute("required", required);
+                this.element.setAttribute("data-cmp-required", required);
+            }
+        }
+
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
+            this.#syncWidgetName();
+        }
+
+        #syncWidgetName() {
+            this.widget.forEach(widget => {
+                widget.setAttribute("name", this.id + "_name");
+            });
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

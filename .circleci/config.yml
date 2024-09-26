@@ -2,28 +2,40 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@1.0.5
-  browser-tools: circleci/browser-tools@1.3.0
+  browser-tools: circleci/browser-tools@1.4.3
 
 common:
   restore_cache: &restore_cache
     restore_cache:
       keys:
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
-        - maven-repo-v2-{{ arch }}-{{ .Branch }}
+        - maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
+        - maven-repo-v2-{{ .Branch }}
         - maven-repo-v2-
 
   cypress_test_steps: &cypress_test_steps
     steps:
       - checkout
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - browser-tools/install-browser-tools:
+          chrome-version: latest
       - run:
           command: |
-              google-chrome --version
-              chromedriver --version
-              which google-chrome
+            google-chrome --version
+            chromedriver --version
+            which google-chrome
           name: Check browser installed
       - *restore_cache
+      - run:
+          name: Docker compose
+          command: |
+            set +e  # Disable exit on error
+            for i in $(seq 3); do
+              echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
+              echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
+              docker-compose -f .circleci/docker-compose.yml down -v
+              docker-compose -f .circleci/docker-compose.yml up -d && break
+              sleep 10  # Add a delay between retries
+            done
+            set -e  # Enable exit on error
       - attach_workspace:
           at: /home/circleci/build
       - run:
@@ -49,23 +61,59 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
+      - run: docker ps -a
       - run:
           name: UI tests
-          command: node .circleci/ci/it-tests.js
+          # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
+          command: |
+            cd ui.tests/test-module
+            TESTFILES=$(circleci tests glob "specs/**/*.cy.js")
+            cd ../../
+            echo "false" >> TEST_EXECUTION_STATUS.txt
+            echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose --split-by=timings
+      - store_test_results:
+          path: ui.tests/test-module/test_results
       - run:
           name: Calculate lighthouse Scores
-          command: node .circleci/ci/lighthouse.js
+          command: |
+            test_execution_status=$(cat TEST_EXECUTION_STATUS.txt)
+            if [[ $test_execution_status == "true" ]]; then
+              node .circleci/ci/lighthouse.js
+            else
+              echo "Skipping Lighthouse Scores calculation..."
+            fi
       - run:
           name: Check Accessibility
-          command: node .circleci/ci/accessibility-axe.js
+          command: |
+            test_execution_status=$(cat TEST_EXECUTION_STATUS.txt)
+            if [[ $test_execution_status == "true" ]]; then
+              node .circleci/ci/accessibility-axe.js
+            else
+              echo "Skipping Accessibility check..."
+            fi
       - run:
           name: Stop CQ
-          command: node .circleci/ci/stop-cq.js
-      - store_test_results:
-          path: ui.tests/test-module/target/reports
+          command: |
+            test_execution_status=$(cat TEST_EXECUTION_STATUS.txt)
+            if [[ $test_execution_status == "true" ]]; then
+              node .circleci/ci/stop-cq.js
+            else
+              echo "Skipping stop cq ..."
+            fi
+      - run:
+          name: Cleanup
+          command: |
+            rm -rf TEST_EXECUTION_STATUS.txt
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
+      - run:
+          name: Move .cy.json files to target directory of cypress
+          command: |
+            mkdir -p ui.tests/test-module/target/cy-json
+            find ui.tests/test-module -name "*.cy.json" -exec mv {} ui.tests/test-module/target/cy-json/ \;
+      - store_artifacts:
+          path: ui.tests/test-module/target/cy-json
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs
@@ -85,11 +133,9 @@ executors:
     docker:
       - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
-    docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
-        <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:12142-openjdk11
-        <<: *docker_auth
+    machine:
+      image: ubuntu-2204:2023.10.1
+      docker_layer_caching: true
 
 jobs:
   build-java-11:
@@ -110,7 +156,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.m2
-          key: maven-repo-v2-{{ arch }}-{{ .Branch }}-{{ checksum "pom.xml" }}
+          key: maven-repo-v2-{{ .Branch }}-{{ checksum "pom.xml" }}
       - persist_to_workspace:
           root: /home/circleci/build
           paths:
@@ -127,6 +173,7 @@ jobs:
             - it/content/target/*.zip
             - it/config/target/*.zip
             - jsdocs/target/jsapi
+            - ui.tests/test-module/node_modules
       - store_test_results:
           path: bundles/core/target/surefire-reports
       - store_artifacts:
@@ -135,21 +182,6 @@ jobs:
           conf: .circleci/codecov.yml
           flags: unittests
 
-  build-java-8:
-    executor: forms_executor_java8
-    working_directory: /home/circleci/build
-    steps:
-      - checkout
-      - *restore_cache
-      - run:
-          name: Update permissions
-          command: sudo chown -R circleci /usr/local/lib/node_modules
-      - run:
-          name: Build
-          command: node .circleci/ci/build.js
-      - store_artifacts:
-          path: test-results/junit
-
   cypress-chrome-cloudready-with-addon:
     executor: test_executor_cloudready
     environment:
@@ -157,8 +189,9 @@ jobs:
       TYPE: cypress
       BROWSER: chrome
       PRERELEASE: 'true'
-    resource_class: large
+    resource_class: xlarge
     working_directory: /home/circleci/build
+    parallelism: 8
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon:
@@ -168,8 +201,37 @@ jobs:
       TYPE: cypress
       BROWSER: chrome
       PRERELEASE: 'true'
-    resource_class: large
+      FT: 'true'
+    resource_class: xlarge
     working_directory: /home/circleci/build
+    parallelism: 8
+    <<: *cypress_test_steps
+
+  cypress-chrome-cloudready-with-latest-addon-without-ft:
+    executor: test_executor_cloudready
+    environment:
+      AEM: addon-latest
+      TYPE: cypress
+      BROWSER: chrome
+      PRERELEASE: 'true'
+      FT: 'false'
+    resource_class: xlarge
+    working_directory: /home/circleci/build
+    parallelism: 8
+    <<: *cypress_test_steps
+
+  cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
+    executor: test_executor_cloudready
+    environment:
+      AEM: addon-latest
+      TYPE: cypress
+      BROWSER: chrome
+      PRERELEASE: 'true'
+      FT: 'true'
+      CORE_COMPONENTS: '3.0.0'
+    resource_class: xlarge
+    working_directory: /home/circleci/build
+    parallelism: 8
     <<: *cypress_test_steps
 
   jsdocs-deploy:
@@ -245,6 +307,83 @@ jobs:
                 --data-binary @"$ARTIFACT" \
                 "$UPLOAD_URL?name=$(basename "$ARTIFACT")"
             done
+      - run:
+          name: Configure git user name
+          command: |
+            git config user.email "ci-build@aemforms"
+            git config user.name "ci-build"
+      - add_ssh_keys:
+          fingerprints:
+            - "ba:61:80:74:5e:67:7e:ee:15:4c:5d:58:8a:47:12:05"
+      - run:
+          name: Update VERSIONS.md and README.md with the new released version
+          command: |
+            echo "CIRCLE_TAG: $CIRCLE_TAG"
+            RELEASE_BRANCH=$(git branch --contains ${CIRCLE_TAG} | awk 'FNR==2 {print $1}')
+
+            # Debugging output
+            echo "RELEASE_BRANCH: $RELEASE_BRANCH"
+
+            # Checkout branch
+            git checkout $RELEASE_BRANCH
+
+            # Retrieve the branch name
+            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+            # Debugging output
+            echo "BRANCH_NAME: $BRANCH_NAME"
+
+            # Find the last two tags on the branch
+            LAST_TWO_TAGS=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | head -n 2)
+            # Debugging output
+            echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
+
+            # Extract the last released from the output
+            LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1)
+            # Debugging output
+            echo "LAST_TAG: $LAST_TAG"
+
+            # If there is no previous release, use an empty string
+            if [[ -z "$LAST_TAG" ]]; then
+              LAST_TAG=""
+            fi
+
+            # Fetch the new version
+            NEW_VERSION=$(echo ${CIRCLE_TAG} | sed 's/^core-forms-components-reactor-//')
+            # Debugging output
+            echo "NEW_VERSION: $NEW_VERSION"
+
+            # Fetch the last released version
+            LAST_VERSION=$(echo "${LAST_TAG}" | sed 's/core-forms-components-reactor-//')
+            # Debugging output
+            echo "LAST_VERSION: $LAST_VERSION"
+
+            # Fetch the wcm core component version
+            WCM_CORE_COMPONENTS_VERSION=$(mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout)
+            # Debugging output
+            echo "WCM_CORE_COMPONENTS_VERSION: $WCM_CORE_COMPONENTS_VERSION"
+
+            echo "Before sed: $(cat VERSIONS.md)"
+            # update versions.md
+            sed -i "/$LAST_VERSION/ { p; b; }; 1,/$LAST_VERSION/ { p; d; }" VERSIONS.md
+            sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
+            echo "After sed: $(cat VERSIONS.md)"
+
+            echo "Before sed: $(cat README.md)"
+            # update readme.md
+            sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+ \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
+            echo "After sed: $(cat README.md)"
+
+            # Check if package-lock.json is modified
+            if [[ $(git status --porcelain | grep "package-lock.json") ]]; then
+              # Discard the changes to package-lock.json (if needed)
+              git checkout -- '**/package-lock.json'
+            fi
+
+            git add VERSIONS.md README.md
+            git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
+            git push origin $RELEASE_BRANCH
+
 
 workflows:
   version: 2
@@ -254,24 +393,24 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - build-java-8:
-          filters:
-            tags:
-              only: /.*/
       - cypress-chrome-cloudready-with-addon:
           filters:
             tags:
               only: /.*/
           requires:
             - build-java-11
-            - build-java-8
       - cypress-chrome-cloudready-with-latest-addon:
           filters:
             tags:
               only: /.*/
           requires:
             - build-java-11
-            - build-java-8
+      - cypress-chrome-cloudready-with-latest-addon-without-ft:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build-java-11
       - jsdocs-deploy:
           requires:
             - build-java-11
@@ -280,10 +419,19 @@ workflows:
               ignore: /.*/
             tags:
               only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+      - cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
+          filters:
+#            branches:
+#              ignore: /.*/
+            tags:
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+          requires:
+            - build-java-11
       - release:
           requires:
             - build-java-11
             - jsdocs-deploy
+            - cypress-chrome-cloudready-with-latest-addon-and-old-core-components
           filters:
             branches:
               ignore: /.*/

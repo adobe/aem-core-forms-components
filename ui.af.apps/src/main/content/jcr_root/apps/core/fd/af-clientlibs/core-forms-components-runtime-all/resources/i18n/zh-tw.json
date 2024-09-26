@@ -1,7 +1,90 @@
 {
-  "FileCloseAccessText"   :       "按 Enter 以刪除檔案",
-  "FileSizeGreater"       :        "檔案 {0} 的大小比預期大: {1}MB。",
-  "FileNameInvalid"       :       "{0} 檔案名稱中包含無效字元。僅支援字母數字字元",
-  "FileMimeTypeInvalid"   :       "{0} 檔案的檔案類型不受支援",
-  "InternalFormSubmissionError" :  "提交表單時發生內部錯誤。"
+  "FileCloseAccessText": "按 Enter 以刪除檔案",
+  "FileSizeGreater": "檔案 ${0} 的大小比預期大: ${1}MB。",
+  "FileNameInvalid": "不要附加以下檔案：檔案名稱以 (.) 開頭且包含 \\ / : * ? \" < > | ; % $，或檔案名稱為保留關鍵字，例如 nul、prn、con、lpt 或 com。",
+  "FileMimeTypeInvalid": "${0} 檔案的檔案類型不受支援",
+  "InternalFormSubmissionError": "提交表單時發生內部錯誤。",
+  "type": "請輸入有效值。",
+  "required": "請填寫此欄位。",
+  "minimum": "值必須大於或等於 ${0}。",
+  "maximum": "值必須小於或等於 ${0}。",
+  "minLength": "請將此文字延長至 ${0} 個字元或更多。",
+  "maxLength": "請將此文字縮短至 ${0} 個字元或更少。",
+  "step": "請輸入有效值。",
+  "format": "以允許的格式指定值：${0}。",
+  "pattern": "請符合要求的格式。",
+  "minItems": "指定等於或大於 ${0} 的項目數。",
+  "maxItems": "指定等於或小於 ${0} 的項目數。",
+  "uniqueItems": "所有項目必須是唯一的。",
+  "validationExpression": "請輸入有效值。",
+  "maxFileSize": "檔案太大。請縮減大小並再試一次。",
+  "accept": "指定的檔案類型不受支援。",
+  "defaultError": "此欄位有錯誤",
+  "clearText": "清除",
+  "calendarSymbols": {
+    "monthNames": [
+      "1 月",
+      "2 月",
+      "3 月",
+      "4 月",
+      "5 月",
+      "6 月",
+      "7 月",
+      "8 月",
+      "9 月",
+      "10 月",
+      "11 月",
+      "12 月"
+    ],
+    "abbrmonthNames": [
+      "1 月",
+      "2 月",
+      "3 月",
+      "4 月",
+      "5 月",
+      "6 月",
+      "7 月",
+      "8 月",
+      "9 月",
+      "10 月",
+      "11 月",
+      "12 月"
+    ],
+    "dayNames": [
+      "星期日",
+      "星期一",
+      "星期二",
+      "星期三",
+      "星期四",
+      "星期五",
+      "星期六"
+    ],
+    "abbrdayNames": [
+      "週日",
+      "週一",
+      "週二",
+      "週三",
+      "週四",
+      "週五",
+      "週六"
+    ],
+    "meridiemNames": [
+      "上午",
+      "下午"
+    ],
+    "eraNames": [
+      "公元前",
+      "公元"
+    ],
+    "day": "天",
+    "days": "天",
+    "month": "個月",
+    "months": "個月",
+    "year": "年",
+    "years": "年",
+    "more": "超過",
+    "less": "少於"
+  },
+  "saveDraftSuccessMessage"     :   "草稿保存成功。",
+  "saveDraftErrorMessage"       :   "出现错误，导致我们无法保存您的草稿。请再试一次。"
 }

@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -30,18 +32,22 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FORM_FIELD_TYPE;
-import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FRAGMENT_FIELD_TYPE;
 
 /**
  * Utility helper functions for components.
  */
 public class ComponentUtils {
+
+    private static final String EDGE_DELIVERY_FRAGMENT_CONTAINER_REL_PATH = "root/section/form";
+    private static final String[] EDGE_DELIVERY_RESOURCE_TYPES = new String[] { "core/franklin/components/page/v1/page" };
+
     /**
      * Private constructor to prevent instantiation of utility class.
      */
@@ -69,7 +75,7 @@ public class ComponentUtils {
     @NotNull
     public static boolean isAFContainer(@NotNull Resource resource) {
         String fieldType = resource.getValueMap().get("fieldType", String.class);
-        return FORM_FIELD_TYPE.equals(fieldType) || FRAGMENT_FIELD_TYPE.equals(fieldType);
+        return FORM_FIELD_TYPE.equals(fieldType);
     }
 
     /**
@@ -130,12 +136,64 @@ public class ComponentUtils {
      * @param date date
      * @return clone of date object
      */
-    @NotNull
     public static Date clone(@Nullable Date date) {
         return Optional.ofNullable(date)
             .map(Date::getTime)
             .map(Date::new)
             .orElse(null);
+    }
+
+    /**
+     * Retrieves the exclusive value based on certain conditions.
+     *
+     * @param exclusiveValue The exclusive value to be checked.
+     * @param value The actual value to be returned if conditions are met.
+     * @param exclusiveValueCheck An additional check for exclusive value.
+     * @return The exclusive value if conditions are met; otherwise, null.
+     */
+    public static <T> T getExclusiveValue(Object exclusiveValue, T value, Object exclusiveValueCheck) {
+        // Check if exclusive value is a boolean and true, and value is not null
+        if (exclusiveValue instanceof Boolean && (Boolean.TRUE.equals(exclusiveValue) || Boolean.TRUE.equals(exclusiveValueCheck))
+            && value != null) {
+            // If so, return the value
+            return (T) value;
+        } else if (exclusiveValue instanceof Long) { // special case
+            // If exclusive value is already a long, return it directly
+            return (T) exclusiveValue;
+        } else if (exclusiveValue instanceof String) {
+            // Check if exclusive value is a boolean string and true, and value is not null
+            if (((String) exclusiveValue).equalsIgnoreCase("true") && value != null) {
+                return (T) value;
+            } else {
+                return null;
+            }
+        } else if (Boolean.TRUE.equals(exclusiveValueCheck) && value != null) { // backward compatibility case // not to be changed
+            // If so, return the value
+            return (T) value;
+        } else {
+            // Handle other cases or return null if desired
+            return null;
+        }
+    }
+
+    /**
+     * Parses a given string value into a Number.
+     * The method attempts to parse the string as a Long first, and if that fails,
+     * it attempts to parse it as a Float. If both parsing attempts fail, it returns null.
+     *
+     * @param value the string value to be parsed, can be null
+     * @return the parsed Number (Long or Float), or null if the value cannot be parsed
+     */
+    public static Number parseNumber(@Nullable String value) {
+        try {
+            return value != null ? Long.parseLong(value) : null;
+        } catch (NumberFormatException e) {
+            try {
+                return Float.parseFloat(value);
+            } catch (NumberFormatException ex) {
+                return null;
+            }
+        }
     }
 
     @NotNull
@@ -165,6 +223,25 @@ public class ComponentUtils {
             policy = policyManager.getPolicy(contentResource);
         }
         return policy;
+    }
+
+    public static Resource getFragmentContainer(ResourceResolver resourceResolver, @NotNull String fragmentPath) {
+        String fragmentRef = fragmentPath;
+        if (StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")) {
+            fragmentRef = GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath);
+        }
+        Resource pageContentResource = resourceResolver.getResource(fragmentRef + "/" + JcrConstants.JCR_CONTENT);
+        if (pageContentResource != null) {
+            if (Arrays.stream(EDGE_DELIVERY_RESOURCE_TYPES).anyMatch(pageContentResource::isResourceType)) {
+                return pageContentResource.getChild(EDGE_DELIVERY_FRAGMENT_CONTAINER_REL_PATH);
+            }
+            return pageContentResource.getChild("guideContainer");
+        }
+        return null;
+    }
+
+    public static boolean isFragmentComponent(Resource resource) {
+        return resource != null && resource.getValueMap().get(FormConstants.PROP_FRAGMENT_PATH, String.class) != null;
     }
 
 }

@@ -1,0 +1,25 @@
+{
+  "id": "datepicker-0ac1fed1fe",
+  "fieldType": "date-input",
+  "name": "DoB",
+  "description": "Date of Birth",
+  "type": "string",
+  "label": {
+    "value": "DoB"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datepicker-backwardcompatible"
+  },
+  "format": "date",
+  "exclusiveMaximum": "2024-07-23",
+  "exclusiveMinimum": "2024-07-10",
+  ":type": "core/fd/components/form/datepicker/v1/datepicker"
+}

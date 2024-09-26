@@ -58,6 +58,12 @@ public class FormContainerTest {
     }
 
     @Test
+    void testGetRoleAttribute() throws Exception {
+        FormContainer formContainerMock = Mockito.mock(FormContainer.class);
+        assertEquals(formContainerMock.getRoleAttribute(), null);
+    }
+
+    @Test
     void testGetDocumentPath() {
         FormContainer formContainerMock = Mockito.mock(FormContainer.class);
         Mockito.when(formContainerMock.getDocumentPath()).thenCallRealMethod();
@@ -83,6 +89,13 @@ public class FormContainerTest {
         FormContainer formContainerMock = Mockito.mock(FormContainer.class);
         Mockito.when(formContainerMock.getExportedItemsOrder()).thenCallRealMethod();
         assertEquals(ArrayUtils.EMPTY_STRING_ARRAY, formContainerMock.getExportedItemsOrder());
+    }
+
+    @Test
+    void testGetLanguageDirection() {
+        FormContainer formContainerMock = Mockito.mock(FormContainer.class);
+        Mockito.when(formContainerMock.getLanguageDirection()).thenCallRealMethod();
+        assertEquals("ltr", formContainerMock.getLanguageDirection());
     }
 
 }

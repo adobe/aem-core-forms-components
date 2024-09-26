@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class FileInput extends FormView.FormFieldBase {
+    class FileInput extends FormView.FormFileInput {
 
         static NS = FormView.Constants.NS;
         /**
@@ -27,7 +27,7 @@
          */
         static IS = "adaptiveFormFileInput";
         static bemBlock = 'cmp-adaptiveform-fileinput'
-        static selectors  = {
+        static selectors = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${FileInput.bemBlock}__widget`,
             label: `.${FileInput.bemBlock}__label`,
@@ -35,12 +35,18 @@
             qm: `.${FileInput.bemBlock}__questionmark`,
             errorDiv: `.${FileInput.bemBlock}__errormessage`,
             tooltipDiv: `.${FileInput.bemBlock}__shortdescription`,
-            fileListDiv : `.${FileInput.bemBlock}__filelist`,
-            attachButtonLabel : `.${FileInput.bemBlock}__widgetlabel`
+            fileListDiv: `.${FileInput.bemBlock}__filelist`,
+            attachButtonLabel: `.${FileInput.bemBlock}__widgetlabel`
         };
 
         constructor(params) {
             super(params);
+        }
+
+        widgetFields = {
+            widget: this.getWidget(),
+            fileListDiv: this.getFileListDiv(),
+            model: () => this._model
         }
 
         getWidget() {
@@ -71,37 +77,41 @@
             return this.element.querySelector(FileInput.selectors.fileListDiv);
         }
 
-        #getAttachButtonLabel() {
+        getAttachButtonLabel() {
             return this.element.querySelector(FileInput.selectors.attachButtonLabel);
         }
 
         updateValue(value) {
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
+                this.widgetObject = new FileInputWidget(this.widgetFields)
             }
             this.widgetObject.setValue(value);
             super.updateEmptyStatus();
         }
 
+        updateEnabled(enabled, state) {
+            if (this.widget) {
+                this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
+                const isDisabled = !enabled || state.readOnly;
+                if (isDisabled) {
+                    this.widget.setAttribute("disabled", "disabled");
+                } else {
+                    this.widget.removeAttribute("disabled");
+                }
+            }
+        }
+
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.getWidget(), this.getFileListDiv(), this._model)
+                this.widgetObject = new FileInputWidget(this.widgetFields)
             }
-        }
-
-        #syncWidget() {
-            let widgetElement = this.getWidget ? this.getWidget() : null;
-            if (widgetElement) {
-                widgetElement.id = this.getId() + "__widget";
-                this.#getAttachButtonLabel().setAttribute('for', this.getId() + "__widget");
-            }
-
-        }
-
-        syncMarkupWithModel() {
-            super.syncMarkupWithModel();
-            this.#syncWidget();
+            this.getAttachButtonLabel().addEventListener('focus', () => {
+                this.setActive();
+            })
+            this.getAttachButtonLabel().addEventListener('blur', () => {
+                this.setInactive();
+            })
         }
     }
 

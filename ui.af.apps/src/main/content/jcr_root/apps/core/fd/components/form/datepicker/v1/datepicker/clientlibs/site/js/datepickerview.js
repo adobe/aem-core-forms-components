@@ -62,14 +62,25 @@
         updateValue(value) {
             if (this.widgetObject) {
                 if (this.isActive()) {
-                    this.widgetObject.setValue(value);
+                    // Replacing undefined / null with empty string on reset
+                    this.widgetObject.setValue(value || '');
                 } else {
-                    this.widgetObject.setDisplayValue(value);
+                    // Replacing undefined / null with empty string on reset
+                    this.widgetObject.setDisplayValue(value || '');
                 }
             } else {
-                super.updateValue(value);
+                // Replacing undefined / null with empty string on reset
+                super.updateValue(value || '');
             }
         }
+
+        updateReadOnly(readOnly, state) {
+            super.updateReadOnly(readOnly, state);
+            if (this.widgetObject != null) {
+                this.widgetObject.markAsReadOnly(readOnly);
+            }
+        }
+
 
         setModel(model) {
             super.setModel(model);
@@ -77,39 +88,45 @@
                 if (this.widgetObject == null) {
                     this.widgetObject = new DatePickerWidget(this, this.getWidget(), model);
                 }
-                if (this.widgetObject.getValue() !== '') {
-                    this._model.value = this.widgetObject.getValue();
+                if (this.isActive()) {
+                    this.widgetObject.setValue(model.value);
+                } else {
+                    this.widgetObject.setDisplayValue(model.value);
                 }
                 this.widgetObject.addEventListener('blur', (e) => {
-                    this._model.value = this.widgetObject.getValue();
-
+                    this.setModelValue(this.widgetObject.getValue())
                     //setDisplayValue is required for cases where value remains same while focussing in and out.
                     this.widgetObject.setDisplayValue(this._model.value);
-
+                    this.widgetObject.setCalendarWidgetValue(this._model.value);
                     this.setInactive();
                 }, this.getWidget());
                 this.widgetObject.addEventListener('focus', (e) => {
                     this.widgetObject.setValue(e.target.value);
                     this.setActive();
                 }, this.getWidget());
+                this.widgetObject.addEventListener('input', (e) => {
+                    if( e.target.value === '') {
+                        // clear the value if user manually empties the value in date input box
+                        this.setModelValue("");
+                    }
+                }, this.getWidget());
             } else {
                 if (this.widget.value !== '') {
-                    this._model.value = this.widget.value;
+                    this.setModelValue(this.widget.value);
                 }
                 this.widget.addEventListener('blur', (e) => {
-                    this._model.value = e.target.value;
+                    this.setModelValue(e.target.value);
                     this.setInactive();
                 });
                 this.widget.addEventListener('focus', (e) => {
                     this.setActive();
                 });
             }
-
         }
 
         #noFormats() {
             return (this._model.editFormat == null || this._model.editFormat === 'date|short') &&
-                (this._model.displayFormat == null || this._model.displayFormat === 'date|short');
+                (this._model.displayFormat == null || this._model.displayFormat === 'date|short') && (this._model.displayValueExpression == null)
         }
     }
 

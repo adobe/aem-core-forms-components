@@ -15,12 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.Collections;
-import java.util.Map;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.util.*;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +32,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -37,6 +40,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.mockito.Mockito.mock;
@@ -51,9 +55,15 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_CUSTOMIZED = CONTENT_ROOT + "/textinput-customized";
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
-
+    private static final String PATH_NUMBER_TEXTINPUT_EXCLUSIVE = CONTENT_ROOT + "/number-textinput-exclusive";
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
     private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
+    private static final String PATH_TEXTINPUT_BLANK_DATAREF = CONTENT_ROOT + "/textinput-blank-dataref";
+    private static final String PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-validationExpression";
+    private static final String PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/textinput-displayValueExpression";
+    private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
+    private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
+    private static final String PATH_TEXTINPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/textinput-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -166,7 +176,7 @@ public class TextInputImplTest {
     @Test
     void testIsVisible() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
-        assertEquals(null, textInput.isVisible());
+        assertEquals(true, textInput.isVisible());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isVisible()).thenCallRealMethod();
         assertEquals(null, textInputMock.isVisible());
@@ -184,7 +194,7 @@ public class TextInputImplTest {
     @Test
     void testIsEnabled() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
-        assertEquals(null, textInput.isEnabled());
+        assertEquals(true, textInput.isEnabled());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, textInputMock.isEnabled());
@@ -202,7 +212,7 @@ public class TextInputImplTest {
     @Test
     void testIsReadOnly() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
-        assertEquals(null, textInput.isReadOnly());
+        assertEquals(false, textInput.isReadOnly());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, textInputMock.isReadOnly());
@@ -290,6 +300,20 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testGetExclusiveMinimum() {
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT_EXCLUSIVE, TextInput.class, context);
+        assertNull(numberTextInput.getMinimum());
+        assertEquals(10L, numberTextInput.getExclusiveMinimum().longValue());
+    }
+
+    @Test
+    void testGetExclusiveMaximum() {
+        TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT_EXCLUSIVE, TextInput.class, context);
+        assertNull(numberTextInput.getMaximum());
+        assertEquals(100L, numberTextInput.getExclusiveMaximum().longValue());
+    }
+
+    @Test
     void testGetTooltip() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
         assertEquals("test-short-description", textInput.getTooltip());
@@ -346,6 +370,49 @@ public class TextInputImplTest {
         // get custom properties of "afs:layout"
         Map<String, Object> customProperties = (Map<String, Object>) properties.get(Base.CUSTOM_PROPERTY_WRAPPER);
         assertFalse((boolean) customProperties.get("tooltipVisible"));
+    }
+
+    @Test
+    public void testGetCustomProperties() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
+        Method method = AbstractFormComponentImpl.class.getDeclaredMethod("getCustomProperties");
+        method.setAccessible(true);
+        Map<String, Object> result = (Map<String, Object>) method.invoke(textInput);
+        Assertions.assertFalse(result.isEmpty());
+        Assertions.assertEquals("test-custom-string", result.get("customPropString"));
+        assertArrayEquals(new String[] { "a", "b" }, (Object[]) result.get("customPropStringArray"));
+        Assertions.assertEquals(true, result.get("customPropBool"));
+        Assertions.assertEquals(true, result.get("customPropBoolArray"));
+        Assertions.assertEquals(45L, result.get("customPropLong"));
+        assertArrayEquals(new Long[] { 345L, 576L }, (Object[]) result.get("customPropLongArray"));
+        Assertions.assertEquals(new BigDecimal("45.67"), (BigDecimal) result.get("customPropDecimal"));
+        assertArrayEquals(new BigDecimal[] { new BigDecimal("45.67"), new BigDecimal("90.34") }, (BigDecimal[]) result.get(
+            "customPropDecimalArray"));
+        Assertions.assertEquals(new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
+            {
+                set(Calendar.MILLISECOND, 0);
+                setTimeZone(TimeZone.getTimeZone("UTC"));
+            }
+        }, (Calendar) result.get("customPropDate"));
+        assertArrayEquals(
+            new Calendar[] {
+                new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
+                    {
+                        set(Calendar.MILLISECOND, 0);
+                        setTimeZone(TimeZone.getTimeZone("UTC"));
+                    }
+                },
+                new GregorianCalendar(2024, Calendar.JUNE, 22, 14, 0, 0) {
+                    {
+                        set(Calendar.MILLISECOND, 0);
+                        setTimeZone(TimeZone.getTimeZone("UTC"));
+                    }
+                }
+            },
+            (Calendar[]) result.get("customPropDateArray"));
+        Assertions.assertNull(result.get("fd:accidentalPrefix"));
+        Assertions.assertNull(result.get("sling:accidentalPrefix"));
+        Assertions.assertNull(result.get("jcr:accidentalPrefix"));
     }
 
     @Test
@@ -410,5 +477,44 @@ public class TextInputImplTest {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_DATALAYER, TextInput.class, context);
         FieldUtils.writeField(textInput, "dataLayerEnabled", true, true);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_DATALAYER));
+    }
+
+    @Test
+    void testJSONExportForBlankDataRef() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_DATAREF, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_DATAREF));
+    }
+
+    @Test
+    void testJSONExportForEmptyValidationExpression() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION));
+    }
+
+    @Test
+    void testPlaceholderAndAutocomplete() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE));
+        assertEquals("given-name", textInput.getAutoComplete());
+        assertEquals("test-placeholder", textInput.getPlaceHolder());
+    }
+
+    @Test
+    void testJSONExportForDisplayValueExpression() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION));
+    }
+
+    @Test
+    void testExportTypeWithViewType() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_WITH_VIEWTYPE, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_WITH_VIEWTYPE));
+        assertEquals("some/custom/value", textInput.getExportedType());
+    }
+
+    @Test
+    void testNoFieldType() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_WITHOUT_FIELDTYPE, TextInput.class, context);
+        assertEquals(FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
     }
 }

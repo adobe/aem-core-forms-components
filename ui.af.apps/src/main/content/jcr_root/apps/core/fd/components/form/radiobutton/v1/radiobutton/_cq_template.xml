@@ -3,6 +3,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Radio Button"
     fieldType="radio-group"
+    type="number"
     orientation="horizontal"
     enum="[0,1]"
     enumNames="[Item 1,Item 2]"/>

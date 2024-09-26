@@ -192,4 +192,10 @@ public class FormContainerImplTest {
         assert (dataObject.getId()).equals("L2NvbnRlbnQvZm9ybXMvYWYvYWYy");
         assert (dataObject.getType()).equals("core/fd/components/form/container/v1/container");
     }
+
+    @Test
+    void testGetName() throws Exception {
+        FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
+        assertNull(formContainer.getName());
+    }
 }

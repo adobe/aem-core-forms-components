@@ -35,7 +35,9 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Button;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -47,19 +49,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ButtonImpl extends AbstractBaseImpl implements Button {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "value")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VALUE)
     @Nullable
     protected String value;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "icon")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ICON)
     @Nullable
     private String icon;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "default")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DEFAULT_VALUE)
     @Nullable
     private String defaultValue;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "buttonType")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_BUTTON_TYPE)
     @Default(values = "button")
     protected String buttonType;
 
@@ -86,11 +88,16 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
         return buttonType;
     }
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.BUTTON);
+    }
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUSION)
     @Default(booleanValues = false)
     protected boolean dorExclusion;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_COLSPAN)
     @org.jetbrains.annotations.Nullable
     protected String dorColspan;
 

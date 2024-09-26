@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Field;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
 
@@ -37,17 +38,17 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENFORCE_ENUM)
     @Default(booleanValues = true)
     private boolean enforceEnum;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enum")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENUM)
     @Nullable
-    private String[] enums; // todo: this needs to be thought through ?
+    protected String[] enums; // todo: this needs to be thought through ?
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "enumNames")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENUM_NAMES)
     @Nullable
-    private String[] enumNames;
+    protected String[] enumNames;
 
     @Override
     public boolean isEnforceEnum() {
@@ -55,23 +56,28 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     /**
-     * Function to override the enum names on providing same enum values
-     *
-     * @return an empty hashmap
-     *         {@code @if} either of the arrays is null or if they have different lengths
-     *
-     *         {@code @else}
+     * Function to retrieve enum values and enum names paired together
+     * 
      * @return map containing enum values and enum names as key-value pairs
      */
-    private Map<Object, String> removeDuplicates() {
+    private Map<Object, String> getEnumPairs() {
 
         Object[] enumArray = this.enums;
         String[] enumNamesArray = this.enumNames;
 
         LinkedHashMap<Object, String> map = new LinkedHashMap<>();
 
-        if (enumArray != null && enumNamesArray != null && enumArray.length == enumNamesArray.length) {
-            map = IntStream.range(0, enumArray.length).collect(LinkedHashMap::new, (m, i) -> m.put(enumArray[i], enumNamesArray[i]),
+        if (enumArray != null) {
+            if (enumNamesArray != null && enumArray.length != enumNamesArray.length) {
+                int oldSize = enumNamesArray.length;
+                int sizeDiff = enumArray.length - enumNamesArray.length;
+                enumNamesArray = Arrays.copyOf(enumNamesArray, oldSize + sizeDiff);
+                for (int i = oldSize; i < oldSize + sizeDiff; i++) {
+                    enumNamesArray[i] = (String) enumArray[i];
+                }
+            }
+            String[] finalEnumNamesArray = enumNamesArray != null ? enumNamesArray : new String[enumArray.length];
+            map = IntStream.range(0, enumArray.length).collect(LinkedHashMap::new, (m, i) -> m.put(enumArray[i], finalEnumNamesArray[i]),
                 LinkedHashMap::putAll);
         }
 
@@ -88,7 +94,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             // array element in JCR
             // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
-            Map<Object, String> map = removeDuplicates();
+            Map<Object, String> map = getEnumPairs();
             String[] enumValue = map.keySet().toArray(new String[0]);
             return ComponentUtils.coerce(type, enumValue);
         }
@@ -97,11 +103,11 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @Override
     public String[] getEnumNames() {
         if (enumNames != null) {
-            Map<Object, String> map = removeDuplicates();
+            Map<Object, String> map = getEnumPairs();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
                 .map(p -> {
-                    return this.translate("enumNames", p);
+                    return this.translate(ReservedProperties.PN_ENUM_NAMES, p);
                 })
                 .toArray(String[]::new);
         }

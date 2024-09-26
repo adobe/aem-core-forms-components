@@ -15,6 +15,13 @@ To execute the tests in headless mode, simply run
 mvn verify -Pcypress-ci
 ```
 
+To run a particular spec file in headless mode,
+
+```
+cd ui.tests/test-module
+npm run cypress:run:file -- ./specs/textinput/textinput.runtime.spec.js
+```
+
 ## Requirements
 
 * Maven

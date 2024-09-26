@@ -19,6 +19,28 @@
     // Editor evaluates this script and if the clientlib is not loaded by then, it will fail. Hence triggering an
     // event after clientlib load and initializing on that event.
     (function () {
+
+        const registerGuideBridgeEvents = (e) => {
+            const formContainerPath = e.detail.getPath();
+            bridge.connect(()=>{
+                if(window.guideBridge && typeof window.guideBridge?.getFormModel().setAdditionalSubmitMetadata == 'function') {
+                    const additionalSubmitMetadata = window.guideBridge?.getFormModel()?.additionalSubmitMetadata;
+                    window.guideBridge?.getFormModel()?.
+                    setAdditionalSubmitMetadata({...additionalSubmitMetadata, embedContainerFormPathMapping: {...additionalSubmitMetadata.embedContainerFormPathMapping, "${form.formPagePath @ context='scriptString'}": "${resource.path @ context='scriptString'}"}});
+                }
+            }, null, formContainerPath);
+        }
+
+        const onDocumentReady = () => {
+            if(window.guideBridge !== undefined){
+                bridge = window.guideBridge;
+            } else {
+                window.addEventListener("bridgeInitializeStart", (event)=>{
+                    bridge = event.detail.guideBridge;
+                });
+            }
+            document.addEventListener("AF_FormContainerInitialised", registerGuideBridgeEvents);
+        }
         var onScriptLoad = function (evnt) {
             var formApp = evnt.detail.formApp;
             formApp.initializeAEMForm({
@@ -37,6 +59,7 @@
             window.removeEventListener("aemform-onscript-load", onScriptLoad);
         };
         window.addEventListener("aemform-onscript-load", onScriptLoad);
+        window.addEventListener("DOMContentLoaded", onDocumentReady);
     }());
 </script>
 <sly data-sly-list="${form.htmlPageItems}"><script data-sly-test="${item.location.name == 'header'}"
@@ -45,8 +68,12 @@
 <sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"/>
 <sly data-sly-test.useIframe="${form.useIframe != 'false'}">
     <sly data-sly-test.formLocaleString="${form.locale || 'en'}"/>
-        <iframe class="cmp-aemform__iframecontent"
-            src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html?dataRef=${request.requestParameterMap['dataRef'] != null ? request.requestParameterMap['dataRef'][0].toString : '' @ context='attribute'}${!wcmmode.edit ? '&wcmmode={0}':'' @ format=[wcmmode.toString]}"
+        <iframe title="${form.title}"
+                role="${form.roleAttribute || ''}"
+                data-sly-set.dataRef="?${['dataRef=', request.requestParameterMap['dataRef'][0].toString] @ join=''}"
+                class="cmp-aemform__iframecontent"
+                src="${request.contextPath}${resource.path}.iframe.${formLocaleString}.html${request.requestParameterMap['dataRef'] != null ? dataRef : '' @ context='attribute'}"
+         width="100%;"
             width="100%;"
             data-form-page-path="${form.formEditPagePath}"></iframe>
     <sly data-sly-test="${form.useIframe != 'false' && form.height == 'auto'}"

@@ -17,13 +17,14 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
+import com.adobe.cq.export.json.ComponentExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -63,6 +64,8 @@ public interface FormContainer extends Container {
      */
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
+    String DEFAULT_FORMS_SPEC_VERSION = "0.14.1";
+
     /**
      * Returns form metadata {@link FormMetaData}
      *
@@ -79,14 +82,14 @@ public interface FormContainer extends Container {
      */
     @JsonProperty("adaptiveform")
     default String getAdaptiveFormVersion() {
-        return "0.12.0";
+        return DEFAULT_FORMS_SPEC_VERSION;
     }
 
     /*
      * Returns schema reference
      *
      * @return reference to schema
-     * 
+     *
      * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable
@@ -291,7 +294,29 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 4.0.0
      */
     default String getLang() {
-        return "en-US";
+        return Base.DEFAULT_LANGUAGE;
+    }
+
+    /**
+     * Returns the language of the containing page
+     *
+     * @return the language of the containing page
+     * @since com.adobe.cq.forms.core.components.models.form 4.7.1
+     */
+    @JsonIgnore
+    default String getContainingPageLang() {
+        return getLang();
+    }
+
+    /**
+     * API to give direction of content in HTML for a given language.
+     *
+     * @return one of the constants "rtl" or "ltr" depending on direction of given language
+     * @since com.adobe.cq.forms.core.components.models.form 4.5.0
+     */
+    @JsonIgnore
+    default String getLanguageDirection() {
+        return "ltr";
     }
 
     /**
@@ -325,9 +350,7 @@ public interface FormContainer extends Container {
     default void setContextPath(String contextPath) {}
 
     @JsonIgnore
-    default <FormComponent, R> R visit(Function<FormComponent, R> callBack) throws Exception {
-        return null;
-    }
+    default void visit(Consumer<ComponentExporter> callback) throws Exception {}
 
     /**
      * Returns site page path if dropped in sites else the form page path.
@@ -339,5 +362,4 @@ public interface FormContainer extends Container {
     default String getParentPagePath() {
         return null;
     }
-
 }

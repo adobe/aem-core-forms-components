@@ -62,4 +62,11 @@ yarn-error.log
 # UI Tests
 node/
 node_modules/
+test_results/
 ui.tests/test-module/reports
+ui.tests/test-module/cypress
+
+.java-version
+
+# Ignore Cypress runtime JSON files
+ui.tests/test-module/**/*.cy.json

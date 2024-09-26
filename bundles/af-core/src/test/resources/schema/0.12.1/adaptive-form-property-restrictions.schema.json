@@ -1,0 +1,396 @@
+{
+  "$id": "classpath:/schema/0.12.1/adaptive-form-property-restrictions.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$defs": {
+    "Date": {
+      "title": "property with type date",
+      "type": "string",
+      "format": "date"
+    },
+    "DateField": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "string",
+            "string[]"
+          ]
+        },
+        "format": {
+          "const": "date"
+        }
+      },
+      "required": [
+        "type",
+        "format"
+      ]
+    },
+    "NumberField": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "number",
+            "number[]"
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "DateOrNumberField": {
+      "type": "object",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/NumberField"
+        },
+        {
+          "$ref": "#/$defs/DateField"
+        }
+      ]
+    },
+    "StringTypeField": {
+      "title": "field having type string",
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "string",
+            "string[]"
+          ]
+        }
+      }
+    },
+    "FileTypeField": {
+      "title": "field with type file having format as data-url or binary",
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "string",
+            "string[]"
+          ]
+        },
+        "format": {
+          "enum": [
+            "binary",
+            "data-url"
+          ]
+        }
+      }
+    },
+    "OptimizedFileTypeField": {
+      "title": "field having type file",
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "file",
+            "file[]"
+          ]
+        }
+      }
+    }
+  },
+  "title": "The schema defines constraints on which Headless Adaptive Form properties can be used together",
+  "allOf": [
+    {
+      "title": "minimum constraint is valid only for numeric or date types",
+      "type": "object",
+      "dependencies": {
+        "minimum": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "minimum": {
+                      "type": "number"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/NumberField"
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "minimum": {
+                      "$ref": "#/$defs/Date"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/DateField"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errorMessage": "minimum constraint is valid only for numeric or date types"
+    },
+    {
+      "title": "exclusiveMinimum constraint is valid only for numeric or date types",
+      "type": "object",
+      "dependencies": {
+        "exclusiveMinimum": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "exclusiveMinimum": {
+                      "type": "number"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/NumberField"
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "exclusiveMinimum": {
+                      "$ref": "#/$defs/Date"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/DateField"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errorMessage": "exclusiveMinimum constraint is valid only for numeric or date types"
+    },
+    {
+      "title": "maximum constraint is valid only for numeric or date types",
+      "type": "object",
+      "dependencies": {
+        "maximum": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "maximum": {
+                      "type": "number"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/NumberField"
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "maximum": {
+                      "$ref": "#/$defs/Date"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/DateField"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errorMessage": "maximum constraint is valid only for numeric or date types"
+    },
+    {
+      "title": "exclusiveMaximum constraint is valid only for numeric or date types",
+      "type": "object",
+      "dependencies": {
+        "exclusiveMinimum": {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "exclusiveMinimum": {
+                      "type": "number"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/NumberField"
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "exclusiveMinimum": {
+                      "$ref": "#/$defs/Date"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/DateField"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "errorMessage": "exclusiveMaximum constraint is valid only for numeric or date types"
+    },
+    {
+      "title": "step constraint is valid only for number type or date types",
+      "type": "object",
+      "dependencies": {
+        "step": {
+          "$ref": "#/$defs/DateOrNumberField"
+        }
+      },
+      "errorMessage": "step constraint is valid only for date and number type"
+    },
+    {
+      "title": "format, pattern, minLength and maxLength constraint are valid only for fields with type string",
+      "type": "object",
+      "dependencies": {
+        "format": {
+          "$ref": "#/$defs/StringTypeField"
+        },
+        "pattern": {
+          "$ref": "#/$defs/StringTypeField"
+        },
+        "minLength": {
+          "$ref": "#/$defs/StringTypeField"
+        },
+        "maxLength": {
+          "$ref": "#/$defs/StringTypeField"
+        }
+      },
+      "errorMessage": "format, pattern, minLength and maxLength constraint are valid only for fields with type string"
+    },
+    {
+      "title": "enforceEnum is valid only if enum property is defined",
+      "type": "object",
+      "dependencies": {
+        "enforceEnum": {
+          "type": "object",
+          "required": [
+            "enum"
+          ]
+        }
+      },
+      "errorMessage": "enforceEnum is valid only if enum property is defined"
+    },
+    {
+      "title": "minItems, maxItems, uniqueItems are valid only for type array",
+      "type": "object",
+      "dependencies": {
+        "minItems": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "array",
+                "string[]",
+                "boolean[]",
+                "number[]",
+                "file[]"
+              ]
+            }
+          }
+        },
+        "maxItems": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "array",
+                "string[]",
+                "boolean[]",
+                "number[]",
+                "file[]"
+              ]
+            }
+          }
+        },
+        "uniqueItems": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "array",
+                "string[]",
+                "boolean[]",
+                "number[]",
+                "file[]"
+              ]
+            }
+          }
+        }
+      },
+      "errorMessage": "minItems, maxItems are valid only for type array"
+    },
+    {
+      "title": "maxFileSize, accept are valid only for file types",
+      "type": "object",
+      "dependencies": {
+        "maxFileSize": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/OptimizedFileTypeField"
+            },
+            {
+              "$ref": "#/$defs/FileTypeField"
+            }
+          ]
+        },
+        "accept": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/OptimizedFileTypeField"
+            },
+            {
+              "$ref": "#/$defs/FileTypeField"
+            }
+          ]
+        }
+      },
+      "errorMessage": "maxFileSize, accept are valid only for file types"
+    },
+    {
+      "title": "editFormat, displayFormat, dataFormat are valid only for fields with type date or number",
+      "type": "object",
+      "dependencies": {
+        "editFormat": {
+          "$ref": "#/$defs/DateOrNumberField"
+        },
+        "displayFormat": {
+          "$ref": "#/$defs/DateOrNumberField"
+        },
+        "dataFormat": {
+          "$ref": "#/$defs/DateOrNumberField"
+        }
+      }
+    }
+  ]
+}

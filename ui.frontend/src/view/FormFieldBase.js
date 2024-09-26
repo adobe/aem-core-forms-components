@@ -16,9 +16,22 @@
 
 import {Constants} from "../constants.js";
 import FormField from './FormField.js';
+import LanguageUtils from '../LanguageUtils.js';
 
-export default class FormFieldBase extends FormField {
+/**
+ * @module FormView
+ */
 
+/**
+ * Base class for form fields.
+ * @extends module:FormView~FormField
+ */
+class FormFieldBase extends FormField {
+
+    /**
+     * Constructor for FormFieldBase.
+     * @param {object} params - The parameters for initializing the form field.
+     */
     constructor(params) {
         super(params)
         this.widget = this.getWidget();
@@ -30,65 +43,103 @@ export default class FormFieldBase extends FormField {
         this.updateEmptyStatus();
     }
 
-    ELEMENT_FOCUS_CHANGED = "elementFocusChanged";
-
-    ELEMENT_HELP_SHOWN = "elementHelpShown";
-
-    ELEMENT_ERROR_SHOWN = "elementErrorShown";
+    /**
+     * Event constant for element focus change.
+     * @type {string}
+     */
+    ELEMENT_FOCUS_CHANGED = Constants.ELEMENT_FOCUS_CHANGED;
 
     /**
-     * implementations should return the widget element that is used to capture the value from the user
-     * It will be a input/textarea element
-     * @returns html element corresponding to widget
+     * Event constant for element help shown.
+     * @type {string}
+     */
+    ELEMENT_HELP_SHOWN = Constants.ELEMENT_HELP_SHOWN;
+
+    /**
+     * Event constant for element error shown.
+     * @type {string}
+     */
+    ELEMENT_ERROR_SHOWN = Constants.ELEMENT_ERROR_SHOWN;
+
+
+    /**
+     * Event constant for value change.
+     * @type {string}
+     */
+    ELEMENT_VALUE_CHANGED = Constants.ELEMENT_VALUE_CHANGED;
+
+    /**
+     * Gets the widget element used to capture the value from the user.
+     * Implementations should return the widget element that is used to capture the value from the user.
+     * @returns {HTMLElement} - The widget element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getWidget() {
         throw "method not implemented";
     }
 
     /**
-     * implementations should return the element used to show the description of the field
-     * @returns html element corresponding to description
+     * Gets the element used to show the description of the field.
+     * Implementations should return the description element that is used to capture the description
+     * @returns {HTMLElement} - The description element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getDescription() {
         throw "method not implemented";
     }
 
     /**
-     * implementations should return the element used to show the label of the field
-     * @returns html element corresponding to label
+     * Gets the element used to show the label of the field.
+     * Implementations should return the label element that is used to capture the label
+     * @returns {HTMLElement} - The label element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getLabel() {
         throw "method not implemented";
     }
 
     /**
-     * implementations should return the element used to show the error on the field
-     * @returns html element corresponding to error
+     * Gets the element used to show the error on the field.
+     * Implementations should return the error element that is used to capture the error
+     * @returns {HTMLElement} - The error element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getErrorDiv() {
         throw "method not implemented";
     }
 
     /**
-     * implementation should return the tooltip / short description div
-     * @returns html element corresponding to tooltip
+     * Gets the tooltip / short description div.
+     * Implementations should return the tooltip element that is used to capture the tooltip or short description
+     * @returns {HTMLElement} - The tooltip element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getTooltipDiv() {
         throw "method not implemented";
     }
 
     /**
-     * Implementation should return the questionMark div
-     * @returns html element corresponding to question mark
+     * Gets the question mark div.
+     * Implementations should return the question mark element
+     * @returns {HTMLElement} - The question mark element.
+     * @throws {string} Throws an error if the method is not implemented.
      */
     getQuestionMarkDiv() {
         throw "method not implemented";
     }
 
+    /**
+     * Gets the class of the form field.
+     * @returns {string} - The class of the form field.
+     */
     getClass() {
         return this.constructor.IS;
     }
 
+    /**
+     * Sets the model for the form field.
+     * @param {object} model - The model object.
+     */
     setModel(model) {
         super.setModel(model);
         const state = this._model.getState();
@@ -96,45 +147,156 @@ export default class FormFieldBase extends FormField {
         this.#registerEventListeners();
     }
 
-    #syncLabel() {
-        let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
-        if (labelElement) {
-            labelElement.setAttribute('for', this.getId());
-        }
+    getWidgetId(){
+      return this.getId() + '-widget';
     }
 
-    syncMarkupWithModel() {
-        this.#syncLabel()
+    #syncWidget() {
+      let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+      let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+      widgetElement = widgetElements || widgetElement;
+      if (widgetElement) {
+          widgetElement.setAttribute('id', this.getWidgetId());
+      }
     }
 
     /**
-     * Sets the focus on component's widget.
+     * Synchronizes the label element with the model.
+     * @private
+     */
+    #syncLabel() {
+        let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+        if (labelElement) {
+            labelElement.setAttribute('for', this.getWidgetId());
+        }
+    }
+
+
+    #syncError() {
+        let errorElement = typeof this.getErrorDiv === 'function' ? this.getErrorDiv() : null;
+        if (errorElement) {
+            errorElement.setAttribute('id', `${this.getId()}__errormessage`);
+        }
+    }   
+
+    #syncShortDesc() {
+        let shortDescElement = typeof this.getTooltipDiv === 'function' ? this.getTooltipDiv() : null;
+        if (shortDescElement) {
+            shortDescElement.setAttribute('id', `${this.getId()}__shortdescription`);
+        }
+    } 
+
+    #syncLongDesc() {
+        let longDescElement = typeof this.getDescription === 'function' ? this.getDescription() : null;
+        if (longDescElement) {
+            longDescElement.setAttribute('id', `${this.getId()}__longdescription`);
+        }
+    } 
+
+    #syncAriaDescribedBy() {
+        let ariaDescribedby = '';
+        let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+        let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+        widgetElement = widgetElements || widgetElement;
+        
+        function appendDescription(descriptionType, id) {
+            if (ariaDescribedby) {
+               ariaDescribedby += ` ${id}__${descriptionType}`;
+             } else {
+                 ariaDescribedby = `${id}__${descriptionType}`;
+             }
+         }
+            
+        if (widgetElement) {
+
+           if (this.getDescription()) {
+            const descriptionDiv = this.getDescription();
+            if (!(descriptionDiv.innerHTML.trim() === '' || descriptionDiv.children.length === 0)) {
+                appendDescription('longdescription', this.getId());
+            }
+          }
+          
+           if (this.getTooltipDiv()) {
+            appendDescription('shortdescription', this.getId());
+          }
+
+           if (this.getErrorDiv() && this.getErrorDiv().innerHTML) {
+            appendDescription('errormessage', this.getId());
+          }
+
+            widgetElement.setAttribute('aria-describedby', ariaDescribedby);
+        }
+    }
+
+    #syncAriaLabel() {
+        let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+        let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+        widgetElement = widgetElements || widgetElement;
+        const model = this.getModel?.();
+    
+        if (widgetElement && model?.screenReaderText) {
+            // Use DOMPurify to sanitize and strip HTML tags
+            const screenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(model.screenReaderText, { ALLOWED_TAGS: [] }) : model.screenReaderText;
+            widgetElement.setAttribute('aria-label', screenReaderText);
+        }
+    }
+
+    /**
+     * Synchronizes the markup with the model.
+     * @method
+     */
+    syncMarkupWithModel() {
+        this.#syncLabel()
+        this.#syncWidget()
+        this.#syncShortDesc()
+        this. #syncLongDesc()
+        this.#syncAriaDescribedBy()
+        this.#syncError()
+        this.#syncAriaLabel()
+    }
+
+    /**
+     * Sets the focus on the component's widget.
+     * @param {string} id - The ID of the component's widget.
      */
     setFocus(id) {
         const fieldType = this.parentView?.getModel()?.fieldType;
         if (fieldType !== 'form' && this.parentView.setFocus) {
-            this.parentView.setFocus(id);
+            this.parentView.setFocus(this.getId());
         }
-        this.widget.focus();
+        if(!this.isActive()) {
+            this.widget = this.getWidget(); // updating to the latest widget in case of datepicker widget with a formatter
+            if (this.widget instanceof NodeList) { // only checkbox and radiobutton returns NodeList
+                this.widget[0].focus(); // If multiple widgets like radio-button or checkbox-group, then focus on the first widget
+            } else if(this.getClass() === 'adaptiveFormFileInput') {
+                this.getAttachButtonLabel().focus();
+            } else {
+                this.widget.focus();
+            }
+        }
     }
 
     /**
-     * applies full state of the field to the HTML. Generally done just after the model is bound to the field
-     * @param state
+     * Applies the full state of the field to the HTML.
+     * Generally done just after the model is bound to the field.
+     * @param {Object} state - The state object.
      */
     applyState(state) {
         if (state.value) {
             this.updateValue(state.value);
         }
-        this.updateVisible(state.visible)
+        this.updateVisible(state.visible, state)
         this.updateReadOnly(state.readOnly)
         this.updateEnabled(state.enabled, state)
         this.initializeHelpContent(state);
+        this.updateLabel(state.label);
+        this.updateRequired(state.required, state);
+        this.updateDescription(state.description);
     }
 
     /**
-     * Initialise Hint ('?') and long description.
-     * @param state
+     * Initializes the hint ('?') and long description.
+     * @param {Object} state - The state object.
      */
     initializeHelpContent(state) {
         this.#showHideLongDescriptionDiv(false);
@@ -144,13 +306,18 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * Register all event listeners on this field
+     * Registers all event listeners on this field.
+     * @private
      */
     #registerEventListeners() {
         this.#addOnFocusEventListener();
         this.#addOnHelpIconClickEventListener();
     }
 
+    /**
+     * Adds an event listener for the help icon click event.
+     * @private
+     */
     #addOnHelpIconClickEventListener() {
         const questionMarkDiv = this.qm;
         if (questionMarkDiv) {
@@ -160,6 +327,10 @@ export default class FormFieldBase extends FormField {
         }
     }
 
+    /**
+     * Adds an event listener for the focus event.
+     * @private
+     */
     #addOnFocusEventListener() {
         const widget = this.getWidget();
         if (widget) {
@@ -177,31 +348,58 @@ export default class FormFieldBase extends FormField {
         }
     }
 
-    #triggerEventOnGuideBridge(eventType) {
+    /**
+     * Triggers an event on GuideBridge.
+     * @param {string} eventType - The event type.
+     * @private
+     */
+    #triggerEventOnGuideBridge(eventType, originalEventPayload) {
         const formId = this.formContainer.getFormId();
         const formTitle = this.formContainer.getFormTitle();
         const panelName = this.#getPanelName();
         const fieldName = this._model.name;
         const fieldId = this._model.id;
+        const fieldQualifiedName = this._model.qualifiedName;
         const eventPayload = {
             formId,
             formTitle,
             fieldName,
             fieldId,
-            panelName
+            panelName,
+            fieldQualifiedName,
+            ...(originalEventPayload?.prevValue !== undefined ? { prevText: originalEventPayload?.prevValue } : {}),
+            ...(originalEventPayload?.currentValue !== undefined ? { newText: originalEventPayload?.currentValue } : {}),
+            ...((typeof originalEventPayload === 'object' && originalEventPayload !== null) ? originalEventPayload : {})
         };
         const formContainerPath = this.formContainer.getPath();
         window.guideBridge.trigger(eventType, eventPayload, formContainerPath);
     }
 
 
+    /**
+     * Gets the panel name.
+     * @returns {string} The panel name.
+     * @private
+     */
     #getPanelName() {
         return this.parentView.getModel().name;
     }
 
+    setWidgetValueToDisplayValue() {
+        if(this._model.displayValueExpression && this._model.displayValue) { // only do this if displayValueExpression is set
+            this.widget.value = this._model.displayValue;
+        }
+    }
+
+    setWidgetValueToModelValue() {
+        if(this._model.displayValueExpression && this._model.displayValue) { // only do this if displayValueExpression is set
+            this.widget.value = this._model.value;
+        }
+    }
+
     /**
-     *
-     * @param show If true then <div> containing tooltip(Short Description) will be shown else hidden
+     * Shows or hides the tooltip <div> based on the provided flag.
+     * @param {boolean} show - If true, the tooltip <div> will be shown; otherwise, it will be hidden.
      * @private
      */
     #showHideTooltipDiv(show) {
@@ -211,23 +409,29 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     *
-     * @param show If true then <div> containing description(Long Description) will be shown
+     * Shows or hides the long description <div> based on the provided flag.
+     * @param {boolean} show - If true, the long description <div> will be shown; otherwise, it will be hidden.
      * @private
      */
     #showHideLongDescriptionDiv(show) {
-        if (this.description) {
-            this.toggleAttribute(this.description, show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+        if (this.getDescription()) {
+            this.toggleAttribute(this.getDescription(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
         }
     }
 
+    /**
+     * Checks if the tooltip is always visible.
+     * @returns {boolean} True if the tooltip is always visible; otherwise, false.
+     * @private
+     */
     #isTooltipAlwaysVisible() {
         return !!this.getLayoutProperties()['tooltipVisible'];
     }
 
     /**
-     * updates html based on visible state
-     * @param visible
+     * Updates the HTML based on the visible state.
+     * @param {boolean} visible - The visible state.
+     * @param {Object} state - The state object.
      */
     updateVisible(visible, state) {
         this.toggle(visible, Constants.ARIA_HIDDEN, true);
@@ -237,33 +441,30 @@ export default class FormFieldBase extends FormField {
         }
     }
 
-    /**
-     * updates the html state based on enable state of the field
-     * @param enabled
+     /**
+     * Updates the HTML state based on the enabled state of the field.
+     * @param {boolean} enabled - The enabled state.
+     * @param {Object} state - The state object.
      */
-
     updateEnabled(enabled, state) {
         if (this.widget) {
-            this.toggle(enabled, Constants.ARIA_DISABLED, true);
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             if (enabled === false) {
                 this.widget.setAttribute("disabled", "disabled");
-                this.widget.setAttribute(Constants.ARIA_DISABLED, true);
             } else {
                 this.widget.removeAttribute("disabled");
-                this.widget.removeAttribute(Constants.ARIA_DISABLED);
             }
         }
     }
 
     /**
-     * udpates the html state based on enable state of the field
-     * @param readOnly
-     * @private
+     * Updates the HTML state based on the read-only state of the field.
+     * @param {boolean} readOnly - The read-only state.
+     * @param {Object} state - The state object.
      */
-    updateReadOnly(readOnly, state) {
+    updateReadOnly(readOnly) {
         if (this.widget) {
-            this.toggle(readOnly, "readonly");
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_READONLY, readOnly);
             if (readOnly === true) {
                 this.widget.setAttribute("readonly", "readonly");
             } else {
@@ -273,39 +474,91 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * updates the html state based on valid state of the field
-     * @param valid
-     * @param state
+     * Updates the HTML state based on the required state of the field.
+     * @param {boolean} required - The required state.
+     * @param {Object} state - The state object.
      */
-    updateValid(valid, state) {
-        if (this.errorDiv) {
-            this.toggle(valid, Constants.ARIA_INVALID, true);
-            this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
-            this.updateErrorMessage(state.errorMessage, state);
-        }
-    }
-
-    /**
-     * updates the html state based on errorMessage state of the field
-     * @param errorMessage
-     * @param state
-     */
-    updateErrorMessage(errorMessage, state) {
-        if (this.errorDiv) {
-            this.errorDiv.innerHTML = state.errorMessage;
-            if (state.valid === false) {
-                this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN);
-                // if there is no error message in model, set a default error in the view
-                if (!state.errorMessage) {
-                    this.errorDiv.innerHTML = 'There is an error in the field';
-                }
+    updateRequired(required, state) {
+        if (this.widget) {
+            this.element.toggleAttribute("required", required);
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_REQUIRED, required);
+            if (required === true) {
+                this.widget.setAttribute("required", "required");
+            } else {
+                this.widget.removeAttribute("required");
             }
         }
     }
 
     /**
-     * updates the html state based on value state of the field
-     * @param value
+     * Updates the HTML state based on the valid state of the field.
+     * @param {boolean} valid - The valid state.
+     * @param {Object} state - The state object.
+     * @deprecated Use the new method updateValidity() instead.
+     */
+    updateValid(valid, state) {
+        // not doing anything, since it would impact performance, as the same functionality
+        // is implemented by updateValidity
+    }
+
+    /**
+     * Updates the HTML state based on the validity state of the field.
+     * @param {Object} validity - The validity state.
+     * @param {Object} state - The state object.
+     */
+    updateValidity(validity, state) {
+        // todo: handle the type of validity if required later
+        const valid = validity.valid;
+        if (this.errorDiv) {
+            this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+            this.widget.setAttribute(Constants.ARIA_INVALID, !valid);
+            this.updateValidationMessage(state.validationMessage, state);
+        }
+    }
+
+    /**
+     * Updates the HTML state based on the error message state of the field.
+     * @param {string} errorMessage - The error message.
+     * @param {Object} state - The state object.
+     * @deprecated Use the new method updateValidationMessage() instead.
+     */
+    updateErrorMessage(errorMessage, state) {
+        // not doing anything, since it would impact performance, as the same functionality
+        // is implemented by updateValidationMessage
+    }
+
+
+    /**
+     * Updates the HTML state based on the validation message state of the field.
+     * @param {string} validationMessage - The validation message.
+     * @param {Object} state - The state object.
+     */
+    updateValidationMessage(validationMessage, state) {
+        if (this.errorDiv) {
+            // Check if the validationMessage is different from the current content
+            if (this.errorDiv.innerHTML !== state.validationMessage) {
+                this.errorDiv.innerHTML = state.validationMessage;
+                if (state.validity.valid === false) {
+                    // Find the first key whose value is true
+                    const validationType = Object.keys(state.validity).find(key => key !== 'valid' && state.validity[key] === true);
+                    this.#triggerEventOnGuideBridge(this.ELEMENT_ERROR_SHOWN, {
+                        'validationMessage': state.validationMessage,
+                        'validationType': validationType
+                    });
+                    
+                    // if there is no error message in model, set a default error in the view
+                    if (!state.validationMessage) {
+                        this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
+                    }
+                } 
+                this.#syncAriaDescribedBy();
+            }
+        }
+    }
+
+    /**
+     * Updates the HTML state based on the value state of the field.
+     * @param {any} value - The value.
      */
     updateValue(value) {
         // html sets undefined value as undefined string in input value, hence this check is added
@@ -317,32 +570,30 @@ export default class FormFieldBase extends FormField {
     }
 
     /**
-     * updates the html class based on the existence of a value in a field
+     * Updates the HTML class based on the existence of a value in a field.
      */
     updateEmptyStatus() {
-        if (!this.getWidget())
-            return;
-
-        const updateModifierClass = (widget, newValue) => {
-            const widgetBemClass = widget.className.split(/\s+/).filter(bemClass => bemClass.endsWith("__widget"))[0];
-            const filledModifierClass = `${widgetBemClass}--filled`;
-            const emptyModifierClass = `${widgetBemClass}--empty`;
-
-            widget.classList.add(newValue ? filledModifierClass : emptyModifierClass);
-            widget.classList.remove(newValue ? emptyModifierClass : filledModifierClass);
-        };
-
+        if (!this.getWidget()){
+          return;
+        }
+        let value = '';
+        const checkedWidget = ['radio', 'checkbox'];
         // radiobutton, checkbox, datefield(AFv1, not datepicker), etc. have multiple widgets in the form of a NodeList
         if (this.widget instanceof NodeList) {
-            this.widget.forEach((widget) => updateModifierClass(widget, (widget.type === "radio" || widget.type === "checkbox") ? widget.checked : widget.value))
+          value = Array.from(this.widget).map((widget) => checkedWidget.includes(widget.type) ? widget.checked : widget.value).find(value => value);
         } else {
-            updateModifierClass(this.widget, this.widget.value)
+          value = checkedWidget.includes(this.widget.type) ? this.widget.checked : this.widget.value;
         }
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0]
+        const filledModifierClass = `${bemClass}--filled`;
+        const emptyModifierClass = `${bemClass}--empty`;
+        this.element.classList.add(value ? filledModifierClass : emptyModifierClass);
+        this.element.classList.remove(value ? emptyModifierClass : filledModifierClass);
     }
 
     /**
-     * updates the html state based on label state of the field
-     * @param label
+     * Updates the HTML state based on the label state of the field.
+     * @param {Object} label - The label.
      */
     updateLabel(label) {
         if (this.label) {
@@ -356,26 +607,94 @@ export default class FormFieldBase extends FormField {
         }
     }
 
+
     /**
-     * updates the html state based on description state of the field
-     * @param description
+     * Updates the active child of the form container.
+     * @param {Object} activeChild - The active child.
      */
-    updateDescription(description) {
-        if (this.description) {
-            this.description.querySelector("p").innerHTML = description;
-        } else {
-            //TODO: handle the case when description is not present initially.
+    updateActiveChild(activeChild) {
+      this.formContainer.setFocus(activeChild?._activeChild?.id || activeChild?.id);
+    }
+
+    /**
+     * Updates the HTML state based on the description state of the field.
+     * @param {string} descriptionText - The description.
+     */
+   
+    updateDescription(descriptionText) {
+        if (typeof descriptionText !== 'undefined') {
+            const sanitizedDescriptionText = window.DOMPurify ? window.DOMPurify.sanitize(descriptionText, { ALLOWED_TAGS: [] }).trim() : descriptionText;
+            let descriptionElement = this.getDescription();
+
+            if (descriptionElement) {
+                 // Check if the content inside the descriptionElement needs updating
+                 let currentTextContent = descriptionElement.innerText.trim();
+
+                 if (currentTextContent === sanitizedDescriptionText) {
+                   // No update needed if the text content already matches
+                   return;
+               }
+                 
+                // Find the existing <p> element
+                let pElement = descriptionElement.querySelector('p');
+
+                if (!pElement)  {
+                    // If no <p> tag exists, create one and set it as the content
+                    pElement = document.createElement('p');
+                    descriptionElement.innerHTML = ''; // Clear existing content
+                    descriptionElement.appendChild(pElement);
+                }
+
+                // Update the <p> element's content with sanitized content
+                pElement.innerHTML = sanitizedDescriptionText;
+            } else {    
+                // If no description was set during authoring
+                this.#addDescriptionInRuntime(sanitizedDescriptionText);
+            }
         }
     }
 
+    #addDescriptionInRuntime(descriptionText) {
+        // add question mark icon
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+        const labelContainer = this.element.querySelector(`.${bemClass}__label-container`);
+        if (labelContainer) {
+            const qmButton = document.createElement('button');
+            qmButton.className = `${bemClass}__questionmark`;
+            qmButton.title = 'Help text';
+            labelContainer.appendChild(qmButton);
+        } else {
+            console.error('label container not found');
+            return;
+        }
+        // add description div
+        const descriptionDiv = document.createElement('div');
+        descriptionDiv.className = `${bemClass}__longdescription`;
+        descriptionDiv.id = `${this.getId()}__longdescription`;
+        descriptionDiv.setAttribute('aria-live', 'polite');
+        descriptionDiv.setAttribute('data-cmp-visible', false);
+        const pElement = document.createElement('p');
+        pElement.textContent = descriptionText;
+        descriptionDiv.appendChild(pElement)
+        var errorDiv = this.getErrorDiv();
+        if (errorDiv) {
+            this.element.insertBefore(descriptionDiv, errorDiv);
+        } else {
+            console.log('error div not found');
+            return;
+        }
+        // attach event handler for question mark icon
+        this.#addHelpIconHandler();
+    }
 
     /**
-     * Shows or Hides Description Based on click of '?' mark.
+     * Adds an event listener for the '?' icon click.
+     * @param {Object} state - The state object.
      * @private
      */
     #addHelpIconHandler(state) {
-        const questionMarkDiv = this.qm,
-            descriptionDiv = this.description,
+        const questionMarkDiv = this.getQuestionMarkDiv(),
+            descriptionDiv = this.getDescription(),
             tooltipAlwaysVisible = this.#isTooltipAlwaysVisible();
         const self = this;
         if (questionMarkDiv && descriptionDiv) {
@@ -397,6 +716,10 @@ export default class FormFieldBase extends FormField {
         }
     }
 
+    /**
+     * Subscribes to model changes and updates the corresponding properties in the view.
+     * @override
+     */
     subscribe() {
         const changeHandlerName = (propName) => `update${propName[0].toUpperCase() + propName.slice(1)}`
         this._model.subscribe((action) => {
@@ -404,12 +727,17 @@ export default class FormFieldBase extends FormField {
             const changes = action.payload.changes;
             changes.forEach(change => {
                 const fn = changeHandlerName(change.propertyName);
+                if (change.propertyName === 'value') {
+                    this.#triggerEventOnGuideBridge(this.ELEMENT_VALUE_CHANGED, change);
+                }
                 if (typeof this[fn] === "function") {
                     this[fn](change.currentValue, state);
                 } else {
-                    console.error(`changes to ${change.propertyName} are not supported. Please raise an issue`)
+                    console.warn(`changes to ${change.propertyName} are not supported. Please raise an issue`)
                 }
             })
         });
     }
 }
+
+export default FormFieldBase;

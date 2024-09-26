@@ -1,0 +1,13 @@
+{
+  "jcr:primaryType": "nt:unstructured",
+  "jcr:createdBy": "admin",
+  "jcr:title": "Image",
+  "fileReference": "/content/dam/core-components-examples/library/forms-components/datepicker.svg",
+  "jcr:lastModifiedBy": "admin",
+  "jcr:created": "Thu Jul 18 2024 12:25:29 GMT+0530",
+  "name": "image1721285729653",
+  "visible": true,
+  "jcr:lastModified": "Thu Jul 18 2024 12:37:29 GMT+0530",
+  "sling:resourceType": "forms-components-examples/components/form/image",
+  "fieldType": "image"
+}

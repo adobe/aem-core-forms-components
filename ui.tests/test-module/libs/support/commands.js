@@ -40,39 +40,61 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import 'cypress-file-upload';
-import { recurse } from 'cypress-recurse'
+
+import { recurse } from 'cypress-recurse';
 
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
     siteConstants = require('../commons/sitesConstants'),
     guideSelectors = require('../commons/guideSelectors'),
     guideConstants = require('../commons/formsConstants');
+var toggles = [];
 
 // Cypress command to login to aem page
-Cypress.Commands.add("login", (pagePath) => {
-    const username = Cypress.env('crx.username') ?  Cypress.env('crx.username') : "admin";
+Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
+    const username = Cypress.env('crx.username') ? Cypress.env('crx.username') : "admin";
     const password = Cypress.env('crx.password') ? Cypress.env('crx.password') : "admin";
     cy.get('#username').type(username);
     cy.get('#password').type(password);
-    cy.get('#submit-button').click();
+    let retryCount = 0;
+    let maxRetries = 3;
+    // Check if the element with id 'submit-button' exists
+    cy.get('body').then(($body) => {
+        const element = $body.find('#submit-button');
+        if (element.length === 0) {
+            // Element is not present
+            retryCount++;
+            if (retryCount <= maxRetries) {
+                // Retry the visit with an exponential backoff delay
+                const delay = Math.pow(2, retryCount - 1) * 1000; // 2^n seconds
+                cy.wait(delay);
+                failurehandler();
+            }
+        } else {
+            // Element is present, click it
+            cy.wrap(element).click();
+        }
+    });
 });
 
 
-function getCSRFToken() {
-    const TOKEN_SERVLET = '/libs/granite/csrf/token.json';
+
+function getCSRFToken(contextPath) {
+    const TOKEN_SERVLET = contextPath + '/libs/granite/csrf/token.json';
     cy.request(TOKEN_SERVLET).its('body.token').as("token")
 }
 
-function getUserInfoHome() {
-    const USER_INFO_SERVLET = "/libs/cq/security/userinfo.json";
+function getUserInfoHome(contextPath) {
+    const USER_INFO_SERVLET = contextPath + "/libs/cq/security/userinfo.json";
     cy.request(USER_INFO_SERVLET).its('body.home').as("home")
 }
 
+
 // Cypress command to open authoring page
 Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
-    getCSRFToken();
-    getUserInfoHome();
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    getCSRFToken(contextPath);
+    getUserInfoHome(contextPath);
     let preferences = {};
     if (!enable) {
         preferences = {
@@ -101,13 +123,31 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
         preferences[":cq_csrf_token"] = token;
     });
     cy.get("@home").then(home => {
-        const contextPath = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
         const url = contextPath + home + '/preferences';
         //cy.request('POST', url, preferences) // not using cy.request, since application level cookies needs to be passed
         cy.window().then(win => {
             win.$.post(url, preferences)
         });
     });
+});
+
+// Cypress command to open AFv2
+Cypress.Commands.add("openAFv2TemplateEditor", () => {
+    const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    cy.visit(baseUrl, {'failOnStatusCode': false});
+    cy.login(baseUrl, () => {
+        cy.openAFv2TemplateEditor();
+    });
+    cy.openTemplateEditor("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html");
+});
+
+// Cypress command to open template editor
+Cypress.Commands.add("openTemplateEditor", (templatePath) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    const path = contextPath ? `${contextPath}/editor.html${templatePath}` : `editor.html${templatePath}`;
+    cy.enableOrDisableTutorials(false);
+    cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
+    preventClickJacking();
 });
 
 let loginRedirected = false;
@@ -127,15 +167,7 @@ const waitForEditorToInitialize = () => {
     });
 };
 
-// Cypress command to open Site authoring page
-Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
-    const editorPageUrl = cy.af.getEditorUrl(pagePath);
-    const isEventComplete = {};
-    cy.enableOrDisableTutorials(false);
-    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
-    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
-    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
-    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+const preventClickJacking = () => {
     cy.window().then(win => {
         // only if granite is defined, override the API
         if (win.Granite) {
@@ -145,29 +177,92 @@ Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
                     //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
                     // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
                     var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-                    l.href =  win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
+                    l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
                 }
             };
         }
     });
+};
+
+
+// Cypress command to open Site authoring page
+Cypress.Commands.add("openSiteAuthoring", (pagePath) => {
+    const editorPageUrl = cy.af.getEditorUrl(pagePath);
+    const isEventComplete = {};
+    cy.enableOrDisableTutorials(false);
+    cy.visit(editorPageUrl).then(waitForEditorToInitialize);
+    // Granite's frame bursting technique to prevent click jacking is not known by Cypress, hence this override is done
+    // For more details, please refer, https://github.com/cypress-io/cypress/issues/3077
+    // refer, https://github.com/cypress-io/cypress/issues/886#issuecomment-364779884
+    preventClickJacking();
+});
+
+
+Cypress.Commands.add('clickDialogWithRetry', (selector = '.cq-dialog-cancel', retryCount = 3) => {
+    let currentRetry = 0;
+
+    function clickRetry() {
+        cy.get(selector)
+        .click({ multiple: true })
+        .should(($element) => {
+            if ($element.closest('.cq-dialog').is(':visible')) {
+                if (currentRetry < retryCount - 1) {
+                    currentRetry++;
+                    clickRetry();
+                }
+            }
+        });
+    }
+    clickRetry();
+});
+
+
+// Cypress command to get form JSON
+Cypress.Commands.add("getFormJson", (pagePath) => {
+    const pageUrl = cy.af.getFormJsonUrl(pagePath);
+    return cy.request({
+        method : 'GET',
+        url: pageUrl
+    }).its('body');
+});
+
+// Cypress command to open template editor
+Cypress.Commands.add("openTemplateEditor", (templatePath) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    const path = contextPath ? `${contextPath}/editor.html${templatePath}` : `editor.html${templatePath}`;
+    cy.enableOrDisableTutorials(false);
+    cy.visit(path, {'failOnStatusCode': false}).then(waitForEditorToInitialize);
+    preventClickJacking();
 });
 
 // Cypress command to open authoring page
 Cypress.Commands.add("openAuthoring", (pagePath) => {
-    const baseUrl = Cypress.env('crx.contextPath') ?  Cypress.env('crx.contextPath') : "";
-    cy.visit(baseUrl);
-    cy.login(baseUrl);
+    const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    // getting status 403 intermittently, just ignore it
+    cy.visit(baseUrl, {'failOnStatusCode': false});
+    cy.login(baseUrl, () => {
+        cy.openAuthoring(pagePath);
+    });
     cy.openSiteAuthoring(pagePath);
 });
 
 // Cypress command to open authoring page
-Cypress.Commands.add("openPage", (pagePath, options={}) => {
+Cypress.Commands.add("openPage", (pagePath, options = {}) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    let path = ((contextPath && !pagePath.startsWith(contextPath)) ? `${contextPath}${pagePath.startsWith('/') ? '' : '/'}${pagePath}` : pagePath);
     if (!options.noLogin) {
-        const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-        cy.visit(baseUrl);
-        cy.login(baseUrl);
+    // getting status 403 intermittently, just ignore it
+        const baseUrl = contextPath;
+        cy.visit(baseUrl, {'failOnStatusCode': false});
+        cy.getCookie('login-token').then(cookie => {
+            if(!cookie) {
+                cy.login(baseUrl, () => {
+                    cy.openPage(path, options);
+                });
+            }
+        })
     }
-    cy.visit(pagePath, options);
+    cy.visit(path, options);
 });
 
 // cypress command to select layer in authoring
@@ -194,11 +289,11 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
                 cy.get(path).should('be.visible');
             } else {
                 cy.get(path).then($header => {
-                    if (!$header.is(':visible')){
+                    if (!$header.is(':visible')) {
                         cy.get(selector).first().click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
-                        cy.get(siteSelectors.overlays.self).click(0,0); // dont click on body, always use overlay wrapper to click
+                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
                         cy.get(selector).click({force: true});
                         cy.get(path).should('be.visible');
                     }
@@ -252,13 +347,19 @@ const waitForFormInit = () => {
         cy.get('form').then(($form) => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
-                    const isReady = () => {
-                        if (!($form[0].classList.contains("cmp-adaptiveform-container--loading"))) {
-                            resolve(e.detail);
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']")?.classList.contains("cmp-adaptiveform-container--loading")){
+                        const isReady = () => {
+                            const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                            if (container &&
+                                e.detail._path === $form.data("cmp-path") &&
+                                !container.classList.contains("cmp-adaptiveform-container--loading")) {
+
+                                resolve(e.detail);
+                            }
+                            setTimeout(isReady, 0)
                         }
-                        setTimeout(isReady, 0)
+                        isReady();
                     }
-                    isReady();
                 }
                 document.addEventListener(INIT_EVENT, listener1);
             })
@@ -267,24 +368,70 @@ const waitForFormInit = () => {
     })
 }
 
-const waitForChildViewAddition = () => {
-    return cy.get('[data-cmp-is="adaptiveFormContainer"]')
-        .then((el) => {
-            const ADD_EVENT = "AF_PanelInstanceAdded";
+const waitForFormInitMultipleContiners = (multipleEmbedContainers) => {
+    const INIT_EVENT = "AF_FormContainerInitialised"
+    return cy.document().then(document => {
+        const promiseArray = []
+        cy.get('form').each(($form) => {
             const promise = new Cypress.Promise((resolve, reject) => {
                 const listener1 = e => {
-                    resolve(e.detail.formContainer);
-                };
-                el[0].addEventListener(ADD_EVENT, listener1);
+                    if(document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']")?.classList.contains("cmp-adaptiveform-container--loading")){
+                        const isReady = () => {
+                            const container = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ $form[0].id + "']");
+                            if (container &&
+                                e.detail._path === $form.data("cmp-path") &&
+                                !container.classList.contains("cmp-adaptiveform-container--loading")) {
+
+                                resolve(e.detail);
+                            }
+                            setTimeout(isReady, 0)
+                        }
+                        isReady();
+                    }
+                }
+                document.addEventListener(INIT_EVENT, listener1);
             })
-            return promise;
+        if(typeof multipleEmbedContainers == "boolean" && multipleEmbedContainers){
+            promiseArray.push(new Cypress.Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(promise);
+                }, 1000);
+            }));
+        } else {
+            promiseArray.push(promise)
+        }
+        }).then(($lis) => {
+            if(typeof multipleEmbedContainers == "boolean" && multipleEmbedContainers) {
+                setTimeout(() => {
+                    return Promise.all(promiseArray);
+                }, 1000);
+            } else {
+                return Promise.all(promiseArray)
+            }
         });
+    })
+}
+
+const waitForChildViewAddition = () => {
+    return cy.get('[data-cmp-is="adaptiveFormContainer"]')
+    .then((el) => {
+        const ADD_EVENT = "AF_PanelInstanceAdded";
+        const promise = new Cypress.Promise((resolve, reject) => {
+            const listener1 = e => {
+                resolve(e.detail.formContainer);
+            };
+            el[0].addEventListener(ADD_EVENT, listener1);
+        })
+        return promise;
+    });
 }
 
 Cypress.Commands.add("getFormData", () => {
     return cy.window().then(win => {
         const promise = new Cypress.Promise((resolve, reject) => {
-            const successhandler = data => { resolve(data); };
+            const successhandler = data => {
+                resolve(data);
+            };
             win.guideBridge.getFormDataString({success: successhandler});
         });
         return promise;
@@ -292,8 +439,25 @@ Cypress.Commands.add("getFormData", () => {
 });
 
 
+Cypress.Commands.add("getFromDefinitionUsingOpenAPIUsingCursor", (formPath, cursor = "", limit = 20) => {
+    return cy.request("GET", `/adobe/forms/af/listforms?cursor=${cursor}&limit=${limit}`).then(({body}) => {
+        // We need its ID to continue nesting below it
+        let retVal = body.items.find(collection => collection.path === formPath);
+        if (retVal) {
+            return cy.request("GET", `/adobe/forms/af/${retVal.id}`);
+        } else {
+            console.log("fetching the list of forms again");
+            if (body.cursor) {
+                cursor = body.cursor;
+            }
+            return cy.getFromDefinitionUsingOpenAPIUsingCursor(formPath, cursor, limit);
+        }
+    });
+});
+
+// this API is deprecated, this is not to be used anymore
 Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, limit = 20) => {
-    return cy.request("GET", `/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({ body }) => {
+    return cy.request("GET", `/adobe/forms/af/listforms?offset=${offset}&limit=${limit}`).then(({body}) => {
         // We need its ID to continue nesting below it
         let retVal = body.items.find(collection => collection.path === formPath);
         if (retVal) {
@@ -306,24 +470,62 @@ Cypress.Commands.add("getFromDefinitionUsingOpenAPI", (formPath, offset = 0, lim
 });
 
 
-Cypress.Commands.add("previewForm", (formPath, options={}) => {
-    let pagePath = `${formPath}?wcmmode=disabled`;
-    if(options?.params) {
-        options.params.forEach((param) => pagePath +=`&${param}`)
+Cypress.Commands.add("previewForm", (formPath, options = {}) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    let pagePath = contextPath ? `${contextPath}${formPath.startsWith('/') ? '' : '/'}${formPath}?wcmmode=disabled` : `${formPath}?wcmmode=disabled`;
+    if (options?.params) {
+        options.params.forEach((param) => pagePath += `&${param}`)
         delete options.params
+    }
+    if(options?.multipleEmbedContainers) {
+        return cy.openPage(pagePath, options).then(() => waitForFormInitMultipleContiners(options?.multipleEmbedContainers))
+    }
+    if(options?.multipleContainers) {
+        return cy.openPage(pagePath, options).then(waitForFormInitMultipleContiners)
     }
     return cy.openPage(pagePath, options).then(waitForFormInit)
 })
 
+Cypress.Commands.add("fetchFeatureToggles",()=>{
+    return cy.request('/etc.clientlibs/toggles.json')
+})
 
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
     return cy.get("body").then($body => {
+        return cy.window().then((win) => {
+            return new Cypress.Promise((resolve, reject) => {
+                const isReady = () => {
+                    if ((win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) &&
+                        $body.find('#OverlayWrapper').length > 0 &&
+                        $body.find('#OverlayWrapper').is(':visible') &&
+                        !$body.find('#OverlayWrapper').hasClass('is-hidden-children')) {
+                        // do something custom here
+                        const selector12 = "[data-path='" + editPath + "']";
+                        if ($body.find(selector12).length > 0) {
+                            cy.deleteComponentByPath(editPath);
+                        }
+                        resolve(editPath);
+                    } else {
+                        setTimeout(isReady, 0);
+                    }
+                };
+                isReady();
+            });
+        });
+    });
+})
+
+Cypress.Commands.add("cleanTitleTest", (editPath) => {
+    // clean the test before the next run, if any
+    return cy.get("body").then($body => {
         return new Cypress.Promise((resolve, reject) => {
             // do something custom here
-            const selector12 =  "[data-path='" + editPath + "']";
+            const selector12 = "div[data-path^='" + editPath + "']";
             if ($body.find(selector12).length > 0) {
-                cy.deleteComponentByPath(editPath);
+                $body.find(selector12).each(($index, $titleComponent) => {
+                    cy.deleteComponentByPath($titleComponent.dataset.path);
+                })
             }
             resolve(editPath);
         });
@@ -358,7 +560,7 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
 // cypress command to delete component by title
 Cypress.Commands.add("deleteComponentByTitle", (title) => {
     const editableUpdateEvent = siteConstants.EVENT_NAME_EDITABLES_UPDATED,
-        componentPathSelector = "[title='"+title+"']",
+        componentPathSelector = "[title='" + title + "']",
         overlayRepositionEvent = siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED;
     // intialize the event handler for editableUpdateEvent
     cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
@@ -448,31 +650,141 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible=false')
     .should('not.exist');
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`)
-        .should('contain.text', shortDescriptionText);
+    .should('contain.text', shortDescriptionText);
     // click on ? mark
     cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).click();
     // long description should be shown
     cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
     .should('not.exist');
     cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`)
-        .should('contain.text', longDescriptionText);
+    .should('contain.text', longDescriptionText);
     // short description should be hidden.
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
 });
 
 Cypress.Commands.add("openSidePanelTab", (tab) => {
-    cy.window().then(function(win) {
+    cy.window().then(function (win) {
         let isSidePanelOpen = win.$("#SidePanel").hasClass("sidepanel-opened");
-        if(!isSidePanelOpen) {
+        if (!isSidePanelOpen) {
             cy.get("#Content .toggle-sidepanel").click();
         }
     });
     var tabSelector = '[role="tablist"] [role="tab"][title="' + tab + '"]';
     cy.get(tabSelector)
-        .should("be.visible")
-        .click();
+    .should("be.visible")
+    .click();
     cy.get(tabSelector + ".is-selected").should("exist");
 })
 
 
+/**
+ * This will attach a listener to console.error calls,
+ * that will help in checking if errors were logged or not.
+ *
+ * This is supposed to be called in the before hook of a test, like this:
+ * before(() => {
+ *     cy.attachConsoleErrorSpy();
+ * });
+ */
+Cypress.Commands.add("attachConsoleErrorSpy", () => {
+    Cypress.on('window:before:load', (win) => {
+        cy.spy(win.console, 'error');
+    });
+});
+
+
+
+/**
+ * This checks if any console.errors were logged or not,
+ * after the spy was attached (see above command).
+ * So make sure to attach the spy function first!
+ */
+Cypress.Commands.add("expectNoConsoleErrors", () => {
+    return cy.window().then(win => {
+        const spy = cy.spy(win.console, 'error');
+        cy.wrap(spy).should('have.callCount', 0);
+    });
+});
+
+Cypress.Commands.add("getContentIFrameBody", () => {
+    return cy
+        .get('iframe#ContentFrame')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+});
+
+Cypress.Commands.add("isElementInViewport", { prevSubject: true }, (subject) => {
+    const rect = subject[0].getBoundingClientRect();
+
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= Cypress.config("viewportHeight") &&
+        rect.right <= Cypress.config("viewportWidth")
+    );
+});
+
+
+/**
+ * This function is used to fetch elements from ContentFrame iframe which are not accessible.
+ * Without this, the element will not be returned due to browser's cross-origin security feature.
+ */
+Cypress.Commands.add("getContentIframeBody", () => {
+    return cy
+        .get('#ContentFrame')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+});
+
+/**
+ * This function is used to fetch rule editor iframe.
+ */
+Cypress.Commands.add("getRuleEditorIframe", () => {
+    // get the iframe > document > body
+    // and retry until the body element is not empty
+    return cy
+        .get('iframe#af-rule-editor')
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap)
+});
+
+/**
+ * This function is used to change language.
+ */
+Cypress.Commands.add("changeLanguage", (str) => {
+    cy.openPage('/aem/forms.html/content/dam/formsanddocuments');
+    cy.get(siteSelectors.locale.shell.userProperties).click();
+    cy.get(siteSelectors.locale.shell.userPreferences).click();
+    cy.get(siteSelectors.locale.language).first().click();
+    cy.get(`coral-selectlist-item[value=${str}]`).click({force: true});
+    cy.get(siteSelectors.locale.accept).click();
+});
+
+
+const mimeTypes = {
+    'pdf': 'application/pdf',
+    'txt': 'text/plain',
+    'bat': 'application/x-msdos-program',
+    'msg': 'application/vnd.ms-outlook',
+    // Add more mappings as needed
+};
+
+const getMimeType = (fileName) => {
+    const extension = fileName.split('.').pop();
+    return mimeTypes[extension] || 'application/octet-stream';
+};
+
+Cypress.Commands.add("attachFile", (fileInput, fileNames) => {
+    const uploads = fileNames.map(fileName => {
+        const mimeType = getMimeType(fileName);
+        return cy.fixture(fileName, { encoding: null }).then(fileContent => {
+            return cy.get(fileInput).selectFile({
+                contents: fileContent,
+                fileName: fileName,
+                mimeType: mimeType
+            }, { force: true });
+        });
+    });
+    return cy.wrap(uploads);
+});

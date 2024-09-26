@@ -7,10 +7,13 @@
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             sling:resourceType="forms-components-examples/components/page"
             guideComponentType="fd/af/templates">
-        <parsys1
+        <container1
                 jcr:primaryType="nt:unstructured"
-                editable="{Boolean}true"
-                sling:resourceType="wcm/foundation/components/responsivegrid"/>
+                jcr:title="Header"
+                sling:resourceType="core/wcm/components/container/v1/container"
+                cq:policy="wcm/foundation/components/responsivegrid/page-header"
+                layout="responsiveGrid"
+                editable="{Boolean}true" />
         <guideContainer
                 jcr:primaryType="nt:unstructured"
                 editable="{Boolean}true"
@@ -18,10 +21,12 @@
                 fd:version="2.1"
                 sling:resourceType="forms-components-examples/components/form/container">
         </guideContainer>
-        <parsys2
+        <container2
                 jcr:primaryType="nt:unstructured"
-                editable="{Boolean}true"
-                sling:resourceType="wcm/foundation/components/responsivegrid"/>
+                jcr:title="Footer"
+                sling:resourceType="core/wcm/components/container/v1/container"
+                layout="responsiveGrid"
+                editable="{Boolean}true" />
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
                 <smallScreen

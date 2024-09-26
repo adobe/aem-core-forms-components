@@ -56,14 +56,18 @@ module.exports = class CI {
     /**
      * Run shell command and attach to process stdio.
      */
-    sh(command, returnStdout = false, print = true) {
+    sh(command, returnStdout = false, print = true, shellStr = '') {
         if (print) {
             console.log(command);
         }
         if (returnStdout) {
             return e.execSync(command).toString().trim();
         }
-        return e.execSync(command, {stdio: 'inherit'});
+        if (shellStr) {
+            return e.execSync(command, {stdio: 'inherit', shell: shellStr});
+        } else {
+            return e.execSync(command, {stdio: 'inherit'});
+        }
     };
 
     /**
@@ -165,10 +169,13 @@ module.exports = class CI {
         return JSON.parse(configuration);
     }
 
-    addQpFileDependency(module) {
+    addQpFileDependency(module, cloud = false) {
         let output = '--install-file ';
 
         let filename = `${module.artifactId}-${module.version}`;
+        if (cloud) {
+            filename += '-cloud';
+        }
         if (module.packaging == 'content-package') {
             filename += '.zip';
         } else if (module.packaging == 'bundle') {

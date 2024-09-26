@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2022 Adobe
+ ~ Copyright 2023 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -15,24 +15,16 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.Map;
-
-import javax.annotation.Nullable;
-import javax.annotation.PostConstruct;
-
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
-import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
+import com.adobe.cq.forms.core.components.util.AbstractCheckboxImpl;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -41,30 +33,4 @@ import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 @Exporter(
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
-public class CheckBoxImpl extends AbstractOptionsFieldImpl implements CheckBox {
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "orientation")
-    @Nullable
-    protected String orientationJcr;
-    private Orientation orientation;
-
-    @PostConstruct
-    private void initCheckBoxModel() {
-        orientation = Orientation.fromString(orientationJcr);
-    }
-
-    @Override
-    public @NotNull Map<String, Object> getCustomLayoutProperties() {
-        Map<String, Object> customLayoutProperties = super.getCustomLayoutProperties();
-        if (orientation != null) {
-            customLayoutProperties.put("orientation", orientation);
-        }
-        return customLayoutProperties;
-    }
-
-    @Override
-    public Orientation getOrientation() {
-        return orientation;
-    }
-
-}
+public class CheckBoxImpl extends AbstractCheckboxImpl implements CheckBox {}

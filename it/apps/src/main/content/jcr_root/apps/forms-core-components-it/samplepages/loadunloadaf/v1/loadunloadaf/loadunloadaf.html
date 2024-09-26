@@ -1,0 +1,44 @@
+<div class="custom-embed">
+        <script>
+            
+           function loadform(btn) {
+             var formPath = btn.getAttribute('data-form-path')
+             loadAdaptiveForm({
+               formPath: formPath,
+               CSS_Selector: '.customafsection'
+             })
+           }
+
+           var loadAdaptiveForm = function(options) {
+             // Note: Query Parameter 'wcmmode=disabled' is not required for publish instance
+             var path = options.formPath + '.html?wcmmode=disabled';
+             fetch(path).then((res) => res.text()).then(html => {
+               setInnerHTML(document.querySelector(options.CSS_Selector), html); // OR $(options.CSS_Selector).html(html);
+             })
+           }
+
+            function setInnerHTML(elm, html) {
+                elm.innerHTML = html;
+                Array.from(elm.querySelectorAll("script"))
+                    .forEach(oldScriptEl => {
+                        const newScriptEl = document.createElement("script");
+                        Array.from(oldScriptEl.attributes).forEach(attr => {
+                            newScriptEl.setAttribute(attr.name, attr.value)
+                    });
+                const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+                newScriptEl.appendChild(scriptText);
+                oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
+                });
+            }
+
+        </script>
+       
+        <div class="customafselection">
+            <button id="form1-btn" data-form-path="/content/forms/af/core-components-it/samples/loadunloadadaptiveforms/form1" onclick="loadform(this)">Load First Form</button>
+            <button id="form2-btn" data-form-path="/content/forms/af/core-components-it/samples/loadunloadadaptiveforms/form2" onclick="loadform(this)">Load Second Form</button>
+        </div>
+     
+        <div class="customafsection">
+
+        </div>
+    </div>

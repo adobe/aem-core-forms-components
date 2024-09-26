@@ -34,12 +34,32 @@
                         jcr:primaryType="nt:unstructured"
                         name="numberinput1"
                         jcr:title="Number Input 1"
+                        aria-disabled="true"
                         sling:resourceType="forms-components-examples/components/form/numberinput"/>
                 <textinput
                         fieldType="text-input"
                         jcr:primaryType="nt:unstructured"
                         name="textinput1"
                         jcr:title="Text Input 1"
+                        sling:resourceType="forms-components-examples/components/form/textinput"/>
+                <textinput
+                        fieldType="text-input"
+                        jcr:primaryType="nt:unstructured"
+                        name="textinput1"
+                        jcr:title="Text Input 2"
+                        sling:resourceType="forms-components-examples/components/form/textinput"/>
+                <textinput
+                        fieldType="text-input"
+                        jcr:primaryType="nt:unstructured"
+                        name="textinput1"
+                        jcr:title="Text Input 3"
+                        sling:resourceType="forms-components-examples/components/form/textinput"/>
+                <textinput
+                        fieldType="text-input"
+                        jcr:primaryType="nt:unstructured"
+                        name="textinput1"
+                        aria-disabled="true"
+                        jcr:title="Text Input 4"
                         sling:resourceType="forms-components-examples/components/form/textinput"/>
             </wizard>
             <wizard

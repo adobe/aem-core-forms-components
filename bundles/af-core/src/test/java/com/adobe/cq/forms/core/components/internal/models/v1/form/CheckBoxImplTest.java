@@ -29,6 +29,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.models.form.CheckBox.Orientation;
 import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Label;
@@ -40,6 +41,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -51,6 +53,11 @@ public class CheckBoxImplTest {
     private static final String PATH_CHECKBOX = CONTENT_ROOT + "/checkbox";
 
     private static final String PATH_CHECKBOX_CUSTOMIZED = CONTENT_ROOT + "/checkbox-customized";
+
+    private static final String PATH_CHECKBOX_NOENUM = CONTENT_ROOT + "/checkboxNoEnum";
+
+    private static final String PATH_CHECKBOX_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/checkbox-enableUncheckedValueFalse";
+    private static final String PATH_CHECKBOX_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/checkbox-without-fieldtype";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -129,7 +136,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsVisible() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isVisible());
+        assertEquals(true, checkbox.isVisible());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isVisible()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isVisible());
@@ -147,7 +154,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsEnabled() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isEnabled());
+        assertEquals(true, checkbox.isEnabled());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isEnabled());
@@ -165,7 +172,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsReadOnly() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isReadOnly());
+        assertEquals(false, checkbox.isReadOnly());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isReadOnly()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isReadOnly());
@@ -183,7 +190,7 @@ public class CheckBoxImplTest {
     @Test
     void testIsRequired() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals(null, checkbox.isRequired());
+        assertEquals(false, checkbox.isRequired());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.isRequired()).thenCallRealMethod();
         assertEquals(null, checkboxMock.isRequired());
@@ -299,13 +306,23 @@ public class CheckBoxImplTest {
     @Test
     void testGetEnum() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertArrayEquals(new Boolean[] { true, false }, checkbox.getEnums());
+        assertArrayEquals(new String[] { "on", "off" }, checkbox.getEnums());
+
     }
 
     @Test
-    void testGetEnumNames() {
+    void testGetNullEnumNames() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertArrayEquals(new String[] { "yes", "no" }, checkbox.getEnumNames());
+        assertNull(checkbox.getEnumNames());
+        CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
+        assertNull(noEnumCheckbox.getEnumNames());
+    }
+
+    @Test
+    void testGetNullEnum() {
+        CheckBox noEnumCheckbox = getCheckBoxUnderTest(PATH_CHECKBOX_NOENUM);
+        assertNull(noEnumCheckbox.getEnums());
+
     }
 
     @Test
@@ -321,9 +338,27 @@ public class CheckBoxImplTest {
         assertEquals("mystyle", appliedCssClasses);
     }
 
+    @Test
+    void testGetOrientiztion() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
+        assertEquals(Orientation.HORIZONTAL, checkbox.getOrientation());
+    }
+
+    @Test
+    void shouldOnlyHaveOnEnumIfEnableUncheckedValueOff() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_ENABLEUNCHECKEDOFF);
+        assertArrayEquals(new String[] { "on" }, checkbox.getEnums());
+    }
+
     private CheckBox getCheckBoxUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(CheckBox.class);
+    }
+
+    @Test
+    void testNoFieldType() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_WITHOUT_FIELDTYPE);
+        Utils.testJSONExport(checkbox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_WITHOUT_FIELDTYPE));
     }
 }

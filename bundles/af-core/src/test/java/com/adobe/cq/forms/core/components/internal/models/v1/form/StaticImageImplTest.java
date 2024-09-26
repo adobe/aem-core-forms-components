@@ -48,8 +48,11 @@ public class StaticImageImplTest {
     private static final String BASE = "/form/image";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_IMAGE_CUSTOMIZED = CONTENT_ROOT + "/image-customized";
+
+    private static final String PATH_IMAGE_PARSED = CONTENT_ROOT + "/image-parsedSrc";
     private static final String PATH_IMAGE = CONTENT_ROOT + "/image";
     private static final String PATH_IMAGE_DATALAYER = CONTENT_ROOT + "/image-datalayer";
+    private static final String PATH_IMAGE_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/image-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -65,6 +68,13 @@ public class StaticImageImplTest {
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getExportedType()).thenCallRealMethod();
         assertEquals("", staticImageMock.getExportedType());
+    }
+
+    @Test
+    void testExportedTypeForParsedImage() {
+        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE_PARSED, StaticImage.class, context);
+        assertEquals(FormConstants.RT_FD_FORM_IMAGE_V1, staticImage.getExportedType());
+        assertEquals("/content/dam/formsanddocuments/abc.jpeg", staticImage.getProperties().get("fd:repoPath"));
     }
 
     @Test
@@ -133,7 +143,7 @@ public class StaticImageImplTest {
     @Test
     void testIsVisible() {
         StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
-        assertEquals(null, staticImage.isVisible());
+        assertEquals(true, staticImage.isVisible());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.isVisible()).thenCallRealMethod();
         assertEquals(null, staticImageMock.isVisible());
@@ -198,5 +208,11 @@ public class StaticImageImplTest {
         StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_DATALAYER, StaticImage.class, context);
         FieldUtils.writeField(image, "dataLayerEnabled", true, true);
         Utils.testJSONExport(image, Utils.getTestExporterJSONPath(BASE, PATH_IMAGE_DATALAYER));
+    }
+
+    @Test
+    void testNoFieldType() {
+        StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_WITHOUT_FIELDTYPE, StaticImage.class, context);
+        assertEquals(FieldType.IMAGE.getValue(), image.getFieldType());
     }
 }

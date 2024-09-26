@@ -50,6 +50,9 @@ public final class FormConstants {
     /** The resource type for checkbox v1 */
     public static final String RT_FD_FORM_CHECKBOX_V1 = RT_FD_FORM_PREFIX + "checkbox/v1/checkbox";
 
+    /** The resource type for switch v1 */
+    public static final String RT_FD_FORM_SWITCH_V1 = RT_FD_FORM_PREFIX + "switch/v1/switch";
+
     /** The resource type for date picker v1 */
     public static final String RT_FD_FORM_DATE_PICKER_V1 = RT_FD_FORM_PREFIX + "datepicker/v1/datepicker";
 
@@ -62,8 +65,17 @@ public final class FormConstants {
     /** The resource type for file input v1 */
     public static final String RT_FD_FORM_FILE_INPUT_V1 = RT_FD_FORM_PREFIX + "fileinput/v1/fileinput";
 
+    /** The resource type for file input v2 */
+    public static final String RT_FD_FORM_FILE_INPUT_V2 = RT_FD_FORM_PREFIX + "fileinput/v2/fileinput";
+
+    /** The resource type for file input v3 */
+    public static final String RT_FD_FORM_FILE_INPUT_V3 = RT_FD_FORM_PREFIX + "fileinput/v3/fileinput";
+
     /** The resource type for check box group v1 */
     public static final String RT_FD_FORM_CHECKBOX_GROUP_V1 = RT_FD_FORM_PREFIX + "checkboxgroup/v1/checkboxgroup";
+
+    /** The resource type for reCaptcha v1 */
+    public static final String RT_FD_FORM_HCAPTCHA_V1 = RT_FD_FORM_PREFIX + "hcaptcha/v1/hcaptcha";
 
     /** The resource type for reCaptcha v1 */
     public static final String RT_FD_FORM_RECAPTCHA_V1 = RT_FD_FORM_PREFIX + "recaptcha/v1/recaptcha";
@@ -97,13 +109,28 @@ public final class FormConstants {
     /** The resource type for title v1 */
     public static final String RT_FD_FORM_TITLE_V1 = RT_FD_FORM_PREFIX + "title/v1/title";
 
+    /** The resource type for title v2 */
+    public static final String RT_FD_FORM_TITLE_V2 = RT_FD_FORM_PREFIX + "title/v2/title";
+
     /** The resource type for submit button v1 */
     public static final String RT_FD_FORM_SUBMIT_BUTTON_V1 = RT_FD_FORM_PREFIX + "actions/submit/v1/submit";
 
     /** The resource type for submit button v1 */
     public static final String RT_FD_FORM_RESET_BUTTON_V1 = RT_FD_FORM_PREFIX + "actions/reset/v1/reset";
 
+    /** The resource type for fragment v1 */
+    public static final String RT_FD_FORM_FRAGMENT_V1 = RT_FD_FORM_PREFIX + "fragment/v1/fragment";
+
+    public static final String RT_FD_FRAGMENT_CONTAINER_V1 = RT_FD_FORM_PREFIX + "fragmentcontainer/v1/fragmentcontainer";
+
+    /** The resource type for terms and conditions v1 */
+    public static final String RT_FD_FORM_TERMS_AND_CONDITIONS_V1 = RT_FD_FORM_PREFIX + "termsandconditions/v1/termsandconditions";
+
     public static final String FORM_FIELD_TYPE = "form";
 
-    public static final String FRAGMENT_FIELD_TYPE = "fragment";
+    public static final String REQ_ATTR_FORMCONTAINER_PATH = "formContainerPath";
+
+    public static final String REQ_ATTR_REFERENCED_PATH = "referencedPage";
+
+    public static final String PROP_FRAGMENT_PATH = "fragmentPath";
 }

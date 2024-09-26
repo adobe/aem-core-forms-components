@@ -1,0 +1,24 @@
+{
+  ":type": "core/fd/components/form/numberinput/v1/numberinput",
+  "description": "Enter your phone number.",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "exclusiveMaximum": 2000002,
+  "exclusiveMinimum": 10002,
+  "fieldType": "number-input",
+  "id": "numberinput-57e5de6073",
+  "label": {
+    "value": "Phone Number"
+  },
+  "name": "Phone Number",
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/numberinput-backwardcompatible"
+  },
+  "type": "number"
+}

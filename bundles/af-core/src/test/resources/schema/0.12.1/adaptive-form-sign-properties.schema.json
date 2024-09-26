@@ -1,0 +1,25 @@
+{
+  "$id": "classpath:/schema/0.12.1/adaptive-form-sign-properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "firstSignerFormFiller": {
+      "title": "First Signer Form Filler",
+      "description": "Specifies whether the signer is the first form filler.",
+      "type": "boolean"
+    },
+    "workflowType": {
+      "title": "Workflow Type",
+      "enum": [
+        "SEQUENTIAL",
+        "PARALLEL"
+      ],
+      "description": "Specifies the type of workflow for the sign.",
+      "type": "string"
+    },
+    "signers": {
+      "$ref": "./adaptive-form-signer-properties.schema.json"
+    }
+  }
+}

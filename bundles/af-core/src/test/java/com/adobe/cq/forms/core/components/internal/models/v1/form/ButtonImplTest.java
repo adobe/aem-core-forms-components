@@ -35,6 +35,7 @@ public class ButtonImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_BUTTON_1 = CONTENT_ROOT + "/button";
     private static final String PATH_BUTTON_CUSTOMIZED = CONTENT_ROOT + "/button-customized";
+    private static final String PATH_BUTTON_NO_FIELDTYPE = CONTENT_ROOT + "/button-without-fieldtype";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -87,7 +88,7 @@ public class ButtonImplTest {
     @Test
     void testIsVisible() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
-        assertEquals(null, button.isVisible());
+        assertEquals(true, button.isVisible());
         Button buttonMock = Mockito.mock(Button.class);
         Mockito.when(buttonMock.isVisible()).thenCallRealMethod();
         assertEquals(null, buttonMock.isVisible());
@@ -105,7 +106,7 @@ public class ButtonImplTest {
     @Test
     void testIsEnabled() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
-        assertEquals(null, button.isEnabled());
+        assertEquals(true, button.isEnabled());
         Button buttonMock = Mockito.mock(Button.class);
         Mockito.when(buttonMock.isEnabled()).thenCallRealMethod();
         assertEquals(null, buttonMock.isEnabled());
@@ -140,5 +141,11 @@ public class ButtonImplTest {
     void testGetProperties() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_1, Button.class, context);
         assertEquals("button", button.getProperties().get("fd:buttonType"));
+    }
+
+    @Test
+    void testNoFieldType() {
+        Button button = Utils.getComponentUnderTest(PATH_BUTTON_NO_FIELDTYPE, Button.class, context);
+        assertEquals(FieldType.BUTTON.getValue(), button.getFieldType());
     }
 }

@@ -196,6 +196,23 @@
                     type="string"
                     typeIndex="0"
                     visible="{Boolean}true"/>
+            <dropdown_8
+                    jcr:lastModified="{Date}2023-05-03T11:57:31.005+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Dropdown 8"
+                    sling:resourceType="forms-components-examples/components/form/dropdown"
+                    enabled="{Boolean}true"
+                    enum="[1,2,3]"
+                    enumNames="[Item 1,Item 2,Item 3]"
+                    fieldType="drop-down"
+                    hideTitle="false"
+                    name="dropdown_8"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="string"
+                    typeIndex="0"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.it.service;
 
 
+import com.adobe.aemds.guide.common.GuideValidationResult;
 import com.adobe.aemds.guide.model.FormSubmitInfo;
 import com.adobe.aemds.guide.service.FormSubmitActionService;
 import com.adobe.aemds.guide.utils.GuideConstants;
@@ -81,11 +82,19 @@ public class CustomAFSubmitService implements FormSubmitActionService {
             }
             logger.info("AF Submission successful using custom submit service for: {}", guideContainerPath);
             result.put(GuideConstants.FORM_SUBMISSION_COMPLETE, Boolean.TRUE);
-            // adding id here so that this available in redirect parameters in final thank you page
             result.put(DataManager.UNIQUE_ID, uniqueID);
+            // adding id here so that this available in redirect parameters in final thank you page
+            Map<String, Object> redirectParamMap = new HashMap<String, Object>() {{
+                put(DataManager.UNIQUE_ID, uniqueID);
+            }};
+            // todo: move this to constant, once forms SDK is released
+            result.put("fd:redirectParameters", redirectParamMap);
         } catch (Exception ex) {
             logger.error("Error while using the AF Submit service", ex);
-
+            GuideValidationResult guideValidationResult = new GuideValidationResult();
+            guideValidationResult.setOriginCode("500");
+            guideValidationResult.setErrorMessage("Internal server error");
+            result.put(GuideConstants.FORM_SUBMISSION_ERROR, guideValidationResult);
         }
         return result;
     }

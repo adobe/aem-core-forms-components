@@ -14,80 +14,89 @@
  * limitations under the License.
  ******************************************************************************/
 
-/**
- *
- * @param str {string} json string to convert custom function to object
- * @return {object} JSON Object after parsing the string as json. In case of
- * exceptions empty object is returned
- */
-function toObject(str) {
-    try {
-        return JSON.parse(str);
-    }
-    catch (e) {
-        return {}
-    }
-}
+import * as cf from "@aemforms/af-custom-functions";
 
 /**
- * prefixes the url with the context path
- * @param url {string}
- * @returns {string}
+ * @module FormView
  */
-function externalize(url) {
-    if (window?.Granite?.HTTP && typeof (window.Granite.HTTP.externalize === "function")) {
-        return window.Granite.HTTP.externalize(url);
-    } else {
-        return url;
-    }
-}
 
 /**
- * Validates if the given URL is correct
- * @param url
- * @returns {boolean}
+ * Namespace for custom functions.
+ * @description Contains custom functions which can be used in the rule editor.
+ * @exports FormView/customFunctions
+ * @namespace customFunctions
  */
-function validateURL(url) {
-    try {
-        const validatedUrl = new URL(url, window.location.href);
-        return (validatedUrl.protocol === 'http:' || validatedUrl.protocol === 'https:');
-    }
-    catch (err) {
-        return false;
-    }
-}
-
-
-/**
- * Navigates to the URl mentioned. By specifying the location, you can set the name of the window you are going to open
- * @param destinationURL   {string} URL complete URL. If you do not specify any URL in this function, it will open a new blank window
- * @param destinationType {string} destinationType supports the following values, "_newwindow", "_blank", "_parent", "_self", "_top" or name of the window
- * @returns newly opened window
- */
-function navigateTo(destinationURL, destinationType) {
-    let param = null,
-        windowParam = window,
-        arg = null;
-    switch (destinationType){
-        case "_newwindow":
-            param = "_blank";
-            arg = "width=1000,height=800";
-            break;
-    }
-    if (!param) {
-        if (destinationType) {
-            param = destinationType;
-        } else {
-            param = "_blank";
-        }
-    }
-    if (validateURL(destinationURL)){
-        windowParam.open(externalize(destinationURL), param, arg);
-    }
-}
-
 export const customFunctions = {
-    toObject,
-    externalize,
-    navigateTo
+    /**
+     * Converts a JSON string to an object.
+     * @param {string} str - The JSON string to convert to an object.
+     * @returns {object} - The parsed JSON object. Returns an empty object if an exception occurs.
+     */
+    toObject: cf.toObject,
+
+    /**
+     * Prefixes the URL with the context path.
+     * @param {string} url - The URL to externalize.
+     * @returns {string} - The externalized URL.
+     */
+    externalize: (url) => {
+        // Check if Granite.HTTP.externalize is available, otherwise return the original URL
+        if (window?.Granite?.HTTP && typeof window.Granite.HTTP.externalize === "function") {
+            return window.Granite.HTTP.externalize(url);
+        } else {
+            return url;
+        }
+    },
+
+    /**
+     * Validates if the given URL is correct.
+     * @param {string} url - The URL to validate.
+     * @returns {boolean} - True if the URL is valid, false otherwise.
+     */
+    validateURL: cf.validateURL,
+
+    /**
+     * Navigates to the specified URL.
+     * @param {string} destinationURL - The URL to navigate to. If not specified, a new blank window will be opened.
+     * @param {string} destinationType - The type of destination. Supports the following values: "_newwindow", "_blank", "_parent", "_self", "_top", or the name of the window.
+     * @returns {Window} - The newly opened window.
+     */
+    navigateTo: (destinationURL, destinationType) => cf.navigateTo(customFunctions.externalize(destinationURL), destinationType),
+
+    /**
+     * Default error handler for the invoke service API.
+     * @param {object} response - The response body of the invoke service API.
+     * @param {object} headers - The response headers of the invoke service API.
+     * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
+     * @returns {void}
+     */
+    defaultErrorHandler: cf.defaultErrorHandler,
+
+    /**
+     * Handles the success response after a form submission.
+     *
+     * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
+     * @returns {void}
+     */
+    defaultSubmitSuccessHandler: cf.defaultSubmitSuccessHandler,
+
+    /**
+     * Handles the error response after a form submission.
+     *
+     * @param {string} defaultSubmitErrorMessage - The default error message.
+     * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
+     * @returns {void}
+     */
+    defaultSubmitErrorHandler: cf.defaultSubmitErrorHandler,
+
+    /**
+     * Fetches the captcha token for the form.
+     *
+     * This function uses the Google reCAPTCHA Enterprise service to fetch the captcha token.
+     *
+     * @async
+     * @param {object} globals - An object containing read-only form instance, read-only target field instance and methods for form modifications.
+     * @returns {string} - The captcha token.
+     */
+    fetchCaptchaToken: cf.fetchCaptchaToken
 };

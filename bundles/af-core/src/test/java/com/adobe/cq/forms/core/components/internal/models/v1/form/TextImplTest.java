@@ -39,6 +39,7 @@ public class TextImplTest {
     private static final String PATH_TEXT_CUSTOMIZED = CONTENT_ROOT + "/text-customized";
     private static final String PATH_TEXT = CONTENT_ROOT + "/text";
     private static final String PATH_TEXT_DATALAYER = CONTENT_ROOT + "/text-datalayer";
+    private static final String PATH_TEXT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/text-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -92,7 +93,7 @@ public class TextImplTest {
     @Test
     void testGetDataRef() {
         Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
-        assertEquals("a.b", text.getDataRef());
+        assertEquals("null", text.getDataRef());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.getDataRef()).thenCallRealMethod();
         assertEquals(null, textMock.getDataRef());
@@ -101,7 +102,7 @@ public class TextImplTest {
     @Test
     void testIsVisible() {
         Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
-        assertEquals(null, text.isVisible());
+        assertEquals(true, text.isVisible());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.isVisible()).thenCallRealMethod();
         assertEquals(null, textMock.isVisible());
@@ -145,5 +146,18 @@ public class TextImplTest {
         Text text = Utils.getComponentUnderTest(PATH_TEXT_DATALAYER, Text.class, context);
         FieldUtils.writeField(text, "dataLayerEnabled", true, true);
         Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_DATALAYER));
+    }
+
+    @Test
+    void testDorProperties() {
+        TextImpl textImpl = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, TextImpl.class, context);
+        assertEquals(true, textImpl.getDorProperties().get("dorExclusion"));
+        assertEquals("4", textImpl.getDorProperties().get("dorColspan"));
+    }
+
+    @Test
+    void testNoFieldType() {
+        TextImpl text = Utils.getComponentUnderTest(PATH_TEXT_WITHOUT_FIELDTYPE, TextImpl.class, context);
+        assertEquals(FieldType.PLAIN_TEXT.getValue(), text.getFieldType());
     }
 }

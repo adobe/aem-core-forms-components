@@ -8,7 +8,12 @@
     ]
   },
   "properties": {
-    "fd:path": "/content/image"
+    "fd:path": "/content/image",
+    "fd:repoPath": "/content/dam/formsanddocuments/abc.jpeg",
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "customProp": "customPropValue"
   },
   ":type": "core/fd/components/form/image/v1/image"
 }

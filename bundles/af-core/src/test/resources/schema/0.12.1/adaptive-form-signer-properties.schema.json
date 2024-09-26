@@ -1,0 +1,83 @@
+{
+  "$id": "classpath:/schema/0.12.1/adaptive-form-signer-properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Signers Information",
+  "description": "Represents information about signers.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "signerTitle": {
+      "title": "Signer Title",
+      "description": "The title or name of the signer.",
+      "type": "string"
+    },
+    "email": {
+      "title": "Email Information",
+      "description": "Information about the signer's email address.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Email Type",
+          "description": "Indicates whether the email value is sourced from form data or form configuration.",
+          "type": "string",
+          "enum": [
+            "data",
+            "form"
+          ]
+        },
+        "value": {
+          "title": "Email Address",
+          "description": "The email address value.",
+          "type": "string"
+        }
+      }
+    },
+    "countryCode": {
+      "title": "Country Code",
+      "description": "Information about the country code for the phone number.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Country Code Type",
+          "description": "Indicates whether the country code value is sourced from form data or form configuration.",
+          "type": "string",
+          "enum": [
+            "data",
+            "form"
+          ]
+        },
+        "value": {
+          "title": "Country Code Value",
+          "description": "The country code value.",
+          "type": "string"
+        }
+      }
+    },
+    "phone": {
+      "title": "Phone Number",
+      "description": "Information about the signer's phone number.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "title": "Phone Number Type",
+          "description": "Indicates whether the phone number value is sourced from form data or form configuration.",
+          "type": "string",
+          "enum": [
+            "data",
+            "form"
+          ]
+        },
+        "value": {
+          "title": "Phone Number Value",
+          "description": "The phone number value.",
+          "type": "string"
+        }
+      }
+    },
+    "securityOption": {
+      "title": "Security Option",
+      "description": "Specifies the security option for the signer.",
+      "type": "string"
+    }
+  }
+}

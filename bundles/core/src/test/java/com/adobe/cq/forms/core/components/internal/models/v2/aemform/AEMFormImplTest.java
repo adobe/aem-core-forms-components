@@ -15,8 +15,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.aemform;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
+import org.apache.sling.i18n.ResourceBundleProvider;
+import org.apache.sling.testing.mock.sling.MockResourceBundle;
+import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +31,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
+import com.adobe.aemds.guide.service.GuideLocalizationService;
 import com.adobe.cq.forms.core.components.models.aemform.AEMForm;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
@@ -41,6 +49,13 @@ public class AEMFormImplTest {
     private static final String FORM_1 = "/aemformv2-1";
     private static final String PATH_FORM_1 = GRID + FORM_1;
     private static final String PATH_FORM_2 = "/content/test/en/home/jcr:content/root/container/container_1578756628/aemform";
+    private static final String ROOT_PAGE_LANG = "/content/aemform/en_US";
+    private static final String GRID_LANG = ROOT_PAGE_LANG + "/jcr:content/root/responsivegrid";
+    private static final String PATH_FORM_LANG = GRID_LANG + FORM_1;
+    private static final String PATH_DEFAULT_TITLE = GRID + "/aemformv2";
+    private static final String PATH_JCR_TITLE_NULL = GRID + "/aemformv2_jcrtitleNull";
+    private static final String PATH_FORM_TITLE_TRANSLATION_NO_RESOURCE = GRID_LANG + "/aemformv2_formTitle";
+    private static final String PATH_FORM_LANG_DE = "/content/aemform/de/jcr:content/root/container/container_1578756628/aemform";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -84,6 +99,12 @@ public class AEMFormImplTest {
     }
 
     @Test
+    void testGetRoleAttribute() {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
+        assertEquals(null, aemform.getRoleAttribute());
+    }
+
+    @Test
     void testTheme() throws Exception {
         AEMForm aemform = getAEMFormUnderTest(PATH_FORM_2);
         List<HtmlPageItem> htmlPageItems = aemform.getHtmlPageItems();
@@ -117,5 +138,67 @@ public class AEMFormImplTest {
         AEMForm aemFormMock = Mockito.mock(AEMForm.class);
         Mockito.when(aemFormMock.getFormVersion()).thenCallRealMethod();
         Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::getFormVersion);
+    }
+
+    @Test
+    void testDefaultTitle() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_DEFAULT_TITLE);
+        assertEquals("", aemform.getTitle());
+        AEMForm aemFormMock = Mockito.mock(AEMForm.class);
+        Mockito.when(aemFormMock.getTitle()).thenCallRealMethod();
+        Assertions.assertThrows(UnsupportedOperationException.class, aemFormMock::getTitle);
+    }
+
+    @Test
+    void testTitleAddedThroughEditDialog() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
+        assertEquals("AEM Form", aemform.getTitle());
+    }
+
+    @Test
+    void testJcrTitleNull() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_JCR_TITLE_NULL);
+        assertEquals("", aemform.getTitle());
+    }
+
+    @Test
+    void testFormTitle() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_2);
+        assertEquals("Test", aemform.getTitle());
+    }
+
+    @Test
+    void testTitlePageLanguage() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_LANG);
+        assertEquals("AEM Form in US locale", aemform.getTitle());
+    }
+
+    @Test
+    void testFormTitleTranslationNoResource() throws Exception {
+        AEMForm aemform = getAEMFormUnderTest(PATH_FORM_TITLE_TRANSLATION_NO_RESOURCE);
+        assertEquals("", aemform.getTitle());
+    }
+
+    @Test
+    void testFormTitleTranslationGerman() throws Exception {
+        context.currentResource(PATH_FORM_LANG_DE);
+
+        GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class, Mockito.mock(
+            GuideLocalizationService.class));
+        Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "de" });
+        MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context.getService(ResourceBundleProvider.class);
+        MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider.getResourceBundle(
+            "/content/dam/formsanddocuments/test/jcr:content/dictionary", new Locale("de"));
+        resourceBundle.putAll(new HashMap<String, String>() {
+            {
+                put("title##8331", "Test");
+            }
+        });
+
+        AEMForm aemform = context.request().adaptTo(AEMForm.class);
+
+        assertEquals("de", aemform.getLocale());
+        String translatedTitle = resourceBundle.getString("title##8331");
+        assertEquals(translatedTitle, aemform.getTitle());
     }
 }

@@ -42,7 +42,13 @@ var formsConstants = {
                 "formradiobutton": "/apps/forms-components-examples/components/form/radiobutton",
                 "formfileinput": "/apps/forms-components-examples/components/form/fileinput",
                 "wizard": "/apps/forms-components-examples/components/form/wizard",
-                "title": "/apps/forms-components-examples/components/form/title"
+                "title": "/apps/forms-components-examples/components/form/title",
+                "checkbox": "/apps/forms-components-examples/components/form/checkbox",
+                "switch": "/apps/forms-components-examples/components/form/switch",
+                "fragment": "/apps/forms-components-examples/components/form/fragment",
+                "fragmentcontainer": "/apps/forms-components-examples/components/form/fragmentcontainer",
+                "termsandconditions": "/apps/forms-components-examples/components/form/termsandconditions",
+                "submitButton": "/apps/forms-components-examples/components/form/actions/submit"
             }
         },
         resourceType : {
@@ -52,7 +58,7 @@ var formsConstants = {
     },
     RESPONSIVE_GRID_DEMO_SUFFIX : "/jcr:content/root/responsivegrid/demo/component",
     FORM_EDITOR_FORM_CONTAINER_SUFFIX : "/jcr:content/guideContainer",
-    FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX : "/jcr:content/parsys1",
+    FORM_EDITOR_LAYOUT_CONTAINER_SUFFIX : "/jcr:content/container1",
     RESPONSIVE_GRID_SUFFIX : "/jcr:content/root/responsivegrid",
     EVENT_NAME_GUIDE_REFRESH_DONE : "guideRefreshDone.cypress",
     events : {
