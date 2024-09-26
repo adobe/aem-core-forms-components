@@ -281,7 +281,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         })
 
         it('should add submission handler rules on form', function () {
-            // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
+            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
                 cy.openAuthoring(submitFormPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']").should("exist");
@@ -295,10 +295,10 @@ describe('Rule editor authoring sanity for core-components',function(){
 
                 cy.selectLayer("Edit");
                 cy.deleteComponentByPath(submitFormButtonEditPath);
-            // }
+            }
         })
         it('should add custom formData submit rule on submit button', function () {
-            // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
                 cy.openAuthoring(submitFormPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']").should("exist");
@@ -340,10 +340,10 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.get(sitesSelectors.overlays.overlay.component + submitFormButtonEditPathSelector).should("exist");
                 cy.selectLayer("Edit");
                 cy.deleteComponentByPath(submitFormButtonEditPath);
-            // }
+            }
         })
         it('should add save form rule on button', function () {
-            // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11581")) {
+            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11581")) {
                 cy.openAuthoring(saveFormPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + saveFormContainerPath + "/*']").should("exist");
@@ -356,7 +356,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
                 cy.selectLayer("Edit");
                 cy.deleteComponentByPath(saveButtonEditPath);
-            // }
+            }
         })
 
     })
