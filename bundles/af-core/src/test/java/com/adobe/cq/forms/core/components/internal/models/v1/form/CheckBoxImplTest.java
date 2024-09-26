@@ -57,6 +57,7 @@ public class CheckBoxImplTest {
     private static final String PATH_CHECKBOX_NOENUM = CONTENT_ROOT + "/checkboxNoEnum";
 
     private static final String PATH_CHECKBOX_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/checkbox-enableUncheckedValueFalse";
+    private static final String PATH_CHECKBOX_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/checkbox-without-fieldtype";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -353,5 +354,11 @@ public class CheckBoxImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(CheckBox.class);
+    }
+
+    @Test
+    void testNoFieldType() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_WITHOUT_FIELDTYPE);
+        Utils.testJSONExport(checkbox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_WITHOUT_FIELDTYPE));
     }
 }

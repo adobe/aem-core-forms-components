@@ -131,6 +131,11 @@ describe("Form Runtime with Switch Input", () => {
         })
     });
 
+    it("Switch should not have aria-disabled attribute if enable is false", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[6];
+        cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__widget-label > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
+    })
+
     it("should toggle description and tooltip", () => {
         const id = formContainer._model.items[0].id;
         cy.toggleDescriptionTooltip(bemBlock, id);

@@ -39,6 +39,7 @@ public class TextImplTest {
     private static final String PATH_TEXT_CUSTOMIZED = CONTENT_ROOT + "/text-customized";
     private static final String PATH_TEXT = CONTENT_ROOT + "/text";
     private static final String PATH_TEXT_DATALAYER = CONTENT_ROOT + "/text-datalayer";
+    private static final String PATH_TEXT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/text-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -152,5 +153,11 @@ public class TextImplTest {
         TextImpl textImpl = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, TextImpl.class, context);
         assertEquals(true, textImpl.getDorProperties().get("dorExclusion"));
         assertEquals("4", textImpl.getDorProperties().get("dorColspan"));
+    }
+
+    @Test
+    void testNoFieldType() {
+        TextImpl text = Utils.getComponentUnderTest(PATH_TEXT_WITHOUT_FIELDTYPE, TextImpl.class, context);
+        assertEquals(FieldType.PLAIN_TEXT.getValue(), text.getFieldType());
     }
 }

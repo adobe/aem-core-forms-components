@@ -196,6 +196,7 @@ describe("Form with File Input V-3 - Basic Tests", () => {
     it(`fielinput is disabled when readonly property is true`, () => {
         const fileInput5 =  "input[name='fileinput5']";
         cy.get(fileInput5).should("have.attr", "disabled", "disabled"); 
+        cy.get(fileInput5).should("not.have.attr", "aria-disabled");
     });
 
 })

@@ -1,0 +1,29 @@
+{
+    "id": "button-112233",
+    "dataRef": "test-button-ref",
+    "fieldType": "button",
+    "name": "no-fieldType-button",
+    "description": "test-description",
+    "tooltip": "test-short-description",
+    "type": "string",
+    "buttonType": "button",
+    "properties": {
+      "afs:layout": {
+        "tooltipVisible": false
+      },
+      "fd:dor": {
+        "dorExclusion": true
+      },
+      "fd:path": "/content/button-without-fieldtype",
+      "fd:buttonType": "button"
+    },
+    "label": {
+      "value": "no-fieldType-button"
+    },
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    ":type": "core/fd/components/form/button/v1/button"
+}

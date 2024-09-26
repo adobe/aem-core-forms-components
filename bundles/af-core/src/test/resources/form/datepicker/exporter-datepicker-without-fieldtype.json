@@ -1,0 +1,22 @@
+{
+  "id": "datepicker-without-fieldtype1",
+  "fieldType": "date-input",
+  "name": "abc",
+  "type": "string",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datepicker-without-fieldtype"
+  },
+  "format": "date",
+  ":type": "core/fd/components/form/datepicker/v1/datepicker"
+}
