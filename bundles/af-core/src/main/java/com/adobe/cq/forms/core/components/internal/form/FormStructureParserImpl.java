@@ -123,11 +123,11 @@ public class FormStructureParserImpl implements FormStructureParser {
         String result = null;
         FormContainer formContainer = resource.adaptTo(FormContainer.class);
         try {
-            HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
+//            HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
             ObjectMapper mapper = new ObjectMapper();
             Writer writer = new StringWriter();
             ObjectWriter objectWriter = mapper.writerWithView(Views.Publish.class);
-            objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
+//            objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
             // return publish view specific properties only for runtime
             objectWriter.writeValue(writer, formContainer);
             result = writer.toString();
