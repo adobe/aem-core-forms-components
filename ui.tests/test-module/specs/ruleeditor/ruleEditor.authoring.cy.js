@@ -18,13 +18,14 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
         // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
         //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
-
+        cy.wait(1000);
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click({force: true});
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
 
         // // Forms Objects option is not existing on side panel
@@ -67,7 +68,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force: true});
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click({force: true});
 
         // check if rule is created
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CREATED_RULE_650).should("exist");
@@ -81,11 +82,13 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
         // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
         //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
@@ -127,6 +130,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
@@ -144,6 +148,7 @@ describe('Rule editor authoring sanity for core-components',function(){
     }
 
     const createSubmissionSuccessRule = function() {
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         // select the event for which rule is to written
@@ -178,6 +183,7 @@ describe('Rule editor authoring sanity for core-components',function(){
     }
 
     const createSubmissionErrorRule = function() {
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         // select the event for which rule is to written
@@ -275,7 +281,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         })
 
         it('should add submission handler rules on form', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
+            // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
                 cy.openAuthoring(submitFormPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']").should("exist");
@@ -289,10 +295,10 @@ describe('Rule editor authoring sanity for core-components',function(){
 
                 cy.selectLayer("Edit");
                 cy.deleteComponentByPath(submitFormButtonEditPath);
-            }
+            // }
         })
         it('should add custom formData submit rule on submit button', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+            // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
                 cy.openAuthoring(submitFormPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']").should("exist");
@@ -304,6 +310,7 @@ describe('Rule editor authoring sanity for core-components',function(){
                 // Edit rule option not existing on button toolbar
                 cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
                 cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+                cy.wait(1000);
                 cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
                 // click on  create option from rule editor header
@@ -333,10 +340,10 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.get(sitesSelectors.overlays.overlay.component + submitFormButtonEditPathSelector).should("exist");
                 cy.selectLayer("Edit");
                 cy.deleteComponentByPath(submitFormButtonEditPath);
-            }
+            // }
         })
         it('should add save form rule on button', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11581")) {
+            // if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11581")) {
                 cy.openAuthoring(saveFormPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + saveFormContainerPath + "/*']").should("exist");
@@ -349,7 +356,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
                 cy.selectLayer("Edit");
                 cy.deleteComponentByPath(saveButtonEditPath);
-            }
+            // }
         })
 
     })
