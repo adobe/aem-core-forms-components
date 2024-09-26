@@ -42,6 +42,7 @@
 
 
 import { recurse } from 'cypress-recurse';
+import 'cypress-plugin-snapshots/commands';
 
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
