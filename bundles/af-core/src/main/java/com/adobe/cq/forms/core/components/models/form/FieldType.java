@@ -38,7 +38,9 @@ public enum FieldType {
     IMAGE("image"),
     TELEPHONE("tel"),
     PASSWORD("password"),
-    RANGE("range");
+    RANGE("range"),
+    COLOR("color"),
+    URL("url");
 
     private String value;
 
