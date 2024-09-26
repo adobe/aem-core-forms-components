@@ -125,6 +125,7 @@ describe("Form Runtime with CheckBox Input", () => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-checkbox__errormessage").should('have.text',"This is a custom required checkbox")
             cy.get(`#${id} > div.${bemBlock}__errormessage`).should('have.attr', 'id', `${id}__errormessage`)
             cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${id}__errormessage`)
+            cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('not.have.attr', 'aria-checked')
             cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'true')
         })
 
@@ -134,6 +135,11 @@ describe("Form Runtime with CheckBox Input", () => {
             cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'false')
         })
     });
+
+    it("Checkbox should not have aria-disabled attribute if enable is false", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[6];
+        cy.get(`#${id} > .${bemBlock}__widget-container > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
+    })
 
     it("should toggle description and tooltip", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]

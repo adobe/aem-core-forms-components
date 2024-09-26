@@ -3,13 +3,13 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2021-12-02T15:12:59.900+05:30"
+            cq:lastModified="{Date}2024-09-03T15:12:59.900+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="Adaptive Form V2 (IT)"
-            sling:resourceType="forms-components-examples/components/page">
+            sling:resourceType="forms-core-components-it/components/page-buttonv2">
         <guideContainer
                 fd:version="2.1"
                 fieldType="form"
@@ -23,7 +23,7 @@
                     jcr:title="button-1"
                     enabled="{Boolean}true"
                     visible="{Boolean}true"
-                    sling:resourceType="forms-components-examples/components/form/button"/>
+                    sling:resourceType="core/fd/components/form/button/v2/button"/>
             <button-2
                     aria-label="basic-button"
                     type="button"
@@ -33,7 +33,7 @@
                     fieldType="button"
                     enabled="{Boolean}false"
                     visible="{Boolean}true"
-                    sling:resourceType="forms-components-examples/components/form/button"/>
+                    sling:resourceType="core/fd/components/form/button/v2/button"/>
             <button-3
                     class="cmp-button"
                     data-cmp-is="adaptiveFormButton"
@@ -45,7 +45,7 @@
                     fieldType="button"
                     enabled="{Boolean}true"
                     visible="{Boolean}false"
-                    sling:resourceType="forms-components-examples/components/form/button"/>
+                    sling:resourceType="core/fd/components/form/button/v2/button"/>
             <button-4
               description="This is long description"
               tooltip="This is short description"
@@ -58,13 +58,13 @@
               fieldType="button"
               enabled="{Boolean}true"
               visible="{Boolean}true"
-              sling:resourceType="forms-components-examples/components/form/button"/>
+              sling:resourceType="core/fd/components/form/button/v2/button"/>
             <button-5
                     jcr:lastModified="{Date}2023-01-30T14:02:55.708+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Navigate"
-                    sling:resourceType="forms-components-examples/components/form/button"
+                    sling:resourceType="core/fd/components/form/button/v2/button"
                     dorExclusion="true"
                     fieldType="button"
                     name="button1675067564294">

@@ -196,6 +196,7 @@ describe("Form with File Input V-3 - Basic Tests", () => {
     it(`fielinput is disabled when readonly property is true`, () => {
         const fileInput5 =  "input[name='fileinput5']";
         cy.get(fileInput5).should("have.attr", "disabled", "disabled"); 
+        cy.get(fileInput5).should("not.have.attr", "aria-disabled");
     });
 
 })
@@ -224,7 +225,23 @@ describe('Click on button tag (V-3)', () => {
         cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__dragarea > .${bemBlock}__widgetlabel`).should('exist').click().then(() => {
             cy.attachFile(`#${id} input[type="file"]`, [sampleFileName]).then(() => {
                 cy.get('.cmp-adaptiveform-fileinput__filename').should('contain', sampleFileName);
+            });
         });
+    }); 
+    it('should display an alert if the file size exceeds the maximum allowed size', () => {
+       // Define the maximum file size (in bytes, e.g., 2MB)
+        const maxFileSize = 2 * 1024 * 1024; // 2MB
+
+        // Set up a stub for the alert message
+        const expectedAlertMessage = `File(s) FileAttachment3mb.jpg are greater than the expected size: ${maxFileSize / (1024 * 1024)}MBMB.`;
+
+        const fileInput = 'input[name=\'fileinput5\']';
+        cy.attachFile(fileInput, ['FileAttachment3mb.jpg']);
+
+        // Stub the window alert function
+        cy.on('window:alert', (alertText) => {
+            expect(alertText).to.equal(expectedAlertMessage);
+        });
+
     });
-  }); 
 })

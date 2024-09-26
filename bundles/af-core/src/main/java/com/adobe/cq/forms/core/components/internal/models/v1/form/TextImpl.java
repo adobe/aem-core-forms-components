@@ -28,6 +28,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Text;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -68,5 +69,10 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
     @JsonIgnore
     public String getText() {
         return getValue();
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.PLAIN_TEXT);
     }
 }

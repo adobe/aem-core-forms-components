@@ -15,7 +15,7 @@
  ******************************************************************************/
 describe("Form Runtime with Button Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/button/basic.html"
+    const pagePath = "content/forms/af/core-components-it/samples/button/buttonv1/basic.html"
     const bemBlock = 'cmp-adaptiveform-button'
     const IS = "adaptiveFormButton"
     const selectors = {
@@ -77,6 +77,11 @@ describe("Form Runtime with Button Input", () => {
         cy.toggleDescriptionTooltip(bemBlock, id);
     });
 
+    it("Button should not have aria-disabled attribute if enable is false", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[2];
+        cy.get(`#${id} > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
+    });
+
 
     it("should open a new window on click of button", () => {
         cy.window().then((win) => {
@@ -97,6 +102,10 @@ describe("Form Runtime with Button Input", () => {
                 });
             });
         });
+    });
+
+    it(`should have type as button`, () => {
+        cy.get('.cmp-adaptiveform-button__widget').eq(0).should('have.attr', 'type', 'button');
     });
 
 })

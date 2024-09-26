@@ -57,8 +57,8 @@ public class NumberInputImplTest {
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING = CONTENT_ROOT + "/numberinput-backwardcompatible-string";
     private static final String PATH_NUMBER_INPUT = CONTENT_ROOT + "/numberinput";
     private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
-
     private static final String PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/numberinput-displayvalueExpression";
+    private static final String PATH_NUMBER_INPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/numberinput-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -423,4 +423,9 @@ public class NumberInputImplTest {
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION));
     }
 
+    @Test
+    void testNoFieldType() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITHOUT_FIELDTYPE, NumberInput.class, context);
+        assertEquals(FieldType.NUMBER_INPUT.getValue(), numberInput.getFieldType());
+    }
 }
