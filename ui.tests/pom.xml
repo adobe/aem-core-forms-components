@@ -24,7 +24,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>3.0.67-SNAPSHOT</version>
+        <version>1.1.53-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
@@ -140,7 +140,7 @@
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <version>1.14.2</version>
+                        <version>1.12.1</version>
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
@@ -187,7 +187,7 @@
                                         <argument>${project.basedir}/test-module/node_modules/.bin/cypress</argument>
                                         <argument>open</argument>
                                         <argument>--env</argument>
-                                        <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR},core.components.version=${CORE_COMPONENTS}</argument>
+                                        <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR},crx.contextPath=${aem.contextPath}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -215,7 +215,7 @@
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <version>1.14.2</version>
+                        <version>1.12.1</version>
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
@@ -284,7 +284,7 @@
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <version>1.14.2</version>
+                        <version>1.12.1</version>
                         <configuration>
                             <installDirectory>${project.basedir}/../frontend-maven-plugin</installDirectory>
                             <workingDirectory>test-module</workingDirectory>
@@ -371,7 +371,7 @@
                                         <argument>configFile=cypress.config.js</argument>
                                         <argument>--env</argument>
                                         <!-- value of forms.far is addon or addon-latest -->
-                                        <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR},core.components.version=${CORE_COMPONENTS}</argument>
+                                        <argument>CYPRESS_baseUrl=${AEM_AUTHOR_URL},crx.username=${AEM_AUTHOR_USERNAME},crx.password=${AEM_AUTHOR_PASSWORD},forms.far=${FORMS_FAR},crx.contextPath=${aem.contextPath}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -391,8 +391,6 @@
                                     <goal>install</goal>
                                 </goals>
                                 <configuration>
-                                    <!-- skip the execution if specific core component version is defined to run test -->
-                                    <skip>${CORE_COMPONENTS}</skip>
                                     <slingUrl>${quickstart.url}/system/console</slingUrl>
                                     <bundleFileName>${project.basedir}/../bundles/core/target/core-forms-components-core-${project.version}.jar</bundleFileName>
                                 </configuration>
@@ -404,8 +402,6 @@
                                     <goal>install</goal>
                                 </goals>
                                 <configuration>
-                                    <!-- skip the execution if specific core component version is defined to run test -->
-                                    <skip>${CORE_COMPONENTS}</skip>
                                     <slingUrl>${quickstart.url}/system/console</slingUrl>
                                     <bundleFileName>${project.basedir}/../bundles/af-core/target/core-forms-components-af-core-${project.version}.jar</bundleFileName>
                                 </configuration>

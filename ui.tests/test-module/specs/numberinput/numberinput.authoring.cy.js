@@ -89,9 +89,9 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction(editDialogConfigurationSelector);
             cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
                 cy.get(numberInputBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
-                    cy.get(numberInputBlockBemSelector + "__type").children('._coral-Dropdown-trigger').click();
-                    cy.get("._coral-Menu-itemLabel").contains('Decimal').should('be.visible');
-                    cy.get("._coral-Menu-itemLabel").contains('Integer').should('be.visible').click();
+                    cy.get(numberInputBlockBemSelector + "__type").children('.coral3-Select-button').click();
+                    cy.get(".coral3-SelectList-item").contains('Decimal').should('be.visible');
+                    cy.get(".coral3-SelectList-item").contains('Integer').should('be.visible').click();
                     cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
                         cy.deleteComponentByPath(numberInputDrop);
                     })
@@ -115,8 +115,8 @@ describe('Page - Authoring', function () {
                 cy.get(numberInputBlockBemSelector + "__maximum").clear().type('11.5');
                 // click on the basic tab and update the type field
                 cy.get(numberInputBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
-                    cy.get(numberInputBlockBemSelector + "__type").children('._coral-Dropdown-trigger').click();
-                    cy.get("._coral-Menu-itemLabel").contains('Integer').should('be.visible').click();
+                    cy.get(numberInputBlockBemSelector + "__type").children('button').click();
+                    cy.get(".coral3-SelectList-item").contains('Integer').should('be.visible').click();
                     // check the step attribute
                     cy.get(numberInputBlockBemSelector + "__minimum").scrollIntoView().should('have.attr', 'step', '1');
                     cy.get(numberInputBlockBemSelector + "__maximum").scrollIntoView().should('have.attr', 'step', '1');
@@ -165,7 +165,7 @@ describe('Page - Authoring', function () {
             cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click().then(() => {
                 cy.get(numberInputBlockBemSelector + '__editdialog').contains('Formats').click().then(() => {
                     cy.get(numberInputBlockBemSelector + '__displaypattern').children('button').click();
-                    cy.get('coral-selectlist-item-content').contains('No Pattern').click({force: true}).then(() => {
+                    cy.get('coral-selectlist-item').contains('No Pattern').click({force: true}).then(() => {
                         cy.get('.coral-Form-fieldwrapper').should('be.hidden');
                     });
                     cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {

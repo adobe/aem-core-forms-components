@@ -39,7 +39,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
-import com.adobe.fd.fp.api.exception.FormsPortalException;
 import com.day.cq.wcm.commons.AbstractImageServlet;
 import com.day.cq.wcm.foundation.Image;
 import com.day.image.Layer;
@@ -80,7 +79,7 @@ public class StaticImageGETServletTest {
     private ResourceResolver resourceResolver;
 
     @BeforeEach
-    void setUp() throws FormsPortalException {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
         context.currentResource(PATH_IMAGE);
