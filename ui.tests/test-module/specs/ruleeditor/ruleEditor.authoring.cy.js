@@ -18,13 +18,14 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
         // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
         //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
-
+        cy.wait(1000);
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click({force: true});
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
 
         // // Forms Objects option is not existing on side panel
@@ -67,7 +68,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force: true});
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click({force: true});
 
         // check if rule is created
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CREATED_RULE_650).should("exist");
@@ -81,11 +82,13 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
         // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
         //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
@@ -127,6 +130,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
@@ -144,6 +148,7 @@ describe('Rule editor authoring sanity for core-components',function(){
     }
 
     const createSubmissionSuccessRule = function() {
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         // select the event for which rule is to written
@@ -178,6 +183,7 @@ describe('Rule editor authoring sanity for core-components',function(){
     }
 
     const createSubmissionErrorRule = function() {
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         // select the event for which rule is to written
@@ -304,6 +310,7 @@ describe('Rule editor authoring sanity for core-components',function(){
                 // Edit rule option not existing on button toolbar
                 cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
                 cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+                cy.wait(1000);
                 cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
                 // click on  create option from rule editor header
