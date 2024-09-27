@@ -35,10 +35,7 @@ public enum FieldType {
     PANEL("panel"),
     FORM("form"),
     CHECKBOX_GROUP("checkbox-group"),
-    IMAGE("image"),
-    TELEPHONE("tel"),
-    PASSWORD("password"),
-    RANGE("range");
+    IMAGE("image");
 
     private String value;
 

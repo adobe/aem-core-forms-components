@@ -34,7 +34,6 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.day.cq.wcm.foundation.Image;
@@ -138,10 +137,5 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
             properties.put(DAM_REPO_PATH, fileReference);
         }
         return properties;
-    }
-
-    @Override
-    public String getFieldType() {
-        return super.getFieldType(FieldType.IMAGE);
     }
 }

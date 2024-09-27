@@ -109,11 +109,6 @@ describe("Form Runtime with Email Input", () => {
         })
     });
 
-    it("Email should not have aria-disabled attribute if enable is false", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[1];
-        cy.get(`#${id} > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
-    });
-
     it("mandatory message set by user is displayed", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[3]
         cy.window().then($window => {

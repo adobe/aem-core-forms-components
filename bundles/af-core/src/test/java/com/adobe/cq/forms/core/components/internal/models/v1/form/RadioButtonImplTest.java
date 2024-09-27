@@ -53,7 +53,6 @@ public class RadioButtonImplTest {
 
     private static final String PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/radiobutton-duplicate-enum";
     private static final String PATH_RADIOBUTTON_FOR_INSERTION_ORDER = CONTENT_ROOT + "/radiobutton-insertion-order";
-    private static final String PATH_RADIOBUTTON_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/radiobutton-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -420,11 +419,5 @@ public class RadioButtonImplTest {
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, radioButtonMock.getScreenReaderText());
-    }
-
-    @Test
-    void testNoFieldType() {
-        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_WITHOUT_FIELDTYPE);
-        assertEquals(FieldType.RADIO_GROUP.getValue(), radioButton.getFieldType());
     }
 }

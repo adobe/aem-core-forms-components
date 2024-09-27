@@ -49,13 +49,9 @@ describe("Form in site using embed container", () => {
             method: 'POST',
             url: '**/adobe/forms/af/submit/*',
             }).as('afSubmission');
-            cy.get(`.cmp-adaptiveform-button__widget`).eq(1).then(($button) => {
-                if (!$button.is(':disabled')) {
-                    cy.wrap($button).click().then(() => {
-                        cy.get('body').should('contain', "Thank You message from new form in sites.");
-                    });
-                }
-            });
+            cy.get(`.cmp-adaptiveform-button__widget`).eq(1).click().then(() => {
+            cy.get('body').should('contain', "Thank You message from new form in sites.")
+          });
         });
       }
     })

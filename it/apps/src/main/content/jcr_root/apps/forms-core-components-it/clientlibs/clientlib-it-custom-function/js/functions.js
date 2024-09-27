@@ -239,8 +239,6 @@ function customMessageUsingInvalidApi(field, globals) {
     }
 }
 
-let label = '',
-    panelLabel = '';
 
 /**
  * updatePanelLabel
@@ -249,18 +247,18 @@ let label = '',
  * @param {scope} globals
  */
 function updatePanelLabel(repeatablePanel, globals) {
+    var label = globals.field.who_lives_name.$label.value;//field is current field
+    var panelLabel = globals.field.$label.value;
+    var currentIndex = globals.field.$index; // to prevent unnecessary dom update
 
-    if (globals.field.$fieldType === 'panel' && label === '') {
-        label = globals.field.who_lives_name.$label.value;
-        panelLabel = globals.field.$label.value;
-        globals.functions.setProperty(globals.field, {label: {"value": panelLabel + (globals.field.$index + 1)}});
-        globals.functions.setProperty(globals.field.who_lives_name, {label: {"value": label + "<b>" + (globals.field.$index + 1) + "</b>"}});
-    }
-
+    globals.functions.setProperty(globals.field,{label : {"value" : panelLabel + (globals.field.$index+1)}}); // on initialize panel label not working right now, will be fixed soon
+    globals.functions.setProperty(globals.field.who_lives_name,{label : {"value" : label+"<b>"+(globals.field.$index+1)+"</b>"}});
     // walk through other instances and update their label
     repeatablePanel.$parent.forEach(panel => {
-        globals.functions.setProperty(panel,{label : {"value" : panelLabel + (panel.$index+1)}});
-        globals.functions.setProperty(panel.who_lives_name,{label : {"value" : label+"<b>"+(panel.$index+1)+"</b>"}});
+        if (currentIndex != panel.$index) {
+            globals.functions.setProperty(panel,{label : {"value" : panelLabel + (panel.$index+1)}});
+            globals.functions.setProperty(panel.who_lives_name,{label : {"value" : label+"<b>"+(panel.$index+1)+"</b>"}});
+        }
     });
 }
 
@@ -275,19 +273,4 @@ function updatePanelLabel(repeatablePanel, globals) {
 function addPanelInstance(panel,globals)
 {
     globals.functions.dispatchEvent(panel,'addInstance', globals.field.$parent.$index + 1);
-}
-
-
-/**
- * Tests remove instance with dispatchEvent
- * @name removePanelInstance
- * @param {object} panel
- * @param {scope} globals
- */
-function removePanelInstance(panel,globals)
-{
-    globals.functions.dispatchEvent(panel, 'removeInstance', globals.field.$parent.$index);
-    panel.forEach(p => {
-        globals.functions.dispatchEvent(p, 'initialize');
-    })
 }

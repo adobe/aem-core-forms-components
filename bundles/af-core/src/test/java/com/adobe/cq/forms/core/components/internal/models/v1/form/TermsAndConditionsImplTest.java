@@ -31,7 +31,6 @@ import org.mockito.Mockito;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
@@ -50,7 +49,6 @@ public class TermsAndConditionsImplTest {
     private static final String PATH_TNC = CONTENT_ROOT + "/termsandconditions";
 
     private static final String PATH_NOWRAP_TNC = CONTENT_ROOT + "/termsandconditionsNoWrapData";
-    private static final String PATH_TNC_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/termsandconditions-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -124,11 +122,5 @@ public class TermsAndConditionsImplTest {
     void testNoWrap() {
         TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_NOWRAP_TNC, TermsAndConditions.class, context);
         Assert.assertNull(tnc.getType());
-    }
-
-    @Test
-    void testNoFieldType() {
-        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_TNC_WITHOUT_FIELDTYPE, TermsAndConditions.class, context);
-        assertEquals(FieldType.PANEL.getValue(), tnc.getFieldType());
     }
 }

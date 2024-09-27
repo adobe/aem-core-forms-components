@@ -43,11 +43,8 @@
                 }
             };
             this._model.subscribe((action) => {
-                // only if there is no validation errors show the loading icon
-                if (action?.payload?.length === 0) {
-                    addLoadingClass(action.target.id);
-                }
-            }, "validationComplete"); // use validationComplete instead of submit, to ensure loading class is added after validation is completed on the form
+                addLoadingClass(action.target.id);
+            }, "submit");
             this._model.subscribe((action) => {
                 removeLoadingClass(self.getModel().id);
                 let state = action.target.getState();

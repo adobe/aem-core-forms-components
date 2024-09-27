@@ -74,7 +74,6 @@ describe("Form with Radio Button Input", () => {
             return checkHTML(model.id, model.getState());
         }).then(() => {
             model.enable = false;
-            cy.get(`#${id2}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('not.have.attr', 'aria-disabled');
             return checkHTML(model.id, model.getState());
         });
     });
@@ -107,16 +106,10 @@ describe("Form with Radio Button Input", () => {
             cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__errormessage").should('have.text',"");
             cy.get(`#${id}`).should('have.attr', 'data-cmp-valid', 'true')
             cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('have.attr', 'aria-invalid', 'false');
-            cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('not.have.attr', 'aria-checked');
             cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__widget").should('have.attr', 'aria-describedby', '');
         });
     });
 
-    it("Radio button should not have aria-disabled attribute if enable is false", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[3];
-        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").should('not.have.attr', 'aria-disabled');
-    })
-        
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })
