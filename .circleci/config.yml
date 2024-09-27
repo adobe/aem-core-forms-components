@@ -239,7 +239,6 @@ jobs:
       TYPE: cypress
       BROWSER: chrome
       CONTEXTPATH: lc
-
     resource_class: xlarge
     working_directory: /home/circleci/build
     parallelism: 8

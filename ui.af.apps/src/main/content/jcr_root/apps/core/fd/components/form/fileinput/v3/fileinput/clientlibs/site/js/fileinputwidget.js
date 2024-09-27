@@ -29,13 +29,15 @@ if (typeof window.FileInputWidget === 'undefined') {
         attachEventHandlers(widget, dragArea, model) {
             super.attachEventHandlers(widget, dragArea, model)
             const customBtn = dragArea?.querySelector(".cmp-adaptiveform-fileinput__widgetlabel")
-            customBtn?.addEventListener("click", () => {
+            customBtn?.addEventListener("click", (event) => {
+                event.preventDefault();
                 widget.click();
             });
-            customBtn?.addEventListener('keydown', function(event) {
+            customBtn?.addEventListener('keypress', function(event) {
                 // Check if the Enter key is pressed
                 if (event.key === 'Enter' || event.keyCode === 13) {
                     // Trigger the click event of the file input
+                    event.preventDefault();
                     widget.click();
                 }
             });

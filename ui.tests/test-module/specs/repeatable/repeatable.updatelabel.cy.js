@@ -30,7 +30,7 @@ describe("Form Runtime with Panel Container", () => {
         cy.get(`#${panelId} ${panelLabelSelector}`).should('have.text', panelLabel);
     };
 
-    it("add and remove instance should add/remove instance at correct index and label should be correctly updated", () => {
+    it("add instance should add instance at correct index and label should be correctly updated", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         const [buttonid, fieldView] = Object.entries(formContainer._fields)[3];
         const [textinputid, fieldView1] = Object.entries(formContainer._fields)[0];
@@ -39,26 +39,18 @@ describe("Form Runtime with Panel Container", () => {
         checkLabelText(textinputid, panelid, 'Text Input1', 'Panel1');
 
         cy.get(`#${buttonid}`).find("button").click().then(() => {
-            const [textinputid1, fieldView3] = Object.entries(formContainer._fields)[5];
-            const [panelid1, fieldView4] = Object.entries(formContainer._fields)[6];
+            const [textinputid1, fieldView3] = Object.entries(formContainer._fields)[4];
+            const [panelid1, fieldView4] = Object.entries(formContainer._fields)[5];
             const [buttonid1, fieldView5] = Object.entries(formContainer._fields)[3];
-            const [removeButton, removeFieldView] = Object.entries(formContainer._fields)[4];
 
             checkLabelText(textinputid1, panelid1, 'Text Input2', 'Panel2');
 
             cy.get(`#${buttonid1}`).find("button").click().then(() => {
-                const [textinputid2, fieldView6] = Object.entries(formContainer._fields)[9];
-                const [panelid2, fieldView7] = Object.entries(formContainer._fields)[10];
+                const [textinputid2, fieldView6] = Object.entries(formContainer._fields)[7];
+                const [panelid2, fieldView7] = Object.entries(formContainer._fields)[8];
 
                 checkLabelText(textinputid1, panelid1, 'Text Input3', 'Panel3');
                 checkLabelText(textinputid2, panelid2, 'Text Input2', 'Panel2');
-
-                // remove instance and check label update
-                cy.get(`#${removeButton}`).find("button").click().then(() => {
-                    const [textinputid11, fieldView10] = Object.entries(formContainer._fields)[4];
-                    const [panelid11, fieldView11] = Object.entries(formContainer._fields)[5];
-                    checkLabelText(textinputid11, panelid11, 'Text Input2', 'Panel2');
-                });
             });
         });
     });

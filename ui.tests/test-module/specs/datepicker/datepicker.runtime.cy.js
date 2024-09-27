@@ -169,11 +169,6 @@ describe("Form Runtime with Date Picker", () => {
         })
     })
 
-    it("Datepicker should not have aria-disabled attribute if enable is false", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[1];
-        cy.get(`#${id} > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
-    })
-
     it("should set and clear value based on rules", () => {
         // Rule on datePicker6: When input of datePicker6 is '2023-01-12', set value of datePicker4 to '2023-01-01' and clear value of datePicker1
 

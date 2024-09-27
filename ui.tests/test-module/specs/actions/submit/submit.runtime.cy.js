@@ -193,12 +193,4 @@ describe("Form with Submit Button", () => {
             });
         });
     }
-
-
-    if (!cy.af.isOldCoreComponent()) {
-        it(`should have type as submit`, () => {
-            cy.previewForm(pagePath);
-            cy.get(`.cmp-adaptiveform-button__widget`).should('have.attr', 'type', 'submit');
-        });
-    }
 })

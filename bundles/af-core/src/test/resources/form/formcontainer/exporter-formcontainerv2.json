@@ -25,7 +25,7 @@
   ":itemsOrder": [
     "textinput"
   ],
-  "adaptiveform": "0.14.1",
+  "adaptiveform": "0.14.0",
   "metadata": {
     "version": "1.0.0",
     "grammar": "json-formula-1.0.0"

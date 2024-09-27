@@ -134,11 +134,6 @@ describe("Form Runtime with Text Input", () => {
         cy.expectNoConsoleErrors();
     })
 
-    it("input field should not have aria-disabled attribute if enable is false", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[1];
-        cy.get(`#${id} > .cmp-adaptiveform-textinput__widget`).should('not.have.attr', 'aria-disabled');
-    })
-
     it("should set valid to false and errorMessage other textfields on a certain string input", () => {
         // Rule on textbox9: When textbox9 is changed => set valid and error message property of textbox10
 
@@ -366,5 +361,4 @@ describe("setFocus on text field via rules", () => {
             cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-textinput--filled');
         });
     });
-
 })

@@ -811,9 +811,7 @@
             "rules",
             "screenReaderText",
             "tooltip",
-            "visible",
-            "type",
-            "buttonType"
+            "visible"
           ],
           "errorMessage": {
             "enum": "${0} property is not allowed in Button"
