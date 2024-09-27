@@ -40,7 +40,8 @@ public enum FieldType {
     PASSWORD("password"),
     RANGE("range"),
     COLOR("color"),
-    URL("url");
+    URL("url"),
+    HIDDEN("hidden");
 
     private String value;
 
