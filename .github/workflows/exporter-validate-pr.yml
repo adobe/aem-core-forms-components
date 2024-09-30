@@ -35,7 +35,7 @@ jobs:
           for file in $changed_files; do
             # Fetch the base and head versions of the file
             base_file=$(git show ${{ github.base_ref }}:$file)
-            head_file=$(git show $file)
+            head_file=$(git show ${{ github.head_ref }}:$file)
 
             # Debug: Output the contents of the files
             echo "Base file contents for $file:"
