@@ -6,7 +6,7 @@
       "fd:dor": {
         "dorExclusion": false
       },
-      "abc" : "def",
+      "fd:path": "/content/title",
       "fd:htmlelementType": null
     },
     "events": {
