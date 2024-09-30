@@ -49,6 +49,12 @@ describe.only('Page - Authoring', function () {
         const responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='Please drag Tab components here']:last";
         dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
     }
+
+    const dropPanelInTabComponent = function () {
+        const responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='Please drag Tab components here']:last";
+        dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+    }
+
     const dropTabsInSites = function () {
         const dataPath = "/content/core-components-examples/library/adaptive-form/panelcontainer/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
@@ -87,7 +93,8 @@ describe.only('Page - Authoring', function () {
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             tabsPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/tabsontop",
-            tabsContainerPathSelector = "[data-path='" + tabsPath + "']";
+            tabsContainerPathSelector = "[data-path='" + tabsPath + "']",
+            panelcontainerTabItemSelector = "[data-path='" + tabsPath + "/panelcontainer']";
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
@@ -151,6 +158,29 @@ describe.only('Page - Authoring', function () {
             cy.cleanTest(tabsPath).then(function () {
                 testPanelBehaviour(tabsContainerPathSelector, tabsPath);
             });
+        });
+
+        it('open editable toolbar of 2nd tabpanel', {retries: 3}, function () {
+            cy.cleanTest(tabsPath).then(function () {
+                dropTabsInContainer();
+                //Add 2 children in tabs on top component
+                dropTextInputInTabComponent();
+                dropPanelInTabComponent();
+                cy.reload();
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
+                cy.invokeEditableAction("[data-action='PANEL_SELECT']").then(() => {
+                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table tr").eq(1)
+                        .should("contain.text", "Adaptive Form Panel: Panel");
+                    const panelPath = tabsPath + "/panelcontainer";
+                    cy.get(`[data-id="${panelPath}`).click().then(() => {
+                        cy.get(`[data-path="${panelPath}"]`).should('be.visible');
+                        cy.get('body').click(0, 0);
+                        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerTabItemSelector);
+                        cy.deleteComponentByPath(tabsPath);
+                    })
+                })
+           });
         });
 
     });
