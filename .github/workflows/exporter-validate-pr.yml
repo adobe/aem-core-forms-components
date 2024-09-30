@@ -45,6 +45,17 @@ jobs:
               echo "$removed_keys"
               exit 1
             fi
+            
+            # Check for changed values
+            for key in $base_keys; do
+              base_value=$(echo "$base_file" | jq -r ".$key")
+              head_value=$(echo "$head_file" | jq -r ".$key")
+
+              if [ "$base_value" != "$head_value" ]; then
+                echo "Backward incompatibility change detected in $file. The value of key '$key' was changed from '$base_value' to '$head_value'."
+                exit 1
+              fi
+            done
           done
 
           echo "All exporter JSON files have only additions. No backward incompatibility changes detected."
