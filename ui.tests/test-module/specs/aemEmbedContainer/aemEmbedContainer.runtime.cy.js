@@ -34,7 +34,7 @@ describe("Sites with Aem Embed Container", () => {
                 .then(cy.wrap)
         }
 
-        it.only("test for iframe presence in for with data path as selected form", () => {
+        it("test for iframe presence in for with data path as selected form", () => {
             cy.get('.cmp-aemform__iframecontent').should('have.length', 1);
             cy.get('.cmp-aemform__iframecontent').should('have.attr', "data-form-page-path", "/content/forms/af/core-components-it/samples/numberinput/basic");
         })
