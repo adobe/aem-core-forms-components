@@ -17,6 +17,7 @@
 import {Constants} from "./constants.js";
 import Response from "./Response.js";
 import AfFormData from "./FormData.js";
+import {readAttachments} from "@aemforms/af-core";
 
 /**
  * The GuideBridge class represents the bridge between an adaptive form and JavaScript APIs.
@@ -113,12 +114,12 @@ class GuideBridge {
      * @method
      * @memberof GuideBridge
      */
-    async getFormDataString(options) {
+    getFormDataString(options) {
         let formModel = this.getFormModel();
         if (!formModel) {
             throw new Error("formModel is not defined");
         }
-        formModel.getState().attachments.then(attachmentAsObj => {
+        readAttachments(formModel).then(attachmentAsObj => {
             let attachmentAsArray = Object.keys(attachmentAsObj).flatMap((key) => attachmentAsObj[key]);
             let formData = new AfFormData({
                 "data": JSON.stringify(formModel.exportData()),
