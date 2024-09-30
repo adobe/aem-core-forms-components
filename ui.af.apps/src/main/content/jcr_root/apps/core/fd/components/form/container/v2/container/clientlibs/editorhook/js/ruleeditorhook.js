@@ -82,39 +82,41 @@
         document.body.appendChild(ruleEditorFrame);
     }
 
-    async function _openRuleEditorFromSPA(ruleEditorUri, formPath, selectedFieldPath, fieldDefinitionId, lang) {
+    function _openRuleEditorFromSPA(ruleEditorUri, formPath, selectedFieldPath, fieldDefinitionId, lang) {
         console.debug(`rule-editor fetchUrl: ${ruleEditorUri}`);
 
-        const fetchedContent = await getContent(ruleEditorUri);
+        return getContent(ruleEditorUri).then(fetchedContent => {
+            let htmlDom = new DOMParser().parseFromString(fetchedContent, 'text/html');
+            const base = document.createElement('base');
+            base.href = window.location.origin;
+            document.getElementsByTagName('head')[0].appendChild(base);
 
-        let htmlDom = new DOMParser().parseFromString(fetchedContent, 'text/html');
-        const base = document.createElement('base');
-        base.href = window.location.origin;
-        document.getElementsByTagName('head')[0].appendChild(base);
+            const ruleMetaInfoElement = document.createElement('div');
+            ruleMetaInfoElement.setAttribute('id', 'rule-meta-info');
+            ruleMetaInfoElement.setAttribute('data-formpath', formPath);
+            ruleMetaInfoElement.setAttribute('data-fieldpath', selectedFieldPath);
+            if (fieldDefinitionId) {
+                ruleMetaInfoElement.setAttribute('data-fieldid', fieldDefinitionId);
+            }
 
-        const ruleMetaInfoElement = document.createElement('div');
-        ruleMetaInfoElement.setAttribute('id', 'rule-meta-info');
-        ruleMetaInfoElement.setAttribute('data-formpath', formPath);
-        ruleMetaInfoElement.setAttribute('data-fieldpath', selectedFieldPath);
-        if (fieldDefinitionId) {
-            ruleMetaInfoElement.setAttribute('data-fieldid', fieldDefinitionId);
-        }
+            const existingMetaInfo = htmlDom.getElementById('rule-meta-info');
+            if (existingMetaInfo) {
+                existingMetaInfo.replaceWith(ruleMetaInfoElement);
+            }
 
-        const existingMetaInfo = htmlDom.getElementById('rule-meta-info');
-        if (existingMetaInfo) {
-            existingMetaInfo.replaceWith(ruleMetaInfoElement);
-        }
-
-        htmlDom.documentElement.lang = lang;
-        return htmlDom.documentElement.outerHTML;
+            htmlDom.documentElement.lang = lang;
+            return htmlDom.documentElement.outerHTML;
+        });
     }
 
-    async function getContent(fetchUrl) {
-        const response = await fetch(fetchUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return await response.text();
+    function getContent(fetchUrl) {
+        return fetch(fetchUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            });
     }
 
     function getFormContainerPath(editable) {
