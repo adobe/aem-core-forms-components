@@ -355,4 +355,22 @@ describe("Form Runtime with Date Picker", () => {
             })
         })
     });
+
+    it.only("should create and attach an unique datepicker calendar if it doesn't exist", () => {
+        const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[4];
+        const [datePicker6, datePicker6FieldView] = Object.entries(formContainer._fields)[6];
+        const input = "2023-01-01";
+
+        cy.get(`#${datePicker4}`).find("input").clear().type(input).should('have.value', '2023-01-01').blur();
+        cy.get(`#${datePicker6}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(x => {
+            cy.get(".datetimepicker").should("be.visible");
+            cy.get('.datetimepicker .dp-header .dp-caption').then(($element) => {
+                $element[0].addEventListener('click', () => {
+                    console.log('Test message: Element was clicked');
+                })
+            });
+            cy.get('.datetimepicker .dp-header .dp-caption').eq(1).click();
+            cy.get('.datetimepicker').should('be.visible');
+        });
+    })
 })
