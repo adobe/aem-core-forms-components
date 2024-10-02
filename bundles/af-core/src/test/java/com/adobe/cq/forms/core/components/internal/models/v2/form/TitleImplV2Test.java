@@ -39,6 +39,7 @@ import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormTitle;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.core.components.internal.DataLayerConfig;
@@ -64,6 +65,7 @@ public class TitleImplV2Test {
     private static final String PATH_TITLE_NOPROPS = CONTENT_ROOT + "/title-noprops";
 
     private static final String PATH_TITLE_WRONGTYPE = CONTENT_ROOT + "/title-wrongtype";
+    private static final String PATH_TITLE_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/title-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -212,6 +214,12 @@ public class TitleImplV2Test {
         }
         return context.request().adaptTo(FormTitle.class);
 
+    }
+
+    @Test
+    void testNoFieldType() {
+        TitleImplV2 title = Utils.getComponentUnderTest(PATH_TITLE_WITHOUT_FIELDTYPE, TitleImplV2.class, context);
+        assertEquals(FieldType.PLAIN_TEXT.getValue(), title.getFieldType());
     }
 
 }

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -34,6 +35,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
@@ -71,12 +73,28 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @Override
     public Type getType() {
-        // file upload does not work for type string in core component, hence default it to file
-        if (!isMultiple()) {
-            return Type.FILE;
-        } else {
-            return Type.FILE_ARRAY;
+        Type superType = super.getType();
+        if (superType == null || StringUtils.isBlank(typeJcr) || superType == Type.FILE) {
+            return isMultiple() ? Type.FILE_ARRAY : Type.FILE;
         }
+        if (isMultiple() && superType == Type.STRING) {
+            return Type.STRING_ARRAY;
+        }
+        return superType;
+    }
+
+    @Override
+    public String getFormat() {
+        Type type = getType();
+        if (type == Type.STRING || type == Type.STRING_ARRAY) {
+            return "data-url";
+        }
+        return null;
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.FILE_INPUT);
     }
 
     @Override

@@ -30,6 +30,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.NumberInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
@@ -127,6 +128,11 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
         } else {
             return superType;
         }
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.NUMBER_INPUT);
     }
 
     @PostConstruct

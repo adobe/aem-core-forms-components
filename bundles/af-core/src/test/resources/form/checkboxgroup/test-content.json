@@ -252,5 +252,22 @@
       20
     ],
     ":type": "forms-components-examples/components/form/checkboxgroup"
+  },
+  "checkboxgroup-without-fieldtype": {
+    "id": "checkboxgroup-a484170b97",
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Check Box Group",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "name": "checkboxgroup1722332761006",
+    "type": "number[]",
+    "enumNames": [
+      "Item 1",
+      " Item 2"
+    ],
+    "jcr:lastModified": "Tue Jul 30 2024 15:16:00 GMT+0530",
+    "sling:resourceType": "forms-components-examples/components/form/checkboxgroup"
   }
 }
