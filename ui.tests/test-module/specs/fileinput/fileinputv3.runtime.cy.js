@@ -22,14 +22,6 @@ const checkFileNamesInFileAttachmentView = (component, fileNames) => {
     });
 }
 
-const checkFilePreviewInFileAttachment = (component) => {
-    cy.get(component).then(() => {
-        cy.get(".cmp-adaptiveform-fileinput__filename").each(($file) => {
-            cy.wrap($file).click();
-            cy.window().its('open').should('be.called');
-        })
-    });
-};
 
 const deleteSelectedFiles = (component, fileNames) => {
     cy.get(component).then(() => {

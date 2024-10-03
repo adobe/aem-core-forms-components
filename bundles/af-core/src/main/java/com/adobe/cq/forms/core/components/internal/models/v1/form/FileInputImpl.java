@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -72,12 +73,23 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @Override
     public Type getType() {
-        // file upload does not work for type string in core component, hence default it to file
-        if (!isMultiple()) {
-            return Type.FILE;
-        } else {
-            return Type.FILE_ARRAY;
+        Type superType = super.getType();
+        if (superType == null || StringUtils.isBlank(typeJcr) || superType == Type.FILE) {
+            return isMultiple() ? Type.FILE_ARRAY : Type.FILE;
         }
+        if (isMultiple() && superType == Type.STRING) {
+            return Type.STRING_ARRAY;
+        }
+        return superType;
+    }
+
+    @Override
+    public String getFormat() {
+        Type type = getType();
+        if (type == Type.STRING || type == Type.STRING_ARRAY) {
+            return "data-url";
+        }
+        return null;
     }
 
     @Override

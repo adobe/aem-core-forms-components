@@ -24,7 +24,8 @@
                 selector: ".cmp-adaptiveform-wizard",
                 wrapperSelector: '[data-panelcontainer="wizard"]',
                 itemSelector: "[data-cmp-hook-adaptiveFormWizard='wizardpanel']",
-                itemActiveSelector: ".cmp-adaptiveform-wizard__wizardpanel--active"
+                itemActiveSelector: ".cmp-adaptiveform-wizard__wizardpanel--active",
+                itemSelectorWrapper: ".cmp-adaptiveform-wizard__widget"
             });
         }
     });

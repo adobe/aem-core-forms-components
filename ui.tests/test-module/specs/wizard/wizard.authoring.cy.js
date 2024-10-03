@@ -46,6 +46,14 @@ describe('Page - Authoring', function () {
         cy.get('body').click(0, 0);
     }
 
+    const addComponentInWizardOfSites = function (componentString, componentType) {
+        const dataPath = "/content/core-components-examples/library/adaptive-form/wizard/jcr:content/root/responsivegrid/demo/component/guideContainer/wizard/*",
+            responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
+        cy.selectLayer("Edit");
+        cy.insertComponent(responsiveGridDropZoneSelector, componentString, componentType);
+        cy.get('body').click(0, 0);
+    }
+
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
@@ -56,10 +64,13 @@ describe('Page - Authoring', function () {
             editDialogNavigationPanelSelector = "[data-action='PANEL_SELECT']",
             textInputPath = wizardLayoutDrop + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             numberInputPath = wizardLayoutDrop + "/" + afConstants.components.forms.resourceType.formnumberinput.split("/").pop(),
+            panelcontainerPath = wizardLayoutDrop + "/" + afConstants.components.forms.resourceType.panelcontainer.split("/").pop(),
             textInputDataId = "[data-id='" + textInputPath + "']",
             numberInputDataId = "[data-id='" + numberInputPath + "']",
+            panelcontainerDataId = "[data-id='" + panelcontainerPath + "']",
             textInputDataPath = "[data-path='" + textInputPath + "']",
             numberInputDataPath = "[data-path='" + numberInputPath + "']",
+            panelcontainerDataPath = "[data-path='" + panelcontainerPath + "']",
             editDialogConfigurationSelector = "[data-action='CONFIGURE']";
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -128,10 +139,10 @@ describe('Page - Authoring', function () {
             });
         });
 
-        it('verify save as fragment dialog of Wizard',function (){
+        it('verify save as fragment dialog of Wizard',function () {
             dropWizardInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(()=>{
-                cy.invokeEditableAction("[data-action='saveAsFragment']").then(()=>{
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(() => {
+                cy.invokeEditableAction("[data-action='saveAsFragment']").then(() => {
                     // Check If Dialog Options Are Visible
                     cy.get("[name='name']")
                         .should("exist");
@@ -156,6 +167,23 @@ describe('Page - Authoring', function () {
                 });
             });
             cy.deleteComponentByPath(wizardLayoutDrop);
+        })
+
+        it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
+            cy.cleanTest(wizardLayoutDrop).then(function () {
+                dropWizardInContainer();
+                addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
+                addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
+                cy.invokeEditableAction(editDialogNavigationPanelSelector);
+                cy.wait(2000).then(() => {
+                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
+                    cy.get('body').click(0, 0);
+                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerDataPath);
+                    cy.deleteComponentByPath(wizardLayoutDrop);
+                });
+            });
         });
     });
 
@@ -164,7 +192,11 @@ describe('Page - Authoring', function () {
             wizardEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/wizard",
             wizardBlockBemSelector = '.cmp-adaptiveform-wizard',
             editDialogConfigurationSelector = "[data-action='CONFIGURE']",
-            wizardEditPathSelector = "[data-path='" + wizardEditPath + "']";
+            navigationPanelSelector = "[data-action='PANEL_SELECT']",
+            wizardEditPathSelector = "[data-path='" + wizardEditPath + "']",
+            panelcontainerPath = wizardEditPath + "/" + afConstants.components.forms.resourceType.panelcontainer.split("/").pop(),
+            panelcontainerDataId = "[data-id='" + panelcontainerPath + "']",
+            panelcontainerDataPath = "[data-path='" + panelcontainerPath + "']";
 
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
@@ -228,6 +260,22 @@ describe('Page - Authoring', function () {
 
                 cy.get('.cq-dialog-cancel').click();
                 cy.deleteComponentByPath(wizardEditPath);
+            })
+        });
+        it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
+            cy.cleanTest(wizardEditPath).then(function () {
+                dropWizardInSites();
+                addComponentInWizardOfSites("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
+                addComponentInWizardOfSites("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
+                cy.invokeEditableAction(navigationPanelSelector);
+                cy.wait(2000).then(() => {
+                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
+                    cy.get('body').click(0, 0);
+                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerDataPath);
+                    cy.deleteComponentByPath(wizardEditPath);
+                });
             });
         });
 
