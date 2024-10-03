@@ -3,4 +3,5 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Fragment"
     wrapData="{Boolean}true"
+    fragmentPath=""
     fieldType="panel"/>

@@ -26,10 +26,10 @@
      * @param {Object} [preservedProperties] properties that will be preserved after replace
      * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
      */
-    let sendReplaceParagraph = function (config, editable, preservedProperties) {
+    let sendReplaceParagraph = function (config, editable, preservedProperties, updatedPropertyValue) {
         return (
             new RequestManager.PostRequest()
-                .prepareReplaceParagraph(config, editable, preservedProperties)
+                .prepareReplaceParagraph(config, editable, preservedProperties, updatedPropertyValue)
                 .send()
         );
     };
@@ -59,7 +59,7 @@
         this.dataType = config.dataType
     };
 
-    RequestManager.PostRequest.prototype.prepareReplaceParagraph = function (config, editable, preservedProperties) {
+    RequestManager.PostRequest.prototype.prepareReplaceParagraph = function (config, editable, preservedProperties, updatedPropertyValue) {
         if (config.templatePath) {
             let comTemplatePath = Granite.HTTP.externalize(config.templatePath),
                 comData = CQ.shared.HTTP.eval(comTemplatePath + ".infinity.json"), // get component default json
@@ -81,6 +81,9 @@
 
             comData["sling:resourceType"] = config.resourceType;
             updatedProps = {...comData, ...updatedProps};
+            if(typeof updatedPropertyValue === "object") {
+                updatedProps = {...updatedProps, ...updatedPropertyValue};
+            }
             this.setParam(":content", JSON.stringify(updatedProps));    // write component properties
         }
 
@@ -144,7 +147,7 @@
      * @param {Object} [preservedProperties] properties that will be preserved after replace
      * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
      */
-    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties) {
+    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties, updatedPropertyValue) {
         let args = arguments;
 
         channel.trigger("cq-persistence-before-replace", args);
@@ -155,7 +158,7 @@
                 configParams: component.getConfigParams(),
                 extraParams: component.getExtraParams(),
                 templatePath: component.getTemplatePath()
-            }, editable, preservedProperties)
+            }, editable, preservedProperties, updatedPropertyValue)
                 .done(function () {
                     editable.refresh();
                     channel.trigger("cq-persistence-after-replace", args);

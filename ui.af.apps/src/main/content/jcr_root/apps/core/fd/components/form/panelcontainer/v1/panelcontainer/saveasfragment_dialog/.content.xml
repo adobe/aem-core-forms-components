@@ -19,7 +19,7 @@
           jcr:title="Save as Fragment"
           sling:resourceType="cq/gui/components/authoring/dialog">
     <content
-            granite:class="guideIndependentDialog"
+            granite:class="cmp-adaptiveform-saveasfragment"
             jcr:primaryType="nt:unstructured"
             jcr:title=""
             sling:resourceType="granite/ui/components/coral/foundation/form/fieldset">
@@ -60,32 +60,32 @@
                     rootPath="/content/dam/formsanddocuments"/>
             <formmodel
                     jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                    fieldLabel="Form Model"
-                    name="formModel"
-                    required="{Boolean}true">
-                <items jcr:primaryType="nt:unstructured">
-                    <none
-                            jcr:primaryType="nt:unstructured"
-                            text="none"
-                            value="none"/>
-                    <jsonschema
-                            jcr:primaryType="nt:unstructured"
-                            text="jsonschema"
-                            value="jsonschema"/>
-                    <formdatamodel
-                            jcr:primaryType="nt:unstructured"
-                            text="formdatamodel"
-                            value="formdatamodel"/>
-                </items>
+                    sling:resourceType="granite/ui/components/coral/foundation/include"
+                    path="/libs/core/fd/components/form/container/v2/container/cq:dialog/content/items/tabs/items/dataModel/items/formmodel">
             </formmodel>
-            <fragmentModelRoot
+            <templateselector
+                    granite:class="cmp-adaptiveform-panelcontainer__templateselector"
                     jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                    fieldLabel="Fragment Model Root"
-                    name="fragmentModelRoot">
-                <items jcr:primaryType="nt:unstructured"/>
-            </fragmentModelRoot>
+                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                    emptyText="Type here or browse"
+                    fieldLabel="Select Fragment Template"
+                    filter="template"
+                    name="templatePath"
+                    required="{Boolean}true">
+                <datasource
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="fd/fm/gui/components/admin/formelements/templatedataprovider"/>
+                <options
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                <values
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/tags"/>
+            </templateselector>
+            <fragmentselectcontainer
+                jcr:primaryType="nt:unstructured"
+                granite:class="coral-Form-fieldwrapper cmp-adaptiveform-saveasfragment__fragmentselect-container"
+                sling:resourceType="granite/ui/components/coral/foundation/container"/>
         </items>
     </content>
 </jcr:root>
