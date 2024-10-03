@@ -239,7 +239,7 @@ describe("Form Runtime with Date Picker", () => {
 
         // check clear option
         cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
-            cy.get(".dp-clear").click();
+            cy.get(".dp-clear").eq(1).click();
         });
 
         cy.get(`#${datePicker7}`).find("input").should("have.value", "");
