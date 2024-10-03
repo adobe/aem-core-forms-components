@@ -52,7 +52,15 @@
                 Object.assign(ruleEditorFrame.style, styles);
                 document.body.appendChild(ruleEditorFrame);
             }
-        }
+
+            const existingMetaInfo = htmlDom.getElementById('rule-meta-info');
+            if (existingMetaInfo) {
+                existingMetaInfo.replaceWith(ruleMetaInfoElement);
+            }
+
+            htmlDom.documentElement.lang = lang;
+            return htmlDom.documentElement.outerHTML;
+        });
     }
 
     function getFormContainerPath(editable) {
