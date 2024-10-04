@@ -181,7 +181,6 @@ if (typeof window.DatePickerWidget === 'undefined') {
       }
       html += this.#clearButtonTemplate;
 
-      this.#dp = document.getElementsByClassName("datetimepicker")[0];
       if (!this.#dp) {
         this.#dp = document.createElement("div");
         this.#dp.classList.add("datetimepicker", "datePickerTarget");
