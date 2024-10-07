@@ -17,7 +17,8 @@
 import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
-import {FunctionRuntime} from '@aemforms/af-core'
+import {FunctionRuntime} from '@aemforms/af-core';
+import {loadXfa} from "./handleXfa";
 
 /**
  * @module FormView
@@ -307,7 +308,18 @@ class Utils {
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
+                const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
+                let _formJson, callback;
+                if (loader) {
+                    const id = loader.getAttribute('data-cmp-adaptiveform-container-loader');
+                    const response = await fetch(`/adobe/forms/af/${id}`)
+                    _formJson = (await response.json()).afModelDefinition;
+                    _formJson.id = id;
+                    //window.formJson = _formJson
+                    callback = loadXfa(_formJson.formdom, _formJson.xfaRenderContext);
+                } else {
+                    _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
+                }
                 console.debug("fetched model json", _formJson);
                 await this.registerCustomFunctions(_formJson.id);
                 await this.registerCustomFunctionsByUrl(customFunctionUrl);
@@ -325,6 +337,9 @@ class Utils {
                     _path,
                     _element: elements[i]
                 });
+                if (typeof callback === 'function') {
+                    callback(formContainer.getModel());
+                }
                 Utils.initializeAllFields(formContainer);
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
