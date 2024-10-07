@@ -133,4 +133,6 @@ public final class FormConstants {
     public static final String REQ_ATTR_REFERENCED_PATH = "referencedPage";
 
     public static final String PROP_FRAGMENT_PATH = "fragmentPath";
+
+    public static final String RT_FD_FORM_PASSWORD_V1 = RT_FD_FORM_PREFIX + "password/v1/password";
 }
