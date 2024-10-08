@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2023 Adobe
+ ~ Copyright 2024 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@
         if (window.CQ && window.CQ.CoreComponents && window.CQ.CoreComponents.panelcontainer &&
             window.CQ.CoreComponents.panelcontainer.v1 && window.CQ.CoreComponents.panelcontainer.v1.registry) {
             window.CQ.CoreComponents.panelcontainer.v1.registry.register({
-                name: "cmp-verticaltabs",
-                selector: ".cmp-verticaltabs",
-                wrapperSelector: '[data-panelcontainer="verticaltabs"]',
-                itemSelector: "[data-cmp-hook-adaptiveFormVerticalTabs='tabpanel']",
-                itemActiveSelector: ".cmp-verticaltabs__tabpanel--active",
-                itemSelectorWrapper: ".cmp-verticaltabs__tabs-container"
+                name: "cmp-adaptiveform-tabs",
+                selector: ".cmp-tabs",
+                wrapperSelector: '[data-panelcontainer="adaptiveFormTabs"]',
+                itemSelector: "[data-cmp-hook-adaptiveFormTabs='tabpanel']",
+                itemActiveSelector: ".cmp-tabs__tabpanel--active"
             });
         }
     });
-
-
 })(jQuery(document));

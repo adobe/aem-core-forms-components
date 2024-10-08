@@ -63,6 +63,21 @@
                                                     fieldLabel="Button title"
                                                     name="./buttonText">
                                             </buttonText>
+                                            <type jcr:primaryType="nt:unstructured"
+                                                  sling:orderBefore="visible"
+                                                  sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                  granite:class="cmp-adaptiveform-radiobutton__type"
+                                                  fieldLabel="Data type of submitted value"
+                                                  fieldDescription="Selecting the String data type option would increase the upload size by 30%."
+                                                  required="{Boolean}true"
+                                                  name="./type"
+                                                  key="File"
+                                                  value="file">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <string jcr:primaryType="nt:unstructured" text="String" value="string"/>
+                                                    <boolean jcr:primaryType="nt:unstructured" text="File" value="file"/>
+                                                </items>
+                                            </type>
                                             <showComment
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true">
