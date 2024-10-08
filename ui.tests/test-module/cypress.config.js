@@ -1,4 +1,5 @@
 const { defineConfig } = require('cypress');
+const { initPlugin } = require('cypress-plugin-snapshots/plugin');
 
 module.exports = defineConfig({
   fixturesFolder: 'libs/fixtures',
@@ -32,6 +33,7 @@ module.exports = defineConfig({
           return launchOptions
         }
       })
+      initPlugin(on, config);
       config.env.specPattern = 'specs/**/*.cy.{js,jsx,ts,tsx}';
       return require('./libs/plugins/index.js')(on, config);
     },
