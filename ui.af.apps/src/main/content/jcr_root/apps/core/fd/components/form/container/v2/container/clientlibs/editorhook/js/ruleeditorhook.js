@@ -23,28 +23,34 @@
      * Opens the rule editor in a separate iframe for an editable
      * @param editable
      */
-    window.CQ.FormsCoreComponents.editorhooks.openRuleEditor = function (editable) {
-        let existingRuleEditorFrame = document.getElementById('af-rule-editor');
-        if (existingRuleEditorFrame) {
-            existingRuleEditorFrame.parentNode.removeChild(existingRuleEditorFrame);
-        }
-        let ruleEditorFrame = document.createElement('iframe');
-        ruleEditorFrame.setAttribute('id','af-rule-editor');
-        let formContainerPath = getFormContainerPath(editable);
-        if (!formContainerPath) {
-            showAlert();
-        } else {
-            let ruleEditorUri = '/aem/af/expeditor.html' + getFormContainerPath(editable) + "?fieldPath=" + editable.path + "&fieldId=" + getFieldId(editable);
-            ruleEditorFrame.setAttribute('src', ruleEditorUri);
-            ruleEditorFrame.setAttribute('title', 'AF Rule Editor');
-            ruleEditorFrame.style.display = "block";
-            ruleEditorFrame.style.width = "100%";
-            ruleEditorFrame.style.height = "100%";
-            ruleEditorFrame.style.top = "0";
-            ruleEditorFrame.style.left = "0";
-            ruleEditorFrame.style.position = "fixed";
-            ruleEditorFrame.style.zIndex = "10";
-            document.body.appendChild(ruleEditorFrame);
+    if (typeof window.CQ.FormsCoreComponents.editorhooks.openRuleEditor !== 'function') {
+        window.CQ.FormsCoreComponents.editorhooks.openRuleEditor = function (editable) {
+            let existingRuleEditorFrame = document.getElementById('af-rule-editor');
+            if (existingRuleEditorFrame) {
+                existingRuleEditorFrame.parentNode.removeChild(existingRuleEditorFrame);
+            }
+            let ruleEditorFrame = document.createElement('iframe');
+            ruleEditorFrame.setAttribute('id', 'af-rule-editor');
+            let formContainerPath = getFormContainerPath(editable);
+            if (!formContainerPath) {
+                showAlert();
+            } else {
+                const ruleEditorUri = '/aem/af/expeditor.html' + getFormContainerPath(editable) + "?fieldPath=" + editable.path + "&fieldId=" + getFieldId(editable);
+                ruleEditorFrame.setAttribute('src', ruleEditorUri);
+                ruleEditorFrame.setAttribute('title', 'AF Rule Editor');
+                const styles = {
+                    display: "block",
+                    width: "100%",
+                    height: "100%",
+                    top: "0",
+                    left: "0",
+                    position: "fixed",
+                    zIndex: "10"
+                };
+
+                Object.assign(ruleEditorFrame.style, styles);
+                document.body.appendChild(ruleEditorFrame);
+            }
         }
     }
 
@@ -68,7 +74,6 @@
     }
 
     function getFieldId(editable) {
-        // todo: dead code, not used
         return editable.dom.find("[data-cmp-adaptiveformcontainer-path]").attr('id');
     }
 
