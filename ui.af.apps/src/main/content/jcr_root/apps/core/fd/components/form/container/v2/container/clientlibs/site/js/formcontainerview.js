@@ -21,15 +21,16 @@
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormContainer";
         static bemBlock = 'cmp-adaptiveform-container';
-
+        static hamburgerMenuInstance = '';
         static selectors  = {
-            self: "[data-" + this.NS + '-is="' + this.IS + '"]'
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
         };
 
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
         constructor(params) {
             super(params);
             const { hamburgerMenuInstance } = params;
+            FormContainerV2.hamburgerMenuInstance = hamburgerMenuInstance;
             let self = this;
             this._model.subscribe((action) => {
                 let state = action.target.getState();
@@ -75,14 +76,14 @@
                     window.alert(FormView.LanguageUtils.getTranslatedString(self.getLang(), "saveDraftErrorMessage"));
                 }
             }, "saveError");
-            this.#setupAutoSave(self.getModel(), hamburgerMenuInstance);
+            this.#setupAutoSave(self.getModel());
         }
 
         /**
          * Register time based auto save
          * @param formModel.
          */
-         #setupAutoSave(formModel, hamburgerMenuInstance) {
+         #setupAutoSave(formModel) {
             const autoSaveProperties = formModel?.properties?.['fd:autoSave'];
             const enableAutoSave = autoSaveProperties?.['fd:enableAutoSave'];
             if (enableAutoSave) {
@@ -106,16 +107,16 @@
                     changes.forEach((change) => {
                         switch (change.propertyName) {
                             case "activeChild":
-                                hamburgerMenuInstance.handleActiveItem(field);
+                                FormContainerV2.hamburgerMenuInstance.handleActiveItem(field);
                                 break;
                             case "items":
-                                hamburgerMenuInstance.handleItemsChange(change, items);
+                                FormContainerV2.hamburgerMenuInstance.handleItemsChange(change, items);
                                 break;
                             case "visible":
-                                hamburgerMenuInstance.updateAttribute(field.id, 'data-cmp-visible', field.visible);
+                                FormContainerV2.hamburgerMenuInstance.updateAttribute(field.id, 'data-cmp-visible', field.visible);
                                 break;
                             case "enabled":
-                                hamburgerMenuInstance.updateAttribute(field.id, 'data-cmp-enabled', field.enabled);
+                                FormContainerV2.hamburgerMenuInstance.updateAttribute(field.id, 'data-cmp-enabled', field.enabled);
                                 break;
                         }
                     });
