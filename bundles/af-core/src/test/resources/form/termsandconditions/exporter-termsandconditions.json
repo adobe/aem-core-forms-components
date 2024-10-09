@@ -11,6 +11,7 @@
     },
     "fd:path": "/content/termsandconditions",
     "fd:tnc": true,
+    "showAsPopup": false,
     "customProp": "customPropValue"
   },
   "label": {

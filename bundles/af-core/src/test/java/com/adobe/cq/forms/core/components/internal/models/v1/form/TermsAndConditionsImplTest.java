@@ -95,7 +95,6 @@ public class TermsAndConditionsImplTest {
     public void testGetProperties() {
         TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_TNC, TermsAndConditions.class, context);
         Assert.assertTrue(tnc.isShowApprovalOption());
-        Assert.assertTrue(tnc.isShowAsPopup());
         Assert.assertFalse(tnc.isShowLink());
     }
 
@@ -105,6 +104,7 @@ public class TermsAndConditionsImplTest {
         Map<String, Object> props = tnc.getProperties();
         Assert.assertTrue(props.containsKey("fd:tnc"));
         Assert.assertTrue((Boolean) props.get("fd:tnc"));
+        Assert.assertFalse((Boolean) props.get("showAsPopup"));
 
     }
 
