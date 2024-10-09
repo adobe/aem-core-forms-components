@@ -56,7 +56,7 @@ describe('Page - Authoring', function () {
     cy.deleteComponentByPath(telephoneInputDrop);
   }
 
-  context('Open Forms Editor', function() {
+  context.only('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
         telephoneInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput",
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']",
@@ -86,6 +86,23 @@ describe('Page - Authoring', function () {
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
         cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select('US Phone Number', {force: true});
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+]1[0-9]{0,10}$');
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(telephoneInputDrop);
+      });
+    });
+
+    it('Adding display patterns of Telephone Input', function () {
+      const bemEditDialog = '.cmp-adaptiveform-telephoneinput__editdialog';
+      dropTelephoneInputInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get(bemEditDialog).contains('Formats').click({force: true}).then(() => {
+        cy.get('.cmp-adaptiveform-telephoneinput__displaypattern').should('exist');
+        cy.get('.cmp-adaptiveform-telephoneinput__displaypattern').should('be.visible');
+        cy.get('.cmp-adaptiveform-telephoneinput__displaypattern select').should('exist');
+        cy.get('.cmp-adaptiveform-telephoneinput__displaypattern select').children('option').should('have.length.greaterThan', 0);
+        cy.get('.cmp-adaptiveform-telephoneinput__displaypattern select').select('US Phone Number', {force: true});
+        cy.get('.cmp-adaptiveform-telephoneinput__displayformat').should('have.value', '^[+]1[0-9]{0,10}$');
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(telephoneInputDrop);
       });

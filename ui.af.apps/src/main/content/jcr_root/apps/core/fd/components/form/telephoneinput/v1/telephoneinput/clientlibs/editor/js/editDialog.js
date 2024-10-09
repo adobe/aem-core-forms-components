@@ -17,10 +17,19 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-telephoneinput__editdialog",
+        TELEPHONEINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__displaypattern",
+        TELEPHONEINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__displayformat",
         TELEPHONEINPUT_VALIDATIONPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__validationpattern",
         TELEPHONEINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-telephoneinput__validationformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
+    function handleDisplayPatternDropDown(dialog) {
+        Utils.handlePatternDropDown(dialog,TELEPHONEINPUT_DISPLAYPATTERN,TELEPHONEINPUT_DISPLAYFORMAT);
+    }
+
+    function handleDisplayFormat(dialog){
+        Utils.handlePatternFormat(dialog,TELEPHONEINPUT_DISPLAYPATTERN,TELEPHONEINPUT_DISPLAYFORMAT);
+    }
 
     function handleValidationPatternDropDown(dialog) {
         Utils.handlePatternDropDown(dialog,TELEPHONEINPUT_VALIDATIONPATTERN,TELEPHONEINPUT_VALIDATIONFORMAT);
@@ -30,5 +39,5 @@
         Utils.handlePatternFormat(dialog,TELEPHONEINPUT_VALIDATIONPATTERN,TELEPHONEINPUT_VALIDATIONFORMAT);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown,handleValidationFormat);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleValidationPatternDropDown,handleValidationFormat);
 })(jQuery);
