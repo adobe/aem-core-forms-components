@@ -16,50 +16,47 @@
 
 if (typeof window.HamburgerMenu === 'undefined') {
     window.HamburgerMenu = class HamburgerMenu {
-        // constructor(params) {
-        //     super(params);
-        // }
         static formContainerGlobal = '';
         static activeItemId = '';
-    
-        static NS = FormView.Constants.NS;
-        static IS = "adaptiveFormContainer";
-        static bemBlock = 'cmp-adaptiveform-container';
+
+        static bemBlock = 'cmp-adaptiveform-hamburger-menu';
         static nestingSupport = 10;
     
         static selectors  = {
-            menu: `.${HamburgerMenu.bemBlock}-menu`,
-            topContainer: `.${HamburgerMenu.bemBlock}-hamburger-menu-container`,
-            hamburger: {
-                hamburgerMenuTopBar: `.${HamburgerMenu.bemBlock}-hamburger-menu-top-bar`,
-                hamburgerMenu: `.${HamburgerMenu.bemBlock}-hamburger-menu`,
-                hamburgerSubMenu: `.${HamburgerMenu.bemBlock}-submenu`,
-                hamburgerMenuIcon: `.${HamburgerMenu.bemBlock}-hamburger-icon`,
+            active: `.${HamburgerMenu.bemBlock}__item--active`,
+            hamburgerMenuMainContainer: `.${HamburgerMenu.bemBlock}__container`,
+            hamburgerMenuTopContainer: {
+                self: `.${HamburgerMenu.bemBlock}__top-container`,
+                hamburgerMenuIconContainer: `.${HamburgerMenu.bemBlock}__icon-container`,
+                hamburgerMenuIcon: `.${HamburgerMenu.bemBlock}__icon`,
             },
-            hamburgerNav: {
-                navBar: `.${HamburgerMenu.bemBlock}-nav-bar`,
-                navTitle: `.${HamburgerMenu.bemBlock}-nav-title`,
-                navLink: `.${HamburgerMenu.bemBlock}-nav-link`,
-                closeNavButton: `.${HamburgerMenu.bemBlock}-nav-button-close`,
-                openNavButton: `.${HamburgerMenu.bemBlock}-nav-button-open`,
-                nextNavButton: `.${HamburgerMenu.bemBlock}-nav-button-next`,
-                previousNavButton: `.${HamburgerMenu.bemBlock}-nav-button-previous`,
-                navButtonsContainer: `.${HamburgerMenu.bemBlock}-nav-buttons`,
+            hamburgerMenuWidget: {
+                hamburgerMenu: `.${HamburgerMenu.bemBlock}__dropdown`,
+                hamburgerSubMenu: `.${HamburgerMenu.bemBlock}__submenu`,
+                hamburgerMenuNavLink: `.${HamburgerMenu.bemBlock}__link`,
+                hamburgerMenuCloseNavButton: `.${HamburgerMenu.bemBlock}__button--close`,
+                hamburgerMenuOpenNavButton: `.${HamburgerMenu.bemBlock}__button--open`,
             },
-            active: `.${HamburgerMenu.bemBlock}-hamburger-menu-item-active`,
-            breadCrumbsContainer: `.${HamburgerMenu.bemBlock}-breadcrumbs-container`
+            hamburgerMenuMiddleContainer: `.${HamburgerMenu.bemBlock}__middle-container`,
+            hamburgerMenuBottomContainer: {
+                self: `.${HamburgerMenu.bemBlock}__bottom-container`,
+                hamburgerMenuActiveItemTitle: `.${HamburgerMenu.bemBlock}__active-item-title`,
+                hamburgerMenuNextNavButton: `.${HamburgerMenu.bemBlock}__button--next`,
+                hamburgerMenuPreviousNavButton: `.${HamburgerMenu.bemBlock}__button--prev`,
+                hamburgerMenuNavButtonsContainer: `.${HamburgerMenu.bemBlock}__navigation-container`,
+            },
         };
     
         static cssClasses = {
-            active: `${HamburgerMenu.bemBlock}-hamburger-menu-item-active`,
-            activeParent: `${HamburgerMenu.bemBlock}-hamburger-menu-item-activeparent`,
-            hamburgerMenu: `${HamburgerMenu.bemBlock}-hamburger-menu`,
-            hamburgerNav: {
-                openNavButton: `${HamburgerMenu.bemBlock}-nav-button-open`,
-                closeNavButton: `${HamburgerMenu.bemBlock}-nav-button-close`,
-                navLink: `${HamburgerMenu.bemBlock}-nav-link`,
+            active: `${HamburgerMenu.bemBlock}__item--active`,
+            activeParent: `${HamburgerMenu.bemBlock}__item--activeparent`,
+            hamburgerMenuWidget: {
+                hamburgerMenu: `${HamburgerMenu.bemBlock}__dropdown`,
+                hamburgerSubMenu: `${HamburgerMenu.bemBlock}__submenu`,
+                hamburgerMenuNavLink: `${HamburgerMenu.bemBlock}__link`,
+                hamburgerMenuCloseNavButton: `${HamburgerMenu.bemBlock}__button--close`,
+                hamburgerMenuOpenNavButton: `${HamburgerMenu.bemBlock}__button--open`,
             },
-            hamburgerSubMenu: `${HamburgerMenu.bemBlock}-submenu`,
         }
 
         updateAttribute(id, attributeName, value) {
@@ -107,11 +104,11 @@ if (typeof window.HamburgerMenu === 'undefined') {
 
 
         handleActiveItem(field) {
-            const menu = document.querySelector(HamburgerMenu.selectors.hamburger.hamburgerMenu);
+            const menu = document.querySelector(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu);
             if (field !== null && field) {
                 const activeListItem = document.querySelector(`[data-cmp-id='${field.id}']`);
                 if(activeListItem && activeListItem.tagName === 'LI') {
-                    const menuItems = document.querySelectorAll(HamburgerMenu.selectors.hamburger.hamburgerMenu + ' li');
+                    const menuItems = document.querySelectorAll(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu + ' li');
                     const fieldModel = HamburgerMenu.formContainerGlobal?.getField(activeListItem?.getAttribute('data-cmp-id'))?.getModel();
                     const elementID = this.checkFirstNonPanel(fieldModel);
                     const targetElement = menu.querySelector("[data-cmp-id='"+ elementID + "']");
@@ -119,7 +116,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
                     this.activateCurrentItem(targetElement);
                     const anchorElement = targetElement?.querySelector('a');
                     anchorElement?.classList.add(HamburgerMenu.cssClasses.active);
-                    anchorElement?.querySelector('button')?.classList?.toggle(HamburgerMenu.cssClasses.hamburgerNav.closeNavButton);
+                    anchorElement?.querySelector('button')?.classList?.toggle(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuCloseNavButton);
                     this.updateSelectedPanelTitle(anchorElement);
                     this.highlightMenuTree(anchorElement);
                     this.renderBreadCrumbs(menu);
@@ -132,10 +129,10 @@ if (typeof window.HamburgerMenu === 'undefined') {
         }
     
          updateSelectedPanelTitle(anchorElement, clickedAnchorElement) {
-            const navTitleText = anchorElement?.innerText;
+            const activeItemTitleContent = anchorElement?.innerText;
             const clickedAnchorElementText = clickedAnchorElement?.innerText;
-            const navTitle = document.querySelector(HamburgerMenu.selectors.hamburgerNav.navTitle);
-            navTitle.innerText = navTitleText || clickedAnchorElementText || '';
+            const activeItemTitle = document.querySelector(HamburgerMenu.selectors.hamburgerMenuBottomContainer.hamburgerMenuActiveItemTitle);
+            activeItemTitle.innerText = activeItemTitleContent || clickedAnchorElementText || '';
         }
     
          checkFirstNonPanel(fieldModel) {
@@ -150,19 +147,19 @@ if (typeof window.HamburgerMenu === 'undefined') {
     
          clickHandler(event) {
             const formContainer = HamburgerMenu.formContainerGlobal;
-            const menu = document.querySelector(HamburgerMenu.selectors.hamburger.hamburgerMenu);
+            const menu = document.querySelector(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu);
             event.stopPropagation();
             let targetElement = event.target.closest('li');    
             if(targetElement.getAttribute('data-cmp-enabled') === 'false') {
                 return;
             }
-            if(event.target.tagName === "BUTTON" && (event.target.classList.contains(HamburgerMenu.cssClasses.hamburgerNav.closeNavButton) || event.target.classList.contains(HamburgerMenu.cssClasses.hamburgerNav.openNavButton)))  {
+            if(event.target.tagName === "BUTTON" && (event.target.classList.contains(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuCloseNavButton) || event.target.classList.contains(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuOpenNavButton)))  {
                 const isExpanded = event.target.getAttribute('aria-expanded') === 'true';
-                event.target.classList.toggle(HamburgerMenu.cssClasses.hamburgerNav.closeNavButton);
+                event.target.classList.toggle(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuCloseNavButton);
                 event.target.setAttribute('aria-expanded', !isExpanded);
                 return;
             }
-            const menuItems = document.querySelectorAll(HamburgerMenu.selectors.hamburger.hamburgerMenu + ' li');
+            const menuItems = document.querySelectorAll(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu + ' li');
             const fieldModel = formContainer?.getField(targetElement?.getAttribute('data-cmp-id'))?.getModel();
             const elementID = this.checkFirstNonPanel(fieldModel) || targetElement?.getAttribute('data-cmp-id');
             const parentAnchorElement = targetElement?.querySelector('a');
@@ -171,7 +168,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
             this.activateCurrentItem(targetElement);
             const anchorElement = targetElement?.querySelector('a');
             anchorElement?.classList.add(HamburgerMenu.cssClasses.active);
-            anchorElement?.querySelector('button')?.classList?.toggle(HamburgerMenu.cssClasses.hamburgerNav.closeNavButton);
+            anchorElement?.querySelector('button')?.classList?.toggle(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuCloseNavButton);
             const isExpanded = anchorElement?.querySelector('button')?.getAttribute('aria-expanded') === 'true';
             anchorElement?.querySelector('button')?.setAttribute('aria-expanded', !isExpanded);
             this.updateSelectedPanelTitle(anchorElement, parentAnchorElement);
@@ -189,15 +186,15 @@ if (typeof window.HamburgerMenu === 'undefined') {
     
          resetMenuItems(menuItems) {
             menuItems.forEach(item => {
-                const subMenu = item.querySelector(HamburgerMenu.selectors.hamburger.hamburgerSubMenu);
+                const subMenu = item.querySelector(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerSubMenu);
                 if (subMenu)  {
                     subMenu.style.display = 'none';
                     subMenu.setAttribute('aria-hidden', true);
                 }
                 const link = item.querySelector('a');
                 if(link) {
-                    link?.querySelector('button')?.classList.remove(HamburgerMenu.cssClasses.hamburgerNav.closeNavButton);
-                    link?.querySelector('button')?.classList.add(HamburgerMenu.cssClasses.hamburgerNav.openNavButton);
+                    link?.querySelector('button')?.classList.remove(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuCloseNavButton);
+                    link?.querySelector('button')?.classList.add(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuOpenNavButton);
                     link?.classList.remove(HamburgerMenu.cssClasses.active, HamburgerMenu.cssClasses.activeParent);
                     link.style.fontWeight = 'normal';
                 }
@@ -206,7 +203,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
         
          activateCurrentItem(currentItem) {
             while (currentItem) {
-                const subMenu = currentItem.querySelector(HamburgerMenu.selectors.hamburger.hamburgerSubMenu);
+                const subMenu = currentItem.querySelector(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerSubMenu);
                 if (subMenu)  {
                     subMenu.style.display = 'block';
                     subMenu.setAttribute('aria-hidden', false);
@@ -234,7 +231,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
          createDownArrowButton() {
             const downArrowButton = document.createElement('button');
             downArrowButton.type='button';
-            downArrowButton.classList.add(HamburgerMenu.cssClasses.hamburgerNav.openNavButton);
+            downArrowButton.classList.add(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuOpenNavButton);
             downArrowButton.setAttribute('aria-expanded', false);
             return downArrowButton;
         }
@@ -244,19 +241,16 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 return;
             }
             if (!items?.length) return;
-        
             const ul = document.createElement('ul');
-            ul.classList.add('cmp-adaptiveform-container-breadcrumbs-container-list');
-    
-            let navTitleUpdated = false;
+            let activeItemTitleUpdated = false;
             items.forEach((item) => {
                 if (item?.fieldType !== "panel") return;
     
-                if (!navTitleUpdated) {
-                    const navTitle = document.querySelector(HamburgerMenu.selectors.hamburgerNav.navTitle);
-                    if(navTitle) {
-                        navTitle.innerText = item?.label?.value;
-                        navTitleUpdated = true;
+                if (!activeItemTitleUpdated) {
+                    const activeItemTitle = document.querySelector(HamburgerMenu.selectors.hamburgerMenuBottomContainer.hamburgerMenuActiveItemTitle);
+                    if(activeItemTitle) {
+                        activeItemTitle.innerText = item?.label?.value;
+                        activeItemTitleUpdated = true;
                     }
                 }
     
@@ -290,14 +284,14 @@ if (typeof window.HamburgerMenu === 'undefined') {
                     li.setAttribute('data-cmp-has-input', flag);
                 }
     
-                link.classList.add(HamburgerMenu.cssClasses.hamburgerNav.navLink);
+                link.classList.add(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuNavLink);
                 if (this.isRepeatable(item)) {
                     const subMenu = this.createHamburgerMenu(item.items, counter + 1);
                     subMenu?.childNodes.forEach(child => ul.appendChild(child));
                 } else if (Array.isArray(item.items) && item.items.length > 0) {
                     const subMenu = this.createHamburgerMenu(item.items, counter + 1);
                     if (subMenu?.childNodes?.length) {
-                        subMenu.classList.add(HamburgerMenu.cssClasses.hamburgerSubMenu);
+                        subMenu.classList.add(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerSubMenu);
                         li.appendChild(subMenu);
                         link.insertBefore(this.createDownArrowButton(), link.firstChild);
                         link.addEventListener('click', (event) => {
@@ -355,11 +349,11 @@ if (typeof window.HamburgerMenu === 'undefined') {
     
             if(anchorElement) {
                 anchorElement?.classList.add(HamburgerMenu.cssClasses.activeParent);
-                anchorElement?.querySelector('button')?.classList.add(HamburgerMenu.cssClasses.hamburgerNav.closeNavButton);
-                if(anchorElement?.querySelector('button')?.classList.contains(HamburgerMenu.cssClasses.hamburgerNav.closeNavButton)) {
+                anchorElement?.querySelector('button')?.classList.add(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuCloseNavButton);
+                if(anchorElement?.querySelector('button')?.classList.contains(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuCloseNavButton)) {
                     anchorElement?.querySelector('button')?.setAttribute('aria-expanded', true);
                 }
-                if(li.parentElement.classList.contains(HamburgerMenu.cssClasses.hamburgerMenu)) {
+                if(li.parentElement.classList.contains(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenu)) {
                     anchorElement.style.fontWeight = 'bold'
                 }
                 this.highlightMenuTree(li.parentElement);
@@ -414,9 +408,9 @@ if (typeof window.HamburgerMenu === 'undefined') {
         }
     
          addEventsToNavigationButtons() {
-            const previousNavButton = document.querySelector(HamburgerMenu.selectors.hamburgerNav.previousNavButton);
-            const nextNavButton = document.querySelector(HamburgerMenu.selectors.hamburgerNav.nextNavButton);
-            const menuListItems = document.querySelector(HamburgerMenu.selectors.hamburger.hamburgerMenu).querySelectorAll('li');
+            const previousNavButton = document.querySelector(HamburgerMenu.selectors.hamburgerMenuBottomContainer.hamburgerMenuPreviousNavButton);
+            const nextNavButton = document.querySelector(HamburgerMenu.selectors.hamburgerMenuBottomContainer.hamburgerMenuNextNavButton);
+            const menuListItems = document.querySelector(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu).querySelectorAll('li');
             previousNavButton.addEventListener('click', () => this.movePrev(menuListItems));
             nextNavButton.addEventListener('click', () => this.moveNext(menuListItems));
         }
@@ -453,7 +447,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
     
          renderBreadCrumbs(menu) {
             const selectedPanels = menu.getElementsByClassName(HamburgerMenu.cssClasses.activeParent);
-            const breadCrumbsContainer = document.querySelector(HamburgerMenu.selectors.breadCrumbsContainer);
+            const breadCrumbsContainer = document.querySelector(HamburgerMenu.selectors.hamburgerMenuMiddleContainer);
             breadCrumbsContainer.innerHTML = '';
             const breadCrumbs = this.generateBreadcrumbs(selectedPanels)
             breadCrumbsContainer.appendChild(breadCrumbs);
@@ -461,13 +455,13 @@ if (typeof window.HamburgerMenu === 'undefined') {
         }
     
          renderHamburgerItems(panels) {
-            const parentContainer = document.querySelector(HamburgerMenu.selectors.menu);
-            const hamburgerIcon = document.querySelector(HamburgerMenu.selectors.hamburger.hamburgerMenuIcon);
-            const hamburgerMenuTopBar = document.querySelector(HamburgerMenu.selectors.hamburger.hamburgerMenuTopBar);
+            const parentContainer = document.querySelector(HamburgerMenu.selectors.hamburgerMenuTopContainer.self);
+            const hamburgerIcon = document.querySelector(HamburgerMenu.selectors.hamburgerMenuTopContainer.hamburgerMenuIcon);
+            const hamburgerMenuIconContainer = document.querySelector(HamburgerMenu.selectors.hamburgerMenuTopContainer.hamburgerMenuIconContainer);
     
             const menu = this.createHamburgerMenu(panels);
             if(menu) {
-                menu.classList.add(HamburgerMenu.cssClasses.hamburgerMenu);
+                menu.classList.add(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenu);
                 menu.setAttribute('role', 'menu');
                 menu.setAttribute('id', 'hamburger-menu');
     
@@ -478,14 +472,14 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 this.attachMenuEventListeners(menu);
                 this.styleSubmenuItems(menu);
                 parentContainer.innerHTML='';
-                parentContainer.appendChild(hamburgerMenuTopBar);
+                parentContainer.appendChild(hamburgerMenuIconContainer);
                 parentContainer.appendChild(menu);
     
                 // Add events to navigation buttons
                 this.addEventsToNavigationButtons();
     
                  // Automatically click the first root list item if it exists
-                const rootListItems = menu.querySelectorAll(HamburgerMenu.selectors.hamburger.hamburgerMenu + ' > li');
+                const rootListItems = menu.querySelectorAll(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu + ' > li');
                 if (rootListItems[0] && rootListItems[0].tagName === 'LI') {
                     rootListItems[0].click();
                     menu.style.display = 'none';
@@ -513,10 +507,10 @@ if (typeof window.HamburgerMenu === 'undefined') {
         }
         
          styleSubmenuItems(menu) {
-            const rootListItems = menu.querySelectorAll(HamburgerMenu.selectors.hamburger.hamburgerMenu + ' > li');
+            const rootListItems = menu.querySelectorAll(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu + ' > li');
             rootListItems.forEach((item) => {
                 let padding = 30;
-                const submenus = item.querySelectorAll(HamburgerMenu.selectors.hamburger.hamburgerSubMenu);
+                const submenus = item.querySelectorAll(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerSubMenu);
                 submenus.forEach((submenu) => {
                     const links = submenu.querySelectorAll('a');
                     links.forEach((link) => {
