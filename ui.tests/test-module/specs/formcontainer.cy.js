@@ -227,7 +227,9 @@ describe('Page/Form Authoring', function () {
             });
 
             it('change data model to marketo in container edit dialog box', {retries: 3},function () {
-                verifyChangeDataModelToMarketo(formContainerEditPathSelector);
+                if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-9611")) {
+                    verifyChangeDataModelToMarketo(formContainerEditPathSelector);
+                }
             });
 
             it ('check title in edit dialog', {retries: 3}, function() {
