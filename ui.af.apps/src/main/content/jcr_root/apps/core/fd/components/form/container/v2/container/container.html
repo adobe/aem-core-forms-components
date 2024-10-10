@@ -51,7 +51,7 @@
     <input type="hidden" name=":formstart" value="${resource.path}"/>
     <input type="hidden" name="_charset_" value="utf-8"/>
     <input data-sly-test="${container.redirectUrl}" type="hidden" name=":redirect" value="${container.redirectUrl}"/>
-    <div data-sly-test="${container.properties['fd:hamburgerMenu']}" class="cmp-adaptiveform-hamburger-menu__container">
+    <div data-sly-test="${container.isHamburgerMenuEnabled}" class="cmp-adaptiveform-hamburger-menu__container">
         <div class="cmp-adaptiveform-hamburger-menu__top-container">
             <div role="navigation" aria-label="Toggle menu" class="cmp-adaptiveform-hamburger-menu__icon-container">
                 <button aria-controls="hamburger-menu" type="button" class="cmp-adaptiveform-hamburger-menu__icon" aria-label="Toggle menu"></button>
