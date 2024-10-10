@@ -145,6 +145,17 @@ public interface FormContainer extends Container {
         return true;
     }
 
+    /**
+     * Returns the hamburger menu support
+     *
+     * @return the hamburger menu support of the form
+     * @since com.adobe.cq.forms.core.components.models.form 5.7.5
+     */
+    @JsonIgnore
+    default Boolean getIsHamburgerMenuEnabled() {
+        return false;
+    }
+
     @Override
     @JsonIgnore
     default Label getLabel() {
