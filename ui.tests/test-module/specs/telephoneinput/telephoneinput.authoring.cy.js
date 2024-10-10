@@ -56,7 +56,7 @@ describe('Page - Authoring', function () {
     cy.deleteComponentByPath(telephoneInputDrop);
   }
 
-  context.only('Open Forms Editor', function() {
+  context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
         telephoneInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput",
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']",
