@@ -534,11 +534,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
         }
     
          getAllPanels() {
-            let state = HamburgerMenu.formContainerGlobal._model.getState(true);
-            while (state?.items?.length === 1) {
-              state = state.items[0];
-            }
-            const items = state.items || [];
+            let items = HamburgerMenu.formContainerGlobal._model.getItemsState() || [];
             const panels = items.filter(item => item?.fieldType ===  "panel");
             return panels;
         }
@@ -546,7 +542,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
          initializeHamburgerMenu(formContainer) {
             HamburgerMenu.formContainerGlobal = formContainer;
             const panels = this.getAllPanels();
-            if(HamburgerMenu.formContainerGlobal?.getModel()?.properties?.['fd:hamburgerMenu']) {
+            if(HamburgerMenu.formContainerGlobal?.getModel()?.properties?.['fd:isHamburgerMenuEnabled']) {
                 this.renderHamburgerItems(panels);
             }
         }

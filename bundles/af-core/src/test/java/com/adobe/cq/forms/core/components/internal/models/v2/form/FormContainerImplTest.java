@@ -486,8 +486,8 @@ public class FormContainerImplTest {
     }
 
     @Test
-    public void testGetHamburgerMenu() {
+    public void testGetIsHamburgerMenuEnabled() {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        assertFalse(Boolean.valueOf(formContainer.getHamburgerMenu().toString()));
+        assertFalse(Boolean.valueOf(formContainer.getIsHamburgerMenuEnabled().toString()));
     }
 }
