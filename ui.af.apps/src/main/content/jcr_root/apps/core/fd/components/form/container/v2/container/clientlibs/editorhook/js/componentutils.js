@@ -26,10 +26,10 @@
      * @param {Object} [preservedProperties] properties that will be preserved after replace
      * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
      */
-    let sendReplaceParagraph = function (config, editable, preservedProperties, updatedPropertyValue) {
+    let sendReplaceParagraph = function (config, editable, preservedProperties) {
         return (
             new RequestManager.PostRequest()
-                .prepareReplaceParagraph(config, editable, preservedProperties, updatedPropertyValue)
+                .prepareReplaceParagraph(config, editable, preservedProperties)
                 .send()
         );
     };
@@ -59,7 +59,7 @@
         this.dataType = config.dataType
     };
 
-    RequestManager.PostRequest.prototype.prepareReplaceParagraph = function (config, editable, preservedProperties, updatedPropertyValue) {
+    RequestManager.PostRequest.prototype.prepareReplaceParagraph = function (config, editable, preservedProperties) {
         if (config.templatePath) {
             let comTemplatePath = Granite.HTTP.externalize(config.templatePath),
                 comData = CQ.shared.HTTP.eval(comTemplatePath + ".infinity.json"), // get component default json
@@ -81,9 +81,6 @@
 
             comData["sling:resourceType"] = config.resourceType;
             updatedProps = {...comData, ...updatedProps};
-            if(typeof updatedPropertyValue === "object") {
-                updatedProps = {...updatedProps, ...updatedPropertyValue};
-            }
             this.setParam(":content", JSON.stringify(updatedProps));    // write component properties
         }
 
@@ -147,7 +144,7 @@
      * @param {Object} [preservedProperties] properties that will be preserved after replace
      * @return {$.Deferred} A deferred object that will be resolved when the request is completed.
      */
-    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties, updatedPropertyValue) {
+    window.CQ.FormsCoreComponents.editorhooks.doReplace = function (component, editable, preservedProperties) {
         let args = arguments;
 
         channel.trigger("cq-persistence-before-replace", args);
@@ -158,7 +155,7 @@
                 configParams: component.getConfigParams(),
                 extraParams: component.getExtraParams(),
                 templatePath: component.getTemplatePath()
-            }, editable, preservedProperties, updatedPropertyValue)
+            }, editable, preservedProperties)
                 .done(function () {
                     editable.refresh();
                     channel.trigger("cq-persistence-after-replace", args);
@@ -174,14 +171,15 @@
 
     window.CQ.FormsCoreComponents.editorhooks.allowedCompFieldTypes = [];
 
-    window.CQ.FormsCoreComponents.editorhooks.getGuideContainerProperties =  (editablePath) => {
+    window.CQ.FormsCoreComponents.editorhooks.getFormContainerProperties =  (editablePath) => {
         const result = $.ajax({
             type: 'GET',
             async: false,
-            url: Granite.HTTP.externalize( editablePath + ".model.json"),
-            cache: false
+            url: Granite.HTTP.externalize( editablePath + ".0.json"),
+            cache: false,
+            dataType: "json"
         });
-        return result.responseText;
+        return result.responseJSON;
     };
 
 })(window, Granite.author, Coral, jQuery(document));

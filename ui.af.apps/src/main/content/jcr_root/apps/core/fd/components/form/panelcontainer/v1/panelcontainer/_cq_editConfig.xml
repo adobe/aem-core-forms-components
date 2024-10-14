@@ -22,7 +22,6 @@
                 text="Replace"/>
         <saveAsFragment
                 jcr:primaryType="nt:unstructured"
-                condition="CQ.FormsCoreComponents.editorhooks.isFieldTypePanel"
                 handler="CQ.FormsCoreComponents.editorhooks.saveAsFragment"
                 icon="fragmentAdd"
                 text="Save as Fragment"/>

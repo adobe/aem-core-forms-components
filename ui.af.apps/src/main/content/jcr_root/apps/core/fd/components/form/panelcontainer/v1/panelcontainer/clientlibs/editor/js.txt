@@ -16,3 +16,4 @@
 
 #base=js
 panelcontainer.js
+saveasfragment.js
