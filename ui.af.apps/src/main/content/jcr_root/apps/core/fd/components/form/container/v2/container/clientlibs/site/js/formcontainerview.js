@@ -74,8 +74,6 @@
                 }
             }, "saveError");
             this.#setupAutoSave(self.getModel());
-            const hamburgerMenuInstance = new HamburgerMenu(self);
-            hamburgerMenuInstance.init();
         }
 
         /**
@@ -135,6 +133,8 @@
             const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
             await FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl, true);
             formContainer.subscribe();
+            const hamburgerMenuInstance = new HamburgerMenu(formContainer);
+            hamburgerMenuInstance.init();
             return formContainer;
         }, FormContainerV2.selectors.self, FormContainerV2.IS);
     }

@@ -175,7 +175,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
             const menu = document.querySelector(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu);
             event.stopPropagation();
             let targetElement = event.target.closest('li');    
-            if(targetElement.getAttribute('data-cmp-enabled') === 'false') {
+            if(targetElement?.getAttribute('data-cmp-enabled') === 'false') {
                 return;
             }
             if(event.target.tagName === "BUTTON" && (event.target.classList.contains(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuCloseNavButton) || event.target.classList.contains(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuOpenNavButton)))  {
@@ -297,7 +297,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 li.setAttribute('data-cmp-id', item?.id);
                 li.setAttribute('data-cmp-visible', item?.visible);
                 li.setAttribute('data-cmp-enabled', item?.enabled);
-                const children = this.formContainer?.getField(item.id)?._model?._children;
+                const children = this.formContainer?.getModel()?.getElement(item.id)?._children;
                 let flag = false;
     
                 // setting an attibute(data-cmp-has-input) if the item is having an input field
