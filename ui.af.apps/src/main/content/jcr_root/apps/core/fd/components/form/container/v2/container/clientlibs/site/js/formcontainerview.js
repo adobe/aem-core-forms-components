@@ -113,6 +113,8 @@
         function onInit(e) {
             let formContainer =  e.detail;
             let formEl = formContainer.getFormElement();
+            const hamburgerMenuInstance = new HamburgerMenu(formContainer);
+            hamburgerMenuInstance.init();
             setTimeout(() => {
                 let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
                 if(loaderToRemove){
@@ -133,8 +135,6 @@
             const aemLangUrl = `/etc.clientlibs/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n/${formLanguage}.json`;
             await FormView.LanguageUtils.loadLang(formLanguage, aemLangUrl, true);
             formContainer.subscribe();
-            const hamburgerMenuInstance = new HamburgerMenu(formContainer);
-            hamburgerMenuInstance.init();
             return formContainer;
         }, FormContainerV2.selectors.self, FormContainerV2.IS);
     }
