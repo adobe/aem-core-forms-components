@@ -21,7 +21,6 @@
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormContainer";
         static bemBlock = 'cmp-adaptiveform-container';
-        static hamburgerMenuInstance = '';
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
         };
@@ -29,8 +28,6 @@
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
         constructor(params) {
             super(params);
-            const { hamburgerMenuInstance } = params;
-            FormContainerV2.hamburgerMenuInstance = hamburgerMenuInstance;
             let self = this;
             this._model.subscribe((action) => {
                 let state = action.target.getState();
@@ -77,6 +74,8 @@
                 }
             }, "saveError");
             this.#setupAutoSave(self.getModel());
+            const hamburgerMenuInstance = new HamburgerMenu(self);
+            hamburgerMenuInstance.init();
         }
 
         /**
@@ -99,36 +98,12 @@
                     }, parseInt(autoSaveInterval) * 1000);
                 }
             }
-            this._model.subscribe((action) => {
-                const { payload } = action;
-                const { changes, field } = payload;
-                const { items } = field;
-                if (changes && changes.length > 0) {
-                    changes.forEach((change) => {
-                        switch (change.propertyName) {
-                            case "activeChild":
-                                FormContainerV2.hamburgerMenuInstance.handleActiveItem(field);
-                                break;
-                            case "items":
-                                FormContainerV2.hamburgerMenuInstance.handleItemsChange(change, items);
-                                break;
-                            case "visible":
-                                FormContainerV2.hamburgerMenuInstance.updateAttribute(field.id, 'data-cmp-visible', field.visible);
-                                break;
-                            case "enabled":
-                                FormContainerV2.hamburgerMenuInstance.updateAttribute(field.id, 'data-cmp-enabled', field.enabled);
-                                break;
-                        }
-                    });
-                }
-            }, "fieldChanged");
         }
     }
 
     async function onDocumentReady() {
         const startTime = new Date().getTime();
         let elements = document.querySelectorAll(FormContainerV2.selectors.self);
-        const hamburgerMenuInstance = new HamburgerMenu();
 
         for (let i = 0; i < elements.length; i++) {
             let loaderToAdd = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ elements[i].id + "']");
@@ -139,8 +114,6 @@
         }
         function onInit(e) {
             let formContainer =  e.detail;
-            // creating hamburger menu
-            hamburgerMenuInstance.initializeHamburgerMenu(formContainer);
             let formEl = formContainer.getFormElement();
             setTimeout(() => {
                 let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
@@ -155,7 +128,7 @@
         await FormView.Utils.setupFormContainer(async ({
             _formJson, _prefillData, _path, _element
         }) => {
-            let formContainer = new FormContainerV2({_formJson, _prefillData, _path, _element, hamburgerMenuInstance});
+            let formContainer = new FormContainerV2({_formJson, _prefillData, _path, _element});
             // before initializing the form container load all the locale specific json resources
             // for runtime
             const formLanguage = formContainer.getLang();

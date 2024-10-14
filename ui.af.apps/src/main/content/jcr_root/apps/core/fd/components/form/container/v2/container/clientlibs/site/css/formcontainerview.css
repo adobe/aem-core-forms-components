@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
+form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
     display: none !important;
 }
 .cmp-adaptiveform-container--loading{

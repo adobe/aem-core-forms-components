@@ -16,7 +16,6 @@
 
 if (typeof window.HamburgerMenu === 'undefined') {
     window.HamburgerMenu = class HamburgerMenu {
-        static formContainerGlobal = '';
         static activeItemId = '';
 
         static bemBlock = 'cmp-adaptiveform-hamburger-menu';
@@ -57,6 +56,33 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 hamburgerMenuCloseNavButton: `${HamburgerMenu.bemBlock}__button--close`,
                 hamburgerMenuOpenNavButton: `${HamburgerMenu.bemBlock}__button--open`,
             },
+        }
+
+        constructor(self) {
+            this.formContainer = self;
+            self._model.subscribe((action) => {
+                const { payload } = action;
+                const { changes, field } = payload;
+                const { items } = field;
+                if (changes && changes.length > 0) {
+                    changes.forEach((change) => {
+                        switch (change.propertyName) {
+                            case "activeChild":
+                                this.handleActiveItem(field);
+                                break;
+                            case "items":
+                                this.hamburgerMenuInstance.handleItemsChange(change, items);
+                                break;
+                            case "visible":
+                                this.updateAttribute(field.id, 'data-cmp-visible', field.visible);
+                                break;
+                            case "enabled":
+                                this.updateAttribute(field.id, 'data-cmp-enabled', field.enabled);
+                                break;
+                        }
+                    });
+                }
+            }, "fieldChanged");
         }
 
         updateAttribute(id, attributeName, value) {
@@ -109,7 +135,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 const activeListItem = document.querySelector(`[data-cmp-id='${field.id}']`);
                 if(activeListItem && activeListItem.tagName === 'LI') {
                     const menuItems = document.querySelectorAll(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu + ' li');
-                    const fieldModel = HamburgerMenu.formContainerGlobal?.getField(activeListItem?.getAttribute('data-cmp-id'))?.getModel();
+                    const fieldModel = this.formContainer?.getField(activeListItem?.getAttribute('data-cmp-id'))?.getModel();
                     const elementID = this.checkFirstNonPanel(fieldModel);
                     const targetElement = menu.querySelector("[data-cmp-id='"+ elementID + "']");
                     this.resetMenuItems(menuItems);
@@ -142,11 +168,10 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 }
                 return this.checkFirstNonPanel(fieldModel?._children[0])
             }
-            return fieldModel.id;
+            return fieldModel?.id;
         }
     
          clickHandler(event) {
-            const formContainer = HamburgerMenu.formContainerGlobal;
             const menu = document.querySelector(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu);
             event.stopPropagation();
             let targetElement = event.target.closest('li');    
@@ -160,8 +185,9 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 return;
             }
             const menuItems = document.querySelectorAll(HamburgerMenu.selectors.hamburgerMenuWidget.hamburgerMenu + ' li');
-            const fieldModel = formContainer?.getField(targetElement?.getAttribute('data-cmp-id'))?.getModel();
+            const fieldModel = this.formContainer?.getModel().getElement(targetElement?.getAttribute('data-cmp-id'));
             const elementID = this.checkFirstNonPanel(fieldModel) || targetElement?.getAttribute('data-cmp-id');
+            
             const parentAnchorElement = targetElement?.querySelector('a');
             targetElement = menu.querySelector("[data-cmp-id='"+ elementID + "']");
             this.resetMenuItems(menuItems);
@@ -173,10 +199,12 @@ if (typeof window.HamburgerMenu === 'undefined') {
             anchorElement?.querySelector('button')?.setAttribute('aria-expanded', !isExpanded);
             this.updateSelectedPanelTitle(anchorElement, parentAnchorElement);
             this.highlightMenuTree(anchorElement, parentAnchorElement);
+
+            this.formContainer.getModel().getElement('accordion-9fbafbc6e6');
     
             const itemId = targetElement?.getAttribute('data-cmp-id') || HamburgerMenu.activeItemId;
-            const form = formContainer?.getModel();;
-            const field = formContainer?.getField(itemId);
+            const form = this.formContainer?.getModel();;
+            const field = this.formContainer?.getField(itemId);
             menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
             this.renderBreadCrumbs(menu);
             if (form && field && field._model) {
@@ -269,7 +297,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 li.setAttribute('data-cmp-id', item?.id);
                 li.setAttribute('data-cmp-visible', item?.visible);
                 li.setAttribute('data-cmp-enabled', item?.enabled);
-                const children = HamburgerMenu.formContainerGlobal?.getField(item.id)?._model?._children;
+                const children = this.formContainer?.getField(item.id)?._model?._children;
                 let flag = false;
     
                 // setting an attibute(data-cmp-has-input) if the item is having an input field
@@ -534,15 +562,14 @@ if (typeof window.HamburgerMenu === 'undefined') {
         }
     
          getAllPanels() {
-            let items = HamburgerMenu.formContainerGlobal._model.getItemsState() || [];
+            let items = this.formContainer?._model.getItemsState() || [];
             const panels = items.filter(item => item?.fieldType ===  "panel");
             return panels;
         }
     
-         initializeHamburgerMenu(formContainer) {
-            HamburgerMenu.formContainerGlobal = formContainer;
+        init() {
             const panels = this.getAllPanels();
-            if(HamburgerMenu.formContainerGlobal?.getModel()?.properties?.['fd:isHamburgerMenuEnabled']) {
+            if(this.formContainer?.getModel()?.properties?.['fd:isHamburgerMenuEnabled']) {
                 this.renderHamburgerItems(panels);
             }
         }

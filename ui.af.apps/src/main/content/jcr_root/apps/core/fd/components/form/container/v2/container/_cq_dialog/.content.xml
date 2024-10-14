@@ -18,7 +18,7 @@
   jcr:primaryType="nt:unstructured"
   jcr:title="Adaptive Form Container"
   sling:resourceType="cq/gui/components/authoring/dialog"
-  extraClientlibs="[core.forms.components.container.v1.editor, core.forms.components.container.v2.editor]"
+  extraClientlibs="[core.forms.components.container.v1.editor]"
   helpPath="https://www.adobe.com/go/aem_af_cmp_container_v2"
   trackingFeature="core-components:adaptiveform-container:v2">
     <content
@@ -86,7 +86,7 @@
                                         value="0.14.2"/>
                                     <hamburgerMenu
                                       jcr:primaryType="nt:unstructured"
-                                      granite:class="cmp-adaptiveform-container__hamburgerMenuSupport"
+                                      granite:class="cmp-adaptiveform-container__hamburgermenusupport"
                                       sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                       name="./fd:isHamburgerMenuEnabled"
                                       text="Enable the hamburger menu for mobile view"
