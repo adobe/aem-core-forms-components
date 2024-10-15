@@ -123,7 +123,8 @@
 
         const options = {
             data: {
-                name, title, templatePath, folderPath, fragmentComponentPath, schemaType, schemaPath,
+                name, templatePath, folderPath, fragmentComponentPath, schemaType, schemaPath,
+                title: title || name,
                 panelPath: editable.path,
                 themePath: containerProperties.themeRef || DEFAULT_THEME_PATH
             },
@@ -157,6 +158,18 @@
                 document.body.appendChild(dialog);
                 dialog.show();
             }
+        }
+        const fields = $(dialog.querySelector("form")).find(":-foundation-submittable").toArray();
+        let isFormValid = true;
+        fields.forEach(function(field) {
+            const f = $(field).adaptTo("foundation-validation");
+            if (!f.checkValidity()) {
+                f.updateUI();
+                isFormValid = false;
+            }
+        });
+        if (!isFormValid) {
+            return;
         }
         ns.afUtils.createFragmentFromPanelAFV2(options);
     }

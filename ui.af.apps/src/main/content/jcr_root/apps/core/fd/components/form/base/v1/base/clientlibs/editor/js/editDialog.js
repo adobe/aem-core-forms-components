@@ -251,7 +251,6 @@
         handleAssistPriority(dialog);
         Utils.prefillMultifieldValues(dialog, BASE_ENUMNAMES_VISIBLE, BASE_ENUMNAMES_HIDDEN);
         showHideDoRBindRefField(dialog);
-        validateName();
         handleDialogSubmit(dialog);
         if (isTitleRichText) {
             resolveRichText(dialog, isTitleRichText, false);
@@ -315,6 +314,9 @@
             }
         });
     };
+
+    // Registering validator for node name
+    validateName();
 
     Utils.initializeEditDialog(EDIT_DIALOG)(initialise, updateRichTextTitleOnChange, updateEnumNamesOnAdd, updateEnumNamesOnChange);
 

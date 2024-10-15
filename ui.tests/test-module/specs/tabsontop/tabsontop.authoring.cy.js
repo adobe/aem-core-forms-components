@@ -90,37 +90,54 @@ describe.only('Page - Authoring', function () {
         cy.deleteComponentByPath(tabsContainerDrop);
     }
     
-    const testSaveAsFragmentBehaviour =  function(tabsEditPathSelector, tabsContainerDrop, isSites) {
+    const testSaveAsFragmentBehaviour =  function(tabsEditPathSelector, tabsPath, isSites) {
         if (isSites) {
             dropTabsInSites();
         } else {
             dropTabsInContainer();
         }
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsEditPathSelector);
-        cy.invokeEditableAction("[data-action='saveAsFragment']");
+        cy.invokeEditableAction("[data-action='saveAsFragment']"); // this line is causing frame busting which is causing cypress to fail
         // Check If Dialog Options Are Visible
         cy.get("[name='name']")
-            .should("exist");
-        cy.get("[name='title']")
-            .should("exist");
-        cy.get("[name='description']")
-            .should("exist");
-        cy.get("[name='tags']")
+            .should("be.visible");
+        cy.get("[name='jcr:title']")
             .should("exist");
         cy.get("[name='targetPath']")
+            .should("be.visible")
+            .invoke('val', "/content/dam/formsanddocuments");
+        cy.get("[name='./schemaType']")
             .should("exist");
-        cy.get("[name='formModel']")
-            .should("exist");
-        cy.get("[name='fragmentModelRoot']")
-            .should("exist");
+        cy.get("[name='templatePath']")
+            .should("be.visible");
+        cy.get("[name='fragmentComponent']").should("be.visible");
 
-        // TODO: To Test done when fragment is created
-        // cy.get('.cq-dialog-submit').click();
-        // check if panel is replaced by fragment component and check for fragRef
-
-        cy.get('.cq-dialog-cancel').click();
-        cy.deleteComponentByPath(tabsContainerDrop);
+        cy.intercept('POST' , '**/adobe/forms/fm/v1/saveasfragment').as('saveAsFragment');
+        cy.get("[name='name']").clear().type("panel-saved-as-fragment");
+        cy.get("[name='templatePath']").type("/conf/core-components-examples/settings/wcm/templates/afv2frag-template");
+        cy.initializeEventHandlerOnChannel("cq-editables-updated.cypress").as("isOverlayRepositionEventComplete");
+        cy.get(".cq-dialog-submit").click();
+        cy.wait('@saveAsFragment').then(({request, response}) => {
+            expect(response.statusCode).to.equal(200);
+            expect(response.body).to.be.not.null;
+        });
+        cy.request("/content/forms/af/panel-saved-as-fragment/jcr:content/guideContainer.model.json").then(response => {
+            expect(response.status).to.equal(200);
+        })
+        cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true);
+        cy.reload();
+        cy.deleteComponentByPath(tabsPath);
     };
+
+    const deleteSavedFragment = () => {
+        cy.openPage("/aem/forms.html/content/dam/formsanddocuments");
+        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment']")
+            .trigger('mouseenter')
+            .trigger('mouseover');
+        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment'] [title='Select']").click({force: true});
+        cy.get(".formsmanager-admin-action-delete").click();
+        cy.get("#fmbase-id-modal-template button[variant='warning']").click();
+    }
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
@@ -193,13 +210,6 @@ describe.only('Page - Authoring', function () {
                 testPanelBehaviour(tabsContainerPathSelector, tabsPath);
             });
         });
-      
-      
-        it('open save as fragment dialog of Tab on top',{ retries: 3 }, function(){
-            cy.cleanTest(tabsPath).then(function() {
-                testSaveAsFragmentBehaviour(tabsContainerPathSelector, tabsPath);
-            });
-        });
 
         it('open editable toolbar of 2nd tabpanel', {retries: 3}, function () {
             cy.cleanTest(tabsPath).then(function () {
@@ -222,6 +232,13 @@ describe.only('Page - Authoring', function () {
                     })
                 })
            });
+        });
+
+        it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
+            cy.cleanTest(tabsPath).then(function() {
+                testSaveAsFragmentBehaviour(tabsContainerPathSelector, tabsPath);
+                deleteSavedFragment();
+            });
         });
 
     });
@@ -248,11 +265,11 @@ describe.only('Page - Authoring', function () {
             });
         });
       
-        it('open save as fragment dialog of Tab on top',{ retries: 3 }, function(){
+        it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
             cy.cleanTest(panelContainerEditPath).then(function() {
                 testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
+                deleteSavedFragment();
             });
         });
-
     });
 });

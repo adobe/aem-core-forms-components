@@ -78,7 +78,7 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(panelContainerDrop);
     };
 
-    const testSaveAsFragmentBehaviour = (panelContainerEditPathSelector, panelContainerDrop, isSites) => {
+    const testSaveAsFragmentBehaviour = (panelContainerEditPathSelector, panelContainerPath, isSites) => {
         if (isSites) {
             dropPanelInSites();
         } else {
@@ -88,28 +88,44 @@ describe('Page - Authoring', function () {
         cy.invokeEditableAction("[data-action='saveAsFragment']"); // this line is causing frame busting which is causing cypress to fail
         // Check If Dialog Options Are Visible
         cy.get("[name='name']")
-            .should("exist");
-        cy.get("[name='title']")
-            .should("exist");
-        cy.get("[name='description']")
-            .should("exist");
-        cy.get("[name='tags']")
+            .should("be.visible");
+        cy.get("[name='jcr:title']")
             .should("exist");
         cy.get("[name='targetPath']")
+            .should("be.visible")
+            .invoke('val', "/content/dam/formsanddocuments");
+        cy.get("[name='./schemaType']")
             .should("exist");
-        cy.get("[name='formModel']")
-            .should("exist");
-        cy.get("[name='fragmentModelRoot']")
-            .should("exist");
+        cy.get("[name='templatePath']")
+            .should("be.visible");
+        cy.get("[name='fragmentComponent']").should("be.visible");
 
-        cy.get('.cq-dialog-cancel').click();
-        // TODO: To Test done when fragment is created
-        // cy.get('.cq-dialog-submit').click();
-        // check if panel is replaced by fragment component and check for fragRef
-
-        cy.deleteComponentByPath(panelContainerDrop);
+        cy.intercept('POST' , '**/adobe/forms/fm/v1/saveasfragment').as('saveAsFragment');
+        cy.get("[name='name']").clear().type("panel-saved-as-fragment");
+        cy.get("[name='templatePath']").type("/conf/core-components-examples/settings/wcm/templates/afv2frag-template");
+        cy.initializeEventHandlerOnChannel("cq-editables-updated.cypress").as("isOverlayRepositionEventComplete");
+        cy.get(".cq-dialog-submit").click();
+        cy.wait('@saveAsFragment').then(({request, response}) => {
+            expect(response.statusCode).to.equal(200);
+            expect(response.body).to.be.not.null;
+        });
+        cy.request("/content/forms/af/panel-saved-as-fragment/jcr:content/guideContainer.model.json").then(response => {
+            expect(response.status).to.equal(200);
+        })
+        cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true);
+        cy.reload();
+        cy.deleteComponentByPath(panelContainerPath);
     };
 
+    const deleteSavedFragment = () => {
+        cy.openPage("/aem/forms.html/content/dam/formsanddocuments");
+        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment']")
+            .trigger('mouseenter')
+            .trigger('mouseover');
+        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment'] [title='Select']").click({force: true});
+        cy.get(".formsmanager-admin-action-delete").click();
+        cy.get("#fmbase-id-modal-template button[variant='warning']").click();
+    }
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
@@ -144,6 +160,7 @@ describe('Page - Authoring', function () {
 
         it('Save panel as fragment via toolbar', function () {
             testSaveAsFragmentBehaviour(panelContainerPathSelector, panelEditPath);
+            deleteSavedFragment();
         })
     })
 
@@ -168,6 +185,7 @@ describe('Page - Authoring', function () {
 
         it('Save panel as fragment via toolbar', function () {
             testSaveAsFragmentBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
+            deleteSavedFragment();
         });
 
     });
