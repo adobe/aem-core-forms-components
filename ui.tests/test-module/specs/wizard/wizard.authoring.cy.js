@@ -274,7 +274,7 @@ describe('Page - Authoring', function () {
             });
         });
 
-        it.only('save as fragment in Wizard', { retries: 3 }, function() {
+        it('save as fragment in Wizard', { retries: 3 }, function() {
             cy.cleanTest(wizardEditPath).then(function() {
                 testSaveAsFragment(wizardEditPathSelector, wizardEditPath, true);
                 deleteSavedFragment();
