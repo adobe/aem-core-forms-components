@@ -6,7 +6,7 @@
         <wizardPanel
             jcr:primaryType="nt:unstructured"
             jcr:title="Wizard"
-            id="af_wizard"
+            id="af2_wizard"
             cssSelector=".cmp-adaptiveform-wizard--v2"
             longTitle="Wizard Panel Container"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -14,7 +14,7 @@
                 <wizardLabelContainer
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Label Container"
-                        id="af_wizardlabelcontainer"
+                        id="af2_wizardlabelcontainer"
                         cssSelector=".cmp-adaptiveform-wizard__label-container"
                         longTitle="Wizard Label Container"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -22,7 +22,7 @@
                         <wizardLabel
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label"
-                                id="af_wizardlabel"
+                                id="af2_wizardlabel"
                                 cssSelector=".cmp-adaptiveform-wizard__label"
                                 longTitle="Wizard Label"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -40,11 +40,11 @@
                         <wizardHelpIcon
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Help Icon"
-                                id="af_wizardhelpicon"
+                                id="af2_wizardhelpicon"
                                 cssSelector=".cmp-adaptiveform-wizard__questionmark"
                                 longTitle="Wizard Help Icon"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                secondarySelectors="af_guideContainer:af_helpicon">
+                                secondarySelectors="af2_guideContainer:af2_helpicon">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -79,7 +79,7 @@
                 <wizardDescriptionShort
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Short Description"
-                        id="af_wizarddescriptionshort"
+                        id="af2_wizarddescriptionshort"
                         cssSelector=".cmp-adaptiveform-wizard__shortdescription"
                         longTitle="Wizard Short Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -87,7 +87,7 @@
                 <wizardDescriptionLong
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Long Description"
-                        id="af_wizarddescriptionlong"
+                        id="af2_wizarddescriptionlong"
                         cssSelector=".cmp-adaptiveform-wizard__longdescription"
                         longTitle="Wizard Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -105,7 +105,7 @@
                 <wizardWidget
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Widget"
-                    id="af_wizardwidget"
+                    id="af2_wizardwidget"
                     cssSelector=".cmp-adaptiveform-wizard__widget"
                     longTitle="Wizard Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -113,7 +113,7 @@
                         <wizardPanelNavigationGroup
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Wizard Navigation Group"
-                                id="af_wizardnavgrp"
+                                id="af2_wizardnavgrp"
                                 cssSelector=".cmp-adaptiveform-wizard__tabs-container"
                                 longTitle="Wizard Panel Navigation Group"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -121,7 +121,7 @@
                                 <wizardNavigationItem
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Title"
-                                        id="af_wizardnavitemtitle"
+                                        id="af2_wizardnavitemtitle"
                                         cssSelector=".cmp-adaptiveform-wizard__tab"
                                         longTitle="Wizard Navigation Item Title"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -147,7 +147,7 @@
                 <wizardPanelNavContainer
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Navigation Container"
-                        id="af_wizarddescription"
+                        id="af2_wizarddescription"
                         cssSelector=".cmp-adaptiveform-wizard__containerNav"
                         longTitle="Wizard Navigation Container"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -159,7 +159,7 @@
                                 <panelNextScroll
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Panel Next Scroll"
-                                        id="af_wizardpanelnextscroll"
+                                        id="af2_wizardpanelnextscroll"
                                         cssSelector=".cmp-adaptiveform-wizard__nav--next"
                                         longTitle="Wizard Panel Next Scroll"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -173,7 +173,7 @@
                                 <panelPreviousScroll
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Panel Previous Scroll"
-                                        id="af_wizardpanelprevscroll"
+                                        id="af2_wizardpanelprevscroll"
                                         cssSelector=".cmp-adaptiveform-wizard__nav--previous"
                                         longTitle="Wizard Panel Previous Scroll"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
