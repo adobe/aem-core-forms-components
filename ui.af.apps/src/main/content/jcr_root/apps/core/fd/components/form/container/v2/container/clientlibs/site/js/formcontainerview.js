@@ -24,11 +24,13 @@
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
         };
-
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
+        #hamburgerMenuInstance = '';
+
         constructor(params) {
             super(params);
             let self = this;
+            this.#hamburgerMenuInstance = new HamburgerMenu(this);
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on submitSuccess event.
@@ -76,6 +78,10 @@
             this.#setupAutoSave(self.getModel());
         }
 
+        initialiseHamburgerMenu() {
+            this.#hamburgerMenuInstance.init();
+        }
+
         /**
          * Register time based auto save
          * @param formModel.
@@ -113,8 +119,7 @@
         function onInit(e) {
             let formContainer =  e.detail;
             let formEl = formContainer.getFormElement();
-            const hamburgerMenuInstance = new HamburgerMenu(formContainer);
-            hamburgerMenuInstance.init();
+            formContainer.initialiseHamburgerMenu();
             setTimeout(() => {
                 let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
                 if(loaderToRemove){

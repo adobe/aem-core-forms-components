@@ -86,7 +86,7 @@
                                         value="0.14.2"/>
                                     <hamburgerMenu
                                       jcr:primaryType="nt:unstructured"
-                                      granite:class="cmp-adaptiveform-container__hamburgermenusupport"
+                                      granite:class="cmp-adaptiveform-container__hamburger-toggle"
                                       sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                       name="./fd:isHamburgerMenuEnabled"
                                       text="Enable the hamburger menu for mobile view"
