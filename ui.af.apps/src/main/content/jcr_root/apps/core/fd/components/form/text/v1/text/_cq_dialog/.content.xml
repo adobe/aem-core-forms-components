@@ -59,9 +59,6 @@
                                             <hideTitle
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
-                                            <bindref
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:hideResource="{Boolean}true"/>
                                             <enabled
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
@@ -71,9 +68,6 @@
                                             <dorBindref
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
-                                            <unboundFormElement
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:hideResource="{Boolean}true" />
                                             <readonly
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true" />
