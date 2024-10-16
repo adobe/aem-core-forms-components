@@ -290,16 +290,38 @@ describe('Page/Form Authoring', function () {
 
         context("Check default behaviour in Form Editor", function () {
             const pagePath = "/content/forms/af/core-components-it/samples/numberinput/validation.html";
-
+            let formContainerModel = null
             beforeEach(function () {
-                cy.previewForm(pagePath);
+                cy.previewForm(pagePath).then(p => {
+                    formContainerModel = p;
+                })
             });
 
             it('check the preventDefaultSubmit method by simulating keydown event on the form', function () {
                 cy.get('.cmp-adaptiveform-container').then((formContainer) => {
+                    const [id, fieldView] = Object.entries(formContainerModel._fields)[0]
+
                     cy.stub(formContainer[0], 'onsubmit').as('submit');
                     cy.get('form').trigger('keydown', {key: 'Enter'});
                     cy.get('@submit').should('not.be.called');
+
+                    // Trigger enter on a text input (should prevent submission)
+                    cy.get('input[type="text"]').first().type('{enter}');
+                    cy.get(`#${id} .cmp-adaptiveform-numberinput__errormessage`).should('not.have.text', 'This is required numberinput');
+
+
+                });
+            });
+
+
+            it('button click should work on press of enter key', function () {
+                cy.get('.cmp-adaptiveform-container').then((formContainer) => {
+                    const [id, fieldView] = Object.entries(formContainerModel._fields)[0]
+
+                    // Trigger enter on a button (should not prevent submission)
+                    cy.get('button').first().type('{enter}');
+                    cy.get(`#${id} .cmp-adaptiveform-numberinput__errormessage`).should('have.text', 'This is required numberinput');
+
                 });
             });
 
