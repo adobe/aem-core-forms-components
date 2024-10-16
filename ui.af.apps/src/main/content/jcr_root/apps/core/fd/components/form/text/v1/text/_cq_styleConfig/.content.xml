@@ -6,18 +6,18 @@
         <field
             jcr:primaryType="nt:unstructured"
             jcr:title="Base"
-            id="af_text"
+            id="af2_text"
             longTitle="Base"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Text"
-                    id="af_textwidgetandtext"
+                    id="af2_textwidgetandtext"
                     cssSelector=".cmp-adaptiveform-text"
                     longTitle="Text Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                             jcr:primaryType="nt:unstructured"

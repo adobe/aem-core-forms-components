@@ -6,23 +6,23 @@
         <field
             jcr:primaryType="nt:unstructured"
             jcr:title="Base"
-            id="af_dropdownlist"
+            id="af2_dropdownlist"
             longTitle="Base"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Dropdown"
-                    id="af_dropdownlistwidgetandtext"
+                    id="af2_dropdownlistwidgetandtext"
                     cssSelector=".cmp-adaptiveform-dropdown"
                     longTitle="Dropdown Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <dropdownLabelContainer
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label Container"
-                                id="af_dropdownlabelcontainer"
+                                id="af2_dropdownlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-dropdown__label-container"
                                 longTitle="Dropdown Label Container"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -30,7 +30,7 @@
                                 <dropdownLabel
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
-                                        id="af_dropdownlabel"
+                                        id="af2_dropdownlabel"
                                         cssSelector=".cmp-adaptiveform-dropdown__label"
                                         longTitle="Dropdown Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -48,11 +48,11 @@
                                 <dropdownHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
-                                        id="af_dropdownhelpicon"
+                                        id="af2_dropdownhelpicon"
                                         cssSelector=".cmp-adaptiveform-dropdown__questionmark"
                                         longTitle="Dropdown Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                        secondarySelectors="af_guideContainer:af_helpicon">
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -87,11 +87,11 @@
                         <dropdownWidgetAndText
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Dropdown"
-                                id="af_dropdownwidgetandtext"
+                                id="af2_dropdownwidgetandtext"
                                 cssSelector=".cmp-adaptiveform-dropdown__widget"
                                 longTitle="Dropdown Widget"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                secondarySelectors="af_guideContainer:af_widgetAndText">
+                                secondarySelectors="af2_guideContainer:af2_widgetAndText">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -114,7 +114,7 @@
                         <dropdownDescriptionShort
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Short Description"
-                                id="af_dropdowndescriptionshort"
+                                id="af2_dropdowndescriptionshort"
                                 cssSelector=".cmp-adaptiveform-dropdown__shortdescription"
                                 longTitle="Dropdown Short Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -122,7 +122,7 @@
                         <dropdownDescriptionLong
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Long Description"
-                                id="af_dropdowndescriptionlong"
+                                id="af2_dropdowndescriptionlong"
                                 cssSelector=".cmp-adaptiveform-dropdown__longdescription"
                                 longTitle="Dropdown Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">

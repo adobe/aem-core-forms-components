@@ -6,14 +6,14 @@
         <field
             jcr:primaryType="nt:unstructured"
             jcr:title="Base"
-            id="af_radiobutton"
+            id="af2_radiobutton"
             longTitle="Base"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Radio Button Group"
-                    id="af_radiobuttonwidgetandtext"
+                    id="af2_radiobuttonwidgetandtext"
                     cssSelector=".cmp-adaptiveform-radiobutton"
                     longTitle="Radio Button Group Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -21,7 +21,7 @@
                         <radioButtonLabelContainer
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label Container"
-                                id="af_radiobuttonlabelcontainer"
+                                id="af2_radiobuttonlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-radiobutton__label-container"
                                 longTitle="Radio Button Label Container"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -29,7 +29,7 @@
                                 <radioButtonLabel
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
-                                        id="af_radiobuttonlabel"
+                                        id="af2_radiobuttonlabel"
                                         cssSelector=".cmp-adaptiveform-radiobutton__label"
                                         longTitle="Radio Button Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -47,11 +47,11 @@
                                 <radioButtonHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
-                                        id="af_radiobuttonhelpicon"
+                                        id="af2_radiobuttonhelpicon"
                                         cssSelector=".cmp-adaptiveform-radiobutton__questionmark"
                                         longTitle="Radio Button Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                        secondarySelectors="af_guideContainer:af_helpicon">
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -86,7 +86,7 @@
                         <radioButtonWidget
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Radio Button Widget"
-                                id="af_radiobuttonitemswidget"
+                                id="af2_radiobuttonitemswidget"
                                 cssSelector=".cmp-adaptiveform-radiobutton__widget"
                                 longTitle="Radio Button Widget"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -94,7 +94,7 @@
                                 <radioButtonItem
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Radio Button Item"
-                                        id="af_radiobuttonitem"
+                                        id="af2_radiobuttonitem"
                                         cssSelector=".cmp-adaptiveform-radiobutton__option"
                                         longTitle="Radio Button Item"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -102,7 +102,7 @@
                                         <radioButtonLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Label"
-                                                id="af_radiobuttonitemlabel"
+                                                id="af2_radiobuttonitemlabel"
                                                 cssSelector=".cmp-adaptiveform-radiobutton__option-label span"
                                                 longTitle="Radio Button Item Label"
                                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -128,11 +128,11 @@
                                         <radioButtonWidgetAndText
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Radio Button"
-                                                id="af_radiobuttonwidget"
+                                                id="af2_radiobuttonwidget"
                                                 cssSelector=".cmp-adaptiveform-radiobutton__option__widget"
                                                 longTitle="Radio Button Item Widget"
                                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                                secondarySelectors="af_guideContainer:af_widgetAndText">
+                                                secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                             <states jcr:primaryType="nt:unstructured">
                                                 <focus
                                                         jcr:primaryType="nt:unstructured"
@@ -191,7 +191,7 @@
                         <radioButtonDescriptionShort
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Short Description"
-                                id="af_radiobuttondescriptionshort"
+                                id="af2_radiobuttondescriptionshort"
                                 cssSelector=".cmp-adaptiveform-radiobutton__shortdescription"
                                 longTitle="Radio Button Short Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -199,7 +199,7 @@
                         <radioButtonDescriptionLong
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Long Description"
-                                id="af_radiobuttondescriptionlong"
+                                id="af2_radiobuttondescriptionlong"
                                 cssSelector=".cmp-adaptiveform-radiobutton__longdescription"
                                 longTitle="Radio Button Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">

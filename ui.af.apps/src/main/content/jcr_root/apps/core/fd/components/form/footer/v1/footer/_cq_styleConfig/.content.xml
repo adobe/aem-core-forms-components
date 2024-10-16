@@ -7,7 +7,7 @@
             longTitle="Footer"
             jcr:primaryType="nt:unstructured"
             jcr:title="Footer"
-            id="af_footer"
+            id="af2_footer"
             cssSelector=".cmp-adaptiveform-footer"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
@@ -15,7 +15,7 @@
                     longTitle="Footer Text"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Footer Text"
-                    id="af_footertext"
+                    id="af2_footertext"
                     cssSelector=".cmp-adaptiveform-footer__text .cq-Editable-dom"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
