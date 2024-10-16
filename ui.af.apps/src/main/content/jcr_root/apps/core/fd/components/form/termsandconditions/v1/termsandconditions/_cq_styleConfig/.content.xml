@@ -6,23 +6,23 @@
         <field
             jcr:primaryType="nt:unstructured"
             jcr:title="Base"
-            id="af_tnc"
+            id="af2_tnc"
             longTitle="Base"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Terms And Conditions"
-                    id="af_tncwidgetandtext"
+                    id="af2_tncwidgetandtext"
                     cssSelector=".cmp-adaptiveform-termsandcondition"
                     longTitle="Terms And Conditions Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <tncLabelContainer
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label Container"
-                                id="af_tnclabelcontainer"
+                                id="af2_tnclabelcontainer"
                                 cssSelector=".cmp-adaptiveform-termsandcondition__label-container"
                                 longTitle="Terms and Conditions Label Container"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -30,7 +30,7 @@
                                 <tncLabel
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
-                                        id="af_tnclabel"
+                                        id="af2_tnclabel"
                                         cssSelector=".cmp-adaptiveform-termsandcondition__label"
                                         longTitle="Terms and Conditions Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -48,11 +48,11 @@
                                 <tncHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
-                                        id="af_tnchelpicon"
+                                        id="af2_tnchelpicon"
                                         cssSelector=".cmp-adaptiveform-termsandcondition__questionmark"
                                         longTitle="Terms and Conditions Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                        secondarySelectors="af_guideContainer:af_helpicon">
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -87,7 +87,7 @@
                         <tncContentContainer
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Container"
-                            id="af_tnccontentcontainer"
+                            id="af2_tnccontentcontainer"
                             cssSelector=".cmp-adaptiveform-termsandcondition__content-container"
                             longTitle="Terms And Conditions Content Container"
                             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -95,7 +95,7 @@
                                 <tncContent
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Content"
-                                    id="af_tnccontent"
+                                    id="af2_tnccontent"
                                     cssSelector=".cmp-adaptiveform-termsandcondition__content"
                                     longTitle="Terms And Conditions Content"
                                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -121,7 +121,7 @@
                         <tncConsentArea
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Consent Area"
-                            id="af_tncconsentarea"
+                            id="af2_tncconsentarea"
                             cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox"
                             longTitle="Terms And Conditions Consent Area"
                             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -129,7 +129,7 @@
                                 <tncCheckbox
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Checkbox"
-                                    id="af_tncconsentcheckbox"
+                                    id="af2_tncconsentcheckbox"
                                     cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']"
                                     longTitle="Terms And Conditions Checkbox"
                                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -151,7 +151,7 @@
                                 <tncCheckBoxLabel
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Checkbox Label"
-                                    id="af_tnccheckboxlabel"
+                                    id="af2_tnccheckboxlabel"
                                     cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__label"
                                     longTitle="Terms And Conditions Checkbox Label"
                                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -182,7 +182,7 @@
                         <tncDescriptionShort
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Short Description"
-                                id="af_tncdescriptionshort"
+                                id="af2_tncdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-termsandcondition__shortdescription"
                                 longTitle="Terms And Conditions Short Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -190,7 +190,7 @@
                         <tncDescriptionLong
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Long Description"
-                                id="af_tncdescriptionlong"
+                                id="af2_tncdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-termsandcondition__longdescription"
                                 longTitle="Terms And Conditions Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
