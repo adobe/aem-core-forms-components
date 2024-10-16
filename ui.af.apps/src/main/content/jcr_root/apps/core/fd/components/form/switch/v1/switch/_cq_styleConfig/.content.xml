@@ -6,23 +6,23 @@
         <field
             jcr:primaryType="nt:unstructured"
             jcr:title="Base"
-            id="af_switch"
+            id="af2_switch"
             longTitle="Base"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Switch"
-                    id="af_switchwidgetandtext"
+                    id="af2_switchwidgetandtext"
                     cssSelector=".cmp-adaptiveform-switch"
                     longTitle="Switch Handle Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <switchLabelContainer
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label Container"
-                                id="af_switchlabelcontainer"
+                                id="af2_switchlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-switch__label-container"
                                 longTitle="Switch Label Container"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -30,7 +30,7 @@
                                 <switchLabel
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
-                                        id="af_switchlabel"
+                                        id="af2_switchlabel"
                                         cssSelector=".cmp-adaptiveform-switch__label"
                                         longTitle="Switch Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -48,11 +48,11 @@
                                 <switchHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
-                                        id="af_switchhelpicon"
+                                        id="af2_switchhelpicon"
                                         cssSelector=".cmp-adaptiveform-switch__questionmark"
                                         longTitle="Switch Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                        secondarySelectors="af_guideContainer:af_helpicon">
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -87,7 +87,7 @@
                         <switchContainer
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Switch Widget Container"
-                                id="af_switchwidgetcontainer"
+                                id="af2_switchwidgetcontainer"
                                 cssSelector=".cmp-adaptiveform-switch__container"
                                 longTitle="Switch Widget Container"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -95,7 +95,7 @@
                                 <switchOption
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Option"
-                                        id="af_switchoption"
+                                        id="af2_switchoption"
                                         cssSelector=".cmp-adaptiveform-switch__option"
                                         longTitle="Switch Option"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -113,7 +113,7 @@
                                 <switchWidget
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Widget"
-                                        id="af_switchwidget"
+                                        id="af2_switchwidget"
                                         cssSelector=".adaptiveform-switch__widget-label"
                                         longTitle="Switch Widget"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -135,7 +135,7 @@
                                 <switchHandle
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Handle"
-                                        id="af_switchhandle"
+                                        id="af2_switchhandle"
                                         cssSelector=".cmp-adaptiveform-switch__circle-indicator"
                                         longTitle="Switch Handle"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -161,7 +161,7 @@
                                 <switchSlider
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Slider"
-                                        id="af_switchonlabel"
+                                        id="af2_switchonlabel"
                                         cssSelector=".cmp-adaptiveform-switch__widget-slider"
                                         longTitle="Switch Slider"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -189,7 +189,7 @@
                         <switchDescriptionShort
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Short Description"
-                                id="af_switchdescriptionshort"
+                                id="af2_switchdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-switch__shortdescription"
                                 longTitle="Switch Short Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -197,7 +197,7 @@
                         <switchDescriptionLong
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Long Description"
-                                id="af_switchdescriptionlong"
+                                id="af2_switchdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-switch__longdescription"
                                 longTitle="Switch Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">

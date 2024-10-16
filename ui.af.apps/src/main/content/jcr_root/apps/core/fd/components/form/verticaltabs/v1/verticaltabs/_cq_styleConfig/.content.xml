@@ -6,7 +6,7 @@
         <tabsOnLeftPanel
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Tabs on Left"
-                id="af_tabsonleft"
+                id="af2_tabsonleft"
                 cssSelector=".cmp-verticaltabs"
                 longTitle="Vertical Tabs Panel Container"
                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -14,7 +14,7 @@
                 <verticalTabsLabelContainer
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Label Container"
-                        id="af_verticalTabslabelcontainer"
+                        id="af2_verticalTabslabelcontainer"
                         cssSelector=".cmp-verticaltabs__label-container"
                         longTitle="Vertical Tabs Label Container"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -22,7 +22,7 @@
                         <verticalTabsLabel
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label"
-                                id="af_verticalTabslabel"
+                                id="af2_verticalTabslabel"
                                 cssSelector=".cmp-verticaltabs__label"
                                 longTitle="Vertical Tabs Label"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -40,11 +40,11 @@
                         <verticalTabsHelpIcon
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Help Icon"
-                                id="af_verticalTabshelpicon"
+                                id="af2_verticalTabshelpicon"
                                 cssSelector=".cmp-verticaltabs__questionmark"
                                 longTitle="Vertical Tabs Help Icon"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                secondarySelectors="af_guideContainer:af_helpicon">
+                                secondarySelectors="af2_guideContainer:af2_helpicon">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -79,7 +79,7 @@
                 <verticalTabsDescriptionShort
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Short Description"
-                        id="af_verticalTabsdescriptionshort"
+                        id="af2_verticalTabsdescriptionshort"
                         cssSelector=".cmp-verticaltabs__shortdescription"
                         longTitle="Vertical Tabs Short Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -87,7 +87,7 @@
                 <verticalTabsDescriptionLong
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Long Description"
-                        id="af_verticalTabsdescriptionlong"
+                        id="af2_verticalTabsdescriptionlong"
                         cssSelector=".cmp-verticaltabs__longdescription"
                         longTitle="Vertical Tabs Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -105,7 +105,7 @@
                 <verticalTabsTabContainer
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Tab Container"
-                        id="af_verticalTabstabcontainer"
+                        id="af2_verticalTabstabcontainer"
                         cssSelector=".cmp-verticaltabs__tabs-container"
                         longTitle="Vertical Tabs Tab Container"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -113,7 +113,7 @@
                         <verticalTabsTabList
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Tabs List"
-                                id="af_verticalTabstablist"
+                                id="af2_verticalTabstablist"
                                 cssSelector=".cmp-verticaltabs__tablist"
                                 longTitle="Vertical Tabs Tab List"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -121,7 +121,7 @@
                                 <verticalTabsTab
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Tab"
-                                        id="af_verticalTabstab"
+                                        id="af2_verticalTabstab"
                                         cssSelector=".cmp-verticaltabs__tab"
                                         longTitle="Vertical Tabs Tab"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">

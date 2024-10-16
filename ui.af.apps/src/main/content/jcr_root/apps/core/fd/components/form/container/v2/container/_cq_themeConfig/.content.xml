@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    componentId="af_guideContainer"
+    componentId="af2_guideContainer"
     label="CC Container">
     <items jcr:primaryType="nt:unstructured">
         <afPage
             jcr:primaryType="nt:unstructured"
             jcr:title="Page"
-            id="af_page"
+            id="af2_page"
             cssSelector="body"
             longTitle="Page"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
         <form
             jcr:primaryType="nt:unstructured"
             jcr:title="Form"
-            id="af_form"
+            id="af2_form"
             cssSelector=".cmp-adaptiveform-container"
             longTitle="Form"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -27,7 +27,7 @@
         <base
             jcr:primaryType="nt:unstructured"
             jcr:title="base"
-            id="af_base"
+            id="af2_base"
             cssSelector=".base"
             longTitle="Base"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -56,7 +56,7 @@
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Widget"
-                    id="af_widgetAndText"
+                    id="af2_widgetAndText"
                     cssSelector="input,select,textarea"
                     longTitle="Base Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">

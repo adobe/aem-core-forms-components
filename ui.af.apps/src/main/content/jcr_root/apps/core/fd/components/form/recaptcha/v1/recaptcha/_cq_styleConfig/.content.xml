@@ -10,7 +10,7 @@
                 <captcha
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Captcha"
-                        id="af_recaptchacontainer"
+                        id="af2_recaptchacontainer"
                         cssSelector=".cmp-adaptiveform-recaptcha"
                         longTitle="reCaptcha Widget and Text"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -18,7 +18,7 @@
                         <captchaLabel
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Captcha Label"
-                                id="af_recaptchawidgetlabel"
+                                id="af2_recaptchawidgetlabel"
                                 cssSelector=".cmp-adaptiveform-recaptcha__label"
                                 longTitle="reCaptcha Label"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -36,7 +36,7 @@
                         <captchaWidget
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Captcha Widget"
-                                id="af_recaptchawidget"
+                                id="af2_recaptchawidget"
                                 cssSelector=".cmp-adaptiveform-recaptcha__widget"
                                 longTitle="reCaptcha Widget"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">

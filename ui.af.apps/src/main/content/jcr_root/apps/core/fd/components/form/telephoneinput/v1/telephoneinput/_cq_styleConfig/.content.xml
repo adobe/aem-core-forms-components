@@ -8,16 +8,16 @@
                 <widgetAndText
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Telephone Input"
-                        id="af_telephonewidgetandtext"
+                        id="af2_telephonewidgetandtext"
                         cssSelector=".cmp-adaptiveform-telephoneinput"
                         longTitle="Telephone Input Widget"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                        secondarySelectors="af_guideContainer:af_widgetAndText">
+                        secondarySelectors="af2_guideContainer:af2_widgetAndText">
                         <items jcr:primaryType="nt:unstructured">
                             <telephoneinputLabelContainer
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Label Container"
-                                    id="af_telephoneinputlabelcontainer"
+                                    id="af2_telephoneinputlabelcontainer"
                                     cssSelector=".cmp-adaptiveform-telephoneinput__label-container"
                                     longTitle="Telephone Input Label Container"
                                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -25,7 +25,7 @@
                                     <telephoneinputLabel
                                             jcr:primaryType="nt:unstructured"
                                             jcr:title="Label"
-                                            id="af_telephoneinputlabel"
+                                            id="af2_telephoneinputlabel"
                                             cssSelector=".cmp-adaptiveform-telephoneinput__label"
                                             longTitle="Telephone Input Label"
                                             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -43,11 +43,11 @@
                                     <telephoneinputHelpIcon
                                             jcr:primaryType="nt:unstructured"
                                             jcr:title="Help Icon"
-                                            id="af_telephoneinputhelpicon"
+                                            id="af2_telephoneinputhelpicon"
                                             cssSelector=".cmp-adaptiveform-telephoneinput__questionmark"
                                             longTitle="Telephone Input Help Icon"
                                             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                            secondarySelectors="af_guideContainer:af_helpicon">
+                                            secondarySelectors="af2_guideContainer:af2_helpicon">
                                         <states jcr:primaryType="nt:unstructured">
                                             <focus
                                                     jcr:primaryType="nt:unstructured"
@@ -82,11 +82,11 @@
                             <telephoneinputWidgetAndText
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Telephone Input"
-                                    id="af_telephoneinputwidgetandtext"
+                                    id="af2_telephoneinputwidgetandtext"
                                     cssSelector=".cmp-adaptiveform-telephoneinput__widget"
                                     longTitle="Telephone Input Widget"
                                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                 <states jcr:primaryType="nt:unstructured">
                                     <focus
                                             jcr:primaryType="nt:unstructured"
@@ -109,7 +109,7 @@
                             <telephoneinputDescriptionShort
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Short Description"
-                                    id="af_telephoneinputdescriptionshort"
+                                    id="af2_telephoneinputdescriptionshort"
                                     cssSelector=".cmp-adaptiveform-telephoneinput__shortdescription"
                                     longTitle="Telephone Input Short Description"
                                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -117,7 +117,7 @@
                             <telephoneinputDescriptionLong
                                     jcr:primaryType="nt:unstructured"
                                     jcr:title="Long Description"
-                                    id="af_telephoneinputdescriptionlong"
+                                    id="af2_telephoneinputdescriptionlong"
                                     cssSelector=".cmp-adaptiveform-telephoneinput__longdescription"
                                     longTitle="Telephone Input Long Description"
                                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
