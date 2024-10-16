@@ -6,7 +6,7 @@
         <accordionPanel
             jcr:primaryType="nt:unstructured"
             jcr:title="Accordion"
-            id="af_accordionpanel"
+            id="af2_accordionpanel"
             cssSelector=".cmp-accordion"
             longTitle="Accordion Panel Container"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -14,7 +14,7 @@
                 <accordionLabelContainer
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Label Container"
-                        id="af_accordionlabelcontainer"
+                        id="af2_accordionlabelcontainer"
                         cssSelector=".cmp-accordion__label-container"
                         longTitle="Accordion Label Container"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -22,7 +22,7 @@
                         <accordionLabel
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label"
-                                id="af_accordionlabel"
+                                id="af2_accordionlabel"
                                 cssSelector=".cmp-accordion__label"
                                 longTitle="Accordion Label"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -40,11 +40,11 @@
                         <accordionHelpIcon
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Help Icon"
-                                id="af_accordionhelpicon"
+                                id="af2_accordionhelpicon"
                                 cssSelector=".cmp-accordion__questionmark"
                                 longTitle="Accordion Help Icon"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                secondarySelectors="af_guideContainer:af_helpicon">
+                                secondarySelectors="af2_guideContainer:af2_helpicon">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -79,7 +79,7 @@
                 <accordionDescriptionShort
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Short Description"
-                        id="af_accordiondescriptionshort"
+                        id="af2_accordiondescriptionshort"
                         cssSelector=".cmp-accordion__shortdescription"
                         longTitle="Accordion Short Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -87,7 +87,7 @@
                 <accordionDescriptionLong
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Long Description"
-                        id="af_accordiondescriptionlong"
+                        id="af2_accordiondescriptionlong"
                         cssSelector=".cmp-accordion__longdescription"
                         longTitle="Accordion Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -105,7 +105,7 @@
                 <accordionPanelItem
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Panel Item"
-                    id="af_accordionpanelitem"
+                    id="af2_accordionpanelitem"
                     cssSelector=".cmp-accordion__item"
                     longTitle="Accordion Panel Item"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -113,7 +113,7 @@
                         <accordionHeader
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Header"
-                                id="af_accordionpanelheader"
+                                id="af2_accordionpanelheader"
                                 cssSelector=".cmp-accordion__header"
                                 longTitle="Accordion Header"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -131,7 +131,7 @@
                         <accordionHeaderButton
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Header Button"
-                            id="af_accordionheaderbutton"
+                            id="af2_accordionheaderbutton"
                             cssSelector=".cmp-accordion__button"
                             longTitle="Accordion Header Button"
                             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -139,7 +139,7 @@
                                 <accordionHeaderTitle
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Title"
-                                        id="af_accordionheadertitle"
+                                        id="af2_accordionheadertitle"
                                         cssSelector=".cmp-accordion__title"
                                         longTitle="Accordion Header Title"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -157,7 +157,7 @@
                                 <accordionHeaderIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Icon"
-                                        id="af_accordionheadericon"
+                                        id="af2_accordionheadericon"
                                         cssSelector=".cmp-accordion__icon"
                                         longTitle="Accordion Header Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -187,7 +187,7 @@
                         <accordionPanelWidget
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Widget"
-                                id="af_accordionpanelwidget"
+                                id="af2_accordionpanelwidget"
                                 cssSelector=".cmp-accordion__panel"
                                 longTitle="Accordion Panel Widget"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">

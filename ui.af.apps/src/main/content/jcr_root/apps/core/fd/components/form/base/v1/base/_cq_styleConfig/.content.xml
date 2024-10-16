@@ -6,7 +6,7 @@
         <field
             jcr:primaryType="nt:unstructured"
             jcr:title="Base"
-            id="af_base"
+            id="af2_base"
             cssSelector=".base"
             longTitle="Base"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -14,7 +14,7 @@
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Widget and Text"
-                    id="af_basewidgetandtext"
+                    id="af2_basewidgetandtext"
                     cssSelector="input,select,textarea"
                     longTitle="Base Widget and Text"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -40,7 +40,7 @@
                 <fieldLabel
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Label"
-                    id="af_baselabel"
+                    id="af2_baselabel"
                     cssSelector="label"
                     longTitle="Base Label"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">

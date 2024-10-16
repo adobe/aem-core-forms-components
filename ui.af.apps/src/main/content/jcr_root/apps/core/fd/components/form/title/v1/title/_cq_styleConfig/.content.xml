@@ -6,7 +6,7 @@
         <formTitle
             jcr:primaryType="nt:unstructured"
             jcr:title="Title"
-            id="af_formtitle"
+            id="af2_formtitle"
             cssSelector=".cmp-title"
             longTitle="Form Title"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>

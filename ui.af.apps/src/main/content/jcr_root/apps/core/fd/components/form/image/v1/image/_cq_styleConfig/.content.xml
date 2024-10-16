@@ -6,7 +6,7 @@
         <Image
             jcr:primaryType="nt:unstructured"
             jcr:title="Image"
-            id="af_image"
+            id="af2_image"
             cssSelector=".cmp-image__image"
             longTitle="Image"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
