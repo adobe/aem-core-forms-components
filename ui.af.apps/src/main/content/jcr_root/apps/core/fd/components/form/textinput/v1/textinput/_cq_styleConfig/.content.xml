@@ -6,23 +6,23 @@
         <field
             jcr:primaryType="nt:unstructured"
             jcr:title="Base"
-            id="af_textbox"
+            id="af2_textbox"
             longTitle="Base"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Text Input"
-                    id="af_textboxwidgetandtext"
+                    id="af2_textboxwidgetandtext"
                     cssSelector=".cmp-adaptiveform-textinput"
                     longTitle="Text Input Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <textinputLabelContainer
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label Container"
-                                id="af_textinputlabelcontainer"
+                                id="af2_textinputlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-textinput__label-container"
                                 longTitle="Text Input Label Container"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -30,7 +30,7 @@
                                 <textinputLabel
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
-                                        id="af_textinputlabel"
+                                        id="af2_textinputlabel"
                                         cssSelector=".cmp-adaptiveform-textinput__label"
                                         longTitle="Text Input Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -48,11 +48,11 @@
                                 <textinputHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
-                                        id="af_textinputhelpicon"
+                                        id="af2_textinputhelpicon"
                                         cssSelector=".cmp-adaptiveform-textinput__questionmark"
                                         longTitle="Text Input Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                        secondarySelectors="af_guideContainer:af_helpicon">
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -87,11 +87,11 @@
                         <textinputWidgetAndText
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="textinput"
-                                id="af_textinputwidgetandtext"
+                                id="af2_textinputwidgetandtext"
                                 cssSelector=".cmp-adaptiveform-textinput__widget"
                                 longTitle="Text Input Widget"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                secondarySelectors="af_guideContainer:af_widgetAndText">
+                                secondarySelectors="af2_guideContainer:af2_widgetAndText">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -114,7 +114,7 @@
                         <textinputDescriptionShort
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Short Description"
-                                id="af_textinputdescriptionshort"
+                                id="af2_textinputdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-textinput__shortdescription"
                                 longTitle="Text Input Short Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -122,7 +122,7 @@
                         <textinputDescriptionLong
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Long Description"
-                                id="af_textinputdescriptionlong"
+                                id="af2_textinputdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-textinput__longdescription"
                                 longTitle="Text Input Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -160,11 +160,11 @@
                 <textAreaWidgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Text Area"
-                    id="af_textareawidgetandtext"
+                    id="af2_textareawidgetandtext"
                     cssSelector="textarea.cmp-adaptiveform-textinput__widget"
                     longTitle="Text Area Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                             jcr:primaryType="nt:unstructured"

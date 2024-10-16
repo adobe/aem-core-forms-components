@@ -9,7 +9,7 @@
         <button
             jcr:primaryType="nt:unstructured"
             jcr:title="All Buttons"
-            id="af_button"
+            id="af2_button"
             cssSelector=".cmp-adaptiveform-button__widget"
             longTitle="Button"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -17,7 +17,7 @@
                 <buttonText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Button Text"
-                    id="af_buttontext"
+                    id="af2_buttontext"
                     cssSelector=".cmp-adaptiveform-button__text"
                     longTitle="Button Text"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -43,7 +43,7 @@
                 <buttonDescriptionShort
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Short Description"
-                        id="af_buttondescriptionshort"
+                        id="af2_buttondescriptionshort"
                         cssSelector=".cmp-adaptiveform-button__shortdescription"
                         longTitle="Button Short Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -51,7 +51,7 @@
                 <buttonDescriptionLong
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Long Description"
-                        id="af_buttondescriptionlong"
+                        id="af2_buttondescriptionlong"
                         cssSelector=".cmp-adaptiveform-button__longdescription"
                         longTitle="Button Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -69,7 +69,7 @@
                 <buttonHelpContainer
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Help Container"
-                        id="af_buttonhelpcontainer"
+                        id="af2_buttonhelpcontainer"
                         cssSelector=".cmp-adaptiveform-button__help-container"
                         longTitle="Button Help Container"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -87,11 +87,11 @@
                 <buttonHelpIcon
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Help Icon"
-                        id="af_buttonhelpicon"
+                        id="af2_buttonhelpicon"
                         cssSelector=".cmp-adaptiveform-button__questionmark"
                         longTitle="Button Help Icon"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                        secondarySelectors="af_guideContainer:af_helpicon">
+                        secondarySelectors="af2_guideContainer:af2_helpicon">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
