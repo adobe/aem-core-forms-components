@@ -150,10 +150,6 @@ if (typeof window.HamburgerMenu === 'undefined') {
             }
         }
     
-         #isRepeatable(item) {
-            return item.fieldType === 'panel' && item.type === 'array'
-        }
-    
          #updateSelectedPanelTitle(anchorElement, clickedAnchorElement) {
             const activeItemTitleContent = anchorElement?.innerText;
             const clickedAnchorElementText = clickedAnchorElement?.innerText;
@@ -313,7 +309,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 }
     
                 link.classList.add(HamburgerMenu.cssClasses.hamburgerMenuWidget.hamburgerMenuNavLink);
-                if (this.#isRepeatable(item)) {
+                if (item?.repeatable) {
                     const subMenu = this.#createHamburgerMenu(item.items, counter + 1);
                     subMenu?.childNodes.forEach(child => ul.appendChild(child));
                 } else if (Array.isArray(item.items) && item.items.length > 0) {
