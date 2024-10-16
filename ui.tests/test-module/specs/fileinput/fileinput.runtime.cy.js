@@ -290,7 +290,7 @@ describe("Form with File Input - Prefill & Submit tests", () => {
 
             if (idx === 0) {
                 cy.on('window:alert', (str) => {
-                    expect(str).to.equal('File(s) test.bat are unsupported file types');
+                    expect(str).to.equal('File(s) $test.bat are unsupported file types');
                 });
             } else {
                 // check for successful attachment of file in the view

@@ -20,7 +20,11 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
+<<<<<<< HEAD
         <version>3.0.69-SNAPSHOT</version>
+=======
+        <version>1.1.55-SNAPSHOT</version>
+>>>>>>> release/650
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -86,10 +90,14 @@
                         <!-- Enable processing of OSGI metatype annotations -->
                         <_metatypeannotations>*</_metatypeannotations>
                         <Import-Package>
-                            javax.annotation;version=0.0.0,
-                            com.adobe.cq.wcm.core.components.models;version="[12.0.0,13.0.0)",
+                            <!-- https://github.com/jhy/jsoup/issues/1616 -->
+                            javax.annotation;version=!;resolution:=optional,javax.annotation.meta;version=!;resolution:=optional,
+                            <!-- com.adobe.cq.wcm.core.components.models;version="[12.0.0,13.0.0)", -->
                             *
                         </Import-Package>
+                        <Embed-Dependency>
+                            jsoup;
+                        </Embed-Dependency>
                     </instructions>
                 </configuration>
                 <dependencies>
@@ -160,7 +168,7 @@
                                                 <limit>
                                                     <counter>INSTRUCTION</counter>
                                                     <value>COVEREDRATIO</value>
-                                                    <minimum>0.80</minimum>
+                                                    <minimum>0.60</minimum>
                                                 </limit>
                                             </limits>
                                         </rule>
@@ -340,6 +348,16 @@
                     <plugin>
                         <groupId>net.revelc.code</groupId>
                         <artifactId>impsort-maven-plugin</artifactId>
+                        <version>1.6.2</version>
+                        <dependencies>
+                            <!-- Needed because of maven 3.9.0 backward compatibility issue,
+                                 See : https://github.com/revelc/impsort-maven-plugin/issues/64 -->
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-utils</artifactId>
+                                <version>3.5.1</version>
+                            </dependency>
+                        </dependencies>
                         <configuration>
                             <groups>java, javax, org</groups>
                             <staticGroups>*</staticGroups>
@@ -453,6 +471,13 @@
             <artifactId>httpclient</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.3</version>
+            <scope>compile</scope>
+        </dependency>
+
 
         <!-- AEM and forms sdk versions -->
         <!-- the below order of dependencies is very critical -->
@@ -464,22 +489,22 @@
         -->
 
         <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-forms-sdk-api</artifactId>
+            <groupId>com.adobe.aemfd</groupId>
+            <artifactId>aemfd-client-sdk</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>
-            <classifier>apis</classifier>
         </dependency>
 
         <!-- End of AEM and forms sdk versions -->
-
-        <dependency>
-            <groupId>com.adobe.aem</groupId>
-            <artifactId>aem-sdk-api</artifactId>
-        </dependency>
 
 
         <!-- Testing dependencies -->

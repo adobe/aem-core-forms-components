@@ -30,7 +30,7 @@ describe.only('Page - Authoring', function () {
     cy.selectLayer("Edit");
     cy.insertComponent(responsiveGridDropZoneSelector, componentTitle, componentType);
     cy.get('body').click( 0,0);
-  }  
+  }
 
   const getDropZoneSelector = function(responsiveGridDropZone) {
     return sitesSelectors.overlays.overlay.component + "[data-path='" + responsiveGridDropZone + "']";
@@ -79,7 +79,7 @@ describe.only('Page - Authoring', function () {
     cy.get("[name='./custom']")
         .should("exist");
 
-    cy.get('.cq-dialog-cancel').click();
+    cy.get('.cq-dialog-cancel').should('be.visible').click();
     cy.deleteComponentByPath(tabsContainerDrop);
   }
 

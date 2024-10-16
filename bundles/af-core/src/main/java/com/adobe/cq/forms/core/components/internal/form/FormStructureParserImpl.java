@@ -23,7 +23,6 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +54,15 @@ public class FormStructureParserImpl implements FormStructureParser {
     }
 
     @Override
+    public String getThemeClientLibRefFromFormContainer() {
+        FormContainer formContainer = getFormContainer(resource);
+        return formContainer != null ? formContainer.getThemeClientLibRef() : null;
+    }
+
+    @Override
     public String getClientLibRefFromFormContainer() {
-        return getPropertyFromFormContainer(resource, FormContainer.PN_CLIENT_LIB_REF);
+        FormContainer formContainer = getFormContainer(resource);
+        return formContainer != null ? formContainer.getClientLibRef() : null;
     }
 
     @Override
@@ -79,22 +85,20 @@ public class FormStructureParserImpl implements FormStructureParser {
         return false;
     }
 
-    private String getPropertyFromFormContainer(@Nullable Resource resource, @NotNull String propertyName) {
+    private FormContainer getFormContainer(@Nullable Resource resource) {
         if (resource == null) {
             return null;
         }
 
         if (ComponentUtils.isAFContainer(resource)) {
             FormContainer formContainer = resource.adaptTo(FormContainer.class);
-            if (formContainer != null) {
-                return formContainer.getClientLibRef();
-            }
+            return formContainer;
         }
 
         for (Resource child : resource.getChildren()) {
-            String clientLibRef = getPropertyFromFormContainer(child, propertyName);
-            if (clientLibRef != null) {
-                return clientLibRef;
+            FormContainer formContainer = getFormContainer(child);
+            if (formContainer != null) {
+                return formContainer;
             }
         }
         return null;
@@ -119,11 +123,13 @@ public class FormStructureParserImpl implements FormStructureParser {
         String result = null;
         FormContainer formContainer = resource.adaptTo(FormContainer.class);
         try {
-            HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
+            // commenting the below line because this is causing problem in json encoding
+            // and solving this requires huge bump in 6.5
+            // HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
             ObjectMapper mapper = new ObjectMapper();
             Writer writer = new StringWriter();
             ObjectWriter objectWriter = mapper.writerWithView(Views.Publish.class);
-            objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
+            // objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
             // return publish view specific properties only for runtime
             objectWriter.writeValue(writer, formContainer);
             result = writer.toString();

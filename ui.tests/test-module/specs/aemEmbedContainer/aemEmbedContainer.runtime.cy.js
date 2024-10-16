@@ -48,10 +48,6 @@ describe("Sites with Aem Embed Container", () => {
             cy.get('.cmp-adaptiveform-container').should('have.length', 1);
             cy.get('.cmp-adaptiveform-container').find('.cmp-adaptiveform-textinput__widget').should('have.length', 11);
         })
-
-        it('Test iframe src with dataRef', () => {
-            cy.get('.cmp-aemform__iframecontent').should('have.attr', 'src').should('not.include', "wcmmode");
-        });
     })
 
     context('aem embed container in iframe mode with custom height ', function () {
@@ -128,6 +124,5 @@ describe("Sites with Aem Embed Container", () => {
                 expect(fragmentTextInputModel.getState().value).to.equal(input)
             })
         })
-
     })
 })

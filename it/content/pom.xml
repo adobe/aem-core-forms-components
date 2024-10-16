@@ -20,7 +20,11 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
+<<<<<<< HEAD
         <version>3.0.69-SNAPSHOT</version>
+=======
+        <version>1.1.55-SNAPSHOT</version>
+>>>>>>> release/650
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -88,14 +92,12 @@
                         <dependency>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>core-forms-components-examples-content</artifactId>
-                            <!-- Keeping version range to allow testing of current test content with old components -->
-                            <version>[1.0.0,)</version>
+                            <version>${project.version}</version>
                         </dependency>
                         <dependency>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>core-forms-components-examples-apps</artifactId>
-                            <!-- Keeping version range to allow testing of current test content with old components -->
-                            <version>[1.0.0,)</version>
+                            <version>${project.version}</version>
                         </dependency>
                     </dependencies>
                 </configuration>

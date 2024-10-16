@@ -195,12 +195,6 @@ describe("Form with Dropdown", () => {
         })
     })
 
-
-    it("Dropdown should not have aria-disabled attribute if enable is false", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[5];
-        cy.get(`#${id} > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
-    })
-
     it("should update enum values on providing duplicate enums", () => {
 
         const [dropdown7, dropdown7FieldView] = Object.entries(formContainer._fields)[8];

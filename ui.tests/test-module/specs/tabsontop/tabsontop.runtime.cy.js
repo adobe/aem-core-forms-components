@@ -306,3 +306,31 @@ describe("date picker calendar icon pop up inside tabs", () => {
         });
     });
 });
+
+
+
+describe("date picker calendar icon pop up inside tabs", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/tabsontop/datepicker.html";
+    let formContainer = null;
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    const tabSelector = 'ol li';
+    const lastTab = () => {
+        return cy.get(tabSelector).last();
+    }
+
+    it(" should be visible on first click ", () => {
+        lastTab().click().then(() => {
+            // check if first click on date picker calendar opens the pope
+            cy.get('#datepicker-3a195924d8').find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+                cy.get(".dp-clear").should("be.visible");
+            });
+        });
+    });
+});

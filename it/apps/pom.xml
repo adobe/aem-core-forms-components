@@ -18,7 +18,11 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
+<<<<<<< HEAD
         <version>3.0.69-SNAPSHOT</version>
+=======
+        <version>1.1.55-SNAPSHOT</version>
+>>>>>>> release/650
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -88,20 +92,17 @@
                         <dependency>
                             <group>adobe/cq60</group>
                             <name>core.wcm.components.examples.ui.apps</name>
-                            <!-- Keeping version range to allow testing of current test content with old components -->
-                            <version>[1.0.0,)</version>
+                            <version>${core.wcm.components.library.version}</version>
                         </dependency>
                         <dependency>
                             <group>${vault.package.group}</group>
                             <name>core-forms-components-af-apps</name>
-                            <!-- Keeping version range to allow testing of current test content with old components -->
-                            <version>[1.0.0,)</version>
+                            <version>${project.version}</version>
                         </dependency>
                         <dependency>
                             <group>${vault.package.group}</group>
                             <name>core-forms-components-apps</name>
-                            <!-- Keeping version range to allow testing of current test content with old components -->
-                            <version>[1.0.0,)</version>
+                            <version>${project.version}</version>
                         </dependency>
                     </dependencies>
                 </configuration>

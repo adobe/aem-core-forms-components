@@ -408,10 +408,4 @@ public class FileInputImplTest {
         FieldUtils.writeField(fileInput, "dataLayerEnabled", true, true);
         Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_DATALAYER));
     }
-
-    @Test
-    void testNoFieldType() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_WITHOUT_FIELDTYPE, FileInput.class, context);
-        Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_WITHOUT_FIELDTYPE));
-    }
 }

@@ -21,13 +21,13 @@ describe("Form Runtime with Date Picker", () => {
 
     let formContainer = null
     const fmPropertiesUI = "/libs/fd/fm/gui/content/forms/formmetadataeditor.html/content/dam/formsanddocuments/core-components-it/samples/datepicker/basic"
-    const themeRef = 'input[name="./jcr:content/metadata/themeRef"]'
+    const themeRef = 'input[name="./jcr:content/metadata/themeClientLibRef"]'
     const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
 
     // enabling theme for this test case as without theme there is a bug in custom widget css
     before(() => {
         cy.openPage(fmPropertiesUI).then(() => {
-            cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
+            cy.get(themeRef).should('be.visible').clear().type('adaptiveform.theme.canvas3').then(() => {
                 cy.get(propertiesSaveBtn).click();
             })
         })
@@ -167,11 +167,6 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${datePicker4} > .${bemBlock}__widget`).should('have.attr', 'aria-describedby', `${datePicker4}__shortdescription`)
             cy.get(`#${datePicker4} > .${bemBlock}__widget`).should('have.attr', 'aria-invalid', 'false')
         })
-    })
-
-    it("Datepicker should not have aria-disabled attribute if enable is false", () => {
-        const [id, fieldView] = Object.entries(formContainer._fields)[1];
-        cy.get(`#${id} > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
     })
 
     it("should set and clear value based on rules", () => {

@@ -31,7 +31,8 @@ describe('Document of Record Test', () => {
   });
 
   const getFormId = (path, cursor = "") => {
-    return cy.request("GET", `/adobe/forms/af/listforms?cursor=${cursor}`).then(({body}) => {
+      const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+      return cy.request("GET", `${contextPath}/adobe/forms/af/listforms?cursor=${cursor}`).then(({body}) => {
       let retVal = body.items.find(collection => collection.path === path);
       if (retVal) {
         return retVal.id;
@@ -60,10 +61,11 @@ describe('Document of Record Test', () => {
           redirect: 'follow'
         };
         if (cy.af.isLatestAddon()) {
+            const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
           // use cursor based API if latest AddOn
           return getFormId(formPath)
           .then(formId => {
-            return fetch(`/adobe/forms/af/dor/${formId}`, requestOptions)
+            return fetch(`${contextPath}/adobe/forms/af/dor/${formId}`, requestOptions)
             .then(response => {
               const contentType = response.headers.get('Content-Type');
               expect(contentType).to.equal("application/pdf")

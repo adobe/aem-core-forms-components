@@ -35,7 +35,6 @@ import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.Heading;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormTitle;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
@@ -69,11 +68,6 @@ public class TitleImplV2 extends AbstractFormComponentImpl implements FormTitle 
     private String format;
 
     private Heading heading;
-
-    @Override
-    public String getFieldType() {
-        return super.getFieldType(FieldType.PLAIN_TEXT);
-    }
 
     /**
      * Translation of the title property

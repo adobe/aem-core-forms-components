@@ -48,7 +48,6 @@ public class DatePickerImplTest {
     private static final String PATH_DATEPICKER_DATALAYER = CONTENT_ROOT + "/datepicker-datalayer";
     private static final String PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/datepicker-displayValueExpression";
     private static final String PATH_DATEPICKER_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/datepicker-backwardcompatible";
-    private static final String PATH_DATEPICKER_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/datepicker-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -306,11 +305,5 @@ public class DatePickerImplTest {
     void testJSONExportForDisplayValueExpression() throws Exception {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION));
-    }
-
-    @Test
-    void testNoFieldType() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITHOUT_FIELDTYPE, DatePicker.class, context);
-        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITHOUT_FIELDTYPE));
     }
 }
