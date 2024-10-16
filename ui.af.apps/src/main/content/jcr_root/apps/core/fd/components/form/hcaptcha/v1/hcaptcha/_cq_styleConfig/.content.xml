@@ -10,7 +10,7 @@
                 <captcha
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Captcha"
-                        id="af_hcaptchacontainer"
+                        id="af2_hcaptchacontainer"
                         cssSelector=".cmp-adaptiveform-hcaptcha"
                         longTitle="hCaptcha Widget and Text"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -18,7 +18,7 @@
                         <captchaLabel
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Captcha Label"
-                                id="af_hcaptchawidgetlabel"
+                                id="af2_hcaptchawidgetlabel"
                                 cssSelector=".cmp-adaptiveform-hcaptcha__label"
                                 longTitle="hCaptcha Label"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -36,7 +36,7 @@
                         <captchaWidget
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Captcha Widget"
-                                id="af_hcaptchawidget"
+                                id="af2_hcaptchawidget"
                                 cssSelector=".cmp-adaptiveform-hcaptcha__widget"
                                 longTitle="hCaptcha Widget"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">

@@ -6,23 +6,23 @@
         <field
             jcr:primaryType="nt:unstructured"
             jcr:title="Base"
-            id="af_numericbox"
+            id="af2_numericbox"
             longTitle="Base"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Numeric Box"
-                    id="af_numericboxwidgetandtext"
+                    id="af2_numericboxwidgetandtext"
                     cssSelector=".cmp-adaptiveform-numberinput"
                     longTitle="Number Input Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                    secondarySelectors="af_guideContainer:af_widgetAndText">
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <numberinputLabelContainer
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label Container"
-                                id="af_numberinputlabelcontainer"
+                                id="af2_numberinputlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-numberinput__label-container"
                                 longTitle="Number Input Label Container"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -30,7 +30,7 @@
                                 <numberinputLabel
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
-                                        id="af_numberinputlabel"
+                                        id="af2_numberinputlabel"
                                         cssSelector=".cmp-adaptiveform-numberinput__label"
                                         longTitle="Number Input Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -48,11 +48,11 @@
                                 <numberinputHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
-                                        id="af_numberinputhelpicon"
+                                        id="af2_numberinputhelpicon"
                                         cssSelector=".cmp-adaptiveform-numberinput__questionmark"
                                         longTitle="Number Input Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                        secondarySelectors="af_guideContainer:af_helpicon">
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -87,11 +87,11 @@
                         <numberinputWidgetAndText
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="numberinput"
-                                id="af_numberinputwidgetandtext"
+                                id="af2_numberinputwidgetandtext"
                                 cssSelector=".cmp-adaptiveform-numberinput__widget"
                                 longTitle="Number Input Widget"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                secondarySelectors="af_guideContainer:af_widgetAndText">
+                                secondarySelectors="af2_guideContainer:af2_widgetAndText">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -114,7 +114,7 @@
                         <numberinputDescriptionShort
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Short Description"
-                                id="af_numberinputdescriptionshort"
+                                id="af2_numberinputdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-numberinput__shortdescription"
                                 longTitle="Number Input Short Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
@@ -122,7 +122,7 @@
                         <numberinputDescriptionLong
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Long Description"
-                                id="af_numberinputdescriptionlong"
+                                id="af2_numberinputdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-numberinput__longdescription"
                                 longTitle="Number Input Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
