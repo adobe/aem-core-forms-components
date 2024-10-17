@@ -3,7 +3,7 @@
     "showApprovalOption": true,
     "jcr:title": "Terms And Conditions",
     "fd:tnc": true,
-    "showAsPopup": true,
+    "showAsPopup": false,
     "name": "termsandconditions1694159302516",
     "sling:resourceType": "core/fd/components/form/termsandconditions/v1/termsandconditions",
     "wrapData": true,
