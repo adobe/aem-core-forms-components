@@ -171,6 +171,27 @@ describe('Page/Form Authoring', function () {
         cy.get(".cq-dialog-submit").click();
     };
 
+    const verifyChangeDataModelToMarketo = function(formContainerEditPathSelector) {
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open data model tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
+
+        //select marketo data model
+        cy.get(".cmp-adaptiveform-container__selectformmodel").click();
+        cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
+        cy.get("coral-selectlist-item[value='connector']").contains('Marketo Configuration').should('be.visible').click();
+
+        //select marketo config
+        cy.get(".cmp-adaptiveform-container__marketoselector").click();
+        cy.get("coral-selectlist-item[value='/conf/global/settings/cloudconfigs/marketo/marketoconfig']").contains('marketoconfig').should('be.visible').click();
+        cy.get("#formModelChange").should("be.visible");
+        cy.get("#formModelDialogAcceptButton").click();
+        cy.get(".cq-dialog-submit").click();
+    };
+
         context("Open Forms Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/forms/af/core-components-it/blank",
@@ -203,6 +224,12 @@ describe('Page/Form Authoring', function () {
 
             it('change data model in container edit dialog box', {retries: 3},function () {
                 verifyChangeDataModel(formContainerEditPathSelector);
+            });
+
+            it('change data model to marketo in container edit dialog box', {retries: 3},function () {
+                if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-9611")) {
+                    verifyChangeDataModelToMarketo(formContainerEditPathSelector);
+                }
             });
 
             it ('check title in edit dialog', {retries: 3}, function() {
