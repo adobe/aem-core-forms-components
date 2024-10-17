@@ -13,8 +13,7 @@
         sling:configRef="/conf/forms/hamburgermenuform/"
         sling:resourceType="forms-components-examples/components/page">
         <guideContainer
-            fd:hamburgerMenu="true"
-            fd:hamburgerMenuTitle="Menun"
+            fd:isHamburgerMenuEnabled="true"
             fd:translationIds="\{&quot;thankYouMessage&quot;:&quot;guideContainer##thankYouMessage##7404&quot;}"
             fd:version="2.1"
             jcr:lastModified="{Date}2024-08-22T16:36:00.252+05:30"

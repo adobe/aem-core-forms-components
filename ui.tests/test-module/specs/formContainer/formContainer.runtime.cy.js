@@ -5,21 +5,21 @@ describe("Form Runtime with Fragment", () => {
 const pagePath = "content/forms/af/core-components-it/samples/formcontainer/basic.html"
 
 const selectors = {
-    hamburgerIcon : `.cmp-adaptiveform-container-hamburger-icon`,
-    hamburgerMenu : `.cmp-adaptiveform-container-hamburger-menu`,
-    hamburgerMenuNavBar: `.cmp-adaptiveform-container-nav-bar`,
-    hamburgerMenuNavPrevious: `.cmp-adaptiveform-container-nav-button-previous`,
-    hamburgerMenuNavNext: `.cmp-adaptiveform-container-nav-button-next`,
-    hamburgerMenuNavTitle: `.cmp-adaptiveform-container-nav-title`,
-    hamburgerMenuContainer: `.cmp-adaptiveform-container-hamburger-menu-container`,
-    hamburgerMenuBreadCrumbsContainer: `.cmp-adaptiveform-container-breadcrumbs-container`
+    hamburgerIcon : `.cmp-adaptiveform-container__hamburger-menu-icon`,
+    hamburgerMenu : `.cmp-adaptiveform-container__hamburger-menu-dropdown`,
+    hamburgerMenuNavBar: `.cmp-adaptiveform-container__hamburger-menu-bottom`,
+    hamburgerMenuNavPrevious: `.cmp-adaptiveform-container__hamburger-menu-button--prev`,
+    hamburgerMenuNavNext: `.cmp-adaptiveform-container__hamburger-menu-button--next`,
+    hamburgerMenuNavTitle: `.cmp-adaptiveform-container__hamburger-menu-active-item-title`,
+    hamburgerMenuContainer: `.cmp-adaptiveform-container__hamburger-menu-container`,
+    hamburgerMenuBreadCrumbsContainer: `.cmp-adaptiveform-container__hamburger-menu-middle`
 }
 
 const cssClasses = {
-    hamburgerMenuActive: 'cmp-adaptiveform-container-hamburger-menu-item-active',
-    hamburgerMenuActiveParent: 'cmp-adaptiveform-container-hamburger-menu-item-activeparent',
-    hamburgerMenuNavOpen: `cmp-adaptiveform-container-nav-button-open`,
-    hamburgerMenuNavClose: `cmp-adaptiveform-container-nav-button-Close`,
+    hamburgerMenuActive: 'cmp-adaptiveform-container__hamburger-menu-item--active',
+    hamburgerMenuActiveParent: 'cmp-adaptiveform-container__hamburger-menu-item--activeparent',
+    hamburgerMenuNavOpen: `cmp-adaptiveform-container__hamburger-menu-button--open`,
+    hamburgerMenuNavClose: `cmp-adaptiveform-container__hamburger-menu-button--close`,
 }
 
 let formContainer = null
