@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2024 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,12 @@
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
+        #hamburgerMenuInstance = '';
+
         constructor(params) {
             super(params);
             let self = this;
+            this.#hamburgerMenuInstance = new HamburgerMenu(this);
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on submitSuccess event.
@@ -75,6 +78,10 @@
             this.#setupAutoSave(self.getModel());
         }
 
+        initialiseHamburgerMenu() {
+            this.#hamburgerMenuInstance.init();
+        }
+
         /**
          * Register time based auto save
          * @param formModel.
@@ -101,6 +108,7 @@
     async function onDocumentReady() {
         const startTime = new Date().getTime();
         let elements = document.querySelectorAll(FormContainerV2.selectors.self);
+
         for (let i = 0; i < elements.length; i++) {
             let loaderToAdd = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ elements[i].id + "']");
             if(loaderToAdd){
@@ -111,6 +119,7 @@
         function onInit(e) {
             let formContainer =  e.detail;
             let formEl = formContainer.getFormElement();
+            formContainer.initialiseHamburgerMenu();
             setTimeout(() => {
                 let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
                 if(loaderToRemove){
@@ -144,5 +153,4 @@
     } else {
         document.addEventListener("DOMContentLoaded", onDocumentReady);
     }
-
 })();
