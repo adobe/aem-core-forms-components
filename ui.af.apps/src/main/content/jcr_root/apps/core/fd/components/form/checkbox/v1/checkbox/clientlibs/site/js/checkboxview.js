@@ -68,6 +68,29 @@
         getTooltipDiv() {
             return this.element.querySelector(CheckBox.selectors.tooltipDiv);
         }
+
+        updateEnabled(enabled, state) {
+            if (this.widget) {
+                this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_ENABLED, enabled);
+                const isDisabled = !enabled || state.readOnly;
+                if (isDisabled) {
+                    this.widget.setAttribute("disabled", "disabled");
+                } else {
+                    this.widget.removeAttribute("disabled");
+                }
+            }
+        }
+
+        updateReadOnly(readonly) {
+            if (this.widget) {
+                this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_READONLY, readonly);
+                if (readonly === true) {
+                    this.widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
+                } else {
+                    this.widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
+                }
+            }
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
