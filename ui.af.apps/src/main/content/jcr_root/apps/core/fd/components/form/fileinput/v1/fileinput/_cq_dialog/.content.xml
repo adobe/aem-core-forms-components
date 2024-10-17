@@ -70,12 +70,10 @@
                                                   fieldLabel="Data type of submitted value"
                                                   fieldDescription="Selecting the String data type option would increase the upload size by 30%."
                                                   required="{Boolean}true"
-                                                  name="./type"
-                                                  key="File"
-                                                  value="file">
+                                                  name="./type">
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <string jcr:primaryType="nt:unstructured" text="String" value="string"/>
-                                                    <boolean jcr:primaryType="nt:unstructured" text="File" value="file"/>
+                                                    <file jcr:primaryType="nt:unstructured" text="File" value="file" selected="true"/>
                                                 </items>
                                             </type>
                                             <showComment

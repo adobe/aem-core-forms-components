@@ -56,7 +56,7 @@
 
     })
 
-    it(" should get model and view initialized properly ", () => {
+     it(" should get model and view initialized properly ", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
         Object.entries(formContainer._fields).forEach(([id, field]) => {
@@ -65,7 +65,7 @@
         });
     })
 
-    it(" html changes are reflected in model ", () => {
+     it(" html changes are reflected in model ", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[0]
         const model = formContainer._model.getElement(id)
         const input = "value"
@@ -74,7 +74,7 @@
         })
     });
 
-    it('test the rules editor', () => {
+     it('test the rules editor', () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[1];
         cy.get('.cmp-adaptiveform-textinput__widget')
           .type('Hide me');
@@ -102,6 +102,16 @@
          cy.get(`#${resetId}`).should("be.visible").click().then(() => {
              expect(model.value, " Text model after reset should have same value").contains("Test text");
              cy.get(`#${id}`).contains("Test text");
+         });
+     });
+
+     it(" prefill of static text using explicit dataRef, name bindings is not supported", () => {
+         const [id, fieldView] = Object.entries(formContainer._fields)[3];
+         const [buttonId, buttonFieldView] = Object.entries(formContainer._fields)[5];
+         const model = formContainer._model.getElement(id);
+         cy.get(`#${buttonId} button`).should("be.visible").click().then(() => {
+             expect(model.value, " Text model should import data").contains("prefilled");
+             cy.get(`#${id}`).contains("prefilled");
          });
      });
 

@@ -49,12 +49,15 @@
     var JSON_SCHEMA = 'jsonschema',
         NONE = "none",
         FORM_DATA_MODEL = "formdatamodel",
+        CONNECTOR = "connector",
         SCHEMA_REF = "input[name='./schemaRef']",
         SCHEMA_TYPE = "input[name='./schemaType']",
         SCHEMA_CONTAINER = ".cmp-adaptiveform-container__schemaselectorcontainer",
         FDM_CONTAINER = ".cmp-adaptiveform-container__fdmselectorcontainer",
+        CONNECTOR_CONTAINER = ".cmp-adaptiveform-container__marketoselectorcontainer",
         SCHEMA_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__schemaselector",
         FDM_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__fdmselector",
+        CONNECTOR_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__marketoselector",
         FORM_MODEL_SELECTOR = ".cmp-adaptiveform-container__selectformmodel",
         FM_AF_ROOT = "/content/forms/af/",
         FM_DAM_ROOT ="/content/dam/formsanddocuments/",
@@ -138,6 +141,8 @@
                 $(SCHEMA_DROPDOWN_SELECTOR).val(schemaRef);
             } else if (schemaType == FORM_DATA_MODEL) {
                 $(FDM_DROPDOWN_SELECTOR).val(schemaRef);
+            } else if (schemaType == CONNECTOR) {
+                $(CONNECTOR_DROPDOWN_SELECTOR).val(schemaRef);
             }
         }
     };
@@ -166,6 +171,21 @@
             isSchemaChanged = true;
             if (configuredFormModel) {
                 confirmFormModelChange(selectedSchema, $(FDM_DROPDOWN_SELECTOR));
+            } else {
+                toBeConfiguredFormModel = selectedSchema;
+            }
+        }
+    };
+
+    function connectorSelectorOnChanged(dialog) {
+        var selectedSchema = dialog.find(CONNECTOR_DROPDOWN_SELECTOR);
+        if(selectedSchema.length > 0) {
+            selectedSchema = selectedSchema[0].value;
+            setElementValue(dialog, SCHEMA_REF, selectedSchema);
+            setElementValue(dialog, DAM_SCHEMA_REF, selectedSchema);
+            isSchemaChanged = true;
+            if (configuredFormModel) {
+                confirmFormModelChange(selectedSchema, $(CONNECTOR_DROPDOWN_SELECTOR));
             } else {
                 toBeConfiguredFormModel = selectedSchema;
             }
@@ -205,12 +225,19 @@
     function hideContainersExcept(selectedSchemaType) {
         if (selectedSchemaType == JSON_SCHEMA) {
             $(FDM_CONTAINER).hide();
+            $(CONNECTOR_CONTAINER).hide();
             $(SCHEMA_CONTAINER).show();
         } else if (selectedSchemaType == FORM_DATA_MODEL) {
             $(SCHEMA_CONTAINER).hide();
+            $(CONNECTOR_CONTAINER).hide();
             $(FDM_CONTAINER).show();
+        } else if (selectedSchemaType == CONNECTOR) {
+            $(SCHEMA_CONTAINER).hide();
+            $(FDM_CONTAINER).hide();
+            $(CONNECTOR_CONTAINER).show();
         } else if (selectedSchemaType == 'none') {
             $(FDM_CONTAINER).hide();
+            $(CONNECTOR_CONTAINER).hide();
             $(SCHEMA_CONTAINER).hide();
         }
     };
@@ -238,7 +265,8 @@
     function initialiseDataModel(dialog) {
         var formModelSelector = dialog.find(FORM_MODEL_SELECTOR)[0],
             schemaSelector = dialog.find(SCHEMA_DROPDOWN_SELECTOR)[0],
-            fdmSelector = dialog.find(FDM_DROPDOWN_SELECTOR)[0];
+            fdmSelector = dialog.find(FDM_DROPDOWN_SELECTOR)[0],
+            connectorSelector = dialog.find(CONNECTOR_DROPDOWN_SELECTOR)[0];
         if (formModelSelector) {
             formModelSelector.on("change", function() {
                 selectFormModelOnChanged(dialog);
@@ -252,6 +280,11 @@
         if (fdmSelector) {
             fdmSelector.on("change", function() {
                 fdmSelectorOnChanged(dialog);
+            });
+        };
+        if (connectorSelector) {
+            connectorSelector.on("change", function() {
+                connectorSelectorOnChanged(dialog);
             });
         };
         selectFormModelOnLoad(dialog);

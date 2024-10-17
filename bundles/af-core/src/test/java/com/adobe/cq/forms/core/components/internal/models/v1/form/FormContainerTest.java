@@ -98,4 +98,11 @@ public class FormContainerTest {
         assertEquals("ltr", formContainerMock.getLanguageDirection());
     }
 
+    @Test
+    void testIsHamburgerMenuEnabled() {
+        FormContainer formContainerMock = Mockito.mock(FormContainer.class);
+        Mockito.when(formContainerMock.getIsHamburgerMenuEnabled()).thenCallRealMethod();
+        assertEquals(false, formContainerMock.getIsHamburgerMenuEnabled());
+    }
+
 }
