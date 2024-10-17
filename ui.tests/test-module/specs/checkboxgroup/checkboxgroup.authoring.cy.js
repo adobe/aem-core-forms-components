@@ -17,6 +17,7 @@
 
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
+const formsSelectors = require("../../libs/commons/guideSelectors");
 
 /**
  * Testing CheckBoxGroup with Sites Editor
@@ -47,15 +48,6 @@ describe('Page - Authoring', function () {
         .get('iframe#ContentFrame')
         .its('0.contentDocument.body').should('not.be.empty')
         .then(cy.wrap)
-  }
-
-  const getRuleEditorIframe = () => {
-      // get the iframe > document > body
-      // and retry until the body element is not empty
-      return cy
-          .get('iframe#af-rule-editor')
-          .its('0.contentDocument.body').should('not.be.empty')
-          .then(cy.wrap)
   }
 
   const testCheckBoxGroupBehaviour = function(checkBoxGroupEditPathSelector, checkBoxGroupDrop, isSites) {
@@ -211,34 +203,37 @@ describe('Page - Authoring', function () {
     });
 
     // adding retry since rule editor sometimes does not open at first try
-    it('rule editor is working with rich text enum names', { retries: 3 }, function(){
+    it('rule editor is working with rich text enum names', {retries: 2}, function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='editexpression']");
-        cy.get("#af-rule-editor").should("be.visible");
-        getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
-        getRuleEditorIframe().find("#create-rule-button").click();
-        getRuleEditorIframe().find('#create-rule-button').then(($el) => {
-            $el[0].click();
-            getRuleEditorIframe().find('.child-choice-name').click();
-            getRuleEditorIframe().find('coral-selectlist-item[value="EVENT_SCRIPTS"]').then(($el) => {
-                $el[0].scrollIntoView();
-                $el[0].click();
-                getRuleEditorIframe().find('.EVENT_AND_COMPARISON_OPERATOR').then(($el) => {
-                    $el[0].click();
-                    getRuleEditorIframe().find('coral-selectlist-item[value="CONTAINS"]').then(($el) => {
-                        $el[0].click();
-                        getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').then(($el) => {
-                            $el[0].click();
-                            getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().should("have.text", "Select 1");
-                        });
-                    });
-                });
-            });
-            getRuleEditorIframe().find('.exp-Close-Button').then(($el) => {
-                $el[0].click();
-            });
-        });
-    });
+        cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+        // click on  create option from rule editor header
+        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
+            .click({force: true});
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.CONTAINS).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.CONTAINS).click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PRIMITIVE_EXPRESSION + " .NUMERIC_LITERAL button").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PRIMITIVE_EXPRESSION + " .NUMERIC_LITERAL button").first().click();
+
+        cy.getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().contains("Select 1");
+        cy.getRuleEditorIframe().find('.exp-Cancel-Button').click();
+        cy.getRuleEditorIframe().find('.exp-Close-Button').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
+      });
   });
 /*
   context('Open Sites Editor', function () {
