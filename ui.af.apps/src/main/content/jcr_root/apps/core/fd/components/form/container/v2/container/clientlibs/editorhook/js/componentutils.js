@@ -171,4 +171,15 @@
 
     window.CQ.FormsCoreComponents.editorhooks.allowedCompFieldTypes = [];
 
+    window.CQ.FormsCoreComponents.editorhooks.getFormContainerProperties =  (editablePath) => {
+        const result = $.ajax({
+            type: 'GET',
+            async: false,
+            url: Granite.HTTP.externalize( editablePath + ".0.json"),
+            cache: false,
+            dataType: "json"
+        });
+        return result.responseJSON;
+    };
+
 })(window, Granite.author, Coral, jQuery(document));
