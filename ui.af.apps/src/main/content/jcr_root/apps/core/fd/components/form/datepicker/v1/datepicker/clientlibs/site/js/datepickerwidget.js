@@ -546,10 +546,10 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.#dp.getElementsByClassName("dp-clear")[0].getElementsByTagName(
             "a")[0].innerText = this.#options.locale.clearText;
         this.#layout(this.#defaultView);
-        this.#position();
         this.#dp.style.display = "flex";
         this.#focusedOnLi = false;
         DatePickerWidget.#visible = true;
+        this.#position();
         if (this.#options.showCalendarIcon) {
           this.#curInstance.$field.setAttribute('readonly', true);    // when the datepicker is active, deactivate the field
         }
@@ -580,33 +580,39 @@ if (typeof window.DatePickerWidget === 'undefined') {
           windowScrollY = window.scrollY,
           windowInnerHeight = window.innerHeight,
           windowInnerWidth = window.innerWidth,
+          inputRect = $elem.getBoundingClientRect(),
           height = $elem.offsetHeight,
           top = this.#getOffset($elem).top + height,
           left = this.#getOffset($elem).left,
           styles = {"top": (top + "px"), "left": (left + "px")},
-          diffBottom = top + 333 - windowInnerHeight - windowScrollY, //todo: hard-coded dp height to 333
+          diffBottom = top + this.#dp.offsetHeight - windowInnerHeight - windowScrollY, //this.#dp.offsetHeight is the widget's height
           newLeft,
           newTop;
       if (diffBottom > 0) {
         //can't appear at the bottom
         //check top
-        newTop = top - height - 333 - 20;
+        newTop = top - height - this.#dp.offsetHeight - 20;
         if (newTop < windowScrollY) {
           //can't appear at the top as well ... the datePicker pop up overlaps the date field
           newTop = top - diffBottom;
         }
         styles.top = newTop + "px";
       }
-      if (left + 433 > windowScrollX + windowInnerWidth) { //todo: hard-coding width to 433
+      if (left + this.#dp.offsetWidth > windowScrollX + windowInnerWidth) {
         //align with the right edge
-        newLeft = windowScrollX + windowInnerWidth - 433 - 20;
+        newLeft = windowScrollX + windowInnerWidth - this.#dp.offsetWidth - 20;
         styles.left = newLeft + "px";
       }
       this.#dp.style.top = styles.top;
       this.#dp.style.left = styles.left;
       const localeObj = new Intl.Locale(this.#lang);
       if(localeObj?.textInfo?.direction == "rtl") {
-        this.#dp.style.right = styles.left;
+        let right = windowInnerWidth - (left + inputRect.width); // Calculate right offset
+        if (right + this.#dp.offsetWidth > windowInnerWidth) { // this.#dp.offsetWidth is the widget's width
+          // Align with the right edge of the viewport
+          right = windowScrollX + windowInnerWidth - this.#dp.offsetWidth - 20; // Adjust with a 20px margin
+      }
+        this.#dp.style.right = right + "px";
         this.#dp.style.left = "unset"
       }
       return this;

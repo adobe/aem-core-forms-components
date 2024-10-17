@@ -73,6 +73,10 @@ describe("Form Runtime with CheckBox Input", () => {
         }).then(() => {
             model.enable = false
             return checkHTML(model.id, model.getState())
+        }).then(() => {
+            model.readOnly = true
+            cy.get(`#${id}`).find(".cmp-adaptiveform-checkbox__widget").should('have.attr', 'disabled', 'disabled');
+            return checkHTML(model.id, model.getState());
         })
     });
 

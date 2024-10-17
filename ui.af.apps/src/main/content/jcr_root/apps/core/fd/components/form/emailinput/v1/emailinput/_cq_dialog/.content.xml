@@ -62,14 +62,11 @@
                                             </autocomplete>
                                             <autocomplete-email
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                     fieldLabel="Autofill attribute"
                                                     forceSelection="{Boolean}true"
                                                     name="./autocomplete"
                                                     value="">
-                                                <options
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
                                                 <items jcr:primaryType="nt:unstructured">
                                                     <empty
                                                             jcr:primaryType="nt:unstructured"

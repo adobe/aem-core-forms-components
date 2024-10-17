@@ -485,4 +485,10 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_FIELDTYPE, FormContainer.class, context);
         assertEquals(FieldType.FORM.getValue(), formContainer.getFieldType());
     }
+
+    @Test
+    public void testGetIsHamburgerMenuEnabled() {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertFalse(Boolean.valueOf(formContainer.getIsHamburgerMenuEnabled().toString()));
+    }
 }

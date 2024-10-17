@@ -55,6 +55,10 @@ describe('Page - Authoring', function () {
     .should("exist");
     cy.get("[name='./fd:dragDropText']").should("exist");
     cy.get("[name='./type']").should("exist");
+    cy.get("[name='./type'] coral-select-item:selected").first().should(
+        "have.text",
+        "File"
+    );
     cy.contains("Validation").should("exist");
 
     // Checking some dynamic behaviours

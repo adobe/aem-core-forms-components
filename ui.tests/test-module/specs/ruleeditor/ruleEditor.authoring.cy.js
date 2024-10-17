@@ -242,6 +242,36 @@ describe('Rule editor authoring sanity for core-components',function(){
             submitFormButtonEditPath = submitFormContainerPath + "/" + afConstants.components.forms.resourceType.submitButton.split("/").pop(),
             submitFormButtonEditPathSelector = "[data-path='" + submitFormButtonEditPath + "']";
 
+        it('should open rule-editor from spa', function () {
+            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-14068")) {
+                cy.openAuthoring(formPath);
+                cy.selectLayer("Edit");
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                    "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+
+                cy.intercept('GET', /solutions\/livecycle-ruleeditor-ui-service.*/).as('ruleEditorRequest');
+
+                // Edit rule option not existing on button toolbar
+                cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+                cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+                cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+                // click on  create option from rule editor header
+                cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+                cy.wait('@ruleEditorRequest').its('response.statusCode').should('equal', 200);
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
+
+                cy.get(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).should("exist");
+
+                cy.selectLayer("Edit");
+                cy.deleteComponentByPath(buttonEditPath);
+            }
+        })
+
         /**
          * RuleSanity for button to change label of textbox
          * [To add rule on button item so that when it get clicked
@@ -367,6 +397,37 @@ describe('Rule editor authoring sanity for core-components',function(){
             textinputEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             buttonEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
+
+        it('should open rule-editor from spa', function () {
+            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-14068")) {
+                cy.openAuthoring(pagePath);
+                cy.selectLayer("Edit");
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                    "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+
+                cy.intercept('GET', /solutions\/livecycle-ruleeditor-ui-service.*/).as('ruleEditorRequest');
+
+                // Edit rule option not existing on button toolbar
+                cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+                cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+                cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+                // click on  create option from rule editor header
+                cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+                cy.wait('@ruleEditorRequest').its('response.statusCode').should('equal', 200);
+
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
+
+                cy.get(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).should("exist");
+
+                cy.selectLayer("Edit");
+                cy.deleteComponentByPath(buttonEditPath);
+            }
+        })
 
         /**
          * RuleSanity for button to change label of textbox

@@ -51,7 +51,7 @@ describe('Page - Authoring', function () {
     cy.get("[name='./name']")
         .should("exist");
     cy.get("[name='./readOnly']")
-        .should("not.exist");
+        .should("exist");
     cy.clickAndValidate('.cq-dialog-cancel');
     cy.deleteComponentByPath(checkboxDrop);
   }

@@ -68,7 +68,6 @@
     }
 
     function getFieldId(editable) {
-        // todo: dead code, not used
         return editable.dom.find("[data-cmp-adaptiveformcontainer-path]").attr('id');
     }
 

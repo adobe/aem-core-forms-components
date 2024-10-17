@@ -47,7 +47,9 @@ class FormContainer {
     #preventDefaultSubmit(){
         if(this._element) {
             this._element.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
+                const target = event.target;
+                const isSubmitOrReset = target.tagName === 'INPUT' && (target.type === 'submit' || target.type === 'reset');
+                if (event.key === 'Enter' && target.tagName !== 'SELECT' && target.tagName !== 'BUTTON' && !isSubmitOrReset) {
                     event.preventDefault();
                 }
             });

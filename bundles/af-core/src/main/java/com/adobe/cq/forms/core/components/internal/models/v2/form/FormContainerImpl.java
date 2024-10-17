@@ -76,6 +76,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
+    private static final String FD_IS_HAMBURGER_MENU_ENABLED = "fd:isHamburgerMenuEnabled";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
 
@@ -94,6 +95,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CLIENTLIB_REF)
     @Nullable
     private String clientLibRef;
+
+    @ValueMapValue(name = FD_IS_HAMBURGER_MENU_ENABLED, injectionStrategy = InjectionStrategy.OPTIONAL)
+    private Boolean isHamburgerMenuEnabled = false;
 
     protected String contextPath = StringUtils.EMPTY;
     private boolean formDataEnabled = false;
@@ -267,6 +271,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return prefillService;
     }
 
+    public Boolean getIsHamburgerMenuEnabled() {
+        return isHamburgerMenuEnabled;
+    }
+
     @Override
     public String getRoleAttribute() {
         return roleAttribute;
@@ -327,6 +335,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (StringUtils.isNotBlank(getSchemaRef())) {
             properties.put(FD_SCHEMA_REF, getSchemaRef());
         }
+        properties.put(FD_IS_HAMBURGER_MENU_ENABLED, getIsHamburgerMenuEnabled());
         // adding a custom property to know if form data is enabled
         // this is done so that an extra API call from the client can be avoided
         if (StringUtils.isNotBlank(getPrefillService()) ||
