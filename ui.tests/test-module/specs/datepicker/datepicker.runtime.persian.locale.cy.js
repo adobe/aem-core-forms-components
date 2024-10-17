@@ -49,6 +49,16 @@ describe("Form Runtime with Date Picker", () => {
         });
     });
 
+    it("snapshot testing for rtl", () => {
+        const [datePicker8, datePicker8FieldView] = Object.entries(formContainer._fields)[8];
+        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click();
+        cy.get('body').toMatchImageSnapshot({
+            imageConfig: {
+              threshold: 0,
+            },
+          });  
+    });
+
 
 
 
