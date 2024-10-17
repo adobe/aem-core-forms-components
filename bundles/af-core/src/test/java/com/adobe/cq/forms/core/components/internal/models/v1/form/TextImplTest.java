@@ -92,7 +92,7 @@ public class TextImplTest {
     @Test
     void testGetDataRef() {
         Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
-        assertEquals("null", text.getDataRef());
+        assertEquals("a.b", text.getDataRef());
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.getDataRef()).thenCallRealMethod();
         assertEquals(null, textMock.getDataRef());

@@ -48,13 +48,6 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
     private Resource resource;
 
     @Override
-    protected void initBaseModel() {
-        // Always make dataRef of Text component as null, for this we need to make unboundFormElement as true
-        unboundFormElement = Boolean.TRUE;
-        super.initBaseModel();
-    }
-
-    @Override
     public String getValue() {
         return translate("value", value);
     }
