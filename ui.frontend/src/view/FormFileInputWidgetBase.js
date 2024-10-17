@@ -167,7 +167,7 @@ class FormFileInputWidgetBase {
                 if(typeof elem.dataset.key !== "undefined")
                     fileUrl = elem.dataset.key;
 
-                if(fileUrl)  {
+                if(fileUrl && fileUrl !== "[object Blob]")  {
                     //prepend context path if not already appended
                     if (!(fileUrl.lastIndexOf(this.options.contextPath, 0) === 0)) {
                         fileUrl =  this.options.contextPath + fileUrl;

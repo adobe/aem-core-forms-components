@@ -130,6 +130,26 @@ describe('Page - Authoring', function () {
                 cy.deleteComponentByPath(accordionEditPath);
             });
         });
+
+        it('open editable toolbar of 2nd accordion item', {retries: 3}, function () {
+            cy.cleanTest(accordionEditPath).then(function(){
+                dropAccordionInContainer();
+                cy.reload();
+                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").should('have.css', 'height', '0px')
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionPathSelector);
+                cy.invokeEditableAction("[data-action='PANEL_SELECT']");
+                cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                cy.get("table.cmp-panelselector__table tr").eq(0)
+                    .should("contain.text", "Adaptive Form Panel: Item 1");
+                cy.get("table.cmp-panelselector__table tr").eq(1)
+                    .should("contain.text", "Adaptive Form Panel: Item 2");
+                cy.get("tr[data-name='item_2']").click();
+                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_1']").should('have.css', 'height', '0px');
+                cy.get('body').click(0, 0);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + "[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']");
+                cy.deleteComponentByPath(accordionEditPath);
+            });
+        });
     })
 
     context('Open Sites Editor', function () {

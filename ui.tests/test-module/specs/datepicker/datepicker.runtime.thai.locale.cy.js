@@ -54,9 +54,9 @@ describe("Form Runtime with Date Picker", () => {
            const localizedYear = convertNumberToLocale(Number(yearObject.value));
            const localizedMonth = monthObject.value;
            cy.get(".dp-caption").invoke("text").should("eq", localizedMonth + ', ' + localizedYear);
-           cy.get(".dp-caption").click();
+           cy.get(".dp-caption").eq(1).click();
            cy.get(".dp-caption").invoke("text").should("eq", localizedYear);
-           cy.get(".dp-rightnav").click();
+           cy.get(".dp-rightnav").eq(1).click();
        });
    });
 

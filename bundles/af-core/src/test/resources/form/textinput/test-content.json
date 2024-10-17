@@ -194,5 +194,13 @@
     "fieldType": "text-input",
     "placeholder": "test-placeholder",
     "fd:viewType": "some/custom/value"
+  },
+  "textinput-without-fieldtype" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "placeholder": "test-placeholder",
+    "fd:viewType": "some/custom/value"
   }
 }

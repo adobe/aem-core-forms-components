@@ -1,0 +1,37 @@
+name: Validate Test Files for it.only
+
+on:
+  pull_request:
+    paths:
+      - '**/*.cy.js'
+
+jobs:
+  validate_test_files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Fetch Base and Head References
+        run: |
+          git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
+          git fetch origin ${{ github.head_ref }}:${{ github.head_ref }}
+        if: github.event_name == 'pull_request'
+
+      - name: Validate Test Files
+        run: |
+          # Identify changed test files
+          changed_test_files=$(git diff --name-only ${{ github.base_ref }} ${{ github.head_ref }} | grep '\.cy\.js$')
+      
+          # Loop through each changed test file
+          for file in $changed_test_files; do
+            # Check if the file contains 'it.only', 'describe.skip', or 'it.skip'
+            if grep -qE 'it\.only|describe\.skip|it\.skip' "$file"; then
+              echo "Test file $file contains 'it.only', 'describe.skip', or 'it.skip'. This is not allowed."
+              exit 1
+            fi
+          done
+      
+          echo "No test files contain 'it.only', 'describe.skip', or 'it.skip'."
+        shell: bash

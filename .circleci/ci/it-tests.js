@@ -26,7 +26,7 @@ const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env;
  // 6.6.0 packages are published to same artifactory, once fixed use latest here
 const latestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg');
-const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.1256'; // Use the latest version if available, otherwise default to '6.0.1256'
+const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.1298'; // Use the latest version if available, otherwise default to '6.0.1256'
 // this value is for 6.5.21.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
 const classicFormReleasedAddonVersion = '6.0.1244';
 
@@ -87,10 +87,10 @@ try {
         // Start CQ
         ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
+            ${extras} \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.config:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
-            ${extras} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */)} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */)} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \\

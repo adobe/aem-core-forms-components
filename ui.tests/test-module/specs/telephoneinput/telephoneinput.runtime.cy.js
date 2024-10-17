@@ -127,6 +127,11 @@ describe("Form Runtime with Telephone Input", () => {
         })
     });
 
+    it("Telephone input field should not have aria-disabled attribute if enable is false", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[1];
+        cy.get(`#${id} > .${bemBlock}__widget`).should('not.have.attr', 'aria-disabled');
+    });
+
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'tooltip_scenario_test');
     })

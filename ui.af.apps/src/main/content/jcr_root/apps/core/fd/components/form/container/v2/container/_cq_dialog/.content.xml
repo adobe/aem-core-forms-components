@@ -83,7 +83,7 @@
                                         sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                         ignoreData="{Boolean}true"
                                         name="./specVersion"
-                                        value="0.14.0"/>
+                                        value="0.14.2"/>
                                 </items>
                             </container>
                         </items>
