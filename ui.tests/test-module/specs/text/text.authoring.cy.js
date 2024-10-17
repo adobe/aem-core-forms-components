@@ -54,13 +54,11 @@ describe('Page - Authoring', function () {
     cy.get("[name='./name']")
      .should("exist");
     cy.get("[name='./dataRef']")
-        .should("not.exist");
+        .should("exist");
     cy.get("[name='./readOnly']")
         .should("not.exist");
     cy.get("[name='./unboundFormElement']")
-        .should("not.exist");
-    cy.get("[name='./dorBindRef']")
-        .should("not.exist");
+        .should("exist");
     cy.get('.cmp-adaptiveform-base__istitlerichtext').should('not.exist');
 
     cy.get("[name='./visible'][type=\"checkbox\"]").should("exist").check();

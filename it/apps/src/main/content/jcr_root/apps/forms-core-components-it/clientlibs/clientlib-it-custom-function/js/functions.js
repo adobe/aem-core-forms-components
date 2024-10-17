@@ -166,6 +166,16 @@ function testImportData(globals)
 }
 
 /**
+ * Tests static text import data
+ * @name testTextImportData
+ * @param {scope} globals
+ */
+function testTextImportData(globals)
+{
+    globals.functions.importData({'a' : {'b' : 'prefilled'}});
+}
+
+/**
  * Tests set focus
  * @name testSetFocus
  * @param {object} emailField
