@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@1.0.5
-  browser-tools: circleci/browser-tools@1.4.3
+  browser-tools: circleci/browser-tools@1.4.8
 
 common:
   restore_cache: &restore_cache
@@ -16,6 +16,7 @@ common:
     steps:
       - checkout
       - browser-tools/install-browser-tools:
+          browsers: chrome # Only installs Chrome, skips Firefox
           chrome-version: latest
       - run:
           command: |
