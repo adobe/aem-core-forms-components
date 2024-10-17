@@ -6,7 +6,7 @@
 
 # AEM Forms Core Components
 
-The AEM Forms Core Components project serves as accelerator to get started with projects using AEM Forms. The project contains re-useable Forms core components which are server-side rendered AEM components for dynamic experiences / data. 
+The AEM Forms Core Components project serves as accelerator to get started with projects using AEM Forms. The project contains re-useable Forms core components which are server-side rendered AEM components for dynamic experiences / data.
 
 This project is intended to be used in conjunction with the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). AEM Forms Core Components use the AEM Sites Core Components as a foundation where possible and extending them.
 
@@ -15,21 +15,11 @@ This project is intended to be used in conjunction with the [AEM Sites Core Comp
 
 See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experience-manager-core-components/using/introduction.html) for usage and configuration instructions of the AEM Forms Core Components.
 
-## JavaScript Documentation
-
-https://opensource.adobe.com/aem-core-forms-components/
-
 ## Available Components
 
 ### Page Authoring Components
 
 -   [Adaptive Form - Embed](ui.apps/src/main/content/jcr_root/apps/core/fd/components/aemform/v2/aemform)
-
-### Forms And Communications Portal
-
--   [Link Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/link/v1/link)
--   [Drafts and Submissions Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/draftsandsubmissions/v1/draftsandsubmissions)
--   [Search and Lister Component](ui.apps/src/main/content/jcr_root/apps/core/fd/components/formsportal/searchlister/v1/searchlister)
 
 ### Adaptive Form
 
@@ -57,7 +47,6 @@ https://opensource.adobe.com/aem-core-forms-components/
 -   [Footer](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
 -   [Switch](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/switch/v1/switch)
 -   [ReCaptcha](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/recaptcha/v1/recaptcha)
--   [HCaptcha](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/hcaptcha/v1/hcaptcha)
 -   [Terms and Conditions](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/termsandconditions/v1/termsandconditions)
 -   [Checkbox](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkbox/v1/checkbox)
 
@@ -65,16 +54,18 @@ https://opensource.adobe.com/aem-core-forms-components/
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
 
-| Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
-|-----------------------|---------------------| ---------------------------- | ----- | ------ | 
-| 3.0.68                | 2.24.6             | Continual                    | 11 | 3.3.9+ |
+
+| Forms Core Components | WCM Core Components | AEM 6.5 | Java  | Maven  |  
+|-----------------------|---------------------|---------| ----- | ------ | 
+| 1.1.56                | 2.24.6             | 6.5.20+ | 8, 11 | 3.3.9+ |
+
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
 
 ### AEM Sites Core Components
 
-This project relies on the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). They are typically installed as part of AEM. If you install AEM without sample content option you have to [deploy them manually](https://github.com/adobe/aem-core-wcm-components#installation) before using the AEM Forms Core Components. See the System Requirements above for version requirements.  
+This project relies on the [AEM Sites Core Components](https://github.com/adobe/aem-core-wcm-components). They are typically installed as part of AEM. If you install AEM without sample content option you have to [deploy them manually](https://github.com/adobe/aem-core-wcm-components#installation) before using the AEM Forms Core Components. See the System Requirements above for version requirements.
 
 ## Building
 
@@ -116,7 +107,7 @@ The hostname and port of the instance can be changed with the following user def
 We have a set of example proxy components to demonstrate how the existing components can be customized or
 new components can be added. The `examples` module contains the code for all the components
 
-To build and install that, from the examples directory (or from the root directory), 
+To build and install that, from the examples directory (or from the root directory),
 run the following command
 
 ```shell
@@ -124,13 +115,13 @@ mvn clean install -PautoInstallExamples,include-wcm-components-examples
 ```
 
 ### AEM as a Cloud Service SDK
-When compiling and deploying to AEM as a Cloud Service SDK, you can use the `cloud` profile 
-(in conjunction with previously documented profiles) to generate cloud-ready artifacts 
-(with components located in `/libs` instead of `/apps`). 
+When compiling and deploying to AEM as a Cloud Service SDK, you can use the `cloud` profile
+(in conjunction with previously documented profiles) to generate cloud-ready artifacts
+(with components located in `/libs` instead of `/apps`).
 To allow recompilation of the HTL scripts, you should disable `aem-precompiled-scripts` bundle.
 
-Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365), 
-please only use `autoInstallPackage` and `autoInstallPackagePublish` when 
+Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365),
+please only use `autoInstallPackage` and `autoInstallPackagePublish` when
 working with the AEM as a Cloud Service SDK!
 
 ### UberJar
@@ -166,13 +157,6 @@ and sub package section
 
 to the `content-package-maven-plugin`.
 
-
-## Using Pre-release versions
-In order to use components under pre-release:  
-1. Enable the pre-release channel. Instructions at https://experienceleague.adobe.com/docs/experience-manager-cloud-service/content/release-notes/prerelease.html?lang=en
-   1. Replace `core-forms-components-*` version with the desired pre-release version (e.g `1.0.4-PRERELEASE-20211223`) in your Cloud Manager / AEM Archetype project. This can be done by updating `<core.forms.components.version>x.y.z</core.forms.components.version>` in the top level pom.xml of archetype project.
-
-Contents in the pre-release are contained in the `pre-release` branch.
 
 ## Code Formatting
 

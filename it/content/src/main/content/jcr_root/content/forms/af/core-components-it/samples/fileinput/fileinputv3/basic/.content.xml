@@ -85,7 +85,6 @@
                     name="fileinput5"
                     readOnly="{Boolean}true"
                     textIsRich="[true,true]"
-                    maxFileSize="2"
                     type="file[]"
                     visible="{Boolean}true"/>
             <submit

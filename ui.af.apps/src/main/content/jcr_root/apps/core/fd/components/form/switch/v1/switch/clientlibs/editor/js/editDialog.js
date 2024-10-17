@@ -62,18 +62,32 @@
      */
     function setDataAndDisplayTextFieldLabel(dialog) {
         // For every multifield item, we have enum, enumName and richTextEnumName
-        let onDataValueLabel = $($(ENUM_OPTION + ' label'))[0],
-            onDisplayTextLabel = $($(ENUM_OPTION + ' label'))[1],
-            onDisplayTextLabelRich = $($(ENUM_OPTION + ' label'))[2],
-            offDataValueLabel = $($(ENUM_OPTION + ' label'))[3],
-            offDisplayTextLabel = $($(ENUM_OPTION + ' label'))[4],
-            offDisplayTextLabelRich = $($(ENUM_OPTION + ' label'))[5];
-        onDataValueLabel.innerHTML = 'ON Data Value *';
-        onDisplayTextLabel.innerHTML = 'ON Display text *';
-        onDisplayTextLabelRich.innerHTML = 'ON Display text *';
-        offDataValueLabel.innerHTML = 'OFF Data Value *';
-        offDisplayTextLabel.innerHTML = 'OFF Display text *';
-        offDisplayTextLabelRich.innerHTML = 'OFF Display text *';
+        var dataDisplayFields = $(ENUM_OPTION + ' label');
+        if (dataDisplayFields.length === 4) {
+          let onDataValueLabel = $($(ENUM_OPTION + ' label'))[0],
+              onDisplayTextLabel = $($(ENUM_OPTION + ' label'))[1],
+              offDataValueLabel = $($(ENUM_OPTION + ' label'))[2],
+              offDisplayTextLabel = $($(ENUM_OPTION + ' label'))[3];
+
+          onDataValueLabel.innerHTML = 'ON Data Value *';
+          onDisplayTextLabel.innerHTML = 'ON Display text *';
+          offDataValueLabel.innerHTML = 'OFF Data Value *';
+          offDisplayTextLabel.innerHTML = 'OFF Display text *';
+        } else if (dataDisplayFields.length === 6){
+          let onDataValueLabel = $($(ENUM_OPTION + ' label'))[0],
+              onDisplayTextLabel = $($(ENUM_OPTION + ' label'))[1],
+              onDisplayTextLabelRich = $($(ENUM_OPTION + ' label'))[2],
+              offDataValueLabel = $($(ENUM_OPTION + ' label'))[3],
+              offDisplayTextLabel = $($(ENUM_OPTION + ' label'))[4],
+              offDisplayTextLabelRich = $($(ENUM_OPTION + ' label'))[5];
+          onDataValueLabel.innerHTML = 'ON Data Value *';
+          onDisplayTextLabel.innerHTML = 'ON Display text *';
+          onDisplayTextLabelRich.innerHTML = 'ON Display text *';
+          offDataValueLabel.innerHTML = 'OFF Data Value *';
+          offDisplayTextLabel.innerHTML = 'OFF Display text *';
+          offDisplayTextLabelRich.innerHTML = 'OFF Display text *';
+        }
+
     }
 
   Utils.initializeEditDialog(EDIT_DIALOG)(handleOffFieldVisibility, registerDialogValidator, setDataAndDisplayTextFieldLabel);

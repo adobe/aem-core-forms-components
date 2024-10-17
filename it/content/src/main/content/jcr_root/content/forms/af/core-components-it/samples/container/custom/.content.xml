@@ -58,7 +58,6 @@
                     fieldType="text-input"
                     hideTitle="false"
                     name="textinput11"
-                    required="{Boolean}true"
                     readOnly="{Boolean}false"
                     textIsRich="[true,true,true]"
                     unboundFormElement="{Boolean}false"

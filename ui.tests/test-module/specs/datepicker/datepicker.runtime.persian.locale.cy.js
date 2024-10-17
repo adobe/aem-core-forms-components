@@ -20,7 +20,7 @@ describe("Form Runtime with Date Picker", () => {
 
     let formContainer = null
     const fmPropertiesUI = "/libs/fd/fm/gui/content/forms/formmetadataeditor.html/content/dam/formsanddocuments/core-components-it/samples/datepicker/basic"
-    const themeRef = 'input[name="./jcr:content/metadata/themeRef"]'
+    const themeRef = 'input[name="./jcr:content/metadata/themeClientLibRef"]'
     const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
     // enabling theme for this test case as without theme there is a bug in custom widget css
     before(() => {

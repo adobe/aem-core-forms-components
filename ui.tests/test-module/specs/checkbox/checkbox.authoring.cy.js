@@ -52,8 +52,7 @@ describe('Page - Authoring', function () {
         .should("exist");
     cy.get("[name='./readOnly']")
         .should("exist");
-    cy.get('.cq-dialog-cancel').should('be.visible').click({ force: true });
-    cy.get('.cq-dialog-cancel').should('not.exist');
+    cy.clickAndValidate('.cq-dialog-cancel');
     cy.deleteComponentByPath(checkboxDrop);
   }
 

@@ -17,7 +17,7 @@
 describe('Form with Adaptive form text', () => {
   const pagePath = "content/forms/af/core-components-it/samples/image/basic.html";
   let formContainer = null;
-
+  const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
   /**
    * initialization of form container before every test
    * */
@@ -30,7 +30,7 @@ describe('Form with Adaptive form text', () => {
 
   it('image should use default servlet to fetch 1.json', () => {
     cy.fixture('image/image.1.json').then(expectedJson => {
-      cy.request('GET', '/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image.1.json')
+      cy.request('GET', `${contextPath}/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image.1.json`)
         .then(response => {
           expect(response.status).to.eq(200);
           const expectedFields = Object.keys(expectedJson);
@@ -44,7 +44,7 @@ describe('Form with Adaptive form text', () => {
 
   it('image should use Sling Model Exporter  to fetch model.json', () => {
     cy.fixture('image/image.model.json').then(expectedJson => {
-      cy.request('GET', '/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image.model.json')
+      cy.request('GET', `${contextPath}/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image.model.json`)
       .then(response => {
         expect(response.status).to.eq(200);
         const expectedFields = Object.keys(expectedJson);
@@ -58,7 +58,7 @@ describe('Form with Adaptive form text', () => {
 
   it('image should use StaticImageGETServlet  to fetch image files', () => {
     cy.request({
-      url: '/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image.model.jpg',
+      url: `${contextPath}/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image.model.jpg`,
       encoding: 'binary'
     }).then(response => {
       expect(response.status).to.eq(200);

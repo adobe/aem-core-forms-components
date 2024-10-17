@@ -61,101 +61,102 @@ describe.skip('Form with RUM initialized', () => {
     });
 
 
-    it('sampleRUM should have accurate data', () => {
-        if (toggle_array.includes("FT_SKYOPS-60870") && toggle_array.includes("FT_FORMS-8965")) {
-            expect(formContainer, "formcontainer is initialized").to.not.be.null;
-
-            cy.get(`.cmp-adaptiveform-textinput`).first().find("input").clear().type('random text').blur();
-
-            // Assert the number of calls
-            cy.get('@sampleRUMSpy').should('have.callCount', 5);
-
-            // Access window object to get the sid dynamically
-            cy.window().then((win) => {
-                const sid = win.af.sid;
-
-                // Assert the arguments of the first call
-                cy.get('@sampleRUMSpy').should('be.calledWith', "formviews", {
-                    source: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                    target: JSON.stringify({
-                        version: "core",
-                        sid: sid
-                    })
+        // RUM is not supported in 650
+        it.skip('sampleRUM should have accurate data', () => {
+            if (toggle_array.includes("FT_SKYOPS-60870") && toggle_array.includes("FT_FORMS-8965")) {
+                expect(formContainer, "formcontainer is initialized").to.not.be.null;
+    
+                cy.get(`.cmp-adaptiveform-textinput`).first().find("input").clear().type('random text').blur();
+    
+                // Assert the number of calls
+                cy.get('@sampleRUMSpy').should('have.callCount', 5);
+    
+                // Access window object to get the sid dynamically
+                cy.window().then((win) => {
+                    const sid = win.af.sid;
+    
+                    // Assert the arguments of the first call
+                    cy.get('@sampleRUMSpy').should('be.calledWith', "formviews", {
+                        source: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
+                        target: JSON.stringify({
+                            version: "core",
+                            sid: sid
+                        })
+                    });
+    
+                    // Assert the arguments of the second call
+                    cy.get('@sampleRUMSpy').should((spyCall) => {
+                        const args = spyCall.args[1];
+                        expect(args[0]).to.include("formready");
+                        expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
+                        expect(args[1].target).to.exist;
+                    });
+    
+                    // Assert the arguments of the third call
+                    cy.get('@sampleRUMSpy').should('be.calledWith', "formfieldfocus", {
+                        source: "textinput-f226352a71",
+                        target: JSON.stringify({
+                            qualifiedName: "$form.textinput1",
+                            formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
+                            sid: sid
+                        })
+                    });
+    
+                    // Assert the arguments of the fourth call
+                    cy.get('@sampleRUMSpy').should('be.calledWith', "formfieldchange", {
+                        source: "textinput-f226352a71",
+                        target: JSON.stringify({
+                            qualifiedName: "$form.textinput1",
+                            formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
+                            sid: sid
+                        })
+                    });
+    
+                    // Assert the arguments of the fifth call
+                    cy.get('@sampleRUMSpy').should('be.calledWith', "formvalidationerrors", {
+                        source: "textinput-f226352a71",
+                        target: JSON.stringify({
+                            qualifiedName: "$form.textinput1",
+                            formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
+                            sid: sid,
+                            validationType: "expressionMismatch"
+                        })
+                    });
+    
+                    cy.get(`.cmp-adaptiveform-button__widget`).click();
+    
+                    // Assert the arguments of the sixth call
+                    cy.get('@sampleRUMSpy').should((spyCall) => {
+                        let args = spyCall.args[5];
+                        expect(args[0]).to.include("formfieldfocus");
+                        expect(args[1].source).to.include("submit-64756a5a6e");
+                        expect(args[1].target).to.include(JSON.stringify({
+                            qualifiedName: "$form.submit1669185963968",
+                            formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
+                            sid: sid
+                        }));
+                        args = spyCall.args[6];
+                        expect(args[0]).to.include("formsubmit");
+                        expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
+                        expect(args[1].target).to.include('timeSpentOnForm');
+                    });
                 });
+            }
+        });
 
-                // Assert the arguments of the second call
-                cy.get('@sampleRUMSpy').should((spyCall) => {
-                    const args = spyCall.args[1];
-                    expect(args[0]).to.include("formready");
-                    expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
-                    expect(args[1].target).to.exist;
-                });
-
-                // Assert the arguments of the third call
-                cy.get('@sampleRUMSpy').should('be.calledWith', "formfieldfocus", {
-                    source: "textinput-f226352a71",
-                    target: JSON.stringify({
-                        qualifiedName: "$form.textinput1",
-                        formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                        sid: sid
-                    })
-                });
-
-                // Assert the arguments of the fourth call
-                cy.get('@sampleRUMSpy').should('be.calledWith', "formfieldchange", {
-                    source: "textinput-f226352a71",
-                    target: JSON.stringify({
-                        qualifiedName: "$form.textinput1",
-                        formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                        sid: sid
-                    })
-                });
-
-                // Assert the arguments of the fifth call
-                cy.get('@sampleRUMSpy').should('be.calledWith', "formvalidationerrors", {
-                    source: "textinput-f226352a71",
-                    target: JSON.stringify({
-                        qualifiedName: "$form.textinput1",
-                        formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                        sid: sid,
-                        validationType: "expressionMismatch"
-                    })
-                });
-
+        // RUM is not supported in 650
+        it.skip('sampleRUM custom http post/put checkpoint', () => {
+            if (toggle_array.includes("FT_SKYOPS-60870") && toggle_array.includes("FT_FORMS-14545")) {
+                expect(formContainer, "formcontainer is initialized").to.not.be.null;
                 cy.get(`.cmp-adaptiveform-button__widget`).click();
-
                 // Assert the arguments of the sixth call
                 cy.get('@sampleRUMSpy').should((spyCall) => {
-                    let args = spyCall.args[5];
-                    expect(args[0]).to.include("formfieldfocus");
-                    expect(args[1].source).to.include("submit-64756a5a6e");
-                    expect(args[1].target).to.include(JSON.stringify({
-                        qualifiedName: "$form.submit1669185963968",
-                        formId: "/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer",
-                        sid: sid
-                    }));
-                    args = spyCall.args[6];
-                    expect(args[0]).to.include("formsubmit");
+                    let args = spyCall.args[4];
+                    // Partially match the source
+                    expect(args[0]).to.include("formhttppostput");
+                    // Partially match the source
                     expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
-                    expect(args[1].target).to.include('timeSpentOnForm');
                 });
-            });
-        }
+            }
+        });
     });
-
-    it('sampleRUM custom http post/put checkpoint', () => {
-        // we have separate FT for custom http put post, "FT_FORMS-14545"
-        if (toggle_array.includes("FT_SKYOPS-60870") && toggle_array.includes("FT_FORMS-14545")) {
-            expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            cy.get(`.cmp-adaptiveform-button__widget`).click();
-            // Assert the arguments of the sixth call
-            cy.get('@sampleRUMSpy').should((spyCall) => {
-                let args = spyCall.args[4];
-                // Partially match the source
-                expect(args[0]).to.include("formhttppostput");
-                // Partially match the source
-                expect(args[1].source).to.include("/content/forms/af/core-components-it/samples/rum/basic/jcr:content/guideContainer");
-            });
-        }
-    });
-});
