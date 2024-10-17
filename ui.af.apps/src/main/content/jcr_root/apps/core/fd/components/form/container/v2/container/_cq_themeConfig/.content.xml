@@ -21,7 +21,7 @@
             <items jcr:primaryType="nt:unstructured">
                 <formTitle
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/title/v1/title/cq:styleConfig/items/formTitle"/>
+                    target="/mnt/override/apps/core/fd/components/form/title/v2/title/cq:styleConfig/items/formTitle"/>
             </items>
         </form>
         <base
@@ -134,13 +134,13 @@
             <items jcr:primaryType="nt:unstructured">
                 <allButton
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/button/v1/button/cq:styleConfig/items/button"/>
+                    target="/mnt/override/apps/core/fd/components/form/button/v2/button/cq:styleConfig/items/button"/>
                 <submit
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/actions/submit/v1/submit/cq:styleConfig/items/button"/>
+                    target="/mnt/override/apps/core/fd/components/form/actions/submit/v2/submit/cq:styleConfig/items/button"/>
                 <reset
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/actions/reset/v1/reset/cq:styleConfig/items/button"/>
+                    target="/mnt/override/apps/core/fd/components/form/actions/reset/v2/reset/cq:styleConfig/items/button"/>
             </items>
         </button>
         <panel
