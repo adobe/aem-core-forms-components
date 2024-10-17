@@ -82,7 +82,7 @@
             let widgets = this.widget;
             widgets.forEach(widget => {
                 widget.addEventListener('change', (e) => {
-                    this._model.value = e.target.value;
+                    this.setModelValue(e.target.value);
                 });
                 widget.addEventListener('focus', (e) => {
                     this.setActive();
@@ -100,11 +100,9 @@
                 if (enabled === false) {
                     if(state.readOnly === false){
                         widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                        widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                     }
                 } else if (state.readOnly === false) {
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                    widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
             });
         }
@@ -116,7 +114,7 @@
                 if (readonly === true) {
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
                 } else {
-                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED); 
+                    widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
                 }
             });
         }
@@ -126,18 +124,16 @@
             let widgets = this.widget;
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
             widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
-        } 
+        }
 
         updateValue(modelValue) {
             this.widget.forEach(widget => {
                 if (modelValue != null && widget.value != null && (modelValue.toString() == widget.value.toString())) {
                     widget.checked = true;
                     widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED);
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, true);
                 } else {
                     widget.checked = false;
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
             super.updateEmptyStatus();

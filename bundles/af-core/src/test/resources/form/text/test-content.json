@@ -36,5 +36,10 @@
         "dorExclusion": true
       }
     }
+  },
+  "text-without-fieldtype" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/text/v1/text",
+    "name" : "abc"
   }
 }

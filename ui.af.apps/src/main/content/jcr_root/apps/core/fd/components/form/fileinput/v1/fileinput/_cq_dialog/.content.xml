@@ -64,12 +64,17 @@
                                                     name="./buttonText">
                                             </buttonText>
                                             <type jcr:primaryType="nt:unstructured"
-                                                  wrapperClass="cmp-adaptiveform-fileinput__type"
-                                                  granite:class="cmp-adaptiveform-fileinput__type"
-                                                  sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                  fieldLabel="Type of the field"
-                                                  name="./type"
-                                                  value="file">
+                                                  sling:orderBefore="visible"
+                                                  sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                  granite:class="cmp-adaptiveform-radiobutton__type"
+                                                  fieldLabel="Data type of submitted value"
+                                                  fieldDescription="Selecting the String data type option would increase the upload size by 30%."
+                                                  required="{Boolean}true"
+                                                  name="./type">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <string jcr:primaryType="nt:unstructured" text="String" value="string"/>
+                                                    <file jcr:primaryType="nt:unstructured" text="File" value="file" selected="true"/>
+                                                </items>
                                             </type>
                                             <showComment
                                                     jcr:primaryType="nt:unstructured"

@@ -23,7 +23,7 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE, FT } = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CORE_COMPONENTS, WCM_COMPONENTS} = process.env;
 const isLatestAddon = AEM === 'addon-latest';
 const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/org.jacoco.agent-0.8.3-runtime.jar';
 
@@ -39,7 +39,7 @@ try {
 
     //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
     //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
-    let wcmVersion = "2.25.4";
+    let wcmVersion = "2.26.0";
     ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
         // Connect to QP
@@ -62,11 +62,11 @@ try {
         // Download latest add-on release from artifactory
         ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemfd -DartifactId=aem-forms-cloud-ready-pkg -Dversion=LATEST -Dclassifier=feature-archive -Dtype=far -DoutputDirectory=${buildPath} -DoutputFileName=forms-latest-addon.far`);
         extras += ` --install-file ${buildPath}/forms-latest-addon.far`;
-        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
         if (PRERELEASE === 'true') {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
         }
+        extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
     }
 
     if (FT === 'true') {
@@ -77,6 +77,16 @@ try {
     // Set an environment variable indicating test was executed
     // this is used in case of re-run failed test scenario
     ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt");
+    if (CORE_COMPONENTS) {
+        // enable specific core component version
+        extras += ` --bundle com.adobe.aem:core-forms-components-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-core:${CORE_COMPONENTS}:jar`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-af-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-af-core:${CORE_COMPONENTS}:jar`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-examples-apps:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-examples-content:${CORE_COMPONENTS}:zip`;
+        extras += ` --bundle com.adobe.aem:core-forms-components-examples-core:${CORE_COMPONENTS}:jar`;
+    }
     // Start CQ
     ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
@@ -84,12 +94,12 @@ try {
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
             ${extras} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */)} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */)} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-core']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-apps']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-content']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-core']) : ''} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-config'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
@@ -134,9 +144,16 @@ try {
         }
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
+        if (CORE_COMPONENTS) {
+            // we run only some test suites for older core components
+            testSuites = "specs/prefill/customprefill.cy.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.cy.js,specs/actions/submit/submit.runtime.cy.js,specs/actions/render/render_with_openapi.cy.js";
+        }
         // start running the tests
         ci.dir('ui.tests', () => {
-            const command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
+            let command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
+            if (CORE_COMPONENTS) {
+                command += ` -DCORE_COMPONENTS=true`;
+            }
             ci.sh(command);
         });
     }

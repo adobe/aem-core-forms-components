@@ -18,8 +18,10 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -27,11 +29,13 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 
@@ -69,17 +73,28 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @Override
     public Type getType() {
-        // if (isMultiple()) {
-        // return Type.ARRAY;
-        // } else {
-        // }
-        // file upload does not work for type string in core component, hence default it to file
         Type superType = super.getType();
-        if (Type.STRING.equals(superType)) {
-            return Type.FILE;
-        } else {
-            return superType; // we don't return array but rather type stored in JCR, for example, file[]
+        if (superType == null || StringUtils.isBlank(typeJcr) || superType == Type.FILE) {
+            return isMultiple() ? Type.FILE_ARRAY : Type.FILE;
         }
+        if (isMultiple() && superType == Type.STRING) {
+            return Type.STRING_ARRAY;
+        }
+        return superType;
+    }
+
+    @Override
+    public String getFormat() {
+        Type type = getType();
+        if (type == Type.STRING || type == Type.STRING_ARRAY) {
+            return "data-url";
+        }
+        return null;
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.FILE_INPUT);
     }
 
     @Override
@@ -105,5 +120,12 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
         return Optional.ofNullable(accept)
             .map(Arrays::asList)
             .orElse(Collections.emptyList());
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = super.getProperties();
+        customProperties.put("fd:buttonText", getButtonText());
+        return customProperties;
     }
 }

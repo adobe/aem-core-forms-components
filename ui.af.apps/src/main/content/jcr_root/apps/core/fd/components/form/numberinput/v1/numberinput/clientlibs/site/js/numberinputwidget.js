@@ -101,7 +101,7 @@
                  this.#handleCut(e);
              });
              widget.addEventListener('blur', (e) => {
-                 this.#model.value = this.getValue(e.target.value);
+                 this.#model.dispatch(new FormView.Actions.UIChange({'value': this.getValue(e.target.value)}));
                  this.#widget.value = this.#model.displayValue;
              });
              // IME specific handling, to handle japanese languages max limit

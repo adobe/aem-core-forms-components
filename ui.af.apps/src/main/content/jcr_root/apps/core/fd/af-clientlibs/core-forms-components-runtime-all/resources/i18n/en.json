@@ -36,5 +36,7 @@
     "years": "years",
     "more": "more",
     "less": "less"
-  }
+  },
+  "saveDraftSuccessMessage"     :   "The draft is saved successfully.",
+  "saveDraftErrorMessage"       :   "There was an error preventing us from saving your draft. Please try again."
 }

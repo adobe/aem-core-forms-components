@@ -42,6 +42,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
@@ -62,6 +63,7 @@ import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.WCMMode;
+import com.day.cq.wcm.api.designer.Style;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -76,7 +78,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     protected String dataRef;
 
     // mandatory property else adapt should fail for adaptive form components
-    @ValueMapValue(name = ReservedProperties.PN_FIELDTYPE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FIELDTYPE)
     protected String fieldTypeJcr;
     private FieldType fieldType;
 
@@ -107,6 +109,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_COLSPAN)
     @Nullable
     protected String dorColspan;
+
+    @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected Style currentStyle;
 
     /**
      * Returns dorBindRef of the form field
@@ -142,7 +148,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @PostConstruct
     protected void initBaseModel() {
         // first check if this is in the supported list of field type
-        fieldType = FieldType.fromString(fieldTypeJcr);
+        if (StringUtils.isNotEmpty(fieldTypeJcr)) {
+            fieldType = FieldType.fromString(fieldTypeJcr);
+        }
         if (request != null && i18n == null) {
             i18n = GuideUtils.getI18n(request, resource);
         }
@@ -207,6 +215,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     @Override
     public String getFieldType() {
+        return fieldType.getValue();
+    }
+
+    protected String getFieldType(@Nonnull FieldType defaultFieldType) {
+        if (fieldType == null) {
+            return defaultFieldType.getValue();
+        }
         return fieldType.getValue();
     }
 
@@ -534,4 +549,5 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         return customDorProperties;
     }
+
 }

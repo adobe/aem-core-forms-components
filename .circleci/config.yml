@@ -16,7 +16,7 @@ common:
     steps:
       - checkout
       - browser-tools/install-browser-tools:
-          chrome-version: 116.0.5845.96 # TODO: remove when chromedriver downloads are fixed
+          chrome-version: latest
       - run:
           command: |
             google-chrome --version
@@ -67,7 +67,7 @@ common:
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
           command: |
             cd ui.tests/test-module
-            TESTFILES=$(circleci tests glob "specs/**/*.spec.js")
+            TESTFILES=$(circleci tests glob "specs/**/*.cy.js")
             cd ../../
             echo "false" >> TEST_EXECUTION_STATUS.txt
             echo $TESTFILES | circleci tests run --command="xargs node .circleci/ci/it-tests.js" --verbose --split-by=timings
@@ -107,6 +107,13 @@ common:
       # Save test results as artifacts
       - store_artifacts:
           path: ui.tests/test-module/target
+      - run:
+          name: Move .cy.json files to target directory of cypress
+          command: |
+            mkdir -p ui.tests/test-module/target/cy-json
+            find ui.tests/test-module -name "*.cy.json" -exec mv {} ui.tests/test-module/target/cy-json/ \;
+      - store_artifacts:
+          path: ui.tests/test-module/target/cy-json
       # Save AEM logs as artifacts
       - store_artifacts:
           path: logs
@@ -208,6 +215,20 @@ jobs:
       BROWSER: chrome
       PRERELEASE: 'true'
       FT: 'false'
+    resource_class: xlarge
+    working_directory: /home/circleci/build
+    parallelism: 8
+    <<: *cypress_test_steps
+
+  cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
+    executor: test_executor_cloudready
+    environment:
+      AEM: addon-latest
+      TYPE: cypress
+      BROWSER: chrome
+      PRERELEASE: 'true'
+      FT: 'true'
+      CORE_COMPONENTS: '3.0.0'
     resource_class: xlarge
     working_directory: /home/circleci/build
     parallelism: 8
@@ -398,10 +419,19 @@ workflows:
               ignore: /.*/
             tags:
               only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+      - cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
+          filters:
+#            branches:
+#              ignore: /.*/
+            tags:
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+          requires:
+            - build-java-11
       - release:
           requires:
             - build-java-11
             - jsdocs-deploy
+            - cypress-chrome-cloudready-with-latest-addon-and-old-core-components
           filters:
             branches:
               ignore: /.*/

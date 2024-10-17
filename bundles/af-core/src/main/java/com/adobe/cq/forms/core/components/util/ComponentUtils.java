@@ -167,9 +167,32 @@ public class ComponentUtils {
             } else {
                 return null;
             }
+        } else if (Boolean.TRUE.equals(exclusiveValueCheck) && value != null) { // backward compatibility case // not to be changed
+            // If so, return the value
+            return (T) value;
         } else {
             // Handle other cases or return null if desired
             return null;
+        }
+    }
+
+    /**
+     * Parses a given string value into a Number.
+     * The method attempts to parse the string as a Long first, and if that fails,
+     * it attempts to parse it as a Float. If both parsing attempts fail, it returns null.
+     *
+     * @param value the string value to be parsed, can be null
+     * @return the parsed Number (Long or Float), or null if the value cannot be parsed
+     */
+    public static Number parseNumber(@Nullable String value) {
+        try {
+            return value != null ? Long.parseLong(value) : null;
+        } catch (NumberFormatException e) {
+            try {
+                return Float.parseFloat(value);
+            } catch (NumberFormatException ex) {
+                return null;
+            }
         }
     }
 

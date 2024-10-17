@@ -107,7 +107,7 @@
                 }
             }, this);
             if (value.length !== 0 || this._model.value != null) {
-                this._model.value = value;
+                this.setModelValue(value)
             }
         }
 
@@ -116,7 +116,7 @@
             let widgets = this.widget;
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
             widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
-        }    
+        }
 
         updateValue(modelValue) {
             modelValue = [].concat(modelValue);
@@ -124,12 +124,10 @@
             this.widget.forEach(widget => {
                 if (selectedWidgetValues.includes((widget.value))) {
                     widget.checked = true
-                    widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED)
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, true)
+                    widget.setAttribute(FormView.Constants.HTML_ATTRS.CHECKED, FormView.Constants.HTML_ATTRS.CHECKED);
                 } else {
                     widget.checked = false
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.CHECKED);
-                    widget.setAttribute(FormView.Constants.ARIA_CHECKED, false);
                 }
             }, this)
             super.updateEmptyStatus();
@@ -163,11 +161,9 @@
                 if (enabled === false) {
                     if(state.readOnly === false){
                         widget.setAttribute(FormView.Constants.HTML_ATTRS.DISABLED, "disabled");
-                        widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                     }
                 } else if (state.readOnly === false) {
                     widget.removeAttribute(FormView.Constants.HTML_ATTRS.DISABLED);
-                    widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
             });
         }
@@ -190,6 +186,12 @@
                 this.element.toggleAttribute("required", required);
                 this.element.setAttribute("data-cmp-required", required);
             }
+        }
+
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
+            this.updateEnum(this._model.enum);
+            this.updateEnumNames(this._model.enumNames);
         }
     }
 

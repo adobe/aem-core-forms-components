@@ -24,7 +24,8 @@
     },
     "fd:path": "/content/fileinput",
     "dragDropText":"Drag and Drop To Upload",
-    "customProp": "customPropValue"
+    "customProp": "customPropValue",
+    "fd:buttonText": "Attach"
   },
   ":type": "core/fd/components/form/fileinput/v2/fileinput"
 }

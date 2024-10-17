@@ -87,6 +87,8 @@ public final class ReservedProperties {
     public static final String PN_MINIMUM = "minimum";
     public static final String PN_EXCLUSIVE_MINIMUM = "exclusiveMinimum";
     public static final String PN_EXCLUSIVE_MAXIMUM = "exclusiveMaximum";
+    public static final String PN_EXCLUDE_MINIMUM = "excludeMinimum";
+    public static final String PN_EXCLUDE_MAXIMUM = "excludeMaximum";
     public static final String PN_EXCLUDE_MINIMUM_CHECK = "excludeMinimumCheck";
     public static final String PN_EXCLUDE_MAXIMUM_CHECK = "excludeMaximumCheck";
     public static final String PN_ENFORCE_ENUM = "enforceEnum";
@@ -146,6 +148,7 @@ public final class ReservedProperties {
     public static final String PN_DESIGN_DEFAULT_TYPE = Title.PN_DESIGN_DEFAULT_TYPE;
     public static final String PN_TITLE_LINK_DISABLED = Title.PN_TITLE_LINK_DISABLED;
     public static final String PN_DRAG_DROP_TEXT = "dragDropText";
+    public static final String PN_DRAG_DROP_TEXT_V3 = "fd:dragDropText";
     public static final String PN_CLIENTLIB_REF = "clientLibRef";
     public static final String PN_REDIRECT = "redirect";
     public static final String PN_PREFILL_SERVICE = "prefillService";
@@ -154,6 +157,11 @@ public final class ReservedProperties {
     public static final String PN_OPTIONS_RICH_TEXT = "areOptionsRichText";
     public static final String PN_EXCLUDE_FROM_DOR = "excludeFromDor";
     public static final String PN_MANDATORY = "mandatory";
+    public static final String PN_HTML_ELEMENT_TYPE_V2 = "fd:htmlelementType";
+    public static final String FD_AUTO_SAVE_PROPERTY_WRAPPER = "fd:autoSave";
+    public static final String FD_ENABLE_AUTO_SAVE = "fd:enableAutoSave";
+    public static final String FD_AUTO_SAVE_STRATEGY_TYPE = "fd:autoSaveStrategyType";
+    public static final String FD_AUTO_SAVE_INTERVAL = "fd:autoSaveInterval";
     private static final Set<String> reservedProperties = aggregateReservedProperties();
 
     private static Set<String> aggregateReservedProperties() {

@@ -55,6 +55,42 @@ The `core.forms.components.numberinput.v1.runtime` client library also include a
 It also provides a `core.forms.components.numberinput.v1.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
 
+## Number Input Formatting
+
+The formatting for number inputs, including decimal and thousand separators, is determined by the selected language. For example, with the `es-CO` locale:
+
+- **Decimal separator:** `,`
+- **Thousands separator:** `.`
+
+### Supported Currency Symbols
+
+Currency symbols are supported out-of-the-box (OOTB) for the following languages:
+
+- `da-DK` (Danish)
+- `de-DE` (German)
+- `en-US` (English - United States)
+- `en-GB` (English - United Kingdom)
+- `es-ES` (Spanish - Spain)
+- `fi-FI` (Finnish)
+- `fr-FR` (French)
+- `it-IT` (Italian)
+- `ja-JP` (Japanese)
+- `nb-NO` (Norwegian Bokmål)
+- `nl-NL` (Dutch)
+- `pt-BR` (Portuguese - Brazil)
+- `sv-SE` (Swedish)
+- `zh-CN` (Chinese - Simplified)
+- `zh-TW` (Chinese - Traditional)
+- `ko-KR` (Korean)
+- `cs-CZ` (Czech)
+- `pl-PL` (Polish)
+- `ru-RU` (Russian)
+- `tr-TR` (Turkish)
+
+### Custom Currency Symbols
+
+For languages not listed above, such as `es-CO` (Spanish - Colombia), the currency symbol must be explicitly defined using the ISO 4217 currency code. The format is `¤/COP#,#00.0#`.
+
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-numberinput

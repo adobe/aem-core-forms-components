@@ -1,5 +1,5 @@
 <!--
-Copyright 2023 Adobe
+Copyright 2024 Adobe
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@ limitations under the License.
 Adaptive Form File Input (v3)
 ====
 Adaptive Form File input field component written in HTL.
+
+In version v3, the type will not be saved on the JCR node; instead, it will be fetched in the model.json based on multiselection. If multiselection is false, the type will be file; if multiselection is true, the type will be file[]. The button text is now fetched in the model.json as a custom property named fd:buttonText. Additionally, the dragDropText custom property is now named fd:dragDropText.
 
 ## Features
 
@@ -50,13 +52,13 @@ The following properties are written to JCR for this Form File component and are
 16. `./maxItemsMessage` - defines the message displayed as tooltip when submitting the form if more than allowed maximum files uploaded
 17. `./maxFileSizeMessage` - defines the message displayed as tooltip when submitting the form if the uploaded file size is greater than allowed
 18. `./acceptMessage` - defines the message displayed as tooltip when submitting the form if the uploaded file type is not allowed
-19. `./dragDropText` - defines the file input drag and drop area title 
+19. `./fd:dragDropText` - defines the file input drag and drop area title 
 
 ## Client Libraries
-The component provides a `core.forms.components.fileinput.v2.runtime` client library category that contains the Javascript runtime for the component. 
+The component provides a `core.forms.components.fileinput.v3.runtime` client library category that contains the Javascript runtime for the component. 
 It should be added to a relevant site client library using the `embed` property.
 
-It also provides a `core.forms.components.fileinput.v2.editor` editor client library category that includes
+It also provides a `core.forms.components.fileinput.v3.editor` editor client library category that includes
 JavaScript handling for dialog interaction. It is already included by its edit dialog.
 
 ## BEM Description

@@ -20,7 +20,7 @@
 <!-- Adding core.forms.components.it.runtime.all as we need to embed all component client libraries inside all due to inter dependency between them -->
 <!-- core.forms.components.it.textinput.v1.runtime is embedded as part of core.forms.components.it.runtime.all -->
 <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
- <sly data-sly-test="${!wcmmode.edit}" data-sly-call="${clientlib.js @ categories=['core.forms.components.runtime.base','core.forms.components.container.v2.runtime','core.forms.components.fileinput.v2.runtime','core.forms.components.button.v1.runtime'], async=false}"/>
+ <sly data-sly-test="${!wcmmode.edit}" data-sly-call="${clientlib.js @ categories=['core.forms.components.runtime.base','core.forms.components.container.v2.runtime','core.forms.components.fileinput.v3.runtime','core.forms.components.button.v1.runtime'], async=false}"/>
 </sly>
 <sly data-sly-use.page="com.adobe.cq.wcm.core.components.models.Page">
  <sly data-sly-test="${page.data && page.dataLayerClientlibIncluded}" data-sly-call="${clientlib.js @ categories='core.forms.components.commons.v1.datalayer', async=true}"></sly>

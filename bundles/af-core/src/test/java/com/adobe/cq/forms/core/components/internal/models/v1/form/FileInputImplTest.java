@@ -58,6 +58,9 @@ public class FileInputImplTest {
     private static final String PATH_FILEINPUT = CONTENT_ROOT + "/fileinput";
     private static final String PATH_FILEINPUT_DATALAYER = CONTENT_ROOT + "/fileinput-datalayer";
     private static final String PATH_MULTISELECT_FILEINPUT = CONTENT_ROOT + "/multiselect-fileinput";
+    private static final String PATH_MULTISELECT_FILEINPUT_WITHNOTYPE = CONTENT_ROOT + "/multiselect-fileinput-withNoType";
+    private static final String PATH_MULTISELECT_FILEINPUT_WITH_TYPE = CONTENT_ROOT + "/fileInput-withType";
+    private static final String PATH_FILEINPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/fileinput-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -79,6 +82,18 @@ public class FileInputImplTest {
     void testFieldType() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
         assertEquals(FieldType.FILE_INPUT.getValue(), fileInput.getFieldType());
+    }
+
+    @Test
+    void testType() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_MULTISELECT_FILEINPUT_WITHNOTYPE, FileInput.class, context);
+        assertEquals(BaseConstraint.Type.FILE_ARRAY, fileInput.getType());
+    }
+
+    @Test
+    void testStringType() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_MULTISELECT_FILEINPUT_WITH_TYPE, FileInput.class, context);
+        assertEquals(BaseConstraint.Type.STRING_ARRAY, fileInput.getType());
     }
 
     @Test
@@ -392,5 +407,11 @@ public class FileInputImplTest {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_DATALAYER, FileInput.class, context);
         FieldUtils.writeField(fileInput, "dataLayerEnabled", true, true);
         Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_DATALAYER));
+    }
+
+    @Test
+    void testNoFieldType() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_WITHOUT_FIELDTYPE, FileInput.class, context);
+        Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_WITHOUT_FIELDTYPE));
     }
 }

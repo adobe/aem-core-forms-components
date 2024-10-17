@@ -15,7 +15,7 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <div data-sly-use.accordion="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-panelcontainer="${wcmmode.edit && 'accordion'}"
+     data-panelcontainer="${wcmmode.edit && 'adaptiveFormAccordion'}"
      data-sly-use.renderer="${'accordion.js'}"
      data-sly-use.label="${renderer.labelPath}"
      data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
@@ -84,6 +84,6 @@
          data-sly-test="${(wcmmode.edit || wcmmode.preview) && accordion.items.size < 1}"></sly>
     <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
         <sly data-sly-test="${wcmmode.edit}"
-             data-sly-call="${clientlib.js @ categories='core.forms.components.accordion.v1.runtime'}"/>
+             data-sly-call="${clientlib.js @ categories='core.forms.components.accordion.v1.contentframe'}"/>
     </sly>
 </div>

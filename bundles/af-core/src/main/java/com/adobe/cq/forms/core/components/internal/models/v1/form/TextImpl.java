@@ -28,6 +28,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Text;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,13 +49,6 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
     private Resource resource;
 
     @Override
-    protected void initBaseModel() {
-        // Always make dataRef of Text component as null, for this we need to make unboundFormElement as true
-        unboundFormElement = Boolean.TRUE;
-        super.initBaseModel();
-    }
-
-    @Override
     public String getValue() {
         return translate("value", value);
     }
@@ -68,5 +62,10 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
     @JsonIgnore
     public String getText() {
         return getValue();
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.PLAIN_TEXT);
     }
 }

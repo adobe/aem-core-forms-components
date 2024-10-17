@@ -166,6 +166,16 @@ function testImportData(globals)
 }
 
 /**
+ * Tests static text import data
+ * @name testTextImportData
+ * @param {scope} globals
+ */
+function testTextImportData(globals)
+{
+    globals.functions.importData({'a' : {'b' : 'prefilled'}});
+}
+
+/**
  * Tests set focus
  * @name testSetFocus
  * @param {object} emailField
@@ -208,4 +218,86 @@ function testRemoveInstance(globals)
 {
     var repeatablePanel = globals.form.panelcontainer2;
     globals.functions.dispatchEvent(repeatablePanel, 'removeInstance');
+}
+
+/**
+ * clearValueCustomFunction
+ * @name clearValueCustomFunction
+ * @param {object} field field whose value to be cleared
+ * @param {scope} globals
+ **/
+function clearValueCustomFunction(field, globals) {
+    // only clear data if change was done by user from the UI.
+    if (globals.event.payload.eventSource == "ui") {
+        globals.functions.setProperty(field, {value: null});
+    }
+}
+
+/**
+ * customMessageUsingInvalidApi
+ * @name customMessageUsingInvalidApi
+ * @param {object} field
+ * @param {scope} globals
+ */
+function customMessageUsingInvalidApi(field, globals) {
+    const minLength = 15;
+    const comments = field.$value.trim();
+    if (comments.length < minLength) {
+        globals.functions.setProperty(field, {valid: false, errorMessage : "Comments must be at least 15 characters long."});
+    } else {
+        globals.functions.setProperty(field, {valid : true});
+    }
+}
+
+let label = '',
+    panelLabel = '';
+
+/**
+ * updatePanelLabel
+ * @name updatePanelLabel
+ * @param {object} repeatablePanel
+ * @param {scope} globals
+ */
+function updatePanelLabel(repeatablePanel, globals) {
+
+    if (globals.field.$fieldType === 'panel' && label === '') {
+        label = globals.field.who_lives_name.$label.value;
+        panelLabel = globals.field.$label.value;
+        globals.functions.setProperty(globals.field, {label: {"value": panelLabel + (globals.field.$index + 1)}});
+        globals.functions.setProperty(globals.field.who_lives_name, {label: {"value": label + "<b>" + (globals.field.$index + 1) + "</b>"}});
+    }
+
+    // walk through other instances and update their label
+    repeatablePanel.$parent.forEach(panel => {
+        globals.functions.setProperty(panel,{label : {"value" : panelLabel + (panel.$index+1)}});
+        globals.functions.setProperty(panel.who_lives_name,{label : {"value" : label+"<b>"+(panel.$index+1)+"</b>"}});
+    });
+}
+
+
+
+/**
+ * Tests add instance with dispatchEvent
+ * @name addPanelInstance
+ * @param {object} panel
+ * @param {scope} globals
+ */
+function addPanelInstance(panel,globals)
+{
+    globals.functions.dispatchEvent(panel,'addInstance', globals.field.$parent.$index + 1);
+}
+
+
+/**
+ * Tests remove instance with dispatchEvent
+ * @name removePanelInstance
+ * @param {object} panel
+ * @param {scope} globals
+ */
+function removePanelInstance(panel,globals)
+{
+    globals.functions.dispatchEvent(panel, 'removeInstance', globals.field.$parent.$index);
+    panel.forEach(p => {
+        globals.functions.dispatchEvent(p, 'initialize');
+    })
 }

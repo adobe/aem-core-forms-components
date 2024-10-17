@@ -52,6 +52,7 @@ public class StaticImageImplTest {
     private static final String PATH_IMAGE_PARSED = CONTENT_ROOT + "/image-parsedSrc";
     private static final String PATH_IMAGE = CONTENT_ROOT + "/image";
     private static final String PATH_IMAGE_DATALAYER = CONTENT_ROOT + "/image-datalayer";
+    private static final String PATH_IMAGE_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/image-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -207,5 +208,11 @@ public class StaticImageImplTest {
         StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_DATALAYER, StaticImage.class, context);
         FieldUtils.writeField(image, "dataLayerEnabled", true, true);
         Utils.testJSONExport(image, Utils.getTestExporterJSONPath(BASE, PATH_IMAGE_DATALAYER));
+    }
+
+    @Test
+    void testNoFieldType() {
+        StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_WITHOUT_FIELDTYPE, StaticImage.class, context);
+        assertEquals(FieldType.IMAGE.getValue(), image.getFieldType());
     }
 }

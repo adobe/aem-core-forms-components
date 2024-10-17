@@ -29,7 +29,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 1"
-                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v3/fileinput"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     buttonText="Attach Files"
                     enabled="{Boolean}true"
@@ -43,7 +43,7 @@
             <fileinput2
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 2"
-                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v3/fileinput"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     fieldType="file-input"
                     name="fileinput2"
@@ -51,7 +51,7 @@
             <fileinput3
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 3"
-                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v3/fileinput"
                     accept="[application/pdf]"
                     description="This is long description"
                     fieldType="file-input"
@@ -63,7 +63,7 @@
             <fileinput4
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 4"
-                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v3/fileinput"
                     accept="[application/x-msdownload,application/vnd.ms-outlook,application/pdf]"
                     description="This is long description"
                     fieldType="file-input"
@@ -77,7 +77,7 @@
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="File Input - 5"
-                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
+                    sling:resourceType="core/fd/components/form/fileinput/v3/fileinput"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf]"
                     buttonText="Attach Files"
                     enabled="{Boolean}true"
@@ -85,6 +85,7 @@
                     name="fileinput5"
                     readOnly="{Boolean}true"
                     textIsRich="[true,true]"
+                    maxFileSize="2"
                     type="file[]"
                     visible="{Boolean}true"/>
             <submit
