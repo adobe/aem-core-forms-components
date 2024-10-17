@@ -22,7 +22,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>3.0.100-SNAPSHOT</version>
+        <version>3.0.69-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
