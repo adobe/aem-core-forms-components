@@ -4,6 +4,7 @@ See below for a full list of minimum system requirements for historical versions
 
 | Forms Core Components | WCM Core Components | AEM 6.5 | Java  | Maven  |  
 |-----------------------|---------------------|---------| ----- | ------ |
+| 1.1.60                | 2.24.6             | 6.5.20+ | 8, 11 | 3.3.9+ |
 | 1.1.58                | 2.24.6             | 6.5.20+ | 8, 11 | 3.3.9+ |
 | 1.1.56                | 2.24.6             | 6.5.20+ | 8, 11 | 3.3.9+ |
 | 1.1.54                | 2.24.6             | 6.5.20+ | 8, 11 | 3.3.9+ |
