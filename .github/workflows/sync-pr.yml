@@ -19,14 +19,30 @@ jobs:
           git config --global user.email "ci-build@aemforms"
           git config --global user.name "ci-build"
 
+      - name: Validate branch names
+        id: validate
+        run: |
+          echo "Validating branch names..."
+          if ! [[ "${{ github.event.pull_request.head.ref }}" =~ ^[a-zA-Z0-9._/-]+$ ]]; then
+            echo "Invalid characters in head ref"
+            exit 1
+          fi
+          if ! [[ "${{ github.event.pull_request.base.ref }}" =~ ^[a-zA-Z0-9._/-]+$ ]]; then
+            echo "Invalid characters in base ref"
+            exit 1
+          fi
+          echo "::set-output name=head_ref::${{ github.event.pull_request.head.ref }}"
+          echo "::set-output name=base_ref::${{ github.event.pull_request.base.ref }}"
+
       - name: Sync with Base Branch
         run: |
-          git fetch origin
-          git checkout ${{ github.event.pull_request.base.ref }}
-          git pull origin ${{ github.event.pull_request.base.ref }}
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git pull origin ${{ github.event.pull_request.head.ref }}
-          git rebase ${{ github.event.pull_request.base.ref }}
-          git push --force origin ${{ github.event.pull_request.head.ref }}
+          git fetch origin ${{ steps.validate.outputs.head_ref }}
+          git fetch origin ${{ steps.validate.outputs.base_ref }}
+          git checkout ${{ steps.validate.outputs.base_ref }}
+          git pull origin ${{ steps.validate.outputs.base_ref }}
+          git checkout ${{ steps.validate.outputs.head_ref }}
+          git pull origin ${{ steps.validate.outputs.head_ref }}
+          git rebase ${{ steps.validate.outputs.base_ref }}
+          git push --force origin ${{ steps.validate.outputs.head_ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
