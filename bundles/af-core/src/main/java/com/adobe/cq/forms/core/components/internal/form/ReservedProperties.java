@@ -162,6 +162,7 @@ public final class ReservedProperties {
     public static final String FD_ENABLE_AUTO_SAVE = "fd:enableAutoSave";
     public static final String FD_AUTO_SAVE_STRATEGY_TYPE = "fd:autoSaveStrategyType";
     public static final String FD_AUTO_SAVE_INTERVAL = "fd:autoSaveInterval";
+    public static final String FD_AUTOCOMPLETE = "fd:autoComplete";
     private static final Set<String> reservedProperties = aggregateReservedProperties();
 
     private static Set<String> aggregateReservedProperties() {
