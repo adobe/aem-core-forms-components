@@ -355,7 +355,6 @@ public class DropDownImplTest {
         assertArrayEquals(new Long[] { 0L, 1L }, dropdown.getDefault());
     }
 
-
     @Test
     void testGetMultiSelectDefault_WithDiffProperty() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY, DropDown.class, context);
