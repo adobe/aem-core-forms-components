@@ -54,6 +54,7 @@ public class DropDownImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DROPDOWN_1 = CONTENT_ROOT + "/dropdown-1";
     private static final String PATH_MULTISELECT_DROPDOWN = CONTENT_ROOT + "/multiselect-dropdown";
+    private static final String PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY = CONTENT_ROOT + "/multiselect-dropdown-2";
     private static final String PATH_DROPDOWN2 = CONTENT_ROOT + "/dropdown2";
 
     private static final String PATH_DROPDOWN = CONTENT_ROOT + "/dropdown";
@@ -351,6 +352,13 @@ public class DropDownImplTest {
     @Test
     void testGetMultiSelectDefault() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN, DropDown.class, context);
+        assertArrayEquals(new Long[] { 0L, 1L }, dropdown.getDefault());
+    }
+
+
+    @Test
+    void testGetMultiSelectDefault_WithDiffProperty() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY, DropDown.class, context);
         assertArrayEquals(new Long[] { 0L, 1L }, dropdown.getDefault());
     }
 
