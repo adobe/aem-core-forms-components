@@ -51,6 +51,10 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @Nullable
     protected String[] enumNames;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MULTI_DEFAULT_VALUES)
+    @Nullable
+    protected Object[] multiDefaultValues;
+
     @Override
     public boolean isEnforceEnum() {
         return enforceEnum;
@@ -117,7 +121,9 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     public Object[] getDefault() {
         Object[] typedDefaultValue = null;
         try {
-            if (defaultValue != null) {
+            if (multiDefaultValues != null) {
+                typedDefaultValue = ComponentUtils.coerce(type, multiDefaultValues);
+            } else if (defaultValue != null) {
                 typedDefaultValue = ComponentUtils.coerce(type, defaultValue);
             }
         } catch (Exception exception) {
