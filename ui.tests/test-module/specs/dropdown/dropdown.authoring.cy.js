@@ -79,7 +79,7 @@ describe('Page - Authoring', function () {
             .then(cy.wrap)
       }
 
-    context.only('Open Forms Editor', function() {
+    context('Open Forms Editor', function() {
         const pagePath = "/content/forms/af/core-components-it/blank",
             dropDownEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/dropdown",
             dropDownEditPathSelector = "[data-path='" + dropDownEditPath + "']",
