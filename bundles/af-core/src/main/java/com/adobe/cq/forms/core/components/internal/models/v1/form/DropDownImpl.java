@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Map;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -22,6 +24,7 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -43,6 +46,10 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     @Default(booleanValues = false)
     protected boolean multiSelect;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_AUTOCOMPLETE)
+    @Default(booleanValues = false)
+    protected boolean autoComplete;
+
     @Override
     public Integer getMinItems() {
         return minItems;
@@ -61,5 +68,17 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     @Override
     public String getFieldType() {
         return super.getFieldType(FieldType.DROP_DOWN);
+    }
+
+    @Override
+    public Boolean isAutoComplete() {
+        return autoComplete;
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = super.getProperties();
+        customProperties.put(ReservedProperties.FD_AUTOCOMPLETE, isAutoComplete());
+        return customProperties;
     }
 }
