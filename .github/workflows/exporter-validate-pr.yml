@@ -48,8 +48,8 @@ jobs:
             
             # Check for changed values
             for key in $base_keys; do
-              base_value=$(echo "$base_file" | jq -r ".$key")
-              head_value=$(echo "$head_file" | jq -r ".$key")
+              base_value=$(echo "$base_file" | jq -r --arg k "$key" 'getpath($k | split("."))')
+              head_value=$(echo "$head_file" | jq -r --arg k "$key" 'getpath($k | split("."))')
 
               if [ "$base_value" != "$head_value" ]; then
                 echo "Backward incompatibility change detected in $file. The value of key '$key' was changed from '$base_value' to '$head_value'."
