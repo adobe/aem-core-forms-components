@@ -68,12 +68,12 @@
             offDataValueLabel = $($(ENUM_OPTION + ' label'))[3],
             offDisplayTextLabel = $($(ENUM_OPTION + ' label'))[4],
             offDisplayTextLabelRich = $($(ENUM_OPTION + ' label'))[5];
-        onDataValueLabel.innerHTML = 'ON Data Value *';
-        onDisplayTextLabel.innerHTML = 'ON Display text *';
-        onDisplayTextLabelRich.innerHTML = 'ON Display text *';
-        offDataValueLabel.innerHTML = 'OFF Data Value *';
-        offDisplayTextLabel.innerHTML = 'OFF Display text *';
-        offDisplayTextLabelRich.innerHTML = 'OFF Display text *';
+        onDataValueLabel.innerHTML = Granite.I18n.get('ON Data Value *');
+        onDisplayTextLabel.innerHTML = Granite.I18n.get('ON Display text *');
+        onDisplayTextLabelRich.innerHTML = Granite.I18n.get('ON Display text *');
+        offDataValueLabel.innerHTML = Granite.I18n.get('OFF Data Value *');
+        offDisplayTextLabel.innerHTML = Granite.I18n.get('OFF Display text *');
+        offDisplayTextLabelRich.innerHTML = Granite.I18n.get('OFF Display text *');
     }
 
   Utils.initializeEditDialog(EDIT_DIALOG)(handleOffFieldVisibility, registerDialogValidator, setDataAndDisplayTextFieldLabel);
