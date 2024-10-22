@@ -330,6 +330,14 @@ class Utils {
                     // only execute when fd:formDataEnabled is present and set to true
                     _prefillData = await HTTPAPILayer.getPrefillData(_formJson.id, params) || {};
                     _prefillData = Utils.stripIfWrapped(_prefillData);
+                    if(window.formBridge){
+                        window.formBridge.restoreFormState({
+                            formState : {xfaDom: _prefillData.data.xfaDom, xfaRenderContext: _prefillData.data.xfaRenderContext},
+                            context : this,
+                            error : function() {},
+                            success : function () {}
+                        });
+                    }
                 }
                 const formContainer = await createFormContainer({
                     _formJson,

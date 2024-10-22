@@ -120,6 +120,10 @@
                                               jcr:primaryType="nt:unstructured"
                                               text="Form Data Model"
                                               value="formdatamodel"/>
+                                            <optionFormTemplates
+                                              jcr:primaryType="nt:unstructured"
+                                              text="Form Templates"
+                                              value="formtemplates"/>
                                         </items>
                                     </selectformmodel>
                                     <schemaRef name="./schemaRef"
@@ -169,6 +173,29 @@
                                             </fdmselector>
                                         </items>
                                     </fdmselectorcontainer>
+                                    <formTemplateSelectorContainer
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                            granite:class="cmp-adaptiveform-container__formtemplateselectorcontainer">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <formTemplateSelector
+                                                    granite:class="cmp-adaptiveform-container__formtemplateselector"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    name="./xdpRef"
+                                                    disabled="false"
+                                                    fieldLabel="Select Form Template *"
+                                                    validation="datamodel.config"
+                                                    renderReadOnly="false">
+                                                <datasource
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                                                        guideDataModel="basic"
+                                                        layoutType="fd/af/layouts/panel"
+                                                        type="formtemplates"/>
+                                            </formTemplateSelector>
+                                        </items>
+                                    </formTemplateSelectorContainer>
                                     <formmodelparameters
                                       granite:id="formmodelparameters"
                                       jcr:primaryType="nt:unstructured"
