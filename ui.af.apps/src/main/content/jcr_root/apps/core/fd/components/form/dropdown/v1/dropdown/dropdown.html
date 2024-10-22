@@ -65,11 +65,6 @@
         </select>
     </div>
     <div data-sly-test="${dropdown.properties.fd:autoComplete}" data-sly-unwrap>
-        <input list="${widgetId}" id="dropdown-datalist-input" class="cmp-adaptiveform-dropdown__widget"
-               name="${dropdown.name}"
-               title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
-               disabled="${!dropdown.enabled || dropdown.readOnly}"
-               required="${dropdown.required}"/>
         <datalist id="${widgetId}">
             <option data-sly-test="${!dropdown.placeHolder}" disabled selected></option>
             <option data-sly-test="${dropdown.placeHolder}" value="" disabled selected>${dropdown.placeHolder}</option>
@@ -85,6 +80,11 @@
                 </div>
             </div>
         </datalist>
+        <input list="${widgetId}" id="dropdown-datalist-input" class="cmp-adaptiveform-dropdown__widget"
+               name="${dropdown.name}"
+               title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
+               disabled="${!dropdown.enabled || dropdown.readOnly}"
+               required="${dropdown.required}"/>
     </div>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=dropdown.id, shortDescriptionVisible=dropdown.tooltipVisible, shortDescription=dropdown.tooltip, bemBlock='cmp-adaptiveform-dropdown'}"
