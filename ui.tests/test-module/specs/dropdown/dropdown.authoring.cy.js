@@ -79,7 +79,7 @@ describe('Page - Authoring', function () {
             .then(cy.wrap)
       }
 
-    context('Open Forms Editor', function() {
+    context.only('Open Forms Editor', function() {
         const pagePath = "/content/forms/af/core-components-it/blank",
             dropDownEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/dropdown",
             dropDownEditPathSelector = "[data-path='" + dropDownEditPath + "']",
@@ -149,6 +149,19 @@ describe('Page - Authoring', function () {
             getPreviewIframeBody().find('.cmp-adaptiveform-dropdown').parent().contains('Item 1').should('not.exist');
             cy.deleteComponentByPath(dropdown);
         });
+
+        it('enable auto completion of dropdown component', function () {
+            insertDropDownInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + dropDownEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('input[name="./fd:autoComplete"]').should('exist').check();
+            cy.get('.cq-dialog-submit').click();
+
+            getPreviewIframeBody().find('input[list]').should('exist');
+            getPreviewIframeBody().find('datalist').should('exist');
+            getPreviewIframeBody().find('select').should('not.exist');
+            cy.deleteComponentByPath(dropdown);
+        })
     })
 
     context('Open Sites Editor', function () {

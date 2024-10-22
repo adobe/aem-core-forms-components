@@ -15,7 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.drew.lang.annotations.NotNull;
+import java.util.Map;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -31,14 +32,13 @@ import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.DropDown;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
-
-import java.util.Map;
+import com.drew.lang.annotations.NotNull;
 
 @Model(
-        adaptables = {SlingHttpServletRequest.class, Resource.class},
-        adapters = {DropDown.class,
-                ComponentExporter.class},
-        resourceType = {FormConstants.RT_FD_FORM_DROP_DOWN_V1})
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { DropDown.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_DROP_DOWN_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
 

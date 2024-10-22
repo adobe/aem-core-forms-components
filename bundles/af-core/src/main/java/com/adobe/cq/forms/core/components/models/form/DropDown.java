@@ -20,7 +20,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Defines the form {@code DropDown} Sling Model used for the {@code /apps/core/fd/components/form/dropdown/v1/dropdown} component.
+ * Defines the form {@code DropDown} Sling Model used for the {@code /apps/core/fd/components/form/dropdown/v1/dropdown}
+ * component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
