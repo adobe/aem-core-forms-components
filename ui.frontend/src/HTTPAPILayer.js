@@ -153,7 +153,7 @@ class HTTPAPILayer {
         if (customFunctionConfig && customFunctionConfig.length === 1) {
                 const getCustomFunctionUrl = customFunctionConfig[0].fn;
                 if (typeof getCustomFunctionUrl === 'function') {
-                    customFunctionsUrl = getCustomFunctionUrl(formId);
+                    customFunctionsUrl = await getCustomFunctionUrl(formId);
                 }
         } else {
             customFunctionsUrl = Constants.API_PATH_PREFIX + "/customfunctions/"
