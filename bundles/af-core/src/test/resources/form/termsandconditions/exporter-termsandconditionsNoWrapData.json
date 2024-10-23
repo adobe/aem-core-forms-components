@@ -9,7 +9,8 @@
       "dorExcludeDescription": false
     },
     "fd:path": "/content/termsandconditionsNoWrapData",
-    "fd:tnc": true
+    "fd:tnc": true,
+    "showAsPopup": true
   },
   "label": {
     "value": "Terms And Conditions"
