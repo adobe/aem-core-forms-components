@@ -88,18 +88,6 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
 
-        // // Forms Objects option is not existing on side panel
-        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFormObjectTab).should("exist");
-        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFormObjectTab).then($el => {
-        //     expect($el.text().trim()).to.equal("Form Objects");
-        // })
-        //
-        // // Functions option is not existing on side panel
-        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFunctionObjectTab).should("exist");
-        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFunctionObjectTab).then($el => {
-        //     expect($el.text().trim()).to.equal("Functions");
-        // })
-
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
 
@@ -364,7 +352,7 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.deleteComponentByPath(buttonEditPath);
         })
 
-        // if (cy.af.isLatestAddon()) {
+        if (cy.af.isLatestAddon()) {
             it('should add validation rule on date fields', function () {
                 cy.openAuthoring(formPath);
                 cy.selectLayer("Edit");
@@ -380,7 +368,7 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.selectLayer("Edit");
                 cy.deleteComponentByPath(datePickerEditPath);
             })
-        // }
+        }
 
         it('should add submission handler rules on form', function () {
             if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
