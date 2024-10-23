@@ -34,8 +34,8 @@ jobs:
             head_file=$(git show ${{ github.head_ref }}:$file)
 
             # Compare the JSON keys
-            base_keys=$(echo "$base_file" | jq -r 'paths | map(tostring) | join(".")')
-            head_keys=$(echo "$head_file" | jq -r 'paths | map(tostring) | join(".")')
+            base_keys=$(echo "$base_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
+            head_keys=$(echo "$head_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
 
             # Check for removed keys
             removed_keys=$(comm -23 <(echo "$base_keys" | sort) <(echo "$head_keys" | sort))
@@ -45,7 +45,7 @@ jobs:
               echo "$removed_keys"
               exit 1
             fi
-            
+
             # Check for changed values
             for key in $base_keys; do
               base_value=$(echo "$base_file" | jq -r ".$key")
