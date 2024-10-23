@@ -298,15 +298,16 @@ class FormFileInputWidgetBase {
             }
         }
 
-        invalidMessage(fileName, invalidFeature){
-            // todo: have add localization here
-            if(invalidFeature === this.invalidFeature.SIZE) {
-                alert(FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeGreater", [fileName, this.options.maxFileSize]));
-            } else if (invalidFeature === this.invalidFeature.NAME) {
-                alert(FormView.LanguageUtils.getTranslatedString(this.lang, "FileNameInvalid", [fileName]));
-            } else if (invalidFeature === this.invalidFeature.MIMETYPE) {
-                alert(FormView.LanguageUtils.getTranslatedString(this.lang, "FileMimeTypeInvalid", [fileName]));
-            }
+        invalidMessage(fileName, invalidFeature) {
+            const customMessages = this.options.constraintMessages || {};
+        
+            const messages = {
+                [this.invalidFeature.SIZE]: customMessages.maxFileSize || FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeGreater", [fileName, this.options.maxFileSize]),
+                [this.invalidFeature.NAME]: customMessages.invalidFileName || FormView.LanguageUtils.getTranslatedString(this.lang, "FileNameInvalid", [fileName]),
+                [this.invalidFeature.MIMETYPE]: customMessages.invalidMimeType || FormView.LanguageUtils.getTranslatedString(this.lang, "FileMimeTypeInvalid", [fileName])
+            };
+        
+            alert(messages[invalidFeature]);
         }
 
 
