@@ -76,6 +76,67 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
     }
 
+    const createRuleToValidateDate = function() {
+        // Edit rule option not existing on button toolbar
+        cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+        // click on  create option from rule editor header
+        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
+
+        // // Forms Objects option is not existing on side panel
+        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFormObjectTab).should("exist");
+        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFormObjectTab).then($el => {
+        //     expect($el.text().trim()).to.equal("Form Objects");
+        // })
+        //
+        // // Functions option is not existing on side panel
+        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFunctionObjectTab).should("exist");
+        // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sidePanelFunctionObjectTab).then($el => {
+        //     expect($el.text().trim()).to.equal("Functions");
+        // })
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='VALIDATE_EXPRESSION']")
+            .click({force: true});
+
+        // select the component for which rule is to written i.e. Button here
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").first().click();
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").first().find("coral-selectlist-item[title='Date Input']:first").click();
+
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .OPERATOR").click();
+        cy.getRuleEditorIframe().find("coral-selectlist-item[value='EQUALS_TO']").click();
+
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").last().click();
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").last().find(".selectlist-header").click();
+        cy.getRuleEditorIframe().find("coral-selectlist-item[value='FUNCTION_CALL']").click();
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").last().click();
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").last().find("coral-selectlist-item[value='today']").click();
+
+        cy.intercept('POST', /content\/forms\/af\/core-components-it\/samples\/ruleeditor\/blank.*/).as('ruleEditorRequest');
+        
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+        cy.wait('@ruleEditorRequest').then((interception) => {
+            expect(interception.response.statusCode).to.equal(201);
+            const submittedData = Object.fromEntries(new URLSearchParams(interception.request.body));
+            expect(submittedData[":content"]).contains("dateToDaysSinceEpoch($field.$value)==dateToDaysSinceEpoch(today())");
+        });
+
+        // check if rule is created
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.DATE_PICKER_RULE).should("exist");
+
+        // check and close rule editor
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
+    }
+
     const createRuleToSaveFormOnButtonClick = function() {
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
@@ -227,8 +288,10 @@ describe('Rule editor authoring sanity for core-components',function(){
             saveFormContainerPath = saveFormPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
             textinputEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             buttonEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
+            datePickerEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.datepicker.split("/").pop(),
             saveButtonEditPath = saveFormContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
+            datePickerEditPathSelector = "[data-path='" + datePickerEditPath + "']",
             saveButtonEditPathSelector = "[data-path='" + saveButtonEditPath + "']",
             submitFormButtonEditPath = submitFormContainerPath + "/" + afConstants.components.forms.resourceType.submitButton.split("/").pop(),
             submitFormButtonEditPathSelector = "[data-path='" + submitFormButtonEditPath + "']";
@@ -301,6 +364,23 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.deleteComponentByPath(buttonEditPath);
         })
 
+        // if (cy.af.isLatestAddon()) {
+            it('should add validation rule on date fields', function () {
+                cy.openAuthoring(formPath);
+                cy.selectLayer("Edit");
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                    "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
+
+                createRuleToValidateDate();
+                cy.get(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector).should("exist");
+
+                cy.selectLayer("Edit");
+                cy.deleteComponentByPath(datePickerEditPath);
+            })
+        // }
 
         it('should add submission handler rules on form', function () {
             if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {

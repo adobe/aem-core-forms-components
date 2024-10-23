@@ -185,6 +185,7 @@ var selectors = {
         },
         ruleSummary : {
             CREATED_RULE: "#rule-summary table[handle='table'] tr[title='Button - Click']",
+            DATE_PICKER_RULE: "#rule-summary table[handle='table'] tr[title='Date Input - Validate']",
             SUBMISSION_SUCCESS_RULE: "#rule-summary table[handle='table'] tr[title='FORM - Successful Submission']",
             SUBMISSION_FAILURE_RULE: "#rule-summary table[handle='table'] tr[title='FORM - Error in Submission']",
             CUSTOM_SUBMIT_FORM_RULE: "#rule-summary table[handle='table'] tr[title='Submit - Click']",

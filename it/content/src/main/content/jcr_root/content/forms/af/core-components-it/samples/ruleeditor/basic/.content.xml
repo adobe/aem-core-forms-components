@@ -1,60 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
-    jcr:primaryType="cq:Page">
+          jcr:primaryType="cq:Page">
     <jcr:content
-        cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2024-03-01T11:49:33.311Z"
-        cq:lastModifiedBy="admin"
-        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
-        jcr:language="en"
-        jcr:primaryType="cq:PageContent"
-        jcr:title="basic"
-        sling:configRef="/conf/forms/core-components-it/samples/ruleeditor/basic/"
-        sling:resourceType="forms-components-examples/components/page">
+            cq:deviceGroups="[/etc/mobile/groups/responsive]"
+            cq:lastModified="{Date}2024-10-23T06:16:03.852Z"
+            cq:lastModifiedBy="admin"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+            jcr:language="en"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="basic"
+            sling:configRef="/conf/forms/core-components-it/samples/ruleeditor/basic/"
+            sling:resourceType="forms-components-examples/components/page">
         <guideContainer
-            fd:version="2.1"
-            jcr:lastModified="{Date}2024-03-01T11:40:51.518Z"
-            jcr:lastModifiedBy="admin"
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="forms-components-examples/components/form/container"
-            clientLibRef="corecomponent.it.customfunction,corecomponent.it.customfunction2"
-            dorType="none"
-            fieldType="form"
-            schemaType="none"
-            textIsRich="true"
-            thankYouMessage="Thank you for submitting the form."
-            thankYouOption="page"
-            themeRef="/libs/fd/af/themes/canvas"
-            title="basic">
+                fd:version="2.1"
+                jcr:lastModified="{Date}2024-03-01T11:40:51.518Z"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="forms-components-examples/components/form/container"
+                clientLibRef="corecomponent.it.customfunction,corecomponent.it.customfunction2"
+                dorType="none"
+                fieldType="form"
+                schemaType="none"
+                textIsRich="true"
+                thankYouMessage="Thank you for submitting the form."
+                thankYouOption="page"
+                themeRef="/libs/fd/af/themes/canvas"
+                title="basic">
             <textinput
-                jcr:created="{Date}2024-03-01T11:25:26.612Z"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2024-03-01T11:25:26.612Z"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                jcr:title="Text Input"
-                sling:resourceType="forms-components-examples/components/form/textinput"
-                fieldType="text-input"
-                name="textinput1709292326654"/>
+                    jcr:created="{Date}2024-03-01T11:25:26.612Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-03-01T11:25:26.612Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    fieldType="text-input"
+                    name="textinput1709292326654"/>
             <button
-                jcr:created="{Date}2024-03-01T11:25:31.029Z"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2024-03-01T11:25:31.029Z"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                jcr:title="Button"
-                sling:resourceType="forms-components-examples/components/form/button"
-                dorExclusion="true"
-                fieldType="button"
-                name="button1709292331100">
+                    jcr:created="{Date}2024-03-01T11:25:31.029Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-03-01T11:25:31.029Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Button"
+                    sling:resourceType="forms-components-examples/components/form/button"
+                    dorExclusion="true"
+                    fieldType="button"
+                    name="button1709292331100">
                 <fd:rules
-                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1709292331100&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1709292331100&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testSetProperty&quot;\,&quot;displayName&quot;:&quot;testSetProperty&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;input1&quot;\,&quot;description&quot;:&quot;input1&quot;\,&quot;isMandatory&quot;:true}\,{&quot;type&quot;:&quot;OBJECT|AFCOMPONENT&quot;\,&quot;name&quot;:&quot;normalField&quot;\,&quot;description&quot;:&quot;normalField&quot;\,&quot;isMandatory&quot;:true}]\,&quot;impl&quot;:&quot;$0($1\,$2)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;abc&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1709292326654&quot;\,&quot;displayName&quot;:&quot;Text Input&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input/&quot;\,&quot;name&quot;:&quot;textinput1709292326654&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testSetProperty('abc'\,textinput1709292326654\)&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
-                    jcr:primaryType="nt:unstructured"
-                    validationStatus="valid"/>
+                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1709292331100&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1709292331100&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testSetProperty&quot;\,&quot;displayName&quot;:&quot;testSetProperty&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;input1&quot;\,&quot;description&quot;:&quot;input1&quot;\,&quot;isMandatory&quot;:true}\,{&quot;type&quot;:&quot;OBJECT|AFCOMPONENT&quot;\,&quot;name&quot;:&quot;normalField&quot;\,&quot;description&quot;:&quot;normalField&quot;\,&quot;isMandatory&quot;:true}]\,&quot;impl&quot;:&quot;$0($1\,$2)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;abc&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.textinput1709292326654&quot;\,&quot;displayName&quot;:&quot;Text Input&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Text Input/&quot;\,&quot;name&quot;:&quot;textinput1709292326654&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testSetProperty('abc'\,textinput1709292326654)&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
                 <fd:events
-                    jcr:primaryType="nt:unstructured"
-                    click="[testSetProperty('abc'\,textinput1709292326654)]"/>
+                        jcr:primaryType="nt:unstructured"
+                        click="[testSetProperty('abc'\,textinput1709292326654)]"/>
             </button>
+            <datepicker
+                    jcr:created="{Date}2024-10-23T06:02:06.965Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-10-23T06:02:22.719Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="startDate"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    enabled="{Boolean}true"
+                    fieldType="date-input"
+                    hideTitle="false"
+                    name="startDate"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    validationExpression="(dateToDaysSinceEpoch($field.$value)&lt;dateToDaysSinceEpoch(today())) &amp;&amp; (!(endDate.$value) || (dateToDaysSinceEpoch($field.$value)&lt;dateToDaysSinceEpoch(endDate.$value)))"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.startDate&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;startDate&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_BINARY_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.startDate&quot;\,&quot;displayName&quot;:&quot;startDate&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;displayPath&quot;:&quot;FORM/startDate/&quot;\,&quot;name&quot;:&quot;startDate&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;IS_BEFORE&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;EXPRESSION&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;today&quot;\,&quot;displayName&quot;:&quot;Get Current Date&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}\,&quot;nested&quot;:true}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_BINARY_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.endDate&quot;\,&quot;displayName&quot;:&quot;endDate&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;displayPath&quot;:&quot;FORM/endDate/&quot;\,&quot;name&quot;:&quot;endDate&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;IS_EMPTY&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;OR&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.startDate&quot;\,&quot;displayName&quot;:&quot;startDate&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;displayPath&quot;:&quot;FORM/startDate/&quot;\,&quot;name&quot;:&quot;startDate&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;IS_BEFORE&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.endDate&quot;\,&quot;displayName&quot;:&quot;endDate&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;displayPath&quot;:&quot;FORM/endDate/&quot;\,&quot;name&quot;:&quot;endDate&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}]}\,&quot;nested&quot;:true}]}\,&quot;nested&quot;:true}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;(dateToDaysSinceEpoch($field.$value)&lt;dateToDaysSinceEpoch(today())) &amp;&amp; (!(endDate.$value) || (dateToDaysSinceEpoch($field.$value)&lt;dateToDaysSinceEpoch(endDate.$value)))&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </datepicker>
+            <datepicker_32726336
+                    jcr:created="{Date}2024-10-23T06:02:12.735Z"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-10-23T06:02:40.957Z"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="endDate"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    enabled="{Boolean}true"
+                    fieldType="date-input"
+                    hideTitle="false"
+                    name="endDate"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    validationExpression="dateToDaysSinceEpoch($field.$value)>dateToDaysSinceEpoch(startDate.$value) &amp;&amp; dateToDaysSinceEpoch($field.$value)>dateToDaysSinceEpoch(today())"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.endDate&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;endDate&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BOOLEAN_BINARY_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.endDate&quot;\,&quot;displayName&quot;:&quot;endDate&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;displayPath&quot;:&quot;FORM/endDate/&quot;\,&quot;name&quot;:&quot;endDate&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;IS_AFTER&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.startDate&quot;\,&quot;displayName&quot;:&quot;startDate&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;displayPath&quot;:&quot;FORM/startDate/&quot;\,&quot;name&quot;:&quot;startDate&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.endDate&quot;\,&quot;displayName&quot;:&quot;endDate&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;displayPath&quot;:&quot;FORM/endDate/&quot;\,&quot;name&quot;:&quot;endDate&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;IS_AFTER&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;EXPRESSION&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;today&quot;\,&quot;displayName&quot;:&quot;Get Current Date&quot;\,&quot;type&quot;:&quot;DATE&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;dateToDaysSinceEpoch($field.$value)>dateToDaysSinceEpoch(startDate.$value) &amp;&amp; dateToDaysSinceEpoch($field.$value)>dateToDaysSinceEpoch(today())&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </datepicker_32726336>
         </guideContainer>
     </jcr:content>
 </jcr:root>
