@@ -148,7 +148,18 @@ class HTTPAPILayer {
      * @returns {Promise<Object>} - A Promise that resolves to the custom function configuration.
      */
     static async getCustomFunctionConfig(formId) {
-        return await this.getJson(Constants.API_PATH_PREFIX + "/customfunctions/" + formId);
+        let customFunctionsUrl;
+        let customFunctionConfig = guideBridge.getConfigsForKey(guideBridge.ConfigKeys.CUSTOM_FUNCTIONS_URL_CONFIG);
+        if (customFunctionConfig && customFunctionConfig.length === 1) {
+                const getCustomFunctionUrl = customFunctionConfig[0].fn;
+                if (typeof getCustomFunctionUrl === 'function') {
+                    customFunctionsUrl = getCustomFunctionUrl(formId);
+                }
+        } else {
+            customFunctionsUrl = Constants.API_PATH_PREFIX + "/customfunctions/"
+                + formId;
+        }
+        return await this.getJson(customFunctionsUrl);
     }
 };
 

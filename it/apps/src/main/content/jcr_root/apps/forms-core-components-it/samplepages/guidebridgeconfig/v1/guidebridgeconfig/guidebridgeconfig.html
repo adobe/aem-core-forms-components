@@ -1,0 +1,81 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<div class="custom-embed">
+  <script>
+
+    // Register a custom path for custom functions
+    const initGuideBridge = function (evnt) {
+
+      let guideBridge = evnt.detail.guideBridge;
+      onInit(guideBridge);
+      window.removeEventListener("bridgeInitializeStart", initGuideBridge);
+    };
+    const onInit = function (gb) {
+      if (gb.ConfigKeys.CUSTOM_FUNCTIONS_URL_CONFIG) {
+        gb.registerConfig(gb.ConfigKeys.CUSTOM_FUNCTIONS_URL_CONFIG, function (formId) {
+          return "/customprefixpath/adobe/forms/af/customfunctions/" + formId;
+        })
+      }
+    };
+    if (window.guideBridge) {
+      let guideBridge = window.guideBridge;
+      onInit(guideBridge);
+    } else {
+      window.addEventListener("bridgeInitializeStart", initGuideBridge);
+    }
+
+    // Load the form in external web page
+
+    var loadform = function () {
+      var formPath = "/content/forms/af/core-components-it/samples/loadunloadadaptiveforms/form1";
+
+      function setInnerHTML(elm, html) {
+        elm.innerHTML = html;
+        Array.from(elm.querySelectorAll("script"))
+        .forEach(oldScriptEl => {
+          const newScriptEl = document.createElement("script");
+          Array.from(oldScriptEl.attributes).forEach(attr => {
+            newScriptEl.setAttribute(attr.name, attr.value)
+          });
+          const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+          newScriptEl.appendChild(scriptText);
+          oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
+        });
+      }
+
+      var loadAdaptiveForm = function (options) {
+        // Note: Query Parameter 'wcmmode=disabled' is not required for publish instance
+        var path = options.formPath + '.html?wcmmode=disabled';
+        fetch(path).then((res) => res.text()).then(html => {
+          setInnerHTML(document.querySelector(options.CSS_Selector), html); // OR $(options.CSS_Selector).html(html);
+        })
+      }
+
+      loadAdaptiveForm({
+        formPath: formPath,
+        CSS_Selector: '.customafsection'
+      })
+    }
+
+    loadform()
+
+  </script>
+
+  <div class="customafsection">
+
+  </div>
+</div>
