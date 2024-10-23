@@ -16,6 +16,7 @@
 (function($) {
     "use strict";
     var EDIT_DIALOG = ".cmp-adaptiveform-dropdown__editdialog",
+        DROPDOWN_AUTOCOMPLETE = ".cmp-adaptiveform-dropdown__autocomplete",
         DROPDOWN_ALLOWMULTISELECT = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__allowmultiselect",
         DROPDOWN_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__defaultvalue",
         DROPDOWN_DEFAULTVALUEMULTISELCET = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__defaultvaluemultiselect",
@@ -123,6 +124,31 @@
             return dataType;
         }
     );
+
+    /**
+     * Enables the auto-complete functionality for the dropdown component.
+     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
+     */
+    function handleAutoComplete (dialog) {
+        var autoComplete = dialog.find(DROPDOWN_AUTOCOMPLETE)[0];
+
+        var isAutoComplete = function () {
+            // alert('Auto complete is checked')
+            return autoComplete.checked;
+        }
+
+        autoComplete.addEventListener('checked', function() {
+            alert('Auto complete is checked')
+        })
+
+        const inputElement = document.createElement('input');
+        const datalistElement = document.createElement('datalist');
+        inputElement.id = autoComplete.attr('id');
+        console.log(inputElement.id);
+        // inputElement.type = 'text';
+        // inputElement.name = './autocomplete';
+        // inputElement.value = isAutoComplete() ? 'true' : 'false';
+    }
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleSaveValueDropDown, handleDefaultValue, registerDialogValidator);
 })(jQuery);

@@ -33,31 +33,65 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[dropdown.id, 'widget']}">
     <div class="cmp-adaptiveform-dropdown__label-container">
-      <div data-sly-call="${label.label @componentId=widgetId, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, labelRichText=dropdown.label.richText, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
-      <div data-sly-call="${questionMark.questionMark @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+        <div data-sly-call="${label.label @componentId=widgetId, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, labelRichText=dropdown.label.richText, bemBlock='cmp-adaptiveform-dropdown'}"
+             data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}"
+             data-sly-unwrap></div>
     </div>
-    <select class="cmp-adaptiveform-dropdown__widget"
-            id="${widgetId}"
-            title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
-            name="${dropdown.name}"
-            data-cmp-data-layer="${dropdown.data.json}"
-            disabled="${!dropdown.enabled || dropdown.readOnly}"
-            required="${dropdown.required}"
-            data-sly-attribute.multiple="${dropdown.isMultiSelect ? 'multiple' : ''}"
-            aria-readonly="${dropdown.readOnly ? 'true' : ''}">
-        <div data-sly-test.isPlaceHolderSet="${dropdown.placeHolder != null}" data-sly-unwrap></div>
-        <option data-sly-test="${!isPlaceHolderSet}" disabled selected></option>
-        <option data-sly-test="${isPlaceHolderSet}" value="" disabled selected>${dropdown.placeHolder}</option>
-        <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
-            <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}" data-sly-unwrap>
-                <option value="${dropdown.enums[enumNameList.index].toString}"
-                        class="cmp-adaptiveform-dropdown__option"
-                        data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}">${enumName}</option>
+
+    <div data-sly-test="${!dropdown.properties.fd:autoComplete}" data-sly-unwrap>
+        <select class="cmp-adaptiveform-dropdown__widget"
+                id="${widgetId}"
+                title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
+                name="${dropdown.name}"
+                data-cmp-data-layer="${dropdown.data.json}"
+                disabled="${!dropdown.enabled || dropdown.readOnly}"
+                required="${dropdown.required}"
+                data-sly-attribute.multiple="${dropdown.isMultiSelect ? 'multiple' : ''}"
+                aria-readonly="${dropdown.readOnly ? 'true' : ''}">
+            <div data-sly-test.isPlaceHolderSet="${dropdown.placeHolder != null}" data-sly-unwrap></div>
+            <option data-sly-test="${!isPlaceHolderSet}" disabled selected></option>
+            <option data-sly-test="${isPlaceHolderSet}" value="" disabled selected>${dropdown.placeHolder}</option>
+            <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
+                <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}"
+                     data-sly-unwrap>
+                    <option value="${dropdown.enums[enumNameList.index].toString}"
+                            class="cmp-adaptiveform-dropdown__option"
+                            data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}">
+                        ${enumName}
+                    </option>
+                </div>
             </div>
-        </div>
-    </select>
-    <div data-sly-call="${shortDescription.shortDescription @componentId=dropdown.id, shortDescriptionVisible=dropdown.tooltipVisible, shortDescription=dropdown.tooltip, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap>
+        </select>
     </div>
-    <div data-sly-call="${longDescription.longDescription @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
-    <div data-sly-call="${errorMessage.errorMessage @componentId=dropdown.id, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
+    <div data-sly-test="${dropdown.properties.fd:autoComplete}" data-sly-unwrap>
+        <datalist id="${widgetId}">
+            <option data-sly-test="${!dropdown.placeHolder}" disabled selected></option>
+            <option data-sly-test="${dropdown.placeHolder}" value="" disabled selected>${dropdown.placeHolder}</option>
+
+            <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
+                <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}"
+                     data-sly-unwrap>
+                    <option value="${dropdown.enums[enumNameList.index].toString}"
+                            class="cmp-adaptiveform-dropdown__option"
+                            data-sly-attribute.selected="${dropdown.enums[enumNameList.index] in dropdown.default ? 'selected' : ''}">
+                        ${enumName}
+                    </option>
+                </div>
+            </div>
+        </datalist>
+        <input list="${widgetId}" id="dropdown-datalist-input" class="cmp-adaptiveform-dropdown__widget"
+               name="${dropdown.name}"
+               title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
+               disabled="${!dropdown.enabled || dropdown.readOnly}"
+               required="${dropdown.required}"/>
+    </div>
+
+    <div data-sly-call="${shortDescription.shortDescription @componentId=dropdown.id, shortDescriptionVisible=dropdown.tooltipVisible, shortDescription=dropdown.tooltip, bemBlock='cmp-adaptiveform-dropdown'}"
+         data-sly-unwrap>
+    </div>
+    <div data-sly-call="${longDescription.longDescription @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}"
+         data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=dropdown.id, bemBlock='cmp-adaptiveform-dropdown'}"
+         data-sly-unwrap></div>
 </div>

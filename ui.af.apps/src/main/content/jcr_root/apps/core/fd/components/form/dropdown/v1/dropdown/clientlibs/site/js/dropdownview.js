@@ -123,6 +123,10 @@
             super.updateEmptyStatus();
         }
 
+        updateAutoCompete() {
+
+        }
+
         #createDropDownOptions(value, label) {
             const optionTemplate = `<option value="${value}" class="${DropDown.selectors.options.slice(1)}">${label}</option>`;
             const container = document.createElement('div'); // Create a container element to hold the template

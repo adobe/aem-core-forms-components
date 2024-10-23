@@ -19,6 +19,7 @@
       "dorExclusion": false
     },
     "fd:path": "/content/dropdown",
+    "fd:autoComplete": false,
     "customProp": "customPropValue"
   },
   ":type": "core/fd/components/form/dropdown/v1/dropdown"

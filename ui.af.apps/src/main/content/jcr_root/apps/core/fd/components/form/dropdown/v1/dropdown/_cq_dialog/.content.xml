@@ -151,6 +151,19 @@
                                                         name="./default"
                                                         required="{Boolean}false"/>
                                             </defaultValueMS>
+                                            <autoComplete
+                                                    granite:class="cmp-adaptiveform-dropdown__autocomplete"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./fd:autoComplete"
+                                                    text="Enable Auto-Completion"
+                                                    value="true"
+                                                    uncheckedValue="false"/>
+                                            <autoComplete-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./autoComplete@TypeHint"
+                                                    value="Boolean"/>
                                         </items>
                                     </column>
                                 </items>
