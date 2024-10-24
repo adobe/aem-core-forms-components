@@ -69,7 +69,8 @@ class GuideBridge {
     ConfigKeys = {
         LOCALE_CONFIG: 'localeConfig',
         RENDER_CONFIG: 'renderConfig', // todo: needs to be added
-        SUBMIT_CONFIG: 'submitConfig'  // todo: needs to be added
+        SUBMIT_CONFIG: 'submitConfig',  // todo: needs to be added
+        CUSTOM_FUNCTIONS_URL_CONFIG: "customFunctionsUrlConfig"
     };
 
     /**
