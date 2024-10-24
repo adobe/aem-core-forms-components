@@ -129,7 +129,7 @@ class FormFileInputWidgetBase {
             const img = document.createElement('img');
             img.src = url;
             const newTab = window.open('', '_blank', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
-            newTab.document.body.appendChild(img);
+            newTab?.document?.body.appendChild(img);
         }
 
         static previewFileUsingObjectUrl(file) {
