@@ -179,12 +179,13 @@ class FormFileInputWidgetBase {
                     }
                     FileInputWidget.previewFile.apply(this, [null, {"fileUrl" : fileUrl}]);
                 } else {
-                     let previewFile = this.fileArr[index]?.data;
+                    // todo: add support here
+                    //let previewFileObjIdx = this._getFileObjIdx(index);
+                    let previewFile = this.fileArr[index]?.data;
                     let objectUrl = FileInputWidget.previewFileUsingObjectUrl(previewFile);
                     if (objectUrl) {
                         elem.dataset.objectUrl = objectUrl;
                     }
-                   
                 }
             }
         }
