@@ -14,8 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 
-import FormField from "./FormField"
-import FormFieldBase from "./FormFieldBase"
 
 /**
  * This class is responsible for interacting with the file input widget. It implements the file preview,
@@ -177,9 +175,18 @@ class FormFileInputWidgetBase {
                     // todo: add support here
                     //let previewFileObjIdx = this._getFileObjIdx(index);
                     let previewFile = this.fileArr[index]?.data;
-                    let objectUrl = FileInputWidget.previewFileUsingObjectUrl(previewFile);
-                    if (objectUrl) {
-                        elem.dataset.objectUrl = objectUrl;
+                    if (this.fileArr[index] && this.fileArr[index].type === 'image/svg+xml') {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const svgContent = e.target.result;
+                            const sanitizedSVG = DOMPurify.sanitize(svgContent, { USE_PROFILES: { svg: true } });
+                            const sanitizedSVGBlob = new Blob([sanitizedSVG], { type: 'image/svg+xml' });
+                            let objectUrl = FileInputWidget.previewFileUsingObjectUrl(sanitizedSVGBlob);
+                            if (objectUrl) {
+                                elem.dataset.objectUrl = objectUrl;
+                            }
+                        };
+                        reader.readAsText(previewFile);
                     }
                 }
             }
