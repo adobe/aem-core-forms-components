@@ -79,6 +79,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_IS_HAMBURGER_MENU_ENABLED = "fd:isHamburgerMenuEnabled";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
+    private static final String FD_CUSTOM_FUNCTION_ACTION = "fd:customFunctionAction";
+    private static final String FD_PREFILL_ACTION = "fd:prefillAction";
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -125,6 +127,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
+
+    @ValueMapValue(name = FD_CUSTOM_FUNCTION_ACTION, injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String customFunctionAction;
+
+    @ValueMapValue(name = FD_PREFILL_ACTION, injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String prefillAction;
 
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
@@ -335,6 +343,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
+        if (StringUtils.isNotBlank(getCustomFunctionAction())) {
+            properties.put(FD_CUSTOM_FUNCTION_ACTION, getCustomFunctionAction());
+        }
+        if (StringUtils.isNotBlank(getPrefillAction())) {
+            properties.put(FD_PREFILL_ACTION, getPrefillAction());
+        }
+
         return properties;
     }
 
@@ -388,4 +403,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return FormContainer.super.getName();
     }
 
+    @Override
+    public String getCustomFunctionAction() {
+        return customFunctionAction;
+    }
+
+    @Override
+    public String getPrefillAction() {
+        return prefillAction;
+    }
 }
