@@ -229,6 +229,22 @@ describe("Form with File Input V-2 - Basic Tests", () => {
     //     cy.get('.cmp-adaptiveform-fileinput__filelist').eq(0).children().should('have.length', 0);
     })
 
+    it("check SVG upload and preview functionality", () => {
+        let sampleFileNames = ['sample.svg'];
+        const fileInput = "input[name='fileinput1']";
+        
+        cy.attachFile(fileInput, [sampleFileNames[0]]);
+        
+        checkFilePreviewInFileAttachment(fileInput);
+        
+        cy.get('.cmp-adaptiveform-fileinput__filelist')
+            .children()
+            .should('have.length', 1)
+            .and('contain.text', sampleFileNames[0]);
+
+        deleteSelectedFiles(fileInput, [sampleFileNames[0]]);
+    });
+
     it(`fielinput is disabled when readonly property is true`, () => {
         const fileInput5 =  "input[name='fileinput5']";
         cy.get(fileInput5).should("have.attr", "disabled", "disabled"); 
