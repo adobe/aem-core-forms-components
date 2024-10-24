@@ -138,7 +138,11 @@ class FormFileInputWidgetBase {
                     window.navigator.msSaveOrOpenBlob(file, file.name);
                 } else {
                     let url = window.URL.createObjectURL(file);
-                    this.displaySVG(url);
+                    if (file.type === 'image/svg+xml') {
+                        this.displaySVG(url)
+                     } else {
+                        window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+                     }
                     return url;
                 }
             }
@@ -154,7 +158,7 @@ class FormFileInputWidgetBase {
                 url = url.substr(0, lastIndex) +'/'+ encodeURIComponent(url.substr(lastIndex + 1));
             }
             // this would work for dataURl or normal URL
-            this.displaySVG(url);
+            window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
         }
         // this function maintains a map for
         handleFilePreview (event){
