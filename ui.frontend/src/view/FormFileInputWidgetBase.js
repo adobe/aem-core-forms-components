@@ -181,12 +181,17 @@ class FormFileInputWidgetBase {
                             const svgContent = e.target.result;
                             const sanitizedSVG = DOMPurify.sanitize(svgContent, { USE_PROFILES: { svg: true } });
                             const sanitizedSVGBlob = new Blob([sanitizedSVG], { type: 'image/svg+xml' });
-                            let objectUrl = FileInputWidget.previewFileUsingObjectUrl(sanitizedSVGBlob);
+                            const objectUrl = FileInputWidget.previewFileUsingObjectUrl(sanitizedSVGBlob);
                             if (objectUrl) {
                                 elem.dataset.objectUrl = objectUrl;
                             }
                         };
                         reader.readAsText(previewFile);
+                    } else {
+                        const objectUrl = FileInputWidget.previewFileUsingObjectUrl(previewFile);
+                        if (objectUrl) {
+                            elem.dataset.objectUrl = objectUrl;
+                        }
                     }
                 }
             }
