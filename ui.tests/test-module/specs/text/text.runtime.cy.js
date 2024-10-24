@@ -115,4 +115,24 @@
          });
      });
 
+     it("text hyperlink and new tab should be working", () => {
+         const [id, fieldView] = Object.entries(formContainer._fields)[6];
+         const model = formContainer._model.getElement(id);
+         // expect(model.value, " Text model value should have").contains("Test text");
+         // cy.get(`#${id}`).contains("Test text");
+         cy.get(`#${id}`).should('have.attr', 'href', 'https://google.com') // Ensure the link has the correct href
+             .should('have.attr', 'target', '_blank') // Ensure the link opens in a new tab
+             .should('have.attr', 'rel', 'noopener noreferrer');
+
+         // Spy on the window.open event to ensure a new tab is being opened
+         cy.window().then((win) => {
+             cy.stub(win, 'open').as('windowOpen');
+         });
+
+         // Trigger a click on the link
+         cy.get(`#${id}`).click();
+         // Verify that window.open was called, meaning a new tab would open
+         cy.get('@windowOpen').should('be.calledWith', 'https://google.com');
+     });
+
  })
