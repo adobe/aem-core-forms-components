@@ -74,6 +74,7 @@ public final class ReservedProperties {
     public static final String PN_PLACEHOLDER = "placeholder";
     public static final String PN_READ_ONLY = "readOnly";
     public static final String PN_DEFAULT_VALUE = "default";
+    public static final String PN_MULTI_DEFAULT_VALUES = "multiDefaultValues";
     public static final String PN_FORMAT = "format";
     public static final String PN_DISPLAY_FORMAT = "displayFormat";
     public static final String PN_EDIT_FORMAT = "editFormat";
