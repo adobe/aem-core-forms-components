@@ -490,4 +490,11 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertFalse(Boolean.valueOf(formContainer.getIsHamburgerMenuEnabled().toString()));
     }
+
+    @Test
+    void testActionCustomProperties() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNull(formContainer.getCustomFunctionAction());
+        assertNull(formContainer.getPrefillAction());
+    }
 }

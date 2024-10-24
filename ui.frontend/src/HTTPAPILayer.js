@@ -119,6 +119,16 @@ class HTTPAPILayer {
     }
 
     /**
+     * Retrieves the prefill data for the specified form and parameters.
+     * @param {string} prefillAction - path to load the prefill data from
+     * @param {Object} params - The parameters for prefilling the form.
+     * @returns {Promise<Object>} - A Promise that resolves to the prefill data.
+     */
+    static async getPrefillDataFromPrefillAction(prefillAction, params) {
+        return await this.getJson(prefillAction + "?" + Object.keys(params).map(p => p+"="+params[p]).join("&"));
+    }
+
+    /**
      * Retrieves JSON data from the specified URL.
      * @param {string} url - The URL to fetch JSON data from.
      * @returns {Promise<Object|null>} - A Promise that resolves to the fetched JSON data or null if there was an error.
@@ -150,6 +160,15 @@ class HTTPAPILayer {
     static async getCustomFunctionConfig(formId) {
         return await this.getJson(Constants.API_PATH_PREFIX + "/customfunctions/" + formId);
     }
-};
+
+    /**
+     *
+     * @param customFunctionAction - path to get the custom function config
+     * @returns {Promise<Object>} - A Promise that resolves to the custom function configuration.
+     */
+    static async getCustomFunctionConfigFromAction(customFunctionAction) {
+        return await this.getJson(customFunctionAction);
+    }
+}
 
 export default HTTPAPILayer;

@@ -271,9 +271,15 @@ class Utils {
     /**
      * Registers custom functions from clientlibs.
      * @param {string} formId - The form ID.
+     * @param {string} customFunctionAction - Load Custom Function from different path
      */
-    static async registerCustomFunctions(formId) {
-        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
+    static async registerCustomFunctions(formId, customFunctionAction) {
+        let funcConfig;
+        if (typeof customFunctionAction !== 'undefined' && customFunctionAction !== '') {
+            funcConfig = await HTTPAPILayer.getCustomFunctionConfigFromAction(customFunctionAction);
+        } else {
+            funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
+        }
         console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
         if (funcConfig && funcConfig.customFunction) {
             const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
@@ -309,14 +315,19 @@ class Utils {
             } else {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
-                await this.registerCustomFunctions(_formJson.id);
+                await this.registerCustomFunctions(_formJson.id, _formJson.properties['fd:customFunctionAction']);
                 await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
                 if (_formJson?.properties?.['fd:formDataEnabled'] === true) {
                     // only execute when fd:formDataEnabled is present and set to true
-                    _prefillData = await HTTPAPILayer.getPrefillData(_formJson.id, params) || {};
+                    const prefillAction = _formJson.properties['fd:prefillAction']
+                    if (typeof prefillAction !== 'undefined' && prefillAction !== '') {
+                        _prefillData = await HTTPAPILayer.getPrefillDataFromPrefillAction(prefillAction, params) || {};
+                    } else {
+                        _prefillData = await HTTPAPILayer.getPrefillData(_formJson.id, params) || {};
+                    }
                     _prefillData = Utils.stripIfWrapped(_prefillData);
                 }
                 const formContainer = await createFormContainer({
