@@ -121,8 +121,7 @@
          // expect(model.value, " Text model value should have").contains("Test text");
          // cy.get(`#${id}`).contains("Test text");
          cy.get(`#${id}`).should('have.attr', 'href', 'https://google.com') // Ensure the link has the correct href
-             .should('have.attr', 'target', '_blank') // Ensure the link opens in a new tab
-             .should('have.attr', 'rel', 'noopener noreferrer');
+             .should('have.attr', 'target', '_blank'); // Ensure the link opens in a new tab
 
          // Spy on the window.open event to ensure a new tab is being opened
          cy.window().then((win) => {

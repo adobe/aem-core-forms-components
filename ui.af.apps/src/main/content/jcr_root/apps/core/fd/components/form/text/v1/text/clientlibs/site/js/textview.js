@@ -74,9 +74,6 @@
                     ADD_ATTR: ['target', 'rel'] // Explicitly add target and rel to allowed attributes
                 }) : actualValue;
 
-                // Add rel="noopener noreferrer" to all links with target="_blank" to prevent xss
-                sanitizedValue = sanitizedValue.replace(/target="_blank"/g, 'target="_blank" rel="noopener noreferrer"');
-
                 // since there is no widget for textview, the innerHTML is being changed
                 if (this.element.children[0]) {
                     this.element.children[0].innerHTML = sanitizedValue;
