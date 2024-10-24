@@ -115,6 +115,18 @@
                         jcr:primaryType="nt:unstructured"
                         click="[testTextImportData()]"/>
             </button>
+            <text_637944566
+                    jcr:created="{Date}2024-05-16T11:23:14.686+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-05-16T11:23:32.032+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text"
+                    sling:resourceType="forms-components-examples/components/form/text"
+                    fieldType="plain-text"
+                    name="text_637944566"
+                    textIsRich="true"
+                    value="&lt;p>Hi Click &lt;a href=&quot;https://www.google.com/&quot; target=&quot;_blank&quot;>here&lt;/a>&amp;nbsp;, link working&lt;/p>&#xa;"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
