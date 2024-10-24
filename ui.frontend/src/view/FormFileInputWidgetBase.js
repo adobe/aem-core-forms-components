@@ -124,13 +124,21 @@ class FormFileInputWidgetBase {
             return index;
         }
 
+        static displaySVG(objectUrl) {
+            const url = objectUrl;
+            const img = document.createElement('img');
+            img.src = url;
+            const newTab = window.open('', '_blank', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+            newTab.document.body.appendChild(img);
+        }
+
         static previewFileUsingObjectUrl(file) {
             if (file) {
                 if (window.navigator && window.navigator.msSaveOrOpenBlob) { // for IE
                     window.navigator.msSaveOrOpenBlob(file, file.name);
                 } else {
                     let url = window.URL.createObjectURL(file);
-                    window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+                    this.displaySVG(url);
                     return url;
                 }
             }
@@ -146,8 +154,7 @@ class FormFileInputWidgetBase {
                 url = url.substr(0, lastIndex) +'/'+ encodeURIComponent(url.substr(lastIndex + 1));
             }
             // this would work for dataURl or normal URL
-            window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
-
+            this.displaySVG(url);
         }
         // this function maintains a map for
         handleFilePreview (event){
@@ -172,27 +179,12 @@ class FormFileInputWidgetBase {
                     }
                     FileInputWidget.previewFile.apply(this, [null, {"fileUrl" : fileUrl}]);
                 } else {
-                    // todo: add support here
-                    //let previewFileObjIdx = this._getFileObjIdx(index);
-                    let previewFile = this.fileArr[index]?.data;
-                    if (this.fileArr[index] && this.fileArr[index].type === 'image/svg+xml') {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            const svgContent = e.target.result;
-                            const sanitizedSVG = DOMPurify.sanitize(svgContent, { USE_PROFILES: { svg: true } });
-                            const sanitizedSVGBlob = new Blob([sanitizedSVG], { type: 'image/svg+xml' });
-                            const objectUrl = FileInputWidget.previewFileUsingObjectUrl(sanitizedSVGBlob);
-                            if (objectUrl) {
-                                elem.dataset.objectUrl = objectUrl;
-                            }
-                        };
-                        reader.readAsText(previewFile);
-                    } else {
-                        const objectUrl = FileInputWidget.previewFileUsingObjectUrl(previewFile);
-                        if (objectUrl) {
-                            elem.dataset.objectUrl = objectUrl;
-                        }
+                     let previewFile = this.fileArr[index]?.data;
+                    let objectUrl = FileInputWidget.previewFileUsingObjectUrl(previewFile);
+                    if (objectUrl) {
+                        elem.dataset.objectUrl = objectUrl;
                     }
+                   
                 }
             }
         }
