@@ -13,7 +13,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-
 <sly data-sly-use.renderer="${'dropdown.js'}"
      data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
      data-sly-use.label="${renderer.labelPath}"
@@ -39,7 +38,7 @@
              data-sly-unwrap></div>
     </div>
 
-    <div data-sly-test="${!dropdown.properties.fd:autoComplete}" data-sly-unwrap>
+    <div data-sly-test="${!dropdown.autoSuggestion}" data-sly-unwrap>
         <select class="cmp-adaptiveform-dropdown__widget"
                 id="${widgetId}"
                 title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
@@ -64,11 +63,8 @@
             </div>
         </select>
     </div>
-    <div data-sly-test="${dropdown.properties.fd:autoComplete}" data-sly-unwrap>
+    <div data-sly-test="${dropdown.autoSuggestion}" data-sly-unwrap>
         <datalist id="${widgetId}">
-            <option data-sly-test="${!dropdown.placeHolder}" disabled selected></option>
-            <option data-sly-test="${dropdown.placeHolder}" value="" disabled selected>${dropdown.placeHolder}</option>
-
             <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
                 <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}"
                      data-sly-unwrap>
@@ -80,11 +76,13 @@
                 </div>
             </div>
         </datalist>
-        <input list="${widgetId}" id="dropdown-datalist-input" class="cmp-adaptiveform-dropdown__widget"
+        <input list="${widgetId}" class="cmp-adaptiveform-dropdown__widget"
+               id="${widgetId}"
                name="${dropdown.name}"
                title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
                disabled="${!dropdown.enabled || dropdown.readOnly}"
-               required="${dropdown.required}"/>
+               required="${dropdown.required}"
+               placeholder="${dropdown.placeHolder}"/>
     </div>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=dropdown.id, shortDescriptionVisible=dropdown.tooltipVisible, shortDescription=dropdown.tooltip, bemBlock='cmp-adaptiveform-dropdown'}"
