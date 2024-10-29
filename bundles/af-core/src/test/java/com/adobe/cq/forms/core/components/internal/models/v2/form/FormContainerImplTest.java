@@ -491,10 +491,9 @@ public class FormContainerImplTest {
         assertFalse(Boolean.valueOf(formContainer.getIsHamburgerMenuEnabled().toString()));
     }
 
-    @Test
-    void testActionCustomProperties() throws Exception {
-        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        assertNull(formContainer.getCustomFunctionAction());
-        assertNull(formContainer.getPrefillAction());
-    }
+     @Test
+     void testCustomFunctionUrl() throws Exception {
+     FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getCustomFunctionUrl());
+     }
 }

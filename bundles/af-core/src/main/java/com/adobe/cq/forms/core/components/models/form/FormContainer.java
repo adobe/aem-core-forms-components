@@ -381,18 +381,8 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 5.7.6
      */
     @JsonIgnore
-    default String getCustomFunctionAction() {
+    default String getCustomFunctionUrl() {
         return null;
     }
 
-    /**
-     * Returns the url from where the form should be prefilled
-     * 
-     * @return prefill url
-     * @since com.adobe.cq.forms.core.components.models.form 5.7.6
-     */
-    @JsonIgnore
-    default String getPrefillAction() {
-        return null;
-    }
 }
