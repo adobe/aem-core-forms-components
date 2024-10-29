@@ -24,11 +24,7 @@ import org.osgi.annotation.versioning.ConsumerType;
  */
 @ConsumerType
 public interface Review extends Base {
-    default String[] getLinkedPanels() {
-        return new String[] {};
-    }
+    String[] getLinkedPanels();
 
-    default String getEditAction() {
-        return "";
-    }
+    String getEditAction();
 }

@@ -51,5 +51,32 @@
         }
       }
     }
+  },
+  "formcontainer2": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/container/v2/container",
+    "dorType": "none",
+    "fd:version": "2.1",
+    "fieldType": "form",
+    "thankYouOption": "page",
+    "themeRef": "/libs/fd/af/themes/canvas",
+    "title": "test-review",
+    "panel2": {
+      "fieldType": "panel",
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "Item 2",
+      "layout": "responsiveGrid",
+      "name": "item_2",
+      "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+      "review": {
+        "editAction": "field",
+        "fieldType": "plain-text",
+        "hideTitle": "false",
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Review",
+        "name": "textinput1692165103863",
+        "sling:resourceType": "core/fd/components/form/review/v1/review"
+      }
+    }
   }
 }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.Servlet;
 
@@ -33,8 +34,6 @@ import org.apache.sling.api.wrappers.ValueMapDecorator;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
@@ -67,8 +66,6 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
     @Reference
     private transient ExpressionResolver expressionResolver;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReviewDataSourceServlet.class);
-
     @NotNull
     @Override
     protected ExpressionResolver getExpressionResolver() {
@@ -85,7 +82,8 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
             Resource componentInstance = resourceResolver.getResource(componentInstancePath);
             Resource formInstance = ComponentUtils.getFormContainer(componentInstance);
             FormContainer formContainer = formInstance.adaptTo(FormContainer.class);
-            List<Base> panels = (List<Base>) getPanels(formContainer);
+            List<Base> panelList = (List<Base>) getPanels(formContainer);
+            List<Base> panels = panelList.stream().filter(x -> "panel".equals(x.getFieldType())).collect(Collectors.toList());
             for (Base panel : panels) {
                 String name = panel != null ? panel.getName() : "";
                 String title = "";
@@ -100,8 +98,6 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
                 }
                 if (name != null && title != null) {
                     resources.add(getResourceForDropdownDisplay(resourceResolver, title, name));
-                } else {
-                    LOGGER.warn("[AF] name or title is null");
                 }
             }
         }
@@ -110,13 +106,11 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
     }
 
     private List<? extends ComponentExporter> getPanels(FormComponent formContainer) {
-        if (formContainer instanceof FormContainer) {
-            while (formContainer instanceof Container && ((Container) formContainer).getItems().size() == 1) {
-                formContainer = (FormComponent) ((Container) formContainer).getItems().get(0);
-            }
-            if (formContainer instanceof Container) {
-                return ((Container) formContainer).getItems();
-            }
+        while (formContainer instanceof Container && ((Container) formContainer).getItems().size() == 1) {
+            formContainer = (FormComponent) ((Container) formContainer).getItems().get(0);
+        }
+        if (formContainer instanceof Container) {
+            return ((Container) formContainer).getItems();
         }
         return new ArrayList<>();
     }

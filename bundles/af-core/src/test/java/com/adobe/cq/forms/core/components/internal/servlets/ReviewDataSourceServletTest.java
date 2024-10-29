@@ -38,8 +38,7 @@ import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith({ AemContextExtension.class, MockitoExtension.class })
 public class ReviewDataSourceServletTest {
@@ -48,6 +47,7 @@ public class ReviewDataSourceServletTest {
     private static final String TEST_BASE = "/form/review/datasource";
     private static final String APPS_ROOT = "/apps";
     private String componentInstancePath = "/apps/formcontainer/wizard/panel2/review";
+    private String componentInstancePath2 = "/apps/formcontainer2/panel2/review";
 
     public final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -94,6 +94,22 @@ public class ReviewDataSourceServletTest {
         Resource resource = dataSource.iterator().next();
         assertEquals("Item 1", resource.getValueMap().get("text", String.class));
         assertEquals("item_1", resource.getValueMap().get("value", String.class));
+
+    }
+
+    @Test
+    public void testFormContainerNull() {
+
+        context.currentResource("/apps");
+        ReviewDataSourceServlet reviewDataSourceServlet = new ReviewDataSourceServlet();
+        MockSlingHttpServletRequest request = context.request();
+        MockSlingHttpServletResponse response = context.response();
+        MockRequestPathInfo mockRequestPathInfo = (MockRequestPathInfo) request.getRequestPathInfo();
+        mockRequestPathInfo.setSuffix(componentInstancePath2);
+        reviewDataSourceServlet.doGet(request, response);
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) request.getAttribute(DataSource.class.getName());
+        assertNotNull(dataSource);
+        assertFalse(dataSource.iterator().hasNext());
 
     }
 
