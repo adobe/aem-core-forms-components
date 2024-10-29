@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import com.adobe.xfa.Obj;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -30,6 +31,9 @@ import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.DropDown;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -42,6 +46,10 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MULTISELECT)
     @Default(booleanValues = false)
     protected boolean multiSelect;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_ENABLE_SUGGESTIONS)
+    @Default(booleanValues = false)
+    protected boolean enableSuggestions;
 
     @Override
     public Integer getMinItems() {
@@ -61,5 +69,17 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     @Override
     public String getFieldType() {
         return super.getFieldType(FieldType.DROP_DOWN);
+    }
+
+    @Override
+    public Boolean isEnableSuggestions() {
+        return enableSuggestions;
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = super.getProperties();
+        customProperties.put(ReservedProperties.FD_ENABLE_SUGGESTIONS, isEnableSuggestions());
+        return customProperties;
     }
 }

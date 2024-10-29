@@ -34,4 +34,7 @@ public interface DropDown extends Field, OptionsConstraint, ContainerConstraint 
      */
     @JsonIgnore
     Boolean isMultiSelect();
+
+    @JsonIgnore
+    Boolean isEnableSuggestions();
 }
