@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+
 (function (window, ns, Coral, channel) {
-    const FRAGMENT_CREATION_DIALOG_PATH = "core/fd/components/form/panelcontainer/v1/panelcontainer/saveasfragment_dialog.html";
+    const FRAGMENT_CREATION_DIALOG_PATH = "fd/af/authoring/dialog/saveasfragment/cq:dialog.html";
 
     /* Check if fieldType = panel field is present on this component**/
     window.CQ.FormsCoreComponents.editorhooks.isFieldTypePanel = function(editable) {
@@ -28,7 +29,7 @@
     }
 
     const fragmentCreationDialogConfig = function (componentPath) {
-        const path = `/mnt/override/libs/${FRAGMENT_CREATION_DIALOG_PATH}`;
+        const path = `/mnt/overlay/${FRAGMENT_CREATION_DIALOG_PATH}`;
         return {
             src : path + componentPath + '?resourceType=' + encodeURIComponent(FRAGMENT_CREATION_DIALOG_PATH),
             isFloating : false,
