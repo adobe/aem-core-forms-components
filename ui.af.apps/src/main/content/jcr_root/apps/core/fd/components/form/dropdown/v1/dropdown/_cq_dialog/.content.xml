@@ -151,6 +151,15 @@
                                                         name="./default"
                                                         required="{Boolean}false"/>
                                             </defaultValueMS>
+                                            <enableSuggestions
+                                                    jcr:primaryType="nt:unstructured"
+                                                    granite:class="cmp-adaptiveform-dropdown__enablesuggestions"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./fd:enableSuggestions"
+                                                    fieldDescription="Type in the dropdown to quickly filter and select options."
+                                                    text="Allow search by typing"
+                                                    value="true"
+                                                    uncheckedValue="false"/>
                                         </items>
                                     </column>
                                 </items>
