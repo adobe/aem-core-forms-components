@@ -40,7 +40,8 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/multiselect-dropdown"
+    "fd:path": "/content/multiselect-dropdown",
+    "fd:enableSuggestions": false
   },
   "enum": [
     0,

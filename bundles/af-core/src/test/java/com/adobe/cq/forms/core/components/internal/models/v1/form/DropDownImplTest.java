@@ -472,4 +472,16 @@ public class DropDownImplTest {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_WITHOUT_FIELDTYPE, DropDown.class, context);
         Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_DROPDOWN_WITHOUT_FIELDTYPE));
     }
+
+    @Test
+    void testIsMultiSelect() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        assertFalse(dropdown.isMultiSelect());
+    }
+
+    @Test
+    void testIsEnableSuggestions() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        assertFalse(dropdown.isEnableSuggestions());
+    }
 }

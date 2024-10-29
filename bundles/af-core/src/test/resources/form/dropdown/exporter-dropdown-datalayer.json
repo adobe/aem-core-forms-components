@@ -24,7 +24,8 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/dropdown-datalayer"
+    "fd:path": "/content/dropdown-datalayer",
+    "fd:enableSuggestions": false
   },
   "enum": [
     "Owl",

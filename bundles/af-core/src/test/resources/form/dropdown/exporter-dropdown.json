@@ -19,7 +19,8 @@
       "dorExclusion": false
     },
     "fd:path": "/content/dropdown",
-    "customProp": "customPropValue"
+    "customProp": "customPropValue",
+    "fd:enableSuggestions": false
   },
   ":type": "core/fd/components/form/dropdown/v1/dropdown"
 }
