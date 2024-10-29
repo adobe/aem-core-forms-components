@@ -34,9 +34,6 @@ import com.adobe.cq.forms.core.components.models.form.DropDown;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 
-
-
-
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { DropDown.class,
