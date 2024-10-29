@@ -335,6 +335,7 @@ class Utils {
                 if (_formJson?.properties?.['fd:formDataEnabled'] === true) {
                     // only execute when fd:formDataEnabled is present and set to true
                     _prefillData = await HTTPAPILayer.getJson(_formJson.properties['fd:dataUrl'] + "?" + Object.keys(params).map(p => p+"="+params[p]).join("&"))
+                    _prefillData = _prefillData || {};
                     _prefillData = Utils.stripIfWrapped(_prefillData);
                 }
                 const formContainer = await createFormContainer({
