@@ -149,6 +149,19 @@ describe('Page - Authoring', function () {
             getPreviewIframeBody().find('.cmp-adaptiveform-dropdown').parent().contains('Item 1').should('not.exist');
             cy.deleteComponentByPath(dropdown);
         });
+
+        it('enable suggestions of dropdown component', function () {
+            insertDropDownInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + dropDownEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('input[name="./fd:enableSuggestions"]').should('exist').check();
+            cy.get('.cq-dialog-submit').click();
+
+            getPreviewIframeBody().find('input[list]').should('exist');
+            getPreviewIframeBody().find('datalist').should('exist');
+            getPreviewIframeBody().find('select').should('not.exist');
+            cy.deleteComponentByPath(dropdown);
+        })
     })
 
     context('Open Sites Editor', function () {

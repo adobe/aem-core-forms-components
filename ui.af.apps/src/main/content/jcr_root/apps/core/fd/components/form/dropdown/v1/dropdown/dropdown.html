@@ -36,7 +36,7 @@
       <div data-sly-call="${label.label @componentId=widgetId, labelValue=dropdown.label.value, labelVisible=dropdown.label.visible, labelRichText=dropdown.label.richText, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
       <div data-sly-call="${questionMark.questionMark @componentId=dropdown.id, longDescription=dropdown.description, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap></div>
     </div>
-    <div data-sly-test="${!dropdown.enableSuggestions}" data-sly-unwrap>
+    <div data-sly-test="${!dropdown.isEnableSuggestions}" data-sly-unwrap>
         <select class="cmp-adaptiveform-dropdown__widget"
                 id="${widgetId}"
                 title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
@@ -58,7 +58,7 @@
             </div>
         </select>
     </div>
-    <div data-sly-test="${!dropdown.enableSuggestions}" data-sly-unwrap>
+    <div data-sly-test="${dropdown.isEnableSuggestions}" data-sly-unwrap>
         <datalist id="${widgetId}">
             <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
                 <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}"
@@ -71,13 +71,15 @@
                 </div>
             </div>
         </datalist>
-        <input list="${widgetId}" id="${widgetId}" class="cmp-adaptiveform-dropdown__widget"
+        <input list="${widgetId}" class="cmp-adaptiveform-dropdown__widget"
+               id="${widgetId}"
                name="${dropdown.name}"
                title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
                disabled="${!dropdown.enabled || dropdown.readOnly}"
                required="${dropdown.required}"
                placeholder="${dropdown.placeHolder}"/>
     </div>
+
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=dropdown.id, shortDescriptionVisible=dropdown.tooltipVisible, shortDescription=dropdown.tooltip, bemBlock='cmp-adaptiveform-dropdown'}" data-sly-unwrap>
     </div>
