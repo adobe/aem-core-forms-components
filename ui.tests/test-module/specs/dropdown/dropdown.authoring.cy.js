@@ -150,11 +150,11 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(dropdown);
         });
 
-        it('enable auto completion of dropdown component', function () {
+        it('enable suggestions of dropdown component', function () {
             insertDropDownInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + dropDownEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
-            cy.get('input[name="./fd:autoComplete"]').should('exist').check();
+            cy.get('input[name="./fd:enableSuggestions"]').should('exist').check();
             cy.get('.cq-dialog-submit').click();
 
             getPreviewIframeBody().find('input[list]').should('exist');
