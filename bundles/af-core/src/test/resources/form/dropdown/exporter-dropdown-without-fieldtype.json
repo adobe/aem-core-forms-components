@@ -19,7 +19,7 @@
       "dorExclusion": false
     },
     "fd:path": "/content/dropdown-without-fieldtype",
-    "fd:autoComplete": false
+    "fd:enableSuggestions": false
   },
   ":type": "core/fd/components/form/dropdown/v1/dropdown"
 }

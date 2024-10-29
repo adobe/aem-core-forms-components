@@ -41,7 +41,7 @@
       "dorExclusion": false
     },
     "fd:path": "/content/multiselect-dropdown",
-    "fd:autoComplete": false
+    "fd:enableSuggestions": false
   },
   "enum": [
     0,

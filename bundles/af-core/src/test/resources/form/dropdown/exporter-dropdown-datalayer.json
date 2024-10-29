@@ -25,7 +25,7 @@
       "dorExclusion": false
     },
     "fd:path": "/content/dropdown-datalayer",
-    "fd:autoComplete": false
+    "fd:enableSuggestions": false
   },
   "enum": [
     "Owl",
