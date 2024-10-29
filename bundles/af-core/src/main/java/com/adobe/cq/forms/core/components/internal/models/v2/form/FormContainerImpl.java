@@ -27,16 +27,14 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.Self;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.models.annotations.injectorspecific.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.common.GuideContainer;
+import com.adobe.aemds.guide.service.CoreComponentCustomPropertiesProvider;
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.aemds.guide.utils.GuideUtils;
@@ -79,6 +77,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_IS_HAMBURGER_MENU_ENABLED = "fd:isHamburgerMenuEnabled";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -318,7 +319,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> properties = super.getProperties();
+        Map<String, Object> properties = new LinkedHashMap<>();
+        if (coreComponentCustomPropertiesProvider != null) {
+            Map<String, Object> customProperties = coreComponentCustomPropertiesProvider.getProperties();
+            if (customProperties != null) {
+                properties.putAll(customProperties);
+            }
+        }
+        properties.putAll(super.getProperties());
         if (getSchemaType() != null) {
             properties.put(FD_SCHEMA_TYPE, getSchemaType());
         }
