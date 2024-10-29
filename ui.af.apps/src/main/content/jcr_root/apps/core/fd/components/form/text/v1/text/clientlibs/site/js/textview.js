@@ -59,6 +59,10 @@
             }
 
             setFocus() {
+                const fieldType = this.parentView?.getModel()?.fieldType;
+                if (fieldType !== 'form' && this.parentView.setFocus) {
+                    this.parentView.setFocus(this.getId());
+                }
                 this.setActive();
                 this.element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
