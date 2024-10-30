@@ -107,7 +107,7 @@
 
      it(" prefill of static text using explicit dataRef, name bindings is not supported", () => {
          const [id, fieldView] = Object.entries(formContainer._fields)[3];
-         const [buttonId, buttonFieldView] = Object.entries(formContainer._fields)[5];
+         const [buttonId, buttonFieldView] = Object.entries(formContainer._fields)[6];
          const model = formContainer._model.getElement(id);
          cy.get(`#${buttonId} button`).should("be.visible").click().then(() => {
              expect(model.value, " Text model should import data").contains("prefilled");
@@ -117,8 +117,16 @@
 
      it("text hyperlink should have target attribute in runtime", () => {
          const [id] = Object.entries(formContainer._fields)[4];
-         cy.get(`#${id}`).find('a').should('have.attr', 'href', 'https://www.google.com/') // Ensure the link has the correct href
-             .should('have.attr', 'target', '_blank'); // Ensure the link opens in a new tab
+         cy.get(`#${id}`).find('a').should('have.attr', 'href', 'http://www.google.com') // Ensure the link has the correct href
+             .should('have.attr', 'target', '_blank') // Ensure the link opens in a new tab
+             .should('have.attr', 'title', 'sample link');
+         cy.get(`#${id}`).find('p').eq(2).should('have.attr', 'style');
+         cy.get(`#${id}`).find('table').should('have.attr', 'cellpadding', '1')
+             .should('have.attr', 'cellspacing', '0')
+             .should('have.attr', 'border', '2')
+             .should('have.attr', 'width', '67')
+             .should('have.attr', 'height', '89');
+         cy.get(`#${id}`).find('caption');
      });
 
  })
