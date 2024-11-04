@@ -154,7 +154,7 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(dropdown);
         });
 
-        it.only('enable suggestions of dropdown component', function () {
+        it('enable suggestions of dropdown component', function () {
             insertDropDownInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + dropDownEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
