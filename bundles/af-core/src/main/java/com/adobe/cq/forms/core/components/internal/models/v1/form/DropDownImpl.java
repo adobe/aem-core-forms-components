@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -47,8 +48,8 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     protected boolean multiSelect;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_ENABLE_SUGGESTIONS)
-    @Default(booleanValues = false)
-    protected boolean enableSuggestions;
+    @JsonIgnore
+    protected Boolean enableSuggestions;
 
     @Override
     public Integer getMinItems() {
@@ -72,13 +73,6 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
 
     @Override
     public Boolean isEnableSuggestions() {
-        return enableSuggestions;
-    }
-
-    @Override
-    public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> customProperties = super.getProperties();
-        customProperties.put(ReservedProperties.FD_ENABLE_SUGGESTIONS, isEnableSuggestions());
-        return customProperties;
+        return enableSuggestions != null && enableSuggestions;
     }
 }
