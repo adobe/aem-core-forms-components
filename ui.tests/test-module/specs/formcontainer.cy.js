@@ -171,6 +171,27 @@ describe('Page/Form Authoring', function () {
         cy.get(".cq-dialog-submit").click();
     };
 
+    const verifyChangeDataModelToMarketo = function(formContainerEditPathSelector) {
+        // click configure action on adaptive form container component
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
+
+        //open data model tab
+        cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Data Model').click({force:true});
+
+        //select marketo data model
+        cy.get(".cmp-adaptiveform-container__selectformmodel").click();
+        cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
+        cy.get("coral-selectlist-item[value='connector']").contains('Marketo Configuration').should('be.visible').click();
+
+        //select marketo config
+        cy.get(".cmp-adaptiveform-container__marketoselector").click();
+        cy.get("coral-selectlist-item[value='/conf/global/settings/cloudconfigs/marketo/marketoconfig']").contains('marketoconfig').should('be.visible').click();
+        cy.get("#formModelChange").should("be.visible");
+        cy.get("#formModelDialogAcceptButton").click();
+        cy.get(".cq-dialog-submit").click();
+    };
+
         context("Open Forms Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/forms/af/core-components-it/blank",
@@ -203,6 +224,12 @@ describe('Page/Form Authoring', function () {
 
             it('change data model in container edit dialog box', {retries: 3},function () {
                 verifyChangeDataModel(formContainerEditPathSelector);
+            });
+
+            it('change data model to marketo in container edit dialog box', {retries: 3},function () {
+                if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-9611")) {
+                    verifyChangeDataModelToMarketo(formContainerEditPathSelector);
+                }
             });
 
             it ('check title in edit dialog', {retries: 3}, function() {
@@ -290,16 +317,38 @@ describe('Page/Form Authoring', function () {
 
         context("Check default behaviour in Form Editor", function () {
             const pagePath = "/content/forms/af/core-components-it/samples/numberinput/validation.html";
-
+            let formContainerModel = null
             beforeEach(function () {
-                cy.previewForm(pagePath);
+                cy.previewForm(pagePath).then(p => {
+                    formContainerModel = p;
+                })
             });
 
             it('check the preventDefaultSubmit method by simulating keydown event on the form', function () {
                 cy.get('.cmp-adaptiveform-container').then((formContainer) => {
+                    const [id, fieldView] = Object.entries(formContainerModel._fields)[0]
+
                     cy.stub(formContainer[0], 'onsubmit').as('submit');
                     cy.get('form').trigger('keydown', {key: 'Enter'});
                     cy.get('@submit').should('not.be.called');
+
+                    // Trigger enter on a text input (should prevent submission)
+                    cy.get('input[type="text"]').first().type('{enter}');
+                    cy.get(`#${id} .cmp-adaptiveform-numberinput__errormessage`).should('not.have.text', 'This is required numberinput');
+
+
+                });
+            });
+
+
+            it('button click should work on press of enter key', function () {
+                cy.get('.cmp-adaptiveform-container').then((formContainer) => {
+                    const [id, fieldView] = Object.entries(formContainerModel._fields)[0]
+
+                    // Trigger enter on a button (should not prevent submission)
+                    cy.get('button').first().type('{enter}');
+                    cy.get(`#${id} .cmp-adaptiveform-numberinput__errormessage`).should('have.text', 'This is required numberinput');
+
                 });
             });
 

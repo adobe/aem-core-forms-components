@@ -239,7 +239,7 @@ describe("Form Runtime with Date Picker", () => {
 
         // check clear option
         cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
-            cy.get(".dp-clear").click();
+            cy.get(".dp-clear").eq(1).click();
         });
 
         cy.get(`#${datePicker7}`).find("input").should("have.value", "");
@@ -370,4 +370,17 @@ describe("Form Runtime with Date Picker", () => {
             },
           });  
     });
+
+    it("should create and attach an unique datepicker calendar if it doesn't exist", () => {
+        const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[4];
+        const [datePicker6, datePicker6FieldView] = Object.entries(formContainer._fields)[6];
+        const input = "2023-01-01";
+
+        cy.get(`#${datePicker4}`).find("input").clear().type(input).should('have.value', '2023-01-01').blur();
+        cy.get(`#${datePicker6}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(x => {
+            cy.get(".datetimepicker").should("be.visible");
+            cy.get('.datetimepicker .dp-header .dp-caption').eq(1).click();
+            cy.get('.datetimepicker').should('be.visible');
+        });
+    })
 })

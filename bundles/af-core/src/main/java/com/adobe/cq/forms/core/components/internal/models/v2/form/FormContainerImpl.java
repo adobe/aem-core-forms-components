@@ -27,16 +27,14 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.Self;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.models.annotations.injectorspecific.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.common.GuideContainer;
+import com.adobe.aemds.guide.service.CoreComponentCustomPropertiesProvider;
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.aemds.guide.utils.GuideUtils;
@@ -76,8 +74,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
+    private static final String FD_IS_HAMBURGER_MENU_ENABLED = "fd:isHamburgerMenuEnabled";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -94,6 +96,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_CLIENTLIB_REF)
     @Nullable
     private String clientLibRef;
+
+    @ValueMapValue(name = FD_IS_HAMBURGER_MENU_ENABLED, injectionStrategy = InjectionStrategy.OPTIONAL)
+    private Boolean isHamburgerMenuEnabled = false;
 
     protected String contextPath = StringUtils.EMPTY;
     private boolean formDataEnabled = false;
@@ -257,6 +262,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return prefillService;
     }
 
+    public Boolean getIsHamburgerMenuEnabled() {
+        return isHamburgerMenuEnabled;
+    }
+
     @Override
     public String getRoleAttribute() {
         return roleAttribute;
@@ -310,13 +319,21 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
-        Map<String, Object> properties = super.getProperties();
+        Map<String, Object> properties = new LinkedHashMap<>();
+        if (coreComponentCustomPropertiesProvider != null) {
+            Map<String, Object> customProperties = coreComponentCustomPropertiesProvider.getProperties();
+            if (customProperties != null) {
+                properties.putAll(customProperties);
+            }
+        }
+        properties.putAll(super.getProperties());
         if (getSchemaType() != null) {
             properties.put(FD_SCHEMA_TYPE, getSchemaType());
         }
         if (StringUtils.isNotBlank(getSchemaRef())) {
             properties.put(FD_SCHEMA_REF, getSchemaRef());
         }
+        properties.put(FD_IS_HAMBURGER_MENU_ENABLED, getIsHamburgerMenuEnabled());
         // adding a custom property to know if form data is enabled
         // this is done so that an extra API call from the client can be avoided
         if (StringUtils.isNotBlank(getPrefillService()) ||

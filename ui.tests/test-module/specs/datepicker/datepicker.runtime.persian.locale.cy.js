@@ -43,10 +43,20 @@ describe("Form Runtime with Date Picker", () => {
         cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
             let todayDate = new Date();
             cy.get(".dp-caption").invoke("text").should("eq", "مارس, 2024");
-            cy.get(".dp-caption").click();
+            cy.get(".dp-caption").eq(3).click();
             cy.get(".dp-caption").invoke("text").should("eq", '2024');
-            cy.get(".dp-rightnav").click();
+            cy.get(".dp-rightnav").eq(3).click();
         });
+    });
+
+    it("snapshot testing for rtl", () => {
+        const [datePicker8, datePicker8FieldView] = Object.entries(formContainer._fields)[8];
+        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click();
+        cy.get('body').toMatchImageSnapshot({
+            imageConfig: {
+              threshold: 0,
+            },
+          });  
     });
 
 
