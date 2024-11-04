@@ -36,8 +36,7 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/dropdown-1",
-    "fd:enableSuggestions": false
+    "fd:path": "/content/dropdown-1"
   },
   "enum": [
     0,

@@ -18,8 +18,7 @@
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/dropdown-without-fieldtype",
-    "fd:enableSuggestions": false
+    "fd:path": "/content/dropdown-without-fieldtype"
   },
   ":type": "core/fd/components/form/dropdown/v1/dropdown"
 }
