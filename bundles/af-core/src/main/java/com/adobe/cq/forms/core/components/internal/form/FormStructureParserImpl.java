@@ -18,8 +18,10 @@ package com.adobe.cq.forms.core.components.internal.form;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
@@ -28,6 +30,8 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.adobe.aemds.guide.service.GuideException;
+import com.adobe.cq.forms.core.components.internal.constants.ThemeConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.models.form.HtlUtil;
@@ -58,6 +62,36 @@ public class FormStructureParserImpl implements FormStructureParser {
     @Override
     public String getClientLibRefFromFormContainer() {
         return getPropertyFromFormContainer(resource, FormContainer.PN_CLIENT_LIB_REF);
+    }
+
+    @Override
+    public String getThemeClientLibRefFromFormContainer() {
+        String themeContentPath = null;
+        String themeClientLibRef = null;
+        if (request != null) {
+            themeContentPath = (String) request.getAttribute(ThemeConstants.THEME_OVERRIDE); // theme editor use-case
+        }
+        if (StringUtils.isBlank(themeContentPath)) {
+            if (request != null) {
+                themeContentPath = request.getParameter(ThemeConstants.THEME_OVERRIDE); // embed component use-case
+            }
+            if (StringUtils.isBlank(themeContentPath)) {
+                themeContentPath = getPropertyFromFormContainer(resource, ThemeConstants.THEME_REF); // normal including theme in form
+                                                                                                     // runtime
+            }
+        }
+        // get client library from theme content path
+        if (StringUtils.isNotBlank(themeContentPath)) {
+            Resource themeResource = resource.getResourceResolver().getResource(themeContentPath + ThemeConstants.RELATIVE_PATH_METADATA);
+            if (themeResource != null) {
+                ValueMap themeProps = themeResource.getValueMap();
+                themeClientLibRef = themeProps.get(ThemeConstants.PROPERTY_CLIENTLIB_CATEGORY, "");
+            } else {
+                throw new GuideException("Invalid Theme Name " + themeContentPath);
+            }
+        }
+
+        return themeClientLibRef;
     }
 
     @Override
