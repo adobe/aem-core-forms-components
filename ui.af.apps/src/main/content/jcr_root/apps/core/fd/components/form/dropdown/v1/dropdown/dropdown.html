@@ -59,7 +59,7 @@
         </select>
     </div>
     <div data-sly-test="${dropdown.isEnableSuggestions}" data-sly-unwrap>
-        <datalist id="${widgetId}">
+        <datalist id="${widgetId}__datalist">
             <div data-sly-list.enumName="${dropdown.enumNames}" data-sly-unwrap>
                 <div data-sly-test="${enumName != null && dropdown.enums[enumNameList.index] != null}"
                      data-sly-unwrap>
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </datalist>
-        <input list="${widgetId}" class="cmp-adaptiveform-dropdown__widget"
+        <input list="${widgetId}__datalist" class="cmp-adaptiveform-dropdown__widget"
                id="${widgetId}"
                name="${dropdown.name}"
                title="${dropdown.tooltipVisible ? '' : dropdown.tooltipText}"
