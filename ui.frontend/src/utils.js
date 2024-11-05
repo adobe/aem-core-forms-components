@@ -270,28 +270,16 @@ class Utils {
 
     /**
      * Registers custom functions from clientlibs.
-     * @param {string} formId - The form ID.
+     * @param {object} formJson - The form ID.
      */
-    static async registerCustomFunctions(formId) {
-        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
-        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
-        if (funcConfig && funcConfig.customFunction) {
-            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
-                if (window[func.id]) {
-                    accumulator[func.id] = window[func.id];
-                }
-                return accumulator;
-            }, {});
-            FunctionRuntime.registerFunctions(funcObj);
+    static async registerCustomFunctions(formJson) {
+        let funcConfig;
+        const customFunctionsUrl = formJson.properties['fd:customFunctionsUrl'];
+        if (customFunctionsUrl) {
+            funcConfig = await HTTPAPILayer.getJson(customFunctionsUrl);
+        } else {
+            funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formJson.id);
         }
-    }
-
-    /**
-     * Registers custom functions from clientlibs.
-     * @param {string} customFunctionsUrl - URL from which to register custom function config
-     */
-    static async registerCustomFunctionsV2(customFunctionsUrl) {
-        const funcConfig = await HTTPAPILayer.getJson(customFunctionsUrl);
         console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
         if (funcConfig && funcConfig.customFunction) {
             const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
@@ -327,7 +315,7 @@ class Utils {
             } else {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
-                await this.registerCustomFunctionsV2( _formJson.properties['fd:customFunctionsUrl']);
+                await this.registerCustomFunctions( _formJson);
                 await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
