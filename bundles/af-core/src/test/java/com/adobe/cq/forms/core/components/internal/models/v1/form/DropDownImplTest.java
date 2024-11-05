@@ -484,4 +484,18 @@ public class DropDownImplTest {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
         assertFalse(dropdown.isEnableSuggestions());
     }
+
+    @Test
+    void testIsEnableSuggestionsTrue() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "enableSuggestions", true, true);
+        assertTrue(dropdown.isEnableSuggestions());
+    }
+
+    @Test
+    void testIsEnableSuggestionsFalse() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "enableSuggestions", false, true);
+        assertFalse(dropdown.isEnableSuggestions());
+    }
 }
