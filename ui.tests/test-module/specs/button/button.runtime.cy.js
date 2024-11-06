@@ -108,4 +108,10 @@ describe("Form Runtime with Button Input", () => {
         cy.get('.cmp-adaptiveform-button__widget').eq(0).should('have.attr', 'type', 'button');
     });
 
+    it(`label changes should reflect via rules`, () => {
+        const [id] = Object.entries(formContainer._fields)[5];
+        cy.get(`#${id}`).find('.cmp-adaptiveform-button__text').contains('change me');
+        cy.get(`#${id}`).find('.cmp-adaptiveform-button__widget').click();
+        cy.get(`#${id}`).find('.cmp-adaptiveform-button__text').contains('changed');
+    });
 })
