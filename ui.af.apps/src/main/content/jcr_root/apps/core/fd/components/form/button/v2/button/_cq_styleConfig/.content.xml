@@ -3,9 +3,6 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Button">
     <items jcr:primaryType="nt:unstructured">
-        <field
-            jcr:primaryType="nt:unstructured"
-            sling:hideResource="true"/>
         <button
             jcr:primaryType="nt:unstructured"
             jcr:title="All Buttons"
