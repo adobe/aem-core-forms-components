@@ -9,7 +9,7 @@
             <items jcr:primaryType="nt:unstructured">
                 <captcha
                         jcr:primaryType="nt:unstructured"
-                        jcr:title="Captcha"
+                        jcr:title="hCaptcha"
                         id="af2_hcaptchacontainer"
                         cssSelector=".cmp-adaptiveform-hcaptcha"
                         longTitle="hCaptcha Widget and Text"
@@ -17,7 +17,7 @@
                     <items jcr:primaryType="nt:unstructured">
                         <captchaLabel
                                 jcr:primaryType="nt:unstructured"
-                                jcr:title="Captcha Label"
+                                jcr:title="hCaptcha Label"
                                 id="af2_hcaptchawidgetlabel"
                                 cssSelector=".cmp-adaptiveform-hcaptcha__label"
                                 longTitle="hCaptcha Label"
@@ -35,7 +35,7 @@
                         </captchaLabel>
                         <captchaWidget
                                 jcr:primaryType="nt:unstructured"
-                                jcr:title="Captcha Widget"
+                                jcr:title="hCaptcha Widget"
                                 id="af2_hcaptchawidget"
                                 cssSelector=".cmp-adaptiveform-hcaptcha__widget"
                                 longTitle="hCaptcha Widget"
