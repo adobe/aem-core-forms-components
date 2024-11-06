@@ -26,10 +26,10 @@
         </form>
         <base
             jcr:primaryType="nt:unstructured"
-            jcr:title="base"
+            jcr:title="Field"
             id="af2_base"
             cssSelector=".base"
-            longTitle="Base"
+            longTitle="Field"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <states jcr:primaryType="nt:unstructured">
                 <focus
@@ -58,7 +58,7 @@
                     jcr:title="Widget"
                     id="af2_widgetAndText"
                     cssSelector="input,select,textarea"
-                    longTitle="Base Widget"
+                    longTitle="Field Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
                         <textWidgetAndText
