@@ -86,7 +86,7 @@
                         </textinputLabelContainer>
                         <textinputWidgetAndText
                                 jcr:primaryType="nt:unstructured"
-                                jcr:title="textinput"
+                                jcr:title="Text Input"
                                 id="af2_textinputwidgetandtext"
                                 cssSelector=".cmp-adaptiveform-textinput__widget"
                                 longTitle="Text Input Widget"

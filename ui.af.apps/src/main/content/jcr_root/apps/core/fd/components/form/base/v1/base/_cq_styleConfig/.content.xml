@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    jcr:title="Base">
+    jcr:title="Field">
     <items jcr:primaryType="nt:unstructured">
         <field
             jcr:primaryType="nt:unstructured"
-            jcr:title="Base"
+            jcr:title="Field"
             id="af2_base"
             cssSelector=".base"
-            longTitle="Base"
+            longTitle="Field"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
@@ -16,7 +16,7 @@
                     jcr:title="Widget and Text"
                     id="af2_basewidgetandtext"
                     cssSelector="input,select,textarea"
-                    longTitle="Base Widget and Text"
+                    longTitle="Field Widget and Text"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
@@ -42,7 +42,7 @@
                     jcr:title="Label"
                     id="af2_baselabel"
                     cssSelector="label"
-                    longTitle="Base Label"
+                    longTitle="Field Label"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
