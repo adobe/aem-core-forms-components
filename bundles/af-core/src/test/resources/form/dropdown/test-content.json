@@ -84,7 +84,7 @@
     "tooltip": "test-short-description",
     "type" : "number[]",
     "multiSelect" : true,
-    "multiDefaultValues" : [0, 1],
+    "fd:multiDefaultValues" : [0, 1],
     "enum" : [0, 1, 2],
     "enumNames" : ["m", "f", "o"],
     "minItems" : 1,
