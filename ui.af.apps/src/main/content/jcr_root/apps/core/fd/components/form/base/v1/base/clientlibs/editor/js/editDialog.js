@@ -39,6 +39,8 @@
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_ATTRIBUTE = "form[data-cmp-is='adaptiveFormContainer']",
         V2_ADAPTIVE_FORM_CONTAINER_COMPONENT_PATH_ATTRIBUTE = "data-cmp-path",
         BASE_ENUM_MULTIFIELD_ADD_BUTTON = "coral-multifield[data-granite-coral-multifield-name='./enum'] button[coral-multifield-add]",
+        DROPDOWN_ENABLE_SUGGESTIONS = ".cmp-adaptiveform-dropdown__enablesuggestions",
+        DROPDOWN_ALLOWMULTISELECT = ".cmp-adaptiveform-dropdown__allowmultiselect",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -233,6 +235,22 @@
     }
 
     /**
+     * disables the allow multiple selection field on the basis of allow search by typing checkbox.
+     *
+     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
+     * @param enableSuggestions is allow search by typing checkbox selected.
+     */
+    function handleEnableSuggestions (dialog, enableSuggestions) {
+        let multiSelect = dialog.find(DROPDOWN_ALLOWMULTISELECT)[0];
+        if (enableSuggestions.checked) {
+            multiSelect.disabled = true;
+        } else {
+            multiSelect.disabled = false;
+        }
+    }
+
+
+    /**
      * Initialise the conditional display of the various elements of the dialog.
      *
      * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
@@ -241,7 +259,8 @@
         dialog = $(dialog);
         let baseRequired = dialog.find(BASE_REQUIRED)[0],
             isTitleRichText = dialog.find(BASE_IS_TITLE_RICH_TEXT)[0],
-            areOptionsRichText = dialog.find(BASE_ARE_OPTIONS_RICH_TEXT)[0];
+            areOptionsRichText = dialog.find(BASE_ARE_OPTIONS_RICH_TEXT)[0],
+            enableSuggestions = dialog.find(DROPDOWN_ENABLE_SUGGESTIONS)[0];
         if (baseRequired) {
             handleRequired(dialog, baseRequired);
             baseRequired.on("change", function() {
@@ -263,6 +282,12 @@
             resolveRichTextOptions(dialog, areOptionsRichText, false);
             areOptionsRichText.on("change", function() {
                 resolveRichTextOptions(dialog, areOptionsRichText, true);
+            });
+        }
+        if(enableSuggestions){
+            handleEnableSuggestions(dialog, enableSuggestions);
+            enableSuggestions.on("change", function() {
+                handleEnableSuggestions(dialog, enableSuggestions);
             });
         }
     }

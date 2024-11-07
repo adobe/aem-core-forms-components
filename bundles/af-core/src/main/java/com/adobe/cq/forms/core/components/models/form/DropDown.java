@@ -34,4 +34,12 @@ public interface DropDown extends Field, OptionsConstraint, ContainerConstraint 
      */
     @JsonIgnore
     Boolean isMultiSelect();
+
+    /**
+     * Returns {@code true} if allow search by typing checkbox is checked and suggestions are enabled, {@code false} otherwise
+     *
+     * @return {@code true} if suggestions are enabled, {@code false} otherwise
+     */
+    @JsonIgnore
+    Boolean isEnableSuggestions();
 }

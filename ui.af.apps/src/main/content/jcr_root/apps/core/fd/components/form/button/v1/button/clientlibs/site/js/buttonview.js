@@ -30,6 +30,7 @@
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
             widget: `.${Button.bemBlock}__widget`,
+            label: `.${Button.bemBlock}__text`,
             description: `.${Button.bemBlock}__longdescription`,
             qm: `.${Button.bemBlock}__questionmark`,
             tooltipDiv: `.${Button.bemBlock}__shortdescription`
@@ -40,7 +41,7 @@
         }
 
         getLabel() {
-            return null;
+            return this.element.querySelector(Button.selectors.label);
         }
 
         getWidget() {
