@@ -149,6 +149,29 @@ describe('Page - Authoring', function () {
             getPreviewIframeBody().find('.cmp-adaptiveform-dropdown').parent().contains('Item 1').should('not.exist');
             cy.deleteComponentByPath(dropdown);
         });
+
+        it('enable suggestions of dropdown component', function () {
+            insertDropDownInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + dropDownEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('input[name="./fd:enableSuggestions"]').should('exist').check();
+
+            // Case 1: Add a placeholder Text
+            cy.get('.cmp-adaptiveform-base__placeholder').type('Test Placeholder Text', {delay: 0});
+
+            // Case 2: Allow Multiple Selections should be disabled
+            cy.get(".cmp-adaptiveform-dropdown__allowmultiselect input").should("be.disabled");
+            cy.get('.cq-dialog-submit').click();
+
+            // Check if datalist is present and select is not present
+            getPreviewIframeBody().find('input[list]').should('exist');
+            getPreviewIframeBody().find('datalist').should('exist');
+            getPreviewIframeBody().find('select').should('not.exist');
+
+            // Check if placeholder text is present
+            getPreviewIframeBody().find('input[list]').should('have.attr','placeholder','Test Placeholder Text');
+            cy.deleteComponentByPath(dropdown);
+        })
     })
 
     context('Open Sites Editor', function () {

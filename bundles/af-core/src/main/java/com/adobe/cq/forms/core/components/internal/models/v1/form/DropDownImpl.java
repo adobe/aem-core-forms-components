@@ -43,6 +43,9 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     @Default(booleanValues = false)
     protected boolean multiSelect;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_ENABLE_SUGGESTIONS)
+    protected Boolean enableSuggestions;
+
     @Override
     public Integer getMinItems() {
         return minItems;
@@ -61,5 +64,10 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     @Override
     public String getFieldType() {
         return super.getFieldType(FieldType.DROP_DOWN);
+    }
+
+    @Override
+    public Boolean isEnableSuggestions() {
+        return Boolean.TRUE.equals(enableSuggestions);
     }
 }
