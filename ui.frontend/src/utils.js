@@ -269,10 +269,29 @@ class Utils {
     }
 
     /**
+     * @deprecated Use registerCustomFunctionsV2 instead
+     * Registers custom functions from clientlibs.
+     * @param {string} formId - The form ID.
+     */
+    static async registerCustomFunctions(formId) {
+        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
+        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
+        if (funcConfig && funcConfig.customFunction) {
+            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
+                if (window[func.id]) {
+                    accumulator[func.id] = window[func.id];
+                }
+                return accumulator;
+            }, {});
+            FunctionRuntime.registerFunctions(funcObj);
+        }
+    }
+
+    /**
      * Registers custom functions from clientlibs.
      * @param {object} formJson - The form ID.
      */
-    static async registerCustomFunctions(formJson) {
+    static async registerCustomFunctionsV2(formJson) {
         let funcConfig;
         const customFunctionsUrl = formJson.properties['fd:customFunctionsUrl'];
         if (customFunctionsUrl) {
@@ -315,7 +334,7 @@ class Utils {
             } else {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
-                await this.registerCustomFunctions( _formJson);
+                await this.registerCustomFunctionsV2( _formJson);
                 await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
