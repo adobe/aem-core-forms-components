@@ -378,7 +378,7 @@ public interface FormContainer extends Container {
      * Returns the url from where the custom functions should be registered
      * 
      * @return custom function registration url
-     * @since com.adobe.cq.forms.core.components.models.form 5.7.6
+     * @since com.adobe.cq.forms.core.components.models.form 5.9.5
      */
     @JsonIgnore
     default String getCustomFunctionUrl() {
