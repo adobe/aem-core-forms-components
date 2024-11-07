@@ -45,7 +45,6 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     protected boolean multiSelect;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_ENABLE_SUGGESTIONS)
-    @JsonIgnore
     protected Boolean enableSuggestions;
 
     @Override
