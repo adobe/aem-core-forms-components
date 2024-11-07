@@ -70,6 +70,6 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
 
     @Override
     public Boolean isEnableSuggestions() {
-        return enableSuggestions != null && enableSuggestions;
+        return Boolean.TRUE.equals(enableSuggestions);
     }
 }
