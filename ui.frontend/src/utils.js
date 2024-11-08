@@ -269,7 +269,7 @@ class Utils {
     }
 
     /**
-     * @deprecated Use registerCustomFunctionsV2 instead
+     * @deprecated Use `registerCustomFunctionsV2` instead.
      * Registers custom functions from clientlibs.
      * @param {string} formId - The form ID.
      */
@@ -289,7 +289,7 @@ class Utils {
 
     /**
      * Registers custom functions from clientlibs.
-     * @param {object} formJson - The form ID.
+     * @param {object} formJson - The Sling model exporter representation of the form
      */
     static async registerCustomFunctionsV2(formJson) {
         let funcConfig;
