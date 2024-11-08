@@ -35,7 +35,6 @@
  * </p>
  */
 
-
 @Version("5.9.5")
 package com.adobe.cq.forms.core.components.models.form;
 
