@@ -1,20 +1,18 @@
-/*************************************************************************
- * ADOBE CONFIDENTIAL
- * ___________________
- *
- *  Copyright 2024 Adobe
- *  All Rights Reserved.
- *
- * NOTICE:  All information contained herein is, and remains
- * the property of Adobe and its suppliers, if any.  The
- * intellectual and technical concepts contained herein are
- * proprietary to Adobe and its suppliers and are protected
- * by all applicable intellectual property laws, including
- * trade secret and copyright laws.  Dissemination of this
- * information or reproduction of this material is strictly
- * forbidden unless prior written permission is obtained
- * from Adobe.
- **************************************************************************/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~ Copyright 2024 Adobe
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~     http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.it.service;
 
 import java.io.IOException;
@@ -23,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
@@ -56,6 +55,11 @@ import com.day.cq.replication.TransportContext;
 import com.day.cq.replication.TransportHandler;
 import com.day.cq.wcm.api.NameConstants;
 
+/**
+ * Agent needs to be configured as per this, https://medium.com/@toimrank/aem-transporthandler-e761accaec51
+ * URL: http://localhost:4502/etc/replication/agents.author.html
+ */
+
 @Component(
         service = TransportHandler.class,
         property = {
@@ -66,6 +70,7 @@ public class HeadlessTransportHandler implements TransportHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(HeadlessTransportHandler.class);
     private static final Map<String, Object> AUTH;
+    private final static String URI = "jpmcbcmtest";
 
     static {
         AUTH = new HashMap<>();
@@ -106,9 +111,10 @@ public class HeadlessTransportHandler implements TransportHandler {
 
     @Override
     public boolean canHandle(AgentConfig agentConfig) {
-        return StringUtils.equals(agentConfig.getTransportURI(), "https://admin.hlx.page")
-                && StringUtils.isNotEmpty(agentConfig.getTransportUser())
-                && StringUtils.isNotEmpty(agentConfig.getTransportPassword());
+        return StringUtils.equals(agentConfig.getTransportURI(), URI);
+        // for oauth 2, hence commenting this
+                //&& StringUtils.isNotEmpty(agentConfig.getTransportUser())
+                // && StringUtils.isNotEmpty(agentConfig.getTransportPassword());
 
     }
 
@@ -132,6 +138,7 @@ public class HeadlessTransportHandler implements TransportHandler {
         }
 
         AgentConfig agentConfig = transportContext.getConfig();
+        /*
         String transportUri = agentConfig.getTransportURI();
         String transportAuth = agentConfig.getTransportUser() + ':' + agentConfig.getTransportPassword();
         byte[] encodedAuth = Base64.encodeBase64(transportAuth.getBytes(StandardCharsets.ISO_8859_1));
@@ -140,38 +147,36 @@ public class HeadlessTransportHandler implements TransportHandler {
             HttpRequestBase request = requestSupplier.apply(uri);
             request.addHeader(authHeader);
             return request;
-        };
+        }; */
 
         try (ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(AUTH)) {
             for (String path : action.getPaths()) {
                 Resource resource = resourceResolver.getResource(path);
-
                 if (resource == null || (!resource.isResourceType(NameConstants.NT_PAGE))) {
                     LOG.warn("Resource not found or not a cq:Page {}. Skipping", path);
                     continue;
                 }
                 // get the model json from the resource
+                FormStructureParser parser = resource.adaptTo(FormStructureParser.class);
+                if (parser != null) {
+                    String formContainerPath = parser.getFormContainerPath();
+                    if (StringUtils.isBlank(formContainerPath)) {
+                        LOG.warn("No form container found for page {}. Skipping", path);
+                        continue;
+                    } else {
+                        Resource formContainerResource = resourceResolver.getResource(formContainerPath);
+                        String formModelJson = formContainerResource.adaptTo(FormStructureParser.class).getFormDefinition();
+                        // todo: publish this form model json to the external system
+                    }
+                } else {
+                    LOG.warn("No form structure parser found for page {}. Skipping", path);
+                }
             }
 
             return ReplicationResult.OK;
         } catch (LoginException ex) {
             throw new ReplicationException("Failed to get delivery url for: " + action, ex);
         }
-    }
-
-    private static ResponseHandler<Void> createResponseHandler(String uri) {
-        return response -> {
-            StatusLine statusLine = response.getStatusLine();
-            int statusCode = statusLine.getStatusCode();
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("{}: {}", uri, statusLine);
-
-            }
-            if (statusCode != 200) {
-                throw new NotOk(statusCode);
-            }
-            return null;
-        };
     }
 
     private static class NotOk extends IOException {
