@@ -16,7 +16,7 @@
 
 import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
-import {setCustomDefaultConstraintTypeMessages} from "@aemforms/af-core";
+import {setCustomDefaultConstraintTypeMessages} from "@aemforms/af-core-xfa";
 
 /**
  * @module FormView

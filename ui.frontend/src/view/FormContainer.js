@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-import {createFormInstance} from "@aemforms/af-core";
+import {createFormInstance} from "@aemforms/af-core-xfa";
 
 /**
  * @module FormView

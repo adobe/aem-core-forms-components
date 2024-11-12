@@ -15,13 +15,13 @@
  ******************************************************************************/
 import Utils from "./utils.js";
 import LanguageUtils from "./LanguageUtils.js";
-import {createFormInstance, FileObject, extractFileInfo, readAttachments, Click, Change, Submit, Save, Blur, AddItem, RemoveItem, CustomEvent, UIChange} from "@aemforms/af-core";
+import {createFormInstance, FileObject, extractFileInfo, readAttachments, Click, Change, Submit, Save, Blur, AddItem, RemoveItem, CustomEvent, UIChange} from "@aemforms/af-core-xfa";
 import {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs, FormFileInput, FormOptionFieldBase, FormCheckBox, FormFileInputWidgetBase, FormFileInputWidget} from "./view/index.js";
 import {Constants} from "./constants.js";
 import GuideBridge from "./GuideBridge.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {formatDate, parseDate} from "@aemforms/af-formatters";
-import {FunctionRuntime} from '@aemforms/af-core';
+import {FunctionRuntime} from '@aemforms/af-core-xfa';
 import {customFunctions} from "./customFunctions";
 
 /**
