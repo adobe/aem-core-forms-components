@@ -17,7 +17,7 @@
 import {Constants} from "./constants.js";
 import Response from "./Response.js";
 import AfFormData from "./FormData.js";
-import {readAttachments} from "@aemforms/af-core";
+import {readAttachments} from "@aemforms/af-core-xfa";
 
 /**
  * The GuideBridge class represents the bridge between an adaptive form and JavaScript APIs.

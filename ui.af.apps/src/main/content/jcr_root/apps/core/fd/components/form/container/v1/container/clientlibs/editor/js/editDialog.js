@@ -47,17 +47,21 @@
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     var JSON_SCHEMA = 'jsonschema',
-        NONE = "none",
+        NONE = 'none',
         FORM_DATA_MODEL = "formdatamodel",
+        FORM_TEMPLATE = 'formtemplates',
         CONNECTOR = "connector",
         SCHEMA_REF = "input[name='./schemaRef']",
+        XDP_REF = "input[name='./xdpRef']",
         SCHEMA_TYPE = "input[name='./schemaType']",
         SCHEMA_CONTAINER = ".cmp-adaptiveform-container__schemaselectorcontainer",
         FDM_CONTAINER = ".cmp-adaptiveform-container__fdmselectorcontainer",
         CONNECTOR_CONTAINER = ".cmp-adaptiveform-container__marketoselectorcontainer",
+        FORM_TEMPLATE_CONTAINER = ".cmp-adaptiveform-container__formtemplateselectorcontainer",
         SCHEMA_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__schemaselector",
         FDM_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__fdmselector",
         CONNECTOR_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__marketoselector",
+        FORM_TEMPLATE_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__formtemplateselector",
         FORM_MODEL_SELECTOR = ".cmp-adaptiveform-container__selectformmodel",
         FM_AF_ROOT = "/content/forms/af/",
         FM_DAM_ROOT ="/content/dam/formsanddocuments/",
@@ -113,9 +117,19 @@
             if (isForm()){
                 var afAssetPath = getAfAssetMetadataPath();
                 DAM_SCHEMA_TYPE = "[name='" + afAssetPath + "/formmodel']";
-                DAM_SCHEMA_REF = "[name='" + afAssetPath + "/schemaRef']";
                 addFormParameter(afAssetPath + '/formmodel', schemaType);
-                addFormParameter(afAssetPath + '/schemaRef');
+                if(schemaType == JSON_SCHEMA){
+                    DAM_SCHEMA_REF = "[name='" + afAssetPath + "/schemaRef']";
+                    addFormParameter(afAssetPath + '/schemaRef');
+                } else if(schemaType == FORM_TEMPLATE){
+                    DAM_SCHEMA_REF = "[name='" + afAssetPath + "/xdpRef']";
+                    addFormParameter(afAssetPath + '/xdpRef');
+                    // we don't want user to change the data model if form template has been selected
+                    dialog.find('coral-selectlist-item[value="none"]').remove();
+                    dialog.find('coral-selectlist-item[value="jsonschema"]').remove();
+                    dialog.find('coral-selectlist-item[value="formdatamodel"]').remove();
+                    dialog.find('coral-selectlist-item[value="connector"]').remove();
+                }
             }
             document.body.appendChild(formModelChangeConfirmationDialog);
             prefillSchema(schemaType, dialog);
@@ -133,6 +147,10 @@
 
     function prefillSchema(schemaType, dialog){
         var schemaRef = dialog.find(SCHEMA_REF);
+        // for formtemplates we don't have schemaRef instead xdpRef
+        if(schemaType == FORM_TEMPLATE){
+            schemaRef = dialog.find(XDP_REF);
+        }
         if(schemaRef.length > 0){
             schemaRef = schemaRef[0].value;
             configuredFormModel = schemaRef;
@@ -143,6 +161,8 @@
                 $(FDM_DROPDOWN_SELECTOR).val(schemaRef);
             } else if (schemaType == CONNECTOR) {
                 $(CONNECTOR_DROPDOWN_SELECTOR).val(schemaRef);
+            } else if (schemaType == FORM_TEMPLATE) {
+                $(FORM_TEMPLATE_DROPDOWN_SELECTOR).val(schemaRef);
             }
         }
     };
@@ -192,6 +212,21 @@
         }
     };
 
+    function formTemplateSelectorOnChanged(dialog) {
+        var selectedSchema = dialog.find(FORM_TEMPLATE_DROPDOWN_SELECTOR);
+        if(selectedSchema.length > 0) {
+            selectedSchema = selectedSchema[0].value;
+            setElementValue(dialog, SCHEMA_REF, selectedSchema);
+            setElementValue(dialog, DAM_SCHEMA_REF, selectedSchema);
+            isSchemaChanged = true;
+            if (configuredFormModel) {
+                confirmFormModelChange(selectedSchema, $(FORM_TEMPLATE_DROPDOWN_SELECTOR));
+            } else {
+                toBeConfiguredFormModel = selectedSchema;
+            }
+        }
+    };
+
     function setElementValue(dialog, elementRef, value){
         var element = dialog.find(elementRef);
         if(element.length > 0){
@@ -225,20 +260,29 @@
     function hideContainersExcept(selectedSchemaType) {
         if (selectedSchemaType == JSON_SCHEMA) {
             $(FDM_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).hide();
             $(CONNECTOR_CONTAINER).hide();
             $(SCHEMA_CONTAINER).show();
         } else if (selectedSchemaType == FORM_DATA_MODEL) {
             $(SCHEMA_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).hide();
             $(CONNECTOR_CONTAINER).hide();
             $(FDM_CONTAINER).show();
         } else if (selectedSchemaType == CONNECTOR) {
             $(SCHEMA_CONTAINER).hide();
             $(FDM_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).hide();
             $(CONNECTOR_CONTAINER).show();
-        } else if (selectedSchemaType == 'none') {
+        } else if (selectedSchemaType == FORM_TEMPLATE) {
             $(FDM_CONTAINER).hide();
             $(CONNECTOR_CONTAINER).hide();
             $(SCHEMA_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).show();
+        } else if (selectedSchemaType == NONE) {
+            $(FDM_CONTAINER).hide();
+            $(SCHEMA_CONTAINER).hide();
+            $(CONNECTOR_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).hide();
         }
     };
 
@@ -266,7 +310,8 @@
         var formModelSelector = dialog.find(FORM_MODEL_SELECTOR)[0],
             schemaSelector = dialog.find(SCHEMA_DROPDOWN_SELECTOR)[0],
             fdmSelector = dialog.find(FDM_DROPDOWN_SELECTOR)[0],
-            connectorSelector = dialog.find(CONNECTOR_DROPDOWN_SELECTOR)[0];
+            connectorSelector = dialog.find(CONNECTOR_DROPDOWN_SELECTOR)[0],
+            formTemplateSelector = dialog.find(FORM_TEMPLATE_DROPDOWN_SELECTOR)[0];
         if (formModelSelector) {
             formModelSelector.on("change", function() {
                 selectFormModelOnChanged(dialog);
@@ -287,6 +332,11 @@
                 connectorSelectorOnChanged(dialog);
             });
         };
+        if(formTemplateSelector) {
+            formTemplateSelector.on("change", function() {
+                formTemplateSelectorOnChanged(dialog);
+            });
+        }
         selectFormModelOnLoad(dialog);
     }
 
