@@ -30,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.components.internal.constants.ThemeConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
@@ -87,7 +86,7 @@ public class FormStructureParserImpl implements FormStructureParser {
                 ValueMap themeProps = themeResource.getValueMap();
                 themeClientLibRef = themeProps.get(ThemeConstants.PROPERTY_CLIENTLIB_CATEGORY, "");
             } else {
-                throw new GuideException("Invalid Theme Name " + themeContentPath);
+                logger.error("Invalid Theme Name {}", themeContentPath);
             }
         }
 
