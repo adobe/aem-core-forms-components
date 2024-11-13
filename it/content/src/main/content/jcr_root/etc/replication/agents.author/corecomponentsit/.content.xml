@@ -5,7 +5,7 @@
             cq:lastModified="{Date}2024-11-12T15:30:38.557+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/libs/cq/replication/templates/agent"
-            jcr:description="Agent that replicates to headless json to external system"
+            jcr:description="Agent that replicates headless adaptive form json to external system"
             jcr:lastModified="{Date}2024-11-12T15:30:38.550+05:30"
             jcr:lastModifiedBy="admin"
             jcr:primaryType="nt:unstructured"
