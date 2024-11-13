@@ -160,43 +160,27 @@ public class HeadlessTransportHandler implements TransportHandler {
             for (String path : action.getPaths()) {
                 Resource resource = resourceResolver.getResource(path);
                 if (resource == null || (!resource.isResourceType(NameConstants.NT_PAGE))) {
-                    LOG.warn("[HeadlessTransportHandler] Resource not found or not a cq:Page {}. Skipping", path);
+                    LOG.info("[HeadlessTransportHandler] Resource not found or not a cq:Page {}. Skipping", path);
                     continue;
                 }
                 // get the model json from the resource
-                FormStructureParser parser = resource.adaptTo(FormStructureParser.class);
+                FormStructureParser parser = getFormStructureParserFromPage(resource);
                 if (parser != null) {
-                    boolean isFormContainerPresent = parser.containsFormContainer();
-                    if (!isFormContainerPresent) {
-                        LOG.warn("[HeadlessTransportHandler] No form container present inside page {}. Skipping", path);
-                        continue;
-                    } else {
-                        Resource formContainerResource = getFormContainerResourceFromPage(resource);
-                        if (formContainerResource != null) {
-                            FormStructureParser parser2 = formContainerResource.adaptTo(FormStructureParser.class);
-                            if (parser2 != null ) {
-                                String formModelJson = parser2.getFormDefinition();
-                                // todo: publish this form model json to the external system
-                                LOG.info("[HeadlessTransportHandler] Form Model JSON: {}", formModelJson);
-                                /**
-                                 OAuth2Client oauth2Client = new OAuth2Client(
-                                 "https://example.com/oauth2/token",
-                                 "your_client_id",
-                                 "your_client_secret",
-                                 "https://example.com/api/publish",
-                                 httpClient
-                                 );
-                                 oauth2Client.publishOrDeleteFormModelJson(formModelJson, requestSupplier);
-                                 **/
-                            } else {
-                                LOG.warn("[HeadlessTransportHandler] Form structure parser not found for form container resource {}. Skipping", formContainerResource.getPath());
-                            }
-                        } else {
-                            LOG.warn("[HeadlessTransportHandler] Form container resource not found for path {}. Skipping", path);
-                        }
-                    }
+                    String formModelJson = parser.getFormDefinition();
+                    // todo: publish this form model json to the external system
+                    LOG.info("[HeadlessTransportHandler] Form Model JSON: {}", formModelJson);
+                    /**
+                     OAuth2Client oauth2Client = new OAuth2Client(
+                     "https://example.com/oauth2/token",
+                     "your_client_id",
+                     "your_client_secret",
+                     "https://example.com/api/publish",
+                     httpClient
+                     );
+                     oauth2Client.publishOrDeleteFormModelJson(formModelJson, requestSupplier);
+                     **/
                 } else {
-                    LOG.warn("[HeadlessTransportHandler] Unable to adaptTo FormStructureParser for page {}. Skipping", path);
+                    LOG.info("[HeadlessTransportHandler] No adaptive form container found for resource {}. Skipping", resource.getPath());
                 }
             }
             return ReplicationResult.OK;
@@ -205,17 +189,26 @@ public class HeadlessTransportHandler implements TransportHandler {
         }
     }
 
-    private static Resource getFormContainerResourceFromPage(Resource resource) {
+    private static FormStructureParser getFormStructureParserFromPage(Resource resource) {
         if (resource == null) {
+            LOG.info("[HeadlessTransportHandler] Resource is null. Skipping");
             return null;
         }
+
         if (ComponentUtils.isAFContainer(resource)) {
-            return resource;
+            FormStructureParser parser = resource.adaptTo(FormStructureParser.class);
+            if (parser != null) {
+                return parser;
+            } else {
+                LOG.info("[HeadlessTransportHandler] Form structure parser not found for form container resource {}. Skipping", resource.getPath());
+                return null;
+            }
         }
+
         for (Resource child : resource.getChildren()) {
-            Resource formContainerResource = getFormContainerResourceFromPage(child);
-            if (formContainerResource != null) {
-                return formContainerResource;
+            FormStructureParser parser = getFormStructureParserFromPage(child);
+            if (parser != null) {
+                return parser;
             }
         }
         return null;
