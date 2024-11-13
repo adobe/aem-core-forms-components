@@ -2,14 +2,5 @@
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content/>
-    <publish/>
-    <flush/>
-    <publish_reverse/>
-    <static/>
-    <test_and_target/>
-    <dynamic_media_replication/>
-    <s7delivery/>
-    <scene7/>
-    <youtube/>
-    <jpmc/>
+    <corecomponentsit/>
 </jcr:root>

@@ -5,6 +5,5 @@
     jcr:title="Replication"
     sling:resourceType="cq/replication/components/home">
     <rep:policy/>
-    <agents.publish/>
     <agents.author/>
 </jcr:root>
