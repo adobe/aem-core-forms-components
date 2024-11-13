@@ -1,0 +1,46 @@
+{
+  "id": "datetime-cb8e90e488",
+  "dataRef": "a.b",
+  "fieldType": "date-time",
+  "name": "abc",
+  "visible": false,
+  "description": "dummy",
+  "tooltip": "test-short-description",
+  "type": "string",
+  "required": false,
+  "enabled": false,
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
+  "readOnly": true,
+  "lang" : "it-IT",
+  "label": {
+    "visible": true,
+    "value": "def"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datetime-customized"
+  },
+  "rules": {
+    "visible": "true()",
+    "label": "{value : 'some label'}",
+    "value": "false()",
+    "enabled": "true()"
+  },
+  "format": "date",
+  "minimum": "2022-02-04",
+  "maximum": "2022-02-09",
+  ":type": "core/fd/components/form/dateime/v1/dateime"
+}

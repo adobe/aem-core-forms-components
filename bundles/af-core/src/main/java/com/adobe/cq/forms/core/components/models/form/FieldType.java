@@ -38,6 +38,7 @@ public enum FieldType {
     IMAGE("image"),
     TELEPHONE("tel"),
     PASSWORD("password"),
+    DATETIME("date-time"),
     RANGE("range"),
     COLOR("color"),
     URL("url"),

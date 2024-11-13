@@ -1,0 +1,23 @@
+{
+  "id": "datetime-00447787e6",
+  "fieldType": "date-time",
+  "name": "abc",
+  "type": "string",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datetime",
+    "customProp": "customPropValue"
+  },
+  "format": "date",
+  ":type": "core/fd/components/form/datetime/v1/datetime"
+}
