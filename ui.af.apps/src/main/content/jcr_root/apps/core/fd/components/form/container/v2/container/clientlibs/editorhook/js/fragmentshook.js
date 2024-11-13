@@ -28,20 +28,20 @@
         return fieldType === "panel";
     }
 
-    const fragmentCreationDialogConfig = function (componentPath) {
+    const fragmentCreationDialogConfig = function (editable) {
         const path = `/mnt/overlay/${FRAGMENT_CREATION_DIALOG_PATH}`;
         return {
-            src : path + componentPath + '?resourceType=' + encodeURIComponent(FRAGMENT_CREATION_DIALOG_PATH),
+            src : Granite.HTTP.externalize(path + editable.path + "?formContainerPath=" + window.CQ.FormsCoreComponents.editorhooks.getFormContainerPath(editable)),
             isFloating : false,
             loadingMode : "auto",
             layout : "auto"
         };
     };
 
-    const fragmentCreationDialogDef = (componentPath) =>  {
+    const fragmentCreationDialogDef = (editable) =>  {
         return {
             getConfig : function getConfig() {
-                return fragmentCreationDialogConfig(componentPath);
+                return fragmentCreationDialogConfig(editable);
             },
             getRequestedData : function getRequestedData() {
                 return {
@@ -62,7 +62,7 @@
 
 
     window.CQ.FormsCoreComponents.editorhooks.saveAsFragment = function (editable) {
-        const saveAsFragmentDialog = new ns.ui.Dialog(fragmentCreationDialogDef(editable.path));
+        const saveAsFragmentDialog = new ns.ui.Dialog(fragmentCreationDialogDef(editable));
         ns.DialogFrame.openDialog(function getDialog() {
             saveAsFragmentDialog.editable = editable;
             return saveAsFragmentDialog;
