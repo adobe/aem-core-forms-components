@@ -160,7 +160,6 @@ Import-Package: javax.annotation;version=0.0.0,*
             <groupId>com.adobe.aem</groupId>
             <artifactId>core-forms-components-af-core</artifactId>
             <version>3.0.70</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
