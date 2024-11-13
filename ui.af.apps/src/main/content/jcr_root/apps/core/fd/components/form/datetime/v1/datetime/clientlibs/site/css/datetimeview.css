@@ -1,0 +1,112 @@
+/*******************************************************************************
+ * Copyright 2024 Adobe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+ .cmp-adaptiveform-datetime__label-container{
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+
+ }
+
+ .cmp-adaptiveform-datetime {
+ color: $dark-gray;
+      font-size: $font-md;
+      margin: $field-margin;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+ }
+
+/* .cmp-adaptiveform-datetime__widget {
+     margin-top: 10px;
+       height: $field-height;
+       border-radius: 0.25rem;
+       border: 1px solid $dark-gray;
+       font-size: $font-md;
+       color: $dark-gray;
+       padding: 0 $field-padding-left;
+ }*/
+
+  .cmp-adaptiveform-datetime__widget {
+      color: #666;
+      border: 1px solid #666;
+      border-radius: .25rem;
+      height: 40px;
+      margin-top: 10px;
+      padding: 0 10px;
+      font-size: 1rem;
+      width: -webkit-fill-available
+  }
+
+ .cmp-adaptiveform-datetime__label {
+
+ }
+
+ .cmp-adaptiveform-datetime__longdescription {
+ color: $light-gray;
+   background-color: $very-light-gray;
+   font-size: $font-sm;
+   margin-top: $error-top-margin;
+   margin-bottom: 5px;
+   padding: 10px;
+   p{
+     margin: 0;
+     padding: 0;
+   }
+ }
+
+ .cmp-adaptiveform-datetime__shortdescription {
+  font-size: $font-sm;
+    margin-top: $error-top-margin;
+ }
+
+// below properties for backward compatibility
+.cmp-adaptiveform-datetime__label-container .cmp-adaptiveform-datetime__questionmark{
+  position: unset;
+  right: unset;
+}
+
+ .cmp-adaptiveform-datetime__questionmark {
+  display:inline-block;
+    width:1rem;
+    height:1rem;
+    border-radius: 9px;
+    background: url(./resources/images/question.svg) center center / cover no-repeat,#969696;
+    cursor : pointer;
+    // below properties for backward compatibility
+    position: absolute;
+    right: 0px;
+
+ }
+ .cmp-adaptiveform-datetime__errormessage{
+   color: $error;
+   font-size: $font-sm;
+   margin-top: $error-top-margin;
+ }
+
+ .cmp-adaptiveform-datetime[data-cmp-valid=false]{
+   background: $light-error;
+   border: 0 solid $error;
+   border-inline-start-width: 4px;
+   padding-inline-start: 5px;
+ }
+
+ .cmp-adaptiveform-datetime[data-cmp-valid=true]{
+   border: 0 solid #23b482;
+   border-inline-start-width: 4px;
+   padding-inline-start: 5px;
+ }
+
+

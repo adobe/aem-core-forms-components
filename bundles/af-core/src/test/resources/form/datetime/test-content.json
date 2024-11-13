@@ -1,0 +1,10 @@
+{
+  "datepicker" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/datetime/v1/datetime",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "date-time",
+    "customProp": "customPropValue"
+  }
+}
