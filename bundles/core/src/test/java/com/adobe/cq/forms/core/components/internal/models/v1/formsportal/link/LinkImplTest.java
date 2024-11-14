@@ -40,6 +40,8 @@ public class LinkImplTest {
     private static final String LINK1_PATH = ROOT_PAGE + "/linkcomponent-v1";
     private static final String LINK1_PATH_WITH_INVALID_LINK = ROOT_PAGE + "/linkcomponent-v1-invalidref";
 
+    private static final String LINK2_PATH_WITH_SPACE_IN_ASSET_NAME = ROOT_PAGE + "/linkcomponent-v2-with-space-in-asset-name";
+
     @BeforeEach
     public void setUp() {
         context.load().json(TEST_BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
@@ -86,6 +88,16 @@ public class LinkImplTest {
         Assertions.assertEquals("Link Component", link.getTitle());
         Assertions.assertEquals("Some Hover Tooltip Text", link.getTooltip());
         Assertions.assertEquals(Link.AssetType.ADAPTIVE_FORM, link.getAssetType());
+    }
+
+    @Test
+    public void testLinkComponentWithSpaceInAssetPath() {
+        Link link = getLinkUnderTest(LINK2_PATH_WITH_SPACE_IN_ASSET_NAME);
+        Assertions.assertEquals("/content/dam/formsanddocuments/sample form", link.getAssetPath());
+        Assertions.assertEquals("/content/dam/formsanddocuments/sample%20form?hello=world", link.getAssetPathWithQueryParams());
+        Assertions.assertEquals("Link Component", link.getTitle());
+        Assertions.assertEquals("Some Hover Tooltip Text", link.getTooltip());
+        Assertions.assertEquals(Link.AssetType.PDF, link.getAssetType());
     }
 
     @Test

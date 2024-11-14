@@ -102,8 +102,7 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
             return "#";
         }
         try {
-            URIBuilder uriBuilder = null;
-            uriBuilder = new URIBuilder(url);
+            URIBuilder uriBuilder = new URIBuilder().setPath(url);
             Map<String, String> queryParams = getQueryParams();
             if (queryParams != null && !uriBuilder.isPathEmpty()) {
                 for (String key : queryParams.keySet()) {
@@ -118,7 +117,7 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
             }
             url = uriBuilder.build().toString();
         } catch (URISyntaxException e) {
-            logger.error("[FORMS] Link Component Failed to parse assetPath {}", url, e);
+            logger.warn("The [Forms] link component failed to process the asset path {}. Parameters will not be added to the URL.", url, e);
         }
         return url;
     }
