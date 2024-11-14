@@ -30,9 +30,9 @@ import org.jetbrains.annotations.Nullable;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Review;
 import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -43,31 +43,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ReviewImpl extends AbstractBaseImpl implements Review {
 
     private static final String LINKED_PANEL_PROPERTY = "fd:linkedPanels";
-    private static final String EDIT_ACTION_PROPERTY = "fd:editAction";
+    private static final String EDIT_ACTION_PROPERTY = "fd:editModeAction";
 
-    @JsonIgnore
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "linkedPanels")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fd:linkedPanels")
     @Nullable
     private String[] linkedPanels;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fd:editModeAction")
+    @Nullable
+    private String editModeAction;
 
     public String[] getLinkedPanels() {
         return linkedPanels != null ? Arrays.copyOf(linkedPanels, linkedPanels.length) : new String[] {};
     }
 
-    @JsonIgnore
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "editAction")
-    @Nullable
-    private String editAction;
+    public String getEditModeAction() {
+        return editModeAction;
+    }
 
-    public String getEditAction() {
-        return editAction;
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.PLAIN_TEXT);
     }
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> customProperties = super.getProperties();
         customProperties.put(LINKED_PANEL_PROPERTY, getLinkedPanels());
-        customProperties.put(EDIT_ACTION_PROPERTY, getEditAction());
+        customProperties.put(EDIT_ACTION_PROPERTY, getEditModeAction());
         return customProperties;
     }
 }

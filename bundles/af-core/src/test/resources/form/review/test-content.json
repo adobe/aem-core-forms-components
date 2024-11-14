@@ -55,12 +55,12 @@
             "fd:linkedPanels": [
               "item_1"
             ],
-            "fd:editAction": "field"
+            "fd:editModeAction": "field"
           },
-          "linkedPanels": [
+          "fd:linkedPanels": [
             "item_1"
           ],
-          "editAction": "field"
+          "fd:editModeAction": "field"
         }
       }
     }

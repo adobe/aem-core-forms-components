@@ -371,10 +371,10 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="review"
                         sling:resourceType="forms-components-examples/components/form/review"
-                        editAction="field"
+                        fd:editModeAction="field"
                         fieldType="plain-text"
                         hideTitle="false"
-                        linkedPanels="tab1_id"
+                        fd:linkedPanels="tab1_id"
                         name="review1724402878089"/>
                     <submit
                         jcr:created="{Date}2024-08-23T14:18:03.480+05:30"

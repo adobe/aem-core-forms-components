@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2023 Adobe
+ ~ Copyright 2024 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -17,14 +17,28 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Defines the {@code Review} Sling Model used for the {@code /apps/core/fd/components/form/review} component.
  *
- * @since com.adobe.cq.forms.core.components.models 2.1.0
+ * @since com.adobe.cq.forms.core.components.models 5.9.5
  */
 @ConsumerType
 public interface Review extends Base {
+
+    /**
+     * @return an array of linked panels to be reviewed on the review page. Each linked panel is the name of a panel that is linked to the
+     *         review page.
+     * @since com.adobe.cq.forms.core.components.models.form 5.9.5
+     */
+    @JsonIgnore
     String[] getLinkedPanels();
 
-    String getEditAction();
+    /**
+     * @return the edit mode action, which indicates whether edit button is visible on the review page at field, panel, both, or none
+     * @since com.adobe.cq.forms.core.components.models.form 5.9.5
+     */
+    @JsonIgnore
+    String getEditModeAction();
 }

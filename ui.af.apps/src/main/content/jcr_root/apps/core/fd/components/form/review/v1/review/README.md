@@ -31,8 +31,8 @@ The following properties are written to JCR for this Form Review component and a
 1. `./jcr:title` - defines the label to use for this field
 2. `./hideTitle` - if set to `true`, the label of this field will be hidden
 3. `./name` - defines the name of the field, which will be submitted with the form data
-3. `./linkedPanels` - defines linked panels for reviewing the panel. If no panel is linked, the component will review the entire form.
-3. `./editAction` - defines the edit action for editing the fields, panels, field & panel, or none
+3. `./fd:linkedPanels` - defines linked panels for reviewing the panel. If no panel is linked, the component will review the entire form.
+3. `./fd:editModeAction` - defines the edit action for editing the fields, panels, field & panel, or none
 ## Client Libraries
 The component provides a `core.forms.components.review.v1.runtime` client library category that contains the Javascript runtime for the component. 
 It should be added to a relevant site client library using the `embed` property.
@@ -44,11 +44,16 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-review
     ELEMENT cmp-adaptiveform-review__container
-    ELEMENT cmp-adaptiveform-review__panel
-    MODIFIER cmp-adaptiveform-review__panel--repeatable
-    ELEMENT cmp-adaptiveform-review__label-containe
-    ELEMENT cmp-adaptiveform-review__field
-    ELEMENT cmp-adaptiveform-review__label
-    ELEMENT cmp-adaptiveform-review__value
-    ELEMENT cmp-adaptiveform-review__edit-button
+      ELEMENT cmp-adaptiveform-review__panel
+      MODIFIER cmp-adaptiveform-review__panel--repeatable
+        ELEMENT cmp-adaptiveform-review__label-containe
+          ELEMENT cmp-adaptiveform-review__label
+          ELEMENT cmp-adaptiveform-review__edit-button
+        ELEMENT cmp-adaptiveform-review__value
+      ELEMENT cmp-adaptiveform-review__field
+        ELEMENT cmp-adaptiveform-review__label
+        ELEMENT cmp-adaptiveform-review__value
+        ELEMENT cmp-adaptiveform-review__edit-button
+      ELEMENT cmp-adaptiveform-review__text
+        ELEMENT cmp-adaptiveform-review__label
 ```

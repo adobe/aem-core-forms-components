@@ -69,13 +69,13 @@
                         text="Hide title"
                         uncheckedValue="false"
                         value="true" />
-                      <editAction
+                      <editModeAction
                         jcr:primaryType="nt:unstructured"
                         sling:orderBefore="customText"
                         sling:resourceType="granite/ui/components/coral/foundation/form/select"
                         granite:class="cmp-adaptiveform-review__editaction"
-                        fieldLabel="Enable edit actions for"
-                        name="./editAction"
+                        fieldLabel="Enable edit mode actions for"
+                        name="./fd:editModeAction"
                         value="field">
                         <items jcr:primaryType="nt:unstructured">
                           <field
@@ -95,7 +95,7 @@
                             text="None"
                             value="none" />
                         </items>
-                      </editAction>
+                      </editModeAction>
                       <linkedPanels
                         jcr:primaryType="nt:unstructured"
                         granite:class="cmp-adaptiveform-review__linkedPanels"
@@ -104,7 +104,7 @@
                         fieldLabel="Link panels"
                         multiple="true"
                         value="string[]"
-                        name="./linkedPanels"
+                        name="./fd:linkedPanels"
                       >
                         <datasource
                           jcr:primaryType="nt:unstructured"

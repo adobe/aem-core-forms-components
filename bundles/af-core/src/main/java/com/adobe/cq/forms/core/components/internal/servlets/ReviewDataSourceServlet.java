@@ -81,23 +81,25 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
         if (resourceResolver != null) {
             Resource componentInstance = resourceResolver.getResource(componentInstancePath);
             Resource formInstance = ComponentUtils.getFormContainer(componentInstance);
-            FormContainer formContainer = formInstance.adaptTo(FormContainer.class);
-            List<Base> panelList = (List<Base>) getPanels(formContainer);
-            List<Base> panels = panelList.stream().filter(x -> "panel".equals(x.getFieldType())).collect(Collectors.toList());
-            for (Base panel : panels) {
-                String name = panel != null ? panel.getName() : "";
-                String title = "";
-                if (panel != null) {
-                    Label label = panel.getLabel();
-                    if (label != null) {
-                        String value = label.getValue();
-                        if (value != null) {
-                            title = value;
+            if (formInstance != null) {
+                FormContainer formContainer = formInstance.adaptTo(FormContainer.class);
+                List<Base> panelList = (List<Base>) getMultipleChildPanels(formContainer);
+                List<Base> panels = panelList.stream().filter(x -> "panel".equals(x.getFieldType())).collect(Collectors.toList());
+                for (Base panel : panels) {
+                    String name = panel != null ? panel.getName() : "";
+                    String title = "";
+                    if (panel != null) {
+                        Label label = panel.getLabel();
+                        if (label != null) {
+                            String value = label.getValue();
+                            if (value != null) {
+                                title = value;
+                            }
                         }
                     }
-                }
-                if (name != null && title != null) {
-                    resources.add(getResourceForDropdownDisplay(resourceResolver, title, name));
+                    if (name != null && title != null) {
+                        resources.add(getResourceForDropdownDisplay(resourceResolver, title, name));
+                    }
                 }
             }
         }
@@ -105,7 +107,14 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
 
-    private List<? extends ComponentExporter> getPanels(FormComponent formContainer) {
+    /**
+     * Retrieves a list of child panels that have at least two siblings.
+     * If a panel has fewer than two siblings, it will not be included in the returned list.
+     *
+     * @param formContainer the top-level form container
+     * @return a list of panels with at least two siblings
+     */
+    private List<? extends ComponentExporter> getMultipleChildPanels(FormComponent formContainer) {
         while (formContainer instanceof Container && ((Container) formContainer).getItems().size() == 1) {
             formContainer = (FormComponent) ((Container) formContainer).getItems().get(0);
         }

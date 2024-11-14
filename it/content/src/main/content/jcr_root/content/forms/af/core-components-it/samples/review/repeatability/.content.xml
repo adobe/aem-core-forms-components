@@ -360,7 +360,7 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="review"
                         sling:resourceType="forms-components-examples/components/form/review"
-                        editAction="panel"
+                        fd:editModeAction="panel"
                         fieldType="plain-text"
                         hideTitle="false"
                         name="review1724402878089"/>

@@ -47,14 +47,14 @@ public class ReviewImplTest {
     @Test
     void testGetEditAction() {
         Review review = Utils.getComponentUnderTest(PATH_REVIEW, ReviewImpl.class, context);
-        assertEquals("field", review.getEditAction());
+        assertEquals("field", review.getEditModeAction());
     }
 
     @Test
     public void testGetLinkedPanelsWithNonNullArray() throws IOException {
         Review review = Utils.getComponentUnderTest(PATH_REVIEW, ReviewImpl.class, context);
         String[] linkedPanels = review.getLinkedPanels();
-        String[] expectedLinkedPanels = context.resourceResolver().getResource(PATH_REVIEW).getValueMap().get("linkedPanels",
+        String[] expectedLinkedPanels = context.resourceResolver().getResource(PATH_REVIEW).getValueMap().get("fd:linkedPanels",
             String[].class);
         assertNotNull(expectedLinkedPanels);
         assertArrayEquals(expectedLinkedPanels, linkedPanels);
@@ -73,7 +73,7 @@ public class ReviewImplTest {
         Review review = Utils.getComponentUnderTest(PATH_REVIEW, ReviewImpl.class, context);
         Map<String, Object> properties = review.getProperties();
         assertEquals("/apps/formcontainer/wizard/panel2/review", properties.get("fd:path"));
-        assertEquals("field", properties.get("editAction"));
+        assertEquals("field", properties.get("fd:editModeAction"));
 
     }
 

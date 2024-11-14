@@ -30,6 +30,7 @@
     static bemBlock = 'cmp-adaptiveform-review';
     static templateAttribute = 'data-cmp-review';
     static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
+    static hideFieldFromReview = ['button', 'plain-text', 'captcha', 'image'];
     static selectors = {
       self: "[data-" + this.NS + '-is="' + this.IS + '"]',
       container: `.${Review.bemBlock}__container`,
@@ -90,7 +91,7 @@
     }
 
     static addAccessibilityAttributes(element, item) {
-      const container = element.querySelector('[' + Review.templateAttribute + '-container]');
+      const container = element.querySelector('div');
       const label = element.querySelector('[' + Review.templateAttribute + '-label]');
       const value = element.querySelector('[' + Review.templateAttribute + '-value]');
       const editButton = element.querySelector('[' + Review.templateAttribute + '-editButton]');
@@ -217,7 +218,8 @@
       const currentFragment = document.createDocumentFragment();
       items.filter(item => item.visible !== false && item.fieldType && item[':type']).forEach(item => {
         if (Review.isRepeatable(item)) {
-          const repeatablePanel = this.#renderReviewFields(item.items);
+          const repeatableItems = this.getModel().form.getElement(item.id).getState();
+          const repeatablePanel = this.#renderReviewFields(repeatableItems.items);
           if (Review.hasChild(repeatablePanel)) {
             currentFragment.appendChild(repeatablePanel);
           }
@@ -241,7 +243,7 @@
               }
               currentFragment.appendChild(cloneNode);
             }
-          } else if (item.fieldType !== 'button' && item.fieldType !== 'plain-text' && !item[':type'].endsWith('review')) {
+          } else if (!Review.hideFieldFromReview.includes(item.fieldType) && !item[':type'].endsWith('review')) {
             Review.renderValue(cloneNode, item);
             Review.addAccessibilityAttributes(cloneNode, item);
             currentFragment.appendChild(cloneNode);
@@ -261,7 +263,7 @@
 
     // return all top lavel panels if author has not linked any panel
     #getAllPanels() {
-      let state = this.formContainer._model.getState();
+      let state = this.getModel().form.getState();
       while (state?.items?.length === 1) {
         state = state.items[0];
       }
@@ -271,7 +273,7 @@
     // return linked panels if author has linked any panel
     #getLinkedPanels(linkedPanels) {
       let queue = [], result = [];
-      let state = this.formContainer._model.getState();
+      let state = this.getModel().form.getState();
       queue.push(state);
       while (queue.length && linkedPanels.length) {
         const items = Array.isArray(queue[0]) ? queue[0] : [queue[0]];
@@ -303,10 +305,10 @@
       }
     }
     #isVisibleEditButton(fieldType) {
-      let editAction = this._model?._jsonModel?.properties?.editAction;
-      if (editAction === 'both' ||
-        (editAction === 'panel' && fieldType === 'panel') ||
-        (editAction === 'field' && fieldType !== 'panel')) {
+      let editModeAction = this._model?._jsonModel?.properties?.['fd:editModeAction'];
+      if (editModeAction === 'both' ||
+        (editModeAction === 'panel' && fieldType === 'panel') ||
+        (editModeAction === 'field' && fieldType !== 'panel')) {
         return true;
       }
       return false;

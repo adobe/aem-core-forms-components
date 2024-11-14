@@ -41,7 +41,7 @@
         "name": "item_2",
         "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
         "review": {
-          "editAction": "field",
+          "fd:editModeAction": "field",
           "fieldType": "plain-text",
           "hideTitle": "false",
           "jcr:primaryType": "nt:unstructured",
@@ -69,7 +69,7 @@
       "name": "item_2",
       "sling:resourceType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
       "review": {
-        "editAction": "field",
+        "fd:editModeAction": "field",
         "fieldType": "plain-text",
         "hideTitle": "false",
         "jcr:primaryType": "nt:unstructured",

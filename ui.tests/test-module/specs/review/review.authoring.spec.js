@@ -84,8 +84,8 @@ describe.only('Page - Authoring', function () {
                     cy.invokeEditableAction(editDialogConfigurationSelector);
                     cy.get("[name='./name']").should("exist");
                     cy.get("[name='./jcr:title']").should("exist");
-                    cy.get("[name='./editAction']").should("exist");
-                    cy.get("[name='./editAction'] coral-select-item").should("have.length", 4);
+                    cy.get("[name='./fd:editModeAction']").should("exist");
+                    cy.get("[name='./fd:editModeAction'] coral-select-item").should("have.length", 4);
                     cy.get("[name='./linkedPanels']").should("exist");
                     cy.get("[name='./linkedPanels'] coral-select-item").should("have.length", 2);
                     cy.deleteComponentByPath(tabsPath);
