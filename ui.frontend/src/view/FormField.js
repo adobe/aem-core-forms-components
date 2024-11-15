@@ -77,7 +77,8 @@ class FormField {
     setActive() {
         if (!this.isActive()) {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
-            if (this.parentView) {
+            // optimizing the performance to check if the activeChild is different, else this will be a redundant call
+            if (this.parentView?._model?.activeChild !== this._model) {
                 this.parentView._model.activeChild = this._model; // updating the activeChild of the model when a field is focused in view
             }
             this.active = true;

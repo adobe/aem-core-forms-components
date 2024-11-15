@@ -14,8 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 
-import FormField from "./FormField"
-import FormFieldBase from "./FormFieldBase"
 
 /**
  * This class is responsible for interacting with the file input widget. It implements the file preview,
@@ -126,13 +124,25 @@ class FormFileInputWidgetBase {
             return index;
         }
 
+        static displaySVG(objectUrl) {
+            const url = objectUrl;
+            const img = document.createElement('img');
+            img.src = url;
+            const newTab = window.open('', '_blank', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+            newTab?.document?.body.appendChild(img);
+        }
+
         static previewFileUsingObjectUrl(file) {
             if (file) {
                 if (window.navigator && window.navigator.msSaveOrOpenBlob) { // for IE
                     window.navigator.msSaveOrOpenBlob(file, file.name);
                 } else {
                     let url = window.URL.createObjectURL(file);
-                    window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+                    if (file.type === 'image/svg+xml') {
+                        this.displaySVG(url)
+                     } else {
+                        window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+                     }
                     return url;
                 }
             }
@@ -149,7 +159,6 @@ class FormFileInputWidgetBase {
             }
             // this would work for dataURl or normal URL
             window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
-
         }
         // this function maintains a map for
         handleFilePreview (event){
@@ -298,15 +307,16 @@ class FormFileInputWidgetBase {
             }
         }
 
-        invalidMessage(fileName, invalidFeature){
-            // todo: have add localization here
-            if(invalidFeature === this.invalidFeature.SIZE) {
-                alert(FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeGreater", [fileName, this.options.maxFileSize]));
-            } else if (invalidFeature === this.invalidFeature.NAME) {
-                alert(FormView.LanguageUtils.getTranslatedString(this.lang, "FileNameInvalid", [fileName]));
-            } else if (invalidFeature === this.invalidFeature.MIMETYPE) {
-                alert(FormView.LanguageUtils.getTranslatedString(this.lang, "FileMimeTypeInvalid", [fileName]));
-            }
+        invalidMessage(fileName, invalidFeature) {
+            const customMessages = this.options.constraintMessages || {};
+        
+            const messages = {
+                [this.invalidFeature.SIZE]: customMessages.maxFileSize || FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeGreater", [fileName, this.options.maxFileSize]),
+                [this.invalidFeature.NAME]: customMessages.invalidFileName || FormView.LanguageUtils.getTranslatedString(this.lang, "FileNameInvalid", [fileName]),
+                [this.invalidFeature.MIMETYPE]: customMessages.invalidMimeType || FormView.LanguageUtils.getTranslatedString(this.lang, "FileMimeTypeInvalid", [fileName])
+            };
+        
+            alert(messages[invalidFeature]);
         }
 
 
