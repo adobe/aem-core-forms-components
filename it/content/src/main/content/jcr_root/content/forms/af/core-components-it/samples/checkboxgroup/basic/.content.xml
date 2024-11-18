@@ -175,7 +175,7 @@
                     type="number[]"
                     unboundFormElement="{Boolean}false"
                     visible="{Boolean}true"/>
-            <checkboxgroupreset
+            <resetbutton
                     jcr:created="{Date}2024-11-14T18:03:13.181+05:30"
                     jcr:createdBy="admin"
                     jcr:lastModified="{Date}2024-11-14T18:03:13.181+05:30"
@@ -190,7 +190,7 @@
                 <fd:events
                         jcr:primaryType="nt:unstructured"
                         click="[dispatchEvent('reset')]"/>
-            </checkboxgroupreset>
+            </resetbutton>
         </guideContainer>
     </jcr:content>
 </jcr:root>
