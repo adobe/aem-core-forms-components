@@ -77,4 +77,11 @@ public class ReviewImplTest {
 
     }
 
+    @Test
+    public void testGetFieldType() {
+        Review review = new ReviewImpl();
+        String fieldType = review.getFieldType();
+        assertEquals("plain-text", fieldType);
+    }
+
 }

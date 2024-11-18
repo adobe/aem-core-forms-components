@@ -28,10 +28,13 @@ import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.adobe.granite.ui.components.ExpressionResolver;
 import com.adobe.granite.ui.components.ds.DataSource;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -111,6 +114,19 @@ public class ReviewDataSourceServletTest {
         assertNotNull(dataSource);
         assertFalse(dataSource.iterator().hasNext());
 
+    }
+
+    @Mock
+    ExpressionResolver expressionResolver;
+
+    @InjectMocks
+    private ReviewDataSourceServlet reviewDataSourceServlet;
+
+    @Test
+    public void testGetExpressionResolver() {
+        context.currentResource("/apps");
+        ExpressionResolver expressionResolver = reviewDataSourceServlet.getExpressionResolver();
+        assertNotNull(expressionResolver);
     }
 
 }
