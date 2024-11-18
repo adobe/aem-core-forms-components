@@ -37,7 +37,7 @@ module.exports = defineConfig({
       config.env.specPattern = 'specs/**/*.cy.{js,jsx,ts,tsx}';
       return require('./libs/plugins/index.js')(on, config);
     },
-    baseUrl: 'http://aattri-lnx.corp.adobe.com:5502',
+    baseUrl: 'http://localhost:4502',
     specPattern: 'specs/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'libs/support/index.js',
   },
