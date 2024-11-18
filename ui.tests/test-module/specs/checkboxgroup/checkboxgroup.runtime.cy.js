@@ -238,6 +238,17 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
     });
 
+    it("reset of checkbox group resulting in invalidation", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        const [resetButton, resetButtonView] = Object.entries(formContainer._fields)[7];
+        const [checkBox2, checkBox2FieldView] = Object.entries(formContainer._fields)[1];
+        cy.get(`#${checkBox2}`).find("input").check(["0","3"]);
+        cy.get(`#${checkBox2}`).invoke('attr', 'data-cmp-valid').should('eq', 'true');
+        cy.get(`#${resetButton} button`).click().then(() => {
+            cy.get(`#${checkBox2}`).find("input").should('not.be.checked');
+            cy.get(`#${checkBox2}`).invoke('attr', 'data-cmp-valid').should('not.exist');
+        });
+    })
 })
 
 describe("setFocus on checkboxgroup via rules", () => {

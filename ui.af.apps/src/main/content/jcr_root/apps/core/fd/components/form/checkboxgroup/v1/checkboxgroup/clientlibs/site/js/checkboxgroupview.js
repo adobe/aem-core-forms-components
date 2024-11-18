@@ -112,8 +112,13 @@
         }
 
         updateValidity(validity) {
-            const valid = validity.valid ? validity.valid : false;
             let widgets = this.widget;
+            if(validity.valid === undefined) {
+                this.element.removeAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID);
+                widgets.forEach(widget => widget.removeAttribute(FormView.Constants.ARIA_INVALID));
+                return;
+            }
+            const valid = validity.valid;
             this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
             widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
         }
