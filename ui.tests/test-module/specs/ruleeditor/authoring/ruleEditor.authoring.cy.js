@@ -1,7 +1,7 @@
-const commons = require('../../libs/commons/commons'),
-    sitesSelectors = require('../../libs/commons/sitesSelectors'),
-    formsSelectors = require('../../libs/commons/guideSelectors'),
-    afConstants = require('../../libs/commons/formsConstants');
+const commons = require('../../../libs/commons/commons'),
+    sitesSelectors = require('../../../libs/commons/sitesSelectors'),
+    formsSelectors = require('../../../libs/commons/guideSelectors'),
+    afConstants = require('../../../libs/commons/formsConstants');
 
 describe('Rule editor authoring sanity for core-components',function(){
     let toggle_array = [];
@@ -166,7 +166,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").last().find("coral-selectlist-item[value='today']").click();
 
         cy.intercept('POST', /content\/forms\/af\/core-components-it\/samples\/ruleeditor\/blank.*/).as('ruleEditorRequest');
-        
+
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
         cy.wait('@ruleEditorRequest').then((interception) => {
