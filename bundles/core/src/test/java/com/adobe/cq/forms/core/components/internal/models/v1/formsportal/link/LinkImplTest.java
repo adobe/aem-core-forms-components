@@ -84,7 +84,7 @@ public class LinkImplTest {
     public void testLinkComponentWithInvalidPath() {
         Link link = getLinkUnderTest(LINK1_PATH_WITH_INVALID_LINK);
         Assertions.assertEquals("https://www.adobe.com/", link.getAssetPath());
-        Assertions.assertEquals("https://www.adobe.com/?hello", link.getAssetPathWithQueryParams());
+        Assertions.assertEquals("/https://www.adobe.com/?hello", link.getAssetPathWithQueryParams());
         Assertions.assertEquals("Link Component", link.getTitle());
         Assertions.assertEquals("Some Hover Tooltip Text", link.getTooltip());
         Assertions.assertEquals(Link.AssetType.ADAPTIVE_FORM, link.getAssetType());

@@ -102,7 +102,7 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
             return "#";
         }
         try {
-            URIBuilder uriBuilder = new URIBuilder().setPath(url);
+            URIBuilder uriBuilder = new URIBuilder(url);
             Map<String, String> queryParams = getQueryParams();
             if (queryParams != null && !uriBuilder.isPathEmpty()) {
                 for (String key : queryParams.keySet()) {
@@ -201,11 +201,18 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
                 String builtPath = givenPath + "/" + JcrConstants.JCR_CONTENT;
                 ResourceResolver resourceResolver = request.getResourceResolver();
                 if (resourceResolver.getResource(builtPath) != null) {
-                    Map<String, String> params = link.getQueryParams();
-                    if (AssetType.ADAPTIVE_FORM.equals(link.getAssetType()) && !params.containsKey(QP_AF_DEFAULT_MODE_KEY)) {
-                        builtPath += "?" + QP_AF_DEFAULT_MODE_KEY + "=" + QP_AF_DEFAULT_MODE_VALUE;
+                    try {
+                        // Need to encode path to allow space in assets name so using URIBuilder#setPath method for encoding
+                        URIBuilder uriBuilder = new URIBuilder().setPath(builtPath);
+                        String encodedPath = uriBuilder.build().toString();
+                        Map<String, String> params = link.getQueryParams();
+                        if (AssetType.ADAPTIVE_FORM.equals(link.getAssetType()) && !params.containsKey(QP_AF_DEFAULT_MODE_KEY)) {
+                            encodedPath += "?" + QP_AF_DEFAULT_MODE_KEY + "=" + QP_AF_DEFAULT_MODE_VALUE;
+                        }
+                        givenPath = encodedPath;
+                    } catch (URISyntaxException e) {
+                        logger.warn("The [Forms] link component failed to process the asset path {}. Parameters will not be added to the URL.", builtPath, e);
                     }
-                    givenPath = builtPath;
                 }
                 return givenPath;
             }
