@@ -30,11 +30,22 @@
     static bemBlock = 'cmp-adaptiveform-review';
     static templateAttribute = 'data-cmp-review';
     static DATA_ATTRIBUTE_VISIBLE = 'data-cmp-visible';
-    static hideFieldFromReview = ['button', 'plain-text', 'captcha', 'image'];
+    static FIELD_TYPE = FormView.Constants.FIELD_TYPE;
+    static HIDE_FIELD_FROM_REVIEW = [Review.FIELD_TYPE.BUTTON, Review.FIELD_TYPE.PLAIN_TEXT, Review.FIELD_TYPE.CAPTCHA, Review.FIELD_TYPE.IMAGE];
+    static panelModifier = '__panel--repeatable';
+    static fieldModifier = '__field--';
     static selectors = {
       self: "[data-" + this.NS + '-is="' + this.IS + '"]',
       container: `.${Review.bemBlock}__container`,
-      templates: "template[data-cmp-review-fieldType]"
+      templates: "template[data-cmp-review-fieldType]",
+      label: '[' + Review.templateAttribute + '-label]',
+      value: '[' + Review.templateAttribute + '-value]',
+      editButton:'[' + Review.templateAttribute + '-editButton]',
+      fieldId: Review.templateAttribute + '-fieldId',
+      fieldType: Review.templateAttribute + '-fieldType',
+      panelContent:'[' + Review.templateAttribute + '-content]',
+      labelContainer: `.${Review.bemBlock}__label-container`,
+      intersection: Review.templateAttribute + "-intersection="
     };
     static intersectionOptions = {
       root: null,
@@ -63,11 +74,11 @@
     }
 
     static addClassModifier(element, item) {
-      if(item.fieldType !== 'panel'){
-        element.querySelector('div').classList.add(Review.bemBlock + `__field--${item.fieldType}`);
+      if(item.fieldType !== Review.FIELD_TYPE.PANEL){
+        element.querySelector('div').classList.add(Review.bemBlock + Review.fieldModifier + item.fieldType);
       }
       if(item.repeatable){
-        element.querySelector('div').classList.add(Review.bemBlock + `__panel--repeatable`);
+        element.querySelector('div').classList.add(Review.bemBlock + Review.panelModifier);
       }
       if(item.name){
         element.querySelector('div').classList.add(item.name);
@@ -75,15 +86,15 @@
     }
 
     static renderLabel(element, item) {
-      const label = element.querySelector('[' + Review.templateAttribute + '-label]');
-      label.innerHTML = item.fieldType === 'plain-text' ? Review.sanitizedValue(item.value) : Review.sanitizedValue(item?.label?.value, {ALLOWED_TAGS: [] });
+      const label = element.querySelector(Review.selectors.label);
+      label.innerHTML = item.fieldType === Review.FIELD_TYPE.PLAIN_TEXT ? Review.sanitizedValue(item.value) : Review.sanitizedValue(item?.label?.value, {ALLOWED_TAGS: [] });
       if (item.required) {
         label.setAttribute('data-cmp-required', item.required);
       }
     }
 
     static renderValue(element, item) {
-      const value = element.querySelector('[' + Review.templateAttribute + '-value]');
+      const value = element.querySelector(Review.selectors.value);
       if (value) {
         const plainText = Review.getValue(item, item.value) || '';
         value.innerHTML = Review.sanitizedValue(plainText);
@@ -92,9 +103,9 @@
 
     static addAccessibilityAttributes(element, item) {
       const container = element.querySelector('div');
-      const label = element.querySelector('[' + Review.templateAttribute + '-label]');
-      const value = element.querySelector('[' + Review.templateAttribute + '-value]');
-      const editButton = element.querySelector('[' + Review.templateAttribute + '-editButton]');
+      const label = element.querySelector(Review.selectors.label);
+      const value = element.querySelector(Review.selectors.value);
+      const editButton = element.querySelector(Review.selectors.editButton);
       const id = `${item.id}-review-label`;
       if(label){
         label.setAttribute('id', id);
@@ -110,7 +121,7 @@
     }
 
     static isRepeatable(item) {
-      return item.fieldType === 'panel' && item.type === 'array'
+      return item.fieldType === Review.FIELD_TYPE.PANEL && item.type === 'array'
     }
 
     /* return value of the field, if value is array then return comma separated string and 
@@ -118,7 +129,7 @@
     */
     static getValue(item, value) {
       if (value === undefined || value === null) return '';
-      if (item.fieldType === 'file-input') {
+      if (item.fieldType === Review.FIELD_TYPE.FILE_INPUT) {
         return Array.isArray(value) ? value.filter(file => file && file.name).map(file => file.name).join(', ') : (value.name || '');
       }
       if (Array.isArray(item.enumNames)) {
@@ -150,7 +161,7 @@
       return this.element.querySelectorAll(Review.selectors.templates);
     }
     getIntersectionElement() {
-      return this.element.querySelector("[" + Review.templateAttribute + "-intersection=" + this.id + "]");
+      return this.element.querySelector("[" + Review.selectors.intersection + this.id + "]");
     }
     getWidget() { return null }
     getDescription() { return null; }
@@ -181,7 +192,7 @@
       const templates = this.getTemplates();
       let mappings = {};
       templates.forEach(template => {
-        const type = template.getAttribute(Review.templateAttribute + '-fieldType');
+        const type = template.getAttribute(Review.selectors.fieldType);
         mappings[type || 'default'] = template;
       });
       this.templateMappings = mappings;
@@ -190,7 +201,7 @@
     // click handler to set focus on the field when use click on edit button
     #clickHandler(event) {
       if (event?.target?.nodeName === 'BUTTON') {
-        const id = event.target.getAttribute(Review.templateAttribute + '-fieldId');
+        const id = event.target.getAttribute(Review.selectors.fieldId);
         const form = this.formContainer.getModel();;
         const field = this.formContainer.getField(id);
         if (form && field) {
@@ -229,21 +240,21 @@
           Review.addClassModifier(cloneNode, item);
           Review.renderLabel(cloneNode, item);
           this.#renderEditButton(cloneNode, item);
-          if (item.fieldType === 'panel') {
+          if (item.fieldType === Review.FIELD_TYPE.PANEL) {
             const fields = this.#renderReviewFields(item.items);
             if (Review.hasChild(fields)) {
-              const labelContainer = cloneNode.querySelector(`.${Review.bemBlock}__label-container`);
+              const labelContainer = cloneNode.querySelector(Review.selectors.labelContainer);
               if(item?.label?.visible === false && labelContainer){
                 labelContainer.remove();
               }
               Review.addAccessibilityAttributes(cloneNode, item);
-              const contentElement = cloneNode.querySelector('[' + Review.templateAttribute + '-content]');
+              const contentElement = cloneNode.querySelector(Review.selectors.panelContent);
               if(contentElement){
                 contentElement.appendChild(fields);
               }
               currentFragment.appendChild(cloneNode);
             }
-          } else if (!Review.hideFieldFromReview.includes(item.fieldType) && !item[':type'].endsWith('review')) {
+          } else if (!Review.HIDE_FIELD_FROM_REVIEW.includes(item.fieldType) && !item[':type'].endsWith('review')) {
             Review.renderValue(cloneNode, item);
             Review.addAccessibilityAttributes(cloneNode, item);
             currentFragment.appendChild(cloneNode);
@@ -254,9 +265,9 @@
     }
 
     #getPanels() {
-      const linkedPanels = this._model?._jsonModel?.properties["fd:linkedPanels"] || [];
+      const linkedPanels = this.getModel().properties["fd:linkedPanels"] || [];
       if (linkedPanels.length) {
-        return this.#getLinkedPanels(linkedPanels);
+        return this.#getLinkedPanels([...linkedPanels]);
       }
       return this.#getAllPanels();
     }
@@ -294,10 +305,10 @@
 
     // render edit button of the field
     #renderEditButton(cloneNode, item) {
-      const editButton = cloneNode.querySelector('[' + Review.templateAttribute + '-editButton]');
+      const editButton = cloneNode.querySelector(Review.selectors.editButton);
       if (editButton) {
-        editButton.setAttribute(Review.templateAttribute + '-fieldId', item.id);
-        editButton.setAttribute('aria-label', "Edit " + item?.label?.value);
+        editButton.setAttribute(Review.selectors.fieldId, item.id);
+        editButton.setAttribute('aria-label', item?.label?.value);
         if (item.enabled === false) {
           editButton.setAttribute('disabled', true);
         }
@@ -305,10 +316,10 @@
       }
     }
     #isVisibleEditButton(fieldType) {
-      let editModeAction = this._model?._jsonModel?.properties?.['fd:editModeAction'];
+      let editModeAction = this.getModel().properties?.['fd:editModeAction'];
       if (editModeAction === 'both' ||
-        (editModeAction === 'panel' && fieldType === 'panel') ||
-        (editModeAction === 'field' && fieldType !== 'panel')) {
+        (editModeAction === Review.FIELD_TYPE.PANEL && fieldType === Review.FIELD_TYPE.PANEL) ||
+        (editModeAction === 'field' && fieldType !== Review.FIELD_TYPE.PANEL)) {
         return true;
       }
       return false;

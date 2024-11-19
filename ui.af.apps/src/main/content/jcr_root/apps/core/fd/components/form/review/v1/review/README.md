@@ -44,16 +44,16 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-review
     ELEMENT cmp-adaptiveform-review__container
-      ELEMENT cmp-adaptiveform-review__panel
-      MODIFIER cmp-adaptiveform-review__panel--repeatable
-        ELEMENT cmp-adaptiveform-review__label-containe
-          ELEMENT cmp-adaptiveform-review__label
-          ELEMENT cmp-adaptiveform-review__edit-button
-        ELEMENT cmp-adaptiveform-review__value
-      ELEMENT cmp-adaptiveform-review__field
-        ELEMENT cmp-adaptiveform-review__label
-        ELEMENT cmp-adaptiveform-review__value
-        ELEMENT cmp-adaptiveform-review__edit-button
-      ELEMENT cmp-adaptiveform-review__text
-        ELEMENT cmp-adaptiveform-review__label
+        ELEMENT cmp-adaptiveform-review__panel
+            MODIFIER cmp-adaptiveform-review__panel--repeatable
+                ELEMENT cmp-adaptiveform-review__label-container
+                    ELEMENT cmp-adaptiveform-review__label
+                    ELEMENT cmp-adaptiveform-review__edit-button
+                ELEMENT cmp-adaptiveform-review__value
+        ELEMENT cmp-adaptiveform-review__field
+            ELEMENT cmp-adaptiveform-review__label
+            ELEMENT cmp-adaptiveform-review__value
+            ELEMENT cmp-adaptiveform-review__edit-button
+        ELEMENT cmp-adaptiveform-review__text
+            ELEMENT cmp-adaptiveform-review__label
 ```

@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2023 Adobe
+ ~ Copyright 2024 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -83,8 +83,8 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
             Resource formInstance = ComponentUtils.getFormContainer(componentInstance);
             if (formInstance != null) {
                 FormContainer formContainer = formInstance.adaptTo(FormContainer.class);
-                List<Base> panelList = (List<Base>) getMultipleChildPanels(formContainer);
-                List<Base> panels = panelList.stream().filter(x -> "panel".equals(x.getFieldType())).collect(Collectors.toList());
+                List<Base> panels = ((List<Base>) getMultipleChildPanels(formContainer))
+                    .stream().filter(x -> "panel".equals(x.getFieldType())).collect(Collectors.toList());
                 for (Base panel : panels) {
                     String name = panel != null ? panel.getName() : "";
                     String title = "";
