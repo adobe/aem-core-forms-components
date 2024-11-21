@@ -99,82 +99,102 @@
                                         longTitle="Radio Button Item"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
-                                        <radioButtonLabel
+                                        <radioButtonItemLabelContainer
                                                 jcr:primaryType="nt:unstructured"
-                                                jcr:title="Label"
-                                                id="af2_radiobuttonitemlabel"
-                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label span"
-                                                longTitle="Radio Button Item Label"
+                                                jcr:title="Radio Button Item Label Container"
+                                                id="af2_radiobuttonitemlabelcontainer"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label"
+                                                longTitle="Radio Button Item Label Container"
                                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
-                                            <states jcr:primaryType="nt:unstructured">
-                                                <disabled
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <radioButtonLabel
                                                         jcr:primaryType="nt:unstructured"
-                                                        jcr:title="Disabled"
-                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label input[disabled] + span"/>
+                                                        jcr:title="Label"
+                                                        id="af2_radiobuttonitemlabel"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label span"
+                                                        longTitle="Radio Button Item Label"
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <disabled
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Disabled"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label input[disabled] + span"/>
+                                                        <hover
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Hover"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label:hover span"/>
+                                                        <checked
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Selected"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option input[type='radio']:checked + span"/>
+                                                        <mandatory
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Mandatory"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton[data-cmp-required='true'] .cmp-adaptiveform-radiobutton__option-label span"/>
+                                                    </states>
+                                                </radioButtonLabel>
+                                                <radioButtonWidgetAndText
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Radio Button"
+                                                        id="af2_radiobuttonwidget"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option__widget"
+                                                        longTitle="Radio Button Item Widget"
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                        secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <focus
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Focus"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:focus"/>
+                                                        <disabled
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Disabled"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:disabled"/>
+                                                        <hover
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Hover"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:hover"/>
+                                                        <checked
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Selected"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:checked"/>
+                                                        <mandatory
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Mandatory"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:required"/>
+                                                    </states>
+                                                </radioButtonWidgetAndText>
+                                            </items>
+                                            <states jcr:primaryType="nt:unstructured">
                                                 <hover
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Hover"
-                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label:hover span"/>
-                                                <checked
-                                                        jcr:primaryType="nt:unstructured"
-                                                        jcr:title="Selected"
-                                                        cssSelector=".cmp-adaptiveform-radiobutton__option input[type='radio']:checked + span"/>
-                                                <mandatory
-                                                        jcr:primaryType="nt:unstructured"
-                                                        jcr:title="Mandatory"
-                                                        cssSelector=".cmp-adaptiveform-radiobutton[data-cmp-required='true'] .cmp-adaptiveform-radiobutton__option-label span"/>
-                                            </states>
-                                        </radioButtonLabel>
-                                        <radioButtonWidgetAndText
-                                                jcr:primaryType="nt:unstructured"
-                                                jcr:title="Radio Button"
-                                                id="af2_radiobuttonwidget"
-                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget"
-                                                longTitle="Radio Button Item Widget"
-                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                                                secondarySelectors="af2_guideContainer:af2_widgetAndText">
-                                            <states jcr:primaryType="nt:unstructured">
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label:hover"/>
                                                 <focus
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Focus"
-                                                        cssSelector=".cmp-adaptiveform-radiobutton__option__widget:focus"/>
-                                                <disabled
-                                                        jcr:primaryType="nt:unstructured"
-                                                        jcr:title="Disabled"
-                                                        cssSelector=".cmp-adaptiveform-radiobutton__option__widget:disabled"/>
-                                                <hover
-                                                        jcr:primaryType="nt:unstructured"
-                                                        jcr:title="Hover"
-                                                        cssSelector=".cmp-adaptiveform-radiobutton__option__widget:hover"/>
-                                                <checked
-                                                        jcr:primaryType="nt:unstructured"
-                                                        jcr:title="Selected"
-                                                        cssSelector=".cmp-adaptiveform-radiobutton__option__widget:checked"/>
-                                                <mandatory
-                                                        jcr:primaryType="nt:unstructured"
-                                                        jcr:title="Mandatory"
-                                                        cssSelector=".cmp-adaptiveform-radiobutton__option__widget:required"/>
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label:focus"/>
                                             </states>
-                                        </radioButtonWidgetAndText>
+                                        </radioButtonItemLabelContainer>
                                     </items>
                                     <states jcr:primaryType="nt:unstructured">
-                                    <disabled
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Disabled"
-                                            cssSelector=".cmp-adaptiveform-radiobutton__option input[disabled] + span"/>
-                                    <hover
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Hover"
-                                            cssSelector=".cmp-adaptiveform-radiobutton__option:hover"/>
-                                    <focus
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Focus"
-                                            cssSelector=".cmp-adaptiveform-radiobutton__option:focus"/>
-                                    <mandatory
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Mandatory"
-                                            cssSelector=".cmp-adaptiveform-radiobutton[data-cmp-required='true'] .cmp-adaptiveform-radiobutton__option"/>
-                                </states>
+                                        <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option input[disabled] + span"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option:hover"/>
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option:focus"/>
+                                        <mandatory
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Mandatory"
+                                                cssSelector=".cmp-adaptiveform-radiobutton[data-cmp-required='true'] .cmp-adaptiveform-radiobutton__option"/>
+                                    </states>
                                 </radioButtonItem>
                             </items>
                             <states jcr:primaryType="nt:unstructured">
@@ -188,6 +208,256 @@
                                         cssSelector=".cmp-adaptiveform-radiobutton__widget:focus"/>
                             </states>
                         </radioButtonWidget>
+                        <radioButtonWidgetHorizontal
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Radio Button Widget Horizontal"
+                                id="af2_radiobuttonitemswidgethorizontal"
+                                cssSelector=".cmp-adaptiveform-radiobutton__widget.HORIZONTAL"
+                                longTitle="Radio Button Widget Horizontal"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <radioButtonItemHorizontal
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Radio Button Item"
+                                        id="af2_radiobuttonitemhorizontal"
+                                        cssSelector=".cmp-adaptiveform-radiobutton__option"
+                                        longTitle="Radio Button Item"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <radioButtonItemLabelContainerHorizontal
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Radio Button Item Label Container"
+                                                id="af2_radiobuttonitemlabelcontainerhorizontal"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label"
+                                                longTitle="Radio Button Item Label Container"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <radioButtonLabelHorizontal
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Label"
+                                                        id="af2_radiobuttonitemlabelhorizontal"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label span"
+                                                        longTitle="Radio Button Item Label"
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <disabled
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Disabled"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label input[disabled] + span"/>
+                                                        <hover
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Hover"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label:hover span"/>
+                                                        <checked
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Selected"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option input[type='radio']:checked + span"/>
+                                                        <mandatory
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Mandatory"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton[data-cmp-required='true'] .cmp-adaptiveform-radiobutton__option-label span"/>
+                                                    </states>
+                                                </radioButtonLabelHorizontal>
+                                                <radioButtonWidgetAndTextHorizontal
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Radio Button"
+                                                        id="af2_radiobuttonwidgethorizontal"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option__widget"
+                                                        longTitle="Radio Button Item Widget"
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                        secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <focus
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Focus"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:focus"/>
+                                                        <disabled
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Disabled"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:disabled"/>
+                                                        <hover
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Hover"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:hover"/>
+                                                        <checked
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Selected"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:checked"/>
+                                                        <mandatory
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Mandatory"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:required"/>
+                                                    </states>
+                                                </radioButtonWidgetAndTextHorizontal>
+                                            </items>
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Hover"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label:hover"/>
+                                                <focus
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Focus"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label:focus"/>
+                                            </states>
+                                        </radioButtonItemLabelContainerHorizontal>
+                                    </items>
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option input[disabled] + span"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option:hover"/>
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option:focus"/>
+                                        <mandatory
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Mandatory"
+                                                cssSelector=".cmp-adaptiveform-radiobutton[data-cmp-required='true'] .cmp-adaptiveform-radiobutton__option"/>
+                                    </states>
+                                </radioButtonItemHorizontal>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-radiobutton__widget.HORIZONTAL:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-radiobutton__widget.HORIZONTAL:focus"/>
+                            </states>
+                        </radioButtonWidgetHorizontal>
+                        <radioButtonWidgetVertical
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Radio Button Widget Vertical"
+                                id="af2_radiobuttonitemswidgetvertical"
+                                cssSelector=".cmp-adaptiveform-radiobutton__widget.VERTICAL"
+                                longTitle="Radio Button Widget Vertical"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <radioButtonItemVertical
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Radio Button Item"
+                                        id="af2_radiobuttonitemvertical"
+                                        cssSelector=".cmp-adaptiveform-radiobutton__option"
+                                        longTitle="Radio Button Item"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <radioButtonItemLabelContainerVertical
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Radio Button Item Label Container"
+                                                id="af2_radiobuttonitemlabelcontainervertical"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label"
+                                                longTitle="Radio Button Item Label Container"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <radioButtonLabelVertical
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Label"
+                                                        id="af2_radiobuttonitemlabelvertical"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label span"
+                                                        longTitle="Radio Button Item Label"
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <disabled
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Disabled"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label input[disabled] + span"/>
+                                                        <hover
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Hover"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option-label:hover span"/>
+                                                        <checked
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Selected"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option input[type='radio']:checked + span"/>
+                                                        <mandatory
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Mandatory"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton[data-cmp-required='true'] .cmp-adaptiveform-radiobutton__option-label span"/>
+                                                    </states>
+                                                </radioButtonLabelVertical>
+                                                <radioButtonWidgetAndTextVertical
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Radio Button"
+                                                        id="af2_radiobuttonwidgetvertical"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option__widget"
+                                                        longTitle="Radio Button Item Widget"
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                        secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <focus
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Focus"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:focus"/>
+                                                        <disabled
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Disabled"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:disabled"/>
+                                                        <hover
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Hover"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:hover"/>
+                                                        <checked
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Selected"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:checked"/>
+                                                        <mandatory
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Mandatory"
+                                                                cssSelector=".cmp-adaptiveform-radiobutton__option__widget:required"/>
+                                                    </states>
+                                                </radioButtonWidgetAndTextVertical>
+                                            </items>
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Hover"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label:hover"/>
+                                                <focus
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Focus"
+                                                        cssSelector=".cmp-adaptiveform-radiobutton__option-label:focus"/>
+                                            </states>
+                                        </radioButtonItemLabelContainerVertical>
+                                    </items>
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option input[disabled] + span"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option:hover"/>
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-radiobutton__option:focus"/>
+                                        <mandatory
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Mandatory"
+                                                cssSelector=".cmp-adaptiveform-radiobutton[data-cmp-required='true'] .cmp-adaptiveform-radiobutton__option"/>
+                                    </states>
+                                </radioButtonItemVertical>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-radiobutton__widget.VERTICAL:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-radiobutton__widget.VERTICAL:focus"/>
+                            </states>
+                        </radioButtonWidgetVertical>
                         <radioButtonDescriptionShort
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Short Description"
