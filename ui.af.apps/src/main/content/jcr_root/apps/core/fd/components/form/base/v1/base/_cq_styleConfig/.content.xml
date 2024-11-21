@@ -63,6 +63,13 @@
                             cssSelector="label:required"/>
                     </states>
                 </fieldLabel>
+                <errorMessage
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Error Message"
+                        id="af2_baseerrormessage"
+                        cssSelector="[class$='__errormessage']"
+                        longTitle="Field Error Message"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
             </items>
             <states jcr:primaryType="nt:unstructured">
                 <focus

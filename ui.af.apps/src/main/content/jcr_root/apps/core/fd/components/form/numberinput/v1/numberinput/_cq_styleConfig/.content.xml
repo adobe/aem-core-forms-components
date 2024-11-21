@@ -86,7 +86,7 @@
                         </numberinputLabelContainer>
                         <numberinputWidgetAndText
                                 jcr:primaryType="nt:unstructured"
-                                jcr:title="numberinput"
+                                jcr:title="Number Input Widget and Text"
                                 id="af2_numberinputwidgetandtext"
                                 cssSelector=".cmp-adaptiveform-numberinput__widget"
                                 longTitle="Number Input Widget"
@@ -137,6 +137,14 @@
                                         cssSelector=".cmp-adaptiveform-numberinput__longdescription:hover"/>
                             </states>
                         </numberinputDescriptionLong>
+                        <numberinputErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Number Input Error Message"
+                                id="af2_numberinputerrormessage"
+                                cssSelector=".cmp-adaptiveform-numberinput__errormessage"
+                                longTitle="Number Input Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </numberinputErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
