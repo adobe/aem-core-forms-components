@@ -137,6 +137,14 @@
                                         cssSelector=".cmp-adaptiveform-dropdown__longdescription:hover"/>
                             </states>
                         </dropdownDescriptionLong>
+                        <dropdownErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Dropdown Error Message"
+                                id="af2_dropdownerrormessage"
+                                cssSelector=".cmp-adaptiveform-dropdown__errormessage"
+                                longTitle="Dropdown Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </dropdownErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus

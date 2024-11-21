@@ -132,6 +132,14 @@
                                             cssSelector=".cmp-adaptiveform-telephoneinput__longdescription:hover"/>
                                 </states>
                             </telephoneinputDescriptionLong>
+                            <telephoneinputErrorMessage
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Telephone Input Error Message"
+                                    id="af2_telephoneerrormessage"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput__errormessage"
+                                    longTitle="Telephone Input Error Message"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            </telephoneinputErrorMessage>
                         </items>
                         <states jcr:primaryType="nt:unstructured">
                             <focus
