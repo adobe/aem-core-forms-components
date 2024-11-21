@@ -137,6 +137,14 @@
                                         cssSelector=".cmp-adaptiveform-datepicker__longdescription:hover"/>
                             </states>
                         </datepickerDescriptionLong>
+                        <datepickerErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Datepicker Error Message"
+                                id="af2_datepickererrormessage"
+                                cssSelector=".cmp-adaptiveform-datepicker__errormessage"
+                                longTitle="Datepicker Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </datepickerErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus

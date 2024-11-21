@@ -137,6 +137,14 @@
                                         cssSelector=".cmp-adaptiveform-textinput__longdescription:hover"/>
                             </states>
                         </textinputDescriptionLong>
+                        <textinputErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text Input Error Message"
+                                id="af2_textinputerrormessage"
+                                cssSelector=".cmp-adaptiveform-textinput__errormessage"
+                                longTitle="Text Input Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </textinputErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
