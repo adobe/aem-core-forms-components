@@ -51,6 +51,14 @@
                                         cssSelector=".cmp-adaptiveform-recaptcha__widget:hover"/>
                             </states>
                         </captchaWidget>
+                        <captchaErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="reCaptcha Error Message"
+                                id="af2_recaptchaerrormessage"
+                                cssSelector=".cmp-adaptiveform-recaptcha__errormessage"
+                                longTitle="reCaptcha Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </captchaErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus

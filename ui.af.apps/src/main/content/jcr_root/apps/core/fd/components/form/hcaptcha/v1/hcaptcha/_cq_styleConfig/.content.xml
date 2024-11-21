@@ -51,6 +51,14 @@
                                         cssSelector=".cmp-adaptiveform-hcaptcha__widget:hover"/>
                             </states>
                         </captchaWidget>
+                        <captchaErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="hCaptcha Error Message"
+                                id="af2_hcaptchaerrormessage"
+                                cssSelector=".cmp-adaptiveform-hcaptcha__errormessage"
+                                longTitle="hCaptcha Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </captchaErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus

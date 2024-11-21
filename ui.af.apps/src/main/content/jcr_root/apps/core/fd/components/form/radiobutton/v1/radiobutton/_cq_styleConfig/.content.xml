@@ -484,6 +484,14 @@
                                         cssSelector=".cmp-adaptiveform-radiobutton__longdescription:hover"/>
                             </states>
                         </radioButtonDescriptionLong>
+                        <radioButtonErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Radio Button Error Message"
+                                id="af2_radiobuttonerrormessage"
+                                cssSelector=".cmp-adaptiveform-radiobutton__errormessage"
+                                longTitle="Radio Button Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </radioButtonErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus

@@ -205,6 +205,14 @@
                                         cssSelector=".cmp-adaptiveform-termsandcondition__longdescription:hover"/>
                             </states>
                         </tncDescriptionLong>
+                        <tncErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Terms And Conditions Error Message"
+                                id="af2_tncerrormessage"
+                                cssSelector=".cmp-adaptiveform-termsandcondition__errormessage"
+                                longTitle="Terms And Conditions Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </tncErrorMessage>
                     </items>
                     <states
                         jcr:primaryType="nt:unstructured"
