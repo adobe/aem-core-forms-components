@@ -132,6 +132,14 @@
                                     cssSelector=".cmp-adaptiveform-emailinput__longdescription:hover"/>
                             </states>
                         </emailDescriptionLong>
+                        <emailErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Email Error Message"
+                                id="af2_emailerrormessage"
+                                cssSelector=".cmp-adaptiveform-emailinput__errormessage"
+                                longTitle="Email Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </emailErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus

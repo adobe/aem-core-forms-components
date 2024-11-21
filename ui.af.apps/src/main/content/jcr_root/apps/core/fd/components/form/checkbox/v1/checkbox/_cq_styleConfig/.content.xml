@@ -162,6 +162,14 @@
                                     cssSelector=".cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:disabled"/>
                             </states>
                         </checkBoxItem>
+                        <checkBoxErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Checkbox Error Message"
+                                id="af2_checkboxerrormessage"
+                                cssSelector=".cmp-adaptiveform-checkbox__errormessage"
+                                longTitle="Checkbox Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </checkBoxErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <hover

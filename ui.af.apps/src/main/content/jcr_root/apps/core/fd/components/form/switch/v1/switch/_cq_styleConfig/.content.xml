@@ -212,6 +212,14 @@
                                         cssSelector=".cmp-adaptiveform-switch__longdescription:hover"/>
                             </states>
                         </switchDescriptionLong>
+                        <switchErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Switch Error Message"
+                                id="af2_switcherrormessage"
+                                cssSelector=".cmp-adaptiveform-switch__errormessage"
+                                longTitle="Switch Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </switchErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <checked

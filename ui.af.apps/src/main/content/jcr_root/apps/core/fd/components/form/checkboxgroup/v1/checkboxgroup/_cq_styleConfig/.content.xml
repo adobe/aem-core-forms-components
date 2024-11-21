@@ -472,6 +472,14 @@
                                         cssSelector=".cmp-adaptiveform-checkboxgroup__longdescription:hover"/>
                             </states>
                         </checkBoxGroupDescriptionLong>
+                        <checkBoxGroupErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Checkbox Group Error Message"
+                                id="af2_checkboxgrouperrormessage"
+                                cssSelector=".cmp-adaptiveform-checkboxgroup__errormessage"
+                                longTitle="Checkbox Group Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </checkBoxGroupErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <disabled
