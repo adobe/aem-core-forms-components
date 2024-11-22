@@ -223,21 +223,29 @@
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <checked
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Checked"
-                            cssSelector=".cmp-adaptiveform-switch:checked"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Checked"
+                                cssSelector=".cmp-adaptiveform-switch:checked"/>
                         <focus
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Focus"
-                            cssSelector=".cmp-adaptiveform-switch:focus"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-switch:focus"/>
                         <disabled
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Disabled"
-                            cssSelector=".cmp-adaptiveform-switch:disabled"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-switch[data-cmp-enabled='false']"/>
                         <hover
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Hover"
-                            cssSelector=".cmp-adaptiveform-switch:hover"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-switch:hover"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-switch[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-switch[data-cmp-valid='true']"/>
                     </states>
                 </widgetAndText>
             </items>

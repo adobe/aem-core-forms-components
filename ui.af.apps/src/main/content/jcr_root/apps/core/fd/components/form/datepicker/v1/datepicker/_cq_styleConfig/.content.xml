@@ -148,21 +148,29 @@
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Focus"
-                            cssSelector=".cmp-adaptiveform-datepicker:focus"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-datepicker:focus"/>
                         <disabled
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Disabled"
-                            cssSelector=".cmp-adaptiveform-datepicker:disabled"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-datepicker[data-cmp-enabled='false']"/>
                         <hover
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Hover"
-                            cssSelector=".cmp-adaptiveform-datepicker:hover"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-datepicker:hover"/>
                         <mandatory
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Mandatory"
-                            cssSelector=".cmp-adaptiveform-datepicker:required"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".cmp-adaptiveform-datepicker[data-cmp-required='true']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-datepicker[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-datepicker[data-cmp-valid='true']"/>
                     </states>
                 </widgetAndText>
             </items>
