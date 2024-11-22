@@ -113,9 +113,13 @@
                             </items>
                             <states jcr:primaryType="nt:unstructured">
                                 <hover
-                                    jcr:primaryType="nt:unstructured"
-                                    jcr:title="Hover"
-                                    cssSelector=".cmp-adaptiveform-termsandcondition__content-container:hover"/>
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-termsandcondition__content-container:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-termsandcondition__content-container:focus"/>
                             </states>
                         </tncContentContainer>
                         <tncConsentArea
@@ -157,21 +161,29 @@
                                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <disabled
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Disabled"
-                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:disabled + .cmp-adaptiveform-checkbox__label"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:disabled + .cmp-adaptiveform-checkbox__label"/>
                                         <hover
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Hover"
-                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__label:hover"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__label:hover"/>
                                         <checked
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Selected"
-                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:checked + .cmp-adaptiveform-checkbox__label"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Selected"
+                                                cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:checked + .cmp-adaptiveform-checkbox__label"/>
                                         <mandatory
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Mandatory"
-                                            cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox[data-cmp-required='true'] .cmp-adaptiveform-checkbox__label"/>
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Mandatory"
+                                                cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox[data-cmp-required='true'] .cmp-adaptiveform-checkbox__label"/>
+                                        <error
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Error"
+                                                cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox[data-cmp-valid='false'] .cmp-adaptiveform-checkbox__label"/>
+                                        <success
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Success"
+                                                cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox[data-cmp-valid='true'] .cmp-adaptiveform-checkbox__label"/>
                                     </states>
                                 </tncCheckBoxLabel>
                             </items>
