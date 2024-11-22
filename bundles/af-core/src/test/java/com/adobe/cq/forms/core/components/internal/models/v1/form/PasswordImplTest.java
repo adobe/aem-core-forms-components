@@ -31,6 +31,7 @@ import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+import org.mockito.Mockito;
 
 @ExtendWith(AemContextExtension.class)
 public class PasswordImplTest {
@@ -39,8 +40,10 @@ public class PasswordImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PASSWORD_DATALAYER = CONTENT_ROOT + "/password-datalayer";
     private static final String PATH_PASSWORD_CUSTOMIZED = CONTENT_ROOT + "/password-customized";
-    private static final String PATH_NUMBER_PASSWORD_EXCLUSIVE = CONTENT_ROOT + "/number-password-exclusive";
-    private static final String PATH_NUMBER_PASSWORD_INPUT = CONTENT_ROOT + "/number-password";
+
+    private static final String PATH_PASSWORD = CONTENT_ROOT + "/password";
+
+    private static final String PATH_PASSWORD_PATTERN = CONTENT_ROOT + "/password-pattern";
 
     private static final String PATH_PASSWORD = CONTENT_ROOT + "/password";
 
@@ -51,6 +54,21 @@ public class PasswordImplTest {
     @BeforeEach
     void setUp() {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
+    }
+
+    @Test
+    void testExportedType() {
+        Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
+        assertEquals(FormConstants.RT_FD_FORM_PASSWORD_V1, password.getExportedType());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.getExportedType()).thenCallRealMethod();
+        assertEquals("", textInputMock.getExportedType());
+    }
+
+    @Test
+    void testJSONExport() throws Exception {
+        Password password = Utils.getComponentUnderTest(PATH_PASSWORD_PATTERN, Password.class, context);
+        Utils.testJSONExport(password, Utils.getTestExporterJSONPath(BASE, PATH_PASSWORD));
     }
 
     @Test

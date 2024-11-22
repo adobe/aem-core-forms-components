@@ -36,9 +36,18 @@ The following properties are written to JCR for this Form Password component and
 2. `./hideTitle` - if set to `true`, the label of this field will be hidden
 3. `./name` - defines the name of the field, which will be submitted with the form data
 4. `./description` - defines a help message that can be rendered in the field as a hint for the user
-5. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
-6. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-7. `./readOnly` - if set to `true`, the filed will be read only
+5. `./dataRef` - defines bind reference with model
+6. `./placeholder` - defines place holder for the field
+7. `./unboundFormElement` - defines if the field is unbound
+8. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
+9. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
+10. `./readOnly` - if set to `true`, the filed will be read only
+11. `./maxLength` - define maximum characters permitted
+12. `./minLength` - define minimum characters permitted
+13. `./maxLengthMessage` - define maximum characters of error message permitted
+14. `./pattern` - define regular expression permitted
+15. `./minLengthMessage` - define minimum characters of error message permitted
+16. `./validatePictureClauseMessage` - define error message if wrong pattern is entered.
 
 ## Client Libraries
 The component provides a `core.forms.components.password.v1.runtime` client library category that contains the Javascript runtime for the component. 
@@ -57,22 +66,21 @@ BLOCK cmp-adaptiveform-password
     ELEMENT cmp-adaptiveform-password__shortdescription
     ELEMENT cmp-adaptiveform-password__longdescription
     ELEMENT cmp-adaptiveform-password__errormessage
+    ELEMENT cmp-adaptiveform-password__eyeicon
+    ELEMENT cmp-adaptiveform-password__input-wrapper
 ```
 
 ### Note
 By placing the class names `cmp-adaptiveform-password__label` and `cmp-adaptiveform-password__questionmark` within the `cmp-adaptiveform-password__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## Replace feature:
-We support replace feature that allows replacing Reset Button component to any of the below components:
+We support replace feature that allows replacing Password component to any of the below components:
 
-* Button
-* Date Picker
 * Email Input
 * Number Input
-* Reset Button
-* Submit Button
 * Telephone Input
 * Text Box
+* Email Input
 
 ## JavaScript Data Attribute Bindings
 

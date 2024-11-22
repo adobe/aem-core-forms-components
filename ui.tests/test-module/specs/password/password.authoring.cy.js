@@ -82,7 +82,7 @@ describe('Page - Authoring', function () {
         // Check If Dialog Options Are Visible
         cy.get(".cmp-adaptiveform-base__editdialogbasic [name='./name']")
             .should("exist")
-            .should("have.value", "password_copy_1");
+            .should("have.value", "Password_copy_1");
         cy.get("coral-dialog.is-open coral-dialog-footer button[variant='default']").click();
         cy.deleteComponentByPath(passwordDrop);
         cy.deleteComponentByPath(passwordDrop + "_copy");
@@ -117,7 +117,7 @@ describe('Page - Authoring', function () {
             testPasswordBehaviour(passwordEditPathSelector, passwordDrop);
         })
 
-        it.skip('pasted component should have unique name', function () {
+        it('pasted component should have unique name', function () {
             testCopyPasteComponent(passwordEditPathSelector, passwordEditPathSelectorCopy, passwordDrop);
         })
     })

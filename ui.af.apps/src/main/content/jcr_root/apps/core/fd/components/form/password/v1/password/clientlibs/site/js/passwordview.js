@@ -87,19 +87,19 @@
             });
         }
 
-        #togglePasswordType(){
-            const widget = this.getWidget();
-            if(widget.value){
-                const widget = this.getWidget();
-                if (widget.type === "password") {
-                    widget.type = "text";
-                    this.getEyeIcon().classList.remove('close');
-                    } else {
-                     widget.type = "password";
-                     this.getEyeIcon().classList.add('close');
-                    }
-                }            
-        }       
+         #togglePasswordType(){
+                    const widget = this.getWidget();
+                    if(widget.value){
+                        const widget = this.getWidget();
+                        if (widget.type === "password") {
+                            widget.type = "text";
+                            this.getEyeIcon().classList.add('open');
+                            } else {
+                             widget.type = "password";
+                             this.getEyeIcon().classList.remove('open');
+                            }
+                        }
+                }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

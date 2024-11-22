@@ -158,5 +158,12 @@ describe("Form Runtime with Password", () => {
         })
 
     })
+
+     it("should show required error message on entering wrong validation pattern of password", () =>{
+            const [passwordbox11, passwordbox11FieldView] = Object.entries(formContainer._fields)[10];
+            cy.get(`#${passwordbox11}`).find("input").clear().type(1).blur().then(x => {
+            cy.get(`#${passwordbox11}`).find(".cmp-adaptiveform-password__errormessage").should('have.text',"Please enter valid password")
+            })
+        })
 })
 
