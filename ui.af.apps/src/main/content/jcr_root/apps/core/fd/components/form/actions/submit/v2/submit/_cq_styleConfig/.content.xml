@@ -120,6 +120,14 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Hover"
                         cssSelector=".submit .cmp-adaptiveform-button__widget:hover"/>
+                <error
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Error"
+                        cssSelector=".submit .cmp-adaptiveform-button[data-cmp-valid='false']"/>
+                <success
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Success"
+                        cssSelector=".submit .cmp-adaptiveform-button[data-cmp-valid='true']"/>
             </states>
         </button>
     </items>
