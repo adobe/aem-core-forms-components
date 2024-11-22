@@ -173,17 +173,25 @@
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <hover
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Hover"
-                            cssSelector=".cmp-adaptiveform-checkbox:hover"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-checkbox:hover"/>
                         <focus
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Focus"
-                            cssSelector=".cmp-adaptiveform-checkbox:focus"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-checkbox:focus"/>
                         <disabled
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Disabled"
-                            cssSelector=".cmp-adaptiveform-checkbox:disabled"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-checkbox[data-cmp-enabled='false']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-checkbox[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-checkbox[data-cmp-valid='true']"/>
                     </states>
                 </widgetAndText>
             </items>

@@ -143,21 +143,29 @@
                         </items>
                         <states jcr:primaryType="nt:unstructured">
                             <focus
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Focus"
-                                cssSelector=".cmp-adaptiveform-telephoneinput:focus"/>
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Focus"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput:focus"/>
                             <disabled
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Disabled"
-                                cssSelector=".cmp-adaptiveform-telephoneinput:disabled"/>
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Disabled"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput[data-cmp-enabled='false']"/>
                             <hover
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Hover"
-                                cssSelector=".cmp-adaptiveform-telephoneinput:hover"/>
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput:hover"/>
                             <mandatory
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Mandatory"
-                                cssSelector=".cmp-adaptiveform-telephoneinput:required"/>
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Mandatory"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput[data-cmp-required='true']"/>
+                            <error
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Error"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput[data-cmp-valid='false']"/>
+                            <success
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Success"
+                                    cssSelector=".cmp-adaptiveform-telephoneinput[data-cmp-valid='true']"/>
                         </states>
                 </widgetAndText>
                 <textAreaWidgetAndText

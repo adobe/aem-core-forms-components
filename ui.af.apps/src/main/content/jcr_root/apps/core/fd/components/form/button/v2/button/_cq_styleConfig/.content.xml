@@ -20,21 +20,21 @@
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Focus"
-                            cssSelector=".cmp-adaptiveform-button__text:focus"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-button__text:focus"/>
                         <active
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Down"
-                            cssSelector=".cmp-adaptiveform-button__text:active"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Down"
+                                cssSelector=".cmp-adaptiveform-button__text:active"/>
                         <disabled
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Disabled"
-                            cssSelector=".cmp-adaptiveform-button__text:disabled"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-button__text:disabled"/>
                         <hover
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Hover"
-                            cssSelector=".cmp-adaptiveform-button__text:hover"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-button__text:hover"/>
                     </states>
                 </buttonText>
                 <buttonDescriptionShort
@@ -103,21 +103,29 @@
             </items>
             <states jcr:primaryType="nt:unstructured">
                 <focus
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Focus"
-                    cssSelector=".cmp-adaptiveform-button__widget:focus"/>
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Focus"
+                        cssSelector=".cmp-adaptiveform-button__widget:focus"/>
                 <active
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Down"
-                    cssSelector=".cmp-adaptiveform-button__widget:active"/>
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Down"
+                        cssSelector=".cmp-adaptiveform-button__widget:active"/>
                 <disabled
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Disabled"
-                    cssSelector=".cmp-adaptiveform-button__widget:disabled"/>
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Disabled"
+                        cssSelector=".cmp-adaptiveform-button__widget:disabled"/>
                 <hover
-                    jcr:primaryType="nt:unstructured"
-                    jcr:title="Hover"
-                    cssSelector=".cmp-adaptiveform-button__widget:hover"/>
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Hover"
+                        cssSelector=".cmp-adaptiveform-button__widget:hover"/>
+                <error
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Error"
+                        cssSelector=".cmp-adaptiveform-button[data-cmp-valid='false']"/>
+                <success
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Success"
+                        cssSelector=".cmp-adaptiveform-button[data-cmp-valid='true']"/>
             </states>
         </button>
     </items>

@@ -483,21 +483,29 @@
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <disabled
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Disabled"
-                            cssSelector=".cmp-adaptiveform-checkboxgroup__widget .cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget .cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
                         <hover
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Hover"
-                            cssSelector=".cmp-adaptiveform-checkboxgroup__widget:hover"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget:hover"/>
                         <focus
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Focus"
-                            cssSelector=".cmp-adaptiveform-checkboxgroup__widget:focus"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget:focus"/>
                         <mandatory
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Mandatory"
                                 cssSelector=".cmp-adaptiveform-checkboxgroup[data-cmp-required='true']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-checkboxgroup[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-checkboxgroup[data-cmp-valid='true']"/>
                     </states>
                 </widgetAndText>
             </items>
