@@ -72,7 +72,19 @@
                         <disabled
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Disabled"
-                                cssSelector="\[data-cmp-enabled = 'false'].cmp-adaptiveform-hcaptcha"/>
+                                cssSelector=".cmp-adaptiveform-hcaptcha[data-cmp-enabled='false']"/>
+                        <mandatory
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".cmp-adaptiveform-hcaptcha[data-cmp-required='true']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-hcaptcha[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-hcaptcha[data-cmp-valid='true']"/>
                     </states>
                 </captcha>
             </items>

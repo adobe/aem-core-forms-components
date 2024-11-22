@@ -7,7 +7,7 @@
             jcr:primaryType="nt:unstructured"
             jcr:title="Field"
             id="af2_base"
-            cssSelector=".base"
+            cssSelector=".cmp-adaptiveform-container .base"
             longTitle="Field"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
@@ -15,59 +15,59 @@
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Widget and Text"
                     id="af2_basewidgetandtext"
-                    cssSelector="input,select,textarea"
+                    cssSelector=".cmp-adaptiveform-container input,select,textarea"
                     longTitle="Field Widget and Text"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Focus"
-                            cssSelector="input:focus,select:focus,textarea:focus"/>
+                            cssSelector=".cmp-adaptiveform-container input:focus,select:focus,textarea:focus"/>
                         <disabled
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Disabled"
-                            cssSelector="input:disabled,select:disabled,textarea:disabled"/>
+                            cssSelector=".cmp-adaptiveform-container input:disabled,select:disabled,textarea:disabled"/>
                         <hover
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Hover"
-                            cssSelector="input:hover,select:hover,textarea:hover"/>
+                            cssSelector=".cmp-adaptiveform-container input:hover,select:hover,textarea:hover"/>
                         <mandatory
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Mandatory"
-                            cssSelector="input:required,select:required,textarea:required"/>
+                            cssSelector=".cmp-adaptiveform-container input:required,select:required,textarea:required"/>
                     </states>
                 </widgetAndText>
                 <fieldLabel
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Label"
                     id="af2_baselabel"
-                    cssSelector="label"
+                    cssSelector=".cmp-adaptiveform-container label"
                     longTitle="Field Label"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Focus"
-                            cssSelector="label:focus"/>
+                            cssSelector=".cmp-adaptiveform-container label:focus"/>
                         <hover
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Hover"
-                            cssSelector="label:hover"/>
+                            cssSelector=".cmp-adaptiveform-container label:hover"/>
                         <disabled
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Disabled"
-                            cssSelector="label:disabled"/>
+                            cssSelector=".cmp-adaptiveform-container label:disabled"/>
                         <mandatory
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Mandatory"
-                            cssSelector="label:required"/>
+                            cssSelector=".cmp-adaptiveform-container label:required"/>
                     </states>
                 </fieldLabel>
                 <errorMessage
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Error Message"
                         id="af2_baseerrormessage"
-                        cssSelector="[class$='__errormessage']"
+                        cssSelector=".cmp-adaptiveform-container [class$='__errormessage']"
                         longTitle="Field Error Message"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
             </items>
@@ -75,19 +75,19 @@
                 <focus
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Focus"
-                    cssSelector=".base:focus"/>
+                    cssSelector=".cmp-adaptiveform-container .base:focus"/>
                 <hover
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Hover"
-                    cssSelector=".base:hover"/>
+                    cssSelector=".cmp-adaptiveform-container .base:hover"/>
                 <disabled
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Disabled"
-                    cssSelector=".base:disabled"/>
+                    cssSelector=".cmp-adaptiveform-container .base:disabled"/>
                 <mandatory
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Mandatory"
-                    cssSelector=".base:required"/>
+                    cssSelector=".cmp-adaptiveform-container .base:required"/>
             </states>
         </field>
     </items>

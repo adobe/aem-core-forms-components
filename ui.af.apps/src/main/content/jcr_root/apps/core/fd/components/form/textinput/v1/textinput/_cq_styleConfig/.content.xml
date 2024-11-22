@@ -148,21 +148,29 @@
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Focus"
-                            cssSelector=".cmp-adaptiveform-textinput:focus"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-textinput:focus"/>
                         <disabled
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Disabled"
-                            cssSelector=".cmp-adaptiveform-textinput:disabled"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-textinput[data-cmp-enabled='false']"/>
                         <hover
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Hover"
-                            cssSelector=".cmp-adaptiveform-textinput:hover"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-textinput:hover"/>
                         <mandatory
-                            jcr:primaryType="nt:unstructured"
-                            jcr:title="Mandatory"
-                            cssSelector=".cmp-adaptiveform-textinput:required"/>
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".cmp-adaptiveform-textinput[data-cmp-required='true']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-textinput[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-textinput[data-cmp-valid='true']"/>
                     </states>
                 </widgetAndText>
                 <textAreaWidgetAndText
