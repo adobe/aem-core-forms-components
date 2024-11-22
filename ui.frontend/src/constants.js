@@ -374,7 +374,7 @@ export const Constants = {
      * @memberof module:FormView~Constants
      * @namespace FIELD_TYPE
      */
-    FIELD_TYPE: FIELD_TYPE
+    FIELD_TYPE: FIELD_TYPE,
 
     /**
      * Html input type text

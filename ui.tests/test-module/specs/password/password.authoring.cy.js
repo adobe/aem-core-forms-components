@@ -53,7 +53,7 @@ describe('Page - Authoring', function () {
         cy.get(".cmp-adaptiveform-password__minlength").invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal', 'block');
         cy.get('.cmp-adaptiveform-password__editdialog').contains('Validation').click({force: true}).then(() => {
-            cy.get("[name='./validationPattern']").should('have.length', 1);
+            cy.get("[name='./pattern']").should('have.length', 1);
             cy.get("[name='./validatePictureClauseMessage']").should('have.length', 1);
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(passwordDrop);
@@ -82,7 +82,7 @@ describe('Page - Authoring', function () {
         // Check If Dialog Options Are Visible
         cy.get(".cmp-adaptiveform-base__editdialogbasic [name='./name']")
             .should("exist")
-            .should("have.value", "password_copy_1");
+            .should("have.value", "Password_copy_1");
         cy.get("coral-dialog.is-open coral-dialog-footer button[variant='default']").click();
         cy.deleteComponentByPath(passwordDrop);
         cy.deleteComponentByPath(passwordDrop + "_copy");
@@ -117,7 +117,7 @@ describe('Page - Authoring', function () {
             testPasswordBehaviour(passwordEditPathSelector, passwordDrop);
         })
 
-        it.skip('pasted component should have unique name', function () {
+        it('pasted component should have unique name', function () {
             testCopyPasteComponent(passwordEditPathSelector, passwordEditPathSelectorCopy, passwordDrop);
         })
     })

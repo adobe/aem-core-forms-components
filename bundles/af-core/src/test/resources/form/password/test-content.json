@@ -29,7 +29,7 @@
       "typeMessage" : "incorrect type",
       "tooltip": "test-short-description",
       "placeholder": "Enter valid password",
-      "validationPattern": "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",
+      "pattern": "/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/",
       "default" : "password",
       "fieldType": "password",
       "label": {
@@ -37,46 +37,36 @@
         "visible": true
       }
     },
-    "number-password" : {
-      "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
-      "name" : "abc",
-      "type" : "password",
-      "jcr:title" : "def",
-      "hideTitle" : false,
-      "description" : "dummy",
-      "visible" : false,
-      "assistPriority" : "custom",
-      "dataRef" : "a.b",
-      "custom" : "Custom screen reader text",
-      "typeMessage" : "incorrect type",
-      "tooltip": "test-short-description",
-      "fieldType": "text-input",
-      "maximum" : 16,
-      "minimum" : 8,
-      "default" : 150
+    "password-pattern" : {
+      "id": "password-91417957c6",
+      "fieldType": "password",
+      "name": "password1732174214265",
+      "visible": true,
+      "type": "string",
+      "enabled": true,
+      "constraintMessages": {
+        "pattern": "Enter valid password"
+      },
+      "readOnly": false,
+      "pattern": "^(?=.*\\d.*\\d)[A-Za-z\\d!@]+$",
+      "label": {
+        "visible": true,
+        "value": "Password"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/forms/af/testcheckboaf2/jcr:content/guideContainer/password"
+      },
+      ":type": "forms-components-examples/components/form/password"
     },
-    "number-password-exclusive" : {
-      "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType"    : "core/fd/components/form/password/v1/password",
-      "name" : "abc",
-      "type" : "password",
-      "jcr:title" : "def",
-      "hideTitle" : false,
-      "description" : "dummy",
-      "visible" : false,
-      "assistPriority" : "custom",
-      "dataRef" : "a.b",
-      "custom" : "Custom screen reader text",
-      "typeMessage" : "incorrect type",
-      "tooltip": "test-short-description",
-      "fieldType": "text-input",
-      "maximum" : 16,
-      "minimum" : 8,
-      "exclusiveMinimum" : true,
-      "exclusiveMaximum" : true,
-      "default" : 150
-    },
+
     "password-format" : {
       "jcr:primaryType": "nt:unstructured",
       "sling:resourceType"    : "core/fd/components/form/password/v1/password",

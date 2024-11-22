@@ -29,6 +29,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Password;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
@@ -47,11 +48,11 @@ public class PasswordImpl extends AbstractFieldImpl implements Password {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
-    private String validationPattern;
+    private String pattern;
 
     @Override
     public String getFieldType() {
-        return super.getFieldType();
+        return getFieldType(FieldType.PASSWORD);
     }
 
     @Override
@@ -65,33 +66,13 @@ public class PasswordImpl extends AbstractFieldImpl implements Password {
     }
 
     @Override
-    public Long getMinimum() {
-        return minimum;
-    }
-
-    @Override
-    public Long getMaximum() {
-        return maximum;
-    }
-
-    @Override
     public String getFormat() {
         return displayFormat;
     }
 
     @Override
-    public String getValidationPattern() {
-        return validationPattern;
-    }
-
-    @Override
-    public Long getExclusiveMaximum() {
-        return (Long) exclusiveMaximumValue;
-    }
-
-    @Override
-    public Long getExclusiveMinimum() {
-        return (Long) exclusiveMinimumVaue;
+    public String getPattern() {
+        return pattern;
     }
 
     @PostConstruct
