@@ -38,6 +38,9 @@ import javax.json.JsonReader;
 import java.io.StringReader;
 import java.util.function.Function;
 
+// these bundles are not present on local cloud ready sdk
+// to make this work, you have to download/install 0.11.2 from here, https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api/0.11.2
+// making the import optional
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
