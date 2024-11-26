@@ -162,6 +162,19 @@ Import-Package: javax.annotation;version=0.0.0,*
             <artifactId>core-forms-components-af-core</artifactId>
             <version>3.0.70</version>
         </dependency>
+        <!-- Json web token dependencies for oauth2 flow -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.2</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <!-- ====================================================================== -->
