@@ -52,9 +52,9 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     protected String[] enumNames;
 
     /**
-     * Default for single and multi-valued fields used the same 'default' crx property.
+     * Default for single and multivalued fields used the same 'default' crx property.
      * This was not compatible with Universal Editor's Property Rail Configuration.
-     * Therefore adding this property as an additional way of defining default values.
+     * Therefore, adding this property as an additional way of defining default values.
      **/
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MULTI_DEFAULT_VALUES)
     @Nullable
