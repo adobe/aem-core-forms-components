@@ -170,14 +170,28 @@ public class HeadlessTransportHandler implements TransportHandler {
                     // todo: publish this form model json to the external system
                     LOG.info("[HeadlessTransportHandler] Form Model JSON: {}", formModelJson);
                     /**
+                     PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+                     connectionManager.setDefaultMaxPerRoute(100);
+                     connectionManager.setMaxTotal(100);
+
+                     CloseableHttpClient httpClient = HttpClients.custom()
+                     .setConnectionManager(connectionManager)
+                     .setDefaultRequestConfig(RequestConfig.custom()
+                     .setConnectTimeout(30000)
+                     .setSocketTimeout(30000)
+                     .setConnectionRequestTimeout(30000)
+                     .build())
+                     .build();
+
                      OAuth2Client oauth2Client = new OAuth2Client(
                      "https://example.com/oauth2/token",
                      "your_client_id",
-                     "your_client_secret",
-                     "https://example.com/api/publish",
+                     "your_private_key",
+                     "your_certificate_thumbprint",
+                     "your_resource_uri",
                      httpClient
                      );
-                     oauth2Client.publishOrDeleteFormModelJson(formModelJson, requestSupplier);
+                     oauth2Client.publishOrDeleteFormModelJson(formModelJson, "https://example.com/api/publish", HttpPost::new);
                      **/
                 } else {
                     LOG.info("[HeadlessTransportHandler] No adaptive form container found for resource {}. Skipping", resource.getPath());
