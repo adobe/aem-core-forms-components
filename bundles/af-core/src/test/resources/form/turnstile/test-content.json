@@ -1,0 +1,22 @@
+{
+  "turnstile": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:createdBy": "admin",
+    "jcr:title": "TURNSTILE",
+    "enabled": true,
+    "jcr:lastModifiedBy": "admin",
+    "readOnly": false,
+    "required": true,
+    "jcr:created": "Thu May 09 2024 10:17:37 GMT+0530",
+    "name": "turnstile1715230058257",
+    "size": "normal",
+    "cloudServicePath": "managed",
+    "visible": true,
+    "hideTitle": "false",
+    "jcr:lastModified": "Thu May 09 2024 10:18:00 GMT+0530",
+    "sling:resourceType": "core/fd/components/form/turnstile/v1/turnstile",
+    "fieldType": "captcha",
+    "textIsRich": "true",
+    "unboundFormElement": false
+  }
+}

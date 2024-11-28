@@ -1,0 +1,37 @@
+{
+  "id": "turnstile-b4c0808e68",
+  "fieldType": "captcha",
+  "name": "turnstile1715230058257",
+  "visible": true,
+  "type": "string",
+  "required": true,
+  "enabled": true,
+  "readOnly": false,
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/turnstile",
+    "fd:captcha": {
+      "config": {
+        "uri": "https://challenges.cloudflare.com/turnstile/v0/api.js",
+        "widgetType": "managed",
+        "size": "normal",
+        "theme": "light"
+      }
+    }
+  },
+  "captchaProvider": "turnstile",
+  "captchaDisplayMode": "visible",
+  "captchaSiteKey": "siteKey",
+  "label": {
+    "visible": true,
+    "value": "TURNSTILE"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":type": "core/fd/components/form/turnstile/v1/turnstile"
+}

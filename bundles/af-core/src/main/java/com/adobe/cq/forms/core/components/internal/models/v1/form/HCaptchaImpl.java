@@ -77,18 +77,13 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     @Named(ReservedProperties.PN_SIZE)
     protected String size;
 
-    private static final String SITE_KEY = "siteKey";
-    private static final String URI = "uri";
-    private static final String SIZE = "size";
-    private static final String THEME = "theme";
-    private static final String TYPE = "type";
-
     @Override
     public String getCloudServicePath() {
         return cloudServicePath;
     }
 
     @Override
+    @JsonIgnore
     public String getProvider() {
         return "hcaptcha";
     }
@@ -113,11 +108,11 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
         } catch (GuideException e) {
             LOGGER.error("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
         }
-        customCaptchaProperties.put(SITE_KEY, siteKey);
-        customCaptchaProperties.put(URI, uri);
-        customCaptchaProperties.put(SIZE, this.size);
-        customCaptchaProperties.put(THEME, "light");
-        customCaptchaProperties.put(TYPE, "image");
+        customCaptchaProperties.put(CAPTCHA_SITE_KEY, siteKey);
+        customCaptchaProperties.put(CAPTCHA_URI, uri);
+        customCaptchaProperties.put(CAPTCHA_SIZE, this.size);
+        customCaptchaProperties.put(CAPTCHA_THEME, "light");
+        customCaptchaProperties.put(CAPTCHA_TYPE, "image");
 
         return customCaptchaProperties;
 

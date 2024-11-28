@@ -18,6 +18,8 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
@@ -25,19 +27,7 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 /**
  * Abstract class which can be used as base class for {@link Captcha} implementations.
  */
-public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements Captcha {
-    public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
-    protected static final String CAPTCHA_CONFIG = "config";
-    protected static final String CAPTCHA_SITE_KEY = "siteKey";
-    protected static final String CAPTCHA_URI = "uri";
-    protected static final String CAPTCHA_SIZE = "size";
-    protected static final String CAPTCHA_THEME = "theme";
-    protected static final String CAPTCHA_THEME_LIGHT = "light";
-    protected static final String CAPTCHA_TYPE = "type";
-    protected static final String CAPTCHA_TYPE_IMAGE = "image";
-    protected static final String CAPTCHA_WIDGET_TYPE = "widgetType";
-
-    public abstract String getProvider();
+public abstract class AbstractCaptchaImplV2 extends AbstractCaptchaImpl implements Captcha {
 
     @Override
     public String getFieldType() {
@@ -46,14 +36,13 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
 
     public abstract Map<String, Object> getCaptchaProperties();
 
+    @PostConstruct
     public Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
         Map<String, Object> captchaConfig = new HashMap<>();
-
         try {
-            captchaConfig.put("provider", getProvider());
             if (getCaptchaProperties() != null && getCaptchaProperties().size() > 0) {
-                captchaConfig.put("config", getCaptchaProperties());
+                captchaConfig.put(CAPTCHA_CONFIG, getCaptchaProperties());
             }
             properties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, captchaConfig);
         } catch (GuideException e) {
