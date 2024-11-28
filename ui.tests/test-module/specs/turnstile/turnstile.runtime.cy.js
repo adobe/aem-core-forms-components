@@ -15,7 +15,7 @@
  */
 describe("Form Runtime with Turnstile Input", () => {
 
-    const FT_HCAPTCHA = "FT_FORMS-12407";
+    const FT_TURNSTILE = "FT_FORMS-12407";
     const pagePath = "content/forms/af/core-components-it/samples/turnstile/basic.html"
     const invisiblePagePath = "content/forms/af/core-components-it/samples/turnstile/invisible.html"
     const bemBlock = 'cmp-adaptiveform-turnstile'
@@ -70,7 +70,7 @@ describe("Form Runtime with Turnstile Input", () => {
     }
 
     it(" should get model and view initialized properly ", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
             Object.entries(formContainer._fields).forEach(([id, field]) => {
@@ -81,7 +81,7 @@ describe("Form Runtime with Turnstile Input", () => {
     })
 
     it(" model's changes are reflected in the html ", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             const [id, fieldView] = Object.entries(formContainer._fields)[0]
             const model = formContainer._model.getElement(id)
             cy.get('div.cf-turnstile').should('exist');
@@ -97,7 +97,7 @@ describe("Form Runtime with Turnstile Input", () => {
     });
 
     it(" html changes are reflected in model ", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             const [id, fieldView] = Object.entries(formContainer._fields)[0]
             const model = formContainer._model.getElement(id)
             cy.log(model.getState().value)
@@ -110,7 +110,7 @@ describe("Form Runtime with Turnstile Input", () => {
 
 
     it("decoration element should not have same class name", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             cy.wrap().then(() => {
                 const id = formContainer._model._children[0].id;
@@ -120,7 +120,7 @@ describe("Form Runtime with Turnstile Input", () => {
     })
 
     it("client side validation should fail if captcha is not filled", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
             cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
                 cy.get('.cmp-adaptiveform-turnstile__errormessage').should('exist').contains('Please fill in this field.');
@@ -129,7 +129,7 @@ describe("Form Runtime with Turnstile Input", () => {
     })
 
     it("submission should pass for mandatory captcha", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             updateTurnstileSecretKey(alwaysPassSecretKey, "managed");
             cy.previewForm(pagePath).then((p) => {
                 formContainer = p;
@@ -156,7 +156,7 @@ describe("Form Runtime with Turnstile Input", () => {
     })
 
     it("submission should fail for mandatory captcha", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             updateTurnstileSecretKey(alwaysFailSecretKey, "managed");
             cy.previewForm(pagePath).then((p) => {
                 formContainer = p;
@@ -190,7 +190,7 @@ describe("Form Runtime with Turnstile Input", () => {
     })
 
     it("submission should pass for mandatory inivisble captcha", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             updateTurnstileSecretKey(alwaysPassSecretKey, "invisible");
             cy.previewForm(invisiblePagePath).then((p) => {
                 formContainer = p;
@@ -208,7 +208,7 @@ describe("Form Runtime with Turnstile Input", () => {
     });
 
     it("submission should pass for mandatory inivisble captcha", () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes(FT_HCAPTCHA)) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             updateTurnstileSecretKey(alwaysFailSecretKey, "invisible");
             cy.previewForm(invisiblePagePath).then((p) => {
                 formContainer = p;

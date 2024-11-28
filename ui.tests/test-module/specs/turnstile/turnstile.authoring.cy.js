@@ -22,7 +22,17 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  */
 describe('Page - Authoring', function () {
 
+    const FT_TURNSTILE = "FT_FORMS-12407";
     const formturnstile = "/apps/forms-core-components-it/form/turnstile";
+    let toggle_array = [];
+
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
 
     // we can use these values to log in
 
@@ -102,14 +112,14 @@ describe('Page - Authoring', function () {
         });
 
         it('insert turnstile in form container', function () {
-            if (cy.af.isLatestAddon()) {
+            if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
                 dropTurnstileInContainer();
                 cy.deleteComponentByPath(turnstileDrop);
             }
         });
 
         it ('open edit dialog of turnstile',{ retries: 3 }, function(){
-            if (cy.af.isLatestAddon()) {
+            if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
                 cy.cleanTest(turnstileDrop).then(function(){
                     testTurnstileBehaviour(turnstileEditPathSelector, turnstileDrop);
                 });
@@ -131,14 +141,14 @@ describe('Page - Authoring', function () {
         });
 
         it('insert aem forms turnstile', function () {
-            if (cy.af.isLatestAddon()) {
+            if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
                 dropTurnstileInSites();
                 cy.deleteComponentByPath(turnstileDrop);
             }
         });
 
         it('open edit dialog of aem forms turnstile', function() {
-            if (cy.af.isLatestAddon()) {
+            if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
                 testTurnstileBehaviour(turnstileEditPathSelector, turnstileDrop, true);
             }
         });
