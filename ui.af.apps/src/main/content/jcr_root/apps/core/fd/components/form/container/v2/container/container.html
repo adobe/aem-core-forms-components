@@ -51,6 +51,21 @@
     <input type="hidden" name=":formstart" value="${resource.path}"/>
     <input type="hidden" name="_charset_" value="utf-8"/>
     <input data-sly-test="${container.redirectUrl}" type="hidden" name=":redirect" value="${container.redirectUrl}"/>
+    <div data-sly-test="${container.isHamburgerMenuEnabled && !wcmmode.edit}" class="cmp-adaptiveform-container__hamburger-menu">
+        <div class="cmp-adaptiveform-container__hamburger-menu-top">
+            <div role="navigation" aria-label="Toggle menu" class="cmp-adaptiveform-container__hamburger-menu-icon-container">
+                <button aria-controls="hamburger-menu" type="button" class="cmp-adaptiveform-container__hamburger-menu-icon" aria-label="Toggle menu"></button>
+            </div>
+        </div>
+        <div role="navigation" class="cmp-adaptiveform-container__hamburger-menu-middle"></div>
+        <div class="cmp-adaptiveform-container__hamburger-menu-bottom">
+            <div role="heading" class="cmp-adaptiveform-container__hamburger-menu-active-item-title"></div>
+            <div role="navigation" aria-label="Navigation buttons" class="cmp-adaptiveform-container__hamburger-menu-navigation">
+                <button class="cmp-adaptiveform-container__hamburger-menu-button--prev" type="button" aria-label="Previous Item"></button>
+                <button class="cmp-adaptiveform-container__hamburger-menu-button--next" type="button" aria-label="Next Item"></button>
+            </div>
+        </div>
+    </div>
     <div id="${container.id}-wrapper"
          class="cmp-adaptiveform-container__wrapper ${grid.cssClass} ${allowed.cssClass}">
         <sly data-sly-test="${!isAllowedApplicable}" data-sly-repeat.paragraph="${grid.paragraphs}"

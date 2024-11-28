@@ -64,6 +64,9 @@
                       jcr:primaryType="nt:unstructured"
                       sling:resourceType="granite/ui/components/coral/foundation/include"
                       path="core/fd/components/form/container/v2/container/cq:dialog/content/items/tabs/items/dataModel"/>
+                    <autosave
+                            jcr:primaryType="nt:unstructured"
+                            sling:hideResource="true"/>
                     <submitActions
                       jcr:primaryType="nt:unstructured"
                       sling:hideResource="true"/>

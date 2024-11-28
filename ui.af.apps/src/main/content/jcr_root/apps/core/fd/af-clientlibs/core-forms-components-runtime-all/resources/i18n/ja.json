@@ -1,56 +1,56 @@
 {
-  "FileCloseAccessText"         :   "ファイルを削除するには Enter を押します ",
-  "FileSizeGreater"             :   "ファイル「${0}」は予期されたサイズを超えています :${1} MB。",
-  "FileNameInvalid"             :   "${0} ファイルの名前に無効な文字が含まれています。サポートされるのは英数字のみになります",
-  "FileMimeTypeInvalid"         :   "${0} ファイルの形式はサポートされていません",
-  "InternalFormSubmissionError" :   "フォームを送信中に内部エラーが発生しました。",
-  "type"                        :   "Please enter a valid value.",
-  "required"                    :   "Please fill in this field.",
-  "minimum"                     :   "Value must be greater than or equal to ${0}.",
-  "maximum"                     :   "Value must be less than or equal to ${0}.",
-  "minLength"                   :   "Please lengthen this text to ${0} characters or more.",
-  "maxLength"                   :   "Please shorten this text to ${0} characters or less.",
-  "step"                        :   "Please enter a valid value.",
-  "format"                      :   "Specify the value in allowed format : ${0}.",
-  "pattern"                     :   "Please match the format requested.",
-  "minItems"                    :   "Specify a number of items equal to or greater than ${0}.",
-  "maxItems"                    :   "Specify a number of items equal to or less than ${0}.",
-  "uniqueItems"                 :   "All the items must be unique.",
-  "validationExpression"        :   "Please enter a valid value.",
-  "maxFileSize"                 :   "File too large. Reduce size and try again.",
-  "accept"                      :   "The specified file type not supported.",
-  "defaultError"                :   "There is an error in the field",
-  "clearText"                   :   "消去",
-  "calendarSymbols" : {
-    "monthNames" : [
-      "1月",
-      "2月",
-      "3月",
-      "4月",
-      "5月",
-      "6月",
-      "7月",
-      "8月",
-      "9月",
-      "10月",
-      "11月",
-      "12月"
+  "FileCloseAccessText": "ファイルを削除するには Enter を押します ",
+  "FileSizeGreater": "ファイル「${0}」は予期されたサイズを超えています :${1} MB。",
+  "FileNameInvalid": "ファイル名が (.) で始まる、\\ / : * ? \" < > | ; % $ を含む、または nul、prn、con、lpt、com などの予約キーワードを含むファイルは添付しないでください。",
+  "FileMimeTypeInvalid": "${0} ファイルの形式はサポートされていません",
+  "InternalFormSubmissionError": "フォームを送信中に内部エラーが発生しました。",
+  "type": "有効な値を入力してください。",
+  "required": "このフィールドに入力してください。",
+  "minimum": "値は ${0} 以上にする必要があります。",
+  "maximum": "値は ${0} 以下にする必要があります。",
+  "minLength": "このテキストを ${0} 文字以上に長くしてください。",
+  "maxLength": "このテキストを ${0} 文字以下に短くしてください。",
+  "step": "有効な値を入力してください。",
+  "format": "許可された形式 : ${0} で値を指定します。",
+  "pattern": "リクエストされた形式と一致させてください。",
+  "minItems": "${0} 以上の項目数を指定します。",
+  "maxItems": "${0} 以下の項目数を指定します。",
+  "uniqueItems": "すべての項目は一意にする必要があります。",
+  "validationExpression": "有効な値を入力してください。",
+  "maxFileSize": "ファイルが大きすぎます。サイズを小さくして、もう一度試してください。",
+  "accept": "指定したファイルタイプはサポートされていません。",
+  "defaultError": "フィールドにエラーがあります。",
+  "clearText": "消去",
+  "calendarSymbols": {
+    "monthNames": [
+      "1 月",
+      "2 月",
+      "3 月",
+      "4 月",
+      "5 月",
+      "6 月",
+      "7 月",
+      "8 月",
+      "9 月",
+      "10 月",
+      "11 月",
+      "12 月"
     ],
-    "abbrmonthNames" : [
-      "1月",
-      "2月",
-      "3月",
-      "4月",
-      "5月",
-      "6月",
-      "7月",
-      "8月",
-      "9月",
-      "10月",
-      "11月",
-      "12月"
+    "abbrmonthNames": [
+      "1 月",
+      "2 月",
+      "3 月",
+      "4 月",
+      "5 月",
+      "6 月",
+      "7 月",
+      "8 月",
+      "9 月",
+      "10 月",
+      "11 月",
+      "12 月"
     ],
-    "dayNames" : [
+    "dayNames": [
       "日曜日",
       "月曜日",
       "火曜日",
@@ -59,7 +59,7 @@
       "金曜日",
       "土曜日"
     ],
-    "abbrdayNames" : [
+    "abbrdayNames": [
       "日",
       "月",
       "火",
@@ -68,21 +68,23 @@
       "金",
       "土"
     ],
-    "meridiemNames" : [
+    "meridiemNames": [
       "午前",
       "午後"
     ],
-    "eraNames" : [
-      "紀元前",
-      "西暦"
+    "eraNames": [
+      "BC",
+      "AD"
     ],
-    "day": "day",
-    "days": "days",
-    "month": "month",
-    "months": "months",
-    "year": "year",
-    "years": "years",
-    "more": "more",
-    "less": "less"
-  }
+    "day": "日",
+    "days": "日",
+    "month": "月",
+    "months": "月",
+    "year": "年",
+    "years": "年",
+    "more": "さらに表示",
+    "less": "表示を減らす"
+  },
+  "saveDraftSuccessMessage"     :   "下書きは正常に保存されました。",
+  "saveDraftErrorMessage"       :   "エラーが発生したため、下書きを保存できませんでした。もう一度試してください。"
 }

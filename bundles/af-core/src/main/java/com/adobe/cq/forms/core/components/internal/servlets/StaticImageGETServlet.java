@@ -21,7 +21,6 @@ import java.io.InputStream;
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.servlet.Servlet;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
@@ -32,14 +31,12 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.day.cq.commons.ImageHelper;
 import com.day.cq.commons.ImageResource;
 import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.commons.AbstractImageServlet;
 import com.day.cq.wcm.foundation.Image;
 import com.day.image.Layer;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Renders an image
@@ -49,26 +46,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
     service = { Servlet.class },
     property = {
         "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_IMAGE_V1,
+        "sling.servlet.extensions=jpg",
+        "sling.servlet.extensions=png",
+        "sling.servlet.extensions=gif",
         "sling.servlet.methods=GET"
     })
 public class StaticImageGETServlet extends AbstractImageServlet {
-
-    @Override
-    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response)
-        throws ServletException, IOException {
-        String extension = request.getRequestPathInfo().getExtension();
-        if ("json".equals(extension)) {
-            StaticImage staticImage = request.adaptTo(StaticImage.class);
-            if (staticImage != null) {
-                ObjectMapper mapper = new ObjectMapper();
-                response.setContentType("application/json");
-                response.getWriter().write(mapper.writeValueAsString(staticImage));
-            }
-        } else {
-            super.doGet(request, response);
-        }
-
-    }
 
     @Override
     protected Layer createLayer(ImageContext c)

@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface NumberInput extends Field, NumberConstraint {
+public interface NumberInput extends Field, NumberConstraintV2 {
     @Nullable
     @JsonIgnore
     default String getEditFormat() {

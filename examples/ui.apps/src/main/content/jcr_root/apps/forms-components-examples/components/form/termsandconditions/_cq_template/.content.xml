@@ -19,6 +19,7 @@
     jcr:title="I agree to the terms &amp; conditions"
     sling:resourceType="core/fd/components/form/checkbox/v1/checkbox"
     enabled="false"
+    required="true"
     checkedValue="true"
     fieldType="checkbox">
   </approvalcheckbox>

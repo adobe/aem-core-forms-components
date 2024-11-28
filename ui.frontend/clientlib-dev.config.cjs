@@ -46,7 +46,7 @@ module.exports = {
       ...libsBaseConfig,
       name: 'core-forms-components-runtime-base',
       categories: ['core.forms.components.runtime.base'],
-      dependencies: ['granite.csrf.standalone.fetchsupport', 'af.rum'],
+      dependencies: ['granite.csrf.standalone.fetchsupport', 'af.rum', 'dompurify'],
       assets: {
         js: ['dist/main.js'],
         resources: ['dist/main.js.map']

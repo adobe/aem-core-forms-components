@@ -23,11 +23,13 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Panel;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
@@ -35,16 +37,19 @@ import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
+import static org.junit.Assert.assertEquals;
+
 @ExtendWith(AemContextExtension.class)
 public class WizardImplTest {
     private static final String BASE = "/form/wizard";
     private static final String CONTENT_ROOT = "/content";
 
     private static final String PATH_WIZARD = CONTENT_ROOT + "/wizard";
+    private static final String PATH_WIZARD_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/wizard-without-fieldtype";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
-    @Test
-    void testGetExportedItems() throws Exception {
+    @BeforeEach
+    void setUp() {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
@@ -69,8 +74,17 @@ public class WizardImplTest {
                     .collect(Collectors.toList());
             }
         });
+    }
+
+    @Test
+    void testGetExportedItems() throws Exception {
         Panel wizard = Utils.getComponentUnderTest(PATH_WIZARD, Panel.class, context);
         wizard.getExportedItems();
+    }
 
+    @Test
+    void testNoFieldType() {
+        Panel wizard = Utils.getComponentUnderTest(PATH_WIZARD_WITHOUT_FIELDTYPE, Panel.class, context);
+        assertEquals(FieldType.PANEL.getValue(), wizard.getFieldType());
     }
 }

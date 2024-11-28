@@ -18,6 +18,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="I agree to the terms &amp; conditions"
     sling:resourceType="core/fd/components/form/checkbox/v1/checkbox"
+    required="true"
     enabled="false"
     checkedValue="true"
     fieldType="checkbox">

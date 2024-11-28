@@ -1,0 +1,20 @@
+{
+  "id": "image-e59a06e107",
+  "fieldType": "image",
+  "name": "image1721285729653",
+  "value": "/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image.img.jpg/1721286449820.jpg",
+  "visible": true,
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image",
+    "fd:repoPath": "/content/dam/core-components-examples/library/forms-components/datepicker.svg"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":type": "forms-components-examples/components/form/image"
+}

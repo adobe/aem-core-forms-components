@@ -87,17 +87,19 @@
             });
         }
 
-        #togglePasswordType(){
-            const widget = this.getWidget();
-            if(widget.value){
-                const widget = this.getWidget();
-                if (widget.type === "password") {
-                    widget.type = "text";
-                    } else {
-                     widget.type = "password";
-                    }
-                }            
-        }       
+         #togglePasswordType(){
+                    const widget = this.getWidget();
+                    if(widget.value){
+                        const widget = this.getWidget();
+                        if (widget.type === "password") {
+                            widget.type = "text";
+                            this.getEyeIcon().classList.add('open');
+                            } else {
+                             widget.type = "password";
+                             this.getEyeIcon().classList.remove('open');
+                            }
+                        }
+                }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

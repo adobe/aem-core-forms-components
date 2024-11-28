@@ -14,6 +14,9 @@
                 fd:version="2.1"
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="forms-components-examples/components/form/container"
+                clientLibRef="corecomponent.it.customfunction"
+                schemaType="none"
+                specVersion="0.14.2"
                 fieldType="form">
             <textinput
                     jcr:primaryType="nt:unstructured"
@@ -71,6 +74,59 @@
                         jcr:primaryType="nt:unstructured"
                         click="[dispatchEvent('reset')]"/>
             </reset>
+            <text_327821969
+                    jcr:created="{Date}2024-10-16T11:14:16.467+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-10-16T11:34:33.938+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text"
+                    sling:resourceType="forms-components-examples/components/form/text"
+                    dataRef="$.a.b"
+                    fieldType="plain-text"
+                    name="prefilltext"
+                    textIsRich="true"
+                    unboundFormElement="{Boolean}false"
+                    value="&lt;p>prefill test&lt;/p>&#xd;&#xa;"
+                    visible="{Boolean}true">
+                <fd:rules jcr:primaryType="nt:unstructured"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </text_327821969>
+            <button
+                    jcr:created="{Date}2024-10-16T11:15:30.148+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-10-16T11:15:43.398+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="click to prefill static text"
+                    sling:resourceType="forms-components-examples/components/form/button"
+                    dorExclusion="true"
+                    enabled="{Boolean}true"
+                    fieldType="button"
+                    name="button1729057530205"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1729057530205&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1729057530205&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;testTextImportData&quot;\,&quot;displayName&quot;:&quot;testTextImportData&quot;\,&quot;type&quot;:&quot;STRING|NUMBER|BOOLEAN|DATE|ARRAY|OBJECT&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;testTextImportData()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="[testTextImportData()]"/>
+            </button>
+            <text_637944566
+                    jcr:created="{Date}2024-05-16T11:23:14.686+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-05-16T11:23:32.032+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text"
+                    sling:resourceType="forms-components-examples/components/form/text"
+                    fieldType="plain-text"
+                    name="text_637944566"
+                    textIsRich="true"
+                    value="'&lt;p>&lt;b>&lt;i>&lt;u>Hello1,&lt;/u>&lt;/i>&lt;/b> &lt;sub>Hello2&lt;/sub>, &lt;sup>Hello3&lt;/sup>&lt;/p>&#xa;&lt;p>&lt;a target=&quot;_blank&quot; href=&quot;http://www.google.com&quot; title=&quot;sample link&quot;>Hello4&lt;/a>, &lt;a id=&quot;anchor&quot;>&lt;/a>Hello5, ©&lt;/p>&#xa;&lt;p style=&quot;text-align: left;&quot;>sample text&lt;/p>&#xa;&lt;p style=&quot;text-align: left;&quot;>&amp;nbsp;&lt;/p>&#xa;&lt;table height=&quot;89&quot; width=&quot;67&quot; border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;1&quot;>&#xa;&lt;caption>sample table&lt;/caption>&#xa;&lt;tbody>&lt;tr>&lt;th scope=&quot;col&quot;>Header1&lt;/th>&#xa;&lt;th scope=&quot;col&quot;>Header2&lt;/th>&#xa;&lt;th scope=&quot;col&quot;>Header3&lt;/th>&#xa;&lt;/tr>&lt;tr>&lt;td>Cell1&lt;/td>&#xa;&lt;td>Cell2&lt;/td>&#xa;&lt;td>Cell3&lt;/td>&#xa;&lt;/tr>&lt;/tbody>&lt;/table>&#xa;&lt;h2>&lt;span class=&quot;bold&quot;>Section Title&lt;/span>&lt;/h2>&#xa;&lt;p style=&quot;text-align: right;&quot;>right-aligned text&lt;/p>&#xa;&lt;ul>&#xa;&lt;li>item one&lt;/li>&#xa;&lt;/ul>&#xa;&lt;ol>&#xa;&lt;li>ordered item one&lt;/li>&#xa;&lt;/ol>&#xa;&lt;p>Paragraph start&lt;/p>&#xa;&lt;p style=&quot;margin-left: 40px;&quot;>Span Test&lt;/p>&#xa;&lt;p style=&quot;margin-left: 40px;&quot;>&amp;nbsp;&lt;/p>&#xa;'"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>

@@ -95,10 +95,8 @@
                 const isDisabled = !enabled || state.readOnly;
                 if (isDisabled) {
                     this.widget.setAttribute("disabled", "disabled");
-                    this.widget.setAttribute(FormView.Constants.ARIA_DISABLED, true);
                 } else {
                     this.widget.removeAttribute("disabled");
-                    this.widget.removeAttribute(FormView.Constants.ARIA_DISABLED);
                 }
             }
         }

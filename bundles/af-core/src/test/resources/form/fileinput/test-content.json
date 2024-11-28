@@ -101,5 +101,37 @@
     "maxItems" : 2,
     "maxFileSize" : "4096",
     "accept" : ["text/*", "application/pdf"]
+  },
+  "fileInput-withType": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/fileinput/v1/fileinput",
+    "fieldType": "file-input",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "description" : "dummy",
+    "visible" : false,
+    "assistPriority" : "custom",
+    "dataRef" : "a.b",
+    "custom" : "Custom screen reader text",
+    "typeMessage" : "incorrect type",
+    "tooltip": "test-short-description",
+    "multiSelection" : true,
+    "type" : "string",
+    "minItems" : 1,
+    "maxItems" : 2,
+    "maxFileSize" : "4096",
+    "accept" : ["text/*", "application/pdf"]
+  },
+  "fileinput-without-fieldtype": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/fileinput/v1/fileinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "buttonText" : "Attach",
+    "accept" : ["audio/*",
+      " video/*",
+      " image/*",
+      " text/*",
+      " application/pdf"]
   }
 }

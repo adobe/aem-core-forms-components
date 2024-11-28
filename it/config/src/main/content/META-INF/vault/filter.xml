@@ -5,4 +5,5 @@
     <filter root="/apps/system/config/Guide Localization Service.cfg.json"/>
     <filter root="/apps/system/config/org.apache.felix.http.cfg.json"/>
     <filter root="/apps/system/config/com.adobe.granite.webvitals.impl.WebVitalsTransformerFactory.cfg.json"/>
+    <filter root="/apps/system/config/org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended~headlessreplication.cfg.json"/>
 </workspaceFilter>

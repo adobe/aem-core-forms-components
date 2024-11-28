@@ -106,20 +106,23 @@ class FormTabs extends FormPanel {
         var tabs = this.#getCachedTabs();
         if (tabpanels) {
             for (var i = 0; i < tabpanels.length; i++) {
-                if (tabs[i].id === this.#_active) {
-                    tabpanels[i].classList.add(this.#_selectors.active.tabpanel);
-                    tabpanels[i].removeAttribute(Constants.ARIA_HIDDEN);
-                    tabs[i].classList.add(this.#_selectors.active.tab);
-                    tabs[i].setAttribute(Constants.ARIA_SELECTED, true);
-                    tabs[i].setAttribute(Constants.TABINDEX, "0");
-                    tabs[i].setAttribute(Constants.ARIA_CURRENT, "true");
-                } else {
-                    tabpanels[i].classList.remove(this.#_selectors.active.tabpanel);
-                    tabpanels[i].setAttribute(Constants.ARIA_HIDDEN, true);
-                    tabs[i].classList.remove(this.#_selectors.active.tab);
-                    tabs[i].setAttribute(Constants.ARIA_SELECTED, false);
-                    tabs[i].setAttribute(Constants.TABINDEX, "-1");
-                    tabs[i].setAttribute(Constants.ARIA_CURRENT, "false");
+                // In case of repeatability ( adding instance via loop) tabs and tabpanels may be out of sync, it will sync in future
+                if(tabs[i]) {
+                    if (tabs[i].id === this.#_active) {
+                        tabpanels[i].classList.add(this.#_selectors.active.tabpanel);
+                        tabpanels[i].removeAttribute(Constants.ARIA_HIDDEN);
+                        tabs[i].classList.add(this.#_selectors.active.tab);
+                        tabs[i].setAttribute(Constants.ARIA_SELECTED, true);
+                        tabs[i].setAttribute(Constants.TABINDEX, "0");
+                        tabs[i].setAttribute(Constants.ARIA_CURRENT, "true");
+                    } else {
+                        tabpanels[i].classList.remove(this.#_selectors.active.tabpanel);
+                        tabpanels[i].setAttribute(Constants.ARIA_HIDDEN, true);
+                        tabs[i].classList.remove(this.#_selectors.active.tab);
+                        tabs[i].setAttribute(Constants.ARIA_SELECTED, false);
+                        tabs[i].setAttribute(Constants.TABINDEX, "-1");
+                        tabs[i].setAttribute(Constants.ARIA_CURRENT, "false");
+                    }
                 }
             }
         }
@@ -544,11 +547,15 @@ class FormTabs extends FormPanel {
                 result.beforeViewElement = this.#getTabListElement();
             }
         } else {
-            var previousInstanceElement = instanceManager.children[instanceIndex - 1].element;
-            var previousInstanceTabPanelIndex = this.#getTabIndexById(previousInstanceElement.id + this.#tabIdSuffix);
-            result.beforeViewElement = this.#getCachedTabPanels()[previousInstanceTabPanelIndex];
+            let previousInstanceElement = this.#getRepeatableElementAt(instanceManager, instanceIndex - 1);
+            result.beforeViewElement = previousInstanceElement;
         }
         return result;
+    }
+
+    #getRepeatableElementAt(instanceManager, index) {
+        let childId = instanceManager._model.items.find((model) => model.index === index)?.id;
+        return this.element.querySelector(`#${childId}${this.#tabPanelIdSuffix}`);
     }
 
     /**

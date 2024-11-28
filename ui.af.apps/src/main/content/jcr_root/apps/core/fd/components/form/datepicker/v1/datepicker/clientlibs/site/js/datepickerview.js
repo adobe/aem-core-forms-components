@@ -94,9 +94,10 @@
                     this.widgetObject.setDisplayValue(model.value);
                 }
                 this.widgetObject.addEventListener('blur', (e) => {
-                    this._model.value = this.widgetObject.getValue();
+                    this.setModelValue(this.widgetObject.getValue())
                     //setDisplayValue is required for cases where value remains same while focussing in and out.
                     this.widgetObject.setDisplayValue(this._model.value);
+                    this.widgetObject.setCalendarWidgetValue(this._model.value);
                     this.setInactive();
                 }, this.getWidget());
                 this.widgetObject.addEventListener('focus', (e) => {
@@ -106,15 +107,15 @@
                 this.widgetObject.addEventListener('input', (e) => {
                     if( e.target.value === '') {
                         // clear the value if user manually empties the value in date input box
-                        this._model.value = "";
+                        this.setModelValue("");
                     }
                 }, this.getWidget());
             } else {
                 if (this.widget.value !== '') {
-                    this._model.value = this.widget.value;
+                    this.setModelValue(this.widget.value);
                 }
                 this.widget.addEventListener('blur', (e) => {
-                    this._model.value = e.target.value;
+                    this.setModelValue(e.target.value);
                     this.setInactive();
                 });
                 this.widget.addEventListener('focus', (e) => {

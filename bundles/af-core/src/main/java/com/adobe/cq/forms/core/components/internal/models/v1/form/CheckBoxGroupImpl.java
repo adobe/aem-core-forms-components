@@ -34,6 +34,7 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.models.form.CheckBoxGroup;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -82,5 +83,10 @@ public class CheckBoxGroupImpl extends AbstractOptionsFieldImpl implements Check
     @Override
     public Type getType() {
         return super.getType(); // check box group always has type array // we always return boolean[], string[] or number[]
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.CHECKBOX_GROUP);
     }
 }

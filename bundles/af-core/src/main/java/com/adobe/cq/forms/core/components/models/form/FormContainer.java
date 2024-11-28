@@ -64,7 +64,7 @@ public interface FormContainer extends Container {
      */
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
-    String DEFAULT_FORMS_SPEC_VERSION = "0.14.0";
+    String DEFAULT_FORMS_SPEC_VERSION = "0.14.2";
 
     /**
      * Returns form metadata {@link FormMetaData}
@@ -143,6 +143,17 @@ public interface FormContainer extends Container {
     default Boolean isEnabled() {
         // explicitly setting true, since form container does not have enabled property, but other containers like panel have enabled
         return true;
+    }
+
+    /**
+     * Returns the hamburger menu support
+     *
+     * @return the hamburger menu support of the form
+     * @since com.adobe.cq.forms.core.components.models.form 5.7.5
+     */
+    @JsonIgnore
+    default Boolean getIsHamburgerMenuEnabled() {
+        return false;
     }
 
     @Override
@@ -362,4 +373,16 @@ public interface FormContainer extends Container {
     default String getParentPagePath() {
         return null;
     }
+
+    /**
+     * Returns the url from where the custom functions should be registered
+     * 
+     * @return custom function registration url
+     * @since com.adobe.cq.forms.core.components.models.form 5.9.5
+     */
+    @JsonIgnore
+    default String getCustomFunctionUrl() {
+        return null;
+    }
+
 }

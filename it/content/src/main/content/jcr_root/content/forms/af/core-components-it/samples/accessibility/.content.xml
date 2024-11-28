@@ -60,7 +60,7 @@
                     sling:resourceType="forms-components-examples/components/form/panelcontainer"
                     enabled="{Boolean}true"
                     fieldType="panel"
-                    hideTitle="false"
+                    hideTitle="true"
                     name="panelcontainer1684928145531"
                     readOnly="{Boolean}false"
                     repeatable="false"
@@ -107,7 +107,8 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Online Services"
                         sling:resourceType="forms-components-examples/components/form/title"
-                        fieldType="plain-text">
+                        fieldType="plain-text"
+                        type="h2">
                         <cq:responsive jcr:primaryType="nt:unstructured">
                             <default
                                 jcr:primaryType="nt:unstructured"
@@ -139,7 +140,8 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title=" For more information "
                         sling:resourceType="forms-components-examples/components/form/title"
-                        fieldType="plain-text">
+                        fieldType="plain-text"
+                        type="h2">
                         <cq:responsive jcr:primaryType="nt:unstructured">
                             <default
                                 jcr:primaryType="nt:unstructured"
@@ -171,7 +173,8 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="What is a child support assessment?"
                         sling:resourceType="forms-components-examples/components/form/title"
-                        fieldType="plain-text">
+                        fieldType="plain-text"
+                        type="h2">
                         <cq:responsive jcr:primaryType="nt:unstructured">
                             <default
                                 jcr:primaryType="nt:unstructured"
@@ -203,7 +206,8 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Eligibility"
                         sling:resourceType="forms-components-examples/components/form/title"
-                        fieldType="plain-text">
+                        fieldType="plain-text"
+                        type="h2">
                         <cq:responsive jcr:primaryType="nt:unstructured">
                             <default
                                 jcr:primaryType="nt:unstructured"

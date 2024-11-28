@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * Interface for constraints applicable to file attachments
  *
@@ -53,5 +55,16 @@ public interface FileConstraint {
      */
     default List<String> getAccept() {
         return DEFAULT_ACCEPT;
+    }
+
+    /**
+     * The constraint is
+     * applicable for file attachment field. If the type is {@code String}, the format will always be {@code data-url}.
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 5.7.4
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    default String getFormat() {
+        return null;
     }
 }

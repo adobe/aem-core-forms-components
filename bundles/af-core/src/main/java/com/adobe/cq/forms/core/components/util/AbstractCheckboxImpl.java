@@ -22,6 +22,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 
 /**
  * Abstract class which can be used as base class for {@link Base} implementations.
@@ -56,5 +57,10 @@ public abstract class AbstractCheckboxImpl extends AbstractOptionsFieldImpl {
         } else {
             return ComponentUtils.coerce(type, enums);
         }
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.CHECKBOX);
     }
 }
