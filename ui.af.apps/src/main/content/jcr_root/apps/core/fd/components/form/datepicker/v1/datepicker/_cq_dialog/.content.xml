@@ -95,7 +95,7 @@
                                             <excludeMinimum
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                    granite:class="cmp-adaptiveform-numberinput__excludeMinimum"
+                                                    granite:class="cmp-adaptiveform-datepicker__excludeMinimum"
                                                     text="Exclude minimum value"
                                                     value="true"
                                                     fieldLabel="Exclude Minimum"
@@ -123,7 +123,7 @@
                                             <excludeMaximum
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                    granite:class="cmp-adaptiveform-numberinput__excludeMaximum"
+                                                    granite:class="cmp-adaptiveform-datepicker__excludeMaximum"
                                                     text="Exclude maximum value"
                                                     fieldLabel="Exclude Maximum"
                                                     value="true"

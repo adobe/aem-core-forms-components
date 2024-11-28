@@ -11,6 +11,8 @@
       "$event.payload"
     ]
   },
+  "minimum" : 100.22,
+  "maximum" : 102.44,
   "properties": {
     "fd:dor": {
       "dorExclusion": false

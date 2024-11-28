@@ -42,12 +42,15 @@
     };
 
     const correctEditableEditorType = function (editable, name) {
-        if (name == "EDIT") {
-            var hasRichTextLabel = editable.dom.find("[class$='__label']")[0] && editable.dom.find("[class$='__label']")[0].getAttribute("data-richtext") != null,
-                hasRichTextAttribute = editable.dom.find("[class$='__text']")[0] && editable.dom.find("[class$='__text']")[0].getAttribute("data-richtext") != null;
-            // We are checking for data-richtext in component to decide whether open rich-text inplace editor or plain text editor
-            if(!(hasRichTextLabel || hasRichTextAttribute)){
-                editable.config.editConfig.inplaceEditingConfig.editorType="plaintext";
+        if (name === "EDIT") {
+            const isAFComponent = editable.dom.find("[data-cmp-is^='adaptiveForm']")[0] != null;
+            if (isAFComponent) {
+                const hasRichTextLabel = editable.dom.find("[class$='__label']")[0] && editable.dom.find("[class$='__label']")[0].getAttribute("data-richtext") != null,
+                    hasRichTextAttribute = editable.dom.find("[class$='__text']")[0] && editable.dom.find("[class$='__text']")[0].getAttribute("data-richtext") != null;
+                // We are checking for data-richtext in component to decide whether open rich-text inplace editor or plain text editor
+                if (!(hasRichTextLabel || hasRichTextAttribute)) {
+                    editable.config.editConfig.inplaceEditingConfig.editorType = "plaintext";
+                }
             }
         }
     };

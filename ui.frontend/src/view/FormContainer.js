@@ -35,6 +35,25 @@ class FormContainer {
         this._fields = {};
         this._deferredParents = {};
         this._element = params._element;
+
+        // Prevent default behaviour on form container.
+        this.#preventDefaultSubmit();
+    }
+
+    /**
+     * Prevents the default behavior of the Enter key on components within the formContainer
+     * from triggering a form submission and redirecting to the Thank-You Page.
+     */
+    #preventDefaultSubmit(){
+        if(this._element) {
+            this._element.addEventListener('keydown', (event) => {
+                const target = event.target;
+                const isSubmitOrReset = target.tagName === 'INPUT' && (target.type === 'submit' || target.type === 'reset');
+                if (event.key === 'Enter' && target.tagName !== 'SELECT' && target.tagName !== 'BUTTON' && !isSubmitOrReset) {
+                    event.preventDefault();
+                }
+            });
+        }
     }
 
     /**

@@ -25,6 +25,7 @@
     trackingFeature="core-components:design-dialog:adaptiveform-title:v1">
     <content
         jcr:primaryType="nt:unstructured"
+        granite:class="cmp-adaptiveform-title__designdialog"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <tabs

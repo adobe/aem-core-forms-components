@@ -64,6 +64,7 @@ public class DropDownImplTest {
     private static final String PATH_DROPDOWN_FOR_NO_ENUM_NAMES = CONTENT_ROOT + "/dropdown-without-enumNames";
     private static final String PATH_DROPDOWN_FOR_LESSER_ENUM_NAMES = CONTENT_ROOT + "/dropdown-with-lesser-enumNames";
     private static final String PATH_DROPDOWN_FOR_EXTRA_ENUM_NAMES = CONTENT_ROOT + "/dropdown-with-extra-enumNames";
+    private static final String PATH_DROPDOWN_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/dropdown-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -464,5 +465,11 @@ public class DropDownImplTest {
         DropDown dropdown2 = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_EXTRA_ENUM_NAMES, DropDown.class, context);
         Set<String> set2 = new LinkedHashSet<>(Arrays.asList("zero", "one"));
         assertArrayEquals(set2.toArray(new String[0]), dropdown2.getEnumNames());
+    }
+
+    @Test
+    void testNoFieldType() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_WITHOUT_FIELDTYPE, DropDown.class, context);
+        Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_DROPDOWN_WITHOUT_FIELDTYPE));
     }
 }

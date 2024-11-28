@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+import { FIELD_TYPE } from "@aemforms/af-core";
 
 /**
  * @module FormView
@@ -37,7 +38,7 @@ export const Constants = {
      * @property {object} event - The event object.
      * @property {object} event.detail - Instance of FormContainer that is initialized.
      * @example
-     * document.on("AF_FormContainerInitialised" , function(event) {
+     * document.addEventListener("AF_FormContainerInitialised" , function(event) {
      *      var formContainer = event.detail;
      *      // Handle the event
      * });
@@ -50,10 +51,15 @@ export const Constants = {
      * @property {object} event - The event object.
      * @property {object} event.detail - Instance of child view that is added.
      * @example
-     * formcontainer.getFormElement().on("AF_PanelInstanceAdded" , function(event) {
-     *      var childView = event.detail;
+     * document.addEventListener("AF_FormContainerInitialised" , function(event) {
+     *      var formContainer = event.detail;
      *      // Handle the event
+     *      formcontainer.getFormElement().addEventListener("AF_PanelInstanceAdded" , function(event) {
+     *          var childView = event.detail;
+     *          // Handle the event
+     *       });
      * });
+     *
      */
     PANEL_INSTANCE_ADDED : "AF_PanelInstanceAdded",
 
@@ -63,9 +69,13 @@ export const Constants = {
      * @property {object} event - The event object.
      * @property {object} event.detail - Instance of child view that was removed.
      * @example
-     * formcontainer.getFormElement().on("AF_PanelInstanceRemoved" , function(event) {
-     *      var childView = event.detail;
+     * document.addEventListener("AF_FormContainerInitialised" , function(event) {
+     *      var formContainer = event.detail;
      *      // Handle the event
+     *      formcontainer.getFormElement().addEventListener("AF_PanelInstanceRemoved" , function(event) {
+     *          var childView = event.detail;
+     *          // Handle the event
+     *      });
      * });
      */
     PANEL_INSTANCE_REMOVED : "AF_PanelInstanceRemoved",
@@ -76,7 +86,7 @@ export const Constants = {
      * @property {object} event - The event object.
      * @property {object} event.detail - The locale that has loaded.
      * @example
-     * document.on("AF_LanguageInitialised" , function(event) {
+     * document.addEventListener("AF_LanguageInitialised" , function(event) {
      *      var locale = event.detail;
      *      // Handle the event
      * });
@@ -357,5 +367,25 @@ export const Constants = {
      * @type {string}
      */
     API_PATH_PREFIX : "/adobe/forms/af",
+
+    /**
+     * Field type object.
+     * @type {object}
+     * @memberof module:FormView~Constants
+     * @namespace FIELD_TYPE
+     */
+    FIELD_TYPE: FIELD_TYPE,
+
+    /**
+     * Html input type text
+     * @type {string}
+     */
+    HTML_INPUT_TYPE_TEXT : "text",
+
+    /**
+     * Html input type password
+     * @type {string}
+     */
+    HTML_INPUT_TYPE_PASSWORD : "password"
 };
 

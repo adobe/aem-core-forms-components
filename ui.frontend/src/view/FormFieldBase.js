@@ -208,8 +208,12 @@ class FormFieldBase extends FormField {
          }
             
         if (widgetElement) {
+
            if (this.getDescription()) {
-            appendDescription('longdescription', this.getId());
+            const descriptionDiv = this.getDescription();
+            if (!(descriptionDiv.innerHTML.trim() === '' || descriptionDiv.children.length === 0)) {
+                appendDescription('longdescription', this.getId());
+            }
           }
           
            if (this.getTooltipDiv()) {
@@ -219,7 +223,21 @@ class FormFieldBase extends FormField {
            if (this.getErrorDiv() && this.getErrorDiv().innerHTML) {
             appendDescription('errormessage', this.getId());
           }
+
             widgetElement.setAttribute('aria-describedby', ariaDescribedby);
+        }
+    }
+
+    #syncAriaLabel() {
+        let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+        let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+        widgetElement = widgetElements || widgetElement;
+        const model = this.getModel?.();
+    
+        if (widgetElement && model?.screenReaderText) {
+            // Use DOMPurify to sanitize and strip HTML tags
+            const screenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(model.screenReaderText, { ALLOWED_TAGS: [] }) : model.screenReaderText;
+            widgetElement.setAttribute('aria-label', screenReaderText);
         }
     }
 
@@ -234,6 +252,7 @@ class FormFieldBase extends FormField {
         this. #syncLongDesc()
         this.#syncAriaDescribedBy()
         this.#syncError()
+        this.#syncAriaLabel()
     }
 
     /**
@@ -266,10 +285,13 @@ class FormFieldBase extends FormField {
         if (state.value) {
             this.updateValue(state.value);
         }
-        this.updateVisible(state.visible)
+        this.updateVisible(state.visible, state)
         this.updateReadOnly(state.readOnly)
         this.updateEnabled(state.enabled, state)
         this.initializeHelpContent(state);
+        this.updateLabel(state.label);
+        this.updateRequired(state.required, state);
+        this.updateDescription(state.description);
     }
 
     /**
@@ -392,8 +414,8 @@ class FormFieldBase extends FormField {
      * @private
      */
     #showHideLongDescriptionDiv(show) {
-        if (this.description) {
-            this.toggleAttribute(this.description, show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
+        if (this.getDescription()) {
+            this.toggleAttribute(this.getDescription(), show, Constants.DATA_ATTRIBUTE_VISIBLE, false);
         }
     }
 
@@ -419,7 +441,7 @@ class FormFieldBase extends FormField {
         }
     }
 
-    /**
+     /**
      * Updates the HTML state based on the enabled state of the field.
      * @param {boolean} enabled - The enabled state.
      * @param {Object} state - The state object.
@@ -429,10 +451,8 @@ class FormFieldBase extends FormField {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ENABLED, enabled);
             if (enabled === false) {
                 this.widget.setAttribute("disabled", "disabled");
-                this.widget.setAttribute(Constants.ARIA_DISABLED, true);
             } else {
                 this.widget.removeAttribute("disabled");
-                this.widget.removeAttribute(Constants.ARIA_DISABLED);
             }
         }
     }
@@ -598,18 +618,74 @@ class FormFieldBase extends FormField {
 
     /**
      * Updates the HTML state based on the description state of the field.
-     * @param {string} description - The description.
+     * @param {string} descriptionText - The description.
      */
-    updateDescription(description) {
-        if (this.description) {
-            this.description.querySelector("p").innerHTML = description;
-        } else {
-            //TODO: handle the case when description is not present initially.
+   
+    updateDescription(descriptionText) {
+        if (typeof descriptionText !== 'undefined') {
+            const sanitizedDescriptionText = window.DOMPurify ? window.DOMPurify.sanitize(descriptionText, { ALLOWED_TAGS: [] }).trim() : descriptionText;
+            let descriptionElement = this.getDescription();
+
+            if (descriptionElement) {
+                 // Check if the content inside the descriptionElement needs updating
+                 let currentTextContent = descriptionElement.innerText.trim();
+
+                 if (currentTextContent === sanitizedDescriptionText) {
+                   // No update needed if the text content already matches
+                   return;
+               }
+                 
+                // Find the existing <p> element
+                let pElement = descriptionElement.querySelector('p');
+
+                if (!pElement)  {
+                    // If no <p> tag exists, create one and set it as the content
+                    pElement = document.createElement('p');
+                    descriptionElement.innerHTML = ''; // Clear existing content
+                    descriptionElement.appendChild(pElement);
+                }
+
+                // Update the <p> element's content with sanitized content
+                pElement.innerHTML = sanitizedDescriptionText;
+            } else {    
+                // If no description was set during authoring
+                this.#addDescriptionInRuntime(sanitizedDescriptionText);
+            }
         }
     }
 
-
-
+    #addDescriptionInRuntime(descriptionText) {
+        // add question mark icon
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+        const labelContainer = this.element.querySelector(`.${bemClass}__label-container`);
+        if (labelContainer) {
+            const qmButton = document.createElement('button');
+            qmButton.className = `${bemClass}__questionmark`;
+            qmButton.title = 'Help text';
+            labelContainer.appendChild(qmButton);
+        } else {
+            console.error('label container not found');
+            return;
+        }
+        // add description div
+        const descriptionDiv = document.createElement('div');
+        descriptionDiv.className = `${bemClass}__longdescription`;
+        descriptionDiv.id = `${this.getId()}__longdescription`;
+        descriptionDiv.setAttribute('aria-live', 'polite');
+        descriptionDiv.setAttribute('data-cmp-visible', false);
+        const pElement = document.createElement('p');
+        pElement.textContent = descriptionText;
+        descriptionDiv.appendChild(pElement)
+        var errorDiv = this.getErrorDiv();
+        if (errorDiv) {
+            this.element.insertBefore(descriptionDiv, errorDiv);
+        } else {
+            console.log('error div not found');
+            return;
+        }
+        // attach event handler for question mark icon
+        this.#addHelpIconHandler();
+    }
 
     /**
      * Adds an event listener for the '?' icon click.
@@ -617,8 +693,8 @@ class FormFieldBase extends FormField {
      * @private
      */
     #addHelpIconHandler(state) {
-        const questionMarkDiv = this.qm,
-            descriptionDiv = this.description,
+        const questionMarkDiv = this.getQuestionMarkDiv(),
+            descriptionDiv = this.getDescription(),
             tooltipAlwaysVisible = this.#isTooltipAlwaysVisible();
         const self = this;
         if (questionMarkDiv && descriptionDiv) {

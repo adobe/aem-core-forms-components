@@ -23,5 +23,29 @@
     "properties": {
       "fd:path": "/content/forms/af/af2runtime/jcr:content/guideContainer/recaptcha"
     }
+  },
+  "recaptcha-without-fieldtype": {
+    "id": "recaptcha-4b672680a2",
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:createdBy": "admin",
+    "jcr:title": "CAPTCHA",
+    "enabled": true,
+    "readOnly": false,
+    "mandatory": "true",
+    "name": "test-recaptcha",
+    "rcCloudServicePath": "v2checkbox",
+    "visible": true,
+    "hideTitle": "false",
+    "sling:resourceType": "core/fd/components/form/recaptcha/v1/recaptcha",
+    "recaptchaSize": "compact",
+    "customProp": "customPropValue",
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    "properties": {
+      "fd:path": "/content/forms/af/af2runtime/jcr:content/guideContainer/recaptcha"
+    }
   }
 }

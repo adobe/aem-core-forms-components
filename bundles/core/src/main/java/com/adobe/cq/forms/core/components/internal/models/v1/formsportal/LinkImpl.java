@@ -102,8 +102,7 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
             return "#";
         }
         try {
-            URIBuilder uriBuilder = null;
-            uriBuilder = new URIBuilder(url);
+            URIBuilder uriBuilder = new URIBuilder(url);
             Map<String, String> queryParams = getQueryParams();
             if (queryParams != null && !uriBuilder.isPathEmpty()) {
                 for (String key : queryParams.keySet()) {
@@ -118,7 +117,7 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
             }
             url = uriBuilder.build().toString();
         } catch (URISyntaxException e) {
-            logger.error("[FORMS] Link Component Failed to parse assetPath {}", url, e);
+            logger.warn("The [Forms] link component failed to process the asset path {}. Parameters will not be added to the URL.", url, e);
         }
         return url;
     }
@@ -199,16 +198,28 @@ public class LinkImpl extends AbstractComponentImpl implements Link {
             @Override
             public String processLink(LinkImpl link, SlingHttpServletRequest request) {
                 String givenPath = link.getAssetPath();
-                String builtPath = givenPath + "/" + JcrConstants.JCR_CONTENT;
+                String encodedPath = encodePath(givenPath);
+                String builtPath = encodedPath + "/" + JcrConstants.JCR_CONTENT;
                 ResourceResolver resourceResolver = request.getResourceResolver();
-                if (resourceResolver.getResource(builtPath) != null) {
+                if (resourceResolver.getResource(givenPath + "/" + JcrConstants.JCR_CONTENT) != null) {
                     Map<String, String> params = link.getQueryParams();
                     if (AssetType.ADAPTIVE_FORM.equals(link.getAssetType()) && !params.containsKey(QP_AF_DEFAULT_MODE_KEY)) {
                         builtPath += "?" + QP_AF_DEFAULT_MODE_KEY + "=" + QP_AF_DEFAULT_MODE_VALUE;
                     }
-                    givenPath = builtPath;
+                    encodedPath = builtPath;
                 }
-                return givenPath;
+                return encodedPath;
+            }
+
+            private String encodePath(String path) {
+                try {
+                    // Encode path to allow space in asset names using URIBuilder#setPath method
+                    URIBuilder uriBuilder = new URIBuilder().setPath(path);
+                    return uriBuilder.build().toString();
+                } catch (URISyntaxException e) {
+                    logger.warn("The [Forms] link component failed to process the asset path {} due to invalid path.", path, e);
+                    return path;
+                }
             }
 
             @Override

@@ -63,6 +63,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/textinput-displayValueExpression";
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
     private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
+    private static final String PATH_TEXTINPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/textinput-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -509,5 +510,11 @@ public class TextInputImplTest {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_WITH_VIEWTYPE, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_WITH_VIEWTYPE));
         assertEquals("some/custom/value", textInput.getExportedType());
+    }
+
+    @Test
+    void testNoFieldType() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_WITHOUT_FIELDTYPE, TextInput.class, context);
+        assertEquals(FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
     }
 }

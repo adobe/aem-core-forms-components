@@ -1,7 +1,6 @@
 {
   "id": "text-ac0bcff4f3",
  "fieldType": "plain-text",
-  "dataRef": null,
   "richText": false,
   "name": "abc",
   ":type": "core/fd/components/form/text/v1/text",

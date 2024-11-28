@@ -103,7 +103,7 @@ if (typeof window.RecaptchaWidget === 'undefined') {
         }
 
         setCaptchaModel = function(response) {
-            this.#model.value = (response);
+            this.#model.dispatch(new FormView.Actions.UIChange({'value': response}));
         }
     }
 }

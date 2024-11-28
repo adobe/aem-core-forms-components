@@ -182,12 +182,12 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         if (AssistPriority.LABEL.equals(assistPriority)) {
             Label label = getLabel();
             if (label != null) {
-                screenReaderText = "$label.$value";
+                screenReaderText = label.getValue();
             }
         } else if (AssistPriority.NAME.equals(assistPriority)) {
-            screenReaderText = "$name";
+            screenReaderText = getName();
         } else if (AssistPriority.DESCRIPTION.equals(assistPriority)) {
-            screenReaderText = "$description";
+            screenReaderText = getDescription();
         } else if (AssistPriority.CUSTOM.equals(assistPriority)) {
             screenReaderText = "'" + customAssistPriorityMsg + "'"; // json formula string literal
         }

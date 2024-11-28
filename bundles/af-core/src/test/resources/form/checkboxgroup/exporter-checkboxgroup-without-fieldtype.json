@@ -1,0 +1,33 @@
+{
+  "id": "checkboxgroup-a484170b97",
+  "fieldType": "checkbox-group",
+  "name": "checkboxgroup1722332761006",
+  "type": "number[]",
+  "enforceEnum": true,
+  "enumNames": [
+    "Item 1",
+    " Item 2"
+  ],
+  "label": {
+    "value": "Check Box Group"
+  },
+  "properties": {
+    "afs:layout": {
+      "orientation": "horizontal"
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/checkboxgroup-without-fieldtype"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "enum": [
+    0,
+    1
+  ],
+  ":type": "forms-components-examples/components/form/checkboxgroup"
+}

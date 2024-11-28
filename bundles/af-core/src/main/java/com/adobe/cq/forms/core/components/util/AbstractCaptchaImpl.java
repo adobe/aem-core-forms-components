@@ -20,6 +20,7 @@ import java.util.Map;
 
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -30,6 +31,11 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
 
     @JsonIgnore
     public abstract String getProvider();
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.CAPTCHA);
+    }
 
     public abstract Map<String, Object> getCaptchaProperties();
 

@@ -45,11 +45,15 @@ public class RadioButtonImplTest {
     private static final String BASE = "/form/radiobutton";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED = CONTENT_ROOT + "/radiobutton-customized";
+    private static final String PATH_RADIOBUTTON_CUSTOMIZED_WITH_LABEL = CONTENT_ROOT + "/radiobutton-customized-withLabel";
+    private static final String PATH_RADIOBUTTON_CUSTOMIZED_WITH_NAME = CONTENT_ROOT + "/radiobutton-customized-withName";
+    private static final String PATH_RADIOBUTTON_CUSTOMIZED_WITH_DESC = CONTENT_ROOT + "/radiobutton-customized-withDescription";
     private static final String PATH_RADIOBUTTON = CONTENT_ROOT + "/radiobutton";
     private static final String PATH_RADIOBUTTON_DATALAYER = CONTENT_ROOT + "/radiobutton-datalayer";
 
     private static final String PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/radiobutton-duplicate-enum";
     private static final String PATH_RADIOBUTTON_FOR_INSERTION_ORDER = CONTENT_ROOT + "/radiobutton-insertion-order";
+    private static final String PATH_RADIOBUTTON_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/radiobutton-without-fieldtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -389,5 +393,38 @@ public class RadioButtonImplTest {
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), radioButton.getEnumNames());
+    }
+
+    @Test
+    void testGetScreenReaderTextWithLabel() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED_WITH_LABEL);
+        assertEquals("Radio Button", radioButton.getScreenReaderText());
+        RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
+        Mockito.when(radioButtonMock.getScreenReaderText()).thenCallRealMethod();
+        assertEquals(null, radioButtonMock.getScreenReaderText());
+    }
+
+    @Test
+    void testGetScreenReaderTextWithName() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED_WITH_NAME);
+        assertEquals("radiobutton_12345", radioButton.getScreenReaderText());
+        RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
+        Mockito.when(radioButtonMock.getScreenReaderText()).thenCallRealMethod();
+        assertEquals(null, radioButtonMock.getScreenReaderText());
+    }
+
+    @Test
+    void testGetScreenReaderTextWithDescription() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED_WITH_DESC);
+        assertEquals("long description", radioButton.getScreenReaderText());
+        RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
+        Mockito.when(radioButtonMock.getScreenReaderText()).thenCallRealMethod();
+        assertEquals(null, radioButtonMock.getScreenReaderText());
+    }
+
+    @Test
+    void testNoFieldType() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_WITHOUT_FIELDTYPE);
+        assertEquals(FieldType.RADIO_GROUP.getValue(), radioButton.getFieldType());
     }
 }

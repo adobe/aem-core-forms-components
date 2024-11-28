@@ -30,6 +30,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.NumberInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
@@ -65,9 +66,10 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @Nullable
     private Boolean excludeMinimumCheck;
     /** End **/
-    private Long exclusiveMinimumValue;
-    private Long exclusiveMaximumValue;
+    private Number exclusiveMinimumValue;
+    private Number exclusiveMaximumValue;
 
+    /** Deprecated methods not to be changed **/
     @Override
     @Nullable
     public Long getMinimum() {
@@ -83,12 +85,38 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
     @Override
     @Nullable
     public Long getExclusiveMaximum() {
-        return exclusiveMaximumValue;
+        return (Long) exclusiveMaximumValue;
     }
 
     @Override
     @Nullable
     public Long getExclusiveMinimum() {
+        return (Long) exclusiveMinimumValue;
+    }
+
+    /** End of Deprecated methods not to be changed **/
+
+    @Override
+    @Nullable
+    public Number getMinimumNumber() {
+        return ComponentUtils.parseNumber(minimumAsStr);
+    }
+
+    @Override
+    @Nullable
+    public Number getMaximumNumber() {
+        return ComponentUtils.parseNumber(maximumAsStr);
+    }
+
+    @Override
+    @Nullable
+    public Number getExclusiveMaximumNumber() {
+        return exclusiveMaximumValue;
+    }
+
+    @Override
+    @Nullable
+    public Number getExclusiveMinimumNumber() {
         return exclusiveMinimumValue;
     }
 
@@ -102,15 +130,30 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
         }
     }
 
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.NUMBER_INPUT);
+    }
+
     @PostConstruct
     private void initNumberInput() {
-        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, excludeMaximumCheck);
-        exclusiveMinimumValue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, excludeMinimumCheck);
+        Object tempExclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximumAsStr != null ? maximumAsStr : maximum,
+            excludeMaximumCheck);
+        Object tempExclusiveMinimumValue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimumAsStr != null ? minimumAsStr : minimum,
+            excludeMinimumCheck);
+        if (tempExclusiveMaximumValue != null) {
+            exclusiveMaximumValue = ComponentUtils.parseNumber(tempExclusiveMaximumValue.toString());
+        }
+        if (tempExclusiveMinimumValue != null) {
+            exclusiveMinimumValue = ComponentUtils.parseNumber(tempExclusiveMinimumValue.toString());
+        }
         // in json either, exclusiveMaximum or maximum should be present
         if (exclusiveMaximumValue != null) {
+            maximumAsStr = null;
             maximum = null;
         }
         if (exclusiveMinimumValue != null) {
+            minimumAsStr = null;
             minimum = null;
         }
     }

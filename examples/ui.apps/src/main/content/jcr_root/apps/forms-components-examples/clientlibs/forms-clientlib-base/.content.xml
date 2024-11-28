@@ -4,4 +4,4 @@
     allowProxy="{Boolean}true"
     categories="[forms-examples.base]"
     embed="[forms-examples.site]"
-    jsProcessor="[default:none,min:gcc;languageIn=ECMASCRIPT_2015;languageOut=ECMASCRIPT_2015]"/>
+    jsProcessor="[default:none,min:gcc;languageIn=ECMASCRIPT_2021;languageOut=ECMASCRIPT_2021]"/>

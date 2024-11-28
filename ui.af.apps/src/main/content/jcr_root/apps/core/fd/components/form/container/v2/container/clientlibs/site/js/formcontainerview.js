@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2024 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,12 @@
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
+        #hamburgerMenuInstance = '';
+
         constructor(params) {
             super(params);
             let self = this;
+            this.#hamburgerMenuInstance = new HamburgerMenu(this);
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on submitSuccess event.
@@ -62,22 +65,50 @@
                 // execute the handler only if there are no rules configured on custom:saveSuccess event.
                 if (!state.events['custom:saveSuccess'] || state.events['custom:saveSuccess'].length === 0) {
                     console.log("Draft id = " + action?.payload?.body?.draftId);
-                    window.alert("Draft has been saved successfully");
+                    window.alert(FormView.LanguageUtils.getTranslatedString(self.getLang(), "saveDraftSuccessMessage"));
                 }
             }, "saveSuccess");
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on custom:saveError event.
                 if (!state.events['custom:saveError'] || state.events['custom:saveError'].length === 0) {
-                    window.alert("Issue while saving draft");
+                    window.alert(FormView.LanguageUtils.getTranslatedString(self.getLang(), "saveDraftErrorMessage"));
                 }
             }, "saveError");
+            this.#setupAutoSave(self.getModel());
+        }
+
+        initialiseHamburgerMenu() {
+            this.#hamburgerMenuInstance.init();
+        }
+
+        /**
+         * Register time based auto save
+         * @param formModel.
+         */
+         #setupAutoSave(formModel) {
+            const autoSaveProperties = formModel?.properties?.['fd:autoSave'];
+            const enableAutoSave = autoSaveProperties?.['fd:enableAutoSave'];
+            if (enableAutoSave) {
+                const autoSaveStrategyType = autoSaveProperties['fd:autoSaveStrategyType'];
+                const autoSaveInterval = autoSaveProperties['fd:autoSaveInterval'];
+                const saveEndPoint = FormView.Utils.getContextPath() + '/adobe/forms/af/save/' + formModel.id;
+                if (autoSaveStrategyType === 'time' && autoSaveInterval) {
+                    console.log("Registering time based auto save");
+                    setInterval(() => {
+                        formModel.dispatch(new FormView.Actions.Save({
+                            'action': saveEndPoint
+                        }));
+                    }, parseInt(autoSaveInterval) * 1000);
+                }
+            }
         }
     }
 
     async function onDocumentReady() {
         const startTime = new Date().getTime();
         let elements = document.querySelectorAll(FormContainerV2.selectors.self);
+
         for (let i = 0; i < elements.length; i++) {
             let loaderToAdd = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ elements[i].id + "']");
             if(loaderToAdd){
@@ -88,6 +119,7 @@
         function onInit(e) {
             let formContainer =  e.detail;
             let formEl = formContainer.getFormElement();
+            formContainer.initialiseHamburgerMenu();
             setTimeout(() => {
                 let loaderToRemove = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ formEl.id + "']");
                 if(loaderToRemove){
@@ -121,5 +153,4 @@
     } else {
         document.addEventListener("DOMContentLoaded", onDocumentReady);
     }
-
 })();

@@ -80,7 +80,7 @@ const languages = [
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Drücken Sie die Eingabetaste, um die Datei zu löschen ",
             "FileSizeGreater"       :        "Dateien ${0} übersteigen die erwartete Größe: ${1}MB.",
-            "FileNameInvalid"       :       "Datei(en) ${0} hat/haben ungültige Zeichen in ihrem Namen. Es werden nur alphanumerische Zeichen unterstützt",
+            "FileNameInvalid"       :       'Hängen Sie keine Dateien an, deren Dateiname mit (.) beginnt, \\ / : * ? " < > | ; % oder $ enthält oder ein reserviertes Schlüsselwort wie nul, prn, con, lpt oder com ist.',
             "FileMimeTypeInvalid"   :       "Datei(en) ${0} ist/sind nicht unterstützte(r) Dateityp(en)",
             "InternalFormSubmissionError" :  "Beim Übermitteln des Formulars ist ein interner Fehler aufgetreten."
         }
@@ -110,7 +110,7 @@ const languages = [
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "ファイルを削除するには Enter を押します ",
             "FileSizeGreater"       :        "ファイル「${0}」は予期されたサイズを超えています :${1} MB。",
-            "FileNameInvalid"       :       "${0} ファイルの名前に無効な文字が含まれています。サポートされるのは英数字のみになります",
+            "FileNameInvalid"       :       'ファイル名が (.) で始まる、\\ / : * ? " < > | ; % $ を含む、または nul、prn、con、lpt、com などの予約キーワードを含むファイルは添付しないでください。',
             "FileMimeTypeInvalid"   :       "${0} ファイルの形式はサポートされていません",
             "InternalFormSubmissionError" :  "フォームを送信中に内部エラーが発生しました。"
         }
@@ -140,7 +140,7 @@ const languages = [
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Premete Invio per eliminare il file ",
             "FileSizeGreater"       :        "I file ${0} superano le dimensioni previste: ${1} MB.",
-            "FileNameInvalid"       :       "I file ${0} contengono caratteri non validi nel nome. Sono supportati solo caratteri alfanumerici",
+            "FileNameInvalid"       :       'Non allegare file il cui nome inizia con (.), contiene \\ / : * ? " < > | ; % $ oppure è una parola chiave riservata come nul, prn, con, lpt o com.',
             "FileMimeTypeInvalid"   :       "I file ${0} non sono tipi di file supportati",
             "InternalFormSubmissionError" :  "Errore interno durante l'invio del modulo."
         }
@@ -169,8 +169,8 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Appuyer sur Entrée pour supprimer le fichier ",
-            "FileSizeGreater"       :       "FLes fichiers ${0} font plus que la taille attendue : ${1} Mo.",
-            "FileNameInvalid"       :       "Le nom du ou des fichiers ${0} comportent des caractères non valides. Seuls les caractères alphanumériques sont pris en charge",
+            "FileSizeGreater"       :       '${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.',
+            "FileNameInvalid"       :       "Ne joignez pas de fichiers dont le nom commence par (.), contient \\ / : * ?  \" < > | ; % $, ou est un mot-clé réservé comme nul, prn, con, lpt ou com.",
             "FileMimeTypeInvalid"   :       "Le ou les fichiers ${0} sont des types de fichiers non pris en charge",
             "InternalFormSubmissionError" :  "Une erreur interne s'est produite lors de l'envoi du formulaire."
         }
@@ -199,8 +199,8 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Presione Intro para eliminar el archivo ",
-            "FileSizeGreater"       :        "FLos archivos ${0} tienen un tamaño superior al esperado: ${1}MB.",
-            "FileNameInvalid"       :       "El nombre de los archivos ${0} contiene caracteres no válidos. Solo se admiten caracteres alfanuméricos",
+            "FileSizeGreater"       :        "Los archivos ${0} son mayores que el tamaño esperado: ${1} MB.",
+            "FileNameInvalid"       :       'No adjunte archivos cuyo nombre comience con (.), contenga \\ / : * ? " < > | ; % $, o sea una palabra clave reservada como nul, prn, con, lpt o com.',
             "FileMimeTypeInvalid"   :       "Los tipos de archivo ${0} no son compatibles",
             "InternalFormSubmissionError" :  "Error interno al enviar el formulario."
         }
@@ -230,7 +230,7 @@ const languages = [
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Enter 키를 눌러 파일 삭제",
             "FileSizeGreater"       :        "파일 ${0}이(가) 예상 크기 ${1}MB를 초과합니다.",
-            "FileNameInvalid"       :       "파일 ${0}의 이름에 잘못된 문자가 포함되어 있습니다. 영숫자만 지원됩니다.",
+            "FileNameInvalid"       :       '파일 이름이 (.)으로 시작하거나, \\ / : * ? " < > | ; % $를 포함하거나, nul, prn, con, lpt 또는 com과 같이 예약된 키워드인 파일은 첨부하지 마십시오.',
             "FileMimeTypeInvalid"   :       "파일 ${0}은(는) 지원되지 않는 파일 유형입니다.",
             "InternalFormSubmissionError" :  "양식을 제출하는 중 내부 오류가 발생했습니다."
         }
@@ -260,7 +260,7 @@ const languages = [
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "按 Enter 以刪除檔案",
             "FileSizeGreater"       :        "檔案 ${0} 的大小比預期大: ${1}MB。",
-            "FileNameInvalid"       :       "${0} 檔案名稱中包含無效字元。僅支援字母數字字元",
+            "FileNameInvalid"       :       '不要附加以下檔案：檔案名稱以 (.) 開頭且包含 \\ / : * ? " < > | ; % $，或檔案名稱為保留關鍵字，例如 nul、prn、con、lpt 或 com。',
             "FileMimeTypeInvalid"   :       "${0} 檔案的檔案類型不受支援",
             "InternalFormSubmissionError" :  "提交表單時發生內部錯誤。"
         }
@@ -291,7 +291,7 @@ const languages = [
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "按 Enter 可删除文件",
             "FileSizeGreater"       :        "文件 ${0} 大于预期大小: ${1}MB。",
-            "FileNameInvalid"       :       "文件 ${0} 的名称中包含无效字符。仅支持字母数字字符",
+            "FileNameInvalid"       :       '请勿附加文件名以 (.) 开头、包含 \\ / : * ? " < > | ; % $ 或为保留关键字（如 nul、prn、con、lpt 或 com）的文件。',
             "FileMimeTypeInvalid"   :       "文件 ${0} 的类型不受支持",
             "InternalFormSubmissionError" :  "提交表单时遇到内部错误。"
         }
@@ -321,7 +321,7 @@ const languages = [
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Pressione Enter para excluir o arquivo ",
             "FileSizeGreater"       :        "Fos arquivos ${0} são maiores do que o tamanho esperado: ${1}MB.",
-            "FileNameInvalid"       :       "O(s) arquivo(s) ${0} tem caracteres inválidos em seu nome. Somente caracteres alfanuméricos são suportados",
+            "FileNameInvalid"       :       'Não anexe arquivos cujos nomes comecem com (.), contenham \\ / : * ? " < > | ; % $, ou sejam palavras-chave reservadas, como nul, prn, con, lpt ou com.',
             "FileMimeTypeInvalid"   :       "O(s) arquivo(s) ${0} não é(são) suportado(s)",
             "InternalFormSubmissionError" :  "Encontrou um erro interno ao enviar o formulário."
         }

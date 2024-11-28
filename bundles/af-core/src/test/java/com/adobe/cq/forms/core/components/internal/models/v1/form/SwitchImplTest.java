@@ -48,6 +48,7 @@ public class SwitchImplTest {
     private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/switch-enableUncheckedValueFalse";
     private static final String PATH_SWITCH_ENABLEUNCHECKED_BOOLEAN = CONTENT_ROOT + "/switch-boolean";
     private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF_BOOLEAN = CONTENT_ROOT + "/switch-enableUncheckedValueFalse-boolean";
+    private static final String PATH_SWITCH_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/switch-without-fieldtype";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -343,5 +344,11 @@ public class SwitchImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(Switch.class);
+    }
+
+    @Test
+    void testNoFieldType() {
+        Switch switchComp = getSwitchUnderTest(PATH_SWITCH_WITHOUT_FIELDTYPE);
+        assertEquals(FieldType.CHECKBOX.getValue(), switchComp.getFieldType());
     }
 }

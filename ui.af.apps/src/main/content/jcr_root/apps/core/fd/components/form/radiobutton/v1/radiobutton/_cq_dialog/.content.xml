@@ -148,7 +148,7 @@
                                                     <caption
                                                             jcr:primaryType="nt:unstructured"
                                                             text="Title"
-                                                            value="caption"/>
+                                                            value="label"/>
                                                 </items>
                                             </assistPriorityCustom>
                                             <customText

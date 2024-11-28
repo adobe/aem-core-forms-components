@@ -142,6 +142,7 @@ class FormPanel extends FormFieldBase {
         this.updateVisible(state.visible);
         this.updateEnabled(state.enabled);
         this.initializeHelpContent(state);
+        this.updateLabel(state.label);
     }
 
     /**

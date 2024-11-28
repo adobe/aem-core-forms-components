@@ -330,5 +330,14 @@
       "1"
     ],
     ":type": "forms-components-examples/components/form/dropdown"
+  },
+  "dropdown-without-fieldtype" : {
+    "id": "dropdown-without-fieldtype1",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/dropdown/v1/dropdown",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "enum" : [0, 1, 2],
+    "enumNames" : ["m", "f", "o"]
   }
 }

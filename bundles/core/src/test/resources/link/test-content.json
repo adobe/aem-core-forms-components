@@ -111,6 +111,21 @@
             "title"                 : "Link Component",
             "sling:resourceType"    : "core/fd/components/formsportal/link/v2/link",
             "assetType"             : "Others"
+        },
+        "linkcomponent-v2-with-space-in-asset-name":{
+            "tooltip"               : "Some Hover Tooltip Text",
+            "pdfPath"             : "/content/dam/formsanddocuments/sample form",
+            "title"                 : "Link Component",
+            "sling:resourceType"    : "core/fd/components/formsportal/link/v2/link",
+            "assetType"             : "PDF",
+            "queryParams":{
+                "jcr:primaryType"   : "nt:unstructured",
+                "item0":{
+                    "jcr:primaryType"   : "nt:unstructured",
+                    "key"               : "hello",
+                    "value"             : "world"
+                }
+            }
         }
     },
     "dam" : {
