@@ -5,7 +5,7 @@
         cq:lastModified="{Date}2024-03-12T12:04:40.719+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
-        jcr:description="Text Input"
+        jcr:description="Password"
         jcr:primaryType="cq:PageContent"
         jcr:title="Password"
         sling:resourceType="forms-components-examples/components/page"
@@ -25,7 +25,7 @@
                     jcr:lastModified="{Date}2024-03-12T11:09:55.804+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
-                    sling:resourceType="core/wcm/components/text/v2/text"
+                    sling:resourceType="core/wcm/components/password/v1/password"
                     text="&lt;h1>Password&lt;sub>v1&lt;/sub>&lt;/h1>&#xd;&#xa;"
                     textIsRich="true"/>
                 <text
@@ -35,8 +35,8 @@
                     jcr:lastModified="{Date}2020-07-15T13:25:39.729+02:00"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
-                    sling:resourceType="core/wcm/components/text/v2/text"
-                    text="&lt;p>A text input (text box) component allows a user to enter and edit a single or multiple lines of text, depending on the type attribute of the input element. The text input component can be placed within a form and is usually labeled with a helpful text that easily identifies its purpose.&lt;/p>&lt;p>These text input fields can be used in a variety of ways, such as for collecting information like names, email addresses, phone numbers, and other types of text data. Additionally, the text input component can have additional functionality, styling, and accessibility features that can make it more user-friendly, efficient and accessible.&lt;/p>"
+                    sling:resourceType="core/wcm/components/password/v1/password"
+                    text="&lt;p>The password component allows a user to enter password, depending on the type attribute of the input element. The password component can be placed within a form and is usually labeled with a helpful text that easily identifies its purpose.&lt;/p>&lt;p>These password fields can be used to get passwords as input in login and similar forms.&lt;/p>"
                     textIsRich="true"/>
                 <teaser
                     cq:styleIds="[1550165685463]"
@@ -80,13 +80,13 @@
                     jcr:lastModified="{Date}2019-05-22T11:26:32.604+03:00"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
-                    sling:resourceType="core/wcm/components/text/v2/text"
+                    sling:resourceType="core/wcm/components/password/v2/password"
                     text="&lt;p>The component, simply displaying placeholder data.&lt;/p>"
                     textIsRich="true"/>
                 <demo
-                    jcr:created="{Date}2018-12-07T12:55:03.496+01:00"
+                    jcr:created="{Date}2023-12-07T12:55:03.496+01:00"
                     jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2018-12-07T12:55:03.496+01:00"
+                    jcr:lastModified="{Date}2023-12-07T12:55:03.496+01:00"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="forms-components-examples/components/demo">

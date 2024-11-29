@@ -76,7 +76,7 @@ public class PasswordImpl extends AbstractFieldImpl implements Password {
     }
 
     @PostConstruct
-    private void initTextInput() {
+    private void initPassword() {
         exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, null);
         exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, null);
         // in json either, exclusiveMaximum or maximum should be present

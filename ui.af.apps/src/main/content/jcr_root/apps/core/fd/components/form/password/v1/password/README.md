@@ -80,7 +80,7 @@ We support replace feature that allows replacing Password component to any of th
 * Number Input
 * Telephone Input
 * Text Box
-* Email Input
+* Date Picker
 
 ## JavaScript Data Attribute Bindings
 
