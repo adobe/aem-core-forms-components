@@ -22,16 +22,17 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Password;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
-import org.mockito.Mockito;
 
 @ExtendWith(AemContextExtension.class)
 public class PasswordImplTest {
@@ -57,12 +58,12 @@ public class PasswordImplTest {
     }
 
     @Test
-    void testExportedType() {
+    void testExportedType() throws Exception {
         Password password = Utils.getComponentUnderTest(PATH_PASSWORD_CUSTOMIZED, Password.class, context);
         assertEquals(FormConstants.RT_FD_FORM_PASSWORD_V1, password.getExportedType());
-        TextInput textInputMock = Mockito.mock(TextInput.class);
-        Mockito.when(textInputMock.getExportedType()).thenCallRealMethod();
-        assertEquals("", textInputMock.getExportedType());
+        Password passwordMock = Mockito.mock(Password.class);
+        Mockito.when(passwordMock.getExportedType()).thenCallRealMethod();
+        assertEquals("", passwordMock.getExportedType());
     }
 
     @Test
