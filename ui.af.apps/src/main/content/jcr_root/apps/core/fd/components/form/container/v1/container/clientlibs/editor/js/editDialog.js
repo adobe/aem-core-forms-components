@@ -234,7 +234,7 @@
         });
     }
 
-    const initialiseDataModel = window.CQ.FormsCoreComponents.Utils.DataModel.v2?.initialiseDataModel || window.CQ.FormsCoreComponents.Utils.DataModel.initialiseDataModel;
+    const initialiseDataModel = window.CQ.FormsCoreComponents.Utils.DataModel.initialiseDataModel;
 
     Utils.initializeEditDialog(EDIT_DIALOG_FORM)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
         registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel, registerAutoSaveDialogAction);

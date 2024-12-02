@@ -174,7 +174,7 @@
 
     window.CQ.FormsCoreComponents.editorhooks.allowedCompFieldTypes = [];
 
-    window.CQ.FormsCoreComponents.editorhooks.getFormContainerProperties =  (editablePath) => {
+    window.CQ.FormsCoreComponents.editorhooks.getComponentProperties =  (editablePath) => {
         const result = $.ajax({
             type: 'GET',
             async: false,

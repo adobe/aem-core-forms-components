@@ -17,17 +17,6 @@
 (function (window, ns, Coral, channel) {
     const FRAGMENT_CREATION_DIALOG_PATH = "fd/af/authoring/dialog/saveasfragment/cq:dialog.html";
 
-    /* Check if fieldType = panel field is present on this component**/
-    window.CQ.FormsCoreComponents.editorhooks.isFieldTypePanel = function(editable) {
-        const formContainer = window.CQ.FormsCoreComponents.editorhooks.getFormContainerProperties(editable.path);
-        let fieldType;
-        if (formContainer != null && formContainer !== "") {
-            const properties = JSON.parse(formContainer);
-            fieldType = properties['fieldType'];
-        }
-        return fieldType === "panel";
-    }
-
     const fragmentCreationDialogConfig = function (editable) {
         const path = `/mnt/overlay/${FRAGMENT_CREATION_DIALOG_PATH}`;
         return {

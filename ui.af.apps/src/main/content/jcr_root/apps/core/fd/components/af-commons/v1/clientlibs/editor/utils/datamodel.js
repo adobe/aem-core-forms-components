@@ -17,6 +17,10 @@
 (function($, channel, Coral) {
     "use strict";
 
+    if(window.CQ?.FormsCoreComponents?.Utils?.DataModel) {
+        return;
+    }
+
     window.CQ = window.CQ || {};
     window.CQ.FormsCoreComponents = window.CQ.FormsCoreComponents || {};
     window.CQ.FormsCoreComponents.Utils = window.CQ.FormsCoreComponents.Utils || {};
