@@ -51,18 +51,29 @@ public class CustomCloudRewriterTransformer implements TransformerFactory {
         throws SAXException {
       AttributesImpl mutableAttributes =
           attributes instanceof AttributesImpl ? (AttributesImpl) attributes
-              : null;
+              : new AttributesImpl(attributes);
       if (isPublish) {
         if ("link".equals(localName)) {
-          mutableAttributes = mutableAttributes != null ? mutableAttributes : new AttributesImpl(attributes);
           replaceLinkPaths(mutableAttributes);
-        } else if ("script".equals(localName)) {
-          mutableAttributes = mutableAttributes != null ? mutableAttributes : new AttributesImpl(attributes);
-          replaceScriptPaths(mutableAttributes);
+        } else if ("script".equals(localName) || "img".equals(localName)) {
+          replaceAttributePaths(mutableAttributes, "src");
+        } else if ("form".equals(localName)) {
+          replaceAttributePaths(mutableAttributes, "data-cmp-path");
+        } else if ("div".equals(localName)) {
+          replaceAttributePaths(mutableAttributes, "data-cmp-adaptiveformcontainer-path");
         }
       }
+
       super.startElement(uri, localName, qName,
-          mutableAttributes != null ? mutableAttributes : attributes);
+          mutableAttributes);
+    }
+
+    private void replaceAttributePaths(AttributesImpl attributes, String attributeName) {
+      if (attributes.getIndex(attributeName) >= 0) {
+        int index = attributes.getIndex(attributeName);
+        String value = attributes.getValue(index);
+        setAttribute(attributes, index, addPathPrefix(value));
+      }
     }
 
     private void replaceLinkPaths(AttributesImpl attributes) {
@@ -73,14 +84,6 @@ public class CustomCloudRewriterTransformer implements TransformerFactory {
           String value = attributes.getValue(index);
           setAttribute(attributes, index, addPathPrefix(value));
         }
-      }
-    }
-
-    private void replaceScriptPaths(AttributesImpl attributes) {
-      if (attributes.getIndex("src") >= 0) {
-        int index = attributes.getIndex("src");
-        String value = attributes.getValue(index);
-        setAttribute(attributes, index, addPathPrefix(value));
       }
     }
 
