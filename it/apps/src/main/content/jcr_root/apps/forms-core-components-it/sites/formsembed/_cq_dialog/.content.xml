@@ -14,7 +14,7 @@
           <text
             jcr:primaryType="nt:unstructured"
             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-            fieldLabel="Forms URL - should be prefixed with abbviecloud"
+            fieldLabel="Forms URL - should be prefixed with custom"
             name="./formsUrl"/>
         </items>
       </column>
