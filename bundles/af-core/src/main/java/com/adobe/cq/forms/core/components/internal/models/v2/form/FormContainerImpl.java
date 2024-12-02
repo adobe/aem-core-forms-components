@@ -83,6 +83,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
 
+    private static final String DRAFT_PREFILL_SERVICE = "service://FP/draft/";
+
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private SlingHttpServletRequest request;
@@ -341,6 +343,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (StringUtils.isNotBlank(getPrefillService()) ||
             (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF)))) {
             formDataEnabled = true;
+        }
+
+        // set draftId in properties in case of forms portal prefill
+        if (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF))) {
+            final String dataRef = request.getParameter(GuideConstants.AF_DATA_REF);
+            if (dataRef.startsWith(DRAFT_PREFILL_SERVICE)) {
+                properties.put(GuideConstants.DRAFT_ID, StringUtils.substringAfter(dataRef, DRAFT_PREFILL_SERVICE));
+            }
         }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);

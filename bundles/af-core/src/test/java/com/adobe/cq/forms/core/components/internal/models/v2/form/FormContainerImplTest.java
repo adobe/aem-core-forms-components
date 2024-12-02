@@ -456,6 +456,18 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testDraftIdPropertyWhenDataRefIsSet() throws Exception {
+        MockSlingHttpServletRequest request = context.request();
+        Map<String, Object> tempMap = new HashMap<>();
+        tempMap.put(GuideConstants.AF_DATA_REF, "service://FP/draft/KH5DOFY2RMWVOOVREE324MRXIY");
+        request.setParameterMap(tempMap);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
+        assertEquals("KH5DOFY2RMWVOOVREE324MRXIY", formContainer.getProperties().get(GuideConstants.DRAFT_ID));
+        // reset the parameter map
+        request.setParameterMap(new HashMap<>());
+    }
+
+    @Test
     void testGetFormDataDisabled() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
         assertFalse(Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
