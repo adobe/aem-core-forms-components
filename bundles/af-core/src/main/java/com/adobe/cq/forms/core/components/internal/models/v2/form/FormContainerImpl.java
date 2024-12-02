@@ -64,7 +64,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
     resourceType = { FormContainerImpl.RESOURCE_TYPE, FormConstants.RT_FD_FRAGMENT_CONTAINER_V1 })
-@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+@Exporter(name = "ic-jackson", extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FormContainerImpl extends AbstractContainerImpl implements FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
 
