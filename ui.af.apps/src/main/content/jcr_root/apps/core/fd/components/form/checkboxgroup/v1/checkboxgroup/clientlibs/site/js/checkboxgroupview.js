@@ -112,10 +112,13 @@
         }
 
         updateValidity(validity) {
-            const valid = validity.valid ? validity.valid : false;
-            let widgets = this.widget;
-            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
-            widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
+            if(validity.valid === undefined) {
+                this.element.removeAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID);
+                this.widget.forEach(widget => widget.removeAttribute(FormView.Constants.ARIA_INVALID));
+            } else {
+                this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, validity.valid);
+                this.widget.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !validity.valid));
+            }
         }
 
         updateValue(modelValue) {

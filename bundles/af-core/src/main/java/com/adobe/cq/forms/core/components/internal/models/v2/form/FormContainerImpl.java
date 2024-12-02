@@ -77,6 +77,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_IS_HAMBURGER_MENU_ENABLED = "fd:isHamburgerMenuEnabled";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
+    private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
+    private static final String FD_DATA_URL = "fd:dataUrl";
 
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
@@ -343,6 +345,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
+        properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
+        properties.put(FD_DATA_URL, getDataUrl());
+
         return properties;
     }
 
@@ -394,6 +399,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public String getName() {
         return FormContainer.super.getName();
+    }
+
+    @Override
+    public String getCustomFunctionUrl() {
+        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId();
     }
 
 }

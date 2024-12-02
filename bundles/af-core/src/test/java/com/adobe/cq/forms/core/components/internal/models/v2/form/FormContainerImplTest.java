@@ -524,4 +524,10 @@ public class FormContainerImplTest {
         Mockito.when(coreComponentCustomPropertiesProvider.getProperties()).thenReturn(null);
         assertEquals("customPropValue", formContainer.getProperties().get("customProp"));
     }
+
+    @Test
+    void testCustomFunctionUrl() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getCustomFunctionUrl());
+    }
 }
