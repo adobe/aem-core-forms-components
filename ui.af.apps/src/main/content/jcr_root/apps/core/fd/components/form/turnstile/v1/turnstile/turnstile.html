@@ -36,6 +36,7 @@
 
     <div class="cmp-adaptiveform-turnstile__widget"
          name="${turnstile.name}"></div>
-
-    <div data-sly-call="${errorMessage.errorMessage @componentId=turnstile.id, bemBlock='cmp-adaptiveform-turnstile'}" data-sly-unwrap></div>
+    <div data-sly-test="${turnstile && turnstile.captchaDisplayMode && turnstile.captchaDisplayMode != 'invisible'}">
+        <div data-sly-call="${errorMessage.errorMessage @componentId=turnstile.id, bemBlock='cmp-adaptiveform-turnstile'}" data-sly-unwrap></div>
+    </div>
 </div>

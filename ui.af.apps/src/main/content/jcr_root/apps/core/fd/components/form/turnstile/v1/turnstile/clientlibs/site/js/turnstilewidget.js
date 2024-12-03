@@ -15,7 +15,7 @@
  ******************************************************************************/
 
 /**
- * This class is responsible for interacting with the hCaptcha widget. It displays hCaptcha challenge.
+ * This class is responsible for interacting with the turnstile widget. It displays turnstile challenge.
  */
 
 if (typeof window.TurnstileWidget === 'undefined') {
@@ -41,25 +41,23 @@ if (typeof window.TurnstileWidget === 'undefined') {
             this.#renderTurnstile(widget);
         }
 
-        #renderTurnstile(element) {
+        #renderTurnstile(turnstileContainer) {
 
-            var self = this;
-            var turnstileConfigData = this.#options;
-            element.innerHTML = '<div class="cf-turnstile"></div>';
-            var turnstileContainer = document.getElementsByClassName("cf-turnstile")[0];
-            var widgetId;
-            var url = turnstileConfigData.properties[TurnstileWidget.FD_CAPTCHA].config.uri;
+            const self = this;
+            const turnstileConfigData = this.#options;
+            let widgetId;
+            const url = turnstileConfigData.properties[TurnstileWidget.FD_CAPTCHA].config.uri;
 
-            var successCallback = function(response) {
+            const successCallback = function(response) {
                 self.setCaptchaModel(response);
             };
 
-            var expiredCallback = function() {
+            const expiredCallback = function() {
                 turnstile.reset(widgetId);
                 self.setCaptchaModel("");
             };
 
-            var onloadCallbackInternal = function() {
+            const onloadCallbackInternal = function() {
                 widgetId = turnstile.render(
                     turnstileContainer,
                     turnstileParameters
@@ -67,7 +65,7 @@ if (typeof window.TurnstileWidget === 'undefined') {
                 return widgetId;
             };
 
-            var turnstileParameters = {
+            const turnstileParameters = {
                 'sitekey': this.#model.captchaSiteKey,
                 'size': turnstileConfigData.properties[TurnstileWidget.FD_CAPTCHA].config.size,
                 'theme': turnstileConfigData.properties[TurnstileWidget.FD_CAPTCHA].config.theme || 'light',
@@ -83,10 +81,10 @@ if (typeof window.TurnstileWidget === 'undefined') {
                 : "?onload=onloadTurnstileCallback&render=explicit";
             scr.src = url + queryParams;
             scr.async = true;
-            element.appendChild(scr);
+            turnstileContainer.appendChild(scr);
         }
 
-        setCaptchaModel = function(response) {
+        setCaptchaModel(response) {
             this.#model.dispatch(new FormView.Actions.UIChange({'value': response}));
         }
     }

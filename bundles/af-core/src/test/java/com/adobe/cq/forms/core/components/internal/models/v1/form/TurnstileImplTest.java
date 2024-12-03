@@ -140,7 +140,7 @@ public class TurnstileImplTest {
     @Test
     void testJSONExport() throws Exception {
         Mockito.when(turnstileConfig.getSiteKey()).thenReturn("siteKey");
-        Mockito.when(turnstileConfig.getWidgetType()).thenReturn("managed");
+        Mockito.when(turnstileConfig.getWidgetType()).thenReturn("invisible");
         Mockito.when(turnstileConfig.getClientSideJsUrl()).thenReturn("https://challenges.cloudflare.com/turnstile/v0/api.js");
         Turnstile turnstile = Utils.getComponentUnderTest(PATH_TURNSTILE, Turnstile.class, context);
         Utils.testJSONExport(turnstile, Utils.getTestExporterJSONPath(BASE, PATH_TURNSTILE));

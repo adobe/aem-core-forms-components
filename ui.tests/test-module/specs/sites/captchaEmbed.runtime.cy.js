@@ -97,7 +97,7 @@ describe("Captcha In Sites Runtime Test", () => {
                 formContainer = p;
                 expect(formContainer, "formcontainer is initialized").to.not.be.null;
                 expect(formContainer._model.items.length, "model and view elements match").to.equal(Object.keys(formContainer._fields).length);
-                cy.get('.cmp-adaptiveform-turnstile__widget > div.cf-turnstile').should('exist').then($iframe => {
+                cy.get('.cmp-adaptiveform-turnstile__widget').should('exist').then($iframe => {
                     cy.wrap($iframe).then($iframe => {
                         cy.window().should('have.property', 'turnstile').and('not.be.undefined');
                     });

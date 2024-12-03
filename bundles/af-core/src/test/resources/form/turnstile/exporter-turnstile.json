@@ -15,14 +15,14 @@
     "fd:captcha": {
       "config": {
         "uri": "https://challenges.cloudflare.com/turnstile/v0/api.js",
-        "widgetType": "managed",
+        "widgetType": "invisible",
         "size": "normal",
         "theme": "light"
       }
     }
   },
   "captchaProvider": "turnstile",
-  "captchaDisplayMode": "visible",
+  "captchaDisplayMode": "invisible",
   "captchaSiteKey": "siteKey",
   "label": {
     "visible": true,

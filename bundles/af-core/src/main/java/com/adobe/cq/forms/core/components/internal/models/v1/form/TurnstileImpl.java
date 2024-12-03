@@ -115,7 +115,7 @@ public class TurnstileImpl extends AbstractCaptchaImplV2 implements Turnstile {
 
     @PostConstruct
     @Override
-    public Map<String, Object> getCaptchaProperties() throws GuideException {
+    public Map<String, Object> getCaptchaProperties() {
         Map<String, Object> customCaptchaProperties = new LinkedHashMap<>();
         String siteKey = null, uri = null, widgetType = null;
         if (turnstileConfiguration == null) {

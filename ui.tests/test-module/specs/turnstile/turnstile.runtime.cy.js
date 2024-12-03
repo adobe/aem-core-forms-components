@@ -84,7 +84,7 @@ describe("Form Runtime with Turnstile Input", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             const [id, fieldView] = Object.entries(formContainer._fields)[0]
             const model = formContainer._model.getElement(id)
-            cy.get('div.cf-turnstile').should('exist');
+            cy.get('.cmp-adaptiveform-turnstile__widget').should('exist');
 
             checkHTML(model.id, model.getState()).then(() => {
                 model.visible = false
@@ -135,7 +135,7 @@ describe("Form Runtime with Turnstile Input", () => {
                 formContainer = p;
             });
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            cy.get('.cmp-adaptiveform-turnstile__widget > div.cf-turnstile').should('be.visible').then($iframe => {
+            cy.get('.cmp-adaptiveform-turnstile__widget').should('be.visible').then($iframe => {
                 cy.wrap($iframe).then($iframe => {
                     cy.window().should('have.property', 'turnstile').and('not.be.undefined')
                         .then((turnstile) => {
@@ -162,7 +162,7 @@ describe("Form Runtime with Turnstile Input", () => {
                 formContainer = p;
             });
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            cy.get('.cmp-adaptiveform-turnstile__widget > div.cf-turnstile').should('be.visible').then($iframe => {
+            cy.get('.cmp-adaptiveform-turnstile__widget').should('be.visible').then($iframe => {
                 cy.wrap($iframe).then($iframe => {
                     cy.window().should('have.property', 'turnstile').and('not.be.undefined')
                         .then((hcaptcha) => {
@@ -196,7 +196,7 @@ describe("Form Runtime with Turnstile Input", () => {
                 formContainer = p;
             });
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            cy.get(`div.cf-turnstile`).should('exist').then(() => {
+            cy.get(`.cmp-adaptiveform-turnstile__widget`).should('exist').then(() => {
                 cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/, (req) => {
                     req.reply((res) => {
                         expect(res.statusCode).to.equal(200);
@@ -214,7 +214,7 @@ describe("Form Runtime with Turnstile Input", () => {
                 formContainer = p;
             });
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            cy.get(`div.cf-turnstile`).should('exist').then(() => {
+            cy.get(`.cmp-adaptiveform-turnstile__widget`).should('exist').then(() => {
                 cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/, (req) => {
                     req.reply((res) => {
                         expect(res.statusCode).to.equal(400);

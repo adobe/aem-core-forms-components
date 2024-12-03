@@ -20,7 +20,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 
@@ -40,14 +39,11 @@ public abstract class AbstractCaptchaImplV2 extends AbstractCaptchaImpl implemen
     public Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
         Map<String, Object> captchaConfig = new HashMap<>();
-        try {
-            if (getCaptchaProperties() != null && getCaptchaProperties().size() > 0) {
-                captchaConfig.put(CAPTCHA_CONFIG, getCaptchaProperties());
-            }
-            properties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, captchaConfig);
-        } catch (GuideException e) {
-            throw new RuntimeException(e);
+        Map<String, Object> captchaProperties = getCaptchaProperties();
+        if (captchaProperties != null && captchaProperties.size() > 0) {
+            captchaConfig.put(CAPTCHA_CONFIG, captchaProperties);
         }
+        properties.put(CUSTOM_RECAPTCHA_PROPERTY_WRAPPER, captchaConfig);
         return properties;
     }
 
