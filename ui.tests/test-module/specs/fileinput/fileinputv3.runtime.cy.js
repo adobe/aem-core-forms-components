@@ -217,7 +217,19 @@ describe('Click on button tag (V-3)', () => {
         cy.get(`#${id} > .${bemBlock}__container > .${bemBlock}__dragarea > .${bemBlock}__widgetlabel`).should('exist').click().then(() => {
             cy.attachFile(`#${id} input[type="file"]`, [sampleFileName]).then(() => {
                 cy.get('.cmp-adaptiveform-fileinput__filename').should('contain', sampleFileName);
+            });
         });
-    });
-  }); 
-})
+    })
+
+    it('should display an error message configured by the user', () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[5];
+        const model = formContainer._model.getElement(id);
+
+        const fileInput = 'input[name=\'fileinput6\']';
+        cy.attachFile(fileInput, ['FileAttachment3mb.jpg']);
+ 
+        cy.on('window:alert', (alertText) => {
+            expect(alertText).to.equal(model.getState().constraintMessages.maxFileSize);
+        });
+     });
+});

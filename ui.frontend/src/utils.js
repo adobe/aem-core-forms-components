@@ -269,11 +269,36 @@ class Utils {
     }
 
     /**
+     * @deprecated Use `registerCustomFunctionsV2` instead.
      * Registers custom functions from clientlibs.
      * @param {string} formId - The form ID.
      */
     static async registerCustomFunctions(formId) {
         const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
+        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
+        if (funcConfig && funcConfig.customFunction) {
+            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
+                if (window[func.id]) {
+                    accumulator[func.id] = window[func.id];
+                }
+                return accumulator;
+            }, {});
+            FunctionRuntime.registerFunctions(funcObj);
+        }
+    }
+
+    /**
+     * Registers custom functions from clientlibs.
+     * @param {object} formJson - The Sling model exporter representation of the form
+     */
+    static async registerCustomFunctionsV2(formJson) {
+        let funcConfig;
+        const customFunctionsUrl = formJson.properties['fd:customFunctionsUrl'];
+        if (customFunctionsUrl) {
+            funcConfig = await HTTPAPILayer.getJson(customFunctionsUrl);
+        } else {
+            funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formJson.id);
+        }
         console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
         if (funcConfig && funcConfig.customFunction) {
             const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
@@ -309,14 +334,15 @@ class Utils {
             } else {
                 const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
-                await this.registerCustomFunctions(_formJson.id);
+                await this.registerCustomFunctionsV2( _formJson);
                 await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
                 if (_formJson?.properties?.['fd:formDataEnabled'] === true) {
                     // only execute when fd:formDataEnabled is present and set to true
-                    _prefillData = await HTTPAPILayer.getPrefillData(_formJson.id, params) || {};
+                    _prefillData = await HTTPAPILayer.getJson(_formJson.properties['fd:dataUrl'] + "?" + Object.keys(params).map(p => p+"="+params[p]).join("&"))
+                    _prefillData = _prefillData || {};
                     _prefillData = Utils.stripIfWrapped(_prefillData);
                 }
                 const formContainer = await createFormContainer({

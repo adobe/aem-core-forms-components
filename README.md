@@ -49,16 +49,23 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [ReCaptcha](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/recaptcha/v1/recaptcha)
 -   [Terms and Conditions](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/termsandconditions/v1/termsandconditions)
 -   [Checkbox](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkbox/v1/checkbox)
+-   [Review](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/review/v1/review)
 
 ## System Requirements
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
 
+<<<<<<< HEAD
 
 | Forms Core Components | WCM Core Components | AEM 6.5 | Java  | Maven  |  
 |-----------------------|---------------------|---------| ----- | ------ | 
 | 1.1.60                | 2.24.6             | 6.5.20+ | 8, 11 | 3.3.9+ |
 
+=======
+| Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
+|-----------------------|---------------------| ---------------------------- | ----- | ------ | 
+| 3.0.74                | 2.24.6             | Continual                    | 11 | 3.3.9+ |
+>>>>>>> master
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 

@@ -229,6 +229,18 @@ describe("Form with Radio Button Input", () => {
         })
         cy.get(`#${id}`).invoke('attr', 'data-cmp-required').should('eq', 'true');
     })
+
+    it("reset of radiobutton resulting in invalidation", () => {
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
+        const [resetButton, resetButtonFieldView] = Object.entries(formContainer._fields)[9];
+
+        cy.get(`#${radioButton1}`).find("input").check("1");
+        cy.get(`#${resetButton} button`).click().then(() => {
+            cy.get(`#${radioButton1}`).find("input[value='1']").should('not.be.checked');
+            cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-valid').should('not.exist');
+        })
+    })
 })
 
 describe("setFocus on radiobutton via rules", () => {

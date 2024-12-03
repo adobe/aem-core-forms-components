@@ -13,4 +13,5 @@
     <filter root="/conf/core-components-it" mode="update"/>
     <filter root="/conf/wknd" mode="update"/>
     <filter root="/conf/datalayerContainer" mode="update"/>
+    <filter root="/etc/replication/agents.author/corecomponentsit"/>
 </workspaceFilter>

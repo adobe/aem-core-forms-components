@@ -40,6 +40,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import com.adobe.aemds.guide.service.CoreComponentCustomPropertiesProvider;
 import com.adobe.aemds.guide.service.GuideLocalizationService;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.export.json.ComponentExporter;
@@ -490,5 +491,44 @@ public class FormContainerImplTest {
     public void testGetIsHamburgerMenuEnabled() {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertFalse(Boolean.valueOf(formContainer.getIsHamburgerMenuEnabled().toString()));
+    }
+
+    /**
+     * Test to check if the properties are fetched from the CoreComponentCustomPropertiesProvider are part of form container properties or
+     * not
+     * Also, if same properties is set in form container, then it should override the properties from CoreComponentCustomPropertiesProvider
+     * 
+     * @throws Exception
+     */
+    @Test
+    void testGetPropertiesForCoreComponentCustomPropertiesProvider() throws Exception {
+        CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider = Mockito.mock(
+            CoreComponentCustomPropertiesProvider.class);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        Utils.setInternalState(formContainer, "coreComponentCustomPropertiesProvider", coreComponentCustomPropertiesProvider);
+        Mockito.when(coreComponentCustomPropertiesProvider.getProperties()).thenReturn(new HashMap<String, Object>() {
+            {
+                put("fd:changeEventBehaviour", "deps");
+                put("customProp", "customValue");
+            }
+        });
+        assertEquals("deps", formContainer.getProperties().get("fd:changeEventBehaviour"));
+        assertEquals("customPropValue", formContainer.getProperties().get("customProp"));
+    }
+
+    @Test
+    void testGetPropertiesForCoreComponentCustomPropertiesProviderForNull() throws Exception {
+        CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider = Mockito.mock(
+            CoreComponentCustomPropertiesProvider.class);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        Utils.setInternalState(formContainer, "coreComponentCustomPropertiesProvider", coreComponentCustomPropertiesProvider);
+        Mockito.when(coreComponentCustomPropertiesProvider.getProperties()).thenReturn(null);
+        assertEquals("customPropValue", formContainer.getProperties().get("customProp"));
+    }
+
+    @Test
+    void testCustomFunctionUrl() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getCustomFunctionUrl());
     }
 }

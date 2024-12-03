@@ -1,7 +1,7 @@
-const commons = require('../../libs/commons/commons'),
-    sitesSelectors = require('../../libs/commons/sitesSelectors'),
-    formsSelectors = require('../../libs/commons/guideSelectors'),
-    afConstants = require('../../libs/commons/formsConstants');
+const commons = require('../../../libs/commons/commons'),
+    sitesSelectors = require('../../../libs/commons/sitesSelectors'),
+    formsSelectors = require('../../../libs/commons/guideSelectors'),
+    afConstants = require('../../../libs/commons/formsConstants');
 
 describe('Rule editor authoring sanity for core-components',function(){
     let toggle_array = [];
@@ -72,6 +72,113 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         // check if rule is created
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CREATED_RULE_650).should("exist");
+
+        // check and close rule editor
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
+    }
+
+    const createRuleToHideTextInputOnEqualityOperator = function() {
+        // Edit rule option not existing on button toolbar
+        cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+        // click on  create option from rule editor header
+        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
+            .click({force: true});
+
+        // select the component for which rule is to written i.e. Button here
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
+
+        // EQUALS option not existing in 'OPERATIONS' dropdown
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.EQUALS_TO).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.EQUALS_TO).click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STRING_LITERAL).type('abc');
+        cy.getRuleEditorIframe().find(".delete-else-button").click();
+
+        // check and click on dropdown to view the actions available
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
+
+        // select HIDE action from dropdown
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).click();
+
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").should("be.visible");
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").click();
+
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force: true});
+
+        cy.intercept('POST', /content\/forms\/af\/core-components-it\/samples\/ruleeditor\/blank.*/).as('ruleEditorRequest');
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+
+        cy.wait('@ruleEditorRequest').then((interception) => {
+            expect(interception.response.statusCode).to.equal(201);
+            const submittedData = Object.fromEntries(new URLSearchParams(interception.request.body));
+            expect(submittedData[":content"]).contains("\"fd:events\":{\"change\":[\"if(contains($event.payload.changes[].propertyName, 'value'), if($field.$value == 'abc', {visible : false()}, {}), {})\"]}");
+        });
+
+        // check and close rule editor
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
+    }
+
+    const createRuleToValidateDate = function() {
+        // Edit rule option not existing on button toolbar
+        cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+        // click on  create option from rule editor header
+        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='VALIDATE_EXPRESSION']")
+            .click({force: true});
+
+        // select the component for which rule is to written i.e. Button here
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").first().click();
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").first().find("coral-selectlist-item[title='Date Input']:first").click();
+
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .OPERATOR").click();
+        cy.getRuleEditorIframe().find("coral-selectlist-item[value='IS_BEFORE']").click();
+
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").last().click();
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").last().find(".selectlist-header").click();
+        cy.getRuleEditorIframe().find("coral-selectlist-item[value='FUNCTION_CALL']").click();
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").last().click();
+        cy.getRuleEditorIframe().find(".COMPARISON_EXPRESSION .sequence-view-cell .EXPRESSION").last().find("coral-selectlist-item[value='today']").click();
+
+        cy.intercept('POST', /content\/forms\/af\/core-components-it\/samples\/ruleeditor\/blank.*/).as('ruleEditorRequest');
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+        cy.wait('@ruleEditorRequest').then((interception) => {
+            expect(interception.response.statusCode).to.equal(201);
+            const submittedData = Object.fromEntries(new URLSearchParams(interception.request.body));
+            expect(submittedData[":content"]).contains("dateToDaysSinceEpoch($field.$value)<dateToDaysSinceEpoch(today())");
+        });
+
+        // check if rule is created
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.DATE_PICKER_RULE).should("exist");
 
         // check and close rule editor
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
@@ -236,8 +343,11 @@ describe('Rule editor authoring sanity for core-components',function(){
             saveFormContainerPath = saveFormPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
             textinputEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             buttonEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
+            datePickerEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.datepicker.split("/").pop(),
             saveButtonEditPath = saveFormContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']",
+            textinputEditPathSelector = "[data-path='" + textinputEditPath + "']",
+            datePickerEditPathSelector = "[data-path='" + datePickerEditPath + "']",
             saveButtonEditPathSelector = "[data-path='" + saveButtonEditPath + "']",
             submitFormButtonEditPath = submitFormContainerPath + "/" + afConstants.components.forms.resourceType.submitButton.split("/").pop(),
             submitFormButtonEditPathSelector = "[data-path='" + submitFormButtonEditPath + "']";
@@ -291,7 +401,7 @@ describe('Rule editor authoring sanity for core-components',function(){
          * 12 Close rule editor
          * 13 Check if button is visible
          */
-        it('should add rule on button to disable a text box', function () {
+        it('should add rule on button to hide a text box', function () {
             cy.openAuthoring(formPath);
             cy.selectLayer("Edit");
             cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
@@ -308,6 +418,46 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.selectLayer("Edit");
             cy.deleteComponentByPath(textinputEditPath);
             cy.deleteComponentByPath(buttonEditPath);
+        })
+        
+        if (cy.af.isLatestAddon()) {
+            it('should add validation rule on date fields', function () {
+                cy.openAuthoring(formPath);
+                cy.selectLayer("Edit");
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                    "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
+
+                createRuleToValidateDate();
+                cy.get(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector).should("exist");
+
+                cy.selectLayer("Edit");
+                cy.deleteComponentByPath(datePickerEditPath);
+            })
+        }
+
+        it('should add rule on texbox equality operator to hide a text box', function () {
+            cy.openAuthoring(formPath);
+            cy.selectLayer("Edit");
+            cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+
+            cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
+            // cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textinputEditPathSelector);
+            // cy.get(formsSelectors.ruleEditor.action.configure).should("exist");
+            // cy.get(formsSelectors.ruleEditor.action.configure).click();
+            // cy.get(".cmp-adaptiveform-base__editdialogbasic [name='./name']").clear().type("textinput");
+            // cy.get(".cq-dialog-actions.cq-dialog-submit").click();
+
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textinputEditPathSelector);
+
+            createRuleToHideTextInputOnEqualityOperator();
+            cy.get(sitesSelectors.overlays.overlay.component + textinputEditPathSelector).should("exist");
+
+            cy.selectLayer("Edit");
+            cy.deleteComponentByPath(textinputEditPath);
         })
 
         it('should add submission handler rules on form', function () {
