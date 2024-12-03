@@ -198,6 +198,13 @@
                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
                                                    sling:hideResource="{Boolean}true">
                                                 <items jcr:primaryType="nt:unstructured">
+                                                    <areOptionsRichText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            granite:class="cmp-adaptiveform-base__areOptionsRichText"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                            name="./areOptionsRichText"
+                                                            text="Allow Rich Text for Options"
+                                                            value="true"/>
                                                     <enumOptions jcr:primaryType="nt:unstructured"
                                                                  sling:orderBefore="bindref"
                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
@@ -349,13 +356,6 @@
                                                                granite:class="cmp-adaptiveform-base__enumNamesHidden"
                                                                granite:hidden="true"/>
                                                     </enumNames>
-                                                    <areOptionsRichText
-                                                            jcr:primaryType="nt:unstructured"
-                                                            granite:class="cmp-adaptiveform-base__areOptionsRichText"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                            name="./areOptionsRichText"
-                                                            text="Allow Rich Text for Options"
-                                                            value="true"/>
                                                 </items>
                                             </enums>
                                             <bindref

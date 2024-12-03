@@ -23,6 +23,7 @@ import org.mockito.Mockito;
 
 import com.adobe.aemds.guide.model.HCaptchaConfiguration;
 import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
+import com.adobe.aemds.guide.model.TurnstileConfiguration;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.Utils;
@@ -55,8 +56,18 @@ public class HCaptchaImplTest {
         }
 
         @Override
+        public String getCustomFunctionUrl(Resource resource) {
+            return null;
+        }
+
+        @Override
         public HCaptchaConfiguration getHCaptchaCloudConfiguration(Resource resource) throws GuideException {
             return hCaptchaConfiguration;
+        }
+
+        @Override
+        public TurnstileConfiguration getTurnstileCloudConfiguration(Resource resource) throws GuideException {
+            return null;
         }
     };
 

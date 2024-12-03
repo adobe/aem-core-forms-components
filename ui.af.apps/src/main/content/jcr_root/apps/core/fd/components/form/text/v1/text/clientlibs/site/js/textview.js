@@ -59,6 +59,10 @@
             }
 
             setFocus() {
+                const fieldType = this.parentView?.getModel()?.fieldType;
+                if (fieldType !== 'form' && this.parentView.setFocus) {
+                    this.parentView.setFocus(this.getId());
+                }
                 this.setActive();
                 this.element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
@@ -66,7 +70,36 @@
             updateValue(value) {
                 // html sets undefined value as undefined string in input value, hence this check is added
                 let actualValue = typeof value === "undefined" ? "" :  value;
-                const sanitizedValue = window.DOMPurify ? window.DOMPurify.sanitize(actualValue) : actualValue;
+
+                // Custom configuration for DOMPurify for RTE content
+                const cleanHTML = (dirtyHTML) => {
+                    // Specify the allowed tags and attributes
+                    const allowedTags = [
+                        'b', 'strong', 'caption', 'i', 'em', 'u',
+                        'sub', 'sup', 'small', 'blockquote',
+                        'ul', 'ol', 'li', 'a', 'img',
+                        'table', 'tbody', 'tr', 'td', 'th',
+                        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+                        'br', 'p', 'span'
+                    ];
+                    const allowedAttributes = [
+                        'href', 'target', 'rel', '_rte_href',
+                        'src', 'alt' , 'style', '_rte_a_id_repl',
+                        'class', 'id', 'title', 'colspan', 'rowspan',
+                        'cellPadding', 'cellSpacing', 'border', 'width', 'height', 'scope'
+                    ];
+
+                    // Sanitize the HTML
+                    const sanitizedHTML = window.DOMPurify ? window.DOMPurify.sanitize(dirtyHTML, {
+                        ALLOWED_TAGS: allowedTags,
+                        ALLOWED_ATTR: allowedAttributes,
+                    }) : dirtyHTML;
+
+                    return sanitizedHTML;
+                };
+
+                const sanitizedValue = cleanHTML(actualValue);
+
                 // since there is no widget for textview, the innerHTML is being changed
                 if (this.element.children[0]) {
                     this.element.children[0].innerHTML = sanitizedValue;

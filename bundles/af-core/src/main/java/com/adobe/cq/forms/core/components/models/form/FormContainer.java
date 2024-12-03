@@ -373,4 +373,16 @@ public interface FormContainer extends Container {
     default String getParentPagePath() {
         return null;
     }
+
+    /**
+     * Returns the url from where the custom functions should be registered
+     * 
+     * @return custom function registration url
+     * @since com.adobe.cq.forms.core.components.models.form 5.9.5
+     */
+    @JsonIgnore
+    default String getCustomFunctionUrl() {
+        return null;
+    }
+
 }

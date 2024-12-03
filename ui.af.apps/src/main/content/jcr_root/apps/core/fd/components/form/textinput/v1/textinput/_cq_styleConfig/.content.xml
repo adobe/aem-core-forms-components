@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Base">
+    <items jcr:primaryType="nt:unstructured">
+        <field
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Base"
+            id="af2_textbox"
+            longTitle="Base"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <widgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input"
+                    id="af2_textboxwidgetandtext"
+                    cssSelector=".cmp-adaptiveform-textinput"
+                    longTitle="Text Input Widget"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                    <items jcr:primaryType="nt:unstructured">
+                        <textinputLabelContainer
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Label Container"
+                                id="af2_textinputlabelcontainer"
+                                cssSelector=".cmp-adaptiveform-textinput__label-container"
+                                longTitle="Text Input Label Container"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <textinputLabel
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Label"
+                                        id="af2_textinputlabel"
+                                        cssSelector=".cmp-adaptiveform-textinput__label"
+                                        longTitle="Text Input Label"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-textinput__label:hover"/>
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-textinput__label:focus"/>
+                                    </states>
+                                </textinputLabel>
+                                <textinputHelpIcon
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Help Icon"
+                                        id="af2_textinputhelpicon"
+                                        cssSelector=".cmp-adaptiveform-textinput__questionmark"
+                                        longTitle="Text Input Help Icon"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-textinput__questionmark:focus"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-textinput__questionmark:hover"/>
+                                        <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-textinput__questionmark:disabled"/>
+                                    </states>
+                                </textinputHelpIcon>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector="cmp-adaptiveform-textinput__label-container:disabled"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector="cmp-adaptiveform-textinput__label-container:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector="cmp-adaptiveform-textinput__label-container:focus"/>
+                            </states>
+                        </textinputLabelContainer>
+                        <textinputWidgetAndText
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text Input"
+                                id="af2_textinputwidgetandtext"
+                                cssSelector=".cmp-adaptiveform-textinput__widget"
+                                longTitle="Text Input Widget"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-textinput__widget:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-textinput__widget:hover"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-textinput__widget:disabled"/>
+                                <mandatory
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Mandatory"
+                                        cssSelector=".cmp-adaptiveform-textinput__widget:required"/>
+                            </states>
+                        </textinputWidgetAndText>
+                        <textinputDescriptionShort
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Short Description"
+                                id="af2_textinputdescriptionshort"
+                                cssSelector=".cmp-adaptiveform-textinput__shortdescription"
+                                longTitle="Text Input Short Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </textinputDescriptionShort>
+                        <textinputDescriptionLong
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description"
+                                id="af2_textinputdescriptionlong"
+                                cssSelector=".cmp-adaptiveform-textinput__longdescription"
+                                longTitle="Text Input Long Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-textinput__longdescription:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-textinput__longdescription:hover"/>
+                            </states>
+                        </textinputDescriptionLong>
+                        <textinputErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text Input Error Message"
+                                id="af2_textinputerrormessage"
+                                cssSelector=".cmp-adaptiveform-textinput__errormessage"
+                                longTitle="Text Input Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </textinputErrorMessage>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-textinput:focus"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-textinput[data-cmp-enabled='false']"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-textinput:hover"/>
+                        <mandatory
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".cmp-adaptiveform-textinput[data-cmp-required='true']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-textinput[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-textinput[data-cmp-valid='true']"/>
+                    </states>
+                </widgetAndText>
+                <textAreaWidgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Area"
+                    id="af2_textareawidgetandtext"
+                    cssSelector="textarea.cmp-adaptiveform-textinput__widget"
+                    longTitle="Text Area Widget"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Focus"
+                            cssSelector="textarea.cmp-adaptiveform-textinput__widget:focus"/>
+                        <disabled
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Disabled"
+                            cssSelector="textarea.cmp-adaptiveform-textinput__widget:disabled"/>
+                        <hover
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Hover"
+                            cssSelector="textarea.cmp-adaptiveform-textinput__widget:hover"/>
+                        <mandatory
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Mandatory"
+                            cssSelector="textarea.cmp-adaptiveform-textinput__widget:required"/>
+                    </states>
+                </textAreaWidgetAndText>
+            </items>
+        </field>
+    </items>
+</jcr:root>
