@@ -419,13 +419,13 @@ workflows:
           filters:
             tags:
               only: /.*/
-#      - cypress-chrome-655:
-#          filters:
-#            tags:
-#              only: /.*/
-#          requires:
-#            - build-java-11
-#            - build-java-8
+      - cypress-chrome-655:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build-java-11
+            - build-java-8
       - cypress-chrome-655-with-latest-addon-with-ft:
           filters:
             tags:
