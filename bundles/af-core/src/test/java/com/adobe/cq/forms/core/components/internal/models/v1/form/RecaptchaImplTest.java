@@ -53,11 +53,6 @@ public class RecaptchaImplTest {
         public ReCaptchaConfigurationModel getRecaptchaCloudConfiguration(Resource resource) throws GuideException {
             return reCaptchaConfiguration;
         }
-
-        @Override
-        public String getCustomFunctionUrl(Resource resource) {
-            return null;
-        }
     };
 
     @BeforeEach
