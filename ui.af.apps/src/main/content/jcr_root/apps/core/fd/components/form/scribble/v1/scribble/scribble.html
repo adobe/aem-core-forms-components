@@ -1,0 +1,97 @@
+
+<!--/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/ -->
+
+<sly data-sly-use.scribble="com.adobe.cq.forms.core.components.models.form.Scribble"
+     data-sly-use.renderer="${'scribble.js'}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
+
+<div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     class="cmp-adaptiveform-scribble"
+     data-cmp-is="adaptiveFormScribble"
+     data-cmp-visible="${scribble.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${scribble.enabled ? 'true' : 'false'}"
+     data-cmp-required="${scribble.required ? 'true': 'false'}"
+     data-cmp-readonly="${scribble.readOnly ? 'true' : 'false'}"
+     id="${scribble.id}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[scribble.id, 'widget']}">
+
+    <div class="cmp-adaptiveform-scribble__label-container">
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=scribble.label.value, labelVisible=scribble.label.visible, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=scribble.id, longDescription=scribble.description, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
+    </div>
+
+    <div class="cmp-adaptiveform-scribble__canvas-signed-container">
+    </div>
+
+    <div data-sly-call="${shortDescription.shortDescription @componentId=scribble.id, shortDescriptionVisible=scribble.tooltipVisible, shortDescription=scribble.tooltip, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap>
+    </div>
+
+    <div data-sly-call="${longDescription.longDescription @componentId= scribble.id, longDescription=scribble.description, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
+
+    <div data-sly-call="${errorMessage.errorMessage @componentId=scribble.id, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
+      <div class="cmp-adaptiveform-scribble__container" tabindex="0" role="dialog" aria-label="pleaseSignText">
+        <!-- <div class="cmp-adaptiveform-scribble__panel">
+          <div class="cmp-adaptiveform-scribble__button cmp-adaptiveform-scribble__button-close" tabindex="0" role="button" aria-label="cancel" title="Cancel" ></div>
+        </div> -->
+        <div class="cmp-adaptiveform-scribble__header">Please sign here</div>
+        <div class="cmp-adaptiveform-scribble__content">
+          <div class="cmp-adaptiveform-scribble__canvases">
+            <div class="cmp-adaptiveform-scribble__signcanvases" style="display:inline-block; vertical-align:top;">
+              <canvas id="${widgetId}" class="cmp-adaptiveform-scribble__canvas"></canvas>
+              <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="Type Your Signature Here">
+              <!-- <fieldset class="cmp-adaptiveform-scribble__caption"><legend >Please Sign Here</legend></fieldset> -->
+            </div>
+            <canvas class="cmp-adaptiveform-scribble__geocanvasright" width="0" height="0" ></canvas>
+          </div>
+          <div class="cmp-adaptiveform-scribble__controlpanel">
+            <div class="cmp-adaptiveform-scribble__controls">
+              <div class="cmp-adaptiveform-scribble__control-brush cmp-adaptiveform-scribble__button" tabindex="0"  role="button" aria-label="brushes"  title="brushes"></div>
+              <div class="cmp-adaptiveform-scribble__brushlist cmp-adaptiveform-scribble__button" ></div>
+              <div class="cmp-adaptiveform-scribble__control-clear cmp-adaptiveform-scribble__button" tabindex="0"  role="button" aria-label="clear"  title="clear" ></div>
+              <div class="cmp-adaptiveform-scribble__control-geo cmp-adaptiveform-scribble__button" tabindex="0"  role="button" aria-label="geolocation"  title="geolocation" ></div>
+              <div class="cmp-adaptiveform-scribble__control-text cmp-adaptiveform-scribble__button" tabindex="0"  role="button" aria-label="typeYourName"  title="typeYourName"></div>
+              <div class="cmp-adaptiveform-scribble__control-message"></div>
+            </div>
+            <div class="cmp-adaptiveform-scribble__controlpanel__controls">
+              <button class="cmp-adaptiveform-scribble__button-close" tabindex="0" type="button" aria-label="Close">Close</button>
+              <button class="cmp-adaptiveform-scribble__control-submit" tabindex="0" type="button" aria-label="Save">Save</button>
+            </div>
+          </div>
+        </div>
+        <div id="iEBox_moveframe" ></div>
+      </div>
+      <div id="msgBox_container">
+        <h1 id="msgBox_title">Clear Signature Confirmation</h1>
+        <div id="msgBox_content" class="msgBoxTypenull">
+          <div id="msgBox_message">
+            Are you sure you want to clear signature?
+          </div>
+          <div id="msgBox_panel">
+            <input type="button" value="Yes" id="msgBox_Yes" class="msgbox_input">
+            <input type="button" value="No" id="msgBox_No" class="msgbox_input">
+          </div>
+        </div>
+      </div>
+</div>

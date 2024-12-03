@@ -1,0 +1,414 @@
+/*******************************************************************************
+ * Copyright 2024 Adobe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+.cmp-adaptiveform-scribble__widget {
+
+}
+textarea.cmp-adaptiveform-scribble__widget{
+  
+}
+
+.cmp-adaptiveform-scribble__label {
+
+}
+.cmp-adaptiveform-scribble__label-container{
+  
+}
+
+.cmp-adaptiveform-scribble__longdescription {
+}
+
+.cmp-adaptiveform-scribble__shortdescription {
+}
+
+.cmp-adaptiveform-scribble__questionmark {
+
+}
+
+.cmp-adaptiveform-scribble__header {
+    font-size: 19px;
+    font-weight: 100;
+    line-height: 24.7px;
+    margin-bottom: 10px;
+}
+
+.cmp-adaptiveform-scribble__canvas-signed-container {
+    position: relative;
+    border: 1px solid #AAAAAA;
+    height: 210px;
+    min-width: 50px;
+    width: 100%;
+    border-radius: 0.5rem;
+}
+
+.cmp-adaptiveform-scribble__canvas__main {
+    width: 100%;
+}
+
+.cmp-adaptiveform-scribble__canvas {
+    /* Styles for the canvas element where the signature is drawn */
+    /* border: 1px solid #616060; 
+    background-color: #f9f9f9;
+    color: black */
+    width: 100%;
+    height: 200px;
+    border:1px #AAAAAA dashed;
+    border-bottom: 0;
+    -ms-touch-action:pinch-zoom;
+    touch-action:pinch-zoom;
+}
+
+.cmp-adaptiveform-scribble__signcanvases{
+    width: 100%;
+    background-color: #FFF;
+}
+
+ .cmp-adaptiveform-scribble__container {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    min-width: 50px; /* Dialog will be no smaller than this */
+    width: 36%;
+   /* Dialog will wrap after this width */
+    background: #FFF;
+    border: solid 2px #999;
+    color: #000;
+    padding: 10px;
+    display: none;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #F8F8F8;
+   
+    /* display:none; */;
+    /* the shadow */
+    -moz-box-shadow: 10px 10px 5px #888888;
+    -webkit-box-shadow: 10px 10px 5px #888888;
+     box-shadow: 0px 0px 15px #888888;
+     
+    /* make dialog a non-selectatable thing */
+    -moz-user-select: none; 
+    -khtml-user-select: none; 
+    -webkit-user-select: none; 
+    -o-user-select: none; 
+    
+     z-index: 99998;
+     margin: 0;
+	 line-height:0;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+}
+
+.cmp-adaptiveform-scribble__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.cmp-adaptiveform-scribble__control-message {
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    line-height: 1.75em;
+    min-width: 50px;
+    color: #555555;
+    cursor: default;
+    padding: 10px;
+    margin: 0em;
+    display: none;
+}
+
+.cmp-adaptiveform-scribble__content {
+    background: 16px 16px no-repeat ;
+    margin: 0em;
+	min-width: 50px;
+    width: 100%;
+}
+
+.cmp-adaptiveform-scribble__panel {
+    text-align: center;
+    margin: 0em 0em 0em 0em;
+    background-color:black;
+    -moz-border-top-right-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    border-top-right-radius: 8px;
+    -moz-border-top-left-radius: 8px;
+    -webkit-border-top-left-radius: 8px;
+    border-top-left-radius: 8px;
+    overflow:hidden;
+    background: #AFB0B5;
+    -ms-touch-action:pinch-zoom;
+    touch-action:pinch-zoom;
+}
+
+.cmp-adaptiveform-scribble__button {
+   background:no-repeat;
+   border-radius: 5px;
+   width:32px;
+   height:32px;
+   border: 1px solid #D5D5D5;
+   background-size:32px 32px;
+   margin-right:5px;
+   background-color: white;
+   background-position: center;
+}
+.cmp-adaptiveform-scribble__control-geo{
+  background-image:url('../resources/images/iEBox_geo.png');
+}
+.cmp-adaptiveform-scribble__control-text{
+    background-image:url('../resources/icontext.svg');
+}
+.cmp-adaptiveform-scribble__keyboard-sign-box{
+    border: 1px dashed#AAAAAA;
+    display:none;;
+    margin:0px;
+    border-radius: 0px 0px 0px 0px;
+    outline:none;
+    width: 100%;
+    height: 200px;
+}
+
+#keyboard_Sign_Box::placeholder {
+    font: 1rem sans-serif, Georgia;
+    vertical-align: middle;
+}
+
+.cmp-adaptiveform-scribble__control-brush{
+   background-image:url('../resources/images/iEBox_brush.png');
+}
+
+.cmp-adaptiveform-scribble__control-submit {
+    width: 77px;
+    height: 40px;
+    margin: 5px;
+    padding: 9px 20px 11px 20px;
+    border: 1px transparent;
+    border-radius: 20px;
+    background-color: #0265DC;
+    color: white;
+}
+
+.cmp-adaptiveform-scribble__control-clear {
+    background-image:url('../resources/iconeraser.svg');
+}
+
+.cmp-adaptiveform-scribble__button-close {
+    width: 77px;
+    height: 40px;
+    font-weight: 700;
+    padding: 9px 20px 11px 20px;
+    margin: 5px;
+    border: 2px solid #4b4b4b;
+    color: #4b4b4b;
+    border-radius: 20px;
+}
+
+.cmp-adaptiveform-scribble__controlpanel {
+    margin-top: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* @media (max-width: 780px) { */
+  
+    /* .cmp-adaptiveform-scribble__controlpanel {
+        flex-direction: column;
+    } */
+    /* .cmp-adaptiveform-scribble__controlpanel__controls {
+        margin-top: 10px;
+        flex-direction: row;
+    }
+    
+  } */
+
+  @media (max-width: 460px) {
+  
+    .cmp-adaptiveform-scribble__controlpanel__controls {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+  }
+
+  @media (min-width: 460px) and (max-width: 1155px) {
+    .cmp-adaptiveform-scribble__controlpanel__controls {
+        margin-top: 10px;
+    }
+    
+    .cmp-adaptiveform-scribble__controlpanel {
+        margin-top: 40px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+  }
+
+#iEBox_moveframe{
+padding:0px;
+margin:0px;
+    border:0px dotted rgba(0,0,0,0.5);
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    
+    -moz-box-shadow: 10px 10px 5px #888888;
+    -webkit-box-shadow: 10px 10px 5px #888888;
+     box-shadow: 0px 0px 15px #888888;
+     
+   /* display:none; */;
+   position:absolute;
+}
+.disable_button {
+    filter: grayscale(100%); /* Apply grayscale effect */
+  -webkit-filter: grayscale(100%); /* For Safari and older versions of Chrome */
+  -moz-filter: grayscale(100%); /* For older versions of Firefox */
+  -ms-filter: grayscale(100%); /* For older versions of Internet Explorer */
+  -o-filter: grayscale(100%); /* For older versions of Opera */
+  cursor: not-allowed; /* Change cursor to indicate disabled state */
+  opacity: 0.6; /* Optional: Adjust opacity to give a faded look */
+  pointer-events: none; /* Disable all mouse events */
+  }
+.sc_popUpMenu {
+    position: absolute;
+    width:20px;
+    height:20px;
+    background:no-repeat;
+    background-size:20px 20px; 
+    background-image:url('../resources/images/iEBox_no.png');
+    left:2px;
+    top:2px;
+}
+.cmp-adaptiveform-scribble__brushlist{
+    position:absolute;
+    z-index:99999;
+    background-color:white;
+    -moz-box-shadow: 10px 10px 5px #888888;
+    -webkit-box-shadow: 10px 10px 5px #888888;
+    box-shadow: 0px 0px 15px #888888;
+    display:none;
+    bottom: 60px;
+}
+.cmp-adaptiveform-scribble__brushlist :hover{
+    background-color:gray;
+}
+.cmp-adaptiveform-scribble__caption {
+    border:4px dashed #AAAAAA;
+    border-bottom:0px;
+    border-left:0px;
+    border-right:0px;
+    margin-right:4px;
+    margin-left:1px;
+    margin-top:0px;
+    text-align:center;
+    padding:0px;
+}
+.cmp-adaptiveform-scribble__caption > legend {
+   width:auto;
+   background-color: #FFFFFF;
+   padding: 2px;
+}
+.emptyScribble {
+    background: url('../resources/images/signature.png') no-repeat;
+}
+
+.cmp-adaptiveform-scribble__canvases {
+    white-space:nowrap;
+}
+
+#msgBox_container {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    min-width: 50px; /* Dialog will be no smaller than this */
+    max-width: 600px; /* Dialog will wrap after this width */
+    background: #FFF;
+    border: solid 5px #999;
+    color: #000;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: none;
+    transform: translate(-50%, -50%);
+}
+
+#msgBox_title {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.75em;
+    color: #666;
+    background: #CCC  top repeat-x;
+    border: solid 1px #FFF;
+    border-bottom: solid 1px #999;
+    cursor: default;
+    padding: 0em;
+    margin: 0em;
+}
+
+#msgBox_content {
+    background: 16px 16px no-repeat ;
+    padding: 1em 1.75em;
+    margin: 0em;
+}
+
+#msgBox_message {
+    text-align: center;
+}
+
+#msgBox_panel {
+    text-align: center;
+    margin: 1em 0em 0em 1em;
+}
+
+#msgBox_prompt {
+    margin: .5em 0em;
+}
+
+input#msgBox_Ok,input#msgBox_Yes,input#msgBox_No,input#msgBox_Cancel{
+    background-color: buttonFace;
+    padding: 5px 10px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: buttonText;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    vertical-align: middle;
+    outline:none;
+    border: 2px outset buttonface;
+    border-radius: 1rem;
+ }
+ 
+ input#msgBox_Ok:focus,input#msgBox_Yes:focus,input#msgBox_No:focus,input#msgBox_Cancel:focus{
+ outline:highlight;
+ }
+ 
+ input#msgBox_Ok:hover,input#msgBox_Yes:hover,input#msgBox_No:hover,input#msgBox_Cancel:hover{
+ outline:none;
+ border: 2px outset buttonface;
+ }
