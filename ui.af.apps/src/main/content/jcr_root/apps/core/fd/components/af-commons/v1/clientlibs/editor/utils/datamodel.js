@@ -17,6 +17,8 @@
 (function($, channel, Coral) {
     "use strict";
 
+    // TODO: remove this code. No changes has to be done in this file, it has been moved to FAR.
+
     if(window.CQ?.FormsCoreComponents?.Utils?.DataModel) {
         return;
     }
