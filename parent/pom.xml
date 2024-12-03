@@ -21,12 +21,7 @@
     <groupId>com.adobe.aem</groupId>
     <artifactId>core-forms-components-parent</artifactId>
     <packaging>pom</packaging>
-<<<<<<< HEAD
     <version>1.1.61-SNAPSHOT</version>
-=======
-    <version>3.0.75-SNAPSHOT</version>
-
->>>>>>> master
     <name>AEM Forms Core Components - Parent</name>
     <description>Parent POM for AEM Forms Core Components</description>
     <url>https://github.com/adobe/aem-core-forms-components</url>
@@ -1133,23 +1128,6 @@
                 <scope>provided</scope>
             </dependency>
 
-<<<<<<< HEAD
-=======
-
-            <dependency>
-                <groupId>com.adobe.aem</groupId>
-                <artifactId>aem-forms-sdk-api</artifactId>
-                <version>2024.09.08.00-240800</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.adobe.aem</groupId>
-                <artifactId>aem-sdk-api</artifactId>
-                <version>2022.9.8722.20220912T101352Z-220800</version>
-            </dependency>
-
-
->>>>>>> master
             <!-- Testing -->
             <dependency>
                 <groupId>junit</groupId>

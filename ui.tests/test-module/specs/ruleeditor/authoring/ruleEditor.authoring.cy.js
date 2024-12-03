@@ -419,7 +419,7 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.deleteComponentByPath(textinputEditPath);
             cy.deleteComponentByPath(buttonEditPath);
         })
-        
+
         if (cy.af.isLatestAddon()) {
             it('should add validation rule on date fields', function () {
                 cy.openAuthoring(formPath);
