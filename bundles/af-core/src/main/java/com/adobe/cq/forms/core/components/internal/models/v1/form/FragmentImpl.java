@@ -160,6 +160,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     public Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
+        properties.put(ReservedProperties.PN_VIEWTYPE, "fragment");
         return properties;
     }
 

@@ -89,6 +89,55 @@ describe.only('Page - Authoring', function () {
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(tabsContainerDrop);
     }
+    
+    const testSaveAsFragmentBehaviour =  function(tabsEditPathSelector, tabsPath, isSites) {
+        if (isSites) {
+            dropTabsInSites();
+        } else {
+            dropTabsInContainer();
+        }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsEditPathSelector);
+        cy.invokeEditableAction("[data-action='saveAsFragment']"); // this line is causing frame busting which is causing cypress to fail
+        // Check If Dialog Options Are Visible
+        cy.get("[name='name']")
+            .should("be.visible");
+        cy.get("[name='jcr:title']")
+            .should("exist");
+        cy.get("[name='targetPath']")
+            .should("be.visible")
+            .invoke('val', "/content/dam/formsanddocuments");
+        cy.get("[name='./schemaType']")
+            .should("exist");
+        cy.get("[name='templatePath']")
+            .should("be.visible");
+        cy.get("[name='fragmentComponent']").should("be.visible");
+
+        cy.intercept('POST' , '**/adobe/forms/fm/v1/saveasfragment').as('saveAsFragment');
+        cy.get("[name='name']").clear().type("panel-saved-as-fragment");
+        cy.get("[name='templatePath']").type("/conf/core-components-examples/settings/wcm/templates/afv2frag-template");
+        cy.initializeEventHandlerOnChannel("cq-editables-updated.cypress").as("isOverlayRepositionEventComplete");
+        cy.get(".cq-dialog-submit").click();
+        cy.wait('@saveAsFragment').then(({request, response}) => {
+            expect(response.statusCode).to.equal(200);
+            expect(response.body).to.be.not.null;
+        });
+        cy.request("/content/forms/af/panel-saved-as-fragment/jcr:content/guideContainer.model.json").then(response => {
+            expect(response.status).to.equal(200);
+        })
+        cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true);
+        cy.reload();
+        cy.deleteComponentByPath(tabsPath);
+    };
+
+    const deleteSavedFragment = () => {
+        cy.openPage("/aem/forms.html/content/dam/formsanddocuments");
+        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment']")
+            .trigger('mouseenter')
+            .trigger('mouseover');
+        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment'] [title='Select']").click({force: true});
+        cy.get(".formsmanager-admin-action-delete").click();
+        cy.get("#fmbase-id-modal-template button[variant='warning']").click();
+    }
 
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
@@ -130,6 +179,7 @@ describe.only('Page - Authoring', function () {
             });
         });
 
+      
         // todo: flaky
         it('switch tabs using dialog select panel button in toolbar', {retries: 3}, function () {
             cy.cleanTest(tabsPath).then(function () {
@@ -153,6 +203,7 @@ describe.only('Page - Authoring', function () {
                 })
             });
         });
+
 
         it('open edit dialog of Tab on top', {retries: 3}, function () {
             cy.cleanTest(tabsPath).then(function () {
@@ -183,6 +234,13 @@ describe.only('Page - Authoring', function () {
            });
         });
 
+        it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
+            cy.cleanTest(tabsPath).then(function() {
+                testSaveAsFragmentBehaviour(tabsContainerPathSelector, tabsPath);
+                deleteSavedFragment();
+            });
+        });
+
     });
 
     context('Open Sites Editor', function () {
@@ -200,11 +258,18 @@ describe.only('Page - Authoring', function () {
             cy.deleteComponentByPath(panelContainerEditPath);
         });
 
+
         it('open edit dialog of tabs on top of form', {retries: 3}, function () {
             cy.cleanTest(panelContainerEditPath).then(function () {
                 testPanelBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
             });
         });
-
+      
+        it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
+            cy.cleanTest(panelContainerEditPath).then(function() {
+                testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
+                deleteSavedFragment();
+            });
+        });
     });
 });
