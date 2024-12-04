@@ -14,8 +14,6 @@
  * limitations under the License.
  ******************************************************************************/
 
-import FormField from "./FormField"
-import FormFieldBase from "./FormFieldBase"
 
 /**
  * This class is responsible for interacting with the file input widget. It implements the file preview,
@@ -43,7 +41,32 @@ class FormFileInputWidgetBase {
         "dll": "application/x-msdownload",
         "exe": "application/x-msdownload",
         "msi": "application/x-msdownload",
-        "msg": "application/vnd.ms-outlook"
+        "msg": "application/vnd.ms-outlook",
+        "dwg": "image/vnd.dwg",
+        "jxr": "image/vnd.ms-photo",
+        "psd": "image/vnd.adobe.photoshop",
+        "ico": "image/vnd.microsoft.icon",
+        "cab": "application/vnd.ms-cab-compressed",
+        "deb": "application/vnd.debian.binary-package",
+        "sqlite": "application/vnd.sqlite3",
+        "inf2": "image/vnd.cns.inf2",
+        "djv": "image/vnd.djvu",
+        "djvu": "image/vnd.djvu",
+        "dxf": "image/vnd.dxf",
+        "fbs": "image/vnd.fastbidsheet",
+        "fpx": "image/vnd.fpx",
+        "fst": "image/vnd.fst",
+        "mmr": "image/vnd.fujixerox.edmics-mmr",
+        "rlc": "image/vnd.fujixerox.edmics-rlc",
+        "pgb": "image/vnd.globalgraphics.pgb",
+        "mix": "image/vnd.mix",
+        "mdi": "image/vnd.ms-modi",
+        "npx": "image/vnd.net-fpx",
+        "radiance": "image/vnd.radiance",
+        "sealed.png": "image/vnd.sealed.png",
+        "softseal.gif": "image/vnd.sealedmedia.softseal.gif",
+        "softseal.jpg": "image/vnd.sealedmedia.softseal.jpg",
+        "svf": "image/vnd.svf"
     }
     initialFileValueFileNameMap;
 
@@ -126,13 +149,25 @@ class FormFileInputWidgetBase {
             return index;
         }
 
+        static displaySVG(objectUrl) {
+            const url = objectUrl;
+            const img = document.createElement('img');
+            img.src = url;
+            const newTab = window.open('', '_blank', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+            newTab?.document?.body.appendChild(img);
+        }
+
         static previewFileUsingObjectUrl(file) {
             if (file) {
                 if (window.navigator && window.navigator.msSaveOrOpenBlob) { // for IE
                     window.navigator.msSaveOrOpenBlob(file, file.name);
                 } else {
                     let url = window.URL.createObjectURL(file);
-                    window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+                    if (file.type === 'image/svg+xml') {
+                        this.displaySVG(url)
+                     } else {
+                        window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
+                     }
                     return url;
                 }
             }
@@ -149,7 +184,6 @@ class FormFileInputWidgetBase {
             }
             // this would work for dataURl or normal URL
             window.open(url, '', 'scrollbars=no,menubar=no,height=600,width=800,resizable=yes,toolbar=no,status=no');
-
         }
         // this function maintains a map for
         handleFilePreview (event){
@@ -298,15 +332,16 @@ class FormFileInputWidgetBase {
             }
         }
 
-        invalidMessage(fileName, invalidFeature){
-            // todo: have add localization here
-            if(invalidFeature === this.invalidFeature.SIZE) {
-                alert(FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeGreater", [fileName, this.options.maxFileSize]));
-            } else if (invalidFeature === this.invalidFeature.NAME) {
-                alert(FormView.LanguageUtils.getTranslatedString(this.lang, "FileNameInvalid", [fileName]));
-            } else if (invalidFeature === this.invalidFeature.MIMETYPE) {
-                alert(FormView.LanguageUtils.getTranslatedString(this.lang, "FileMimeTypeInvalid", [fileName]));
-            }
+        invalidMessage(fileName, invalidFeature) {
+            const customMessages = this.options.constraintMessages || {};
+        
+            const messages = {
+                [this.invalidFeature.SIZE]: customMessages.maxFileSize || FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeGreater", [fileName, this.options.maxFileSize]),
+                [this.invalidFeature.NAME]: customMessages.invalidFileName || FormView.LanguageUtils.getTranslatedString(this.lang, "FileNameInvalid", [fileName]),
+                [this.invalidFeature.MIMETYPE]: customMessages.invalidMimeType || FormView.LanguageUtils.getTranslatedString(this.lang, "FileMimeTypeInvalid", [fileName])
+            };
+        
+            alert(messages[invalidFeature]);
         }
 
 

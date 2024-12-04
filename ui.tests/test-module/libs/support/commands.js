@@ -41,8 +41,8 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 
-import { recurse } from 'cypress-recurse';
 import 'cypress-plugin-snapshots/commands';
+import { recurse } from 'cypress-recurse';
 
 const commons = require('../commons/commons'),
     siteSelectors = require('../commons/sitesSelectors'),
@@ -781,6 +781,7 @@ const mimeTypes = {
     'txt': 'text/plain',
     'bat': 'application/x-msdos-program',
     'msg': 'application/vnd.ms-outlook',
+    'svg': 'image/svg+xml',
     // Add more mappings as needed
 };
 

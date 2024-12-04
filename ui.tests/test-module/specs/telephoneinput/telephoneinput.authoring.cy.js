@@ -99,6 +99,7 @@ describe('Page - Authoring', function () {
         authoringPagePath = '/content/forms/af/core-components-it/blank',
         bemEditDialog = '.cmp-adaptiveform-telephoneinput__editdialog',
         bemDesignDialog = '.cmp-adaptiveform-telephoneinput__designdialog',
+        submitBtnSelector = ".cq-dialog-submit",
         telephoneInputEditPath = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput",
         telephoneInputDrop = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop(),
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']";
@@ -118,7 +119,7 @@ describe('Page - Authoring', function () {
       cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').should('exist').then(() => {
         cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().type(customKey);
         cy.get('[name="./allowedCustomFormats/item0/customFormatValue"]').focus().type(customValue);
-        cy.get('[title="Done"]').click();
+        cy.get(submitBtnSelector).click();
       }).then(() => {
         cy.openSiteAuthoring(authoringPagePath);
         dropTelephoneInputInContainer();

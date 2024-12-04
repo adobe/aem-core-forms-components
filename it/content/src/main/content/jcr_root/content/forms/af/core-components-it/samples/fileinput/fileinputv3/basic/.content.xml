@@ -87,6 +87,21 @@
                     textIsRich="[true,true]"
                     type="file[]"
                     visible="{Boolean}true"/>
+             <fileinput6
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="File Input - 6"
+                    sling:resourceType="core/fd/components/form/fileinput/v3/fileinput"
+                    accept="[audio/*, video/*, image/*, text/*, application/pdf]"
+                    buttonText="Attach Files"
+                    enabled="{Boolean}true"
+                    maxFileSizeMessage="File size is greater than the expected size!"
+                    fieldType="file-input"
+                    name="fileinput6"
+                    readOnly="{Boolean}true"
+                    textIsRich="[true,true]"
+                    maxFileSize="2"
+                    type="file[]"
+                    visible="{Boolean}true"/>
             <submit
                     jcr:lastModified="{Date}2023-01-17T16:28:58.844+05:30"
                     jcr:lastModifiedBy="admin"

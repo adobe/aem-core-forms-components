@@ -110,6 +110,7 @@ describe('Page - Authoring', function () {
             titlePolicy = '[value="' + templateDataPath + '/jcr:content/guideContainer/forms-components-examples/components/form/title' + '"] [data-action="POLICY"]',
             pagePath = '/content/forms/af/core-components-it/blank',
             bemDesignDialog = '.cmp-adaptiveform-title__designdialog',
+            submitBtnSelector = ".cq-dialog-submit",
             titleEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/title",
             titleDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.title.split("/").pop(),
             titleEditPathSelector = "[data-path='" + titleEditPath + "']";
@@ -134,7 +135,7 @@ describe('Page - Authoring', function () {
             cy.get('coral-selectlist-item').contains(defaultValue).click({ force: true });
             cy.get('[name="./type"]').eq(0).should('contain', defaultValue);
             cy.get('[placeholder="New policy"]').eq(1).type("Default policy");
-            cy.get('[title="Done"]').click();
+            cy.get(submitBtnSelector).click();
           }).then(() => {
             cy.openSiteAuthoring(pagePath); 
             dropTitleInContainer(); 

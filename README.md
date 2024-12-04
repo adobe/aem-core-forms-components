@@ -49,6 +49,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [ReCaptcha](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/recaptcha/v1/recaptcha)
 -   [Terms and Conditions](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/termsandconditions/v1/termsandconditions)
 -   [Checkbox](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkbox/v1/checkbox)
+-   [Review](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/review/v1/review)
 
 ## System Requirements
 

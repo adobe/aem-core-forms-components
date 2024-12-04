@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+import { FIELD_TYPE } from "@aemforms/af-core";
 
 /**
  * @module FormView
@@ -365,6 +366,14 @@ export const Constants = {
      * Prefix path for all AF HTTP APIs.
      * @type {string}
      */
-    API_PATH_PREFIX : "/adobe/forms/af"
+    API_PATH_PREFIX : "/adobe/forms/af",
+
+    /**
+     * Field type object.
+     * @type {object}
+     * @memberof module:FormView~Constants
+     * @namespace FIELD_TYPE
+     */
+    FIELD_TYPE: FIELD_TYPE
 };
 

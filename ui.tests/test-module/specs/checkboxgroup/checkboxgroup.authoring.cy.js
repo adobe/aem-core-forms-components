@@ -17,6 +17,7 @@
 
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
+const formsSelectors = require("../../libs/commons/guideSelectors");
 
 /**
  * Testing CheckBoxGroup with Sites Editor
@@ -40,25 +41,27 @@ describe('Page - Authoring', function () {
     cy.get('body').click( 0,0);
   }
 
-  const getPreviewIframeBody = () => {
-    // get the iframe > document > body
-    // and retry until the body element is not empty
-    return cy
-        .get('iframe#ContentFrame')
-        .its('0.contentDocument.body').should('not.be.empty')
-        .then(cy.wrap)
-  }
 
-  const getRuleEditorIframe = () => {
-      // get the iframe > document > body
-      // and retry until the body element is not empty
-      return cy
-          .get('iframe#af-rule-editor')
-          .its('0.contentDocument.body').should('not.be.empty')
-          .then(cy.wrap)
-  }
+    const getPreviewIframeBody = () => {
+        // get the iframe > document > body
+        // and retry until the body element is not empty
+        return cy
+            .get('iframe#ContentFrame')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
+    }
 
-  const testCheckBoxGroupBehaviour = function(checkBoxGroupEditPathSelector, checkBoxGroupDrop, isSites) {
+    const getRuleEditorIframe = () => {
+        // get the iframe > document > body
+        // and retry until the body element is not empty
+        return cy
+            .get('iframe#af-rule-editor')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
+    }
+
+
+    const testCheckBoxGroupBehaviour = function(checkBoxGroupEditPathSelector, checkBoxGroupDrop, isSites) {
     if (isSites) {
       dropTextInputInSites();
     } else {
@@ -211,7 +214,7 @@ describe('Page - Authoring', function () {
     });
 
     // adding retry since rule editor sometimes does not open at first try
-    it('rule editor is working with rich text enum names', { retries: 3 }, function(){
+    it('rule editor is working with rich text enum names', {retries: 2}, function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.invokeEditableAction("[data-action='editexpression']");
         cy.get("#af-rule-editor").should("be.visible");
