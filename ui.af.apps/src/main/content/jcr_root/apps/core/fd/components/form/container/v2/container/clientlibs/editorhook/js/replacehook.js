@@ -40,7 +40,8 @@
         'plain-text': fieldTypes.NON_INPUT,
         'title': fieldTypes.NON_INPUT,
         'image': fieldTypes.NON_INPUT,
-        'panel': fieldTypes.CONTAINER
+        'panel': fieldTypes.CONTAINER,
+        'password' : fieldTypes.TEXT
     }
 
     const preservedProperties = ['id', 'description', 'enabled', 'jcr:created', 'jcr:title', 'name',
