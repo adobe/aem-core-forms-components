@@ -16,7 +16,7 @@
 describe("Form Runtime with Turnstile Input", () => {
 
     const FT_TURNSTILE = "FT_FORMS-12407";
-    const pagePath = "content/forms/af/core-components-it/samples/turnstile/basic.html"
+    const pagePath = "content/forms/af/core-components-it/samples/turnstile/managed.html"
     const invisiblePagePath = "content/forms/af/core-components-it/samples/turnstile/invisible.html"
     const bemBlock = 'cmp-adaptiveform-turnstile'
     // The secret keys are part of public documentation and are not sensitive : 

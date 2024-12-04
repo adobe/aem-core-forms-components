@@ -37,7 +37,7 @@ describe('Page - Authoring', function () {
     // we can use these values to log in
 
     const dropTurnstileInContainer = function () {
-        const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
+        const dataPath = "/content/forms/af/core-components-it/samples/turnstile/basic/jcr:content/guideContainer/*",
             responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
         cy.selectLayer("Edit");
         cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Cloudflare® Turnstile", formturnstile);
@@ -100,7 +100,7 @@ describe('Page - Authoring', function () {
     }
 
     context('Open Forms Editor', function() {
-        const pagePath = "/content/forms/af/core-components-it/blank",
+        const pagePath = "/content/forms/af/core-components-it/samples/turnstile/basic",
             turnstileEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/turnstile",
             turnstileEditPathSelector = "[data-path='" + turnstileEditPath + "']",
             turnstileDrop = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + formturnstile.split("/").pop();
