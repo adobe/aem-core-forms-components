@@ -41,16 +41,27 @@ describe('Page - Authoring', function () {
     cy.get('body').click( 0,0);
   }
 
-  const getPreviewIframeBody = () => {
-    // get the iframe > document > body
-    // and retry until the body element is not empty
-    return cy
-        .get('iframe#ContentFrame')
-        .its('0.contentDocument.body').should('not.be.empty')
-        .then(cy.wrap)
-  }
 
-  const testCheckBoxGroupBehaviour = function(checkBoxGroupEditPathSelector, checkBoxGroupDrop, isSites) {
+    const getPreviewIframeBody = () => {
+        // get the iframe > document > body
+        // and retry until the body element is not empty
+        return cy
+            .get('iframe#ContentFrame')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
+    }
+
+    const getRuleEditorIframe = () => {
+        // get the iframe > document > body
+        // and retry until the body element is not empty
+        return cy
+            .get('iframe#af-rule-editor')
+            .its('0.contentDocument.body').should('not.be.empty')
+            .then(cy.wrap)
+    }
+
+
+    const testCheckBoxGroupBehaviour = function(checkBoxGroupEditPathSelector, checkBoxGroupDrop, isSites) {
     if (isSites) {
       dropTextInputInSites();
     } else {

@@ -21,7 +21,7 @@ describe("wizard with static text", () => {
     // enabling theme for this test case as without theme there is a bug in custom widget css
     before(() => {
         const fmPropertiesUI = "/libs/fd/fm/gui/content/forms/formmetadataeditor.html/content/dam/formsanddocuments/core-components-it/samples/wizard/setfocus"
-        const themeRef = 'input[name="./jcr:content/metadata/themeRef"]'
+        const themeRef = 'input[name="./jcr:content/metadata/themeClientLibRef"]'
         const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
         cy.openPage(fmPropertiesUI).then(() => {
             cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
