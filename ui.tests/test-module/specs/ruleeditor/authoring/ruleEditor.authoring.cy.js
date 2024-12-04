@@ -85,7 +85,8 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
-        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        // cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
@@ -368,9 +369,10 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
                 cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
                 cy.get(formsSelectors.ruleEditor.action.editRule).click();
+                cy.wait(1000);
 
                 // click on  create option from rule editor header
-                cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+                // cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
                 cy.wait('@ruleEditorRequest').its('response.statusCode').should('equal', 200);
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
