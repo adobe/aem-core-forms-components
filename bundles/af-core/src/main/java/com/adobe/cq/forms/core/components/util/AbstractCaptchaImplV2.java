@@ -44,7 +44,7 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
  * 
  * Example JSON Structures:
  * 
- * Old V1 Structure:
+ * Created using AbstractCaptchaImpl:
  * {
  *   "fieldType": "captcha",
  *   "properties": {
@@ -62,7 +62,7 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
  *   }
  * }
  * 
- * New V2 Structure:
+ * Created using AbstractCaptchaImplV2:
  * {
  *   "fieldType": "captcha",
  *   "captchaProvider": "turnstile",
