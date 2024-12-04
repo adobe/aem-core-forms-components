@@ -189,7 +189,7 @@ describe("Form Runtime with Turnstile Input", () => {
         }
     })
 
-    it("submission should pass for mandatory inivisble captcha", () => {
+    it("submission should pass for mandatory invisible captcha", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             updateTurnstileSecretKey(alwaysPassSecretKey, "invisible");
             cy.previewForm(invisiblePagePath).then((p) => {
@@ -207,7 +207,7 @@ describe("Form Runtime with Turnstile Input", () => {
         }
     });
 
-    it("submission should pass for mandatory inivisble captcha", () => {
+    it("submission should return 400 if invisible captcha validation fails", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes(FT_TURNSTILE)) {
             updateTurnstileSecretKey(alwaysFailSecretKey, "invisible");
             cy.previewForm(invisiblePagePath).then((p) => {

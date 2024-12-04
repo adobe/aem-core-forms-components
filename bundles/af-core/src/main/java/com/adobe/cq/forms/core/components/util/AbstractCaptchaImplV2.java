@@ -24,7 +24,60 @@ import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 
 /**
- * Abstract class which can be used as base class for {@link Captcha} implementations.
+ * AbstractCaptchaImplV2 is an updated implementation for handling captcha field types.
+ * 
+ * This class represents an evolution in the captcha JSON structure where captchaProvider
+ * is promoted to a top-level property, improving JSON clarity and eliminating redundancy.
+ * 
+ * Background:
+ * Previous Implementation (AbstractCaptchaImplV1):
+ * - Captcha provider information was embedded within the fd:captcha custom property
+ * - This led to redundant data and a less clean JSON structure with the updated forms spec
+ * 
+ * Current Implementation (AbstractCaptchaImplV2):
+ * - CaptchaProvider is now a first-class citizen at the root level of the JSON
+ * - This change results in a cleaner and more efficient JSON structure
+ * 
+ * Note: AbstractCaptchaImplV1 is not deprecated yet, as it is still used by
+ * recaptcha/hcaptcha v1 implementations in core components. Once these are migrated
+ * to AbstractCaptchaImplV2, the V1 implementation will be deprecated.
+ * 
+ * Example JSON Structures:
+ * 
+ * Old V1 Structure:
+ * {
+ *   "fieldType": "captcha",
+ *   "properties": {
+ *     "fd:captcha": {
+ *       "provider": "hcaptcha",
+ *       "config": {
+ *         "siteKey": null,
+ *         "uri": null,
+ *         "size": "normal",
+ *         "theme": "light",
+ *         "type": "image"
+ *       }
+ *     }
+ *    ...
+ *   }
+ * }
+ * 
+ * New V2 Structure:
+ * {
+ *   "fieldType": "captcha",
+ *   "captchaProvider": "turnstile",
+ *   "properties": {
+ *     "fd:captcha": {
+ *       "config": {
+ *         "uri": "https://challenges.cloudflare.com/turnstile/v0/api.js",
+ *         "widgetType": "managed",
+ *         "size": "normal",
+ *         "theme": "light"
+ *       }
+ *     }
+ *     ...
+ *   }
+ * }
  */
 public abstract class AbstractCaptchaImplV2 extends AbstractCaptchaImpl implements Captcha {
 
