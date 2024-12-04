@@ -41,43 +41,6 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
  * Note: AbstractCaptchaImplV1 is not deprecated yet, as it is still used by
  * recaptcha/hcaptcha v1 implementations in core components. Once these are migrated
  * to AbstractCaptchaImplV2, the V1 implementation will be deprecated.
- * 
- * Example JSON Structures:
- * 
- * Created using AbstractCaptchaImpl:
- * {
- *   "fieldType": "captcha",
- *   "properties": {
- *     "fd:captcha": {
- *       "provider": "hcaptcha",
- *       "config": {
- *         "siteKey": null,
- *         "uri": null,
- *         "size": "normal",
- *         "theme": "light",
- *         "type": "image"
- *       }
- *     }
- *    ...
- *   }
- * }
- * 
- * Created using AbstractCaptchaImplV2:
- * {
- *   "fieldType": "captcha",
- *   "captchaProvider": "turnstile",
- *   "properties": {
- *     "fd:captcha": {
- *       "config": {
- *         "uri": "https://challenges.cloudflare.com/turnstile/v0/api.js",
- *         "widgetType": "managed",
- *         "size": "normal",
- *         "theme": "light"
- *       }
- *     }
- *     ...
- *   }
- * }
  */
 public abstract class AbstractCaptchaImplV2 extends AbstractCaptchaImpl implements Captcha {
 
