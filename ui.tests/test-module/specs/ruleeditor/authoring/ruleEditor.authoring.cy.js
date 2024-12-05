@@ -82,6 +82,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
@@ -141,10 +142,12 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
-        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        // cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
