@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:conf="/conf/core-components-it/samples/recaptcha/basic"
+        cq:lastModified="{Date}2024-12-03T16:11:14.992+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
+        jcr:description="Inline Form with Captcha Runtime test"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Container"
+        sling:resourceType="forms-components-examples/components/page"
+        pwaCachestrategy="staleWhileRevalidate"
+        pwaDisplay="standalone"
+        pwaOrientation="any">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+                <container
+                    fd:autoSaveStrategyType="time"
+                    fd:version="2.1"
+                    jcr:created="{Date}2024-12-03T15:15:01.796+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-12-03T15:20:02.193+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Form Container"
+                    sling:resourceType="forms-components-examples/components/form/container"
+                    actionType="forms-core-components-it/customsubmission/logsubmit"
+                    fieldType="form"
+                    schemaType="none"
+                    specVersion="0.14.2"
+                    textIsRich="true"
+                    thankYouMessage="&lt;p>Thank you for submitting the form.&lt;/p>&#xd;&#xa;"
+                    thankYouOption="message">
+                    <submit
+                        jcr:created="{Date}2024-12-03T15:15:14.621+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-12-03T15:15:14.621+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Submit"
+                        sling:resourceType="forms-components-examples/components/form/actions/submit"
+                        buttonType="submit"
+                        dorExclusion="true"
+                        fieldType="button"
+                        name="submit1733219114749">
+                        <fd:rules
+                            fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                            jcr:primaryType="nt:unstructured"/>
+                        <fd:events
+                            jcr:primaryType="nt:unstructured"
+                            click="[submitForm()]"/>
+                    </submit>
+                    <recaptcha
+                        jcr:created="{Date}2024-12-03T15:56:55.306+05:30"
+                        jcr:createdBy="admin"
+                        jcr:lastModified="{Date}2024-12-03T16:09:39.983+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="CAPTCHA"
+                        sling:resourceType="forms-core-components-it/form/recaptcha"
+                        enabled="{Boolean}true"
+                        fieldType="captcha"
+                        hideTitle="false"
+                        name="recaptcha1733221615591"
+                        rcCloudServicePath="entscore"
+                        readOnly="{Boolean}false"
+                        required="{Boolean}true"
+                        textIsRich="true"
+                        unboundFormElement="{Boolean}false"
+                        visible="{Boolean}true"/>
+                </container>
+            </responsivegrid>
+        </root>
+        <cq:featuredimage
+            jcr:lastModified="{Date}2024-12-03T16:11:14.941+05:30"
+            jcr:lastModifiedBy="admin"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="core/wcm/components/image/v3/image"
+            altValueFromDAM="false"/>
+    </jcr:content>
+</jcr:root>
