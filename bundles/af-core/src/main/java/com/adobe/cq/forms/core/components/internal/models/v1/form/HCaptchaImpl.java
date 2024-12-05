@@ -111,7 +111,7 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
         }
         customCaptchaProperties.put(CAPTCHA_SITE_KEY, siteKey);
         customCaptchaProperties.put(CAPTCHA_URI, uri);
-        customCaptchaProperties.put(CAPTCHA_SIZE, this.size);
+        customCaptchaProperties.put(CAPTCHA_SIZE, getSize());
         customCaptchaProperties.put(CAPTCHA_THEME, "light");
         customCaptchaProperties.put(CAPTCHA_TYPE, "image");
 

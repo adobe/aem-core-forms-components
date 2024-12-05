@@ -127,7 +127,7 @@ public class TurnstileImpl extends AbstractCaptchaImplV2 implements Turnstile {
             customCaptchaProperties.put(CAPTCHA_URI, turnstileConfiguration.getClientSideJsUrl());
             customCaptchaProperties.put(CAPTCHA_WIDGET_TYPE, turnstileConfiguration.getWidgetType());
         }
-        customCaptchaProperties.put(CAPTCHA_SIZE, this.size);
+        customCaptchaProperties.put(CAPTCHA_SIZE, getSize());
         customCaptchaProperties.put(CAPTCHA_THEME, CAPTCHA_THEME_LIGHT);
         return customCaptchaProperties;
     }
