@@ -107,9 +107,11 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.EQUALS_TO).click();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STRING_LITERAL).type('abc');
-        if(cy.getRuleEditorIframe().find(".delete-else-button").exists()) {
-            cy.getRuleEditorIframe().find(".delete-else-button").click();
-        }
+        cy.getRuleEditorIframe().find(".delete-else-button").then(($button) => {
+            if ($button.length) {
+                cy.wrap($button).click();
+            }
+        });
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
