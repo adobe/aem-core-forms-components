@@ -115,7 +115,11 @@ describe('Rule editor authoring sanity for core-components',function(){
                 } else {
                     cy.log("Button not present");
                 }
-        });
+            })
+            .catch(() => {
+                // This catch block handles the case where the element is not found at all
+                cy.log("No delete else button found");
+            });
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
