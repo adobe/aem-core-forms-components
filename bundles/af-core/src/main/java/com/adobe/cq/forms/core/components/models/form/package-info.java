@@ -35,7 +35,7 @@
  * </p>
  */
 
-@Version("5.9.6")
+@Version("5.10.0")
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.Version;

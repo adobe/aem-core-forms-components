@@ -64,7 +64,7 @@ describe('Page - Authoring', function () {
 
         // Checking some dynamic behaviours
         cy.get(".cmp-adaptiveform-recaptcha__configuration").click().then(() => {
-            cy.get("coral-selectlist-item[value='entScore']").click();
+            cy.get("coral-selectlist-item[value='entscore']").click();
             cy.get("input[name='./recaptchaSize'][value='normal']").should("be.disabled");
             cy.get("input[name='./recaptchaSize'][value='compact']").should("be.disabled");
         })
