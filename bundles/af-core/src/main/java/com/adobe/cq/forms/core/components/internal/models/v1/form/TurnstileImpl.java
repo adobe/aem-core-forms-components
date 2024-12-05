@@ -43,7 +43,6 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Turnstile;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImplV2;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -69,12 +68,10 @@ public class TurnstileImpl extends AbstractCaptchaImplV2 implements Turnstile {
     private CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named("cloudServicePath")
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named("size")
     protected String size;
 
@@ -86,6 +83,11 @@ public class TurnstileImpl extends AbstractCaptchaImplV2 implements Turnstile {
     @Override
     public String getProvider() {
         return "turnstile";
+    }
+
+    @Override
+    public String getSize() {
+        return size;
     }
 
     /**

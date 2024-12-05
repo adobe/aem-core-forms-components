@@ -41,7 +41,6 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -65,12 +64,10 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     private CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named(ReservedProperties.PN_RECAPTCHA_CLOUD_SERVICE_PATH)
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named(ReservedProperties.PN_RECAPTCHA_SIZE)
     protected String size;
 
@@ -81,23 +78,20 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     public static final String RECAPTCHA_KEYTYPE = "keyType";
 
     @Override
-    @JsonIgnore
     public String getCloudServicePath() {
         return cloudServicePath;
     }
 
-    @JsonIgnore
+    @Override
     public String getSize() {
         return size;
     }
 
     @Override
-    @JsonIgnore
     public String getProvider() {
         return "recaptcha";
     }
 
-    @JsonIgnore
     @Override
     public Map<String, Object> getCaptchaProperties() throws GuideException {
 
@@ -129,5 +123,4 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         return customCaptchaProperties;
 
     }
-
 }

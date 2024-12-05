@@ -21,7 +21,6 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.service.GuideException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Defines a base interface to be extended by all the different types of captcha.
@@ -63,7 +62,9 @@ public interface Captcha extends Field {
         return null;
     }
 
-    @JsonProperty("captchaProvider")
+    @JsonIgnore
+    String getSize();
+
     String getProvider();
 
     @JsonIgnore

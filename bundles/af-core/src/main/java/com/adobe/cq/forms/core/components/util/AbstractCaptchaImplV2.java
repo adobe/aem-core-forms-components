@@ -22,6 +22,8 @@ import javax.annotation.PostConstruct;
 
 import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * AbstractCaptchaImplV2 is an updated implementation for handling captcha field types.
@@ -43,6 +45,11 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
  * to AbstractCaptchaImplV2, the V1 implementation will be deprecated.
  */
 public abstract class AbstractCaptchaImplV2 extends AbstractCaptchaImpl implements Captcha {
+
+    @Override
+    @JsonProperty("captchaProvider")
+    @JsonIgnore(false)
+    public abstract String getProvider();
 
     @Override
     public String getFieldType() {

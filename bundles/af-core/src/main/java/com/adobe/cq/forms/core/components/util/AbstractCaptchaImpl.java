@@ -21,6 +21,7 @@ import java.util.Map;
 import com.adobe.aemds.guide.service.GuideException;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Abstract class which can be used as base class for {@link Captcha} implementations.
@@ -37,6 +38,8 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
     protected static final String CAPTCHA_TYPE_IMAGE = "image";
     protected static final String CAPTCHA_WIDGET_TYPE = "widgetType";
 
+    @Override
+    @JsonIgnore
     public abstract String getProvider();
 
     @Override
@@ -44,6 +47,7 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
         return super.getFieldType(FieldType.CAPTCHA);
     }
 
+    @JsonIgnore
     public abstract Map<String, Object> getCaptchaProperties();
 
     public Map<String, Object> getProperties() {

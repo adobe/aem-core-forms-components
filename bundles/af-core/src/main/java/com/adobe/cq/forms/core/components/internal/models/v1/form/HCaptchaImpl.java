@@ -42,7 +42,6 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.HCaptcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -68,12 +67,10 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     private CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named(ReservedProperties.PN_CLOUD_SERVICE_PATH)
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named(ReservedProperties.PN_SIZE)
     protected String size;
 
@@ -83,7 +80,11 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     }
 
     @Override
-    @JsonIgnore
+    public String getSize() {
+        return size;
+    }
+
+    @Override
     public String getProvider() {
         return "hcaptcha";
     }
