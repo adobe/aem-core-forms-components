@@ -108,17 +108,13 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STRING_LITERAL).type('abc');
         cy.getRuleEditorIframe()
-            .find(".delete-else-button", { timeout: 0 }) // Skip retrying if the element doesn't exist
+            .find(".delete-else-button")
             .then(($button) => {
-                if ($button.length) {
+                if ($button.length > 0) {
                     cy.wrap($button).click();
                 } else {
                     cy.log("Button not present");
                 }
-            })
-            .catch(() => {
-                // This catch block handles the case where the element is not found at all
-                cy.log("No delete else button found");
             });
 
         // check and click on dropdown to view the actions available
