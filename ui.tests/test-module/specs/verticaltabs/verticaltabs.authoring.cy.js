@@ -49,6 +49,12 @@ describe.only('Page - Authoring', function () {
     const responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='Please drag Tab components here']:last";
     dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
   }
+
+  const dropPanelInVerticalTabComponent = function(tabsPath) {
+    const responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + tabsPath + "/*']";
+    dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+  }
+
   const dropTabsInSites = function() {
     const dataPath = "/content/core-components-examples/library/adaptive-form/panelcontainer/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
         responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-path='" + dataPath + "']";
@@ -118,6 +124,18 @@ describe.only('Page - Authoring', function () {
       });
     });
 
+    it('verify second panel is not visible after adding two panel',{ retries: 3 }, function(){
+      cy.cleanTest(tabsPath).then(function() {
+        dropTabsInContainer();
+        dropPanelInVerticalTabComponent(tabsPath);
+        dropPanelInVerticalTabComponent(tabsPath);
+        cy.reload();
+        cy.getContentIFrameBody().find('.cmp-verticaltabs__tabpanel').should('have.length', 2);
+        cy.getContentIFrameBody().find('.cmp-verticaltabs__tabpanel').eq(0).should('be.visible');
+        cy.getContentIFrameBody().find('.cmp-verticaltabs__tabpanel').eq(1).should('not.be.visible');
+        cy.deleteComponentByPath(tabsPath);
+      });
+    });
   });
 
   context('Open Sites Editor', function () {
