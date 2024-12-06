@@ -286,7 +286,27 @@ class FormTabs extends FormPanel {
      */
     navigate(tabId) {
         this.#_active = tabId;
+        this.addSteppedClass(tabId);
         this.#refreshActive();
+    }
+
+
+    addSteppedClass(tabId) {
+        var tabs = this.#getCachedTabs();
+        var tabpanels= this.#getCachedTabPanels();
+        const activeTabId = this.getActiveTabId(tabs); 
+        const activeTabElement = this.#getTabNavElementById(activeTabId);
+        if (activeTabElement.classList.contains(this.#_selectors.active.tab)) {
+            activeTabElement.classList.add(this.#_selectors.stepped.tab);
+
+            const correspondingPanel = Array.from(tabpanels).find(panel =>
+                panel.getAttribute("aria-labelledby") === activeTabElement.id
+            );
+    
+            if (correspondingPanel) {
+                correspondingPanel.classList.add(this.#_selectors.stepped.tabpanel);
+            }
+        }
     }
 
     /**
@@ -384,6 +404,14 @@ class FormTabs extends FormPanel {
             this.#cacheElements(this._elements.self);
             var repeatedTabPanel = this.#getTabPanelElementById(childView.id + this.#tabPanelIdSuffix);
             repeatedTabPanel.setAttribute("aria-labelledby", childView.id + this.#tabIdSuffix);
+            const steppedTabClass = Array.from(navigationTabToBeRepeated.classList).find(cls => cls.includes('--stepped'));
+            if (steppedTabClass) {
+                navigationTabToBeRepeated.classList.remove(steppedTabClass);
+            }
+            const steppedTabpanelClass = Array.from(repeatedTabPanel.classList).find(cls => cls.includes('--stepped'));
+            if (steppedTabpanelClass) {
+                repeatedTabPanel.classList.remove(steppedTabpanelClass);
+            }
             this.#bindEventsToTab(navigationTabToBeRepeated.id);
             this.#refreshActive();
             if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {

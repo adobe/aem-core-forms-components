@@ -41,6 +41,10 @@
                     tab: "cmp-adaptiveform-wizard__tab--active",
                     wizardpanel: "cmp-adaptiveform-wizard__wizardpanel--active"
                 },
+                stepped: {
+                    tab: "cmp-adaptiveform-wizard__tab--stepped",
+                    wizardpanel: "cmp-adaptiveform-wizard__wizardpanel--stepped",
+                },
                 label: `.${Wizard.bemBlock}__label`,
                 description: `.${Wizard.bemBlock}__longdescription`,
                 qm: `.${Wizard.bemBlock}__questionmark`,
@@ -332,6 +336,30 @@
                 this.focusWithoutScroll(this.getCachedTabs()[index]);
             }
 
+            navigate(index) {
+                this._active = index;
+                this.#addSteppedClass();
+                this.refreshActive();
+            }
+
+            #addSteppedClass() {
+                const tabs = this.getCachedTabs();
+                const wizardPanels = this.getCachedWizardPanels();
+                const activeChildId =  this.#getActiveWizardTabId(tabs)
+                const activeTab = this.#getTabNavElementById(activeChildId);
+                if (activeTab.classList.contains(Wizard.selectors.active.tab)) {
+                    activeTab.classList.add(Wizard.selectors.stepped.tab);
+
+                    const correspondingPanel = Array.from(wizardPanels).find(panel =>
+                        panel.getAttribute("aria-labelledby") === activeTab.id
+                    );
+            
+                    if (correspondingPanel) {
+                        correspondingPanel.classList.add(Wizard.selectors.stepped.wizardpanel);
+                    }
+                }
+            }
+   
             #syncWizardNavLabels() {
                 const tabs = this.getCachedTabs();
                 const wizardPanels = this.getCachedWizardPanels();
@@ -388,6 +416,14 @@
                     this.cacheElements(this._elements.self);
                     let repeatedWizardPanel = this.#getWizardPanelElementById(childView.id + Wizard.#wizardPanelIdSuffix);
                     repeatedWizardPanel.setAttribute("aria-labelledby", childView.id + Wizard.#tabIdSuffix);
+                    const steppedTabClass = Array.from(navigationTabToBeRepeated.classList).find(cls => cls.includes('--stepped'));
+                    if (steppedTabClass) {
+                        navigationTabToBeRepeated.classList.remove(steppedTabClass);
+                    }
+                    const steppedWizardPanelClass = Array.from(repeatedWizardPanel.classList).find(cls => cls.includes('--stepped'));
+                    if (steppedWizardPanelClass) {
+                        repeatedWizardPanel.classList.remove(steppedWizardPanelClass);
+            }
                     this.refreshActive();
                     this.#getTabIndexById();
                     if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {
@@ -488,6 +524,19 @@
                     }
                 }
                 return -1;
+            }
+
+            #getActiveWizardTabId(tabs) {
+                if (tabs) {
+                    var result = tabs[0].id;
+                    for (var i = 0; i < tabs.length; i++) {
+                        if (tabs[i].classList.contains(Wizard.selectors.active.tab)) {
+                            result = tabs[i].id;
+                            break;
+                        }
+                    }
+                    return result;
+                }
             }
 
             #getBeforeViewElement(instanceManager, instanceIndex) {

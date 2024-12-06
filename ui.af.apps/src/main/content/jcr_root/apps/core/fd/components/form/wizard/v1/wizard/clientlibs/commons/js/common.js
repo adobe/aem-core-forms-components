@@ -29,7 +29,11 @@
                 active: {
                     tab: "cmp-adaptiveform-wizard__tab--active",
                     wizardpanel: "cmp-adaptiveform-wizard__wizardpanel--active"
-                }
+                },
+                stepped: {
+                    tab: "cmp-adaptiveform-wizard__tab--stepped",
+                    wizardpanel: "cmp-adaptiveform-wizard__wizardpanel--stepped",
+                }    
             };
 
             _active;

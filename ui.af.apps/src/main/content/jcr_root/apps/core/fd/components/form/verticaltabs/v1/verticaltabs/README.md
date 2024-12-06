@@ -48,6 +48,7 @@ BLOCK cmp-verticaltabs
     ELEMENT cmp-verticaltabs__label-container
     ELEMENT cmp-verticaltabs__tab
         MOD cmp-verticaltabs__tab--active
+        MOD cmp-verticaltabs__tab--stepped
     ELEMENT cmp-verticaltabs__title
     ELEMENT cmp-verticaltabs__icon
     ELEMENT cmp-verticaltabs__label
