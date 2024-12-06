@@ -424,6 +424,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
             cy.selectLayer("Edit");
             cy.deleteComponentByPath(textinputEditPath);
+            cy.reload();
             cy.deleteComponentByPath(buttonEditPath);
         })
 
