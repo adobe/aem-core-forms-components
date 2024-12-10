@@ -28,6 +28,7 @@
     <content
         granite:class="cmp-adaptiveform-scribble__editdialog"
         jcr:primaryType="nt:unstructured"
+        jcr:title="Adaptive Form Scribble"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <tabs
@@ -49,38 +50,12 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <label
+                                            <readonly
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Label"
-                                                    name="./jcr:title"/>
-                                            <name
+                                                    sling:hideResource="{Boolean}true" />
+                                            <placeholder
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Name"
-                                                    name="./name"/>
-                                            <description
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                    fieldLabel="Description"
-                                                    name="./description"/>
-                                            <required
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                    fieldLabel="Required"
-                                                    name="./required"
-                                                    value="{Boolean}true"/>
-                                            <requiredMessage
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                    fieldLabel="Required Message"
-                                                    name="./requiredMessage"/>
-                                            <readOnly
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                    fieldLabel="Read Only"
-                                                    name="./readOnly"
-                                                    value="{Boolean}true"/>
+                                                    sling:hideResource="{Boolean}true" />
                                         </items>
                                     </column>
                                 </items>
