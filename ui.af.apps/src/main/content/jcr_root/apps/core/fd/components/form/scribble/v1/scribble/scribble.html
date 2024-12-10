@@ -42,8 +42,9 @@
       <div data-sly-call="${questionMark.questionMark @componentId=scribble.id, longDescription=scribble.description, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
     </div>
 
-    <div class="cmp-adaptiveform-scribble__canvas-signed-container">
-    </div>
+    <button type="button" class="cmp-adaptiveform-scribble__canvas-signed-container">
+      <img class="cmp-adaptiveform-scribble__canvas-signed-image" src="${scribble.value}" />
+    </button>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=scribble.id, shortDescriptionVisible=scribble.tooltipVisible, shortDescription=scribble.tooltip, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap>
     </div>
@@ -52,26 +53,22 @@
 
     <div data-sly-call="${errorMessage.errorMessage @componentId=scribble.id, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
       <div class="cmp-adaptiveform-scribble__container" tabindex="0" role="dialog" aria-label="pleaseSignText">
-        <!-- <div class="cmp-adaptiveform-scribble__panel">
-          <div class="cmp-adaptiveform-scribble__button cmp-adaptiveform-scribble__button-close" tabindex="0" role="button" aria-label="cancel" title="Cancel" ></div>
-        </div> -->
         <div class="cmp-adaptiveform-scribble__header">Please sign here</div>
         <div class="cmp-adaptiveform-scribble__content">
           <div class="cmp-adaptiveform-scribble__canvases">
             <div class="cmp-adaptiveform-scribble__signcanvases" style="display:inline-block; vertical-align:top;">
-              <canvas id="${widgetId}" class="cmp-adaptiveform-scribble__canvas"></canvas>
+              <canvas class="cmp-adaptiveform-scribble__canvas"></canvas>
               <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="Type Your Signature Here">
-              <!-- <fieldset class="cmp-adaptiveform-scribble__caption"><legend >Please Sign Here</legend></fieldset> -->
             </div>
             <canvas class="cmp-adaptiveform-scribble__geocanvasright" width="0" height="0" ></canvas>
           </div>
           <div class="cmp-adaptiveform-scribble__controlpanel">
             <div class="cmp-adaptiveform-scribble__controls">
-              <div class="cmp-adaptiveform-scribble__control-brush cmp-adaptiveform-scribble__button" tabindex="0"  role="button" aria-label="brushes"  title="brushes"></div>
-              <div class="cmp-adaptiveform-scribble__brushlist cmp-adaptiveform-scribble__button" ></div>
-              <div class="cmp-adaptiveform-scribble__control-clear cmp-adaptiveform-scribble__button" tabindex="0"  role="button" aria-label="clear"  title="clear" ></div>
-              <div class="cmp-adaptiveform-scribble__control-geo cmp-adaptiveform-scribble__button" tabindex="0"  role="button" aria-label="geolocation"  title="geolocation" ></div>
-              <div class="cmp-adaptiveform-scribble__control-text cmp-adaptiveform-scribble__button" tabindex="0"  role="button" aria-label="typeYourName"  title="typeYourName"></div>
+              <button type="button" class="cmp-adaptiveform-scribble__control-brush cmp-adaptiveform-scribble__button" tabindex="0" aria-label="brushes" title="brushes"></button>
+              <div class="cmp-adaptiveform-scribble__brushlist"></div>
+              <button type="button" class="cmp-adaptiveform-scribble__control-clear cmp-adaptiveform-scribble__button" tabindex="0" aria-label="clear" title="clear" ></button>
+              <button type="button" class="cmp-adaptiveform-scribble__control-geo cmp-adaptiveform-scribble__button" tabindex="0" aria-label="geolocation" title="geolocation" ></button>
+              <button type="button" class="cmp-adaptiveform-scribble__control-text cmp-adaptiveform-scribble__button" tabindex="0" aria-label="typeYourName" title="typeYourName"></button>
               <div class="cmp-adaptiveform-scribble__control-message"></div>
             </div>
             <div class="cmp-adaptiveform-scribble__controlpanel__controls">
@@ -80,17 +77,16 @@
             </div>
           </div>
         </div>
-        <div id="iEBox_moveframe" ></div>
       </div>
-      <div id="msgBox_container">
-        <h1 id="msgBox_title">Clear Signature Confirmation</h1>
-        <div id="msgBox_content" class="msgBoxTypenull">
-          <div id="msgBox_message">
-            Are you sure you want to clear signature?
+      <div class="cmp-adaptiveform-scribble__clearsign-container">
+        <h1 class="cmp-adaptiveform-scribble__clearsign-title">Clear all?</h1>
+        <div class="cmp-adaptiveform-scribble__clearsign-content" class="msgBoxTypenull">
+          <div class="cmp-adaptiveform-scribble__clearsign-message">
+            Are you sure you want to start over? 
           </div>
-          <div id="msgBox_panel">
-            <input type="button" value="Yes" id="msgBox_Yes" class="msgbox_input">
-            <input type="button" value="No" id="msgBox_No" class="msgbox_input">
+          <div class="cmp-adaptiveform-scribble__clearsign-panel">
+            <button type="button" id="msgBox_No" class="cmp-adaptiveform-scribble__clearsign-no">Cancel</button>
+            <button type="button" id="msgBox_Yes" class="cmp-adaptiveform-scribble__clearsign-yes">Clear</button>
           </div>
         </div>
       </div>

@@ -45,5 +45,5 @@ public class ScribbleImpl extends AbstractFieldImpl implements Scribble {
     public String getValue() {
         return value;
     }
-    
+
 }

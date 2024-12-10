@@ -48,7 +48,8 @@ textarea.cmp-adaptiveform-scribble__widget{
 .cmp-adaptiveform-scribble__canvas-signed-container {
     position: relative;
     border: 1px solid #AAAAAA;
-    height: 210px;
+    height: 280px;
+    padding: 10px;
     min-width: 50px;
     width: 100%;
     border-radius: 0.5rem;
@@ -190,7 +191,7 @@ textarea.cmp-adaptiveform-scribble__widget{
 }
 
 .cmp-adaptiveform-scribble__control-brush{
-   background-image:url('../resources/images/iEBox_brush.png');
+   background-image:url('../resources/images/signIcon.png');
 }
 
 .cmp-adaptiveform-scribble__control-submit {
@@ -264,7 +265,7 @@ textarea.cmp-adaptiveform-scribble__widget{
     }
   }
 
-#iEBox_moveframe{
+/* #iEBox_moveframe{
 padding:0px;
 margin:0px;
     border:0px dotted rgba(0,0,0,0.5);
@@ -275,10 +276,8 @@ margin:0px;
     -moz-box-shadow: 10px 10px 5px #888888;
     -webkit-box-shadow: 10px 10px 5px #888888;
      box-shadow: 0px 0px 15px #888888;
-     
-   /* display:none; */;
    position:absolute;
-}
+} */
 .disable_button {
     filter: grayscale(100%); /* Apply grayscale effect */
   -webkit-filter: grayscale(100%); /* For Safari and older versions of Chrome */
@@ -289,25 +288,23 @@ margin:0px;
   opacity: 0.6; /* Optional: Adjust opacity to give a faded look */
   pointer-events: none; /* Disable all mouse events */
   }
-.sc_popUpMenu {
+.cmp-adaptiveform-scribble__clear-sign {
     position: absolute;
     width:20px;
     height:20px;
     background:no-repeat;
     background-size:20px 20px; 
-    background-image:url('../resources/images/iEBox_no.png');
-    left:2px;
-    top:2px;
+    background-image:url('../resources/images/clearSignButton.png');
+    right: 5px;
+    top: 5px;
 }
 .cmp-adaptiveform-scribble__brushlist{
     position:absolute;
     z-index:99999;
     background-color:white;
-    -moz-box-shadow: 10px 10px 5px #888888;
-    -webkit-box-shadow: 10px 10px 5px #888888;
     box-shadow: 0px 0px 15px #888888;
-    display:none;
-    bottom: 60px;
+    display: none;
+    left: 45px;
 }
 .cmp-adaptiveform-scribble__brushlist :hover{
     background-color:gray;
@@ -328,24 +325,19 @@ margin:0px;
    background-color: #FFFFFF;
    padding: 2px;
 }
-.emptyScribble {
-    background: url('../resources/images/signature.png') no-repeat;
-}
 
 .cmp-adaptiveform-scribble__canvases {
     white-space:nowrap;
 }
 
-#msgBox_container {
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    min-width: 50px; /* Dialog will be no smaller than this */
-    max-width: 600px; /* Dialog will wrap after this width */
+.cmp-adaptiveform-scribble__clearsign-container {
+    font-size: 14px;
+    padding: 25px;
+    width: 280px;
+    height: 148px;
     background: #FFF;
-    border: solid 5px #999;
+    border: solid 1px #E6E6E6;
     color: #000;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     border-radius: 5px;
     position: absolute;
     top: 50%;
@@ -354,61 +346,61 @@ margin:0px;
     transform: translate(-50%, -50%);
 }
 
-#msgBox_title {
+.cmp-adaptiveform-scribble__clearsign-title {
     font-size: 14px;
     font-weight: bold;
-    text-align: center;
     line-height: 1.75em;
-    color: #666;
-    background: #CCC  top repeat-x;
-    border: solid 1px #FFF;
-    border-bottom: solid 1px #999;
+    color: #000;
     cursor: default;
-    padding: 0em;
+    padding-bottom: 10px;
     margin: 0em;
 }
 
-#msgBox_content {
+.cmp-adaptiveform-scribble__clearsign-content {
     background: 16px 16px no-repeat ;
     padding: 1em 1.75em;
     margin: 0em;
 }
 
-#msgBox_message {
-    text-align: center;
+.cmp-adaptiveform-scribble__clearsign-message {
+    font-size: 14px;
 }
 
-#msgBox_panel {
-    text-align: center;
+.cmp-adaptiveform-scribble__clearsign-panel {
+    text-align: right;
     margin: 1em 0em 0em 1em;
 }
 
-#msgBox_prompt {
-    margin: .5em 0em;
+.cmp-adaptiveform-scribble__clearsign-yes{
+    width: 54px;
+    height: 24px;
+    margin: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px transparent;
+    border-radius: 20px;
+    background-color: #0265DC;
+    color: white;
 }
 
-input#msgBox_Ok,input#msgBox_Yes,input#msgBox_No,input#msgBox_Cancel{
-    background-color: buttonFace;
-    padding: 5px 10px;
-    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-    box-shadow: rgba(0,0,0,1) 0 1px 0;
-    text-shadow: rgba(0,0,0,.4) 0 1px 0;
-    color: buttonText;
-    font-size: 14px;
-    font-family: Georgia, serif;
-    text-decoration: none;
-    vertical-align: middle;
-    outline:none;
-    border: 2px outset buttonface;
-    border-radius: 1rem;
+
+.cmp-adaptiveform-scribble__clearsign-no{
+    width: 54px;
+    height: 24px;
+    font-weight: 700;
+    font-size: 12px;
+    margin: 5px;
+    background-color: #FFF;
+    border: 2px solid #D5D5D5;
+    color: #4b4b4b;
+    border-radius: 20px;
  }
  
- input#msgBox_Ok:focus,input#msgBox_Yes:focus,input#msgBox_No:focus,input#msgBox_Cancel:focus{
+/* .cmp-adaptiveform-scribble__clearsign-yes:focus,.cmp-adaptiveform-scribble__clearsign-no:focus{
  outline:highlight;
  }
  
- input#msgBox_Ok:hover,input#msgBox_Yes:hover,input#msgBox_No:hover,input#msgBox_Cancel:hover{
+ .cmp-adaptiveform-scribble__clearsign-yes:hover,.cmp-adaptiveform-scribble__clearsign-no:hover{
  outline:none;
  border: 2px outset buttonface;
- }
+ } */
