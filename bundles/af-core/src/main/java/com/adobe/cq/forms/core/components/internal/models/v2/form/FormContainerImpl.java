@@ -75,6 +75,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
     private static final String FD_IS_HAMBURGER_MENU_ENABLED = "fd:isHamburgerMenuEnabled";
+    private static final String FD_IS_FORM_FILL_ENABLED = "fd:isFormFillEnabled";
     public static final String FD_FORM_DATA_ENABLED = "fd:formDataEnabled";
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
     private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
@@ -101,6 +102,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @ValueMapValue(name = FD_IS_HAMBURGER_MENU_ENABLED, injectionStrategy = InjectionStrategy.OPTIONAL)
     private Boolean isHamburgerMenuEnabled = false;
+
+    @ValueMapValue(name = FD_IS_FORM_FILL_ENABLED, injectionStrategy = InjectionStrategy.OPTIONAL)
+    private Boolean isFormFillEnabled = false;
 
     protected String contextPath = StringUtils.EMPTY;
     private boolean formDataEnabled = false;
@@ -268,6 +272,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return isHamburgerMenuEnabled;
     }
 
+    public Boolean getIsFormFillEnabled() {
+        return isFormFillEnabled;
+    }
+
     @Override
     public String getRoleAttribute() {
         return roleAttribute;
@@ -336,6 +344,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             properties.put(FD_SCHEMA_REF, getSchemaRef());
         }
         properties.put(FD_IS_HAMBURGER_MENU_ENABLED, getIsHamburgerMenuEnabled());
+        properties.put(FD_IS_FORM_FILL_ENABLED, getIsFormFillEnabled());
         // adding a custom property to know if form data is enabled
         // this is done so that an extra API call from the client can be avoided
         if (StringUtils.isNotBlank(getPrefillService()) ||

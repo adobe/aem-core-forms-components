@@ -19,3 +19,59 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 .cmp-adaptiveform-container--loading{
 
 }
+.cmp-adaptiveform-container__form-fill-helper{
+  position: fixed;
+    bottom: 200px;
+    right: 300px;
+    width: 50px;
+    height: 50px;
+    background: #a5c0ef;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.message-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  max-height: 200px;
+  border: 1px solid #ddd;
+  padding: 5px;
+  background-color: #fff;
+}
+
+.message-item {
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  background-color: #e1f5fe;
+}
+
+.chat-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  width: calc(100% - 22px); /* Adjust for padding and border */
+}
+
+.send-button {
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.send-button:hover {
+  background-color: #0056b3;
+}

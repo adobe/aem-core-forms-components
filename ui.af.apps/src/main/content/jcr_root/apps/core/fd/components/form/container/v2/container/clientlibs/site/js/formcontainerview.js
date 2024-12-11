@@ -26,11 +26,13 @@
         };
         static loadingClass = `${FormContainerV2.bemBlock}--loading`;
         #hamburgerMenuInstance = '';
+        #formFillHelper = null;
 
         constructor(params) {
             super(params);
             let self = this;
             this.#hamburgerMenuInstance = new HamburgerMenu(this);
+            this.#formFillHelper = new FormFillHelper(this);
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on submitSuccess event.
@@ -80,6 +82,7 @@
 
         initialiseHamburgerMenu() {
             this.#hamburgerMenuInstance.init();
+            this.#formFillHelper.init();
         }
 
         /**

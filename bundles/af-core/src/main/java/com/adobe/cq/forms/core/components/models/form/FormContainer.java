@@ -156,6 +156,11 @@ public interface FormContainer extends Container {
         return false;
     }
 
+    @JsonIgnore
+    default Boolean getIsFormFillEnabled() {
+        return false;
+    }
+
     @Override
     @JsonIgnore
     default Label getLabel() {

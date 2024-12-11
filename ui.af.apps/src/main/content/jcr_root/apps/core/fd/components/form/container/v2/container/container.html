@@ -66,6 +66,7 @@
             </div>
         </div>
     </div>
+    <div data-sly-test="${container.isFormFillEnabled && !wcmmode.edit}" class="cmp-adaptiveform-container__form-fill-helper"></div>
     <div id="${container.id}-wrapper"
          class="cmp-adaptiveform-container__wrapper ${grid.cssClass} ${allowed.cssClass}">
         <sly data-sly-test="${!isAllowedApplicable}" data-sly-repeat.paragraph="${grid.paragraphs}"

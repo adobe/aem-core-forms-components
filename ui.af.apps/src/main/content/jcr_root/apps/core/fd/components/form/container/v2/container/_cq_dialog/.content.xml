@@ -18,7 +18,7 @@
   jcr:primaryType="nt:unstructured"
   jcr:title="Adaptive Form Container"
   sling:resourceType="cq/gui/components/authoring/dialog"
-  extraClientlibs="[core.forms.components.container.v1.editor]"
+  extraClientlibs="[core.forms.components.container.v1.editor,core.forms.components.container.v2.editor]"
   helpPath="https://www.adobe.com/go/aem_af_cmp_container_v2"
   trackingFeature="core-components:adaptiveform-container:v2">
     <content
@@ -92,6 +92,22 @@
                                       text="Enable the hamburger menu for mobile view"
                                       fieldDescription="Select the option to display the hamburger menu for efficient navigation on mobile devices."
                                       value="{Boolean}true"/>
+                                    <formFillHelper
+                                      jcr:primaryType="nt:unstructured"
+                                      granite:class="cmp-adaptiveform-container__form-fill-helper"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                      name="./fd:isFormFillEnabled"
+                                      text="Enable the form fill helper"
+                                      fieldDescription="Select the option to display help chat for form fill."
+                                      value="{Boolean}true"/>
+                                    <file
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:orderBefore="visible"
+                                        sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
+                                        class="cq-droptarget"
+                                        fileNameParameter="./fileName"
+                                        fileReferenceParameter="./fileReference"
+                                        name="./file"/>
                                 </items>
                             </container>
                         </items>

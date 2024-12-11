@@ -16,4 +16,5 @@
 
 #base=js
 hamburgerMenu.js
+formFillHelper.js
 formcontainerview.js
