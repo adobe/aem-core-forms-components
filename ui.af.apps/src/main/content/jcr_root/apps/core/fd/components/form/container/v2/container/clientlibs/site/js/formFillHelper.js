@@ -24,6 +24,7 @@ if (typeof window.FormFillHelper === "undefined") {
       this.recognition = null;
       this.isRecording = false;
       this.formData = {};
+      this.session_id = "id" + Math.random().toString(16).slice(2);
     }
     getOptions(item) {
       const options = item.enumNames && item.enumNames.length ? item.enumNames : item.enums || [];
@@ -60,20 +61,62 @@ if (typeof window.FormFillHelper === "undefined") {
     init() {
       this.createChatBox();
       const items = this.container.getModel().getState().items;
-      this.formData = this.processFormData(items)
-      this.initChat(this.formData);
+      this.formData = this.processFormData(items);
+      this.sendFormData(this.formData);
 
+    }
+
+    sendFormData(formData){
+      // api call
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        "docId": "carinsurance",
+        "formData": formData,
+        "sessionId": this.session_id,
+        "query": null
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+
+      this.customFetch(requestOptions)
+
+    }
+
+    customFetch(requestOptions) {
+      fetch("http://127.0.0.1:5000/query", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if(typeof result === 'string'){
+          this.addMessage(result, 'response');
+        }else {
+          this.addMessage(result.aiMessage, 'response');
+          this.initChat(result.formData);
+        }
+      })
+      .catch((error) => console.error(error));
     }
 
     initChat(res) {
-      console.log(res);
-      res.Address.City.value = 'San Francisco';
-      const data = this.fillFormData(res);
-      this.importData(data);
+      if(res){
+        console.log(res);
+        const data = this.fillFormData(res);
+        this.importData(data);
+
+        const items = this.container.getModel().getState().items;
+        this.formData = this.processFormData(items);
+      }
     }
 
     importData(data) {
-      this.container.getModel().importData(data);
+      this.container.getModel().importData(data);x
     }
 
     fillFormData(data) {
@@ -88,7 +131,27 @@ if (typeof window.FormFillHelper === "undefined") {
       return result;
     }
 
+    sendRequest(transcript) {
 
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        "docId": "carinsurance",
+        "formData": this.formData,
+        "sessionId": this.session_id,
+        "query": transcript
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+
+      this.customFetch(requestOptions)
+    }
 
     startRecording() {
       let msgTranscript = '';
@@ -112,8 +175,8 @@ if (typeof window.FormFillHelper === "undefined") {
         msgTranscript = transcript;
         console.log("Voice input:", transcript);
         // You can also add the transcribed message to the chat
-        const messageList = document.querySelector('.message-list');
-        this.addMessage(messageList, transcript, 'user');
+        this.addMessage(transcript, 'user');
+        this.sendRequest(transcript);
       };
 
       this.recognition.onerror = (event) => {
@@ -122,19 +185,17 @@ if (typeof window.FormFillHelper === "undefined") {
 
       this.recognition.onend = () => {
         console.log("Voice recording ended.");
-        this.textToVoice(msgTranscript);
-        this.isRecording = false;
+        // this.textToVoice(msgTranscript);
+        // this.isRecording = false;
       };
 
       this.recognition.start();
     }
 
     stopRecording() {
-      if (this.recognition) {
-        this.recognition.stop();
-        this.isRecording = false;
-        console.log("Voice recording stopped.");
-      }
+      this.recognition.stop();
+      this.isRecording = false;
+      console.log("Voice recording stopped.");
     }
 
     textToVoice(message) {
@@ -147,7 +208,8 @@ if (typeof window.FormFillHelper === "undefined") {
     }
 
 
-    addMessage(messageList, message, type) {
+    addMessage( message, type) {
+      const messageList = document.querySelector('.message-list');
       const messageItem = document.createElement("div");
       messageItem.className = `message-item ${type}`;
       messageItem.innerText = message;
@@ -182,12 +244,8 @@ if (typeof window.FormFillHelper === "undefined") {
       sendButton.addEventListener("click", () => {
         const message = inputField.value.trim();
         if (message) {
-          this.addMessage(messageList, message, 'user');
+          this.addMessage(message, 'user');
           inputField.value = "";
-          // Simulate a response after a delay
-          setTimeout(() => {
-            this.addMessage(messageList, "This is a response", 'response');
-          }, 1000);
         }
       });
 
