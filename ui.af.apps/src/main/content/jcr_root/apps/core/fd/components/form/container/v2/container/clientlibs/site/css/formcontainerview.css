@@ -19,59 +19,100 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 .cmp-adaptiveform-container--loading{
 
 }
+
 .cmp-adaptiveform-container__form-fill-helper{
+  right: 20px;
+  bottom: 20px;
   position: fixed;
-    bottom: 200px;
-    right: 300px;
-    width: 50px;
-    height: 50px;
-    background: #a5c0ef;
 }
 
+/* body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
+
 .chat-container {
+  width: 500px;
+  max-height: 500px;
+  max-width: 100%;
+  background-color: #fff;
+  box-shadow: -1px 0px 5px 5px rgba(214,214,214,1);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
-  width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #f9f9f9;
+  overflow: hidden;
 }
 
 .message-list {
-  flex-grow: 1;
+  flex: 1;
+  padding: 10px;
   overflow-y: auto;
-  margin-bottom: 10px;
-  max-height: 200px;
-  border: 1px solid #ddd;
-  padding: 5px;
-  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
 }
 
 .message-item {
-  padding: 5px;
-  margin-bottom: 5px;
-  border-radius: 3px;
-  background-color: #e1f5fe;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message-item.user {
+  background-color: #e1ffc7;
+  align-self: flex-end;
+}
+
+.message-item.response {
+  background-color: #f1f1f1;
+  align-self: flex-start;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
 }
 
 .chat-input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  margin-bottom: 10px;
-  width: calc(100% - 22px); /* Adjust for padding and border */
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 10px;
 }
 
 .send-button {
-  padding: 10px;
-  border: none;
-  border-radius: 3px;
+  padding: 8px 12px;
   background-color: #007bff;
-  color: white;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 .send-button:hover {
   background-color: #0056b3;
+}
+.voice-button {
+  background: url(../resources/voiceIcon.svg) 14% / 1rem 1rem no-repeat;
+  padding: 11px 14px;
+  border: none;
+  position: absolute;
+  left: 80%;
+  top: 15px;
+  cursor: pointer;
+}
+
+.voice-button.voiceRecording {
+  background: url(../resources/stop.svg) 14% / 1rem 1rem no-repeat;
 }
