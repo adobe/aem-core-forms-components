@@ -68,6 +68,7 @@ if (typeof window.FormFillHelper === "undefined") {
     }
     initChat(){
       this.createChatBox();
+      this.addMessage('Welcome to Smart Form Filling!', 'response');
       const items = this.container.getModel().getState().items;
       this.formData = this.processFormData(items);
       this.sendFormData(this.formData);
