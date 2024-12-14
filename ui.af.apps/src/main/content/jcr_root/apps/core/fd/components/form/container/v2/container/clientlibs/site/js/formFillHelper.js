@@ -236,16 +236,29 @@ if (typeof window.FormFillHelper === "undefined") {
       inputField.className = "chat-input";
       inputField.placeholder = "Type a message...";
 
+      // inputField.addEventListener("change", (event) => {
+      //   const value = event?.target?.value;
+      //   const sendButton = document.querySelector('.send-button');
+      //   const voiceButton = document.querySelector('.voice-button');
+      //   if(value){
+      //     sendButton.classList.remove('hide');
+      //     voiceButton.classList.add('hide');
+      //   }else {
+      //     sendButton.classList.add('hide');
+      //     voiceButton.classList.remove('hide');
+      //   }
+      // });
+
       // Create send button
       const sendButton = document.createElement("button");
       sendButton.className = "send-button";
-      sendButton.innerText = "Send";
       sendButton.type = "button";
       sendButton.addEventListener("click", () => {
         const message = inputField.value.trim();
         if (message) {
           this.addMessage(message, 'user');
           inputField.value = "";
+          this.sendRequest(message);
         }
       });
 
@@ -263,8 +276,8 @@ if (typeof window.FormFillHelper === "undefined") {
       });
 
       inputContainer.appendChild(inputField);
-      inputContainer.appendChild(voiceButton);
       inputContainer.appendChild(sendButton);
+      inputContainer.appendChild(voiceButton);
       chatContainer.appendChild(inputContainer);
 
       this.getContainerElement().appendChild(chatContainer);
