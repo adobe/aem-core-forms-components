@@ -38,7 +38,7 @@ if (typeof window.FormFillHelper === "undefined") {
 
     processFormData(items) {
       const result = {};
-      items.forEach((item) => {
+      items.filter(x=> x.fieldType).forEach((item) => {
         if (item.fieldType === 'panel') {
           result[item.name] = this.processFormData(item.items)
         } else {
@@ -59,11 +59,28 @@ if (typeof window.FormFillHelper === "undefined") {
     }
 
     init() {
+      this.createButton();
+      // this.createChatBox();
+      // const items = this.container.getModel().getState().items;
+      // this.formData = this.processFormData(items);
+      // this.sendFormData(this.formData);
+
+    }
+    initChat(){
       this.createChatBox();
       const items = this.container.getModel().getState().items;
       this.formData = this.processFormData(items);
       this.sendFormData(this.formData);
+    }
 
+    createButton() {
+      const button = document.createElement("button");
+      button.className = "fill-form-button";
+      button.innerText = "Start Voice/Chat Fill Form";
+      button.addEventListener("click", () => {
+        this.initChat();
+      });
+      this.getContainerElement().appendChild(button);
     }
 
     sendFormData(formData){
@@ -98,13 +115,13 @@ if (typeof window.FormFillHelper === "undefined") {
           this.addMessage(result, 'response');
         }else {
           this.addMessage(result.aiMessage, 'response');
-          this.initChat(result.formData);
+          this.fillData(result.formData);
         }
       })
       .catch((error) => console.error(error));
     }
 
-    initChat(res) {
+    fillData(res) {
       if(res){
         console.log(res);
         const data = this.fillFormData(res);
@@ -280,7 +297,9 @@ if (typeof window.FormFillHelper === "undefined") {
       inputContainer.appendChild(voiceButton);
       chatContainer.appendChild(inputContainer);
 
-      this.getContainerElement().appendChild(chatContainer);
+      const containerElement = this.getContainerElement();
+      containerElement.innerHTML = "";
+      containerElement.appendChild(chatContainer);
     }
   };
 }

@@ -132,3 +132,23 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 .voice-button.voiceRecording {
   background: url(../resources/stop.svg) 14% / 24px 24px no-repeat;
 }
+
+.fill-form-button{
+  font-size: 16px;
+  background: #1976d3;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.fill-form-button::before {
+    content: '';
+    background: url(../resources/chatIcon.svg) 14% / 24px 24px no-repeat;;
+    margin-right: 10px;
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+}
