@@ -118,7 +118,10 @@ if (typeof window.FormFillHelper === "undefined") {
           this.addMessage(result, 'response');
         }else {
           this.removeLoader();
-          this.addMessage(result.aiMessage, 'response');
+          if(result.aiMessage) this.addMessage(result.aiMessage, 'response');
+          if(result.mp3){
+            this.addMessage(result.mp3, 'response', 'mp3');
+          }
           this.fillData(result.formData);
         }
       })
@@ -249,15 +252,46 @@ if (typeof window.FormFillHelper === "undefined") {
       messageList.scrollTop = messageList.scrollHeight; // Scroll to the bottom
     }
 
+    renderAudioMessage(message) {
+      const audioPlayer = document.createElement("audio");
+      audioPlayer.controls = true;
 
-    addMessage( message, type) {
+      // Decode base64 MP3 data and create a Blob URL
+      const byteCharacters = atob(message);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'audio/mpeg' });
+      const audioUrl = URL.createObjectURL(blob);
+
+      const audioSource = document.createElement("source");
+      audioSource.controls = false;
+      audioSource.src = audioUrl;
+      audioSource.type = "audio/mpeg";
+      audioPlayer.appendChild(audioSource);
+      return audioPlayer;
+    }
+
+
+    addMessage( message, type, isMp3 = false) {
       const messageList = document.querySelector('.message-list');
       const messageItem = document.createElement("div");
       messageItem.className = `message-item ${type}`;
-      messageItem.innerText = message;
+      if (isMp3) {
+          // Create audio player for MP3 message
+        const audioMessage = this.renderAudioMessage(message);
+        messageItem.appendChild(audioMessage);
+      } else {
+          // Create text message
+          messageItem.innerText = message;
+      }
+      // messageItem.innerText = message;
       messageList.appendChild(messageItem);
       messageList.scrollTop = messageList.scrollHeight; // Scroll to the bottom
     }
+
     createChatBox() {
       // Create chat container
       const chatContainer = document.createElement("div");

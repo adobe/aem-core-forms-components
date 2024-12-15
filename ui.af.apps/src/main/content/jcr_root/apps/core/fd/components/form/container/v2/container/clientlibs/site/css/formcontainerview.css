@@ -93,7 +93,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 
 .loader{
   background: url(../resources/loader.gif) 50% / 50px 45px no-repeat;
-  width: 45px;
+  width: 48px;
   height: 38px;
 }
 
