@@ -91,6 +91,17 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
   top: 0px;
 }
 
+.loader{
+  background: url(../resources/loader.gif) 50% / 50px 45px no-repeat;
+  width: 45px;
+  height: 38px;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .input-container {
   position: relative;
   display: flex;

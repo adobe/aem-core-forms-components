@@ -109,17 +109,23 @@ if (typeof window.FormFillHelper === "undefined") {
     }
 
     customFetch(requestOptions) {
+      this.addLoader();
       fetch("http://127.0.0.1:5000/query", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if(typeof result === 'string'){
+          this.removeLoader();
           this.addMessage(result, 'response');
         }else {
+          this.removeLoader();
           this.addMessage(result.aiMessage, 'response');
           this.fillData(result.formData);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        this.removeLoader();
+        console.error(error)
+      });
     }
 
     fillData(res) {
@@ -134,7 +140,7 @@ if (typeof window.FormFillHelper === "undefined") {
     }
 
     importData(data) {
-      this.container.getModel().importData(data);x
+      this.container.getModel().importData(data);
     }
 
     fillFormData(data) {
@@ -223,6 +229,24 @@ if (typeof window.FormFillHelper === "undefined") {
       speech.rate = 1;
       speech.pitch = 1;
       window.speechSynthesis.speak(speech);
+    }
+
+    addLoader() {
+      const messageList = document.querySelector('.message-list');
+      const loader = document.createElement("div");
+      loader.className = `loader`;
+      document.querySelector('.input-container').classList.add('disabled');
+      // loader.innerText = 'loader';
+      messageList.appendChild(loader);
+      messageList.scrollTop = messageList.scrollHeight; // Scroll to the bottom
+    }
+
+    removeLoader() {
+      const messageList = document.querySelector('.message-list');
+      const loader = document.querySelector('.loader');
+      messageList.removeChild(loader);
+      document.querySelector('.input-container').classList.remove('disabled');
+      messageList.scrollTop = messageList.scrollHeight; // Scroll to the bottom
     }
 
 
