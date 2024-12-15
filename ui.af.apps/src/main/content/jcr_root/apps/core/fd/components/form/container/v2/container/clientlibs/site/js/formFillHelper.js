@@ -255,7 +255,7 @@ if (typeof window.FormFillHelper === "undefined") {
     renderAudioMessage(message) {
       const audioPlayer = document.createElement("audio");
       audioPlayer.controls = true;
-
+      audioPlayer.autoplay = true;
       // Decode base64 MP3 data and create a Blob URL
       const byteCharacters = atob(message);
       const byteNumbers = new Array(byteCharacters.length);
