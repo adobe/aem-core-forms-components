@@ -204,6 +204,7 @@ if (typeof window.FormFillHelper === "undefined") {
         // You can also add the transcribed message to the chat
         this.addMessage(transcript, 'user');
         this.sendRequest(transcript);
+        document.querySelector('.voice-button').classList.remove('voiceRecording');
       };
 
       this.recognition.onerror = (event) => {
@@ -211,6 +212,7 @@ if (typeof window.FormFillHelper === "undefined") {
       };
 
       this.recognition.onend = () => {
+        document.querySelector('.voice-button').classList.remove('voiceRecording');
         console.log("Voice recording ended.");
         // this.textToVoice(msgTranscript);
         // this.isRecording = false;
@@ -222,6 +224,7 @@ if (typeof window.FormFillHelper === "undefined") {
     stopRecording() {
       this.recognition.stop();
       this.isRecording = false;
+      document.querySelector('.voice-button').classList.remove('voiceRecording');
       console.log("Voice recording stopped.");
     }
 

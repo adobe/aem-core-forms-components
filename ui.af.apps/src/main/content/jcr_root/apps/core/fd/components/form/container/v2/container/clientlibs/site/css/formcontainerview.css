@@ -123,7 +123,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
 
 .send-button {
   padding: 8px 12px;
-  background: url(../resources/sendIcon.svg) 14% / 24px 24px no-repeat;
+  background: url(../resources/sendButton.png) 14% / 24px 24px no-repeat;
   border: none;
   cursor: pointer;
   position: absolute;
@@ -131,7 +131,7 @@ form:not(.cmp-adaptiveform-container--edit) [data-cmp-visible="false"] {
   top: 25px;
 }
 .voice-button {
-  background: url(../resources/voiceIcon.svg) 14% / 24px 24px no-repeat;
+  background: url(../resources/microphone.png) 14% / 28px 28px no-repeat;
   padding: 11px 14px;
   border: none;
   cursor: pointer;
