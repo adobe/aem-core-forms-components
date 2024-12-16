@@ -25,6 +25,7 @@ if (typeof window.FormFillHelper === "undefined") {
       this.isRecording = false;
       this.formData = {};
       this.session_id = "id" + Math.random().toString(16).slice(2);
+      this.docId = "acmecard";
     }
     getOptions(item) {
       const options = item.enumNames && item.enumNames.length ? item.enumNames : item.enums || [];
@@ -91,7 +92,7 @@ if (typeof window.FormFillHelper === "undefined") {
       myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
-        "docId": "carinsurance",
+        "docId": this.docId,
         "formData": formData,
         "sessionId": this.session_id,
         "query": null
@@ -136,10 +137,36 @@ if (typeof window.FormFillHelper === "undefined") {
         console.log(res);
         const data = this.fillFormData(res);
         this.importData(data);
+        if (!this.hasUndefinedField(data)) {
+          alert('submitting the form')
+        } else {
+          const items = this.container.getModel().getState().items;
+          this.formData = this.processFormData(items);
+        }
 
-        const items = this.container.getModel().getState().items;
-        this.formData = this.processFormData(items);
       }
+    }
+
+    hasUndefinedField(obj) {
+      // Check each key-value pair in the object
+      for (const key in obj) {
+        if (key.includes('submit')) {
+
+          continue;
+        }
+        if (obj[key] === undefined) {
+          return true; // Found a field with undefined
+        }
+
+        // If the value is an object, check recursively
+        if (typeof obj[key] === "object" && obj[key] !== null) {
+          if (this.hasUndefinedField(obj[key])) {
+            return true; // Found undefined in a nested object
+          }
+        }
+      }
+
+      return false; // No undefined fields found
     }
 
     importData(data) {
@@ -164,7 +191,7 @@ if (typeof window.FormFillHelper === "undefined") {
       myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
-        "docId": "carinsurance",
+        "docId": this.docId,
         "formData": this.formData,
         "sessionId": this.session_id,
         "query": transcript

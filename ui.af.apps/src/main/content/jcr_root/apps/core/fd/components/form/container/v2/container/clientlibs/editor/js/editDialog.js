@@ -17,29 +17,31 @@
   "use strict";
   let EDIT_DIALOG = ".cmp-adaptiveform-container__editdialog",
       FILE = EDIT_DIALOG + " .cq-droptarget",
-  Utils = window.CQ.FormsCoreComponents.Utils.v1;
+      Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
   function handleMultiSelection(dialog) {
-      dialog = $(dialog);
-      let fileElement = dialog.find(FILE)[0];
-      var submitButton=dialog.find(".cq-dialog-submit")[0];
-      var file = null;
-      submitButton.addEventListener("click", function(event) {
-        doPost(file)
-      })
-      fileElement.addEventListener("change", function(d) {
-        if(d.target && d.target._elements && d.target._elements.input && d.target._elements.input.files) {
-          file = d.target._elements.input.files[0];
-        }
-      })
+    dialog = $(dialog);
+    let fileElement = dialog.find(FILE)[0];
+    var submitButton=dialog.find(".cq-dialog-submit")[0];
+    var file = null;
+    submitButton.addEventListener("click", function(event) {
+      doPost(file)
+    })
+    fileElement.addEventListener("change", function(d) {
+      if(d.target && d.target._elements && d.target._elements.input && d.target._elements.input.files) {
+        file = d.target._elements.input.files[0];
+      }
+    })
   }
   function doPost(file) {
     const dataform = new FormData();
     dataform.append('file', file);
     $.ajax({
       type: "POST",
-      url: "/bin/abc",
+      url: "http://127.0.0.1:5000/read_pdf",
       data: dataform,
+      processData: false, // Prevent jQuery from processing the FormData object
+      contentType: false, // Let the browser set the Content-Type, including boundary
       success: function(data) {
         console.log('===data', data);
       },
