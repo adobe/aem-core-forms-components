@@ -130,5 +130,41 @@ describe("Form with VerticalTabs Container", () => {
         })
     })
 
+    it("After clicking on every tab, if tab-1 is repeated, the repeated instance should not have stepped class", () => {
+        getTabs().should('have.length', 4);
+        getTabPanels().should('have.length', 4);
+        getTabAtIndex(0).should('have.class', 'cmp-verticaltabs__tab--active');
+        getTabPanelAtIndex(0).should('have.class', 'cmp-verticaltabs__tabpanel--active');
+        getTabAtIndex(1).click();
+        getTabAtIndex(1).should('have.class', 'cmp-verticaltabs__tab--active');
+        getTabPanelAtIndex(1).should('have.class', 'cmp-verticaltabs__tabpanel--active');
+        getTabAtIndex(0).should('have.class', 'cmp-verticaltabs__tab--stepped');
+        getTabPanelAtIndex(0).should('have.class', 'cmp-verticaltabs__tabpanel--stepped');
+        getTabAtIndex(2).click();
+        getTabAtIndex(2).should('have.class', 'cmp-verticaltabs__tab--active');
+        getTabPanelAtIndex(2).should('have.class', 'cmp-verticaltabs__tabpanel--active');
+        getTabAtIndex(1).should('have.class', 'cmp-verticaltabs__tab--stepped');
+        getTabPanelAtIndex(1).should('have.class', 'cmp-verticaltabs__tabpanel--stepped');
+        getTabAtIndex(0).should('have.class', 'cmp-verticaltabs__tab--stepped');
+        getTabPanelAtIndex(0).should('have.class', 'cmp-verticaltabs__tabpanel--stepped');
+        getTabAtIndex(3).click();
+        getTabAtIndex(3).should('have.class', 'cmp-verticaltabs__tab--active');
+        getTabPanelAtIndex(3).should('have.class', 'cmp-verticaltabs__tabpanel--active');
+        getTabAtIndex(2).should('have.class', 'cmp-verticaltabs__tab--stepped');
+        getTabPanelAtIndex(2).should('have.class', 'cmp-verticaltabs__tabpanel--stepped');
+        getTabAtIndex(1).should('have.class', 'cmp-verticaltabs__tab--stepped');
+        getTabPanelAtIndex(1).should('have.class', 'cmp-verticaltabs__tabpanel--stepped');
+        getTabAtIndex(0).should('have.class', 'cmp-verticaltabs__tab--stepped');
+        getTabPanelAtIndex(0).should('have.class', 'cmp-verticaltabs__tabpanel--stepped');
+        cy.get("button").contains("+R1").click().then(() => {
+         getTabs().should('have.length', 5);
+         getTabPanels().should('have.length', 5);
+         getTabAtIndex(1).should('have.class', 'cmp-verticaltabs__tab--active');
+         getTabAtIndex(1).should('not.have.class', 'cmp-verticaltabs__tab--stepped');
+         getTabPanelAtIndex(1).should('have.class', 'cmp-verticaltabs__tabpanel--active');
+         getTabPanelAtIndex(1).should('not.have.class', 'cmp-verticaltabs__tabpanel--stepped');
+     })
+   })
+
 
 })
