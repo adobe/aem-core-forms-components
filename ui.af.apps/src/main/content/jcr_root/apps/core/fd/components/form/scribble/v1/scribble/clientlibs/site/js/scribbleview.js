@@ -17,8 +17,6 @@
 
 (function() {
     "use strict";
-
-
     const PNGGeneratorUtil = (() => {
         // Helper function to initialize CRC table
         const initCrcTable = () => {
@@ -113,8 +111,6 @@
         };
     })();
 
-
-
     /**
      * class definition for GeoLocationQueryRequest
      * encapsulated success and error handlers
@@ -133,7 +129,6 @@
             scribbleContainer: `.${Scribble.bemBlock}__container`,
             scribbleContainerPanel: `.${Scribble.bemBlock}__panel`,
             keyboardSignBox: `.${Scribble.bemBlock}__keyboard-sign-box`,
-            scribbleContainerCaption: `.${Scribble.bemBlock}__caption`,
             scribbleControlPanel: `.${Scribble.bemBlock}__controlpanel`,
             geoCanvasRight: `.${Scribble.bemBlock}__geocanvasright`,
             canvasSignedContainer: `.${Scribble.bemBlock}__canvas-signed-container`,
@@ -240,10 +235,6 @@
 
         getScribbleContainerPanel() {
             return document.querySelector(Scribble.selectors.scribbleContainerPanel);
-        }
-
-        getScribbleContainerCaption() {
-            return document.querySelector(Scribble.selectors.scribbleContainerCaption);
         }
 
         getKeyboardSignBox() {
@@ -479,6 +470,7 @@
                     e.stopPropagation();
                     this.context.lineWidth=brush;
                     this.toggleBrushList();
+                    // this.handleBrush(e);
                 })
                 this.getBrushList().append(divel);
              });
@@ -582,29 +574,8 @@
             });
         }
 
-        dialogCallback(button_val, arg1) {
-            switch(button_val){
-                // case "ok":
-                // this.handleOk();
-                // break;
-                // case "Cancel":
-                // this.handleCancel();
-                // break;
-                // case "geolocation":
-                // this.calculateGeolocation();
-                // break;
-                case "brushes":
-                this.handleBrush(arg1);
-                break;
-                case "Text":
-                this.handleText();
-                break;
-            }
-        }
-
         toggleBrushList(event) {
             var brushList = this.getBrushList();
-            var brushButton = this.getBrush();
             if(getComputedStyle(brushList).display === 'none') {
                 brushList.style.display = 'block';
             } else {
@@ -612,8 +583,29 @@
             }
         }
 
-        imageClick(event) {
-            this.dialogCallback(event.srcElement.title);
+        controlPanelClickHandler(event) {
+            const ariaLabel = event.target.getAttribute('aria-label');
+            switch(ariaLabel){
+                case 'save':
+                    this.submitSign();
+                    break;
+                case 'close':
+                    this.closeEditModal();
+                    break;
+                case 'clearSign':
+                    this.eraseSignature();
+                    break;
+                case 'textSign':
+                    this.enableSignatureTextBox();
+                    break;
+                case 'geolocation':
+                    this.handleGeoLocation();
+                    break;
+                case 'brushes':
+                    this.handleBrush(event);
+                    this.toggleBrushList();
+                    break;
+            }
         }
 
         closeEditModal() {
@@ -632,25 +624,14 @@
             this.initializeCanvas();
         }
         initScribbleModal() {
-            const eraserIcon = this.getClearControl();
-            const textSignIcon = this.getTextSignControl();
             const controlPanel = this.getScribbleControlPanel();
             const toggleBrushListIcon = this.getBrush();
             const brushList = this.getBrushList();
-            const closeEditModal = this.getScribbleCloseButton();
             const keyboardSignBox = this.getKeyboardSignBox();
-            const saveButton = this.getSaveControl();
-            const geoLocationIcon = this.getGeoLocationIcon();
         
             this.renderBrushList();
         
-            this.addEventListeners(controlPanel, 'click', this.imageClick.bind(this));
-            this.addEventListeners(saveButton, 'click', this.submitSign.bind(this));
-            this.addEventListeners(geoLocationIcon, 'click', this.handleGeoLocation.bind(this), true);
-            this.addEventListeners(eraserIcon, 'click', this.eraseSignature.bind(this), true);
-            this.addEventListeners(textSignIcon, 'click', this.enableSignatureTextBox.bind(this), true);
-            this.addEventListeners(toggleBrushListIcon, 'click', this.toggleBrushList.bind(this));
-            this.addEventListeners(closeEditModal, 'mousedown', this.closeEditModal.bind(this));
+            this.addEventListeners(controlPanel, 'click', this.controlPanelClickHandler.bind(this));
         
             keyboardSignBox.addEventListener('input', (event) => {
                 if (event?.target?.value) {
