@@ -51,11 +51,11 @@
                 widget: `.${Wizard.bemBlock}__widget`,
                 tooltipDiv: `.${Wizard.bemBlock}__shortdescription`,
                 previousButton: `.${Wizard.bemBlock}__previousNav`,
-                previousButtonHidden: "cmp-adaptiveform-wizard__previousNav__hidden",
+                previousButtonHidden: "cmp-adaptiveform-wizard__previousNav--hidden",
                 nextButton: `.${Wizard.bemBlock}__nextNav`,
                 previousButtonV2: `.${Wizard.bemBlock}__nav--previous`,
                 nextButtonV2: `.${Wizard.bemBlock}__nav--next`,
-                nextButtonHidden: "cmp-adaptiveform-wizard__nextNav__hidden",
+                nextButtonHidden: "cmp-adaptiveform-wizard__nextNav--hidden",
                 olTabList: `.${Wizard.bemBlock}__tabList`
             };
 

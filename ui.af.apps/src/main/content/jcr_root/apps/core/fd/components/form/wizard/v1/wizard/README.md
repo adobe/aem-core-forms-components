@@ -52,7 +52,9 @@ BLOCK cmp-adaptiveform-wizard
         MOD cmp-adaptiveform-wizard__tab--stepped
     ELEMENT cmp-adaptiveform-wizard__wizardpanel
     ELEMENT cmp-adaptiveform-wizard__previousNav
+        MOD cmp-adaptiveform-wizard__previousNav--hidden
     ELEMENT cmp-adaptiveform-wizard__nextNav
+        MOD cmp-adaptiveform-wizard__nextNav--hidden
     
 ```
 

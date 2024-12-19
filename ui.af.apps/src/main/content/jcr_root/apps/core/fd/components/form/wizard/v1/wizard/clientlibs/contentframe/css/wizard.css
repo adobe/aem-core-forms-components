@@ -22,9 +22,9 @@
   display: block;
 }
 
-.cmp-adaptiveform-wizard__previousNav__hidden{
+.cmp-adaptiveform-wizard__previousNav--hidden{
     display: none;
 }
-.cmp-adaptiveform-wizard__nextNav__hidden{
+.cmp-adaptiveform-wizard__nextNav--hidden{
     display: none;
 }
