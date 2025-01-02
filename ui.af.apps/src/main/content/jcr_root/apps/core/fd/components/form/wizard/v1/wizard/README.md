@@ -46,8 +46,10 @@ It is already included by its edit and policy dialogs.
 ```
 BLOCK cmp-adaptiveform-wizard
     ELEMENT cmp-adaptiveform-wizard__label
-    ELEMENT cmp-adaptiveform-wizard__label-container
+    ELEMENT cmp-adaptiveform-wizard__label-container 
     ELEMENT cmp-adaptiveform-wizard__tab
+        MOD cmp-adaptiveform-wizard__tab--active
+        MOD cmp-adaptiveform-wizard__tab--stepped
     ELEMENT cmp-adaptiveform-wizard__wizardpanel
     ELEMENT cmp-adaptiveform-wizard__previousNav
         MOD cmp-adaptiveform-wizard__previousNav--hidden
