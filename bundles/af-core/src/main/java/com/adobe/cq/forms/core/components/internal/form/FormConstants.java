@@ -74,7 +74,10 @@ public final class FormConstants {
     /** The resource type for check box group v1 */
     public static final String RT_FD_FORM_CHECKBOX_GROUP_V1 = RT_FD_FORM_PREFIX + "checkboxgroup/v1/checkboxgroup";
 
-    /** The resource type for reCaptcha v1 */
+    /** The resource type for turnstile v1 */
+    public static final String RT_FD_FORM_TURNSTILE_V1 = RT_FD_FORM_PREFIX + "turnstile/v1/turnstile";
+
+    /** The resource type for hCaptcha v1 */
     public static final String RT_FD_FORM_HCAPTCHA_V1 = RT_FD_FORM_PREFIX + "hcaptcha/v1/hcaptcha";
 
     /** The resource type for reCaptcha v1 */
@@ -133,4 +136,10 @@ public final class FormConstants {
     public static final String REQ_ATTR_REFERENCED_PATH = "referencedPage";
 
     public static final String PROP_FRAGMENT_PATH = "fragmentPath";
+
+    /** The resource type for review v1 */
+    public static final String RT_FD_FORM_REVIEW_V1 = RT_FD_FORM_PREFIX + "review/v1/review";
+
+    /* The resource type for the pre-selected the linked panel */
+    public final static String RT_FD_FORM_REVIEW_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "review/v1/datasource";
 }

@@ -42,11 +42,13 @@
             static cssClasses = {
                 button: {
                     disabled: "cmp-accordion__button--disabled",
-                    expanded: "cmp-accordion__button--expanded"
+                    expanded: "cmp-accordion__button--expanded",
+                    stepped: "cmp-accordion__button--stepped"
                 },
                 panel: {
                     hidden: "cmp-accordion__panel--hidden",
-                    expanded: "cmp-accordion__panel--expanded"
+                    expanded: "cmp-accordion__panel--expanded",
+                    stepped: "cmp-accordion__panel--stepped"
                 }
             };
 
@@ -239,6 +241,11 @@
                     item.removeAttribute(this.constructor.dataAttributes.item.expanded);
                     var button = this.getCachedButtons()[index];
                     var panel = this.getCachedPanels()[index];
+                    if (button.classList.contains(this.constructor.cssClasses.button.expanded)) {
+                        // Only apply `stepped` class if the tab was previously expanded
+                        button.classList.add(this.constructor.cssClasses.button.stepped);
+                        panel.classList.add(this.constructor.cssClasses.panel.stepped);
+                    }
                     button.classList.remove(this.constructor.cssClasses.button.expanded);
                     // used to fix some known screen readers issues in reading the correct state of the 'aria-expanded' attribute
                     // e.g. https://bugs.webkit.org/show_bug.cgi?id=210934
@@ -250,8 +257,9 @@
                     panel.setAttribute("aria-hidden", true);
                 }
             }
-        }
+        };
     }
+     
 
     window.Forms = window.Forms || {};
     window.Forms.CoreComponentsCommons = window.Forms.CoreComponentsCommons || {};

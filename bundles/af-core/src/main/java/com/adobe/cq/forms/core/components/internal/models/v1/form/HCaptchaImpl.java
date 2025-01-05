@@ -42,7 +42,6 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.HCaptcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -68,24 +67,21 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
     private CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named(ReservedProperties.PN_CLOUD_SERVICE_PATH)
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named(ReservedProperties.PN_SIZE)
     protected String size;
-
-    private static final String SITE_KEY = "siteKey";
-    private static final String URI = "uri";
-    private static final String SIZE = "size";
-    private static final String THEME = "theme";
-    private static final String TYPE = "type";
 
     @Override
     public String getCloudServicePath() {
         return cloudServicePath;
+    }
+
+    @Override
+    public String getSize() {
+        return size;
     }
 
     @Override
@@ -113,11 +109,11 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
         } catch (GuideException e) {
             LOGGER.error("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
         }
-        customCaptchaProperties.put(SITE_KEY, siteKey);
-        customCaptchaProperties.put(URI, uri);
-        customCaptchaProperties.put(SIZE, this.size);
-        customCaptchaProperties.put(THEME, "light");
-        customCaptchaProperties.put(TYPE, "image");
+        customCaptchaProperties.put(CAPTCHA_SITE_KEY, siteKey);
+        customCaptchaProperties.put(CAPTCHA_URI, uri);
+        customCaptchaProperties.put(CAPTCHA_SIZE, getSize());
+        customCaptchaProperties.put(CAPTCHA_THEME, "light");
+        customCaptchaProperties.put(CAPTCHA_TYPE, "image");
 
         return customCaptchaProperties;
 

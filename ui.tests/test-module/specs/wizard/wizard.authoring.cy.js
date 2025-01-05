@@ -205,6 +205,19 @@ describe('Page - Authoring', function () {
             });
         });
 
+        it('verify second panel is not visible after adding two panels', function () {
+            cy.cleanTest(wizardLayoutDrop).then(function () {
+                dropWizardInContainer();
+                addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+                addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
+                cy.reload()
+                cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').should('have.length', 2);
+                cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').eq(0).should('be.visible');
+                cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').eq(1).should('not.be.visible');
+                cy.deleteComponentByPath(wizardLayoutDrop);
+            });
+        });
+
         it('save as fragment in Wizard',function () {
             cy.cleanTest(wizardLayoutDrop).then(function () {
                 testSaveAsFragment(wizardEditPathSelector, wizardLayoutDrop);
