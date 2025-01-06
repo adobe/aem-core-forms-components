@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    cq:icon="image"
+    cq:isContainer="{Boolean}true"
+    jcr:description="Svg"
+    jcr:primaryType="cq:Component"
+    jcr:title="Adaptive Form Svg"
+    sling:resourceSuperType="forms-core-components-it/componentDef/svg/v1/svg"
+    componentGroup="Core Components Examples - Adaptive Form"/>

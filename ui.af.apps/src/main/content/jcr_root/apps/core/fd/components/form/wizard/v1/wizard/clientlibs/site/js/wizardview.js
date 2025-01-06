@@ -41,17 +41,21 @@
                     tab: "cmp-adaptiveform-wizard__tab--active",
                     wizardpanel: "cmp-adaptiveform-wizard__wizardpanel--active"
                 },
+                stepped: {
+                    tab: "cmp-adaptiveform-wizard__tab--stepped",
+                    wizardpanel: "cmp-adaptiveform-wizard__wizardpanel--stepped",
+                },
                 label: `.${Wizard.bemBlock}__label`,
                 description: `.${Wizard.bemBlock}__longdescription`,
                 qm: `.${Wizard.bemBlock}__questionmark`,
                 widget: `.${Wizard.bemBlock}__widget`,
                 tooltipDiv: `.${Wizard.bemBlock}__shortdescription`,
                 previousButton: `.${Wizard.bemBlock}__previousNav`,
-                previousButtonHidden: "cmp-adaptiveform-wizard__previousNav__hidden",
+                previousButtonHidden: "cmp-adaptiveform-wizard__previousNav--hidden",
                 nextButton: `.${Wizard.bemBlock}__nextNav`,
                 previousButtonV2: `.${Wizard.bemBlock}__nav--previous`,
                 nextButtonV2: `.${Wizard.bemBlock}__nav--next`,
-                nextButtonHidden: "cmp-adaptiveform-wizard__nextNav__hidden",
+                nextButtonHidden: "cmp-adaptiveform-wizard__nextNav--hidden",
                 olTabList: `.${Wizard.bemBlock}__tabList`
             };
 
@@ -331,7 +335,7 @@
                 this.navigate(index);
                 this.focusWithoutScroll(this.getCachedTabs()[index]);
             }
-
+   
             #syncWizardNavLabels() {
                 const tabs = this.getCachedTabs();
                 const wizardPanels = this.getCachedWizardPanels();
@@ -382,12 +386,21 @@
                         }
                     } else {
                         let beforeTabNavElementId = childView.getInstanceManager().children[instanceIndex - 1].element.id + Wizard.#tabIdSuffix
-                        let beforeElement = this.#getTabNavElementById(beforeTabNavElementId);
+                        let beforeElement = this.getTabNavElementById(beforeTabNavElementId);
                         beforeElement.after(navigationTabToBeRepeated);
                     }
                     this.cacheElements(this._elements.self);
                     let repeatedWizardPanel = this.#getWizardPanelElementById(childView.id + Wizard.#wizardPanelIdSuffix);
                     repeatedWizardPanel.setAttribute("aria-labelledby", childView.id + Wizard.#tabIdSuffix);
+                    
+                    const steppedTabClass = Array.from(navigationTabToBeRepeated.classList).find(cls => cls.includes('--stepped'));
+                    if (steppedTabClass) {
+                        navigationTabToBeRepeated.classList.remove(steppedTabClass);
+                    }
+                    const steppedWizardPanelClass = Array.from(repeatedWizardPanel.classList).find(cls => cls.includes('--stepped'));
+                    if (steppedWizardPanelClass) {
+                        repeatedWizardPanel.classList.remove(steppedWizardPanelClass);
+            }
                     this.refreshActive();
                     this.#getTabIndexById();
                     if (childView.getInstanceManager().getModel().minOccur != undefined && childView.getInstanceManager().children.length > childView.getInstanceManager().getModel().minOccur) {
@@ -400,7 +413,7 @@
                 let removedTabPanelId = removedInstanceView.element.id + Wizard.#wizardPanelIdSuffix;
                 let removedTabNavId = removedTabPanelId.substring(0, removedTabPanelId.lastIndexOf("__")) + Wizard.#tabIdSuffix;
                 let wizardPanelElement = this.#getWizardPanelElementById(removedTabPanelId);
-                let tabNavElement = this.#getTabNavElementById(removedTabNavId);
+                let tabNavElement = this.getTabNavElementById(removedTabNavId);
                 tabNavElement.remove();
                 wizardPanelElement.remove();
                 this.children.splice(this.children.indexOf(removedInstanceView), 1);
@@ -448,22 +461,11 @@
                     let tabId = childView.element.id + Wizard.#tabIdSuffix;
                     let wizardPanelId = childView.element.id + Wizard.#wizardPanelIdSuffix;
                     let instanceManagerId = childView.getInstanceManager().getId();
-                    let navigationTabToBeRepeated = this.#getTabNavElementById(tabId);
+                    let navigationTabToBeRepeated = this.getTabNavElementById(tabId);
                     let wizardPanelToBeRepeated = this.#getWizardPanelElementById(wizardPanelId)
                     this._templateHTML[instanceManagerId] = {};
                     this._templateHTML[instanceManagerId]['navigationTab'] = navigationTabToBeRepeated;
                     this._templateHTML[instanceManagerId]['targetWizardPanel'] = wizardPanelToBeRepeated;
-                }
-            }
-
-            #getTabNavElementById(tabId) {
-                let tabs = this.getCachedTabs();
-                if (tabs) {
-                    for (let i = 0; i < tabs.length; i++) {
-                        if (tabs[i].id === tabId) {
-                            return tabs[i];
-                        }
-                    }
                 }
             }
 
@@ -516,7 +518,7 @@
             }
 
             updateChildVisibility(visible, state) {
-                this.updateVisibilityOfNavigationElement(this.#getTabNavElementById(state.id + Wizard.#tabIdSuffix), visible);
+                this.updateVisibilityOfNavigationElement(this.getTabNavElementById(state.id + Wizard.#tabIdSuffix), visible);
                 let activeTabNavElement = this.getCachedTabs()[this._active];
                 this.#setNavigationRange();
                 this.#hideUnhideNavButtons(this._active);

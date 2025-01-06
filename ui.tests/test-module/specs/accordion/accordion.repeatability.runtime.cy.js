@@ -212,6 +212,41 @@ describe("Form with Accordion Container with repeatable elements", () => {
             getAccordionButtons().should('have.length', 8);
         })
     });
+
+    it("if item-1 is repeated, the repeated instance should not have stepped class", () => {
+        getItemDivs().should('have.length', 5);
+        getAccordionPanels().should('have.length', 5);
+        getAccordionButtons().should('have.length', 5);
+        getExpandedPanelDiv().should('have.length', 1);
+        getExpandedButtonDiv().should('have.length', 1);
+        getAccordionButtonsAtIndex(0).should('have.class', 'cmp-accordion__button--expanded');
+        getAccordionPanelsAtIndex(0).should('have.class', 'cmp-accordion__panel--expanded');
+        cy.get("button").contains("+RP1").click().then(() => {
+            getItemDivs().should('have.length', 6);
+            getAccordionPanels().should('have.length', 6);
+            getAccordionButtons().should('have.length', 6);
+            getExpandedPanelDiv().should('have.length', 1);
+            getExpandedButtonDiv().should('have.length', 1);
+            getAccordionButtonsAtIndex(1).should('have.class', 'cmp-accordion__button--expanded');
+            getAccordionPanelsAtIndex(1).should('have.class', 'cmp-accordion__panel--expanded');
+            getAccordionButtonsAtIndex(0).should('have.class', 'cmp-accordion__button--stepped');
+            getAccordionPanelsAtIndex(0).should('have.class', 'cmp-accordion__panel--stepped');
+        });
+        cy.get("button").contains("+RP1").click().then(() => {
+            getItemDivs().should('have.length', 7); 
+            getAccordionPanels().should('have.length', 7);
+            getAccordionButtons().should('have.length', 7);
+            getExpandedPanelDiv().should('have.length', 1);
+            getExpandedButtonDiv().should('have.length', 1);
+            getAccordionButtonsAtIndex(2).should('have.class', 'cmp-accordion__button--expanded'); 
+            getAccordionPanelsAtIndex(2).should('have.class', 'cmp-accordion__panel--expanded');
+            getAccordionButtonsAtIndex(1).should('have.class', 'cmp-accordion__button--stepped'); 
+            getAccordionPanelsAtIndex(1).should('have.class', 'cmp-accordion__panel--stepped');
+            getAccordionButtonsAtIndex(0).should('have.class', 'cmp-accordion__button--stepped');
+            getAccordionPanelsAtIndex(0).should('have.class', 'cmp-accordion__panel--stepped');
+        });
+        cy.expectNoConsoleErrors();
+    })
 })
 
 describe("Form with Accordion Container with nested repeatable elements", () => {

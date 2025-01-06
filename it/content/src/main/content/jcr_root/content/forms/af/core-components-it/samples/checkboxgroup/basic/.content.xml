@@ -175,6 +175,22 @@
                     type="number[]"
                     unboundFormElement="{Boolean}false"
                     visible="{Boolean}true"/>
+            <resetbutton
+                    jcr:created="{Date}2024-11-14T18:03:13.181+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2024-11-14T18:03:13.181+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Reset"
+                    sling:resourceType="forms-components-examples/components/form/actions/reset"
+                    buttonType="reset"
+                    dorExclusion="true"
+                    fieldType="button"
+                    name="reset1731587593205">
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="[dispatchEvent('reset')]"/>
+            </resetbutton>
         </guideContainer>
     </jcr:content>
 </jcr:root>
