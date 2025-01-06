@@ -90,8 +90,10 @@
         tab2().should('have.class','cmp-verticaltabs__tab--active');
         tab2().should('have.attr','aria-selected','true');
         tab1().should('have.attr','aria-selected','false');
+        tab1().should('have.class','cmp-verticaltabs__tab--stepped');
         tab1().click();
         tab1().should('have.class','cmp-verticaltabs__tab--active');
+        tab1().should('have.class','cmp-verticaltabs__tab--stepped');
         tab1().should('have.attr','aria-selected','true');
         tab2().should('have.attr','aria-selected','false');
     });

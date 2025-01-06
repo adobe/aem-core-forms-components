@@ -1,5 +1,5 @@
 <!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2022 Adobe
+  ~ Copyright 2024 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,26 +14,6 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 
-.cmp-adaptiveform-wizard{
-  
-}
-.cmp-adaptiveform-wizard__label{
-
-}
-.cmp-adaptiveform-wizard__label-container{
-  
-}
-.cmp-adaptiveform-wizard__tabList {
-}
-
-.cmp-adaptiveform-wizard__tab {
-    
-}
-
-.cmp-adaptiveform-wizard__tab--active {
-  
-}
-
 .cmp-adaptiveform-wizard__wizardpanel {
     display: none;
 }
@@ -42,31 +22,9 @@
   display: block;
 }
 
-.cmp-adaptiveform-wizard__nextNav:hover{
-
-}
-.cmp-adaptiveform-wizard__nextNav{
-
-}
-
-.cmp-adaptiveform-wizard__previousNav:hover{
-
-}
-.cmp-adaptiveform-wizard__previousNav{
-
-}
 .cmp-adaptiveform-wizard__previousNav--hidden{
     display: none;
 }
 .cmp-adaptiveform-wizard__nextNav--hidden{
     display: none;
-}
-.cmp-adaptiveform-wizard{
-  
-}
-.cmp-adaptiveform-wizard__widget{
-
-}
-.cmp-adaptiveform-wizard__questionmark {
-
 }

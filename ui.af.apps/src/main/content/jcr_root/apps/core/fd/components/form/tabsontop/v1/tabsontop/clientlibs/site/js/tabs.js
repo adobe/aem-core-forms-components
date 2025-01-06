@@ -27,6 +27,10 @@
                 tab: "cmp-tabs__tab--active",
                 tabpanel: "cmp-tabs__tabpanel--active"
             },
+            stepped: {
+                tab: "cmp-tabs__tab--stepped",
+                tabpanel: "cmp-tabs__tabpanel--stepped"
+            },
             label: `.${Tabs.bemBlock}__label`,
             description: `.${Tabs.bemBlock}__longdescription`,
             qm: `.${Tabs.bemBlock}__questionmark`,
