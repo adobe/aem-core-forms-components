@@ -23,3 +23,4 @@ copypastehook.js
 toolbaractionhook.js
 qualifiedNameHook.js
 panelselect.js
+fragmentshook.js
