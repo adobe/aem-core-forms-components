@@ -41,20 +41,17 @@ class LanguageUtils {
      * @fires module:FormView~Constants#FORM_LANGUAGE_INITIALIZED
      */
     static async loadLang(lang, url, executeConfigsAndFireEvent = false) {
-        if (!(lang in this.#langData)) {
-            // todo: avoid doing this call in product json if locale not found
-            // todo: can't find a condition today, since language client library can be overlaid too
-            const _langData = await HTTPAPILayer.getJson(url);
-            if(_langData) {
-                console.debug("fetched language data", _langData);
-                this.#langData[lang] = _langData;
-                setCustomDefaultConstraintTypeMessages(_langData);
-            }
-            if (executeConfigsAndFireEvent) {
-                await this.#executeLanguageConfigs(lang);
-                const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, {"detail": lang});
-                document.dispatchEvent(event);
-            }
+        // someone can override the product locale as well, hence not adding this check --- if (!(lang in this.#langData))
+        const _langData = await HTTPAPILayer.getJson(url);
+        if(_langData) {
+            console.debug("fetched language data", _langData);
+            this.#langData[lang] = _langData;
+            setCustomDefaultConstraintTypeMessages(_langData);
+        }
+        if (executeConfigsAndFireEvent) {
+            await this.#executeLanguageConfigs(lang);
+            const event = new CustomEvent(Constants.FORM_LANGUAGE_INITIALIZED, {"detail": lang});
+            document.dispatchEvent(event);
         }
     }
 
