@@ -8,7 +8,7 @@
             jcr:title="Base"
             id="af2_radiobutton"
             longTitle="Base"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
@@ -16,7 +16,7 @@
                     id="af2_radiobuttonwidgetandtext"
                     cssSelector=".cmp-adaptiveform-radiobutton"
                     longTitle="Radio Button Group Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
                         <radioButtonLabelContainer
                                 jcr:primaryType="nt:unstructured"
@@ -24,7 +24,7 @@
                                 id="af2_radiobuttonlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-radiobutton__label-container"
                                 longTitle="Radio Button Label Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <radioButtonLabel
                                         jcr:primaryType="nt:unstructured"
@@ -32,7 +32,7 @@
                                         id="af2_radiobuttonlabel"
                                         cssSelector=".cmp-adaptiveform-radiobutton__label"
                                         longTitle="Radio Button Label"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
@@ -50,7 +50,7 @@
                                         id="af2_radiobuttonhelpicon"
                                         cssSelector=".cmp-adaptiveform-radiobutton__questionmark"
                                         longTitle="Radio Button Help Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
@@ -89,7 +89,7 @@
                                 id="af2_radiobuttonitemswidget"
                                 cssSelector=".cmp-adaptiveform-radiobutton__widget"
                                 longTitle="Radio Button Widget"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <radioButtonItem
                                         jcr:primaryType="nt:unstructured"
@@ -97,7 +97,7 @@
                                         id="af2_radiobuttonitem"
                                         cssSelector=".cmp-adaptiveform-radiobutton__option"
                                         longTitle="Radio Button Item"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
                                         <radioButtonItemLabelContainer
                                                 jcr:primaryType="nt:unstructured"
@@ -105,7 +105,7 @@
                                                 id="af2_radiobuttonitemlabelcontainer"
                                                 cssSelector=".cmp-adaptiveform-radiobutton__option-label"
                                                 longTitle="Radio Button Item Label Container"
-                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <radioButtonLabel
                                                         jcr:primaryType="nt:unstructured"
@@ -113,7 +113,7 @@
                                                         id="af2_radiobuttonitemlabel"
                                                         cssSelector=".cmp-adaptiveform-radiobutton__option-label span"
                                                         longTitle="Radio Button Item Label"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <disabled
                                                                 jcr:primaryType="nt:unstructured"
@@ -139,7 +139,7 @@
                                                         id="af2_radiobuttonwidget"
                                                         cssSelector=".cmp-adaptiveform-radiobutton__option__widget"
                                                         longTitle="Radio Button Item Widget"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                                         secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <focus
@@ -214,7 +214,7 @@
                                 id="af2_radiobuttonitemswidgethorizontal"
                                 cssSelector=".cmp-adaptiveform-radiobutton__widget.HORIZONTAL"
                                 longTitle="Radio Button Widget Horizontal"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <radioButtonItemHorizontal
                                         jcr:primaryType="nt:unstructured"
@@ -222,7 +222,7 @@
                                         id="af2_radiobuttonitemhorizontal"
                                         cssSelector=".cmp-adaptiveform-radiobutton__option"
                                         longTitle="Radio Button Item"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
                                         <radioButtonItemLabelContainerHorizontal
                                                 jcr:primaryType="nt:unstructured"
@@ -230,7 +230,7 @@
                                                 id="af2_radiobuttonitemlabelcontainerhorizontal"
                                                 cssSelector=".cmp-adaptiveform-radiobutton__option-label"
                                                 longTitle="Radio Button Item Label Container"
-                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <radioButtonLabelHorizontal
                                                         jcr:primaryType="nt:unstructured"
@@ -238,7 +238,7 @@
                                                         id="af2_radiobuttonitemlabelhorizontal"
                                                         cssSelector=".cmp-adaptiveform-radiobutton__option-label span"
                                                         longTitle="Radio Button Item Label"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <disabled
                                                                 jcr:primaryType="nt:unstructured"
@@ -264,7 +264,7 @@
                                                         id="af2_radiobuttonwidgethorizontal"
                                                         cssSelector=".cmp-adaptiveform-radiobutton__option__widget"
                                                         longTitle="Radio Button Item Widget"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                                         secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <focus
@@ -339,7 +339,7 @@
                                 id="af2_radiobuttonitemswidgetvertical"
                                 cssSelector=".cmp-adaptiveform-radiobutton__widget.VERTICAL"
                                 longTitle="Radio Button Widget Vertical"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <radioButtonItemVertical
                                         jcr:primaryType="nt:unstructured"
@@ -347,7 +347,7 @@
                                         id="af2_radiobuttonitemvertical"
                                         cssSelector=".cmp-adaptiveform-radiobutton__option"
                                         longTitle="Radio Button Item"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
                                         <radioButtonItemLabelContainerVertical
                                                 jcr:primaryType="nt:unstructured"
@@ -355,7 +355,7 @@
                                                 id="af2_radiobuttonitemlabelcontainervertical"
                                                 cssSelector=".cmp-adaptiveform-radiobutton__option-label"
                                                 longTitle="Radio Button Item Label Container"
-                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <radioButtonLabelVertical
                                                         jcr:primaryType="nt:unstructured"
@@ -363,7 +363,7 @@
                                                         id="af2_radiobuttonitemlabelvertical"
                                                         cssSelector=".cmp-adaptiveform-radiobutton__option-label span"
                                                         longTitle="Radio Button Item Label"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <disabled
                                                                 jcr:primaryType="nt:unstructured"
@@ -389,7 +389,7 @@
                                                         id="af2_radiobuttonwidgetvertical"
                                                         cssSelector=".cmp-adaptiveform-radiobutton__option__widget"
                                                         longTitle="Radio Button Item Widget"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                                         secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <focus
@@ -464,7 +464,7 @@
                                 id="af2_radiobuttondescriptionshort"
                                 cssSelector=".cmp-adaptiveform-radiobutton__shortdescription"
                                 longTitle="Radio Button Short Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </radioButtonDescriptionShort>
                         <radioButtonDescriptionLong
                                 jcr:primaryType="nt:unstructured"
@@ -472,7 +472,7 @@
                                 id="af2_radiobuttondescriptionlong"
                                 cssSelector=".cmp-adaptiveform-radiobutton__longdescription"
                                 longTitle="Radio Button Long Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -490,7 +490,7 @@
                                 id="af2_radiobuttonerrormessage"
                                 cssSelector=".cmp-adaptiveform-radiobutton__errormessage"
                                 longTitle="Radio Button Error Message"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </radioButtonErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">

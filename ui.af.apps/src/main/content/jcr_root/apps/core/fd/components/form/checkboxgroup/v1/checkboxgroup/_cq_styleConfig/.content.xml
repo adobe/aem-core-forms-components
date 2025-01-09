@@ -8,7 +8,7 @@
             jcr:title="Base"
             id="af2_checkboxgroupfield"
             longTitle="Base"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
@@ -16,7 +16,7 @@
                     id="af2_checkboxgroupfieldwidgetandtext"
                     cssSelector=".cmp-adaptiveform-checkboxgroup"
                     longTitle="Checkbox Group Widget And Text"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
                         <checkBoxGroupLabelContainer
                             jcr:primaryType="nt:unstructured"
@@ -24,7 +24,7 @@
                             id="af2_checkboxgrouplabelcontainer"
                             cssSelector=".cmp-adaptiveform-checkboxgroup__label-container"
                             longTitle="Checkbox Group Label Container"
-                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <checkBoxGroupLabel
                                         jcr:primaryType="nt:unstructured"
@@ -32,7 +32,7 @@
                                         id="af2_checkboxgrouplabel"
                                         cssSelector=".cmp-adaptiveform-checkboxgroup__label"
                                         longTitle="Checkbox Group Label"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                             jcr:primaryType="nt:unstructured"
@@ -50,7 +50,7 @@
                                         id="af2_checkboxgrouphelpicon"
                                         cssSelector=".cmp-adaptiveform-checkboxgroup__questionmark"
                                         longTitle="Checkbox Group Help Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
@@ -89,7 +89,7 @@
                                 id="af2_checkboxgroupitemswidget"
                                 cssSelector=".cmp-adaptiveform-checkboxgroup__widget"
                                 longTitle="Checkbox Group Items Widget"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <checkBoxGroupItem
                                         jcr:primaryType="nt:unstructured"
@@ -97,7 +97,7 @@
                                         id="af2_checkboxgroupitem"
                                         cssSelector=".cmp-adaptiveform-checkboxgroup-item"
                                         longTitle="Checkbox Group Item"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
                                         <checkBoxGroupItemLabelContainer
                                                 jcr:primaryType="nt:unstructured"
@@ -105,7 +105,7 @@
                                                 id="af2_checkboxgroupitemlabelcontainer"
                                                 cssSelector=".cmp-adaptiveform-checkboxgroup__option-label"
                                                 longTitle="Checkbox Group Item Label Container"
-                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <checkBoxGroupItemLabel
                                                         jcr:primaryType="nt:unstructured"
@@ -113,7 +113,7 @@
                                                         id="af2_checkboxgroupitemlabel"
                                                         cssSelector=".cmp-adaptiveform-checkboxgroup__option-label span"
                                                         longTitle="Checkbox Group Item Label"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <hover
                                                                 jcr:primaryType="nt:unstructured"
@@ -139,7 +139,7 @@
                                                         id="af2_checkboxgroupwidgetandtext"
                                                         cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget"
                                                         longTitle="Checkbox Group Item Widget"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                                         secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <focus
@@ -210,7 +210,7 @@
                                 id="af2_checkboxgroupitemswidgethorizontal"
                                 cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL"
                                 longTitle="Checkbox Group Items Widget Horizontal"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <checkBoxGroupItemHorizontal
                                         jcr:primaryType="nt:unstructured"
@@ -218,7 +218,7 @@
                                         id="af2_checkboxgroupitemhorizontal"
                                         cssSelector=".cmp-adaptiveform-checkboxgroup-item"
                                         longTitle="Checkbox Group Item"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
                                         <checkBoxGroupItemLabelContainerHorizontal
                                                 jcr:primaryType="nt:unstructured"
@@ -226,7 +226,7 @@
                                                 id="af2_checkboxgroupitemlabelcontainerhorizontal"
                                                 cssSelector=".cmp-adaptiveform-checkboxgroup__option-label"
                                                 longTitle="Checkbox Group Item Label Container"
-                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <checkBoxGroupItemLabelHorizontal
                                                         jcr:primaryType="nt:unstructured"
@@ -234,7 +234,7 @@
                                                         id="af2_checkboxgroupitemlabelhorizontal"
                                                         cssSelector=".cmp-adaptiveform-checkboxgroup__option-label span"
                                                         longTitle="Checkbox Group Item Label"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <hover
                                                                 jcr:primaryType="nt:unstructured"
@@ -260,7 +260,7 @@
                                                         id="af2_checkboxgroupwidgetandtexthorizontal"
                                                         cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget"
                                                         longTitle="Checkbox Group Item Widget"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                                         secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <focus
@@ -331,7 +331,7 @@
                                 id="af2_checkboxgroupitemswidgetvertical"
                                 cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL"
                                 longTitle="Checkbox Group Items Widget Vertical"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <checkBoxGroupItemVertical
                                         jcr:primaryType="nt:unstructured"
@@ -339,7 +339,7 @@
                                         id="af2_checkboxgroupitemvertical"
                                         cssSelector=".cmp-adaptiveform-checkboxgroup-item"
                                         longTitle="Checkbox Group Item"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
                                         <checkBoxGroupItemLabelContainerVertical
                                                 jcr:primaryType="nt:unstructured"
@@ -347,7 +347,7 @@
                                                 id="af2_checkboxgroupitemlabelcontainervertical"
                                                 cssSelector=".cmp-adaptiveform-checkboxgroup__option-label"
                                                 longTitle="Checkbox Group Item Label Container"
-                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <checkBoxGroupItemLabelVertical
                                                         jcr:primaryType="nt:unstructured"
@@ -355,7 +355,7 @@
                                                         id="af2_checkboxgroupitemlabelvertical"
                                                         cssSelector=".cmp-adaptiveform-checkboxgroup__option-label span"
                                                         longTitle="Checkbox Group Item Label"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <hover
                                                                 jcr:primaryType="nt:unstructured"
@@ -381,7 +381,7 @@
                                                         id="af2_checkboxgroupwidgetandtextvertical"
                                                         cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget"
                                                         longTitle="Checkbox Group Item Widget"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                                         secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <focus
@@ -452,7 +452,7 @@
                                 id="af2_checkboxgroupdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-checkboxgroup__shortdescription"
                                 longTitle="Checkbox Group Short Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </checkBoxGroupDescriptionShort>
                         <checkBoxGroupDescriptionLong
                                 jcr:primaryType="nt:unstructured"
@@ -460,7 +460,7 @@
                                 id="af2_checkboxgroupdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-checkboxgroup__longdescription"
                                 longTitle="Checkbox Group Long Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -478,7 +478,7 @@
                                 id="af2_checkboxgrouperrormessage"
                                 cssSelector=".cmp-adaptiveform-checkboxgroup__errormessage"
                                 longTitle="Checkbox Group Error Message"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </checkBoxGroupErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">

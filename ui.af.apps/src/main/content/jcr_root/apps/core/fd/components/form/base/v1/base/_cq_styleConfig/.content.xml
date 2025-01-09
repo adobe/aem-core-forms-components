@@ -9,7 +9,7 @@
             id="af2_base"
             cssSelector=".cmp-adaptiveform-container .base"
             longTitle="Field"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
@@ -17,7 +17,7 @@
                     id="af2_basewidgetandtext"
                     cssSelector=".cmp-adaptiveform-container input,select,textarea"
                     longTitle="Field Widget and Text"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                             jcr:primaryType="nt:unstructured"
@@ -43,7 +43,7 @@
                     id="af2_baselabel"
                     cssSelector=".cmp-adaptiveform-container label"
                     longTitle="Field Label"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                             jcr:primaryType="nt:unstructured"
@@ -69,7 +69,7 @@
                         id="af2_baseerrormessage"
                         cssSelector=".cmp-adaptiveform-container [class$='__errormessage']"
                         longTitle="Field Error Message"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common"/>
             </items>
             <states jcr:primaryType="nt:unstructured">
                 <focus

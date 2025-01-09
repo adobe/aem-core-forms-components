@@ -8,7 +8,7 @@
             jcr:title="Base"
             id="af2_switch"
             longTitle="Base"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
@@ -16,7 +16,7 @@
                     id="af2_switchwidgetandtext"
                     cssSelector=".cmp-adaptiveform-switch"
                     longTitle="Switch Handle Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                     secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <switchLabelContainer
@@ -25,7 +25,7 @@
                                 id="af2_switchlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-switch__label-container"
                                 longTitle="Switch Label Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <switchLabel
                                         jcr:primaryType="nt:unstructured"
@@ -33,7 +33,7 @@
                                         id="af2_switchlabel"
                                         cssSelector=".cmp-adaptiveform-switch__label"
                                         longTitle="Switch Label"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
@@ -51,7 +51,7 @@
                                         id="af2_switchhelpicon"
                                         cssSelector=".cmp-adaptiveform-switch__questionmark"
                                         longTitle="Switch Help Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
@@ -90,7 +90,7 @@
                                 id="af2_switchwidgetcontainer"
                                 cssSelector=".cmp-adaptiveform-switch__container"
                                 longTitle="Switch Widget Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <switchOption
                                         jcr:primaryType="nt:unstructured"
@@ -98,7 +98,7 @@
                                         id="af2_switchoption"
                                         cssSelector=".cmp-adaptiveform-switch__option"
                                         longTitle="Switch Option"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                             jcr:primaryType="nt:unstructured"
@@ -114,9 +114,9 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Widget"
                                         id="af2_switchwidget"
-                                        cssSelector=".adaptiveform-switch__widget-label"
+                                        cssSelector=".cmp-adaptiveform-switch__widget-label"
                                         longTitle="Switch Widget"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                             jcr:primaryType="nt:unstructured"
@@ -138,7 +138,7 @@
                                         id="af2_switchhandle"
                                         cssSelector=".cmp-adaptiveform-switch__circle-indicator"
                                         longTitle="Switch Handle"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -164,7 +164,7 @@
                                         id="af2_switchonlabel"
                                         cssSelector=".cmp-adaptiveform-switch__widget-slider"
                                         longTitle="Switch Slider"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -192,7 +192,7 @@
                                 id="af2_switchdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-switch__shortdescription"
                                 longTitle="Switch Short Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </switchDescriptionShort>
                         <switchDescriptionLong
                                 jcr:primaryType="nt:unstructured"
@@ -200,7 +200,7 @@
                                 id="af2_switchdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-switch__longdescription"
                                 longTitle="Switch Long Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -218,7 +218,7 @@
                                 id="af2_switcherrormessage"
                                 cssSelector=".cmp-adaptiveform-switch__errormessage"
                                 longTitle="Switch Error Message"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </switchErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">

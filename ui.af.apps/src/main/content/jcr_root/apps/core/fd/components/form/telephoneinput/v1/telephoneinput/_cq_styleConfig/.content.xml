@@ -11,7 +11,7 @@
                         id="af2_telephonewidgetandtext"
                         cssSelector=".cmp-adaptiveform-telephoneinput"
                         longTitle="Telephone Input Widget"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                         secondarySelectors="af2_guideContainer:af2_widgetAndText">
                         <items jcr:primaryType="nt:unstructured">
                             <telephoneinputLabelContainer
@@ -20,7 +20,7 @@
                                     id="af2_telephoneinputlabelcontainer"
                                     cssSelector=".cmp-adaptiveform-telephoneinput__label-container"
                                     longTitle="Telephone Input Label Container"
-                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                 <items jcr:primaryType="nt:unstructured">
                                     <telephoneinputLabel
                                             jcr:primaryType="nt:unstructured"
@@ -28,7 +28,7 @@
                                             id="af2_telephoneinputlabel"
                                             cssSelector=".cmp-adaptiveform-telephoneinput__label"
                                             longTitle="Telephone Input Label"
-                                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                         <states jcr:primaryType="nt:unstructured">
                                             <hover
                                                     jcr:primaryType="nt:unstructured"
@@ -46,7 +46,7 @@
                                             id="af2_telephoneinputhelpicon"
                                             cssSelector=".cmp-adaptiveform-telephoneinput__questionmark"
                                             longTitle="Telephone Input Help Icon"
-                                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                            propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                             secondarySelectors="af2_guideContainer:af2_helpicon">
                                         <states jcr:primaryType="nt:unstructured">
                                             <focus
@@ -85,7 +85,7 @@
                                     id="af2_telephoneinputwidgetandtext"
                                     cssSelector=".cmp-adaptiveform-telephoneinput__widget"
                                     longTitle="Telephone Input Widget"
-                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                     secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                 <states jcr:primaryType="nt:unstructured">
                                     <focus
@@ -112,7 +112,7 @@
                                     id="af2_telephoneinputdescriptionshort"
                                     cssSelector=".cmp-adaptiveform-telephoneinput__shortdescription"
                                     longTitle="Telephone Input Short Description"
-                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             </telephoneinputDescriptionShort>
                             <telephoneinputDescriptionLong
                                     jcr:primaryType="nt:unstructured"
@@ -120,7 +120,7 @@
                                     id="af2_telephoneinputdescriptionlong"
                                     cssSelector=".cmp-adaptiveform-telephoneinput__longdescription"
                                     longTitle="Telephone Input Long Description"
-                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                 <states jcr:primaryType="nt:unstructured">
                                     <focus
                                             jcr:primaryType="nt:unstructured"
@@ -138,7 +138,7 @@
                                     id="af2_telephoneerrormessage"
                                     cssSelector=".cmp-adaptiveform-telephoneinput__errormessage"
                                     longTitle="Telephone Input Error Message"
-                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             </telephoneinputErrorMessage>
                         </items>
                         <states jcr:primaryType="nt:unstructured">

@@ -11,7 +11,7 @@
                     cssSelector=".cmp-adaptiveform-emailinput"
                     id="af2_emailinputwidgetandtext"
                     longTitle="Email Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                     secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <emailLabelContainer
@@ -20,7 +20,7 @@
                                 id="af2_emaillabelcontainer"
                                 cssSelector=".cmp-adaptiveform-emailinput__label-container"
                                 longTitle="Email Label Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <emailLabel
                                     jcr:primaryType="nt:unstructured"
@@ -28,7 +28,7 @@
                                     id="af2_emaillabel"
                                     cssSelector=".cmp-adaptiveform-emailinput__label"
                                     longTitle="Email Label"
-                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                             jcr:primaryType="nt:unstructured"
@@ -46,7 +46,7 @@
                                         id="af2_emailhelpicon"
                                         cssSelector=".cmp-adaptiveform-emailinput__questionmark"
                                         longTitle="Email Help Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
@@ -85,7 +85,7 @@
                             id="af2_emailwidgetandtext"
                             cssSelector=".cmp-adaptiveform-emailinput__widget"
                             longTitle="Email Widget"
-                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                            propertySheet="/core/fd/components/form/stylePropertySheet/common"
                             secondarySelectors="af2_guideContainer:af2_widgetAndText">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
@@ -112,7 +112,7 @@
                                 id="af2_emaildescriptionshort"
                                 cssSelector=".cmp-adaptiveform-emailinput__shortdescription"
                                 longTitle="Email Short Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </emailDescriptionShort>
                         <emailDescriptionLong
                                 jcr:primaryType="nt:unstructured"
@@ -120,7 +120,7 @@
                                 id="af2_emaildescriptionlong"
                                 cssSelector=".cmp-adaptiveform-emailinput__longdescription"
                                 longTitle="Email Long Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                     jcr:primaryType="nt:unstructured"
@@ -138,7 +138,7 @@
                                 id="af2_emailerrormessage"
                                 cssSelector=".cmp-adaptiveform-emailinput__errormessage"
                                 longTitle="Email Error Message"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </emailErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">

@@ -9,7 +9,7 @@
             id="af2_panel"
             cssSelector=".cmp-container"
             longTitle="Panel Container"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <panelLabelContainer
                         jcr:primaryType="nt:unstructured"
@@ -17,7 +17,7 @@
                         id="af2_panellabelcontainer"
                         cssSelector=".cmp-container__label-container"
                         longTitle="Panel Label Container"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
                         <panelLabel
                                 jcr:primaryType="nt:unstructured"
@@ -25,7 +25,7 @@
                                 id="af2_panellabel"
                                 cssSelector=".cmp-container__label"
                                 longTitle="Panel Label"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <hover
                                         jcr:primaryType="nt:unstructured"
@@ -43,7 +43,7 @@
                                 id="af2_panelhelpicon"
                                 cssSelector=".cmp-container__questionmark"
                                 longTitle="Panel Help Icon"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_helpicon">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
@@ -82,7 +82,7 @@
                         id="af2_paneldescriptionshort"
                         cssSelector=".cmp-container__shortdescription"
                         longTitle="Panel Short Description"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                 </panelDescriptionShort>
                 <panelDescriptionLong
                         jcr:primaryType="nt:unstructured"
@@ -90,7 +90,7 @@
                         id="af2_paneldescriptionlong"
                         cssSelector=".cmp-container__longdescription"
                         longTitle="Panel Long Description"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"

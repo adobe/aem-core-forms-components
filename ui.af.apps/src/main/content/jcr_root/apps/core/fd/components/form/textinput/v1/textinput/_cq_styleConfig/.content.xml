@@ -8,7 +8,7 @@
             jcr:title="Base"
             id="af2_textbox"
             longTitle="Base"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
@@ -16,7 +16,7 @@
                     id="af2_textboxwidgetandtext"
                     cssSelector=".cmp-adaptiveform-textinput"
                     longTitle="Text Input Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                     secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <textinputLabelContainer
@@ -25,7 +25,7 @@
                                 id="af2_textinputlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-textinput__label-container"
                                 longTitle="Text Input Label Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <textinputLabel
                                         jcr:primaryType="nt:unstructured"
@@ -33,7 +33,7 @@
                                         id="af2_textinputlabel"
                                         cssSelector=".cmp-adaptiveform-textinput__label"
                                         longTitle="Text Input Label"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
@@ -51,7 +51,7 @@
                                         id="af2_textinputhelpicon"
                                         cssSelector=".cmp-adaptiveform-textinput__questionmark"
                                         longTitle="Text Input Help Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
@@ -90,7 +90,7 @@
                                 id="af2_textinputwidgetandtext"
                                 cssSelector=".cmp-adaptiveform-textinput__widget"
                                 longTitle="Text Input Widget"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_widgetAndText">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
@@ -117,7 +117,7 @@
                                 id="af2_textinputdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-textinput__shortdescription"
                                 longTitle="Text Input Short Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </textinputDescriptionShort>
                         <textinputDescriptionLong
                                 jcr:primaryType="nt:unstructured"
@@ -125,7 +125,7 @@
                                 id="af2_textinputdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-textinput__longdescription"
                                 longTitle="Text Input Long Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -143,7 +143,7 @@
                                 id="af2_textinputerrormessage"
                                 cssSelector=".cmp-adaptiveform-textinput__errormessage"
                                 longTitle="Text Input Error Message"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </textinputErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
@@ -179,7 +179,7 @@
                     id="af2_textareawidgetandtext"
                     cssSelector="textarea.cmp-adaptiveform-textinput__widget"
                     longTitle="Text Area Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                     secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <states jcr:primaryType="nt:unstructured">
                         <focus

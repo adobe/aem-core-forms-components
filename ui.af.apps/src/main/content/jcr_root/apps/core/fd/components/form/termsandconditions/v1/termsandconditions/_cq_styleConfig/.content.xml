@@ -8,7 +8,7 @@
             jcr:title="Base"
             id="af2_tnc"
             longTitle="Base"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
@@ -16,7 +16,7 @@
                     id="af2_tncwidgetandtext"
                     cssSelector=".cmp-adaptiveform-termsandcondition"
                     longTitle="Terms And Conditions Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                     secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <tncLabelContainer
@@ -25,7 +25,7 @@
                                 id="af2_tnclabelcontainer"
                                 cssSelector=".cmp-adaptiveform-termsandcondition__label-container"
                                 longTitle="Terms and Conditions Label Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <tncLabel
                                         jcr:primaryType="nt:unstructured"
@@ -33,7 +33,7 @@
                                         id="af2_tnclabel"
                                         cssSelector=".cmp-adaptiveform-termsandcondition__label"
                                         longTitle="Terms and Conditions Label"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
@@ -51,7 +51,7 @@
                                         id="af2_tnchelpicon"
                                         cssSelector=".cmp-adaptiveform-termsandcondition__questionmark"
                                         longTitle="Terms and Conditions Help Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
@@ -90,7 +90,7 @@
                             id="af2_tnccontentcontainer"
                             cssSelector=".cmp-adaptiveform-termsandcondition__content-container"
                             longTitle="Terms And Conditions Content Container"
-                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <tncContent
                                     jcr:primaryType="nt:unstructured"
@@ -98,7 +98,7 @@
                                     id="af2_tnccontent"
                                     cssSelector=".cmp-adaptiveform-termsandcondition__content"
                                     longTitle="Terms And Conditions Content"
-                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                             jcr:primaryType="nt:unstructured"
@@ -128,7 +128,7 @@
                             id="af2_tncconsentarea"
                             cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox"
                             longTitle="Terms And Conditions Consent Area"
-                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <tncCheckbox
                                     jcr:primaryType="nt:unstructured"
@@ -136,7 +136,7 @@
                                     id="af2_tncconsentcheckbox"
                                     cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__widget-container input[type='checkbox']"
                                     longTitle="Terms And Conditions Checkbox"
-                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                             jcr:primaryType="nt:unstructured"
@@ -158,7 +158,7 @@
                                     id="af2_tnccheckboxlabel"
                                     cssSelector=".cmp-adaptiveform-termsandcondition__approvalcheckbox .cmp-adaptiveform-checkbox__label"
                                     longTitle="Terms And Conditions Checkbox Label"
-                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <disabled
                                                 jcr:primaryType="nt:unstructured"
@@ -197,7 +197,7 @@
                                 id="af2_tncdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-termsandcondition__shortdescription"
                                 longTitle="Terms And Conditions Short Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </tncDescriptionShort>
                         <tncDescriptionLong
                                 jcr:primaryType="nt:unstructured"
@@ -205,7 +205,7 @@
                                 id="af2_tncdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-termsandcondition__longdescription"
                                 longTitle="Terms And Conditions Long Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -223,7 +223,7 @@
                                 id="af2_tncerrormessage"
                                 cssSelector=".cmp-adaptiveform-termsandcondition__errormessage"
                                 longTitle="Terms And Conditions Error Message"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </tncErrorMessage>
                     </items>
                     <states

@@ -9,6 +9,6 @@
             id="af2_image"
             cssSelector=".cmp-image__image"
             longTitle="Image"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+            propertySheet="/core/fd/components/form/stylePropertySheet/common"/>
     </items>
 </jcr:root>

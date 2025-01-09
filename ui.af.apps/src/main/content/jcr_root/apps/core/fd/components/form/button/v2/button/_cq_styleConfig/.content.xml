@@ -9,7 +9,7 @@
             id="af2_button"
             cssSelector=".cmp-adaptiveform-button__widget"
             longTitle="Button"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <buttonText
                     jcr:primaryType="nt:unstructured"
@@ -17,7 +17,7 @@
                     id="af2_buttontext"
                     cssSelector=".cmp-adaptiveform-button__text"
                     longTitle="Button Text"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -43,7 +43,7 @@
                         id="af2_buttondescriptionshort"
                         cssSelector=".cmp-adaptiveform-button__shortdescription"
                         longTitle="Button Short Description"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                 </buttonDescriptionShort>
                 <buttonDescriptionLong
                         jcr:primaryType="nt:unstructured"
@@ -51,7 +51,7 @@
                         id="af2_buttondescriptionlong"
                         cssSelector=".cmp-adaptiveform-button__longdescription"
                         longTitle="Button Long Description"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -69,7 +69,7 @@
                         id="af2_buttonhelpcontainer"
                         cssSelector=".cmp-adaptiveform-button__help-container"
                         longTitle="Button Help Container"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -87,7 +87,7 @@
                         id="af2_buttonhelpicon"
                         cssSelector=".cmp-adaptiveform-button__questionmark"
                         longTitle="Button Help Icon"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                         secondarySelectors="af2_guideContainer:af2_helpicon">
                     <states jcr:primaryType="nt:unstructured">
                         <focus

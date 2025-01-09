@@ -1,0 +1,2248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    granite:class="stylePropertySheet"
+    jcr:primaryType="nt:unstructured"
+    sling:resourceType="granite/ui/components/coral/foundation/accordion"
+    variant="quiet">
+    <items jcr:primaryType="nt:unstructured">
+        <dimensionPosition
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Dimensions &amp; Position"
+            sling:resourceType="granite/ui/components/coral/foundation/container"
+            granite:class="stylePropertySheetDimensionAndPosition">
+            <granite:data
+                jcr:primaryType="nt:unstructured"
+                styleMoreLess="less"/>
+            <items jcr:primaryType="nt:unstructured">
+                <webfonts
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="fd/af/themes/gui/services/getEmbedCode"/>
+                <clientlibs
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/includeclientlibs"
+                        categories="[guides.3rdparty.csslint]"/>
+                <display
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Display Setting"
+                    name="display"
+                    variant="quiet"
+                    wrapperClass="propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <none
+                            jcr:primaryType="nt:unstructured"
+                            text="None"
+                            value="none"/>
+                        <block
+                            jcr:primaryType="nt:unstructured"
+                            text="Block"
+                            value="block"/>
+                        <flex
+                            jcr:primaryType="nt:unstructured"
+                            text="Flex"
+                            value="flex"/>
+                        <inline
+                            jcr:primaryType="nt:unstructured"
+                            text="Inline"
+                            value="inline"/>
+                        <inlineBlock
+                            jcr:primaryType="nt:unstructured"
+                            text="Inline Block"
+                            value="inline-block"/>
+                        <inlineFlex
+                            jcr:primaryType="nt:unstructured"
+                            text="Inline Flex"
+                            value="inline-flex"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                        <flowRoot
+                            jcr:primaryType="nt:unstructured"
+                            text="Flow Root"
+                            value="flow-root"/>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="display"/>
+                </display>
+                <padding
+                    granite:class="symmetricContainer"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/symmetricfield"
+                    fieldLabel="Padding"
+                    getterFunction="window.guidelib.touchlib.style.shadowPopover.getButtonLabelWithLock"
+                    interaction="on"
+                    placement="bottom"
+                    button-id="paddingButton"
+                    setterFunction="window.guidelib.touchlib.style.shadowPopover.setButtonLabel"
+                    target="#paddingButton"
+                    wrapperClass="symmetricContainerWrapper propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <paddingTop
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldTopContent"
+                            granite:id="paddingTop"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Top"
+                            name="padding-top"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="padding-top"
+                                theme-symmetric="toggleContent"/>
+                        </paddingTop>
+                        <paddingRight
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldTopContent"
+                            granite:id="paddingRight"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Right"
+                            name="padding-right"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="padding-right"
+                                theme-symmetric="toggleContent"/>
+                        </paddingRight>
+                        <container
+                            granite:class="symmetricFieldLockContainer"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                            <items jcr:primaryType="nt:unstructured">
+                                <lock
+                                    granite:class="themeToggleLock"
+                                    granite:id="themeLock"
+                                    granite:title="Edit simultaneously"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/anchorbutton"
+                                    icon="linkOn"
+                                    name="lock">
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        theme-symmetric="themeToggleLock"
+                                        uipropertyname="paddingLock"/>
+                                </lock>
+                            </items>
+                        </container>
+                        <paddingBottom
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldBottomContent"
+                            granite:id="paddingBottom"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Bottom"
+                            name="padding-bottom"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="padding-bottom"
+                                theme-symmetric="toggleContent"/>
+                        </paddingBottom>
+                        <paddingLeft
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldBottomContent"
+                            granite:id="paddingLeft"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Left"
+                            name="padding-left"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="padding-left"
+                                theme-symmetric="toggleContent"/>
+                        </paddingLeft>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        uipropertyname="paddingPopover"/>
+                </padding>
+                <margin
+                    granite:class="symmetricContainer"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/symmetricfield"
+                    fieldLabel="Margin"
+                    getterFunction="window.guidelib.touchlib.style.shadowPopover.getButtonLabelWithLock"
+                    interaction="on"
+                    placement="bottom"
+                    button-id="marginButton"
+                    setterFunction="window.guidelib.touchlib.style.shadowPopover.setButtonLabel"
+                    target="#marginButton"
+                    wrapperClass="symmetricContainerWrapper propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <marginTop
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldTopContent"
+                            granite:id="marginTop"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Top"
+                            name="margin-top"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="margin-top"
+                                theme-symmetric="toggleContent"/>
+                        </marginTop>
+                        <marginRight
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldTopContent"
+                            granite:id="marginRight"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Right"
+                            name="margin-right"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="margin-right"
+                                theme-symmetric="toggleContent"/>
+                        </marginRight>
+                        <container
+                            granite:class="symmetricFieldLockContainer"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                            <items jcr:primaryType="nt:unstructured">
+                                <lock
+                                    granite:class="themeToggleLock"
+                                    granite:id="themeLock"
+                                    granite:title="Edit simultaneously"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/anchorbutton"
+                                    icon="linkOn"
+                                    name="lock">
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        theme-symmetric="themeToggleLock"
+                                        uipropertyname="marginLock"/>
+                                </lock>
+                            </items>
+                        </container>
+                        <marginBottom
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldBottomContent"
+                            granite:id="marginBottom"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Bottom"
+                            name="margin-bottom"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="margin-bottom"
+                                theme-symmetric="toggleContent"/>
+                        </marginBottom>
+                        <marginLeft
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldBottomContent"
+                            granite:id="marginLeft"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Left"
+                            name="margin-left"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="margin-left"
+                                theme-symmetric="toggleContent"/>
+                        </marginLeft>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        uipropertyname="marginPopover"/>
+                </margin>
+                <width
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Width"
+                    name="width"
+                    suffix="%"
+                    wrapperClass="propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="width"/>
+                </width>
+                <demarker1
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/demarker"/>
+                <minWidth
+                    granite:id="minWidth"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Minimum Width"
+                    name="min-width"
+                    suffix="px"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="min-width"/>
+                </minWidth>
+                <maxWidth
+                    granite:id="maxWidth"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Maximum Width"
+                    name="max-width"
+                    suffix="px"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="max-width"/>
+                </maxWidth>
+                <demarker2
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/demarker"/>
+                <height
+                    granite:id="height"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Height"
+                    min="0"
+                    name="height"
+                    suffix="px"
+                    wrapperClass="propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="height"/>
+                </height>
+                <demarker3
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/demarker"/>
+                <minHeight
+                    granite:id="minHeight"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Minimum Height"
+                    name="min-height"
+                    suffix="px"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="min-height"/>
+                </minHeight>
+                <maxHeight
+                    granite:id="maxHeight"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Maximum Height"
+                    name="max-height"
+                    suffix="px"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="max-height"/>
+                </maxHeight>
+                <demarker4
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/demarker"/>
+                <layout
+                    granite:class="symmetricContainer"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/symmetricfield"
+                    fieldLabel="Position"
+                    getterFunction="window.guidelib.touchlib.style.shadowPopover.getButtonLabelWithPosition"
+                    interaction="on"
+                    placement="bottom"
+                    button-id="positionButton"
+                    setterFunction="window.guidelib.touchlib.style.shadowPopover.setButtonLabel"
+                    target="#positionButton"
+                    wrapperClass="styleMore symmetricContainerWrapper propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <position
+                            granite:class="symmetricFieldSelect"
+                            granite:id="position"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                            name="position"
+                            wrapperClass="propertySheetCssProperty">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="position"
+                                theme-symmetric="toggleContent"/>
+                            <items jcr:primaryType="nt:unstructured">
+                                <selectPlaceholder
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Select"
+                                    value=""/>
+                                <static
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Static"
+                                    value="static"/>
+                                <absolute
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Absolute"
+                                    value="absolute"/>
+                                <fixed
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Fixed"
+                                    value="fixed"/>
+                                <relative
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Relative"
+                                    value="relative"/>
+                                <initial
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Browser Default"
+                                    value="initial"/>
+                                <inherit
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Inherit From Parent"
+                                    value="inherit"/>
+                            </items>
+                        </position>
+                        <Top
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldTopContent"
+                            granite:id="top"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Top"
+                            name="top"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="top"
+                                theme-symmetric="toggleContent"/>
+                        </Top>
+                        <Right
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldTopContent"
+                            granite:id="right"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Right"
+                            name="right"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="right"
+                                theme-symmetric="toggleContent"/>
+                        </Right>
+                        <Bottom
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldBottomContent"
+                            granite:id="bottom"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Bottom"
+                            name="bottom"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="bottom"
+                                theme-symmetric="toggleContent"/>
+                        </Bottom>
+                        <Left
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldBottomContent"
+                            granite:id="left"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Left"
+                            name="left"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="left"
+                                theme-symmetric="toggleContent"/>
+                        </Left>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        uipropertyname="positionPopover"/>
+                </layout>
+                <zIndex
+                    granite:id="zIndex"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Z-index"
+                    name="z-index"
+                    wrapperClass="propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="z-index"/>
+                </zIndex>
+                <float
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Float"
+                    name="float"
+                    variant="quiet"
+                    wrapperClass="propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <none
+                            jcr:primaryType="nt:unstructured"
+                            text="None"
+                            value="none"/>
+                        <left
+                            jcr:primaryType="nt:unstructured"
+                            text="Left"
+                            value="left"/>
+                        <right
+                            jcr:primaryType="nt:unstructured"
+                            text="Right"
+                            value="right"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="float"/>
+                </float>
+                <clear
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Clear"
+                    name="clear"
+                    variant="quiet"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <none
+                            jcr:primaryType="nt:unstructured"
+                            text="None"
+                            value="none"/>
+                        <left
+                            jcr:primaryType="nt:unstructured"
+                            text="Left"
+                            value="left"/>
+                        <right
+                            jcr:primaryType="nt:unstructured"
+                            text="Right"
+                            value="right"/>
+                        <both
+                            jcr:primaryType="nt:unstructured"
+                            text="Both"
+                            value="both"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="clear"/>
+                </clear>
+                <overflow
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Overflow"
+                    name="overflow"
+                    variant="quiet"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <auto
+                            jcr:primaryType="nt:unstructured"
+                            text="Auto"
+                            value="auto"/>
+                        <visible
+                            jcr:primaryType="nt:unstructured"
+                            text="Visible"
+                            value="visible"/>
+                        <hidden
+                            jcr:primaryType="nt:unstructured"
+                            text="Hidden"
+                            value="hidden"/>
+                        <scroll
+                            jcr:primaryType="nt:unstructured"
+                            text="Scroll"
+                            value="scroll"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="overflow"/>
+                </overflow>
+                <moreLess
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/moreLess"
+                    wrapperClass="styleMore"/>
+            </items>
+        </dimensionPosition>
+        <text
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Text"
+            sling:resourceType="granite/ui/components/coral/foundation/container"
+            granite:class="stylePropertySheetText">
+            <granite:data
+                jcr:primaryType="nt:unstructured"
+                styleMoreLess="less"/>
+            <items jcr:primaryType="nt:unstructured">
+                <textStylesContainer
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                    granite:class="textStylesContainer">
+                    <items jcr:primaryType="nt:unstructured">
+                        <textStylesSelect
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/afImageStyleSelect"
+                            granite:class="assetLibraryTextStylesSelect">
+                            <items jcr:primaryType="nt:unstructured">
+                                <select
+                                    jcr:primaryType="nt:unstructured"
+                                    text="Select"
+                                    value="none"/>
+                                <SavedStyleGroup
+                                    jcr:primaryType="nt:unstructured"
+                                    group="{Boolean}true"
+                                    class="textStylesSelectSavedStyleGroup"
+                                    text="Saved Style">
+                                </SavedStyleGroup>
+                                <RecentlyUsedStyleGroup
+                                    jcr:primaryType="nt:unstructured"
+                                    group="{Boolean}true"
+                                    class="textStylesSelectRecentlyUsedStyleGroup"
+                                    text="Recently Used Style">
+                                </RecentlyUsedStyleGroup>
+                            </items>
+                        </textStylesSelect>
+                        <textStylesSaveContainer
+                            granite:class="textStylesSaveContainer"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                            <items jcr:primaryType="nt:unstructured">
+                                <textStylesSaveButton
+                                    granite:class="textStylesSaveButton"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                                    disabled="{Boolean}true"
+                                    icon="add"
+                                    iconSize="XS"
+                                    variant="action">
+                                </textStylesSaveButton>
+                                <textStylesSavePopover
+                                    granite:class="textStylesSavePopover"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/popover"
+                                    collision="fit"
+                                    interaction="on"
+                                    placement="bottom"
+                                    target="#style-propertySheetContainer button.textStylesSaveButton">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <textStyleTitle
+                                        granite:class="textStylesSaveInput style-Input"
+                                        wrapperClass="textStylesSaveInputWrapper"
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        fieldLabel="Title"
+                                        value="Responsive Panel Title"/>
+                                    </items>
+                                </textStylesSavePopover>
+                            </items>
+                        </textStylesSaveContainer>
+                    </items>
+                </textStylesContainer>
+                <font-family
+                    granite:class="style-multivalueFieldContainer propertySheetCssProperty"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <items jcr:primaryType="nt:unstructured">
+                        <fontFamily
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
+                            emptyText="Select"
+                            fieldLabel="Font Family"
+                            name="font-family"
+                            variant="quiet">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                mvfieldFont-inputField="fontFamily"/>
+                            <datasource
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="fd/af/themes/gui/services/getFontList"/>
+                            <options
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/list"/>
+                            <values
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete/tags"/>
+                        </fontFamily>
+                        <mvFieldItems
+                            granite:class="style-fontFamilyTable"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/table"
+                            orderable="{Boolean}true"
+                            skipEmptyRow="{Boolean}true">
+                            <columns jcr:primaryType="nt:unstructured">
+                                <moveupdown jcr:primaryType="nt:unstructured"/>
+                                <fontFamily jcr:primaryType="nt:unstructured"/>
+                            </columns>
+                            <items jcr:primaryType="nt:unstructured"/>
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                mvfieldFont-elementtype="table"/>
+                        </mvFieldItems>
+                        <fontFamilyCssProperty
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="font-family"/>
+                        </fontFamilyCssProperty>
+                        <fontFamilyUiProperty
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                uipropertyname="fontFamilyFieldContainer"/>
+                        </fontFamilyUiProperty>
+                    </items>
+                </font-family>
+                <fontWeight
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    csspropertyname="font-weight"
+                    fieldLabel="Font Weight"
+                    name="font-weight"
+                    variant="quiet"
+                    wrapperClass="propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <normal
+                            jcr:primaryType="nt:unstructured"
+                            text="Normal"
+                            value="normal"/>
+                        <bold
+                            jcr:primaryType="nt:unstructured"
+                            text="Bold"
+                            value="bold"/>
+                        <bolder
+                            jcr:primaryType="nt:unstructured"
+                            text="Bolder"
+                            value="bolder"/>
+                        <lighter
+                            jcr:primaryType="nt:unstructured"
+                            text="Lighter"
+                            value="lighter"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="font-weight"/>
+                </fontWeight>
+                <color
+                    granite:class="style-propertysheet-colorpicker"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                    showSwatches="{Boolean}false"
+                    fieldLabel="Font Color"
+                    name="font-color"
+                    wrapperClass="propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="color"/>
+                </color>
+                <fontSize
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Font Size"
+                    name="font-size"
+                    suffix="px"
+                    wrapperClass="propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="font-size"/>
+                </fontSize>
+                <lineHeight
+                    granite:id="lineHeight"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Line Height"
+                    name="line-height"
+                    wrapperClass="propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="line-height"/>
+                </lineHeight>
+                <textAlign
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Text Align"
+                    name="text-align"
+                    variant="quiet"
+                    wrapperClass="propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <textLeft
+                            jcr:primaryType="nt:unstructured"
+                            text="Left"
+                            value="left"/>
+                        <textRight
+                            jcr:primaryType="nt:unstructured"
+                            text="Right"
+                            value="right"/>
+                        <textCenter
+                            jcr:primaryType="nt:unstructured"
+                            text="Center"
+                            value="center"/>
+                        <textJustified
+                            jcr:primaryType="nt:unstructured"
+                            text="Justify"
+                            value="justify"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="text-align"/>
+                </textAlign>
+                <content
+                    granite:class="themeContent style-Input"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Content"
+                    name="content"
+                    renderHidden="true"
+                    wrapperClass="propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="content"/>
+                </content>
+                <letterSpacing
+                    granite:id="letterSpacing"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                    emptyText="—"
+                    fieldLabel="Letter Spacing"
+                    name="letterSpacing"
+                    suffix="px"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="letter-spacing"/>
+                </letterSpacing>
+                <textDecoration
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                    checked="{Boolean}false"
+                    fieldLabel="Underline"
+                    name="underline"
+                    value="underline"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="text-decoration"/>
+                </textDecoration>
+                <fontStyle
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/switch"
+                    checked="{Boolean}false"
+                    fieldLabel="Italics"
+                    name="italic"
+                    value="italic"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="font-style"/>
+                </fontStyle>
+                <textTransform
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Case"
+                    name="textTransform"
+                    variant="quiet"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <none
+                            jcr:primaryType="nt:unstructured"
+                            text="None"
+                            value="none"/>
+                        <uppercase
+                            jcr:primaryType="nt:unstructured"
+                            text="Upper Case"
+                            value="uppercase"/>
+                        <lowercase
+                            jcr:primaryType="nt:unstructured"
+                            text="Lower Case"
+                            value="lowercase"/>
+                        <capitalize
+                            jcr:primaryType="nt:unstructured"
+                            text="Camel Case"
+                            value="capitalize"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="text-transform"/>
+                </textTransform>
+                <VerticalAlignment
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Vertical Align"
+                    name="verticalAlign"
+                    variant="quiet"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="vertical-align"/>
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <baseline
+                            jcr:primaryType="nt:unstructured"
+                            text="Baseline"
+                            value="baseline"/>
+                        <sub
+                            jcr:primaryType="nt:unstructured"
+                            text="Subscript"
+                            value="sub"/>
+                        <super
+                            jcr:primaryType="nt:unstructured"
+                            text="Superscript"
+                            value="super"/>
+                        <top
+                            jcr:primaryType="nt:unstructured"
+                            text="Top"
+                            value="top"/>
+                        <texttop
+                            jcr:primaryType="nt:unstructured"
+                            text="Text Top"
+                            value="text-top"/>
+                        <middle
+                            jcr:primaryType="nt:unstructured"
+                            text="Middle"
+                            value="middle"/>
+                        <bottom
+                            jcr:primaryType="nt:unstructured"
+                            text="Bottom"
+                            value="bottom"/>
+                        <textbottom
+                            jcr:primaryType="nt:unstructured"
+                            text="Text Bottom"
+                            value="text-bottom"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                    </items>
+                </VerticalAlignment>
+                <direction
+                    granite:id="direction"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Direction"
+                    name="direction"
+                    variant="quiet"
+                    wrapperClass="styleMore propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="direction"/>
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <ltr
+                            jcr:primaryType="nt:unstructured"
+                            text="Left to Right"
+                            value="ltr"/>
+                        <rtl
+                            jcr:primaryType="nt:unstructured"
+                            text="Right to Left"
+                            value="rtl"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                    </items>
+                </direction>
+                <moreLess
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/moreLess"
+                    wrapperClass="styleMore propertySheetCssProperty"/>
+            </items>
+        </text>
+        <background
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Background"
+            sling:resourceType="granite/ui/components/coral/foundation/container"
+            granite:class="stylePropertySheetBackground">
+            <items jcr:primaryType="nt:unstructured">
+                <backgroundWrapper
+                    granite:class="style-background"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <items jcr:primaryType="nt:unstructured">
+                        <backgroundContainer
+                            granite:class="style-multivalueFieldContainer"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                            <items jcr:primaryType="nt:unstructured">
+                                <image-gradient
+                                    granite:id="style-buttongroupfield"
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Image &amp; Gradient"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/buttongroupfield"
+                                    fieldLabel="Image &amp; Gradient"
+                                    ignoreData="{Boolean}true"
+                                    wrapperClass="style-buttongroupfield style-backgroundImageGradient">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <image
+                                            granite:class="style-addImagebutton style-toggleDisplay"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/button"
+                                            hidden="hidden"
+                                            text="Image"
+                                            value="image"
+                                            variant="minimal">
+                                            <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                popover-target=".style-imagepopover"/>
+                                        </image>
+                                        <gradient
+                                            granite:class="style-addGradientbutton style-toggleDisplay"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/button"
+                                            hidden="hidden"
+                                            text="Gradient"
+                                            value="gradient"
+                                            variant="minimal">
+                                            <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                popover-target=".style-gradientpopover"/>
+                                        </gradient>
+                                        <add
+                                            granite:class="style-addbutton"
+                                            granite:id="backgroundAddButton"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/button"
+                                            icon="add"
+                                            iconSize="XS"
+                                            text="Add"
+                                            value="add"
+                                            variant="minimal"/>
+                                    </items>
+                                </image-gradient>
+                                <imagepopover
+                                    granite:class="style-imagepopover backgroundPopover"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/popover"
+                                    collision="fit"
+                                    interaction="off"
+                                    within="#style-propertysheet-container"
+                                    placement="bottom"
+                                    target="#style-propertysheet-container button.style-addbutton">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <properties
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <assetLibraryImagesSelect
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/afImageStyleSelect"
+                                                    granite:class="assetLibraryImagesSelect">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <select
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Select"
+                                                            value="none"/>
+                                                        <SavedStyleGroup
+                                                            jcr:primaryType="nt:unstructured"
+                                                            group="{Boolean}true"
+                                                            class="imageSelectSavedStyleGroup"
+                                                            text="Saved Style">
+                                                        </SavedStyleGroup>
+                                                        <RecentlyUsedStyleGroup
+                                                            jcr:primaryType="nt:unstructured"
+                                                            group="{Boolean}true"
+                                                            class="imageSelectRecentlyUsedStyleGroup"
+                                                            text="Recently Used Style">
+                                                        </RecentlyUsedStyleGroup>
+                                                    </items>
+                                                </assetLibraryImagesSelect>
+                                                <assetLibraryImagesSaveContainer
+                                                    granite:class="assetLibraryImagesSaveContainer"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <assetLibraryImagesSaveButton
+                                                            granite:class="assetLibraryImagesSaveButton"
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/button"
+                                                            disabled="{Boolean}true"
+                                                            icon="add"
+                                                            iconSize="XS"
+                                                            variant="action">
+                                                        </assetLibraryImagesSaveButton>
+                                                        <assetLibraryImagesSavePopover
+                                                            granite:class="assetLibraryImagesSavePopover"
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/form/popover"
+                                                            collision="fit"
+                                                            interaction="on"
+                                                            placement="bottom"
+                                                            target="#style-propertySheetContainer button.assetLibraryImagesSaveButton">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <assetLibraryImagesTitle
+                                                                    granite:class="assetLibraryImagesSaveInput style-Input"
+                                                                    wrapperClass="assetLibraryImagesSaveInputWrapper"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Title"
+                                                                    value="Default Title"/>
+                                                            </items>
+                                                        </assetLibraryImagesSavePopover>
+                                                    </items>
+                                                </assetLibraryImagesSaveContainer>
+                                                <imageUpload
+                                                    granite:id="style-useasset"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/imageupload"
+                                                    immediateUpload="{Boolean}true"
+                                                    assetButtonText="Browse Assets"
+                                                    async="{Boolean}true"
+                                                    autoStart="{Boolean}true"
+                                                    class="cq-droptarget"
+                                                    data-assetBrowserProperty="assetBrowserHiddenInput"
+                                                    fieldLabel="Image"
+                                                    multiple="{Boolean}false"
+                                                    pickerTitle="Select Asset"
+                                                    sizeLimit="{Long}100000000"
+                                                    text="Upload"
+                                                    title="Upload Image"
+                                                    useHTML5="{Boolean}true"
+                                                    wrapperClass="styleImageUploadComponent">
+                                                    <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        mvfield-elementproperty="imageSrc"
+                                                        mvfield-elementtype="popoverField"/>
+                                                </imageUpload>
+                                                <size
+                                                    granite:class="style-imagePositionSizeSelect"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldLabel="Size"
+                                                    name="size"
+                                                    variant="quiet">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <selectPlaceholder
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Select"
+                                                            value=""/>
+                                                        <cover
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Cover"
+                                                            value="cover"/>
+                                                        <contain
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Contain"
+                                                            value="contain"/>
+                                                        <custom
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Custom"
+                                                            value="custom"/>
+                                                    </items>
+                                                    <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        mvfield-elementproperty="size"
+                                                        mvfield-elementtarget=".style-imageSizeContainer"
+                                                        mvfield-elementtype="popoverField"/>
+                                                </size>
+                                                <size-container
+                                                    granite:class="style-imageSizeContainer"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <demarker1
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/demarker"/>
+                                                        <width
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                                                            emptyText="—"
+                                                            fieldLabel="Width"
+                                                            name="width"
+                                                            suffix="px">
+                                                            <granite:data
+                                                                jcr:primaryType="nt:unstructured"
+                                                                mvfield-elementproperty="width"
+                                                                mvfield-elementtype="popoverField"/>
+                                                        </width>
+                                                        <height
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                                                            emptyText="—"
+                                                            fieldLabel="Height"
+                                                            name="height"
+                                                            suffix="px">
+                                                            <granite:data
+                                                                jcr:primaryType="nt:unstructured"
+                                                                mvfield-elementproperty="height"
+                                                                mvfield-elementtype="popoverField"/>
+                                                        </height>
+                                                        <demarker2
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/demarker"/>
+                                                    </items>
+                                                </size-container>
+                                                <position
+                                                    granite:class="style-imagePositionSizeSelect"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldLabel="Position"
+                                                    name="position"
+                                                    variant="quiet">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <left_x0020_top
+                                                            jcr:primaryType="nt:unstructured"
+                                                            selected="{Boolean}true"
+                                                            text="Left Top"
+                                                            value="left top"/>
+                                                        <left_x0020_center
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Left Center"
+                                                            value="left center"/>
+                                                        <left_x0020_bottom
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Left Bottom"
+                                                            value="left bottom"/>
+                                                        <right_x0020_top
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Right Top"
+                                                            value="right top"/>
+                                                        <right_x0020_center
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Right Center"
+                                                            value="right center"/>
+                                                        <right_x0020_bottom
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Right Bottom"
+                                                            value="right bottom"/>
+                                                        <center_x0020_top
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Center Top"
+                                                            value="center top"/>
+                                                        <center_x0020_center
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Centered"
+                                                            value="center center"/>
+                                                        <center_x0020_bottom
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Center Bottom"
+                                                            value="center bottom"/>
+                                                        <custom
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Custom"
+                                                            value="custom"/>
+                                                    </items>
+                                                    <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        mvfield-elementproperty="position"
+                                                        mvfield-elementtarget=".style-imagePositionContainer"
+                                                        mvfield-elementtype="popoverField"/>
+                                                </position>
+                                                <position-container
+                                                    granite:class="style-imagePositionContainer"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <demarker1
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/demarker"/>
+                                                        <x-position
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                                                            emptyText="—"
+                                                            fieldLabel="Position (x)"
+                                                            name="x-position"
+                                                            suffix="px">
+                                                            <granite:data
+                                                                jcr:primaryType="nt:unstructured"
+                                                                mvfield-elementproperty="x-position"
+                                                                mvfield-elementtype="popoverField"/>
+                                                        </x-position>
+                                                        <y-position
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                                                            emptyText="—"
+                                                            fieldLabel="Position (y)"
+                                                            name="y-position"
+                                                            suffix="px">
+                                                            <granite:data
+                                                                jcr:primaryType="nt:unstructured"
+                                                                mvfield-elementproperty="y-position"
+                                                                mvfield-elementtype="popoverField"/>
+                                                        </y-position>
+                                                        <demarker2
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/demarker"/>
+                                                    </items>
+                                                </position-container>
+                                                <tiling
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldLabel="Tiling"
+                                                    name="tiling"
+                                                    variant="quiet">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <selectPlaceholder
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Select"
+                                                            value=""/>
+                                                        <repeat
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Repeat"
+                                                            value="repeat"/>
+                                                        <repeat-x
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Repeat X"
+                                                            value="repeat-x"/>
+                                                        <repeat-y
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Repeat Y"
+                                                            value="repeat-y"/>
+                                                        <no-repeat
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="No Repeat"
+                                                            value="no-repeat"/>
+                                                    </items>
+                                                    <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        mvfield-elementproperty="tiling"
+                                                        mvfield-elementtype="popoverField"/>
+                                                </tiling>
+                                                <scrolling
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    fieldLabel="Scrolling"
+                                                    name="scrolling"
+                                                    variant="quiet">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <selectPlaceholder
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Select"
+                                                            value=""/>
+                                                        <scroll
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Scroll"
+                                                            value="scroll"/>
+                                                        <fixed
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Fixed"
+                                                            value="fixed"/>
+                                                        <local
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Local"
+                                                            value="local"/>
+                                                    </items>
+                                                    <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        mvfield-elementproperty="scrolling"
+                                                        mvfield-elementtype="popoverField"/>
+                                                </scrolling>
+                                            </items>
+                                        </properties>
+                                    </items>
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        mvfield-elementtype="popover"
+                                        mvfield-popovertype="image"/>
+                                </imagepopover>
+                                <gradientpopover
+                                    granite:class="style-gradientpopover backgroundPopover"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="fd/af/authoring/components/granite/form/popover"
+                                    closable="on"
+                                    collision="fit"
+                                    interaction="off"
+                                    within="#style-propertysheet-container"
+                                    placement="bottom"
+                                    target="#style-propertysheet-container button.style-addbutton">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <properties
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <gradienttype
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/buttongroup"
+                                                    fieldLabel=""
+                                                    ignoreData="true"
+                                                    selectionMode="single"
+                                                    wrapperClass="gradient-buttongroupwrapper">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <linear
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Linear"
+                                                            value="linear"/>
+                                                        <outside
+                                                            jcr:primaryType="nt:unstructured"
+                                                            text="Radial"
+                                                            value="radial"/>
+                                                    </items>
+                                                    <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        mvfield-elementproperty="gradientType"
+                                                        mvfield-elementtype="popoverField"/>
+                                                </gradienttype>
+                                                <lineargradient
+                                                    granite:id="style-linearGradientContainer"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <angle
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Angle"
+                                                            name="angle"
+                                                            variant="quiet">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <one-eighty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    selected="{Boolean}true"
+                                                                    text="180"
+                                                                    value="180deg"/>
+                                                                <one-fifty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="150"
+                                                                    value="150deg"/>
+                                                                <one-thirty-five
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="135"
+                                                                    value="135deg"/>
+                                                                <one-twenty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="120"
+                                                                    value="120deg"/>
+                                                                <ninety
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="90"
+                                                                    value="90deg"/>
+                                                                <sixty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="60"
+                                                                    value="60deg"/>
+                                                                <forty-five
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="45"
+                                                                    value="45deg"/>
+                                                                <thirty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="30"
+                                                                    value="30deg"/>
+                                                                <zero
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="0"
+                                                                    value="0deg"/>
+                                                                <minus-thirty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="-30"
+                                                                    value="-30deg"/>
+                                                                <minus-forty-five
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="-45"
+                                                                    value="-45deg"/>
+                                                                <minus-sixty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="-60"
+                                                                    value="-60deg"/>
+                                                                <minus-ninety
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="-90"
+                                                                    value="-90deg"/>
+                                                                <minus-one-twenty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="-120"
+                                                                    value="-120deg"/>
+                                                                <minus-one-thirty-five
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="-135"
+                                                                    value="-135deg"/>
+                                                                <minus-one-fifty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="-150"
+                                                                    value="-150deg"/>
+                                                                <minus-one-eighty
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="-180"
+                                                                    value="-180deg"/>
+                                                            </items>
+                                                            <granite:data
+                                                                jcr:primaryType="nt:unstructured"
+                                                                mvfield-elementproperty="angle"
+                                                                mvfield-elementtype="popoverField"/>
+                                                        </angle>
+                                                    </items>
+                                                </lineargradient>
+                                                <color1
+                                                    granite:class="style-propertysheet-colorpicker"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                                                    showSwatches="{Boolean}false"
+                                                    fieldLabel="Color1"
+                                                    name="gradient-color-1">
+                                                    <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        mvfield-elementproperty="color1"
+                                                        mvfield-elementtype="popoverField"/>
+                                                </color1>
+                                                <color2
+                                                    granite:class="style-propertysheet-colorpicker"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                                                    showSwatches="{Boolean}false"
+                                                    fieldLabel="Color2"
+                                                    name="gradient-color-2">
+                                                    <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        mvfield-elementproperty="color2"
+                                                        mvfield-elementtype="popoverField"/>
+                                                </color2>
+                                                <radialgradient
+                                                    granite:id="style-radialGradientContainer"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <x-position
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/form/slider"
+                                                            emptyText="—"
+                                                            fieldLabel="Position (x)"
+                                                            max="{Double}100.0"
+                                                            min="{Double}0.0"
+                                                            name="x-position"
+                                                            step="{Double}1.0"
+                                                            suffix="%"
+                                                            value="50">
+                                                            <granite:data
+                                                                jcr:primaryType="nt:unstructured"
+                                                                mvfield-elementproperty="x-position"
+                                                                mvfield-elementtype="popoverField"/>
+                                                        </x-position>
+                                                        <y-position
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="fd/af/authoring/components/granite/form/slider"
+                                                            emptyText="—"
+                                                            fieldLabel="Position (y)"
+                                                            max="{Double}100.0"
+                                                            min="{Double}0.0"
+                                                            name="y-position"
+                                                            step="{Double}1.0"
+                                                            suffix="%"
+                                                            value="50">
+                                                            <granite:data
+                                                                jcr:primaryType="nt:unstructured"
+                                                                mvfield-elementproperty="y-position"
+                                                                mvfield-elementtype="popoverField"/>
+                                                        </y-position>
+                                                        <radius
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                            fieldLabel="Radius"
+                                                            name="radius"
+                                                            variant="quiet">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <farthest-corner
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    selected="{Boolean}true"
+                                                                    text="Farthest-corner"
+                                                                    value="farthest-corner"/>
+                                                                <closest-corner
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Closest-corner"
+                                                                    value="closest-corner"/>
+                                                                <farthest-side
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Farthest-side"
+                                                                    value="farthest-side"/>
+                                                                <closest-side
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Closest-side"
+                                                                    value="closest-side"/>
+                                                            </items>
+                                                            <granite:data
+                                                                jcr:primaryType="nt:unstructured"
+                                                                mvfield-elementproperty="radius"
+                                                                mvfield-elementtype="popoverField"/>
+                                                        </radius>
+                                                    </items>
+                                                </radialgradient>
+                                                <demarker1
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="fd/af/authoring/components/granite/demarker"/>
+                                                <reverse
+                                                    granite:class="style-reversebutton"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                                                    icon="reorder"
+                                                    text="Reverse Gradient"
+                                                    value="reverse-gradient"
+                                                    variant="quiet"/>
+                                            </items>
+                                        </properties>
+                                    </items>
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        mvfield-elementtype="popover"
+                                        mvfield-popovertype="gradient"/>
+                                </gradientpopover>
+                                <mvFieldItems
+                                    granite:class="style-backgroundTable"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/table"
+                                    orderable="{Boolean}true"
+                                    skipEmptyRow="{Boolean}true">
+                                    <columns jcr:primaryType="nt:unstructured">
+                                        <moveupdown jcr:primaryType="nt:unstructured"/>
+                                        <thumbnail jcr:primaryType="nt:unstructured"/>
+                                        <icons
+                                            jcr:primaryType="nt:unstructured"
+                                            alignment="right"/>
+                                    </columns>
+                                    <items jcr:primaryType="nt:unstructured"/>
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        mvfield-elementtype="table"/>
+                                </mvFieldItems>
+                                <backgroundCssProperty
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden">
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        csspropertyname="background"/>
+                                </backgroundCssProperty>
+                                <backgroundUiProperty
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden">
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        uipropertyname="backgroundContainer"/>
+                                </backgroundUiProperty>
+                            </items>
+                        </backgroundContainer>
+                        <backgroundColor
+                            granite:class="style-propertysheet-colorpicker"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                            showSwatches="{Boolean}false"
+                            fieldLabel="Background Color"
+                            name="background-color"
+                            wrapperClass="style-propertysheet-backgroundColorWrapper propertySheetCssProperty">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                uipropertyname="backgroundColor"/>
+                        </backgroundColor>
+                    </items>
+                </backgroundWrapper>
+            </items>
+        </background>
+        <border
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Border"
+            sling:resourceType="granite/ui/components/coral/foundation/container"
+            granite:class="stylePropertySheetBorder">
+            <items jcr:primaryType="nt:unstructured">
+                <borderWidth
+                    granite:class="symmetricContainer"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/symmetricfield"
+                    fieldLabel="Border Width"
+                    getterFunction="window.guidelib.touchlib.style.shadowPopover.getButtonLabelWithLock"
+                    interaction="on"
+                    placement="bottom"
+                    button-id="borderWidthButton"
+                    setterFunction="window.guidelib.touchlib.style.shadowPopover.setButtonLabel"
+                    target="#borderWidthButton"
+                    wrapperClass="symmetricContainerWrapper propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <borderTopWidth
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldTopContent"
+                            granite:id="borderTop"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Top"
+                            name="border-top-width"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="border-top-width"
+                                theme-symmetric="toggleContent"/>
+                        </borderTopWidth>
+                        <borderRightWidth
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldTopContent"
+                            granite:id="borderRight"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Right"
+                            name="border-left-width"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="border-right-width"
+                                theme-symmetric="toggleContent"/>
+                        </borderRightWidth>
+                        <container
+                            granite:class="symmetricFieldLockContainer"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                            <items jcr:primaryType="nt:unstructured">
+                                <lock
+                                    granite:class="themeToggleLock"
+                                    granite:id="themeLock"
+                                    granite:title="Edit simultaneously"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/anchorbutton"
+                                    icon="linkOn"
+                                    name="lock">
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        theme-symmetric="themeToggleLock"
+                                        uipropertyname="borderWidthLock"/>
+                                </lock>
+                            </items>
+                        </container>
+                        <borderBottomWidth
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldBottomContent"
+                            granite:id="borderBottom"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Bottom"
+                            name="border-bottom-width"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="border-bottom-width"
+                                theme-symmetric="toggleContent"/>
+                        </borderBottomWidth>
+                        <borderLeftWidth
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldBottomContent"
+                            granite:id="borderLeft"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Left"
+                            name="border-left-width"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="border-left-width"
+                                theme-symmetric="toggleContent"/>
+                        </borderLeftWidth>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        uipropertyname="borderWidthPopover"/>
+                </borderWidth>
+                <borderStyle
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                    fieldLabel="Border Style"
+                    name="border-style"
+                    variant="quiet"
+                    wrapperClass="propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="border-style"/>
+                    <items jcr:primaryType="nt:unstructured">
+                        <selectPlaceholder
+                            jcr:primaryType="nt:unstructured"
+                            text="Select"
+                            value=""/>
+                        <hidden
+                            jcr:primaryType="nt:unstructured"
+                            text="Hidden"
+                            value="hidden"/>
+                        <dotted
+                            jcr:primaryType="nt:unstructured"
+                            text="Dotted"
+                            value="dotted"/>
+                        <dashed
+                            jcr:primaryType="nt:unstructured"
+                            text="Dashed"
+                            value="dashed"/>
+                        <solid
+                            jcr:primaryType="nt:unstructured"
+                            text="Solid"
+                            value="solid"/>
+                        <initial
+                            jcr:primaryType="nt:unstructured"
+                            text="Browser Default"
+                            value="initial"/>
+                        <inherit
+                            jcr:primaryType="nt:unstructured"
+                            text="Inherit From Parent"
+                            value="inherit"/>
+                    </items>
+                </borderStyle>
+                <borderColor
+                    granite:class="style-propertysheet-colorpicker"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                    showSwatches="{Boolean}false"
+                    fieldLabel="Border Color"
+                    name="border-color"
+                    wrapperClass="propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="border-color"/>
+                </borderColor>
+                <borderRadius
+                    granite:class="symmetricContainer"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/symmetricfield"
+                    fieldLabel="Border Radius"
+                    getterFunction="window.guidelib.touchlib.style.shadowPopover.getButtonLabelWithLock"
+                    interaction="on"
+                    placement="bottom"
+                    button-id="borderRadiusButton"
+                    setterFunction="window.guidelib.touchlib.style.shadowPopover.setButtonLabel"
+                    target="#borderRadiusButton"
+                    wrapperClass="symmetricContainerWrapper propertySheetCssProperty">
+                    <items jcr:primaryType="nt:unstructured">
+                        <borderTopLeftRadius
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldTopContent"
+                            granite:id="borderTopLeftRadius"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Top"
+                            name="border-top-left-radius"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="border-top-left-radius"
+                                theme-symmetric="toggleContent"/>
+                        </borderTopLeftRadius>
+                        <borderTopRightRadius
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldTopContent"
+                            granite:id="borderTopRightRadius"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Right"
+                            name="border-top-right-radius"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="border-top-right-radius"
+                                theme-symmetric="toggleContent"/>
+                        </borderTopRightRadius>
+                        <container
+                            granite:class="symmetricFieldLockContainer"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                            <items jcr:primaryType="nt:unstructured">
+                                <lock
+                                    granite:class="themeToggleLock"
+                                    granite:id="themeLock"
+                                    granite:title="Edit simultaneously"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/anchorbutton"
+                                    icon="linkOn"
+                                    name="lock">
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        theme-symmetric="themeToggleLock"
+                                        uipropertyname="borderRadiusLock"/>
+                                </lock>
+                            </items>
+                        </container>
+                        <borderBottomLeftRadius
+                            granite:class="symmetricFieldContent symmetricFieldLeftContent symmetricFieldBottomContent"
+                            granite:id="borderBottomLeftRadius"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Bottom"
+                            name="border-bottom-left-radius"
+                            suffix="px"
+                            wrapperClass="symmetricFieldLeftContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="border-bottom-left-radius"
+                                theme-symmetric="toggleContent"/>
+                        </borderBottomLeftRadius>
+                        <borderBottomRightRadius
+                            granite:class="symmetricFieldContent symmetricFieldRightContent symmetricFieldBottomContent"
+                            granite:id="borderBottomRightRadius"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/numericspinnerfield"
+                            emptyText="—"
+                            fieldLabel="Left"
+                            name="border-bottom-right-radius"
+                            suffix="px"
+                            wrapperClass="symmetricFieldRightContentWrapper">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="border-bottom-right-radius"
+                                theme-symmetric="toggleContent"/>
+                        </borderBottomRightRadius>
+                    </items>
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        uipropertyname="borderRadiusPopover"/>
+                </borderRadius>
+            </items>
+        </border>
+        <effects
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Effects"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+            <items jcr:primaryType="nt:unstructured">
+                <shadowContainer
+                    granite:class="style-multivalueFieldContainer propertySheetCssProperty"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <items jcr:primaryType="nt:unstructured">
+                        <addshadow
+                            granite:id="style-buttongroupfield"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Shadow"
+                            sling:resourceType="fd/af/authoring/components/granite/form/buttongroupfield"
+                            fieldLabel="Shadow"
+                            ignoreData="{Boolean}true"
+                            wrapperClass="shadowWrapper">
+                            <items jcr:primaryType="nt:unstructured">
+                                <add
+                                    granite:class="style-addshadowbutton"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                                    icon="add"
+                                    iconSize="XS"
+                                    text="Add"
+                                    value="add"
+                                    variant="minimal">
+                                    <granite:data
+                                        jcr:primaryType="nt:unstructured"
+                                        popover-target="#style-shadowPopover"/>
+                                </add>
+                            </items>
+                        </addshadow>
+                        <shadowpopover
+                            granite:id="style-shadowPopover"
+                            granite:class="style-shadowPopover"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/authoring/components/granite/form/popover"
+                            closable="on"
+                            collision="fit"
+                            interaction="off"
+                            target="#style-propertysheet-container button.style-addshadowbutton"
+                            within="#style-propertysheet-container">
+                            <items jcr:primaryType="nt:unstructured">
+                                <properties
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <shadowPosition
+                                            granite:class="style-shadowPosition"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/buttongroup"
+                                            ignoreData="true"
+                                            selectionMode="single">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <inside
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="Inside"
+                                                    value="inset"/>
+                                                <outside
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="Outside"
+                                                    value=""/>
+                                            </items>
+                                            <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                mvfield-elementproperty="shadowPosition"
+                                                mvfield-elementtype="popoverField"/>
+                                        </shadowPosition>
+                                        <horizontalShadow
+                                            granite:class="shadowHorizontal"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="fd/af/authoring/components/granite/form/slider"
+                                            emptyText="—"
+                                            fieldLabel="Horizontal Offset"
+                                            max="{Decimal}100"
+                                            min="{Decimal}-100"
+                                            name="horizontalShadow"
+                                            step="{Decimal}1"
+                                            suffix="px">
+                                            <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                mvfield-elementproperty="shadowHorizontal"
+                                                mvfield-elementtype="popoverField"/>
+                                        </horizontalShadow>
+                                        <verticalShadow
+                                            granite:class="shadowVertical"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="fd/af/authoring/components/granite/form/slider"
+                                            emptyText="—"
+                                            fieldLabel="Vertical Offset"
+                                            max="{Decimal}100"
+                                            min="{Decimal}-100"
+                                            name="vericalShadow"
+                                            step="{Decimal}1"
+                                            suffix="px">
+                                            <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                mvfield-elementproperty="shadowVertical"
+                                                mvfield-elementtype="popoverField"/>
+                                        </verticalShadow>
+                                        <blur
+                                            granite:class="shadowBlur"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="fd/af/authoring/components/granite/form/slider"
+                                            emptyText="—"
+                                            fieldLabel="Blur"
+                                            max="{Decimal}100"
+                                            min="{Decimal}0"
+                                            name="blur"
+                                            step="{Decimal}1"
+                                            suffix="px">
+                                            <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                mvfield-elementproperty="shadowBlur"
+                                                mvfield-elementtype="popoverField"/>
+                                        </blur>
+                                        <spread
+                                            granite:class="shadowSpread"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="fd/af/authoring/components/granite/form/slider"
+                                            emptyText="—"
+                                            fieldLabel="Spread"
+                                            name="spread"
+                                            suffix="px">
+                                            <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                mvfield-elementproperty="shadowSpread"
+                                                mvfield-elementtype="popoverField"/>
+                                        </spread>
+                                        <color
+                                            granite:class="shadowColor style-propertysheet-colorpicker"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                                            showSwatches="{Boolean}false"
+                                            fieldLabel="Color"
+                                            name="shadow-color">
+                                            <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                mvfield-elementproperty="shadowColor"
+                                                mvfield-elementtype="popoverField"/>
+                                        </color>
+                                    </items>
+                                </properties>
+                            </items>
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                mvfield-elementtype="popover"
+                                mvfield-popovertype="shadow"/>
+                        </shadowpopover>
+                        <mvFieldItems
+                            granite:class="style-shadowTable"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/table"
+                            orderable="{Boolean}true"
+                            skipEmptyRow="{Boolean}true">
+                            <columns jcr:primaryType="nt:unstructured">
+                                <moveupdown jcr:primaryType="nt:unstructured"/>
+                                <thumbnail jcr:primaryType="nt:unstructured"/>
+                                <icons
+                                    jcr:primaryType="nt:unstructured"
+                                    alignment="right"/>
+                            </columns>
+                            <items jcr:primaryType="nt:unstructured"/>
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                mvfield-elementtype="table"/>
+                        </mvFieldItems>
+                        <backgroundCssProperty
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="box-shadow"/>
+                        </backgroundCssProperty>
+                        <backgroundUiProperty
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                uipropertyname="shadowContainer"/>
+                        </backgroundUiProperty>
+                    </items>
+                </shadowContainer>
+                <opacity
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="fd/af/authoring/components/granite/form/slider"
+                    emptyText="—"
+                    fieldLabel="Opacity"
+                    max="100"
+                    min="0"
+                    normalizer="100"
+                    wrapperClass="opacityWrapper propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="opacity"/>
+                </opacity>
+            </items>
+        </effects>
+        <advanced
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Advanced"
+            granite:class="stylePropertySheetAdvanced"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+            <items jcr:primaryType="nt:unstructured">
+                <cssOverride
+                    granite:class="cssOverrides cssTextArea"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="CSS Override"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                    cols="15"
+                    emptyText="Additional styling properties"
+                    fieldDescription="Properties defined in CSS will override their values defined via the above controls."
+                    fieldLabel="CSS Override"
+                    name="cssOverride"
+                    resize="both"
+                    wrapperClass="cssOverridesWrapper propertySheetCssProperty">
+                    <granite:data
+                        jcr:primaryType="nt:unstructured"
+                        csspropertyname="cssOverride"/>
+                </cssOverride>
+                <pseudoElementsContainer
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/accordion"
+                    variant="quiet">
+                    <items jcr:primaryType="nt:unstructured">
+                        <before
+                            granite:class="beforePseudoElement cssTextArea"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Before Pseudo Element"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                            cols="15"
+                            fieldDescription="Properties defined in CSS will be applied to the ::before Pseudo element."
+                            fieldLabel="::before"
+                            name="beforePseudoElement"
+                            resize="both"
+                            wrapperClass="beforePseudoElementWrapper propertySheetCssProperty">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="beforePseudoElement"/>
+                        </before>
+                        <after
+                            granite:class="afterPseudoElement cssTextArea"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="After Pseudo Element"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                            cols="15"
+                            fieldDescription="Properties defined in CSS will be applied to the ::after Pseudo element."
+                            fieldLabel="::after"
+                            name="afterPseudoElement"
+                            resize="both"
+                            wrapperClass="afterPseudoElementWrapper propertySheetCssProperty">
+                            <granite:data
+                                jcr:primaryType="nt:unstructured"
+                                csspropertyname="afterPseudoElement"/>
+                        </after>
+                    </items>
+                </pseudoElementsContainer>
+            </items>
+        </advanced>
+    </items>
+</jcr:root>

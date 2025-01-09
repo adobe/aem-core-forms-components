@@ -13,7 +13,7 @@
                         id="af2_hcaptchacontainer"
                         cssSelector=".cmp-adaptiveform-hcaptcha"
                         longTitle="hCaptcha Widget and Text"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
                         <captchaLabel
                                 jcr:primaryType="nt:unstructured"
@@ -21,7 +21,7 @@
                                 id="af2_hcaptchawidgetlabel"
                                 cssSelector=".cmp-adaptiveform-hcaptcha__label"
                                 longTitle="hCaptcha Label"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -39,7 +39,7 @@
                                 id="af2_hcaptchawidget"
                                 cssSelector=".cmp-adaptiveform-hcaptcha__widget"
                                 longTitle="hCaptcha Widget"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -57,7 +57,7 @@
                                 id="af2_hcaptchaerrormessage"
                                 cssSelector=".cmp-adaptiveform-hcaptcha__errormessage"
                                 longTitle="hCaptcha Error Message"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </captchaErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">

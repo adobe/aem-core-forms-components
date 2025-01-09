@@ -9,7 +9,7 @@
             id="af2_accordionpanel"
             cssSelector=".cmp-accordion"
             longTitle="Accordion Panel Container"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <accordionLabelContainer
                         jcr:primaryType="nt:unstructured"
@@ -17,7 +17,7 @@
                         id="af2_accordionlabelcontainer"
                         cssSelector=".cmp-accordion__label-container"
                         longTitle="Accordion Label Container"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
                         <accordionLabel
                                 jcr:primaryType="nt:unstructured"
@@ -25,7 +25,7 @@
                                 id="af2_accordionlabel"
                                 cssSelector=".cmp-accordion__label"
                                 longTitle="Accordion Label"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <hover
                                         jcr:primaryType="nt:unstructured"
@@ -43,7 +43,7 @@
                                 id="af2_accordionhelpicon"
                                 cssSelector=".cmp-accordion__questionmark"
                                 longTitle="Accordion Help Icon"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_helpicon">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
@@ -82,7 +82,7 @@
                         id="af2_accordiondescriptionshort"
                         cssSelector=".cmp-accordion__shortdescription"
                         longTitle="Accordion Short Description"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                 </accordionDescriptionShort>
                 <accordionDescriptionLong
                         jcr:primaryType="nt:unstructured"
@@ -90,7 +90,7 @@
                         id="af2_accordiondescriptionlong"
                         cssSelector=".cmp-accordion__longdescription"
                         longTitle="Accordion Long Description"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -108,7 +108,7 @@
                     id="af2_accordionpanelitem"
                     cssSelector=".cmp-accordion__item"
                     longTitle="Accordion Panel Item"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
                         <accordionHeader
                                 jcr:primaryType="nt:unstructured"
@@ -116,7 +116,7 @@
                                 id="af2_accordionpanelheader"
                                 cssSelector=".cmp-accordion__header"
                                 longTitle="Accordion Header"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <active
                                         jcr:primaryType="nt:unstructured"
@@ -134,7 +134,7 @@
                             id="af2_accordionheaderbutton"
                             cssSelector=".cmp-accordion__button"
                             longTitle="Accordion Header Button"
-                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <accordionHeaderTitle
                                         jcr:primaryType="nt:unstructured"
@@ -142,7 +142,7 @@
                                         id="af2_accordionheadertitle"
                                         cssSelector=".cmp-accordion__title"
                                         longTitle="Accordion Header Title"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <active
                                                 jcr:primaryType="nt:unstructured"
@@ -160,7 +160,7 @@
                                         id="af2_accordionheadericon"
                                         cssSelector=".cmp-accordion__icon"
                                         longTitle="Accordion Header Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <active
                                                 jcr:primaryType="nt:unstructured"
@@ -190,7 +190,7 @@
                                 id="af2_accordionpanelwidget"
                                 cssSelector=".cmp-accordion__panel"
                                 longTitle="Accordion Panel Widget"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <active
                                         jcr:primaryType="nt:unstructured"

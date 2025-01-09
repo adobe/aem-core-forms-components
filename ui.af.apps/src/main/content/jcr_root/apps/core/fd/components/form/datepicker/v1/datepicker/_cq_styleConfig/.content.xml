@@ -8,7 +8,7 @@
             jcr:title="Base"
             id="af2_datepicker"
             longTitle="Base"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
@@ -16,7 +16,7 @@
                     id="af2_dateinputwidgetandtext"
                     cssSelector=".cmp-adaptiveform-datepicker"
                     longTitle="Date Picker Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                     secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <datepickerLabelContainer
@@ -25,7 +25,7 @@
                                 id="af2_datepickerlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-datepicker__label-container"
                                 longTitle="Datepicker Label Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <datepickerLabel
                                         jcr:primaryType="nt:unstructured"
@@ -33,7 +33,7 @@
                                         id="af2_datepickerlabel"
                                         cssSelector=".cmp-adaptiveform-datepicker__label"
                                         longTitle="Datepicker Label"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
@@ -51,7 +51,7 @@
                                         id="af2_datepickerhelpicon"
                                         cssSelector=".cmp-adaptiveform-datepicker__questionmark"
                                         longTitle="Datepicker Help Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
@@ -90,7 +90,7 @@
                                 id="af2_datepickerwidgetandtext"
                                 cssSelector=".cmp-adaptiveform-datepicker__widget"
                                 longTitle="Datepicker Widget"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_widgetAndText">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
@@ -117,7 +117,7 @@
                                 id="af2_datepickerdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-datepicker__shortdescription"
                                 longTitle="Datepicker Short Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </datepickerDescriptionShort>
                         <datepickerDescriptionLong
                                 jcr:primaryType="nt:unstructured"
@@ -125,7 +125,7 @@
                                 id="af2_datepickerdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-datepicker__longdescription"
                                 longTitle="Datepicker Long Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -143,7 +143,7 @@
                                 id="af2_datepickererrormessage"
                                 cssSelector=".cmp-adaptiveform-datepicker__errormessage"
                                 longTitle="Datepicker Error Message"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </datepickerErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">

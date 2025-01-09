@@ -8,7 +8,7 @@
             jcr:title="Base"
             id="af2_fileuploadfield"
             longTitle="Base"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
@@ -16,7 +16,7 @@
                     id="af2_fileuploadfieldwidgetandtext"
                     cssSelector=".cmp-adaptiveform-fileinput"
                     longTitle="File Upload Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                     secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <fileinputLabelContainer
@@ -25,7 +25,7 @@
                                 id="af2_fileinputlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-fileinput__label-container"
                                 longTitle="File Input Label Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <fileinputLabel
                                         jcr:primaryType="nt:unstructured"
@@ -33,7 +33,7 @@
                                         id="af2_fileinputlabel"
                                         cssSelector=".cmp-adaptiveform-fileinput__label"
                                         longTitle="File Input Label"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
@@ -51,7 +51,7 @@
                                         id="af2_fileinputhelpicon"
                                         cssSelector=".cmp-adaptiveform-fileinput__questionmark"
                                         longTitle="File Input Help Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
@@ -90,7 +90,7 @@
                                 id="af2_fileinputcontainer"
                                 cssSelector=".cmp-adaptiveform-fileinput__container"
                                 longTitle="File Input Widget Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_widgetAndText">
                             <items jcr:primaryType="nt:unstructured">
                                 <fileinputDragArea
@@ -99,7 +99,7 @@
                                         id="af2_fileinputdragarea"
                                         cssSelector=".cmp-adaptiveform-fileinput__dragarea"
                                         longTitle="File Input Widget Drag Area"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -125,7 +125,7 @@
                                         id="af2_fileinputicon"
                                         cssSelector=".cmp-adaptiveform-fileinput__icon"
                                         longTitle="File Input Widget Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -151,7 +151,7 @@
                                         id="af2_fileinputdragtext"
                                         cssSelector=".cmp-adaptiveform-fileinput__dragtext"
                                         longTitle="File Input Widget Drag Text"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
@@ -169,7 +169,7 @@
                                         id="af2_fileinputwidgetlabel"
                                         cssSelector=".cmp-adaptiveform-fileinput__widgetlabel"
                                         longTitle="File Input Widget"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
@@ -219,7 +219,7 @@
                                 id="af2_fileinputdescriptionshort"
                                 cssSelector=".cmp-adaptiveform-fileinput__shortdescription"
                                 longTitle="File Input Short Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </fileinputDescriptionShort>
                         <fileinputDescriptionLong
                                 jcr:primaryType="nt:unstructured"
@@ -227,7 +227,7 @@
                                 id="af2_fileinputdescriptionlong"
                                 cssSelector=".cmp-adaptiveform-fileinput__longdescription"
                                 longTitle="File Input Long Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                     jcr:primaryType="nt:unstructured"

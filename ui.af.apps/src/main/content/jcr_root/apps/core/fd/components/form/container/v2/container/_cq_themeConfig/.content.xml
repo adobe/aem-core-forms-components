@@ -10,14 +10,14 @@
             id="af2_page"
             cssSelector="body"
             longTitle="Page"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+            propertySheet="/core/fd/components/form/stylePropertySheet/common"/>
         <form
             jcr:primaryType="nt:unstructured"
             jcr:title="Form"
             id="af2_form"
             cssSelector=".cmp-adaptiveform-container"
             longTitle="Form"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <formTitle
                     jcr:primaryType="nt:unstructured"
@@ -30,7 +30,7 @@
             id="af2_base"
             cssSelector=".base"
             longTitle="Field"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <states jcr:primaryType="nt:unstructured">
                 <focus
                     jcr:primaryType="nt:unstructured"
@@ -59,7 +59,7 @@
                     id="af2_widgetAndText"
                     cssSelector="input,select,textarea"
                     longTitle="Field Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
                         <textWidgetAndText
                             jcr:primaryType="nt:unstructured"
@@ -166,13 +166,13 @@
         </panel>
 <!--        <mobileMenu-->
 <!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileMenu"/>-->
+<!--            target="/mnt/override/apps/fd/af/components/guideContainer/cq:styleConfig/items/mobileMenu"/>-->
 <!--        <mobileTitleBar-->
 <!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileTitleBar"/>-->
+<!--            target="/mnt/override/apps/fd/af/components/guideContainer/cq:styleConfig/items/mobileTitleBar"/>-->
 <!--        <mobileScrollIndicator-->
 <!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileScrollIndicator"/>-->
+<!--            target="/mnt/override/apps/fd/af/components/guideContainer/cq:styleConfig/items/mobileScrollIndicator"/>-->
         <Image
             jcr:primaryType="nt:unstructured"
             target="/mnt/override/apps/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image"/>

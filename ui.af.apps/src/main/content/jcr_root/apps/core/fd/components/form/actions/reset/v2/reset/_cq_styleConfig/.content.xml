@@ -9,7 +9,7 @@
             id="af2_resetbutton"
             cssSelector=".reset .cmp-adaptiveform-button__widget"
             longTitle="Reset Button"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+            propertySheet="/core/fd/components/form/stylePropertySheet/common"
             secondarySelectors="af2_guideContainer:af2_button">
             <items jcr:primaryType="nt:unstructured">
                 <buttonText
@@ -18,7 +18,7 @@
                     id="af2_resetbuttontext"
                     cssSelector=".reset .cmp-adaptiveform-button__text"
                     longTitle="Reset Button Text"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                     secondarySelectors="af2_guideContainer:af2_buttontext">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
@@ -45,7 +45,7 @@
                         id="af2_resetbuttondescriptionshort"
                         cssSelector=".reset .cmp-adaptiveform-button__shortdescription"
                         longTitle="Reset Button Short Description"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                 </buttonDescriptionShort>
                 <buttonDescriptionLong
                         jcr:primaryType="nt:unstructured"
@@ -53,7 +53,7 @@
                         id="af2_resetbuttondescriptionlong"
                         cssSelector=".reset .cmp-adaptiveform-button__longdescription"
                         longTitle="Reset Button Long Description"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -71,7 +71,7 @@
                         id="af2_resetbuttonhelpcontainer"
                         cssSelector=".reset .cmp-adaptiveform-button__help-container"
                         longTitle="Reset Button Help Container"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -89,7 +89,7 @@
                         id="af2_resetbuttonhelpicon"
                         cssSelector=".reset .cmp-adaptiveform-button__questionmark"
                         longTitle="Reset Button Help Icon"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                         secondarySelectors="af2_guideContainer:af2_helpicon">
                     <states jcr:primaryType="nt:unstructured">
                         <focus

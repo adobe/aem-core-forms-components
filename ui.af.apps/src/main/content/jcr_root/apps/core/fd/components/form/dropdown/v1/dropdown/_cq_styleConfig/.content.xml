@@ -8,7 +8,7 @@
             jcr:title="Base"
             id="af2_dropdownlist"
             longTitle="Base"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            propertySheet="/core/fd/components/form/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
@@ -16,7 +16,7 @@
                     id="af2_dropdownlistwidgetandtext"
                     cssSelector=".cmp-adaptiveform-dropdown"
                     longTitle="Dropdown Widget"
-                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    propertySheet="/core/fd/components/form/stylePropertySheet/common"
                     secondarySelectors="af2_guideContainer:af2_widgetAndText">
                     <items jcr:primaryType="nt:unstructured">
                         <dropdownLabelContainer
@@ -25,7 +25,7 @@
                                 id="af2_dropdownlabelcontainer"
                                 cssSelector=".cmp-adaptiveform-dropdown__label-container"
                                 longTitle="Dropdown Label Container"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <items jcr:primaryType="nt:unstructured">
                                 <dropdownLabel
                                         jcr:primaryType="nt:unstructured"
@@ -33,7 +33,7 @@
                                         id="af2_dropdownlabel"
                                         cssSelector=".cmp-adaptiveform-dropdown__label"
                                         longTitle="Dropdown Label"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
@@ -51,7 +51,7 @@
                                         id="af2_dropdownhelpicon"
                                         cssSelector=".cmp-adaptiveform-dropdown__questionmark"
                                         longTitle="Dropdown Help Icon"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
                                     <states jcr:primaryType="nt:unstructured">
                                         <focus
@@ -90,7 +90,7 @@
                                 id="af2_dropdownwidgetandtext"
                                 cssSelector=".cmp-adaptiveform-dropdown__widget"
                                 longTitle="Dropdown Widget"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_widgetAndText">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
@@ -117,7 +117,7 @@
                                 id="af2_dropdowndescriptionshort"
                                 cssSelector=".cmp-adaptiveform-dropdown__shortdescription"
                                 longTitle="Dropdown Short Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </dropdownDescriptionShort>
                         <dropdownDescriptionLong
                                 jcr:primaryType="nt:unstructured"
@@ -125,7 +125,7 @@
                                 id="af2_dropdowndescriptionlong"
                                 cssSelector=".cmp-adaptiveform-dropdown__longdescription"
                                 longTitle="Dropdown Long Description"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
@@ -143,7 +143,7 @@
                                 id="af2_dropdownerrormessage"
                                 cssSelector=".cmp-adaptiveform-dropdown__errormessage"
                                 longTitle="Dropdown Error Message"
-                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                propertySheet="/core/fd/components/form/stylePropertySheet/common">
                         </dropdownErrorMessage>
                     </items>
                     <states jcr:primaryType="nt:unstructured">

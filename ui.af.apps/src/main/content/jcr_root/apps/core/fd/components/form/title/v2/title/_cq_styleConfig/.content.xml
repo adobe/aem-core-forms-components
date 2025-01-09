@@ -9,6 +9,6 @@
             id="af2_formtitle"
             cssSelector=".cmp-title"
             longTitle="Form Title"
-            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+            propertySheet="/core/fd/components/form/stylePropertySheet/common"/>
     </items>
 </jcr:root>
