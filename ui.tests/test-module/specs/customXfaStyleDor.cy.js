@@ -26,22 +26,36 @@ describe ('Custom XFA Style in Document of Record', () => {
         formContainerEditPath = formPath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
         formContainerPathSelector = "[data-path='" + formContainerEditPath + "']";
 
-    it('select a custom template', () => {
-        cy.openAuthoring(formPath);
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerPathSelector);
-        cy.invokeEditableAction("[data-action='dor']");
-        cy.get('coral-select[name="template"]').click();
-        cy.get('coral-popover:visible').within(() => {
-            cy.get('coral-selectlist-item').contains('Custom').click();
+    let toggle_array = [];
+
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
         });
-        cy.get('foundation-autocomplete[name="./metaTemplateRef"] input[is="coral-textfield"]').type('/content/src/main/content/jcr_root/content/dam/formsanddocuments/core-components-it/customTemplate', { force: true });
+        cy.openAuthoring(formPath);
+    });
+
+    it('select a custom template', () => {
+        if (cy.af.isLatestAddon() && toggle_array.includes('FT_FORMS-2447')) {
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerPathSelector);
+            cy.invokeEditableAction("[data-action='dor']");
+            cy.get('coral-select[name="template"]').click();
+            cy.get('coral-popover:visible').within(() => {
+                cy.get('coral-selectlist-item').contains('Custom').click();
+            });
+            cy.get('foundation-autocomplete[name="./metaTemplateRef"] input[is="coral-textfield"]').type('/content/src/main/content/jcr_root/content/dam/formsanddocuments/core-components-it/customTemplate', {force: true});
+        }
     });
 
     it('dropdown for custom XFA style exist in the field', () => {
-        cy.openAuthoring(formPath);
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
-        cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get(".cmp-adaptiveform-textinput__editdialog coral-tab-label:contains('Document of Record')").click();
-        cy.get('coral-select[name="./dorFieldStyling"]').should('exist');
+        if (cy.af.isLatestAddon() && toggle_array.includes('FT_FORMS-2447')) {
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get(".cmp-adaptiveform-textinput__editdialog coral-tab-label:contains('Document of Record')").click();
+            cy.get('coral-select[name="./dorFieldStyling"]').should('exist');
+        }
     });
+
 });
