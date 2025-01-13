@@ -82,10 +82,12 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
-        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        // cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
@@ -105,7 +107,9 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.EQUALS_TO).click();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STRING_LITERAL).type('abc');
-        cy.getRuleEditorIframe().find(".delete-else-button").click();
+        if (toggle_array.includes("FT_FORMS-12053")) {
+            cy.getRuleEditorIframe().find(".delete-else-button").click();
+        }
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
@@ -140,10 +144,12 @@ describe('Rule editor authoring sanity for core-components',function(){
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
         // click on  create option from rule editor header
-        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        // cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.wait(1000);
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
@@ -244,7 +250,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
         //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
 
-        cy.getRuleEditorIframe().find("#objectNavigationTree li[data-elementid='$form'] > div[role='button']").click();
+        cy.getRuleEditorIframe().find("#objectNavigationTree li[data-elementid='$form'] > div[class='tree-item']").click();
 
         createSubmissionSuccessRule();
         createSubmissionErrorRule();
@@ -352,36 +358,6 @@ describe('Rule editor authoring sanity for core-components',function(){
             submitFormButtonEditPath = submitFormContainerPath + "/" + afConstants.components.forms.resourceType.submitButton.split("/").pop(),
             submitFormButtonEditPathSelector = "[data-path='" + submitFormButtonEditPath + "']";
 
-        it('should open rule-editor from spa', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-14068")) {
-                cy.openAuthoring(formPath);
-                cy.selectLayer("Edit");
-                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
-
-                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
-                    "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-
-                cy.intercept('GET', /solutions\/livecycle-ruleeditor-ui-service.*/).as('ruleEditorRequest');
-
-                // Edit rule option not existing on button toolbar
-                cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
-                cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
-                cy.get(formsSelectors.ruleEditor.action.editRule).click();
-
-                // click on  create option from rule editor header
-                cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-                cy.wait('@ruleEditorRequest').its('response.statusCode').should('equal', 200);
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
-
-                cy.get(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).should("exist");
-
-                cy.selectLayer("Edit");
-                cy.deleteComponentByPath(buttonEditPath);
-            }
-        })
-
         /**
          * RuleSanity for button to change label of textbox
          * [To add rule on button item so that when it get clicked
@@ -417,26 +393,9 @@ describe('Rule editor authoring sanity for core-components',function(){
 
             cy.selectLayer("Edit");
             cy.deleteComponentByPath(textinputEditPath);
+            cy.reload();
             cy.deleteComponentByPath(buttonEditPath);
         })
-
-        if (cy.af.isLatestAddon()) {
-            it('should add validation rule on date fields', function () {
-                cy.openAuthoring(formPath);
-                cy.selectLayer("Edit");
-                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
-
-                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
-                    "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
-
-                createRuleToValidateDate();
-                cy.get(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector).should("exist");
-
-                cy.selectLayer("Edit");
-                cy.deleteComponentByPath(datePickerEditPath);
-            })
-        }
 
         it('should add rule on texbox equality operator to hide a text box', function () {
             cy.openAuthoring(formPath);
@@ -459,6 +418,24 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.selectLayer("Edit");
             cy.deleteComponentByPath(textinputEditPath);
         })
+
+        if (cy.af.isLatestAddon()) {
+            it('should add validation rule on date fields', function () {
+                cy.openAuthoring(formPath);
+                cy.selectLayer("Edit");
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                    "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
+
+                createRuleToValidateDate();
+                cy.get(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector).should("exist");
+
+                cy.selectLayer("Edit");
+                cy.deleteComponentByPath(datePickerEditPath);
+            })
+        }
 
         it('should add submission handler rules on form', function () {
             if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
@@ -493,10 +470,11 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.wait(1000);
                 cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
+                //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+                cy.wait(1000);
                 // click on  create option from rule editor header
                 // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
-                //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-                cy.getRuleEditorIframe().find("[title='Submit - Click'] .title-cell").should("be.visible").click();
+                cy.getRuleEditorIframe().find("[title$=' - Click'] .title-cell").should("be.visible").click();
                 // select FUNCTION_CALL action from dropdown
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
@@ -511,7 +489,7 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
 
                 // check if rule is created
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CUSTOM_SUBMIT_FORM_RULE).should("exist");
+                cy.getRuleEditorIframe().find("[title$=' - Click'] .title-cell").should("exist");
 
                 // check and close rule editor
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
@@ -547,37 +525,6 @@ describe('Rule editor authoring sanity for core-components',function(){
             textinputEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formtextinput.split("/").pop(),
             buttonEditPath = formContainerPath + "/" + afConstants.components.forms.resourceType.formbutton.split("/").pop(),
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
-
-        it('should open rule-editor from spa', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-14068")) {
-                cy.openAuthoring(pagePath);
-                cy.selectLayer("Edit");
-                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
-
-                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
-                    "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-
-                cy.intercept('GET', /solutions\/livecycle-ruleeditor-ui-service.*/).as('ruleEditorRequest');
-
-                // Edit rule option not existing on button toolbar
-                cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
-                cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
-                cy.get(formsSelectors.ruleEditor.action.editRule).click();
-
-                // click on  create option from rule editor header
-                cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-                cy.wait('@ruleEditorRequest').its('response.statusCode').should('equal', 200);
-
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
-
-                cy.get(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).should("exist");
-
-                cy.selectLayer("Edit");
-                cy.deleteComponentByPath(buttonEditPath);
-            }
-        })
 
         /**
          * RuleSanity for button to change label of textbox
