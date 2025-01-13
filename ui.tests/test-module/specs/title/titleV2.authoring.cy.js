@@ -137,12 +137,14 @@ describe('Page - Authoring', function () {
             cy.get('[placeholder="New policy"]').eq(1).type("Default policy");
             cy.get(submitBtnSelector).click();
           }).then(() => {
-            cy.openSiteAuthoring(pagePath); 
-            dropTitleInContainer(); 
-            cy.contains('coral-button-label', 'Preview').should("exist").click({force : true});
-            getPreviewFrame().find('h2').should('exist');
-            cy.contains('button', 'Edit').should("exist").click({force : true});
-            cy.deleteComponentByTitle('Adaptive Form Title');  
+              cy.openSiteAuthoring(pagePath);
+              dropTitleInContainer();
+              // Switching from edit layer to preview layer is flaky, so using previewForm method
+              cy.previewForm(pagePath + ".html");
+              cy.get("h2").should("be.visible");
+              cy.openPage("");
+              cy.openSiteAuthoring(pagePath);
+              cy.deleteComponentByTitle('Adaptive Form Title');
           })
         });  
      });
