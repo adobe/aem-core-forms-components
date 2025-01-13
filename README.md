@@ -50,6 +50,8 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Terms and Conditions](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/termsandconditions/v1/termsandconditions)
 -   [Checkbox](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkbox/v1/checkbox)
 -   [Review](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/review/v1/review)
+-   [Turnstile](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/turnstile/v1/turnstile)
+
 
 ## System Requirements
 
@@ -59,7 +61,6 @@ The latest version of the AEM Forms Core Components, require the below minimum s
 | Forms Core Components | WCM Core Components | AEM 6.5 | Java  | Maven  |  
 |-----------------------|---------------------|---------| ----- | ------ | 
 | 1.1.62                | 2.24.6             | 6.5.20+ | 8, 11 | 3.3.9+ |
-
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 

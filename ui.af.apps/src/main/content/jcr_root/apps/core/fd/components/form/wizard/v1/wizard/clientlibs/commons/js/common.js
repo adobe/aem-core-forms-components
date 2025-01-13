@@ -29,7 +29,11 @@
                 active: {
                     tab: "cmp-adaptiveform-wizard__tab--active",
                     wizardpanel: "cmp-adaptiveform-wizard__wizardpanel--active"
-                }
+                },
+                stepped: {
+                    tab: "cmp-adaptiveform-wizard__tab--stepped",
+                    wizardpanel: "cmp-adaptiveform-wizard__wizardpanel--stepped",
+                }    
             };
 
             _active;
@@ -72,6 +76,48 @@
                 }
             }
 
+            addSteppedClass() {
+                const tabs = this.getCachedTabs();
+                const wizardPanels = this.getCachedWizardPanels();
+                const activeChildId =  this.getActiveWizardTabId(tabs)
+                const activeTab = this.getTabNavElementById(activeChildId);
+                if (activeTab.classList.contains(this.constructor.selectors.active.tab)) {
+                    activeTab.classList.add(this.constructor.selectors.stepped.tab);
+
+                    const correspondingPanel = Array.from(wizardPanels).find(panel =>
+                        panel.getAttribute("aria-labelledby") === activeTab.id
+                    );
+            
+                    if (correspondingPanel) {
+                        correspondingPanel.classList.add(this.constructor.selectors.stepped.wizardpanel);
+                    }
+                }
+            }
+
+            getTabNavElementById(tabId) {
+                let tabs = this.getCachedTabs();
+                if (tabs) {
+                    for (let i = 0; i < tabs.length; i++) {
+                        if (tabs[i].id === tabId) {
+                            return tabs[i];
+                        }
+                    }
+                }
+            }
+
+            getActiveWizardTabId(tabs) {
+                if (tabs) {
+                    var result = tabs[0].id;
+                    for (var i = 0; i < tabs.length; i++) {
+                        if (tabs[i].classList.contains(this.constructor.selectors.active.tab)) {
+                            result = tabs[i].id;
+                            break;
+                        }
+                    }
+                    return result;
+                }
+            }
+
             /**
              * Returns the index of the active tab, if no tab is active returns 0
              *
@@ -105,6 +151,7 @@
              */
             navigate(index) {
                 this._active = index;
+                this.addSteppedClass();
                 this.refreshActive();
             }
 

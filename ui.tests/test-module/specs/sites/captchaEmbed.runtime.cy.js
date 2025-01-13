@@ -31,4 +31,5 @@ describe("Captcha In Sites Runtime Test", () => {
         const model = formContainer._model.getElement(id)
         cy.get('.cmp-adaptiveform-recaptcha__widget > div.g-recaptcha').should('exist');
     })
+
 })

@@ -191,6 +191,7 @@ describe('component replace - Authoring', function () {
 
     context('Group independent replace action test', function () {
         const replaceCompPagePath = "/content/forms/af/core-components-it/samples/replace/replacewcmcomponents/basic",
+            submitBtnSelector = ".cq-dialog-submit",
             replaceCompPageUrl = replaceCompPagePath;
 
         const updateAllowedComponent = function (allow) {
@@ -208,10 +209,10 @@ describe('component replace - Authoring', function () {
                             .invoke('attr', 'checked').then(isChecked => {
                             if ((isChecked === 'checked' && !allow) || (isChecked !== 'checked' && allow)) {
                                 cy.get('[value="group:replace test group"]').eq(0).click({force: true}).then(() => {
-                                    cy.get('[title="Done"]').scrollIntoView().click();
+                                    cy.get(submitBtnSelector).scrollIntoView().click();
                                 });
                             } else {
-                                cy.get('[title="Done"]').scrollIntoView().click();
+                                cy.get(submitBtnSelector).scrollIntoView().click();
                             }
                         })
                     });

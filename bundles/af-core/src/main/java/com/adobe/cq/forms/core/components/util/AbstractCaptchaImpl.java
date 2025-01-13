@@ -28,7 +28,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements Captcha {
     public static final String CUSTOM_RECAPTCHA_PROPERTY_WRAPPER = "fd:captcha";
+    protected static final String CAPTCHA_CONFIG = "config";
+    protected static final String CAPTCHA_SITE_KEY = "siteKey";
+    protected static final String CAPTCHA_URI = "uri";
+    protected static final String CAPTCHA_SIZE = "size";
+    protected static final String CAPTCHA_THEME = "theme";
+    protected static final String CAPTCHA_THEME_LIGHT = "light";
+    protected static final String CAPTCHA_TYPE = "type";
+    protected static final String CAPTCHA_TYPE_IMAGE = "image";
+    protected static final String CAPTCHA_WIDGET_TYPE = "widgetType";
 
+    @Override
     @JsonIgnore
     public abstract String getProvider();
 
@@ -37,6 +47,7 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
         return super.getFieldType(FieldType.CAPTCHA);
     }
 
+    @JsonIgnore
     public abstract Map<String, Object> getCaptchaProperties();
 
     public Map<String, Object> getProperties() {
