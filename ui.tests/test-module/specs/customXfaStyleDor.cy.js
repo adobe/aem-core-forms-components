@@ -33,7 +33,10 @@ describe ('Custom XFA Style in Document of Record', () => {
             if (response.status === 200) {
                 toggle_array = response.body.enabled;
             }
-        });
+        })
+    });
+
+    beforeEach(() => {
         cy.openAuthoring(formPath);
     });
 
