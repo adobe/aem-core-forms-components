@@ -370,6 +370,25 @@
                                                     </table>
                                                 </items>
                                             </dorLayoutType>
+                                            <dorFieldStyling
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    emptyText="Select styling option"
+                                                    fieldLabel="Component Style"
+                                                    fieldDescription="These styles are derived from the Document of Record template (XDP) associated with this adaptive form."
+                                                    forceSelection="{Boolean}true"
+                                                    name="./dorFieldStyling">
+                                                <granite:rendercondition
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                                        toggleName="FT_FORMS-16858"/>
+                                                <datasource
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="fd/af/dor/datasource/fieldstyling"/>
+                                                <granite:data
+                                                        jcr:primaryType="nt:unstructured"
+                                                        af.listeners.onload="guidelib.touchlib.editLayer.dialogUtils.selectDefaultDoRFieldStyling()"/>
+                                            </dorFieldStyling>
                                             <dorNumCols
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
