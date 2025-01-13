@@ -416,4 +416,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId();
     }
 
+    @JsonIgnore
+    @Override
+    public AutoSaveConfiguration getAutoSaveConfig() {
+        return autoSaveConfig;
+    }
+
 }
