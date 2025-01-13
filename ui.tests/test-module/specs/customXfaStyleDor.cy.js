@@ -41,7 +41,7 @@ describe ('Custom XFA Style in Document of Record', () => {
     });
 
     it('select a custom template', () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes('FT_FORMS-2447')) {
+        if (cy.af.isLatestAddon() && toggle_array.includes('FT_FORMS-16858')) {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerPathSelector);
             cy.invokeEditableAction("[data-action='dor']");
             cy.get('coral-select[name="template"]').click();
@@ -53,7 +53,7 @@ describe ('Custom XFA Style in Document of Record', () => {
     });
 
     it('dropdown for custom XFA style exist in the field', () => {
-        if (cy.af.isLatestAddon() && toggle_array.includes('FT_FORMS-2447')) {
+        if (cy.af.isLatestAddon() && toggle_array.includes('FT_FORMS-16858')) {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get(".cmp-adaptiveform-textinput__editdialog coral-tab-label:contains('Document of Record')").click();

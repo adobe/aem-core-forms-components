@@ -381,7 +381,7 @@
                                                 <granite:rendercondition
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
-                                                        toggleName="FT_FORMS-2447"/>
+                                                        toggleName="FT_FORMS-16858"/>
                                                 <datasource
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="fd/af/dor/datasource/fieldstyling"/>
