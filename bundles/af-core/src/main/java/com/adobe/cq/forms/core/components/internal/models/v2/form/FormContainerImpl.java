@@ -354,7 +354,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
-        properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
+        if (this.autoSaveConfig != null && this.autoSaveConfig.isEnableAutoSave()) {
+            properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
+        }
         properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
         properties.put(FD_DATA_URL, getDataUrl());
 
@@ -414,6 +416,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public String getCustomFunctionUrl() {
         return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId();
+    }
+
+    @JsonIgnore
+    @Override
+    public AutoSaveConfiguration getAutoSaveConfig() {
+        return autoSaveConfig;
     }
 
 }

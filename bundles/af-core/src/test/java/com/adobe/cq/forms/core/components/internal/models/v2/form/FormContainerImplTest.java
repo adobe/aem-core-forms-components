@@ -47,16 +47,13 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
-import com.adobe.cq.forms.core.components.models.form.FormContainer;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
-import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
+import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
@@ -79,6 +76,8 @@ public class FormContainerImplTest {
     private static final String CONTENT_DAM_ROOT = "/content/dam/formsanddocuments/demo";
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
     private static final String PATH_FORM_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/formcontainerv2-without-fieldtype";
+
+    private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
     private static final String PATH_FORM_1_WITHOUT_REDIRECT = CONTENT_ROOT + "/formcontainerv2WithoutRedirect";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
@@ -242,6 +241,14 @@ public class FormContainerImplTest {
     void testJSONExport() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));
+    }
+
+    @Test
+    void testJSONExportWithAutoSaveEnable() throws Exception {
+        context.load().json(BASE + "/test-content-auto-save.json", PATH_FORM_WITH_AUTO_SAVE);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_AUTO_SAVE,
+            FormContainer.class, context);
+        Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_WITH_AUTO_SAVE));
     }
 
     @Test
@@ -555,4 +562,63 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getCustomFunctionUrl());
     }
+
+    @Test
+    public void testGetAutoSaveProperties() throws Exception {
+        context.load().json(BASE + "/test-content-auto-save.json", PATH_FORM_WITH_AUTO_SAVE);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_AUTO_SAVE,
+            FormContainer.class, context);
+        assertNotNull(formContainer.getAutoSaveConfig());
+        assertTrue(formContainer.getAutoSaveConfig().isEnableAutoSave());
+        assertEquals(AutoSaveConfiguration.AutoSaveStrategyType.TIME, formContainer.getAutoSaveConfig().getAutoSaveStrategyType());
+    }
+
+    @Test
+    public void testDefaultGetAutoSaveConfig() throws Exception {
+        FormContainer formContainer1 = new FormContainer() {
+
+            @Override
+            public FormMetaData getMetaData() {
+                return null;
+            }
+
+            @Override
+            public String getEncodedCurrentPagePath() {
+                return null;
+            }
+
+            @Override
+            public String getThankYouMessage() {
+                return null;
+            }
+
+            @Override
+            public List<? extends ComponentExporter> getItems() {
+                return null;
+            }
+
+            @Override
+            public String getGridClassNames() {
+                return null;
+            }
+
+            @Override
+            public Map<String, String> getColumnClassNames() {
+                return null;
+            }
+
+            @Override
+            public int getColumnCount() {
+                return 0;
+            }
+
+            @Override
+            public AllowedComponentsExporter getExportedAllowedComponents() {
+                return null;
+            }
+        };
+        ;
+        assertNull(formContainer1.getAutoSaveConfig());
+    }
+
 }

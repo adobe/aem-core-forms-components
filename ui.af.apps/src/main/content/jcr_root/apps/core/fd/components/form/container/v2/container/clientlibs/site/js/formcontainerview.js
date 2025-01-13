@@ -88,7 +88,7 @@
          */
          #setupAutoSave(formModel) {
             const autoSaveProperties = formModel?.properties?.['fd:autoSave'];
-            const enableAutoSave = autoSaveProperties?.['fd:enableAutoSave'];
+            const enableAutoSave = this.#getAutoSaveAttribute();
             if (enableAutoSave) {
                 const autoSaveStrategyType = autoSaveProperties['fd:autoSaveStrategyType'];
                 const autoSaveInterval = autoSaveProperties['fd:autoSaveInterval'];
@@ -102,6 +102,10 @@
                     }, parseInt(autoSaveInterval) * 1000);
                 }
             }
+        }
+
+        #getAutoSaveAttribute() {
+            return this.getFormElement()?.getAttribute('data-cmp-auto-save') === 'true';
         }
     }
 
