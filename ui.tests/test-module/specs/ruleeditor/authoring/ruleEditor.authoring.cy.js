@@ -398,7 +398,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         })
 
         if (cy.af.isLatestAddon()) {
-            it.skip('should add validation rule on date fields', function () {
+            it('should add validation rule on date fields', function () {
                 cy.openAuthoring(formPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
