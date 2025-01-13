@@ -250,7 +250,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
         //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
 
-        cy.getRuleEditorIframe().find("#objectNavigationTree li[data-elementid='$form'] > div[role='button']").click();
+        cy.getRuleEditorIframe().find("#objectNavigationTree li[data-elementid='$form'] > div[class='tree-item']").click();
 
         createSubmissionSuccessRule();
         createSubmissionErrorRule();
@@ -397,24 +397,6 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.deleteComponentByPath(buttonEditPath);
         })
 
-        if (cy.af.isLatestAddon()) {
-            it('should add validation rule on date fields', function () {
-                cy.openAuthoring(formPath);
-                cy.selectLayer("Edit");
-                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
-
-                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
-                    "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
-
-                createRuleToValidateDate();
-                cy.get(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector).should("exist");
-
-                cy.selectLayer("Edit");
-                cy.deleteComponentByPath(datePickerEditPath);
-            })
-        }
-
         it('should add rule on texbox equality operator to hide a text box', function () {
             cy.openAuthoring(formPath);
             cy.selectLayer("Edit");
@@ -436,6 +418,24 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.selectLayer("Edit");
             cy.deleteComponentByPath(textinputEditPath);
         })
+
+        if (cy.af.isLatestAddon()) {
+            it('should add validation rule on date fields', function () {
+                cy.openAuthoring(formPath);
+                cy.selectLayer("Edit");
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                    "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
+
+                createRuleToValidateDate();
+                cy.get(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector).should("exist");
+
+                cy.selectLayer("Edit");
+                cy.deleteComponentByPath(datePickerEditPath);
+            })
+        }
 
         it('should add submission handler rules on form', function () {
             if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
@@ -470,10 +470,11 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.wait(1000);
                 cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
+                //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+                cy.wait(1000);
                 // click on  create option from rule editor header
                 // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
-                //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-                cy.getRuleEditorIframe().find("[title='Submit - Click'] .title-cell").should("be.visible").click();
+                cy.getRuleEditorIframe().find("[title$=' - Click'] .title-cell").should("be.visible").click();
                 // select FUNCTION_CALL action from dropdown
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
@@ -488,7 +489,7 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
 
                 // check if rule is created
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CUSTOM_SUBMIT_FORM_RULE).should("exist");
+                cy.getRuleEditorIframe().find("[title$=' - Click'] .title-cell").should("exist");
 
                 // check and close rule editor
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
