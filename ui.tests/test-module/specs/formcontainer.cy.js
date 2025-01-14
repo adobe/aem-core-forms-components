@@ -76,7 +76,18 @@ describe('Page/Form Authoring', function () {
         cy.get("coral-numberinput[name='./fd:autoSaveInterval']").should("exist");
     }
 
-
+    const checkValidatorFunctioning = function(formContainerEditPathSelector) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cmp-adaptiveform-container__editdialog').contains('Submission').click({force:true});
+        cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
+        cy.get("._coral-Menu-itemLabel").contains('Submit to REST endpoint').should('be.visible').click();
+        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").clear({force: true}).type("invalid-url");
+        cy.get('.coral-Form-errorlabel').should('contain.text', "Enter a valid URL for the POST request");
+        cy.get("[name='./restEndpointPostUrl']").should("exist").clear().type("http://localhost:4502/some/endpoint");
+        cy.get('.coral-Form-errorlabel').should('not.exist');
+        cy.get('.cq-dialog-submit').click();
+    };
 
     const checkAndSaveSubmitAction = function(formContainerEditPathSelector) {
         // click configure action on adaptive form container component
@@ -107,11 +118,11 @@ describe('Page/Form Authoring', function () {
             cy.get("[name='./restEndpointConfigPath']").should("exist").should("be.visible");
             cy.get("coral-radio[name='./restEndPointSource'][value='posturl']").first().click();
             cy.get("[name='./restEndpointPostUrl']").should("exist").should("be.visible");
+            cy.get("[name='./restEndpointPostUrl']").should("exist").clear().type("http://localhost:4502/some/endpoint");
             cy.get("[name='./restEndpointConfigPath']").should("exist").should("not.be.visible");
         }
-        cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
-
         //save the configuration
+        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").clear().type("http://localhost:4502/some/endpoint");
         cy.get('.cq-dialog-submit').click();
     };
 
@@ -243,6 +254,9 @@ describe('Page/Form Authoring', function () {
                 }
             });
 
+            it('check validator functioning for REST endpoint URL', function() {
+                checkValidatorFunctioning(formContainerEditPathSelector);
+            });
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
@@ -296,6 +310,10 @@ describe('Page/Form Authoring', function () {
                     checkEditDialog(formContainerEditPathSelector);
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 })
+
+                it('check validator functioning for REST endpoint URL', function() {
+                    checkValidatorFunctioning(formContainerEditPathSelector);
+                });
         });
 
         context("Render Forms in Disabled mode", function () {
