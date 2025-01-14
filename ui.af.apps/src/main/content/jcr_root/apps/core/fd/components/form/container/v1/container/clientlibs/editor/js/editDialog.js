@@ -378,18 +378,18 @@
             if(restEndPointSource.length == 0 || isPostUrlSelected){
                 Utils.showComponent(restEndPointUrlTextBox, 'div');
                 Utils.hideComponent(restEndpointConfigPath, 'div');
-                restEndPointUrlTextBox.setAttribute("data-rest-endpoint-url-validation", "");
+                restEndPointUrlTextBox?.setAttribute("data-rest-endpoint-url-validation", "");
             } else {
                 Utils.showComponent(restEndpointConfigPath, 'div');
                 Utils.hideComponent(restEndPointUrlTextBox, 'div');
-                restEndPointUrlTextBox.removeAttribute("data-rest-endpoint-url-validation");
+                restEndPointUrlTextBox?.removeAttribute("data-rest-endpoint-url-validation");
             }
         } else {
             Utils.hideComponent(restEndPointSource, 'div');
             Utils.hideComponent(restEndPointUrlTextBox, 'div');
             Utils.hideComponent(restEndpointConfigPath, 'div');
             restEndPointSource.parent('div').parent('div').hide();
-            restEndPointUrlTextBox.removeAttribute("data-rest-endpoint-url-validation");
+            restEndPointUrlTextBox?.removeAttribute("data-rest-endpoint-url-validation");
         }
     }
 
@@ -496,12 +496,14 @@
     function registerRestEndpointUrlValidator() {
         $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
             selector: "[data-rest-endpoint-url-validation]",
-            validate: function(el) {
-                var url = el.value;
-                var absoluteUrlPattern = /^(?:[a-z]+:)?\/\//i;  // Pattern to match absolute URLs
-
+            validate: (el) => {
+                const url = el.value;
+                // Regex to validate absolute URLs starting with http:// or https:// only
+                const absoluteUrlPattern = /^https?:\/\/.+$/i;
                 if (!absoluteUrlPattern.test(url)) {
-                    return Granite.I18n.getMessage("Enter a valid URL for the POST request. Ensure the URL starts with 'https://' or 'http://' and follows this structure: https://www.server.com/path/to/resource");
+                    return Granite.I18n.getMessage(
+                        "Enter a valid URL for the POST request. Ensure the URL starts with 'https://' or 'http://' and follows this structure: https://www.server.com/path/to/resource."
+                    );
                 }
             }
         });
