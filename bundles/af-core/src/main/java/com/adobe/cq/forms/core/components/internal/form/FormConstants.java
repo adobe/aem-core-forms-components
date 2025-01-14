@@ -142,6 +142,6 @@ public final class FormConstants {
 
     /* The resource type for the pre-selected the linked panel */
     public final static String RT_FD_FORM_REVIEW_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "review/v1/datasource";
-    
+
     public static final String RT_FD_FORM_PASSWORD_V1 = RT_FD_FORM_PREFIX + "password/v1/password";
 }

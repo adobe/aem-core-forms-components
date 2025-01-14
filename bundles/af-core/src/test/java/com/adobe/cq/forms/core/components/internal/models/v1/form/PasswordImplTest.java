@@ -16,8 +16,6 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import static org.junit.Assert.assertEquals;
-
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,14 +28,15 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Password;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
-
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+
+import static org.junit.Assert.assertEquals;
 
 @ExtendWith(AemContextExtension.class)
 public class PasswordImplTest {
 
-	private static final String BASE = "/form/password";
+    private static final String BASE = "/form/password";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PASSWORD_DATALAYER = CONTENT_ROOT + "/password-datalayer";
     private static final String PATH_PASSWORD_CUSTOMIZED = CONTENT_ROOT + "/password-customized";
