@@ -46,10 +46,6 @@ public class PasswordImplTest {
 
     private static final String PATH_PASSWORD_PATTERN = CONTENT_ROOT + "/password-pattern";
 
-    private static final String PATH_PASSWORD = CONTENT_ROOT + "/password";
-
-    private static final String PATH_PASSWORD_PATTERN = CONTENT_ROOT + "/password-pattern";
-
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
