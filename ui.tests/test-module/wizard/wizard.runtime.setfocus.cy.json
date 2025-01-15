@@ -1,0 +1,76 @@
+{
+  "specs/wizard/wizard.runtime.setfocus.cy.js": {
+    "should focus in the panel if text is first item": [
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "getCookie\tlogin-token"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\tcontent/forms/af/core-components-it/samples/wizard/setfocus.html?wcmmode=disabled"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "document\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tform"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-407df1d5f4 button"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-407df1d5f4 button"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#text-8a86785ab4"
+      },
+      {
+        "type": "cy:command",
+        "severity": "error",
+        "message": "assert\texpected **<div#text-8a86785ab4.cmp-adaptiveform-text.cmp-adaptiveform-text__label>** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "error",
+        "message": "should\tisElementInViewport"
+      }
+    ]
+  }
+}

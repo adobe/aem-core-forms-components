@@ -1,0 +1,446 @@
+{
+  "specs/LocaleTest.cy.js": {
+    "Korean is loaded": [
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "getCookie\tlogin-token"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#username"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\tadmin"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#password"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\tadmin"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<button#submit-button._coral-Button._coral-Button--cta>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "page load\t--waiting for new page to load--"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "new url\thttp://localhost:4502/aem/start.html"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\t/content/dam/formsanddocuments/core-components-it/samples/af2-form-translation/jcr:content?wcmmode=disabled&afAcceptLang=ko-kr"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "document\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-accordion > .cmp-accordion__label-container > label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **아코디언** to equal **아코디언**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.button.base:not(.submit):not(.reset) span"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **단추** to equal **단추**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-checkboxgroup:has(.checkboxgroup1) .cmp-adaptiveform-checkboxgroup__label-container > label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **확인란 그룹** to equal **확인란 그룹**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-checkboxgroup:has(.checkboxgroup1) > div > div > label > span"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "eq\t0"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **항목 1** to equal **항목 1**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-checkboxgroup:has(.checkboxgroup2) .cmp-adaptiveform-checkboxgroup__label-container > label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **동물 선택** to equal **동물 선택**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-checkboxgroup:has(.checkboxgroup2) > div > div > label > span"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "eq\t0"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **개** to equal **개**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-datepicker label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **날짜 입력** to equal **날짜 입력**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-dropdown label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **드롭다운** to equal **드롭다운**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-emailinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **이메일 입력** to equal **이메일 입력**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-fileinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **첨부파일** to equal **첨부파일**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-fileinput__widgetlabel"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **붙이다** to equal **붙이다**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-tabs label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **상단의 탭** to equal **상단의 탭**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-numberinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **숫자 입력** to equal **숫자 입력**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-container__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **패널** to equal **패널**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-radiobutton__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **라디오 버튼** to equal **라디오 버튼**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.submit span"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **전송** to equal **전송**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-telephoneinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **전화 입력** to equal **전화 입력**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-textinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **텍스트 입력** to equal **텍스트 입력**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-title__text"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **타이틀** to equal **타이틀**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cmp-adaptiveform-wizard__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.text()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **마법사** to equal **마법사**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **Enter 키를 눌러 파일 삭제** to equal **Enter 키를 눌러 파일 삭제**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **파일 ${0}이(가) 예상 크기 ${1}MB를 초과합니다.** to equal **파일 ${0}이(가) 예상 크기 ${1}MB를 초과합니다.**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **파일 이름이 (.)으로 시작하거나, \\\\ / : * ? \" < > | ; % $를 포함하거나, nul, prn, con, lpt 또는 com과 같이 예약된 키워드인 파일은 첨부하지 마십시오.** to equal **파일 이름이 (.)으로 시작하거나, \\\\ / : * ? \" < > | ; % $를 포함하거나, nul, prn, con, lpt 또는 com과 같이 예약된 키워드인 파일은 첨부하지 마십시오.**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **파일 ${0}은(는) 지원되지 않는 파일 유형입니다.** to equal **파일 ${0}은(는) 지원되지 않는 파일 유형입니다.**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "error",
+        "message": "assert\texpected **temp** to equal **양식을 제출하는 중 내부 오류가 발생했습니다.**"
+      }
+    ]
+  }
+}

@@ -1,0 +1,606 @@
+{
+  "specs/button/button.authoring.cy.js": {
+    "open edit dialog of Button": [
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#username"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\tadmin"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#password"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\tadmin"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<button#submit-button._coral-Button._coral-Button--cta>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "page load\t--waiting for new page to load--"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "new url\thttp://localhost:4502/aem/start.html"
+      },
+      {
+        "type": "cy:request",
+        "severity": "success",
+        "message": "/libs/granite/csrf/token.json\nStatus: 200\nResponse body: {\n  \"token\": \"eyJleHAiOjE3MjY1NTYwNzAsImlhdCI6MTcyNjU1NTQ3MH0.XcB3_xLzGMdj3PZkoW1TUtocICpYPzvXGtw5pJe0xCU\"\n}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "its\t.body.token"
+      },
+      {
+        "type": "cy:request",
+        "severity": "success",
+        "message": "/libs/cq/security/userinfo.json\nStatus: 200\nResponse body: {\n  \"userID\": \"admin\",\n  \"userName\": \"Administrator\",\n  \"userName_xss\": \"Administrator\",\n  \"home\": \"/home/users/s/sYHRBtpKuC4jA5bWbAsW\",\n  \"impersonated\": false,\n  \"allowedApps\": [\n    {\n      \"appName\": \"My Workflows\",\n      \"appDescription\": \"Manage your workflows.\",\n      \"iconClass\": \"myworkflows\",\n      \"path\": \"/libs/cq/workflow/content/myworkflows\",\n      \"vanityPath\": \"/myworkflows\"\n    },\n    {\n      \"appName\": \"Websites\",\n      \"appDescription\": \"Create and manage multiple websites.\",\n      \"iconClass\": \"siteadmin\",\n      \"path\": \"/libs/wcm/core/content/siteadmin\",\n      \"vanityPath\": \"/siteadmin\"\n    },\n    {\n      \"appName\": \"Digital Assets\",\n      \"appDescription\": \"Organize your various digital assets.\",\n      \"iconClass\": \"damadmin\",\n      \"path\": \"/libs/wcm/core/content/damadmin\",\n      \"vanityPath\": \"/damadmin\"\n    },\n    {\n      \"appName\": \"Campaigns\",\n      \"appDescription\": \"Manage your marketing campaigns.\",\n      \"iconClass\": \"mcmadmin\",\n      \"path\": \"/libs/mcm/content/admin\",\n      \"vanityPath\": \"/mcmadmin\"\n    },\n    {\n      \"appName\": \"Inbox\",\n      \"appDescription\": \"Manage your inbox items.\",\n      \"iconClass\": \"inbox\",\n      \"path\": \"/libs/cq/workflow/content/inbox\",\n      \"vanityPath\": \"/inbox\"\n    },\n    {\n      \"appName\": \"Users\",\n      \"appDescription\": \"Manage your users and groups.\",\n      \"iconClass\": \"useradmin\",\n      \"path\": \"/libs/cq/security/content/admin\",\n      \"vanityPath\": \"/useradmin\"\n    },\n    {\n      \"appName\": \"Tools\",\n      \"appDescription\": \"Maintain and configure your system.\",\n      \"iconClass\": \"misc\",\n      \"path\": \"/libs/wcm/core/content/misc\",\n      \"vanityPath\": \"/miscadmin\"\n    },\n    {\n      \"appName\": \"Tagging\",\n      \"appDescription\": \"Organize your tags and their namespaces.\",\n      \"iconClass\": \"tagadmin\",\n      \"path\": \"/libs/cq/tagging/content/tagadmin\",\n      \"vanityPath\": \"/tagging\"\n    }\n  ],\n  \"preferences\": {\n    \"cq.authoring.editor.page.showTour62\": \"false\",\n    \"granite.shell.showonboarding620\": \"false\",\n    \"cq.authoring.editor.theme.showTour\": \"false\",\n    \"forms.wizard.preferences.template-switch-dialog\": \"{\\\"showAgain\\\":true}\",\n    \"forms.wizard.recent.theme\": \"[{\\\"timestamp\\\":1720172788585,\\\"assetPath\\\":\\\"/libs/fd/af/themes/canvas\\\"}]\",\n    \"cq.authoring.editor.template.showOnboarding\": \"false\",\n    \"cq.authoring.editor.form.showTour\": \"false\",\n    \"cq.authoring.editor.template.showTour\": \"false\",\n    \"cq.authoring.ruleeditor.showTour\": \"false\",\n    \"cq.authoring.editor.page.showOnboarding62\": \"false\",\n    \"forms.wizard.recent.template\": \"[{\\\"timestamp\\\":1720172788593,\\\"assetPath\\\":\\\"/conf/core-components-examples/settings/wcm/templates/af-blank-v2\\\"}]\"\n  }\n}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "its\t.body.home"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t@token"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t@home"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\t/editor.html/content/forms/af/core-components-it/blank.html"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "document\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t{done: false}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "document\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t{done: false}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-Overlay--component[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.attr()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-Overlay--component[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#EditableToolbar button[data-path=\"/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **[ <button._coral-Button._coral-Button--primary._coral-Button--quiet.cq-editable-action.afActionCustomFont>, 10 more... ]** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#EditableToolbar [data-action=\"DELETE\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<button._coral-Button._coral-Button--primary._coral-Button--quiet.cq-editable-action.afActionCustomFont>** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tcoral-dialog.is-open[role='alertdialog'] coral-dialog-footer [is='coral-button']:last-child"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<button#DELETE._coral-Button._coral-Button--warning>** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t@isEditableUpdateEventComplete"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "its\t.done"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **true** to equal **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t@isOverlayRepositionEventComplete"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "its\t.done"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **true** to equal **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.editor-GlobalBar-layerSwitcher"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#selectlayer-popover [data-layer=\"Edit\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<button.js-editor-LayerSwitcherTrigger._coral-Menu-item._coral-ButtonList-item>** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#selectlayer-popover [data-layer=\"Edit\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.js-editor-GlobalBar-layerCurrent[data-layer=\"Edit\"].is-selected"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-Overlay--component[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.attr()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-Overlay--component[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#EditableToolbar button[data-path=\"/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **[ <button._coral-Button._coral-Button--primary._coral-Button--quiet.cq-editable-action.afActionCustomFont>, 1 more... ]** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t[data-action='INSERT']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<button._coral-Button._coral-Button--primary._coral-Button--quiet.cq-editable-action.afActionCustomFont>** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:log",
+        "severity": "success",
+        "message": "remaining attempts **20**"
+      },
+      {
+        "type": "cy:log",
+        "severity": "success",
+        "message": "time remaining **10000**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.InsertComponentDialog-components input[type='search']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "clear\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\tAdaptive Form Button"
+      },
+      {
+        "type": "cy:log",
+        "severity": "success",
+        "message": "[object Object]"
+      },
+      {
+        "type": "cy:log",
+        "severity": "success",
+        "message": "**NICE!**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.InsertComponentDialog-components input[type='search']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\t{enter}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.InsertComponentDialog-components [value=\"/apps/forms-components-examples/components/form/button\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<coral-list-item._coral-Menu-item>** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.InsertComponentDialog-components [value=\"/apps/forms-components-examples/components/form/button\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t0, 0"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-Overlay--component[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.attr()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-Overlay--component[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#EditableToolbar button[data-path=\"/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **[ <button._coral-Button._coral-Button--primary._coral-Button--quiet.cq-editable-action.afActionCustomFont>, 10 more... ]** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t[data-action='CONFIGURE']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<button._coral-Button._coral-Button--primary._coral-Button--quiet.cq-editable-action.afActionCustomFont>** to be **visible**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t[name='./name']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<input#coral-id-1083.coral-Form-field._coral-Textfield>** to exist in the DOM"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t[name='./visible']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **[ <coral-checkbox.cmp-adaptiveform-base__visible.coral-Form-field._coral-Checkbox>, 1 more... ]** to exist in the DOM"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tcoral-checkbox[name='./enabled']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<coral-checkbox.cmp-adaptiveform-base__enabled.coral-Form-field._coral-Checkbox>** to exist in the DOM"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t[name='./readOnly']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **[name=**'./readOnly'**]** not to exist in the DOM"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-dialog-cancel"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-dialog-cancel"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **.cq-dialog-cancel** not to exist in the DOM"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "document\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t{done: false}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "window\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "document\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t{done: false}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-Overlay--component[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "invoke\t.attr()"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#EditableToolbar button[data-path=\"/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t.cq-Overlay--component[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "first\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t{force: true}"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#EditableToolbar button[data-path=\"/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "error",
+        "message": "assert\texpected **[ <button._coral-Button._coral-Button--primary._coral-Button--quiet.cq-editable-action.afActionCustomFont>, 10 more... ]** to be **visible**"
+      }
+    ]
+  }
+}

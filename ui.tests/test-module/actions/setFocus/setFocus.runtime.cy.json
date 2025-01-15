@@ -1,0 +1,321 @@
+{
+  "specs/actions/setFocus/setFocus.runtime.cy.js": {
+    "Check setFocus for all components": [
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "getCookie\tlogin-token"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#username"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\tadmin"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#password"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\tadmin"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<button#submit-button._coral-Button._coral-Button--cta>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "page load\t--waiting for new page to load--"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "new url\thttp://localhost:4502/aem/start.html"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\tcontent/forms/af/core-components-it/samples/setfocustest.html?wcmmode=disabled"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "document\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tform"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t[data-cmp-is=\"adaptiveFormPanel\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "find\t[data-cmp-is]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#checkboxgroup-382feedeae.cmp-adaptiveform-checkboxgroup.cmp-adaptiveform-checkboxgroup--empty>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#checkboxgroup-382feedeae.cmp-adaptiveform-checkboxgroup.cmp-adaptiveform-checkboxgroup--empty>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#radiobutton-a9d3bfee7a.cmp-adaptiveform-radiobutton.cmp-adaptiveform-radiobutton--empty>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#radiobutton-a9d3bfee7a.cmp-adaptiveform-radiobutton.cmp-adaptiveform-radiobutton--empty>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#fileinput-78dd6c94f0.cmp-adaptiveform-fileinput.cmp-adaptiveform-fileinput--empty>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#fileinput-78dd6c94f0.cmp-adaptiveform-fileinput.cmp-adaptiveform-fileinput--empty>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#datepicker-f0a1b401bd.cmp-adaptiveform-datepicker.cmp-adaptiveform-datepicker--empty>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#datepicker-f0a1b401bd.cmp-adaptiveform-datepicker.cmp-adaptiveform-datepicker--empty>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#datepicker-3ca04ab1ff.cmp-adaptiveform-datepicker.cmp-adaptiveform-datepicker--empty.datePickerTarget>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#datepicker-3ca04ab1ff.cmp-adaptiveform-datepicker.cmp-adaptiveform-datepicker--empty.datePickerTarget>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#dropdown-b695f801f8.cmp-adaptiveform-dropdown.cmp-adaptiveform-dropdown--empty>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#dropdown-b695f801f8.cmp-adaptiveform-dropdown.cmp-adaptiveform-dropdown--empty>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#emailinput-b6d510b1a7.cmp-adaptiveform-emailinput.cmp-adaptiveform-emailinput--empty>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#emailinput-b6d510b1a7.cmp-adaptiveform-emailinput.cmp-adaptiveform-emailinput--empty>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#numberinput-8de1b99efc.cmp-adaptiveform-numberinput.cmp-adaptiveform-numberinput--empty>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#numberinput-8de1b99efc.cmp-adaptiveform-numberinput.cmp-adaptiveform-numberinput--empty>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#telephoneinput-d62de1d168.cmp-adaptiveform-telephoneinput.cmp-adaptiveform-telephoneinput--empty>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#telephoneinput-d62de1d168.cmp-adaptiveform-telephoneinput.cmp-adaptiveform-telephoneinput--empty>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-c974c7515a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<div#textinput-6c79e9bde4.cmp-adaptiveform-textinput.cmp-adaptiveform-textinput--empty>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<div#textinput-6c79e9bde4.cmp-adaptiveform-textinput.cmp-adaptiveform-textinput--empty>** to have attribute **data-cmp-active** with the value **true**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-61a837277a-widget"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t[data-cmp-is=\"adaptiveFormText\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "error",
+        "message": "assert\texpected **<div#text-3c677e9184.cmp-adaptiveform-text.cmp-adaptiveform-text__label>** to have attribute **data-cmp-active**"
+      }
+    ]
+  }
+}

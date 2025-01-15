@@ -1,0 +1,236 @@
+{
+  "specs/repeatable/repeatable.updatelabel.cy.js": {
+    "add and remove instance should add/remove instance at correct index and label should be correctly updated": [
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "getCookie\tlogin-token"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#username"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\tadmin"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#password"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "type\tadmin"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\tbody"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "wrap\t<button#submit-button._coral-Button._coral-Button--cta>"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "page load\t--waiting for new page to load--"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "new url\thttp://localhost:4502/aem/start.html"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "visit\tcontent/forms/af/core-components-it/samples/panelcontainer/repeatability-tests/repeatedpanelcount.html?wcmmode=disabled"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "uncaught exception\tTypeError: Cannot read properties of null (reading 'contentWindow')"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t[data-cmp-is=\"adaptiveFormContainer\"]"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\tformcontainer is initialized: expected **{ Object (_model, _path, ...) }** not to be null"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#textinput-f742f94b24 .cmp-adaptiveform-textinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<label.cmp-adaptiveform-textinput__label>** to have text **Text Input1**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#panelcontainer-c129e66bda .cmp-container__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<label.cmp-container__label>** to have text **Panel1**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-a19b05a26b"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "find\tbutton"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#GGjjXpXY7nQ .cmp-adaptiveform-textinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<label.cmp-adaptiveform-textinput__label>** to have text **Text Input2**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#rpxD5Wu8XwI .cmp-container__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<label.cmp-container__label>** to have text **Panel2**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-a19b05a26b"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "find\tbutton"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#GGjjXpXY7nQ .cmp-adaptiveform-textinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<label.cmp-adaptiveform-textinput__label>** to have text **Text Input3**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#rpxD5Wu8XwI .cmp-container__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<label.cmp-container__label>** to have text **Panel3**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#gurn5bX6__m .cmp-adaptiveform-textinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<label.cmp-adaptiveform-textinput__label>** to have text **Text Input2**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#M7g3oqwqapQ .cmp-container__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<label.cmp-container__label>** to have text **Panel2**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#button-50718313e8"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "find\tbutton"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "click\t"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "get\t#rpxD5Wu8XwI .cmp-adaptiveform-textinput__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "success",
+        "message": "assert\texpected **<label.cmp-adaptiveform-textinput__label>** to have text **Text Input2**"
+      },
+      {
+        "type": "cy:command",
+        "severity": "error",
+        "message": "get\t#cgkfgSQmnE0 .cmp-container__label"
+      },
+      {
+        "type": "cy:command",
+        "severity": "error",
+        "message": "assert\texpected **#cgkfgSQmnE0 .cmp-container__label** to have text **Panel2**, but the text was **''**"
+      }
+    ]
+  }
+}
