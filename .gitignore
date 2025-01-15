@@ -58,6 +58,8 @@ frontend-maven-plugin
 yarn-error.log
 .env
 .npmrc
+**/npm-debug.log
+
 
 # UI Tests
 node/
