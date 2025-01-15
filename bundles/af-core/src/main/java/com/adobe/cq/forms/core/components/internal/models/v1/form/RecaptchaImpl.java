@@ -41,7 +41,6 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -65,33 +64,25 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
     private CloudConfigurationProvider cloudConfigurationProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named(ReservedProperties.PN_RECAPTCHA_CLOUD_SERVICE_PATH)
     protected String cloudServicePath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
     @Named(ReservedProperties.PN_RECAPTCHA_SIZE)
     protected String size;
 
     public static final String RECAPTCHA_DEFAULT_DOMAIN = "https://www.recaptcha.net/";
     public static final String RECAPTCHA_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/api.js";
     public static final String RECAPTCHA_ENTERPRISE_DEFAULT_URL = RECAPTCHA_DEFAULT_DOMAIN + "recaptcha/enterprise.js";
-    private static final String RECAPTCHA_SITE_KEY = "siteKey";
-    private static final String RECAPTCHA_URI = "uri";
-    private static final String RECAPTCHA_SIZE = "size";
-    private static final String RECAPTCHA_THEME = "theme";
-    private static final String RECAPTCHA_TYPE = "type";
-    private static final String RECAPTCHA_VERSION = "version";
-    private static final String RECAPTCHA_KEYTYPE = "keyType";
+    public static final String RECAPTCHA_VERSION = "version";
+    public static final String RECAPTCHA_KEYTYPE = "keyType";
 
     @Override
-    @JsonIgnore
     public String getCloudServicePath() {
         return cloudServicePath;
     }
 
-    @JsonIgnore
+    @Override
     public String getSize() {
         return size;
     }
@@ -101,7 +92,6 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
         return "recaptcha";
     }
 
-    @JsonIgnore
     @Override
     public Map<String, Object> getCaptchaProperties() throws GuideException {
 
@@ -118,20 +108,19 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
                 keyType = reCaptchaConfiguration.keyType();
             }
         }
-        customCaptchaProperties.put(RECAPTCHA_SITE_KEY, siteKey);
+        customCaptchaProperties.put(CAPTCHA_SITE_KEY, siteKey);
         if (StringUtils.isNotEmpty(version) && version.equals("enterprise")) {
-            customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_ENTERPRISE_DEFAULT_URL);
+            customCaptchaProperties.put(CAPTCHA_URI, RECAPTCHA_ENTERPRISE_DEFAULT_URL);
         } else {
-            customCaptchaProperties.put(RECAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
+            customCaptchaProperties.put(CAPTCHA_URI, RECAPTCHA_DEFAULT_URL);
         }
-        customCaptchaProperties.put(RECAPTCHA_SIZE, getSize());
-        customCaptchaProperties.put(RECAPTCHA_THEME, "light");
-        customCaptchaProperties.put(RECAPTCHA_TYPE, "image");
+        customCaptchaProperties.put(CAPTCHA_SIZE, getSize());
+        customCaptchaProperties.put(CAPTCHA_THEME, "light");
+        customCaptchaProperties.put(CAPTCHA_TYPE, "image");
         customCaptchaProperties.put(RECAPTCHA_VERSION, version);
         customCaptchaProperties.put(RECAPTCHA_KEYTYPE, keyType);
 
         return customCaptchaProperties;
 
     }
-
 }

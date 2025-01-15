@@ -90,10 +90,13 @@ describe("Form with Panel Container", () => {
         tab2().should('have.class', 'cmp-tabs__tab--active');
         tab2().should('have.attr', 'aria-selected', 'true');
         tab1().should('have.attr', 'aria-selected', 'false');
+        tab1().should('have.class', 'cmp-tabs__tab--stepped');
         tab1().click();
         tab1().should('have.class', 'cmp-tabs__tab--active');
+        tab1().should('have.class', 'cmp-tabs__tab--stepped');
         tab1().should('have.attr', 'aria-selected', 'true');
         tab2().should('have.attr', 'aria-selected', 'false');
+        tab2().should('have.class', 'cmp-tabs__tab--stepped');
     });
 
     it("switch tab in runtime using keyboard", () => {

@@ -24,6 +24,7 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
 describe('Replace functionality - sites', function () {
     // we can use these values to log in
     const pagePath = "/content/forms/sites/core-components-it/blank",
+        submitBtnSelector = ".cq-dialog-submit",
         pageDropZoneSuffix = "/jcr:content/root/responsivegrid/container";
 
     const dropComponentInSites = function (componentName, resourceType) {
@@ -119,7 +120,7 @@ describe('Replace functionality - sites', function () {
             .then(() => {
                 cy.get('.cq-editable-action').eq(3).click().then(() => {
                     cy.get('[value="group:replace test group"]').eq(0).click({force: true}).then(() => {
-                        cy.get('[title="Done"]').scrollIntoView().click();
+                        cy.get(submitBtnSelector).scrollIntoView().click();
                     })
                 });
             });
@@ -131,7 +132,7 @@ describe('Replace functionality - sites', function () {
             .then(() => {
                 cy.get('.cq-editable-action').eq(3).click().then(() => {
                     cy.get('[value="group:replace test group"]').eq(0).click({force: true}).then(() => {
-                        cy.get('[title="Done"]').scrollIntoView().click();
+                        cy.get(submitBtnSelector).scrollIntoView().click();
                     })
                 });
             });

@@ -258,6 +258,12 @@
                 }
                 this.expandItem(itemDivToExpand);
                 this.collapseAllOtherItems(itemDivToExpand.id);
+
+                const cachedItems = this.getCachedItems();
+                const newIndex = cachedItems.indexOf(itemDivToExpand);
+                this.getCachedButtons()[newIndex].classList.remove(this.constructor.cssClasses.button.stepped);
+                this.getCachedPanels()[newIndex].classList.remove(this.constructor.cssClasses.panel.stepped);
+                
                 this.#showHideRepeatableButtons(childView.getInstanceManager());
             }
 
