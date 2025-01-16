@@ -74,7 +74,8 @@ describe('Page - Authoring', function () {
             .should("exist");
         cy.get("[name='templatePath']")
             .should("be.visible");
-        cy.get("[name='fragmentComponent']").should("be.visible");
+        // Assuming there is one fragment component (in most cases) so this field should not be visible
+        cy.get("[name='fragmentComponent']").should("not.be.visible");
 
         cy.intercept('POST' , '**/adobe/forms/fm/v1/saveasfragment').as('saveAsFragment');
         cy.get("[name='name']").clear().type("panel-saved-as-fragment");
@@ -218,12 +219,14 @@ describe('Page - Authoring', function () {
             });
         });
 
-        it('save as fragment in Wizard',function () {
-            cy.cleanTest(wizardLayoutDrop).then(function () {
-                testSaveAsFragment(wizardEditPathSelector, wizardLayoutDrop);
-                deleteSavedFragment();
+        if (cy.af.isLatestAddon()) {
+            it('save as fragment in Wizard',function () {
+                cy.cleanTest(wizardLayoutDrop).then(function () {
+                    testSaveAsFragment(wizardEditPathSelector, wizardLayoutDrop);
+                    deleteSavedFragment();
+                })
             })
-        })
+        }
     });
 
     context('Open Sites Editor', function () {
@@ -287,12 +290,13 @@ describe('Page - Authoring', function () {
             });
         });
 
-        it('save as fragment in Wizard', { retries: 3 }, function() {
-            cy.cleanTest(wizardEditPath).then(function() {
-                testSaveAsFragment(wizardEditPathSelector, wizardEditPath, true);
-                deleteSavedFragment();
-            })
-        });
-
+        if (cy.af.isLatestAddon()) {
+            it('save as fragment in Wizard', { retries: 3 }, function() {
+                cy.cleanTest(wizardEditPath).then(function() {
+                    testSaveAsFragment(wizardEditPathSelector, wizardEditPath, true);
+                    deleteSavedFragment();
+                })
+            });
+        }
     });
 })

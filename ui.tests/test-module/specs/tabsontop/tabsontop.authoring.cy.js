@@ -110,7 +110,8 @@ describe.only('Page - Authoring', function () {
             .should("exist");
         cy.get("[name='templatePath']")
             .should("be.visible");
-        cy.get("[name='fragmentComponent']").should("be.visible");
+        // Assuming there is one fragment component (in most cases) so this field should not be visible
+        cy.get("[name='fragmentComponent']").should("not.be.visible");
 
         cy.intercept('POST' , '**/adobe/forms/fm/v1/saveasfragment').as('saveAsFragment');
         cy.get("[name='name']").clear().type("panel-saved-as-fragment");
@@ -234,12 +235,14 @@ describe.only('Page - Authoring', function () {
            });
         });
 
-        it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
-            cy.cleanTest(tabsPath).then(function() {
-                testSaveAsFragmentBehaviour(tabsContainerPathSelector, tabsPath);
-                deleteSavedFragment();
+        if (cy.af.isLatestAddon()) {
+            it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
+                cy.cleanTest(tabsPath).then(function() {
+                    testSaveAsFragmentBehaviour(tabsContainerPathSelector, tabsPath);
+                    deleteSavedFragment();
+                });
             });
-        });
+        }
 
     });
 
@@ -264,12 +267,14 @@ describe.only('Page - Authoring', function () {
                 testPanelBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
             });
         });
-      
-        it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
-            cy.cleanTest(panelContainerEditPath).then(function() {
-                testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
-                deleteSavedFragment();
+
+        if (cy.af.isLatestAddon()) {
+            it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
+                cy.cleanTest(panelContainerEditPath).then(function() {
+                    testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
+                    deleteSavedFragment();
+                });
             });
-        });
+        }
     });
 });

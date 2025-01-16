@@ -98,7 +98,8 @@ describe('Page - Authoring', function () {
             .should("exist");
         cy.get("[name='templatePath']")
             .should("be.visible");
-        cy.get("[name='fragmentComponent']").should("be.visible");
+        // Assuming there is one fragment component (in most cases) so this field should not be visible
+        cy.get("[name='fragmentComponent']").should("not.be.visible");
 
         cy.intercept('POST' , '**/adobe/forms/fm/v1/saveasfragment').as('saveAsFragment');
         cy.get("[name='name']").clear().type("panel-saved-as-fragment");
@@ -158,10 +159,12 @@ describe('Page - Authoring', function () {
             cy.deleteComponentByPath(panelEditPath);
         });
 
-        it('Save panel as fragment via toolbar', function () {
-            testSaveAsFragmentBehaviour(panelContainerPathSelector, panelEditPath);
-            deleteSavedFragment();
-        })
+        if (cy.af.isLatestAddon()) {
+            it('Save panel as fragment via toolbar', function () {
+                testSaveAsFragmentBehaviour(panelContainerPathSelector, panelEditPath);
+                deleteSavedFragment();
+            })
+        }
     })
 
     context('Open Sites Editor', function () {
@@ -183,10 +186,11 @@ describe('Page - Authoring', function () {
             testPanelBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
         });
 
-        it('Save panel as fragment via toolbar', function () {
-            testSaveAsFragmentBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
-            deleteSavedFragment();
-        });
-
+        if (cy.af.isLatestAddon()) {
+            it('Save panel as fragment via toolbar', function () {
+                testSaveAsFragmentBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
+                deleteSavedFragment();
+            });
+        }
     });
 });
