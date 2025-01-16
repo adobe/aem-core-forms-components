@@ -27,11 +27,11 @@
          id="${fragment.id}"
          data-cmp-is="adaptiveFormFragment"
          data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-         data-cmp-visible="${panel.visible ? 'true' : 'false'}"
-         data-cmp-enabled="${panel.enabled ? 'true' : 'false'}"
-         data-cmp-readonly="${panel.readOnly ? 'true' : 'false'}"
+         data-cmp-visible="${fragment.visible ? 'true' : 'false'}"
+         data-cmp-enabled="${fragment.enabled ? 'true' : 'false'}"
+         data-cmp-readonly="${fragment.readOnly ? 'true' : 'false'}"
          class="cmp-container${wcmmode.edit ? ' {0}': '' @ format=[allowed.cssClass]}"
-         title="${panel.tooltipVisible ? '' : panel.tooltipText}"
+         title="${fragment.tooltipVisible ? '' : fragment.tooltipText}"
          role="${container.roleAttribute}"
          style="${container.backgroundStyle @ context='styleString'}">
         <div class="cmp-adaptiveform-fragment__label-container">
