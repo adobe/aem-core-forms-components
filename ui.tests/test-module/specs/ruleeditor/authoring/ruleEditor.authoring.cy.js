@@ -184,7 +184,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         });
 
         // check if rule is created
-        cy.getRuleEditorIframe().find("[title^='submit'][title$=' - Validate'] .title-cell").should("exist");
+        cy.getRuleEditorIframe().find("[title^='datepicker'][title$=' - Validate'] .title-cell").should("exist");
 
         // check and close rule editor
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
