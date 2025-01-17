@@ -45,13 +45,25 @@ describe('Test UpdateEnum, UpdateEnumName for Checkbox', () => {
     let enums = ["one", "two", "three"],
         enumNames = ["India", "US", "Singapore"];
 
+    let toggle_array = [];
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
+
     /**
      * initialization of form container before every test
      * */
-    beforeEach(() => {
+    beforeEach(function() {
+        if (!toggle_array.includes("FT_FORMS-11269") && !toggle_array.includes("FT_FORMS-11541")) {
+            this.skip();
+        }
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
-        })
+        });
     });
 
     describe('Checkbox with no options', () => {

@@ -19,6 +19,15 @@
 describe('Form with custom functions containing ui change action configured in client lib', () => {
     const formPath = "content/forms/af/core-components-it/samples/ruleeditor/uichange.html";
     let formContainer = null;
+    let toggle_array = [];
+
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
 
     /**
      * initialization of form container before every test
@@ -30,6 +39,9 @@ describe('Form with custom functions containing ui change action configured in c
     });
 
     it("ui change action should reset field model based on custom function", () => {
+        if (!toggle_array.includes("FT_FORMS-11269") && !toggle_array.includes("FT_FORMS-11541")) {
+            this.skip();
+        }
         // Rule on textBox1: set value of textBox1 to "test", which is output of custom function testFunction1()
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         const [numberInput1, fieldView1] = Object.entries(formContainer._fields)[0]

@@ -21,6 +21,9 @@ describe('Rule editor runtime sanity for core-components',function(){
     });
 
     it("should have merged custom function list registered in FunctionRuntime from both clientlibs", () => {
+        if (!toggle_array.includes("FT_FORMS-11269") && !toggle_array.includes("FT_FORMS-11541")) {
+            this.skip();
+        }
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         let func;
         cy.window().then(win => {
