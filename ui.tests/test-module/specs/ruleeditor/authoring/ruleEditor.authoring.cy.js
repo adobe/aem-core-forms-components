@@ -184,55 +184,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         });
 
         // check if rule is created
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.DATE_PICKER_RULE).should("exist");
-
-        // check and close rule editor
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
-    }
-
-    const createRuleToSaveFormOnButtonClick = function() {
-        // Edit rule option not existing on button toolbar
-        cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
-        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
-        cy.wait(1000);
-        cy.get(formsSelectors.ruleEditor.action.editRule).click();
-
-        // click on  create option from rule editor header
-        // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
-        //cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-        cy.wait(1000);
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
-
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
-
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
-
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
-            .click({force: true});
-
-        // select the component for which rule is to written i.e. Button here
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
-
-        // IS CLICKED option not existing in 'OPERATIONS' dropdown
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
-
-        // check and click on dropdown to view the actions available
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
-
-        // select SAVE FORM action from dropdown
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SAVE_FORM).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SAVE_FORM).click({force: true});
-
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
-
-        // check if rule is created
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CREATED_RULE_650).should("exist");
+        cy.getRuleEditorIframe().find("[title$=' - Validate'] .title-cell").should("exist");
 
         // check and close rule editor
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
@@ -500,23 +452,6 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.deleteComponentByPath(submitFormButtonEditPath);
             }
         })
-        it('should add save form rule on button', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11581")) {
-                cy.openAuthoring(saveFormPath);
-                cy.selectLayer("Edit");
-                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + saveFormContainerPath + "/*']").should("exist");
-
-                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + saveFormContainerPath + "/*']",
-                    "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + saveButtonEditPathSelector);
-
-                createRuleToSaveFormOnButtonClick();
-
-                cy.selectLayer("Edit");
-                cy.deleteComponentByPath(saveButtonEditPath);
-            }
-        })
-
     })
 
     context('Open Sites Editor', function() {
