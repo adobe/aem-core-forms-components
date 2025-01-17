@@ -39,21 +39,20 @@ describe('Form with custom functions containing ui change action configured in c
     });
 
     it("ui change action should reset field model based on custom function", () => {
-        if (!toggle_array.includes("FT_FORMS-11269") && !toggle_array.includes("FT_FORMS-11541")) {
-            this.skip();
+        if (toggle_array.includes("FT_FORMS-11541")) {
+            // Rule on textBox1: set value of textBox1 to "test", which is output of custom function testFunction1()
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            const [numberInput1, fieldView1] = Object.entries(formContainer._fields)[0]
+            const [numberInput7, fieldView2] = Object.entries(formContainer._fields)[6]
+            const numberInput1Model = formContainer._model.getElement(numberInput1)
+            const numberInput7Model = formContainer._model.getElement(numberInput7)
+            numberInput1Model.value = 123;
+            cy.get(`#${numberInput1}`).find("input").should('have.value',"123")
+            // let's trigger ui change action by doing changes via the dom API's
+            cy.get(`#${numberInput7}`).find("input").clear().type("93").blur().then(x => {
+                cy.get(`#${numberInput1}`).find("input").should('have.value',"")
+            })
         }
-        // Rule on textBox1: set value of textBox1 to "test", which is output of custom function testFunction1()
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        const [numberInput1, fieldView1] = Object.entries(formContainer._fields)[0]
-        const [numberInput7, fieldView2] = Object.entries(formContainer._fields)[6]
-        const numberInput1Model = formContainer._model.getElement(numberInput1)
-        const numberInput7Model = formContainer._model.getElement(numberInput7)
-        numberInput1Model.value = 123;
-        cy.get(`#${numberInput1}`).find("input").should('have.value',"123")
-        // let's trigger ui change action by doing changes via the dom API's
-        cy.get(`#${numberInput7}`).find("input").clear().type("93").blur().then(x => {
-            cy.get(`#${numberInput1}`).find("input").should('have.value',"")
-        })
     })
 
 

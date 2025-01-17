@@ -33,10 +33,10 @@ describe('Form with custom functions configured in client lib', () => {
      * initialization of form container before every test
      * */
     beforeEach(function() {
-        if (!toggle_array.includes("FT_FORMS-11269") && !toggle_array.includes("FT_FORMS-11541")) {
+        if (!toggle_array.includes("FT_FORMS-11541")) {
             this.skip();
         }
-        cy.previewForm(pagePath).then(p => {
+        cy.previewForm(formPath).then(p => {
             formContainer = p;
         });
     });
@@ -53,9 +53,6 @@ describe('Form with custom functions configured in client lib', () => {
     })
 
     it("should have custom function registered in FunctionRuntime", () => {
-        if (!toggle_array.includes("FT_FORMS-11269") && !toggle_array.includes("FT_FORMS-11541")) {
-            this.skip();
-        }
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         let func;
         cy.window().then(win => {
@@ -66,9 +63,6 @@ describe('Form with custom functions configured in client lib', () => {
     })
 
     it("should have set textinput value based on custom function rule", () => {
-        if (!toggle_array.includes("FT_FORMS-11269") && !toggle_array.includes("FT_FORMS-11541")) {
-            this.skip();
-        }
         // Rule on textBox1: set value of textBox1 to "test", which is output of custom function testFunction1()
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
