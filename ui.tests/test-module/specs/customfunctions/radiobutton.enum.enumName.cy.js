@@ -61,7 +61,7 @@ describe('Test UpdateEnum, UpdateEnumName for RadioButton', () => {
      * initialization of form container before every test
      * */
     beforeEach(function() {
-        if (!toggle_array.includes("FT_FORMS-11269") && !toggle_array.includes("FT_FORMS-11541")) {
+        if (!toggle_array.includes("FT_FORMS-11269") || !toggle_array.includes("FT_FORMS-11541")) {
             this.skip();
         }
         cy.previewForm(pagePath).then(p => {
