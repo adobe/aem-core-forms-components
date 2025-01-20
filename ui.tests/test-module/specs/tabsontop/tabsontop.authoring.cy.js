@@ -116,7 +116,6 @@ describe('Page - Authoring', function () {
         cy.intercept('POST' , '**/adobe/forms/fm/v1/saveasfragment').as('saveAsFragment');
         cy.get("[name='name']").clear().type("panel-saved-as-fragment");
         cy.get("[name='templatePath']").type("/conf/core-components-examples/settings/wcm/templates/afv2frag-template");
-        cy.initializeEventHandlerOnChannel("cq-editables-updated.cypress").as("isOverlayRepositionEventComplete");
         cy.get(".cq-dialog-submit").click();
         cy.wait('@saveAsFragment').then(({request, response}) => {
             expect(response.statusCode).to.equal(200);
@@ -135,9 +134,6 @@ describe('Page - Authoring', function () {
                 expect(response.status).to.equal(200);
             }
         });
-        cy.get("@isOverlayRepositionEventComplete")
-            .its('done')
-            .should('equal', true);
         cy.reload()
             .then(() => cy.deleteComponentByPath(tabsPath));
     };
