@@ -24,7 +24,7 @@ const commons = require('../../libs/commons/commons'),
 /**
  * Testing Tabs on top Container with Sites Editor
  */
-describe.only('Page - Authoring', function () {
+describe('Page - Authoring', function () {
 
     const dropComponent = function (responsiveGridDropZoneSelector, componentTitle, componentType) {
         cy.selectLayer("Edit");
@@ -122,12 +122,24 @@ describe.only('Page - Authoring', function () {
             expect(response.statusCode).to.equal(200);
             expect(response.body).to.be.not.null;
         });
-        cy.request("/content/forms/af/panel-saved-as-fragment/jcr:content/guideContainer.model.json").then(response => {
-            expect(response.status).to.equal(200);
-        })
-        cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true);
-        cy.reload();
-        cy.deleteComponentByPath(tabsPath);
+        const modelJson = cy.af.getFormJsonUrl("/content/forms/af/panel-saved-as-fragment/jcr:content/guideContainer");
+        cy.request(modelJson, {
+            failOnStatusCode: false
+        }).then(response => {
+            if (response.status !== 200) {
+                cy.wait(1000);
+                cy.request(modelJson).then(retryResponse => {
+                    expect(retryResponse.status).to.equal(200);
+                });
+            } else {
+                expect(response.status).to.equal(200);
+            }
+        });
+        cy.get("@isOverlayRepositionEventComplete")
+            .its('done')
+            .should('equal', true);
+        cy.reload()
+            .then(() => cy.deleteComponentByPath(tabsPath));
     };
 
     const deleteSavedFragment = () => {
@@ -235,12 +247,10 @@ describe.only('Page - Authoring', function () {
            });
         });
 
-        if (cy.af.isLatestAddon()) {
-            it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
-                cy.cleanTest(tabsPath).then(function() {
-                    testSaveAsFragmentBehaviour(tabsContainerPathSelector, tabsPath);
-                    deleteSavedFragment();
-                });
+        if(cy.af.isLatestAddon()) {
+            it('open and save tab as fragment dialog of Tab on top',function(){
+                testSaveAsFragmentBehaviour(tabsContainerPathSelector, tabsPath);
+                deleteSavedFragment();
             });
         }
 
@@ -269,11 +279,9 @@ describe.only('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it('open and save tab as fragment dialog of Tab on top',{ retries: 3 }, function(){
-                cy.cleanTest(panelContainerEditPath).then(function() {
-                    testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
-                    deleteSavedFragment();
-                });
+            it('open and save tab as fragment dialog of Tab on top', function(){
+                testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
+                deleteSavedFragment();
             });
         }
     });
