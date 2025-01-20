@@ -109,11 +109,14 @@
         }
     }
 
-    async function onDocumentReady() {
+    async function initialiseForms() {
         const startTime = new Date().getTime();
         let elements = document.querySelectorAll(FormContainerV2.selectors.self);
 
         for (let i = 0; i < elements.length; i++) {
+            if(elements.dataset?.cmpVisited === "true") {
+                continue;
+            }
             let loaderToAdd = document.querySelector("[data-cmp-adaptiveform-container-loader='"+ elements[i].id + "']");
             if(loaderToAdd){
                 loaderToAdd.classList.add(FormContainerV2.loadingClass);
@@ -153,8 +156,12 @@
     document.cookie="wcmmode=disabled; max-age=0; path=/";
     
     if (document.readyState !== "loading") {
-        onDocumentReady();
+        initialiseForms();
     } else {
-        document.addEventListener("DOMContentLoaded", onDocumentReady);
+        document.addEventListener("DOMContentLoaded", initialiseForms);
     }
+
+    window.Forms = window.Forms || {};
+    window.Forms.CoreComponents = window.Forms.CoreComponents || {};
+    window.Forms.CoreComponents.initialiseForms = initialiseForms;
 })();
