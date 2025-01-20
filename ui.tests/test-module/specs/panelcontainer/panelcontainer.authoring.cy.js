@@ -132,12 +132,18 @@ describe('Page - Authoring', function () {
 
     const deleteSavedFragment = () => {
         cy.openPage("/aem/forms.html/content/dam/formsanddocuments");
-        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment']")
-            .trigger('mouseenter')
-            .trigger('mouseover');
-        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment'] [title='Select']").click({force: true});
-        cy.get(".formsmanager-admin-action-delete").click();
-        cy.get("#fmbase-id-modal-template button[variant='warning']").click();
+        cy.get("body").then(($body) => {
+            const selector = "[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment']";
+            if ($body.find(selector).length > 0) {
+                cy.get(selector)
+                    .trigger('mouseenter')
+                    .trigger('mouseover');
+                cy.get(`${selector} [title='Select']`).click({ force: true });
+                cy.get(".formsmanager-admin-action-delete").click();
+                cy.get("#fmbase-id-modal-template button[variant='warning']").click();
+                cy.log("Fragment deleted successfully.");
+            }
+        });
     }
 
     context('Open Forms Editor', function () {
@@ -172,9 +178,13 @@ describe('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it('Save panel as fragment via toolbar', function () {
-                testSaveAsFragmentBehaviour(panelContainerPathSelector, panelEditPath);
-                deleteSavedFragment();
+            it('Save panel as fragment via toolbar', { retries: 3}, function () {
+                cy.cleanTest(panelEditPath).then(function () {
+                    deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    testSaveAsFragmentBehaviour(panelContainerPathSelector, panelEditPath);
+                    deleteSavedFragment();
+                })
             })
         }
     })
@@ -200,8 +210,12 @@ describe('Page - Authoring', function () {
 
         if (cy.af.isLatestAddon()) {
             it('Save panel as fragment via toolbar', function () {
-                testSaveAsFragmentBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
-                deleteSavedFragment();
+                cy.cleanTest(panelContainerEditPath).then(function () {
+                    deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    testSaveAsFragmentBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
+                    deleteSavedFragment();
+                })
             });
         }
     });

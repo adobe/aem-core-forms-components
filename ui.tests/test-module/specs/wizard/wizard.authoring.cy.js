@@ -108,12 +108,18 @@ describe('Page - Authoring', function () {
 
     const deleteSavedFragment = () => {
         cy.openPage("/aem/forms.html/content/dam/formsanddocuments");
-        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment']")
-            .trigger('mouseenter')
-            .trigger('mouseover');
-        cy.get("[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment'] [title='Select']").click({force: true});
-        cy.get(".formsmanager-admin-action-delete").click();
-        cy.get("#fmbase-id-modal-template button[variant='warning']").click();
+        cy.get("body").then(($body) => {
+            const selector = "[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment']";
+            if ($body.find(selector).length > 0) {
+                cy.get(selector)
+                    .trigger('mouseenter')
+                    .trigger('mouseover');
+                cy.get(`${selector} [title='Select']`).click({ force: true });
+                cy.get(".formsmanager-admin-action-delete").click();
+                cy.get("#fmbase-id-modal-template button[variant='warning']").click();
+                cy.log("Fragment deleted successfully.");
+            }
+        });
     }
 
 
@@ -232,9 +238,13 @@ describe('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it('save as fragment in Wizard',function () {
-                testSaveAsFragment(wizardEditPathSelector, wizardLayoutDrop);
-                deleteSavedFragment();
+            it('save as fragment in Wizard', {retries: 3}, function () {
+                cy.cleanTest(wizardLayoutDrop).then(function () {
+                    deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    testSaveAsFragment(wizardEditPathSelector, wizardLayoutDrop);
+                    deleteSavedFragment();
+                })
             })
         }
     });
@@ -302,8 +312,12 @@ describe('Page - Authoring', function () {
 
         if (cy.af.isLatestAddon()) {
             it('save as fragment in Wizard', { retries: 3 }, function() {
-                testSaveAsFragment(wizardEditPathSelector, wizardEditPath, true);
-                deleteSavedFragment();
+                cy.cleanTest(wizardEditPath).then(function () {
+                    deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    testSaveAsFragment(wizardEditPathSelector, wizardEditPath, true);
+                    deleteSavedFragment();
+                })
             });
         }
     });
