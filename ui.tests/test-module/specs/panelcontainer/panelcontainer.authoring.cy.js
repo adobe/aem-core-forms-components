@@ -112,7 +112,7 @@ describe('Page - Authoring', function () {
     };
 
     const deleteSavedFragment = () => {
-        cy.openPage("/aem/forms.html/content/dam/formsanddocuments");
+        cy.openPage("/aem/forms.html/content/dam/formsanddocuments", {noLogin: true});
         cy.get("body").then(($body) => {
             const selector = "[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment']";
             if ($body.find(selector).length > 0) {
@@ -122,7 +122,6 @@ describe('Page - Authoring', function () {
                 cy.get(`${selector} [title='Select']`).click({ force: true });
                 cy.get(".formsmanager-admin-action-delete").click();
                 cy.get("#fmbase-id-modal-template button[variant='warning']").click();
-                cy.log("Fragment deleted successfully.");
             }
         });
     }
