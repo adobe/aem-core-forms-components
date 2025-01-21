@@ -21,17 +21,23 @@ describe('Form with custom functions configured in client lib', () => {
     let formContainer = null;
     let toggle_array = [];
 
-    /**
-     * initialization of form container before every test
-     * */
-    beforeEach(() => {
-        cy.previewForm(formPath).then(p => {
-            formContainer = p;
-        });
+    before(() => {
         cy.fetchFeatureToggles().then((response) => {
             if (response.status === 200) {
                 toggle_array = response.body.enabled;
             }
+        });
+    });
+
+    /**
+     * initialization of form container before every test
+     * */
+    beforeEach(function() {
+        if (!toggle_array.includes("FT_FORMS-11541")) {
+            this.skip();
+        }
+        cy.previewForm(formPath).then(p => {
+            formContainer = p;
         });
     });
 

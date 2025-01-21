@@ -48,10 +48,25 @@ describe('Test UpdateEnum, UpdateEnumName for RadioButton', () => {
     /**
      * initialization of form container before every test
      * */
-    beforeEach(() => {
+    let toggle_array = [];
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
+
+    /**
+     * initialization of form container before every test
+     * */
+    beforeEach(function() {
+        if (!toggle_array.includes("FT_FORMS-11269") || !toggle_array.includes("FT_FORMS-11541")) {
+            this.skip();
+        }
         cy.previewForm(pagePath).then(p => {
             formContainer = p;
-        })
+        });
     });
 
     describe('Radiobutton with no options', () => {

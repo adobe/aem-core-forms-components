@@ -21,21 +21,23 @@ describe('Rule editor runtime sanity for core-components',function(){
     });
 
     it("should have merged custom function list registered in FunctionRuntime from both clientlibs", () => {
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        let func;
-        cy.window().then(win => {
-            func = win.FormView.FunctionRuntime.customFunctions.testFunction1; // from corecomponent.it.customfunction
-            expect(func).to.not.be.null;
-            expect(func).to.not.be.undefined;
+        if (toggle_array.includes("FT_FORMS-11269") && toggle_array.includes("FT_FORMS-11541")) {
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            let func;
+            cy.window().then(win => {
+                func = win.FormView.FunctionRuntime.customFunctions.testFunction1; // from corecomponent.it.customfunction
+                expect(func).to.not.be.null;
+                expect(func).to.not.be.undefined;
 
-            func = win.FormView.FunctionRuntime.customFunctions.testSubmitFormPreprocessor; // from corecomponent.it.customfunction
-            expect(func).to.not.be.null;
-            expect(func).to.not.be.undefined;
+                func = win.FormView.FunctionRuntime.customFunctions.testSubmitFormPreprocessor; // from corecomponent.it.customfunction
+                expect(func).to.not.be.null;
+                expect(func).to.not.be.undefined;
 
-            func = win.FormView.FunctionRuntime.customFunctions.testSetProperty; // from corecomponent.it.customfunction2
-            expect(func).to.not.be.null;
-            expect(func).to.not.be.undefined;
-        })
+                func = win.FormView.FunctionRuntime.customFunctions.testSetProperty; // from corecomponent.it.customfunction2
+                expect(func).to.not.be.null;
+                expect(func).to.not.be.undefined;
+            })
+        }
     })
 
     if (cy.af.isLatestAddon()) {
