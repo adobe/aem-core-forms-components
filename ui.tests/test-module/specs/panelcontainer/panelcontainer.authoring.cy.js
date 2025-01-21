@@ -78,7 +78,7 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(panelContainerDrop);
     };
 
-    const testSaveAsFragmentBehaviour = (pagePath, panelContainerEditPathSelector, panelContainerPath, isSites) => {
+    const testSaveAsFragmentBehaviour = (panelContainerEditPathSelector, panelContainerPath, isSites) => {
         if (isSites) {
             dropPanelInSites();
         } else {
@@ -109,8 +109,6 @@ describe('Page - Authoring', function () {
             expect(response.statusCode).to.equal(200);
             expect(response.body).to.be.not.null;
         });
-        cy.openSiteAuthoring(pagePath);
-        cy.deleteComponentByPath(panelContainerPath)
     };
 
     const deleteSavedFragment = () => {
@@ -165,8 +163,10 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(panelEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragmentBehaviour(pagePath, panelContainerPathSelector, panelEditPath);
+                    testSaveAsFragmentBehaviour(panelContainerPathSelector, panelEditPath);
                     deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    cy.deleteComponentByPath(panelEditPath);
                 })
             })
        }
@@ -196,8 +196,10 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(panelContainerEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragmentBehaviour(pagePath, panelContainerEditPathSelector, panelContainerEditPath, true);
+                    testSaveAsFragmentBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
                     deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    cy.deleteComponentByPath(panelContainerEditPath);
                 })
             });
         }

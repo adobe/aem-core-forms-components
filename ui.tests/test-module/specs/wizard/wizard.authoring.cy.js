@@ -54,7 +54,7 @@ describe('Page - Authoring', function () {
         cy.get('body').click(0, 0);
     }
 
-    const testSaveAsFragment = function (pagePath, wizardEditPathSelector, wizardPath, isSites) {
+    const testSaveAsFragment = function (wizardEditPathSelector, wizardPath, isSites) {
         if (isSites) {
             dropWizardInSites();
         } else {
@@ -85,8 +85,6 @@ describe('Page - Authoring', function () {
             expect(response.statusCode).to.equal(200);
             expect(response.body).to.be.not.null;
         });
-       cy.openSiteAuthoring(pagePath);
-       cy.deleteComponentByPath(wizardPath);
     }
 
     const deleteSavedFragment = () => {
@@ -225,8 +223,10 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(wizardLayoutDrop).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragment(pagePath, wizardEditPathSelector, wizardLayoutDrop);
+                    testSaveAsFragment(wizardEditPathSelector, wizardLayoutDrop);
                     deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    cy.deleteComponentByPath(wizardLayoutDrop);
                 })
             })
         }
@@ -298,8 +298,10 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(wizardEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragment(pagePath, wizardEditPathSelector, wizardEditPath, true);
+                    testSaveAsFragment(wizardEditPathSelector, wizardEditPath, true);
                     deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    cy.deleteComponentByPath(wizardEditPath);
                 })
             });
         }

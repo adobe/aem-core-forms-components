@@ -90,7 +90,7 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(tabsContainerDrop);
     }
     
-    const testSaveAsFragmentBehaviour =  function(pagePath, tabsEditPathSelector, tabsPath, isSites) {
+    const testSaveAsFragmentBehaviour =  function(tabsEditPathSelector, tabsPath, isSites) {
         if (isSites) {
             dropTabsInSites();
         } else {
@@ -121,8 +121,6 @@ describe('Page - Authoring', function () {
             expect(response.statusCode).to.equal(200);
             expect(response.body).to.be.not.null;
         });
-        cy.openSiteAuthoring(pagePath);
-        cy.deleteComponentByPath(tabsPath);
     };
 
     const deleteSavedFragment = () => {
@@ -241,8 +239,10 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(tabsPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragmentBehaviour(pagePath, tabsContainerPathSelector, tabsPath);
+                    testSaveAsFragmentBehaviour(tabsContainerPathSelector, tabsPath);
                     deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    cy.deleteComponentByPath(tabsPath);
                 })
             });
         }
@@ -275,8 +275,10 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(panelContainerEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragmentBehaviour(pagePath, tabsEditPathSelector, panelContainerEditPath, true);
+                    testSaveAsFragmentBehaviour(tabsEditPathSelector, panelContainerEditPath, true);
                     deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    cy.deleteComponentByPath(panelContainerEditPath);
                 })
             });
         }
