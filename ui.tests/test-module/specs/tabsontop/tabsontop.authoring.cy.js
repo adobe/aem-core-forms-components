@@ -115,13 +115,17 @@ describe('Page - Authoring', function () {
 
         cy.intercept('POST' , '**/adobe/forms/fm/v1/saveasfragment').as('saveAsFragment');
         cy.get("[name='name']").clear().type("panel-saved-as-fragment");
+        // Coral autocomplete component is taking some time to initialisation
+        cy.get('.cmp-adaptiveform-saveasfragment__templateselector')
+            .should(($el) => {
+                expect($el.data('autocomplete')).to.exist;
+            });
         cy.get("[name='templatePath']").type("/conf/core-components-examples/settings/wcm/templates/afv2frag-template");
         cy.get(".cq-dialog-submit").click();
         cy.wait('@saveAsFragment').then(({request, response}) => {
             expect(response.statusCode).to.equal(200);
-            expect(response.body).to.be.not.null;
+            expect(response.body).to.have.property('formPath', '/content/dam/formsanddocuments/panel-saved-as-fragment');
         });
-        cy.wait(1000);
         cy.openSiteAuthoring(pagePath);
         cy.deleteComponentByPath(tabsPath);
     };
