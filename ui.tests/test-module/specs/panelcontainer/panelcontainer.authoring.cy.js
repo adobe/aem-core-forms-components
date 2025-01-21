@@ -108,7 +108,7 @@ describe('Page - Authoring', function () {
             .should(($el) => {
                 expect($el.data('autocomplete')).to.exist;
             });
-        cy.get("[name='templatePath']").type("/conf/core-components-examples/settings/wcm/templates/afv2frag-template");
+        cy.get("[name='templatePath']").type("/conf/core-components-examples/settings/wcm/templates/afv2frag-template", {delay: 30});
         cy.get(".cq-dialog-submit").click();
         cy.wait('@saveAsFragment').then(({request, response}) => {
             expect(response.statusCode).to.equal(200);
@@ -116,7 +116,7 @@ describe('Page - Authoring', function () {
         });
         cy.openSiteAuthoring(pagePath);
         cy.deleteComponentByPath(panelContainerPath)
-    };
+    }
 
     const deleteSavedFragment = () => {
         cy.openPage("/aem/forms.html/content/dam/formsanddocuments", {noLogin: true});
