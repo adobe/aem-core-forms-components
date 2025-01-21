@@ -85,6 +85,7 @@ describe('Page - Authoring', function () {
             expect(response.statusCode).to.equal(200);
             expect(response.body).to.be.not.null;
         });
+        cy.wait(1000);
        cy.openSiteAuthoring(pagePath);
        cy.deleteComponentByPath(wizardPath);
     }
