@@ -54,7 +54,7 @@ describe('Page - Authoring', function () {
         cy.get('body').click(0, 0);
     }
 
-    const testSaveAsFragment = function (wizardEditPathSelector, wizardPath, isSites) {
+    const testSaveAsFragment = function (pagePath, wizardEditPathSelector, wizardPath, isSites) {
         if (isSites) {
             dropWizardInSites();
         } else {
@@ -85,21 +85,8 @@ describe('Page - Authoring', function () {
             expect(response.statusCode).to.equal(200);
             expect(response.body).to.be.not.null;
         });
-        const modelJson = cy.af.getFormJsonUrl("/content/forms/af/panel-saved-as-fragment/jcr:content/guideContainer");
-        cy.request(modelJson, {
-            failOnStatusCode: false
-        }).then(response => {
-            if (response.status !== 200) {
-                cy.wait(1000);
-                cy.request(modelJson).then(retryResponse => {
-                    expect(retryResponse.status).to.equal(200);
-                });
-            } else {
-                expect(response.status).to.equal(200);
-            }
-        });
-        cy.reload()
-            .then(() => cy.deleteComponentByPath(wizardPath));
+       cy.openSiteAuthoring(pagePath);
+       cy.deleteComponentByPath(wizardPath);
     }
 
     const deleteSavedFragment = () => {
@@ -238,7 +225,7 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(wizardLayoutDrop).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragment(wizardEditPathSelector, wizardLayoutDrop);
+                    testSaveAsFragment(pagePath, wizardEditPathSelector, wizardLayoutDrop);
                     deleteSavedFragment();
                 })
             })
@@ -311,7 +298,7 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(wizardEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragment(wizardEditPathSelector, wizardEditPath, true);
+                    testSaveAsFragment(pagePath, wizardEditPathSelector, wizardEditPath, true);
                     deleteSavedFragment();
                 })
             });

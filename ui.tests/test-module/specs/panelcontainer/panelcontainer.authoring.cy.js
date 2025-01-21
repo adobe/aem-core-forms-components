@@ -78,7 +78,7 @@ describe('Page - Authoring', function () {
         cy.deleteComponentByPath(panelContainerDrop);
     };
 
-    const testSaveAsFragmentBehaviour = (panelContainerEditPathSelector, panelContainerPath, isSites) => {
+    const testSaveAsFragmentBehaviour = (pagePath, panelContainerEditPathSelector, panelContainerPath, isSites) => {
         if (isSites) {
             dropPanelInSites();
         } else {
@@ -109,21 +109,8 @@ describe('Page - Authoring', function () {
             expect(response.statusCode).to.equal(200);
             expect(response.body).to.be.not.null;
         });
-        const modelJson = cy.af.getFormJsonUrl("/content/forms/af/panel-saved-as-fragment/jcr:content/guideContainer");
-        cy.request(modelJson, {
-            failOnStatusCode: false
-        }).then(response => {
-            if (response.status !== 200) {
-                cy.wait(1000);
-                cy.request(modelJson).then(retryResponse => {
-                    expect(retryResponse.status).to.equal(200);
-                });
-            } else {
-                expect(response.status).to.equal(200);
-            }
-        });
-        cy.reload()
-            .then(() => cy.deleteComponentByPath(panelContainerPath));
+        cy.openSiteAuthoring(pagePath);
+        cy.deleteComponentByPath(panelContainerPath)
     };
 
     const deleteSavedFragment = () => {
@@ -178,7 +165,7 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(panelEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragmentBehaviour(panelContainerPathSelector, panelEditPath);
+                    testSaveAsFragmentBehaviour(pagePath, panelContainerPathSelector, panelEditPath);
                     deleteSavedFragment();
                 })
             })
@@ -209,7 +196,7 @@ describe('Page - Authoring', function () {
                 cy.cleanTest(panelContainerEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
-                    testSaveAsFragmentBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
+                    testSaveAsFragmentBehaviour(pagePath, panelContainerEditPathSelector, panelContainerEditPath, true);
                     deleteSavedFragment();
                 })
             });
