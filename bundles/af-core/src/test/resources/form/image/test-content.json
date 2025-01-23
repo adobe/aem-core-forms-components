@@ -18,6 +18,7 @@
     "jcr:title" : "def",
     "hideTitle" : false,
     "visible" : false,
+    "dataRef" : "a.b",
     "altText": "abc",
     "file": {
       "jcr:content": {
