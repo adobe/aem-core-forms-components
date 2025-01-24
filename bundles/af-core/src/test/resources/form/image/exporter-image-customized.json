@@ -1,5 +1,6 @@
 {
   "id": "image-ad1e095fba",
+  "dataRef" : "a.b",
   "fieldType": "image",
   "name": "abc",
   "value": "/content/image-customized.img.png",

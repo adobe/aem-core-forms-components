@@ -91,4 +91,14 @@
 
     })
 
+    it("prefill test", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[3];
+        const [buttonId, buttonFieldView] = Object.entries(formContainer._fields)[1];
+        const model = formContainer._model.getElement(id);
+        cy.get(`#${buttonId}-widget`).should("be.visible").click().then(() => {
+            expect(model.value).contains("/content/dam/reference-fragments/visa%402x.png");
+            cy.get(`#${id}`).find('img.cmp-image__image').should('have.attr', 'src', '/content/dam/reference-fragments/visa%402x.png');
+        })
+    })
+
  })
