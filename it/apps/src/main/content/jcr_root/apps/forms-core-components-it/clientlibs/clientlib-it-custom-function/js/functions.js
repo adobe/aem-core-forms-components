@@ -176,6 +176,16 @@ function testTextImportData(globals)
 }
 
 /**
+ * Tests static image import data
+ * @name testImageImportData
+ * @param {scope} globals
+ */
+function testImageImportData(globals)
+{
+    globals.functions.importData({'a' : {'b' : '/content/dam/reference-fragments/visa%402x.png'}})
+}
+
+/**
  * Tests set focus
  * @name testSetFocus
  * @param {object} emailField

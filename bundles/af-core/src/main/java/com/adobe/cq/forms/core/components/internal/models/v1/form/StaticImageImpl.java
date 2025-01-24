@@ -110,11 +110,6 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     }
 
     @Override
-    public String getDataRef() {
-        return null;
-    }
-
-    @Override
     @JsonIgnore
     public String getDescription() {
         return description;
