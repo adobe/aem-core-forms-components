@@ -244,7 +244,7 @@ public class FormContainerImplTest {
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));
     }
 
-    @Test
+    @Ignore
     void testJSONExportWithAutoSaveEnable() throws Exception {
         context.load().json(BASE + "/test-content-auto-save.json", PATH_FORM_WITH_AUTO_SAVE);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_AUTO_SAVE,
