@@ -379,6 +379,7 @@
                 Utils.showComponent(restEndPointUrlTextBox, 'div');
                 Utils.hideComponent(restEndpointConfigPath, 'div');
                 restEndPointUrlTextBox?.setAttribute("data-rest-endpoint-url-validation", "");
+                updateFieldDescription();
             } else {
                 Utils.showComponent(restEndpointConfigPath, 'div');
                 Utils.hideComponent(restEndPointUrlTextBox, 'div');
@@ -507,6 +508,18 @@
                 }
             }
         });
+    }
+
+    function updateFieldDescription() {
+        const field = document.querySelector("[name='./restEndpointPostUrl']");
+        if (field) {
+            const tooltipId = field.getAttribute("aria-labelledby").split(" ")[1]; // Get the second ID which is for the description
+            const tooltip = document.getElementById(tooltipId);
+            if (tooltip) {
+                tooltip.style.left = "0px";
+                tooltip.querySelector("coral-tooltip-content").innerHTML = "Enter the URL of a remote server as (http://<host>:<port>/path/to/resource).";
+            }
+        }
     }
 
     Utils.initializeEditDialog(EDIT_DIALOG_FORM)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
