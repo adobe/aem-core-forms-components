@@ -83,6 +83,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
 
+    private static final String DRAFT_PREFILL_SERVICE = "service://FP/draft/";
+
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private SlingHttpServletRequest request;
@@ -352,9 +354,19 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF)))) {
             formDataEnabled = true;
         }
+
+        // set draftId in properties in case of forms portal prefill
+        if (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF))) {
+            final String dataRef = request.getParameter(GuideConstants.AF_DATA_REF);
+            if (dataRef.startsWith(DRAFT_PREFILL_SERVICE)) {
+                properties.put(ReservedProperties.FD_DRAFT_ID, StringUtils.substringAfter(dataRef, DRAFT_PREFILL_SERVICE));
+            }
+        }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
-        properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
+        if (this.autoSaveConfig != null && this.autoSaveConfig.isEnableAutoSave()) {
+            properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
+        }
         properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
         properties.put(FD_DATA_URL, getDataUrl());
 
@@ -414,6 +426,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public String getCustomFunctionUrl() {
         return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId();
+    }
+
+    @JsonIgnore
+    @Override
+    public AutoSaveConfiguration getAutoSaveConfig() {
+        return autoSaveConfig;
     }
 
 }
