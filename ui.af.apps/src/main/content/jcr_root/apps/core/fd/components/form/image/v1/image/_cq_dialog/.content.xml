@@ -44,9 +44,6 @@
                                             <placeholder
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
-                                            <bindref
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:hideResource="{Boolean}true"/>
                                             <description
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:orderBefore="visible"
