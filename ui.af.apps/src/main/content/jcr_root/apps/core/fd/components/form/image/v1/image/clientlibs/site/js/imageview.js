@@ -61,6 +61,16 @@
             setFocus() {
                 this.setActive();
             }
+
+            updateValue(value) {
+                if (this.element) {
+                    this.element.setAttribute('data-cmp-src', value);
+                    const imgElement = this.element.querySelector('img');
+                    if (imgElement) {
+                        imgElement.setAttribute('src', value);
+                    }
+                }
+            }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
