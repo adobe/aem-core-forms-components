@@ -58,7 +58,7 @@ describe('Page - Authoring', function () {
     cy.get("[name='./name']")
       .should("exist");
     cy.get("[name='./dataRef']")
-        .should("not.exist");
+        .should("exist");
     cy.get("[name='./readOnly']")
         .should("not.exist");
     cy.get("[name='./unboundFormElement']")
