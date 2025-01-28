@@ -79,12 +79,12 @@ describe('Page/Form Authoring', function () {
     const checkValidatorFunctioning = function(formContainerEditPathSelector) {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
-        cy.get('.cmp-adaptiveform-container__editdialog').contains('Submission').click({force:true});
-        cy.get(".cmp-adaptiveform-container__submitaction").children('._coral-Dropdown-trigger').click();
-        cy.get("._coral-Menu-itemLabel").contains('Submit to REST endpoint').should('be.visible').click();
-        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").clear({force: true}).type("invalid-url");
-        cy.get('.coral-Form-errorlabel').should('contain.text', "Enter a valid URL for the POST request");
-        cy.get("[name='./restEndpointPostUrl']").should("exist").clear().type("http://localhost:4502/some/endpoint");
+        cy.get('.cmp-adaptiveform-container__editdialog').contains('Submission').click({force:true});   
+        cy.get(".cmp-adaptiveform-container__submitaction").children('button[is="coral-button"][aria-haspopup="listbox"]').first().click({force: true});
+        cy.get('coral-selectlist-item[value="fd/af/components/guidesubmittype/restendpoint"]').should('be.visible').click();
+        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().clear({force: true}).type("invalid-url", {force: true});
+        cy.get('.coral-Form-errorlabel').should('contain.text', "Please enter the absolute path of the REST endpoint.");
+        cy.get("[name='./restEndpointPostUrl']").clear({force: true}).type("http://localhost:4502/some/endpoint", {force: true}); 
         cy.get('.coral-Form-errorlabel').should('not.exist');
         cy.get('.cq-dialog-submit').click();
     };
