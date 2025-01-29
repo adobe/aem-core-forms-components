@@ -87,7 +87,7 @@
                 }
             }
 
-
+            
             /**
              * Returns all expanded items.
              *
@@ -225,6 +225,21 @@
                     panel.classList.add(this.constructor.cssClasses.panel.expanded);
                     panel.classList.remove(this.constructor.cssClasses.panel.hidden);
                     panel.setAttribute("aria-hidden", false);
+
+                    if (document.activeElement === button) {
+                        setTimeout(() => {
+                           let id = panel.id.replace(this.constructor.idSuffixes.panel, "");
+                           const form = this.formContainer.getModel();
+                           const tab = this.getModel()._jsonModel.items.find(item => item.id === id);
+                          
+                           if (tab && Array.isArray(tab.items) && tab.items.length > 0) {
+                               const field = form.getElement(tab.id);
+                               if (field) {
+                                form.setFocus(field);
+                              }
+                            }
+                    }, 0)
+                  }
                 }
             }
 
