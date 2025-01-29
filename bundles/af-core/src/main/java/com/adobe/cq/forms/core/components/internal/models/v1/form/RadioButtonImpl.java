@@ -50,6 +50,15 @@ public class RadioButtonImpl extends AbstractOptionsFieldImpl implements RadioBu
     protected String orientationJcr;
     private Orientation orientation;
 
+    // todo: inject this by taking this property as input from edit dialog based on the requirement
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String[] helpTexts;
+
+    public String[] getHelpTexts() {
+        return helpTexts;
+    }
+
     @PostConstruct
     private void initRadioButtonModel() {
         orientation = Orientation.fromString(orientationJcr);
