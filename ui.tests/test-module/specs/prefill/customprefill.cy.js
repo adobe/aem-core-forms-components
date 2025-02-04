@@ -27,7 +27,7 @@ describe('Custom Prefill Test', function () {
     const nameTextBox = "input[name='name']",
           dobDropdown = "input[name='dob']",
           jobDropdown = "select[name='job']";
-    let genderRadioButton = "input[name='radiobutton-c8c660bac8_name']";
+    let genderRadioButton = "input[name='radiobutton-c8c660bac8_gender']";
     let formContainer = null;
 
     beforeEach(() => {
