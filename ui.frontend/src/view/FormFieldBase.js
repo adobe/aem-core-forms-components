@@ -636,17 +636,18 @@ class FormFieldBase extends FormField {
                }
                  
                 // Find the existing <p> element
-                let pElement = descriptionElement.querySelector('p');
+                let pElements = descriptionElement.querySelectorAll('p');
 
-                if (!pElement)  {
+                if (!pElements)  {
                     // If no <p> tag exists, create one and set it as the content
-                    pElement = document.createElement('p');
+                    pElements = document.createElement('p');
                     descriptionElement.innerHTML = ''; // Clear existing content
                     descriptionElement.appendChild(pElement);
                 }
 
                 // Update the <p> element's content with sanitized content
-                pElement.innerHTML = sanitizedDescriptionText;
+                   pElements.length === 1 ? (pElements[0].innerHTML = sanitizedDescriptionText) : null;
+               
             } else {    
                 // If no description was set during authoring
                 this.#addDescriptionInRuntime(sanitizedDescriptionText);
