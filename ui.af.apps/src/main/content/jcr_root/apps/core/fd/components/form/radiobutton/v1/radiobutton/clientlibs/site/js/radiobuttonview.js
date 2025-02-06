@@ -177,8 +177,9 @@
         }
 
         #syncWidgetName() {
+            const name = this.getModel()?.name;
             this.widget.forEach(widget => {
-                widget.setAttribute("name", this.id + "_name");
+                widget.setAttribute("name", `${this.id}_${name}`);
             });
         }
     }

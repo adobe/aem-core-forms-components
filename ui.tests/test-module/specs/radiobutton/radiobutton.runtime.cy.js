@@ -79,6 +79,22 @@ describe("Form with Radio Button Input", () => {
         });
     });
 
+    it("should have data-name attribute in parent div matching model name", () => {
+        const [radioButton1, radioButton1FieldView] = Object.entries(formContainer._fields)[0];
+        const modelName = radioButton1FieldView.getModel().name;
+        cy.get(`#${radioButton1}`).invoke('attr', 'data-name').should('eq', modelName);
+    });
+
+    it("should set proper name attribute for radio buttons", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        const model = formContainer._model.getElement(id);
+        const expectedName = `${id}_${model.name}`;
+
+        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").each(($radio) => {
+            cy.wrap($radio).should('have.attr', 'name', expectedName);
+        });
+    });
+
     it("radiobutton html changes are reflected in model", () => {
         const [id, fieldView] = Object.entries(formContainer._fields)[1];
         const model = formContainer._model.getElement(id);
