@@ -334,29 +334,6 @@ if (typeof window.HamburgerMenu === 'undefined') {
             return ul;
         }
     
-        // #hideIndividualComponentsNavigation() {
-        //     // if(window.innerWidth <= 768) {
-        //         // hide all the horizontal tabs list
-        //         const tabsLists = document.getElementsByClassName('cmp-tabs__tablist');
-        //         Array.from(tabsLists).forEach(tabsList => {
-        //             tabsList.style.display = 'none';
-        //         });
-        
-        //         // hide all the vertical tabs list
-        //         const verticalTabsLists = document.getElementsByClassName('cmp-verticaltabs__tablist');
-        //         Array.from(verticalTabsLists).forEach(tabsList => {
-        //             tabsList.style.display = 'none';
-        //         });
-        //         // hide all the wizard tabs list
-        //         const wizardTabsLists = document.getElementsByClassName('cmp-adaptiveform-wizard__tabList');
-        //         const wizardTabsNavButton = document.querySelector('.cmp-adaptiveform-wizard__containerNav');
-        //         if(wizardTabsNavButton) wizardTabsNavButton.style.display = 'none';
-        //         Array.from(wizardTabsLists).forEach(tabsList => {
-        //             tabsList.style.display = 'none';
-        //         });
-        //     // }
-        // }
-    
         // Function to find the currently active li
         #findActiveLi() {
             return document.querySelector(HamburgerMenu.selectors.active).parentElement;
@@ -494,8 +471,6 @@ if (typeof window.HamburgerMenu === 'undefined') {
     
                 this.#attachHamburgerEventListeners(hamburgerIcon, menu);
                 this.#attachOutsideClickHandler(hamburgerIcon, menu);
-    
-                // this.#hideIndividualComponentsNavigation();
                 this.#attachMenuEventListeners(menu);
                 this.#styleSubmenuItems(menu);
                 parentContainer.innerHTML='';
