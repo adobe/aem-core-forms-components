@@ -97,7 +97,6 @@
                 this.expandItem(item)
             }
 
-
             #collapseAllItems() {
                 var items = this.getCachedItems();
                 if (items) {

@@ -76,6 +76,40 @@ class FormPanel extends FormFieldBase {
         }
     }
 
+    focusToFirstVisibleField(id) {
+        const form = this.formContainer.getModel();
+        const activeTab = this.getModel()._jsonModel.items.find(item => item.id === id);
+    
+        if (!activeTab) {
+            return;
+        }
+    
+        // Check if it's a panel
+        if (activeTab.fieldType === "panel") {
+            const model = form.getElement(activeTab.id);
+            // Handle regular panel case
+            if (!activeTab.items || !Array.isArray(activeTab.items) || activeTab.items.length === 0) {
+                return; // Empty panel, don't set focus
+            }
+    
+            // Find first field in regular panel
+            for (let item of activeTab.items) {
+                const field = form.getElement(item.id);
+                if (field) {
+                    form.setFocus(field);
+                    break;
+                }
+            }
+            return;
+        }
+    
+        // For non-panel elements, set focus directly
+        const field = form.getElement(activeTab.id);
+        if (field) {
+            form.setFocus(field);
+        }
+    } 
+
     /**
      * Adds a child view to the FormPanel.
      * @param {Object} childView - The child view to be added.
