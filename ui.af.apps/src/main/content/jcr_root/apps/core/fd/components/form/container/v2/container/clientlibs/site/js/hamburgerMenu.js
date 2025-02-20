@@ -543,7 +543,6 @@ if (typeof window.HamburgerMenu === 'undefined') {
     
         init() {
             if(this.formContainer?.getModel()?.properties?.['fd:isHamburgerMenuEnabled']) {
-                document.querySelector('.cmp-adaptiveform-container')?.setAttribute('data-cmp-hamburger-menu-enabled', 'true');
                 const panels = this.#getAllPanels();
                 this.#renderHamburgerItems(panels);
             }

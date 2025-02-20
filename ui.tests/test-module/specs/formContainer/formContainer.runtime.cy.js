@@ -45,7 +45,7 @@ describe("Form Runtime with Hamburger Menu", () => {
 
     it(`Test data-cmp-hamburger-menu-enabled attribute when hamburger menu is enabled`, () => {
         cy.viewport('iphone-x');
-        cy.get('.cmp-adaptiveform-container')
+        cy.get('form')
             .should('have.attr', 'data-cmp-hamburger-menu-enabled', 'true');
     })
 
