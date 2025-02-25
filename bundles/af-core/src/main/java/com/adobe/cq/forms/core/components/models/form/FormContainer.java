@@ -385,4 +385,15 @@ public interface FormContainer extends Container {
         return null;
     }
 
+    /**
+     * Returns the auto save configuration
+     *
+     * @return auto save configuration
+     * @since com.adobe.cq.forms.core.components.models.form 5.11.0
+     */
+    @JsonIgnore
+    default AutoSaveConfiguration getAutoSaveConfig() {
+        return null;
+    }
+
 }

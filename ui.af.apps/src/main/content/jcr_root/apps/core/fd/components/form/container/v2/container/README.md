@@ -24,6 +24,7 @@ Adaptive Form container written in HTL.
 * Thank you page
 * Thank you message
 * Ability to drop other adaptive form components
+* Auto save feature for Drafts
 
 ### Use Object
 The Adaptive Form Container component uses the `com.adobe.cq.forms.core.components.models.form.FormContainer` Sling Model for its Use-object.
@@ -89,3 +90,7 @@ Applying `data-cmp-adaptiveform-container-loader` attribute to the div specifica
 
 Applying `data-cmp-custom-functions-module-url` attribute to the div to point to the edge delivery URL of the custom functions file. Custom Functions exported from this file will be registered in Function Runtime. 
 This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.
+
+Applying `data-cmp-auto-save` attribute to the `cmp-adaptiveform-container` block to control the auto-save functionality. If the attribute's value is set to true, auto-save will be enabled for the form; otherwise, it will not be triggered. This attribute will be set to true in published mode if enableAutoSave is enabled.
+
+Applying `data-cmp-hamburger-menu-enabled` attribute to the `cmp-adaptiveform-container` block to control the hamburger meu. If the attribute's value is set to true, hamburger menu will be enabled in the mobile view.

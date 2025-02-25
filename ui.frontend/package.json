@@ -23,8 +23,8 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@aemforms/af-core": "^0.22.112",
-    "@aemforms/af-formatters": "^0.22.109",
-    "@aemforms/af-custom-functions": "1.0.13"
+    "@aemforms/af-core": "^0.22.114",
+    "@aemforms/af-formatters": "^0.22.114",
+    "@aemforms/af-custom-functions": "1.0.14"
   }
 }
