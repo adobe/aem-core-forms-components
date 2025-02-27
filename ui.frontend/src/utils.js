@@ -335,7 +335,8 @@ class Utils {
             } else {
                 const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
                 let _formJson, callback;
-                if (loader) {
+                // only invoke this for XFA specific adaptive form
+                if (loader && window.xfalib) {
                     const id = loader.getAttribute('data-cmp-adaptiveform-container-loader');
                     const response = await fetch(`/adobe/forms/af/${id}`)
                     _formJson = (await response.json()).afModelDefinition;
