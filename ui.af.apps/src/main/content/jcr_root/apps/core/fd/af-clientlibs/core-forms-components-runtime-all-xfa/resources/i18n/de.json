@@ -1,0 +1,90 @@
+{
+  "FileCloseAccessText": "Drücken Sie die Eingabetaste, um die Datei zu löschen ",
+  "FileSizeGreater": "Dateien ${0} übersteigen die erwartete Größe: ${1}MB.",
+  "FileNameInvalid": "Hängen Sie keine Dateien an, deren Dateiname mit (.) beginnt, \\ / : * ? \" < > | ; % oder $ enthält oder ein reserviertes Schlüsselwort wie nul, prn, con, lpt oder com ist.",
+  "FileMimeTypeInvalid": "Datei(en) ${0} ist/sind nicht unterstützte(r) Dateityp(en)",
+  "InternalFormSubmissionError": "Beim Übermitteln des Formulars ist ein interner Fehler aufgetreten.",
+  "type": "Bitte geben Sie einen gültigen Wert ein.",
+  "required": "Bitte füllen Sie dieses Feld aus.",
+  "minimum": "Der Wert muss größer als oder gleich ${0} sein.",
+  "maximum": "Der Wert muss kleiner als oder gleich ${0} sein.",
+  "minLength": "Bitte verlängern Sie diesen Text auf ${0} Zeichen oder mehr.",
+  "maxLength": "Bitte kürzen Sie diesen Text auf maximal ${0} Zeichen.",
+  "step": "Bitte geben Sie einen gültigen Wert ein.",
+  "format": "Geben Sie den Wert im zulässigen Format an: ${0}.",
+  "pattern": "Bitte passen Sie dies an das angeforderte Format an.",
+  "minItems": "Geben Sie eine Anzahl von Elementen an, die größer oder gleich ${0} ist.",
+  "maxItems": "Geben Sie eine Anzahl von Elementen an, die kleiner oder gleich ${0} ist.",
+  "uniqueItems": "Alle Elemente müssen eindeutig sein.",
+  "validationExpression": "Bitte geben Sie einen gültigen Wert ein.",
+  "maxFileSize": "Datei zu groß. Reduzieren Sie die Größe, und versuchen Sie es erneut.",
+  "accept": "Der angegebene Dateityp wird nicht unterstützt.",
+  "defaultError": "In dem Feld liegt ein Fehler vor.",
+  "clearText": "Löschen",
+  "calendarSymbols": {
+    "monthNames": [
+      "Januar",
+      "Februar",
+      "März",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember"
+    ],
+    "abbrmonthNames": [
+      "Jan",
+      "Feb",
+      "Mrz",
+      "Apr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dez"
+    ],
+    "dayNames": [
+      "Sonntag",
+      "Montag",
+      "Dienstag",
+      "Mittwoch",
+      "Donnerstag",
+      "Freitag",
+      "Samstag"
+    ],
+    "abbrdayNames": [
+      "So",
+      "Mo",
+      "Di",
+      "Mi",
+      "Do",
+      "Fr",
+      "Sa"
+    ],
+    "meridiemNames": [
+      "vorm.",
+      "nachm."
+    ],
+    "eraNames": [
+      "v. Chr.",
+      "n. Chr."
+    ],
+    "day": "Tag",
+    "days": "Tage",
+    "month": "Monat",
+    "months": "Monate",
+    "year": "Jahr",
+    "years": "Jahre",
+    "more": "mehr",
+    "less": "weniger"
+  },
+  "saveDraftSuccessMessage"     :   "Der Entwurf wurde erfolgreich gespeichert.",
+  "saveDraftErrorMessage"       :   "Es ist ein Fehler aufgetreten, der uns daran gehindert hat, Ihren Entwurf zu speichern. Bitte versuchen Sie es erneut."
+}

@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-const path = require('path');
 
-module.exports = (env = {}) => ({
-    entry: './src/index.js',
-    output: {
-        filename: env.xfa ? '[name]-xfa.js' : '[name].js',
-        path: path.resolve(__dirname, 'dist'),
-        clean: !env.xfa,
-        library: {
-            name: 'FormView',
-            type: 'window'
-        },
-    },
-    resolve: env.xfa ? {
-        alias: {
-            '@aemforms/af-core': '@aemforms/af-core-xfa'
+const baseConfig = require('./clientlib.config.cjs');
+
+module.exports = {
+    ...baseConfig,
+    libs: [
+        {
+            ...baseConfig.libs[0],
+            name: 'core-forms-components-runtime-base-xfa',
+            categories: ['core.forms.components.runtime.base.xfa'],
+            assets: {
+                js: ['dist/main-xfa.js']
+            }
         }
-    } : {}
-});
+    ]
+}; 
