@@ -23,6 +23,7 @@ module.exports = {
             ...baseConfig.libs[0],
             name: 'core-forms-components-runtime-base-xfa',
             categories: ['core.forms.components.runtime.base.xfa'],
+            dependencies: [...baseConfig.libs[0].dependencies, ...baseConfig.xfaDependencies],
             assets: {
                 js: ['dist/main-xfa.js']
             }

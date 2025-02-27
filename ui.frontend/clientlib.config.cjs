@@ -37,6 +37,16 @@ const libsBaseConfig = {
     jsProcessor: ['default:none', 'min:none']
 };
 
+const xfaDependencies = [
+    'xfaforms.3rdparty',
+    'xfaforms.I18N.en',
+    'xfaforms.formbridge',
+    'xfaforms.xfalibutil',
+    'xfaforms.xfalibwidgets',
+    'xfaforms.formcalc',
+    'xfaforms.xfalibModel'
+];
+
 // Config for `aem-clientlib-generator`
 module.exports = {
     context: __dirname,
@@ -51,5 +61,6 @@ module.exports = {
                 js: ['dist/main.js']
             }
         }
-    ]
+    ],
+    xfaDependencies
 };
