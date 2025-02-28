@@ -198,7 +198,6 @@
                                                     granite:class="cmp-adaptiveform-container__formtemplateselector"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                                    name="./xdpRef"
                                                     disabled="false"
                                                     fieldLabel="Select Form Template *"
                                                     validation="datamodel.config"
@@ -212,6 +211,9 @@
                                             </formTemplateSelector>
                                         </items>
                                     </formTemplateSelectorContainer>
+                                    <xdpRef name="./xdpRef"
+                                               jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
                                     <marketoselectorcontainer
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container"

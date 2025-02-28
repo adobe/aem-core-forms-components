@@ -130,6 +130,11 @@
                     dialog.find('coral-selectlist-item[value="formdatamodel"]').remove();
                     dialog.find('coral-selectlist-item[value="connector"]').remove();
                 }
+            } else {
+                // when there is no dam asset, remove XFA from selection dynamically
+                dialog.find('coral-selectlist-item[value="formtemplates"]').remove();
+                // always hide form template container
+                $(FORM_TEMPLATE_CONTAINER).hide();
             }
             document.body.appendChild(formModelChangeConfirmationDialog);
             prefillSchema(schemaType, dialog);
@@ -142,6 +147,16 @@
             schemaTypeSelected = schemaTypeSelected[0].value;
             setElementValue(dialog, DAM_SCHEMA_TYPE, schemaTypeSelected)
             hideContainersExcept(schemaTypeSelected);
+            
+            // Clear previous form parameters if schema type changes
+            if (isForm()) {
+                var afAssetPath = getAfAssetMetadataPath();
+                if (schemaTypeSelected == FORM_TEMPLATE) {
+                    // When changing to form template, ensure xdpRef parameter is added
+                    setElementValue(dialog, XDP_REF, "")
+                    addFormParameter(afAssetPath + '/xdpRef', "");
+                }
+            }
         }
     };
 
@@ -163,6 +178,11 @@
                 $(CONNECTOR_DROPDOWN_SELECTOR).val(schemaRef);
             } else if (schemaType == FORM_TEMPLATE) {
                 $(FORM_TEMPLATE_DROPDOWN_SELECTOR).val(schemaRef);
+                // Also set the form parameter for xdpRef when prefilling
+                if (isForm()) {
+                    var afAssetPath = getAfAssetMetadataPath();
+                    addFormParameter(afAssetPath + '/xdpRef', schemaRef);
+                }
             }
         }
     };
@@ -217,7 +237,12 @@
         if(selectedSchema.length > 0) {
             selectedSchema = selectedSchema[0].value;
             setElementValue(dialog, SCHEMA_REF, selectedSchema);
+            setElementValue(dialog, XDP_REF, selectedSchema);
             setElementValue(dialog, DAM_SCHEMA_REF, selectedSchema);
+            if (isForm()) {
+                var afAssetPath = getAfAssetMetadataPath();
+                addFormParameter(afAssetPath + '/xdpRef', selectedSchema);
+            }
             isSchemaChanged = true;
             if (configuredFormModel) {
                 confirmFormModelChange(selectedSchema, $(FORM_TEMPLATE_DROPDOWN_SELECTOR));
