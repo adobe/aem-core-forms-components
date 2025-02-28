@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@aemforms/af-core": "^0.22.114",
-    "@aemforms/af-core-xfa": "^0.1.4",
+    "@aemforms/af-core-xfa": "^0.1.6",
     "@aemforms/af-formatters": "^0.22.114",
     "@aemforms/af-custom-functions": "1.0.14"
   }
