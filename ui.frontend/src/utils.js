@@ -333,10 +333,13 @@ class Utils {
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
                 let _formJson, callback;
-                // only invoke this for XFA specific adaptive form
-                if (loader && window.xfalib) {
+                const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
+                // Get the schema type from the data attribute with null safety
+                const schemaType = elements[i].getAttribute('data-cmp-schema-type');
+                // Check if this is an XDP form based on the schema type
+                // According to GuideSchemaType enum, XDP has value of FORM_TEMPLATES, not 'XFA'
+                if (loader && schemaType && (schemaType === 'XDP' || schemaType === 'FORM_TEMPLATES')) {
                     const id = loader.getAttribute('data-cmp-adaptiveform-container-loader');
                     const response = await fetch(`/adobe/forms/af/${id}`)
                     _formJson = (await response.json()).afModelDefinition;

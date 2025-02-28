@@ -292,7 +292,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
         }
         List<String> disabledScripts = getDisabledXFAScripts();
-        if (disabledScripts.size() > 0) {
+        if (!disabledScripts.isEmpty()) {
             properties.put("fd:disabledXfaScripts", disabledScripts);
         }
         return properties;
@@ -549,7 +549,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     private List<String> getDisabledXFAScripts() {
         Set<String> disabledScripts = new HashSet<>();
-        String xfaScripts = resource.getValueMap().get("fd:xfaScripts", "");
+        String xfaScripts = resource.getValueMap().get(ReservedProperties.FD_XFA_SCRIPTS, "");
         if (StringUtils.isNotEmpty(xfaScripts)) {
             // read string xfaScripts to jsonNode
             ObjectMapper mapper = new ObjectMapper();
