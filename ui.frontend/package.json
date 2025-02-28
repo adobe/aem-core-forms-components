@@ -4,8 +4,10 @@
   "description": "",
   "scripts": {
     "test": "jest",
-    "build:dev": "webpack --config webpack.dev.cjs && clientlib --verbose clientlib-dev.config.cjs",
-    "build:prod": "webpack --config webpack.prod.cjs && clientlib --verbose clientlib.config.cjs"
+    "build:dev": "webpack --config webpack.dev.cjs && webpack --config webpack.dev.cjs --env xfa && npm run clientlib:dev",
+    "build:prod": "webpack --config webpack.prod.cjs && webpack --config webpack.prod.cjs --env xfa && npm run clientlib:prod",
+    "clientlib:dev": "clientlib --verbose clientlib-dev.config.cjs && clientlib --verbose clientlib-dev.xfa.config.cjs",
+    "clientlib:prod": "clientlib --verbose clientlib.config.cjs && clientlib --verbose clientlib.xfa.config.cjs"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,7 @@
   },
   "dependencies": {
     "@aemforms/af-core": "^0.22.114",
+    "@aemforms/af-core-xfa": "^0.1.6",
     "@aemforms/af-formatters": "^0.22.114",
     "@aemforms/af-custom-functions": "1.0.14"
   }
