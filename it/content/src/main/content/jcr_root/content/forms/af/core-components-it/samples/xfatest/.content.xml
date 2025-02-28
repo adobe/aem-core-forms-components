@@ -22,7 +22,7 @@
             thankYouOption="page"
             themeRef="/libs/fd/af/themes/canvas"
             title="xfatest"
-            xdpRef="/content/dam/formsanddocuments/showHideRule.xdp">
+            xdpRef="/content/dam/formsanddocuments/core-components-it/samples/showHideRule.xdp">
             <_x0031_740725085254 jcr:primaryType="nt:unstructured"/>
             <form11740725095396
                 fd:xfajson="\{&quot;visible&quot;:true,&quot;hideTitle&quot;:true,&quot;icon&quot;:&quot;article&quot;,&quot;name&quot;:&quot;form1&quot;,&quot;sling:resourceType&quot;:&quot;core/fd/components/form/panelcontainer/v1/panelcontainer&quot;,&quot;jcr:title&quot;:&quot;Form 1&quot;,&quot;dataRef&quot;:&quot;xfa[0].form[0].form1[0]&quot;,&quot;fieldType&quot;:&quot;panel&quot;,&quot;enabled&quot;:true}"
