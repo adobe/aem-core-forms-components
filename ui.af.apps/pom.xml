@@ -91,6 +91,9 @@
                             <root>/apps/core/fd/components/page</root>
                         </filter>
                         <filter>
+                            <root>/apps/core/fd/components/xfa-page</root>
+                        </filter>
+                        <filter>
                             <root>/apps/core/fd/af-clientlibs</root>
                         </filter>
                     </filters>
@@ -167,6 +170,7 @@
                         <exclude>**/*.editorconfig</exclude>
                         <exclude>**/*.stylelintrc.yaml</exclude>
                         <exclude>**/*.eslintignore</exclude>
+                        <exclude>**/main-xfa.js</exclude>
                         <!-- Ignore Node and npm -->
                         <exclude>**/node/**</exclude>
                         <exclude>**/node_modules/**</exclude>
@@ -351,6 +355,9 @@
                                         </filter>
                                         <filter>
                                             <root>/libs/core/fd/components/page</root>
+                                        </filter>
+                                        <filter>
+                                            <root>/libs/core/fd/components/xfa-page</root>
                                         </filter>
                                         <filter>
                                             <root>/libs/core/fd/af-clientlibs</root>
