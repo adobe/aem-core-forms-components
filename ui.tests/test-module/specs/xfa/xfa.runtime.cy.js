@@ -14,41 +14,40 @@
  * limitations under the License.
  ******************************************************************************/
 describe("Form Runtime with XFA", () => {
+    if(cy.af.isLatestAddon()) {
+        const pagePath = "content/forms/af/core-components-it/samples/xfatest.html"
+        const IS = "adaptiveFormButton"
 
-    const pagePath = "content/forms/af/core-components-it/samples/xfatest.html"
-    const bemBlock = 'cmp-adaptiveform-button'
-    const IS = "adaptiveFormButton"
-    const selectors = {
-        buttonGroup : `[data-cmp-is="${IS}"]`
-    }
+        let formContainer = null
+        let toggle_array = [];
 
-    let formContainer = null
-    let toggle_array = [];
+        beforeEach(() => {
+            cy.fetchFeatureToggles().then((response) => {
+                if (response.status === 200) {
+                    toggle_array = response.body.enabled;
+                }
+            });
 
-    beforeEach(() => {
-        cy.previewForm(pagePath).then(p => {
-            formContainer = p;
-        })
-
-        cy.fetchFeatureToggles().then((response) => {
-            if (response.status === 200) {
-                toggle_array = response.body.enabled;
+            if (toggle_array && toggle_array.includes("FT_FORMS-14518")) {
+                cy.previewForm(pagePath).then(p => {
+                    formContainer = p;
+                })
             }
         });
-    });
 
 
-    it(`xfa rules would work`, () => {
-        if (toggle_array && toggle_array.includes("FT_FORMS-14518")) {
-            const [textInputId] = Object.entries(formContainer._fields)[0];
-            const [showButtonId] = Object.entries(formContainer._fields)[3];
-            const [hideButtonId] = Object.entries(formContainer._fields)[4];
-            cy.get(`#${showButtonId}`).find('.cmp-adaptiveform-button__widget').click();
-            cy.get(`#${textInputId}`).should("be.visible");
-            cy.get(`#${hideButtonId}`).find('.cmp-adaptiveform-button__widget').click();
-            cy.get(`#${textInputId}`).should("not.be.visible");
-            cy.get(`#${showButtonId}`).find('.cmp-adaptiveform-button__widget').click();
-            cy.get(`#${textInputId}`).should("be.visible");
-        }
-    });
+        it(`xfa rules would work`, () => {
+            if (toggle_array && toggle_array.includes("FT_FORMS-14518")) {
+                const [textInputId] = Object.entries(formContainer._fields)[0];
+                const [showButtonId] = Object.entries(formContainer._fields)[3];
+                const [hideButtonId] = Object.entries(formContainer._fields)[4];
+                cy.get(`#${showButtonId}`).find('.cmp-adaptiveform-button__widget').click();
+                cy.get(`#${textInputId}`).should("be.visible");
+                cy.get(`#${hideButtonId}`).find('.cmp-adaptiveform-button__widget').click();
+                cy.get(`#${textInputId}`).should("not.be.visible");
+                cy.get(`#${showButtonId}`).find('.cmp-adaptiveform-button__widget').click();
+                cy.get(`#${textInputId}`).should("be.visible");
+            }
+        });
+    }
 })
