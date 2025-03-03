@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:policy="forms-components-examples/components/page/default"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/core/components/policies/mappings">
+        <container1
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Header"
+                sling:resourceType="wcm/core/components/policies/mapping"
+                cq:policy="wcm/foundation/components/responsivegrid/page-header"
+                layout="responsiveGrid"
+                editable="{Boolean}true" />
+        <guideContainer
+                cq:policy="forms-components-examples/components/form/container/default"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/core/components/policies/mapping">
+            <forms-components-examples
+                    jcr:primaryType="nt:unstructured">
+                <components
+                        jcr:primaryType="nt:unstructured">
+                    <form
+                            jcr:primaryType="nt:unstructured">
+                        <numberinput
+                                cq:policy="forms-components-examples/components/form/numberinput/default"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="wcm/core/components/policies/mapping">
+                        </numberinput>
+                        <datepicker
+                                cq:policy="forms-components-examples/components/form/datepicker/default"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="wcm/core/components/policies/mapping">
+                        </datepicker>
+                        <telephoneinput
+                                cq:policy="forms-components-examples/components/form/telephoneinput/default"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="wcm/core/components/policies/mapping">
+                        </telephoneinput>
+                        <panelcontainer
+                                cq:policy="forms-components-examples/components/form/panelcontainer/default"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="wcm/core/components/policies/mapping">
+                        </panelcontainer>
+                        <switch
+                                cq:policy="forms-components-examples/components/form/switch/default"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="wcm/core/components/policies/mapping">
+                        </switch>
+                    </form>
+                </components>
+            </forms-components-examples>
+
+        </guideContainer>
+        <container2
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Footer"
+                sling:resourceType="wcm/core/components/policies/mapping"
+                cq:policy="wcm/foundation/components/responsivegrid/page-footer"
+                layout="responsiveGrid"
+                editable="{Boolean}true" />
+    </jcr:content>
+</jcr:root>
