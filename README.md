@@ -64,6 +64,12 @@ https://opensource.adobe.com/aem-core-forms-components/
 -   [Turnstile](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/turnstile/v1/turnstile)
 
 
+### XFA-based Form
+
+-   [XFA Page](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/xfa-page/v1/xfa-page)
+
+To create XFA-based core component forms, you need to use the XFA Page component. This component serves as the foundation for rendering XFA forms.
+
 ## System Requirements
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
