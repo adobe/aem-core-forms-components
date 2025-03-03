@@ -5,13 +5,13 @@
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
         cq:lastModified="{Date}2025-02-28T12:14:58.923+05:30"
         cq:lastModifiedBy="admin"
-        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-xfa-blank-v2"
         fd:ignoreTranslationInvalidation="{Boolean}true"
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="xfatest"
         sling:configRef="/conf/forms/xfatest/"
-        sling:resourceType="core/fd/components/xfa-page/v1/xfa-page">
+        sling:resourceType="forms-components-examples/components/xfa-page">
         <guideContainer
             fd:version="2.1"
             jcr:primaryType="nt:unstructured"
