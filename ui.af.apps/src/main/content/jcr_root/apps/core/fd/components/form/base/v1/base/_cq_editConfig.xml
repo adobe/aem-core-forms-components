@@ -23,6 +23,12 @@
             handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"
             icon="viewSOMExpression"
             text="View Qualified Name"/>
+        <viewXFAScripts
+                jcr:primaryType="nt:unstructured"
+                condition="CQ.FormsCoreComponents.editorhooks.hasXfaScripts"
+                handler="CQ.FormsCoreComponents.editorhooks.viewXfaScripts"
+                icon="code"
+                text="View XFA Scripts"/>
     </cq:actionConfigs>
     <cq:inplaceEditing
             jcr:primaryType="cq:InplaceEditingConfig"

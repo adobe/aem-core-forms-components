@@ -27,7 +27,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Text Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
 -   [Number Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/numberinput/v1/numberinput)
 -   [Date Picker](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/datepicker/v1/datepicker)
--   [File Attachment](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v1/fileinput)
+-   [File Attachment](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v3/fileinput)
 -   [Dropdown List](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown)
 -   [Checkbox Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup)
 -   [Radio Button Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton)
@@ -52,6 +52,12 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Review](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/review/v1/review)
 -   [Turnstile](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/turnstile/v1/turnstile)
 
+
+### XFA-based Form
+
+-   [XFA Page](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/xfa-page/v1/xfa-page)
+
+To create XFA-based core component forms, you need to use the XFA Page component. This component serves as the foundation for rendering XFA forms.
 
 ## System Requirements
 

@@ -47,17 +47,21 @@
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     var JSON_SCHEMA = 'jsonschema',
-        NONE = "none",
+        NONE = 'none',
         FORM_DATA_MODEL = "formdatamodel",
+        FORM_TEMPLATE = 'formtemplates',
         CONNECTOR = "connector",
         SCHEMA_REF = "input[name='./schemaRef']",
+        XDP_REF = "input[name='./xdpRef']",
         SCHEMA_TYPE = "input[name='./schemaType']",
         SCHEMA_CONTAINER = ".cmp-adaptiveform-container__schemaselectorcontainer",
         FDM_CONTAINER = ".cmp-adaptiveform-container__fdmselectorcontainer",
         CONNECTOR_CONTAINER = ".cmp-adaptiveform-container__marketoselectorcontainer",
+        FORM_TEMPLATE_CONTAINER = ".cmp-adaptiveform-container__formtemplateselectorcontainer",
         SCHEMA_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__schemaselector",
         FDM_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__fdmselector",
         CONNECTOR_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__marketoselector",
+        FORM_TEMPLATE_DROPDOWN_SELECTOR = ".cmp-adaptiveform-container__formtemplateselector",
         FORM_MODEL_SELECTOR = ".cmp-adaptiveform-container__selectformmodel",
         FM_AF_ROOT = "/content/forms/af/",
         FM_DAM_ROOT ="/content/dam/formsanddocuments/",
@@ -113,9 +117,24 @@
             if (isForm()){
                 var afAssetPath = getAfAssetMetadataPath();
                 DAM_SCHEMA_TYPE = "[name='" + afAssetPath + "/formmodel']";
-                DAM_SCHEMA_REF = "[name='" + afAssetPath + "/schemaRef']";
                 addFormParameter(afAssetPath + '/formmodel', schemaType);
-                addFormParameter(afAssetPath + '/schemaRef');
+                if(schemaType == JSON_SCHEMA){
+                    DAM_SCHEMA_REF = "[name='" + afAssetPath + "/schemaRef']";
+                    addFormParameter(afAssetPath + '/schemaRef');
+                } else if(schemaType == FORM_TEMPLATE){
+                    DAM_SCHEMA_REF = "[name='" + afAssetPath + "/xdpRef']";
+                    addFormParameter(afAssetPath + '/xdpRef');
+                    // we don't want user to change the data model if form template has been selected
+                    dialog.find('coral-selectlist-item[value="none"]').remove();
+                    dialog.find('coral-selectlist-item[value="jsonschema"]').remove();
+                    dialog.find('coral-selectlist-item[value="formdatamodel"]').remove();
+                    dialog.find('coral-selectlist-item[value="connector"]').remove();
+                }
+            } else {
+                // when there is no dam asset, remove XFA from selection dynamically
+                dialog.find('coral-selectlist-item[value="formtemplates"]').remove();
+                // always hide form template container
+                $(FORM_TEMPLATE_CONTAINER).hide();
             }
             document.body.appendChild(formModelChangeConfirmationDialog);
             prefillSchema(schemaType, dialog);
@@ -128,11 +147,25 @@
             schemaTypeSelected = schemaTypeSelected[0].value;
             setElementValue(dialog, DAM_SCHEMA_TYPE, schemaTypeSelected)
             hideContainersExcept(schemaTypeSelected);
+            
+            // Clear previous form parameters if schema type changes
+            if (isForm()) {
+                var afAssetPath = getAfAssetMetadataPath();
+                if (schemaTypeSelected == FORM_TEMPLATE) {
+                    // When changing to form template, ensure xdpRef parameter is added
+                    setElementValue(dialog, XDP_REF, "")
+                    addFormParameter(afAssetPath + '/xdpRef', "");
+                }
+            }
         }
     };
 
     function prefillSchema(schemaType, dialog){
         var schemaRef = dialog.find(SCHEMA_REF);
+        // for formtemplates we don't have schemaRef instead xdpRef
+        if(schemaType == FORM_TEMPLATE){
+            schemaRef = dialog.find(XDP_REF);
+        }
         if(schemaRef.length > 0){
             schemaRef = schemaRef[0].value;
             configuredFormModel = schemaRef;
@@ -143,6 +176,13 @@
                 $(FDM_DROPDOWN_SELECTOR).val(schemaRef);
             } else if (schemaType == CONNECTOR) {
                 $(CONNECTOR_DROPDOWN_SELECTOR).val(schemaRef);
+            } else if (schemaType == FORM_TEMPLATE) {
+                $(FORM_TEMPLATE_DROPDOWN_SELECTOR).val(schemaRef);
+                // Also set the form parameter for xdpRef when prefilling
+                if (isForm()) {
+                    var afAssetPath = getAfAssetMetadataPath();
+                    addFormParameter(afAssetPath + '/xdpRef', schemaRef);
+                }
             }
         }
     };
@@ -192,6 +232,26 @@
         }
     };
 
+    function formTemplateSelectorOnChanged(dialog) {
+        var selectedSchema = dialog.find(FORM_TEMPLATE_DROPDOWN_SELECTOR);
+        if(selectedSchema.length > 0) {
+            selectedSchema = selectedSchema[0].value;
+            setElementValue(dialog, SCHEMA_REF, selectedSchema);
+            setElementValue(dialog, XDP_REF, selectedSchema);
+            setElementValue(dialog, DAM_SCHEMA_REF, selectedSchema);
+            if (isForm()) {
+                var afAssetPath = getAfAssetMetadataPath();
+                addFormParameter(afAssetPath + '/xdpRef', selectedSchema);
+            }
+            isSchemaChanged = true;
+            if (configuredFormModel) {
+                confirmFormModelChange(selectedSchema, $(FORM_TEMPLATE_DROPDOWN_SELECTOR));
+            } else {
+                toBeConfiguredFormModel = selectedSchema;
+            }
+        }
+    };
+
     function setElementValue(dialog, elementRef, value){
         var element = dialog.find(elementRef);
         if(element.length > 0){
@@ -225,20 +285,29 @@
     function hideContainersExcept(selectedSchemaType) {
         if (selectedSchemaType == JSON_SCHEMA) {
             $(FDM_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).hide();
             $(CONNECTOR_CONTAINER).hide();
             $(SCHEMA_CONTAINER).show();
         } else if (selectedSchemaType == FORM_DATA_MODEL) {
             $(SCHEMA_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).hide();
             $(CONNECTOR_CONTAINER).hide();
             $(FDM_CONTAINER).show();
         } else if (selectedSchemaType == CONNECTOR) {
             $(SCHEMA_CONTAINER).hide();
             $(FDM_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).hide();
             $(CONNECTOR_CONTAINER).show();
-        } else if (selectedSchemaType == 'none') {
+        } else if (selectedSchemaType == FORM_TEMPLATE) {
             $(FDM_CONTAINER).hide();
             $(CONNECTOR_CONTAINER).hide();
             $(SCHEMA_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).show();
+        } else if (selectedSchemaType == NONE) {
+            $(FDM_CONTAINER).hide();
+            $(SCHEMA_CONTAINER).hide();
+            $(CONNECTOR_CONTAINER).hide();
+            $(FORM_TEMPLATE_CONTAINER).hide();
         }
     };
 
@@ -266,7 +335,8 @@
         var formModelSelector = dialog.find(FORM_MODEL_SELECTOR)[0],
             schemaSelector = dialog.find(SCHEMA_DROPDOWN_SELECTOR)[0],
             fdmSelector = dialog.find(FDM_DROPDOWN_SELECTOR)[0],
-            connectorSelector = dialog.find(CONNECTOR_DROPDOWN_SELECTOR)[0];
+            connectorSelector = dialog.find(CONNECTOR_DROPDOWN_SELECTOR)[0],
+            formTemplateSelector = dialog.find(FORM_TEMPLATE_DROPDOWN_SELECTOR)[0];
         if (formModelSelector) {
             formModelSelector.on("change", function() {
                 selectFormModelOnChanged(dialog);
@@ -287,6 +357,11 @@
                 connectorSelectorOnChanged(dialog);
             });
         };
+        if(formTemplateSelector) {
+            formTemplateSelector.on("change", function() {
+                formTemplateSelectorOnChanged(dialog);
+            });
+        }
         selectFormModelOnLoad(dialog);
     }
 
@@ -378,15 +453,18 @@
             if(restEndPointSource.length == 0 || isPostUrlSelected){
                 Utils.showComponent(restEndPointUrlTextBox, 'div');
                 Utils.hideComponent(restEndpointConfigPath, 'div');
+                restEndPointUrlTextBox?.setAttribute("data-rest-endpoint-url-validation", "");
             } else {
                 Utils.showComponent(restEndpointConfigPath, 'div');
                 Utils.hideComponent(restEndPointUrlTextBox, 'div');
+                restEndPointUrlTextBox?.removeAttribute("data-rest-endpoint-url-validation");
             }
         } else {
             Utils.hideComponent(restEndPointSource, 'div');
             Utils.hideComponent(restEndPointUrlTextBox, 'div');
             Utils.hideComponent(restEndpointConfigPath, 'div');
             restEndPointSource.parent('div').parent('div').hide();
+            restEndPointUrlTextBox?.removeAttribute("data-rest-endpoint-url-validation");
         }
     }
 
@@ -421,6 +499,7 @@
             $(document).off('change' + REST_ENDPOINT).on('change' + REST_ENDPOINT, restCheckBox, function(){
                 showPostUrlTextField(dialog);
             });
+            registerRestEndpointUrlValidator();
         }
     }
 
@@ -488,6 +567,22 @@
             }
         }
     });
+
+    function registerRestEndpointUrlValidator() {
+        $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
+            selector: "[data-rest-endpoint-url-validation]",
+            validate: (el) => {
+                const url = el.value;
+                // Regex to validate absolute URLs starting with http:// or https:// only
+                const absoluteUrlPattern = /^https?:\/\/.+$/i;
+                if (!absoluteUrlPattern.test(url)) {
+                    return Granite.I18n.getMessage(
+                       "Please enter the absolute path of the REST endpoint."
+                    );
+                }
+            }
+        });
+    }
 
     Utils.initializeEditDialog(EDIT_DIALOG_FORM)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
         registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel, registerAutoSaveDialogAction);
