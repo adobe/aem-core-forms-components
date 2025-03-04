@@ -10,6 +10,7 @@
     <filter root="/conf/core-components-examples/settings/wcm/policies/forms-components-examples" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/af-blank-v2" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/afv2frag-template" mode="update"/>
+    <filter root="/conf/core-components-examples/settings/wcm/templates/af-xfa-blank-v2" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/policies/jcr:content/root/responsivegrid/core-components-examples/components/form/container" mode="update"/>
     <filter root="/conf/core-components-examples/settings/wcm/templates/content-page/policies/jcr:content/root/responsivegrid/forms-components-examples" mode="update"/>
     <filter root="/content/core-components-examples/library/forms-and-communications-portal" mode="update"/>
