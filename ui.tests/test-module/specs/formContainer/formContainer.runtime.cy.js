@@ -43,6 +43,12 @@ describe("Form Runtime with Hamburger Menu", () => {
         cy.get(selectors.hamburgerMenuWidget.hamburgerMenu).should("be.visible");
     })
 
+    it(`Test data-cmp-hamburger-menu-enabled attribute when hamburger menu is enabled`, () => {
+        cy.viewport('iphone-x');
+        cy.get('form')
+            .should('have.attr', 'data-cmp-hamburger-menu-enabled', 'true');
+    })
+
     it(`Test hamburger menu should render exact number of items`, () => {
         cy.viewport('iphone-x');
         cy.get(selectors.hamburgerMenuTopContainer.hamburgerMenuIcon).click();
