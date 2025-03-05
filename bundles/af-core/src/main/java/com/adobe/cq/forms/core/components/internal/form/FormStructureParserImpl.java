@@ -122,7 +122,7 @@ public class FormStructureParserImpl implements FormStructureParser {
             HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
             ObjectMapper mapper = new ObjectMapper();
             Writer writer = new StringWriter();
-            ObjectWriter objectWriter = mapper.writerWithView(Views.Publish.class);
+            ObjectWriter objectWriter = mapper.writerWithView(Views.Submission.class);
             objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
             // return publish view specific properties only for runtime
             objectWriter.writeValue(writer, formContainer);

@@ -29,4 +29,6 @@ public class Views {
      */
     public static class Author extends Publish {}
 
+    public static class Submission extends Publish {}
+
 }

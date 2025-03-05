@@ -25,8 +25,10 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Defines the form container {@code FormContainer} Sling Model used for the {@code /apps/core/fd/components/form/formcontainer} component.
@@ -393,6 +395,12 @@ public interface FormContainer extends Container {
      */
     @JsonIgnore
     default AutoSaveConfiguration getAutoSaveConfig() {
+        return null;
+    }
+
+    @JsonView(Views.Submission.class)
+    @JsonProperty("fd:submit")
+    default Map<String, Object> getSubmitProperties() {
         return null;
     }
 
