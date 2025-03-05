@@ -708,14 +708,14 @@ public class FormContainerImplTest {
 
     @Test
     public void testJSONExportWithSubmissionView() throws Exception {
-        FormContainerImpl formContainer =  Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW, FormContainerImpl.class, context);
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW, FormContainerImpl.class, context);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Submission.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
         JsonNode submitJson = formJson.get("fd:submit");
         assertTrue("Should have fd:submit at top level", formJson.has("fd:submit"));
         assertEquals("spreadsheet", submitJson.get("actionType").asText());
-        assertEquals("test@example.com",submitJson.get("email_mailto").get(0).asText());
+        assertEquals("test@example.com", submitJson.get("email_mailto").get(0).asText());
         assertEquals("sender@example.com", submitJson.get("email_from").asText());
         assertEquals("Test Subject", submitJson.get("email_subject").asText());
         assertEquals("http://localhost/testurl", submitJson.get("spreadsheetUrl").asText());
