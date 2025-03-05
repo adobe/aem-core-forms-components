@@ -82,6 +82,41 @@
         "visible" : false,
         "customProp": "customPropValue"
       }
+    },
+    "formcontainer-submissionView": {
+      "jcr:primaryType": "nt:unstructured",
+      "thankYouOption": "page",
+      "subject": "Test Subject",
+      "thankYouMessage": "<p>Thank you for submitting the form.</p>\r\n",
+      "jcr:lastModifiedBy": "admin",
+      "mailto": [
+        "test@example.com"
+      ],
+      "fd:version": "2.1",
+      "schemaType": "none",
+      "specVersion": "0.14.2",
+      "useExternalEmailTemplate": "true",
+      "from": "sender@example.com",
+      "title": "afv2",
+      "jcr:lastModified": "Wed Mar 05 2025 11:19:02 GMT+0530",
+      "themeRef": "/libs/fd/af/themes/canvas",
+      "sling:resourceType": "forms-components-examples/components/form/container",
+      "fieldType": "form",
+      "spreadsheetUrl": "http://localhost/testurl",
+      "textIsRich": "true",
+      "dorType": "none",
+      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet",
+      "numberinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:createdBy": "admin",
+        "jcr:title": "Number Input",
+        "jcr:lastModifiedBy": "admin",
+        "jcr:created": "Mon Mar 03 2025 22:55:19 GMT+0530",
+        "name": "numberinput1741022719935",
+        "jcr:lastModified": "Mon Mar 03 2025 22:55:19 GMT+0530",
+        "sling:resourceType": "forms-components-examples/components/form/numberinput",
+        "fieldType": "number-input"
+      }
     }
   }
 }

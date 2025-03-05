@@ -131,6 +131,26 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonIgnore
+    private String actionType;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonIgnore
+    private String[] mailto;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonIgnore
+    private String from;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonIgnore
+    private String subject;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonIgnore
+    private String spreadsheetUrl;
+
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
 
@@ -359,7 +379,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
         properties.put(FD_DATA_URL, getDataUrl());
-
         return properties;
     }
 
@@ -422,6 +441,37 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public AutoSaveConfiguration getAutoSaveConfig() {
         return autoSaveConfig;
+    }
+
+    @Override
+    public Map<String, Object> getSubmitProperties() {
+        Map<String, Object> submitProps = new LinkedHashMap<>();
+        Map<String, String> submitActionMap = new LinkedHashMap<>();
+
+        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_EMAIL, FormConstants.NAME_SUBMIT_TYPE_EMAIL);
+        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_SPREADSHEET, FormConstants.NAME_SUBMIT_TYPE_SPREADSHEET);
+        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_REST, FormConstants.NAME_SUBMIT_TYPE_REST);
+        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_FDM, FormConstants.NAME_SUBMIT_TYPE_FDM);
+        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_AZURE_BLOB, FormConstants.NAME_SUBMIT_TYPE_AZURE_BLOB);
+        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_ONEDRIVE, FormConstants.NAME_SUBMIT_TYPE_ONEDRIVE);
+        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_SHAREPOINT, FormConstants.NAME_SUBMIT_TYPE_SHAREPOINT);
+        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_AEM_WORKFLOW, FormConstants.NAME_SUBMIT_TYPE_AEM_WORKFLOW);
+        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_POWER_AUTOMATE, FormConstants.NAME_SUBMIT_TYPE_POWER_AUTOMATE);
+
+        submitProps.put("actionType", submitActionMap.getOrDefault(actionType, actionType));
+        if (mailto != null && mailto.length > 0) {
+            submitProps.put("email_mailto", mailto);
+        }
+        if (StringUtils.isNotEmpty(from)) {
+            submitProps.put("email_from", from);
+        }
+        if (StringUtils.isNotEmpty(subject)) {
+            submitProps.put("email_subject", subject);
+        }
+        if (StringUtils.isNotEmpty(spreadsheetUrl)) {
+            submitProps.put("spreadsheetUrl", spreadsheetUrl);
+        }
+        return submitProps;
     }
 
 }
