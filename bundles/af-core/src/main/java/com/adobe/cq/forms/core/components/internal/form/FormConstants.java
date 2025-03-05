@@ -142,4 +142,41 @@ public final class FormConstants {
 
     /* The resource type for the pre-selected the linked panel */
     public final static String RT_FD_FORM_REVIEW_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "review/v1/datasource";
+
+    public final static String RT_SUBMIT_TYPE_EMAIL = "fd/af/components/guidesubmittype/email";
+
+    public final static String RT_SUBMIT_TYPE_SPREADSHEET = "fd/af/components/guidesubmittype/franklin/spreadsheet";
+
+    public final static String RT_SUBMIT_TYPE_REST = "fd/af/components/guidesubmittype/restendpoint";
+
+    public final static String RT_SUBMIT_TYPE_FDM = "fd/af/afaddon/components/actions/fdm";
+
+    public final static String RT_SUBMIT_TYPE_AZURE_BLOB = "fd/af/afaddon/components/actions/azureblobstorage";
+
+    public final static String RT_SUBMIT_TYPE_ONEDRIVE = "fd/af/afaddon/components/actions/onedrivestorage";
+
+    public final static String RT_SUBMIT_TYPE_SHAREPOINT = "fd/af/afaddon/components/actions/sharepointstorage";
+
+    public final static String RT_SUBMIT_TYPE_AEM_WORKFLOW = "fd/dashboard/components/actions/aemworkflowsubmit";
+
+    public final static String RT_SUBMIT_TYPE_POWER_AUTOMATE = "fd/powerautomate/components/actions/pasubmit";
+
+    public final static String NAME_SUBMIT_TYPE_SPREADSHEET = "spreadsheet";
+
+    public final static String NAME_SUBMIT_TYPE_EMAIL = "email";
+
+    public final static String NAME_SUBMIT_TYPE_REST = "rest";
+
+    public final static String NAME_SUBMIT_TYPE_FDM = "fdm";
+
+    public final static String NAME_SUBMIT_TYPE_AZURE_BLOB = "azureblobstorage";
+
+    public final static String NAME_SUBMIT_TYPE_ONEDRIVE = "onedrivestorage";
+
+    public final static String NAME_SUBMIT_TYPE_SHAREPOINT = "sharepointstorage";
+
+    public final static String NAME_SUBMIT_TYPE_AEM_WORKFLOW = "aemworkflowsubmit";
+
+    public final static String NAME_SUBMIT_TYPE_POWER_AUTOMATE = "pasubmit";
+
 }
