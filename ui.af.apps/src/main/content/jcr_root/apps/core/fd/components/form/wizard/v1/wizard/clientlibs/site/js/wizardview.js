@@ -199,6 +199,12 @@
             }
 
 
+            getFocusElementId() {
+                const activeIndex = this._active;
+                const activeTabElement = this.getCachedTabs()[activeIndex];
+                return activeTabElement.id.substring(0, activeTabElement.id.lastIndexOf(Wizard.#tabIdSuffix));
+            }
+
             #navigateToNextTab() {
                 const activeIndex = this._active;
                 const activeTabElement = this.getCachedTabs()[activeIndex];
@@ -334,6 +340,8 @@
             #navigateAndFocusTab(index) {
                 this.navigate(index);
                 this.focusWithoutScroll(this.getCachedTabs()[index]);
+                const id = this.getFocusElementId();
+                this.focusToFirstVisibleField(id);
             }
    
             #syncWizardNavLabels() {

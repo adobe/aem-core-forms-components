@@ -249,9 +249,10 @@ class FormTabs extends FormPanel {
         if (this.#_active !== tabId) {
             this.navigate(tabId);
             this.focusWithoutScroll(this.#getTabNavElementById(tabId));
+            const id = this.getActiveTabId(this.#getCachedTabs()).replace(this.#tabIdSuffix,"");
+            this.focusToFirstVisibleField(id);
         }
     }
-
 
 
     #getTabNavElementById(tabId) {
@@ -327,7 +328,6 @@ class FormTabs extends FormPanel {
             return result;
         }
     }
-
 
     /**
      * Synchronizes tab labels with their corresponding tab panels.
