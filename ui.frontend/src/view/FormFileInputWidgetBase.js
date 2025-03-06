@@ -446,7 +446,7 @@ class FormFileInputWidgetBase {
                 let isInvalidSize = false,
                     isInvalidFileName = false,
                     isInvalidMimeType = false;
-                //this.resetIfNotMultiSelect();
+
                 if (typeof files !== "undefined") {
                     let invalidFilesIndexes = [];
                     Array.from(files).forEach(function (file, fileIndex) {
@@ -466,9 +466,17 @@ class FormFileInputWidgetBase {
                             inValidNamefileNames = currFileName + "," + inValidNamefileNames;
                         } else {
                             let isMatch = false;
-                            let extension = currFileName.split('.').pop();
-                            let mimeType = (file.type) ? file.type : self.extensionToMimeTypeMap[extension];
-                            if (mimeType != undefined && mimeType.trim().length > 0) {
+                            let extension = currFileName.split('.').pop().toLowerCase();
+                            let mimeType = file.type || self.extensionToMimeTypeMap[extension];
+                            
+                            // If no MIME type is detected, check if the file extension is in the accept list
+                            if (!mimeType) {
+                                isMatch = this.options.accept.some(function(acceptPattern) {
+                                    // Remove leading dot if present and convert to lowercase
+                                    let cleanPattern = acceptPattern.replace(/^\./, '').toLowerCase();
+                                    return cleanPattern === extension;
+                                });
+                            } else {
                                 isMatch = this.regexMimeTypeList.some(function (rx) {
                                     return rx.test(mimeType);
                                 });
