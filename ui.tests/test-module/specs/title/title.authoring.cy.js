@@ -38,30 +38,34 @@ describe('Page - Authoring', function () {
     const testTitleEditDialog = function (titleEditPathSelector, titleDrop, isSites) {
         if (isSites) {
             dropTitleInSites();
+            cy.wait(500);
             cy.get(sitesSelectors.overlays.overlay.component + titleEditPathSelector)
                 .should('be.visible')
                 .first()
-                .then($el => {
-                    cy.wrap($el).click();
-                    cy.invokeEditableAction("[data-action='CONFIGURE']");
-                    cy.get('.cq-dialog-cancel').should('be.visible').click();
-                    cy.deleteComponentByPath(titleDrop);
-                });
+                .as('titleElement');
+            
+            cy.get('@titleElement').should('exist').should('be.visible');
+            cy.get('@titleElement').click({force: true});
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('.cq-dialog-cancel').should('be.visible').click();
+            cy.deleteComponentByPath(titleDrop);
         } else {
             dropTitleInContainer();
+            cy.wait(500);
             cy.get(sitesSelectors.overlays.overlay.component + titleEditPathSelector)
                 .should('be.visible')
                 .first()
-                .then($el => {
-                    cy.wrap($el).click();
-                    cy.invokeEditableAction("[data-action='CONFIGURE']");
-                    cy.get('.cq-dialog-cancel').should('be.visible').click();
-                    cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
-                        .should('exist')
-                        .invoke('attr', 'data-path')
-                        .then(dataPath => {
-                            cy.deleteComponentByPath(dataPath);
-                        });
+                .as('titleElement');
+            
+            cy.get('@titleElement').should('exist').should('be.visible');
+            cy.get('@titleElement').click({force: true});
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('.cq-dialog-cancel').should('be.visible').click();
+            cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
+                .should('exist')
+                .invoke('attr', 'data-path')
+                .then(dataPath => {
+                    cy.deleteComponentByPath(dataPath);
                 });
         }
     }
