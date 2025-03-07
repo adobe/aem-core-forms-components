@@ -1,4 +1,11 @@
-<template data-sly-template.label="${@ componentId, labelValue, labelVisible, labelRichText, bemBlock}">
-  <label for="${componentId}" class="${bemBlock}__label"
-         data-sly-test="${labelValue && (labelVisible==null || labelVisible==true)}" data-richtext="${labelRichText}">${labelValue @ context = labelRichText ? 'html' : 'text'}</label>
+<template data-sly-template.label="${@ componentId, labelValue, labelVisible, labelRichText, bemBlock, isLegend}">
+  <sly data-sly-test.isVisible="${labelValue && (labelVisible==null || labelVisible==true)}">
+    <sly data-sly-test="${isVisible}">
+      <sly data-sly-test="${isLegend}" data-richtext="${labelRichText}">
+        ${labelValue @ context = labelRichText ? 'html' : 'text'}
+      </sly>
+      <label for="${componentId}" class="${bemBlock}__label"
+        data-sly-test="${!isLegend}" data-richtext="${labelRichText}">${labelValue @ context = labelRichText ? 'html' : 'text'}</label>
+    </sly>
+  </sly>
 </template>

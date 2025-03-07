@@ -65,6 +65,9 @@ BLOCK cmp-accordion
     ELEMENT cmp-accordion__questionmark
     ELEMENT cmp-accordion__shortdescription
     ELEMENT cmp-accordion__longdescription
+    ELEMENT cmp-accordion__fieldset
+    ELEMENT cmp-accordion__legend
+        MOD cmp-accordion__legend--hidden
 ```
 ### Note
 By placing the class names `cmp-accordion__label` and `cmp-accordion__questionmark` within the `cmp-accordion__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
@@ -83,6 +86,7 @@ data-cmp-hook-accordion="panel"
 ```
 
 ### Enabling Accordion Editing Functionality
+
 The following properties and child nodes are required in the proxy component to enable full editing functionality for the Accordion:
 
 1. `./cq:isContainer` - set to `{Boolean}true`, marks the Accordion as a container component

@@ -1,0 +1,15 @@
+<template data-sly-template.fieldsetLegend="${@ componentId, labelValue, labelVisible, labelRichText, required, bemBlock}">
+    <fieldset class="${bemBlock}__fieldset"
+             id="${componentId}"
+             aria-required="${required}">
+        <legend class="${bemBlock}__legend">
+            <span class="${bemBlock}__label-text"
+                  data-sly-test="${labelValue && (labelVisible==null || labelVisible==true)}"
+                  data-richtext="${labelRichText}">
+                ${labelValue @ context = labelRichText ? 'html' : 'text'}
+            </span>
+            <span class="${bemBlock}__required" data-sly-test="${required}">*</span>
+        </legend>
+        <sly data-sly-call="${fieldContent.content @ componentId=componentId}"></sly>
+    </fieldset>
+</template> 
