@@ -27,6 +27,8 @@ import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -400,6 +402,7 @@ public interface FormContainer extends Container {
 
     @JsonView(Views.Submission.class)
     @JsonProperty("fd:submit")
+    @JsonInclude(Include.NON_NULL)
     default Map<String, Object> getSubmitProperties() {
         return null;
     }

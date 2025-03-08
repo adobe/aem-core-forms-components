@@ -15,15 +15,25 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.osgi.services.HttpClientBuilderFactory;
+import org.apache.http.util.EntityUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -59,6 +69,8 @@ import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -79,9 +91,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
     private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
     private static final String FD_DATA_URL = "fd:dataUrl";
+    private static final String SS_EMAIL = "email";
+    private static final String SS_SPREADSHEET = "spreadsheet";
 
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private HttpClientBuilderFactory clientBuilderFactory;
 
     private static final String DRAFT_PREFILL_SERVICE = "service://FP/draft/";
 
@@ -130,26 +147,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
-    private String actionType;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
-    private String[] mailto;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
-    private String from;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
-    private String subject;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
-    @JsonIgnore
-    private String spreadsheetUrl;
 
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
@@ -297,7 +294,52 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getAction() {
+        List<String> supportedSubmitActions = this.getSupportedSubmitActions();
+        String resourceType = resource.getValueMap().get("sling:resourceType", String.class);
+        supportedSubmitActions = Arrays.asList("spreadsheet");
+        if (supportedSubmitActions.contains(resource.getValueMap().get(ReservedProperties.PN_SUBMIT_ACTION_NAME))) {
+            if (resourceType != null && resourceType.contains("/franklin")) {
+                return "";
+            } else {
+                return "https://forms.adobe.com" + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" +
+                    ComponentUtils.getEncodedPath(resource.getPath() + ".model.json");
+            }
+        }
         return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
+    }
+
+    private List<String> getSupportedSubmitActions() {
+        String supportedSubmitActionsUrl = "https://forms.adobe.com/adobe/forms/af/supportedSubmitActions";
+        List<String> supportedSubmitActions = new ArrayList<>();
+        try {
+            if (clientBuilderFactory != null) {
+                RequestConfig requestConfig = RequestConfig.custom()
+                    .setConnectTimeout(5000)
+                    .setSocketTimeout(5000)
+                    .setConnectionRequestTimeout(5000)
+                    .build();
+
+                CloseableHttpClient httpClient = clientBuilderFactory.newBuilder()
+                    .setDefaultRequestConfig(requestConfig)
+                    .build();
+
+                HttpGet httpGet = new HttpGet(supportedSubmitActionsUrl);
+                CloseableHttpResponse response = httpClient.execute(httpGet);
+                String responseBody = null;
+
+                if (response != null && response.getStatusLine() != null
+                    && response.getStatusLine().getStatusCode() == java.net.HttpURLConnection.HTTP_OK
+                    && response.getEntity() != null) {
+                    responseBody = EntityUtils.toString(response.getEntity());
+                    supportedSubmitActions = Arrays.asList(responseBody.split(","));
+                } else {
+                    logger.warn("Failed to retrieve supported submit actions.");
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Error while fetching supported submit actions", e);
+        }
+        return supportedSubmitActions;
     }
 
     @Override
@@ -444,34 +486,54 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     }
 
     @Override
+    @JsonInclude(Include.NON_NULL)
     public Map<String, Object> getSubmitProperties() {
-        Map<String, Object> submitProps = new LinkedHashMap<>();
-        Map<String, String> submitActionMap = new LinkedHashMap<>();
 
-        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_EMAIL, FormConstants.NAME_SUBMIT_TYPE_EMAIL);
-        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_SPREADSHEET, FormConstants.NAME_SUBMIT_TYPE_SPREADSHEET);
-        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_REST, FormConstants.NAME_SUBMIT_TYPE_REST);
-        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_FDM, FormConstants.NAME_SUBMIT_TYPE_FDM);
-        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_AZURE_BLOB, FormConstants.NAME_SUBMIT_TYPE_AZURE_BLOB);
-        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_ONEDRIVE, FormConstants.NAME_SUBMIT_TYPE_ONEDRIVE);
-        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_SHAREPOINT, FormConstants.NAME_SUBMIT_TYPE_SHAREPOINT);
-        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_AEM_WORKFLOW, FormConstants.NAME_SUBMIT_TYPE_AEM_WORKFLOW);
-        submitActionMap.put(FormConstants.RT_SUBMIT_TYPE_POWER_AUTOMATE, FormConstants.NAME_SUBMIT_TYPE_POWER_AUTOMATE);
+        Map<String, Object> submitProps = null;
 
-        submitProps.put("actionType", submitActionMap.getOrDefault(actionType, actionType));
-        if (mailto != null && mailto.length > 0) {
-            submitProps.put("email_mailto", mailto);
-        }
-        if (StringUtils.isNotEmpty(from)) {
-            submitProps.put("email_from", from);
-        }
-        if (StringUtils.isNotEmpty(subject)) {
-            submitProps.put("email_subject", subject);
-        }
-        if (StringUtils.isNotEmpty(spreadsheetUrl)) {
-            submitProps.put("spreadsheetUrl", spreadsheetUrl);
+        if (shouldIncludeSubmitProperties()) {
+            submitProps = new LinkedHashMap<>();
+            List<String> submitActionProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_ACTION_TYPE,
+                ReservedProperties.PN_SUBMIT_ACTION_NAME);
+
+            List<String> submitEmailProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_EMAIL_TO,
+                ReservedProperties.PN_SUBMIT_EMAIL_FROM,
+                ReservedProperties.PN_SUBMIT_EMAIL_SUBJECT,
+                ReservedProperties.PN_SUBMIT_EMAIL_CC,
+                ReservedProperties.PN_SUBMIT_EMAIL_BCC);
+
+            List<String> submitSpreadsheetProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_SPREADSHEETURL);
+            ValueMap resourceMap = resource.getValueMap();
+            for (Map.Entry<String, Object> entry : resourceMap.entrySet()) {
+                if (submitActionProperties.contains(entry.getKey())) {
+                    submitProps.put(entry.getKey(), entry.getValue());
+                } else if (submitEmailProperties.contains(entry.getKey())) {
+                    if (submitProps.get(SS_EMAIL) == null) {
+                        submitProps.put(SS_EMAIL, new LinkedHashMap<String, Object>());
+                    }
+                    ((Map<String, Object>) submitProps.get(SS_EMAIL)).put(entry.getKey(), entry.getValue());
+                } else if (submitSpreadsheetProperties.contains(entry.getKey())) {
+                    if (submitProps.get(SS_SPREADSHEET) == null) {
+                        submitProps.put(SS_SPREADSHEET, new LinkedHashMap<String, Object>());
+                    }
+                    ((Map<String, Object>) submitProps.get(SS_SPREADSHEET)).put(entry.getKey(), entry.getValue());
+                }
+            }
         }
         return submitProps;
+    }
+
+    private boolean shouldIncludeSubmitProperties() {
+        return (request == null)
+            || (request.getAttribute(FormConstants.X_ADOBE_FORM_DEFINITION) != null
+                && request.getAttribute(FormConstants.X_ADOBE_FORM_DEFINITION)
+                    .equals(FormConstants.FORM_DEFINITION_SUBMISSION))
+            || (request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION) != null
+                && request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION)
+                    .equals(FormConstants.FORM_DEFINITION_SUBMISSION));
     }
 
 }

@@ -158,6 +158,16 @@ public final class ReservedProperties {
     public static final String PN_EXCLUDE_FROM_DOR = "excludeFromDor";
     public static final String PN_MANDATORY = "mandatory";
     public static final String PN_HTML_ELEMENT_TYPE_V2 = "fd:htmlelementType";
+
+    public static final String PN_SUBMIT_ACTION_TYPE = "actionType";
+    public static final String PN_SUBMIT_ACTION_NAME = "actionName";
+    public static final String PN_SUBMIT_EMAIL_TO = "mailto";
+    public static final String PN_SUBMIT_EMAIL_FROM = "from";
+    public static final String PN_SUBMIT_EMAIL_SUBJECT = "subject";
+    public static final String PN_SUBMIT_EMAIL_CC = "cc";
+    public static final String PN_SUBMIT_EMAIL_BCC = "bcc";
+    public static final String PN_SUBMIT_SPREADSHEETURL = "spreadsheetUrl";
+
     public static final String FD_AUTO_SAVE_PROPERTY_WRAPPER = "fd:autoSave";
     public static final String FD_ENABLE_AUTO_SAVE = "fd:enableAutoSave";
     public static final String FD_AUTO_SAVE_STRATEGY_TYPE = "fd:autoSaveStrategyType";
