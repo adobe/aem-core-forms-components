@@ -117,6 +117,9 @@ public class FormStructureParserImpl implements FormStructureParser {
 
     public String getFormDefinition() {
         String result = null;
+        if (request != null) {
+            request.setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
+        }
         FormContainer formContainer = resource.adaptTo(FormContainer.class);
         try {
             HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
@@ -124,7 +127,6 @@ public class FormStructureParserImpl implements FormStructureParser {
             Writer writer = new StringWriter();
             ObjectWriter objectWriter = mapper.writerWithView(Views.Submission.class);
             objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
-            // return publish view specific properties only for runtime
             objectWriter.writeValue(writer, formContainer);
             result = writer.toString();
         } catch (Exception e) {

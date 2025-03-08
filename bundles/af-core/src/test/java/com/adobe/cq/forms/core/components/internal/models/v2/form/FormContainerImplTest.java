@@ -16,7 +16,6 @@
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +32,6 @@ import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
 import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,7 +66,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -99,6 +96,8 @@ public class FormContainerImplTest {
         + "/jcr:content/root/sitecontainer/formcontainer";
 
     protected static final String AF_PATH = "/content/forms/af/testAf";
+    private static final String SS_EMAIL = "email";
+    private static final String SS_SPREADSHEET = "spreadsheet";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -630,94 +629,28 @@ public class FormContainerImplTest {
     }
 
     @Test
-    public void testGetSubmitPropertiesWithAllFields() {
-        // Setup
-        FormContainerImpl formContainer = new FormContainerImpl();
-        String actionType = "email";
-        String[] mailto = new String[] { "test@example.com", "test2@example.com" };
-        String from = "sender@example.com";
-        String subject = "Test Subject";
-
-        // Set private fields using reflection
-        setPrivateField(formContainer, "actionType", actionType);
-        setPrivateField(formContainer, "mailto", mailto);
-        setPrivateField(formContainer, "from", from);
-        setPrivateField(formContainer, "subject", subject);
-
-        // Execute
-        Map<String, Object> result = formContainer.getSubmitProperties();
-
-        // Verify
-        Assert.assertNotNull("Result map should not be null", result);
-        assertEquals("Action type should match", actionType, result.get("actionType"));
-        assertIterableEquals(Arrays.asList(mailto),
-            Arrays.asList((String[]) result.get("email_mailto")),
-            "Mailto array should match");
-        assertEquals("From should match", from, result.get("email_from"));
-        assertEquals("Subject should match", subject, result.get("email_subject"));
-    }
-
-    @Test
-    public void testGetSubmitPropertiesWithNullFields() {
-        // Setup
-        FormContainerImpl formContainer = new FormContainerImpl();
-        Map<String, Object> result = formContainer.getSubmitProperties();
-
-        // Verify
-        assertNotNull("Result map should not be null", result);
-        assertNull("Action type should be null", result.get("actionType"));
-        assertNull("Mailto should be null", result.get("email_mailto"));
-        assertNull("From should be null", result.get("email_from"));
-        assertNull("Subject should be null", result.get("email_subject"));
-    }
-
-    @Test
-    public void testGetSubmitPropertiesWithPartialFields() {
-        // Setup
-        FormContainerImpl formContainer = new FormContainerImpl();
-        String actionType = "email";
-        String[] mailto = new String[] { "test@example.com" };
-
-        // Set only some fields
-        setPrivateField(formContainer, "actionType", actionType);
-        setPrivateField(formContainer, "mailto", mailto);
-
-        // Execute
-        Map<String, Object> result = formContainer.getSubmitProperties();
-
-        // Verify
-        assertNotNull("Result map should not be null", result);
-        assertEquals("Action type should match", actionType, result.get("actionType"));
-        assertIterableEquals(java.util.Arrays.asList(mailto),
-            java.util.Arrays.asList((String[]) result.get("email_mailto")),
-            "Mailto array should match");
-        assertNull("From should be null", result.get("email_from"));
-        assertNull("Subject should be null", result.get("email_subject"));
-    }
-
-    // Helper method to set private fields using reflection
-    private void setPrivateField(Object object, String fieldName, Object value) {
-        try {
-            java.lang.reflect.Field field = object.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            field.set(object, value);
-        } catch (Exception e) {
-            fail("Failed to set private field: " + fieldName + ", error: " + e.getMessage());
-        }
-    }
-
-    @Test
-    public void testJSONExportWithSubmissionView() throws Exception {
+    public void testJSONExportWithSubmissionAttribute() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW, FormContainerImpl.class, context);
+        context.request().setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Submission.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
         JsonNode submitJson = formJson.get("fd:submit");
         assertTrue("Should have fd:submit at top level", formJson.has("fd:submit"));
-        assertEquals("spreadsheet", submitJson.get("actionType").asText());
-        assertEquals("test@example.com", submitJson.get("email_mailto").get(0).asText());
-        assertEquals("sender@example.com", submitJson.get("email_from").asText());
-        assertEquals("Test Subject", submitJson.get("email_subject").asText());
-        assertEquals("http://localhost/testurl", submitJson.get("spreadsheetUrl").asText());
+        assertEquals("fd/af/components/guidesubmittype/franklin/spreadsheet", submitJson.get("actionType").asText());
+        assertEquals("test@example.com", submitJson.get(SS_EMAIL).get("mailto").get(0).asText());
+        assertEquals("sender@example.com", submitJson.get(SS_EMAIL).get("from").asText());
+        assertEquals("Test Subject", submitJson.get(SS_EMAIL).get("subject").asText());
+        assertEquals("http://localhost/testurl", submitJson.get(SS_SPREADSHEET).get("spreadsheetUrl").asText());
+    }
+
+    @Test
+    public void testJSONExportWithoutSubmissionAttribute() throws Exception {
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
+                FormContainerImpl.class, context);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithView(Views.Submission.class).writeValueAsString(formContainer);
+        JsonNode formJson = mapper.readTree(json);
+        assertNull("Should not have fd:submit at top level", formJson.get("fd:submit"));
     }
 }
