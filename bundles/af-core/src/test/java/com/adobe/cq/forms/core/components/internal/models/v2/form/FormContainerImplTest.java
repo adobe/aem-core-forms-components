@@ -79,16 +79,15 @@ public class FormContainerImplTest {
     private static final String CONTENT_ROOT = CONTENT_PAGE_ROOT + "/jcr:content";
     private static final String CONTENT_DAM_ROOT = "/content/dam/formsanddocuments/demo";
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
-
     private static final String PATH_FORM_SUBMISSION_VIEW = CONTENT_ROOT + "/formcontainer-submissionView";
     private static final String PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION = CONTENT_ROOT
-            + "/formContainer-ue-form-spreadsheet-submission";
+        + "/formContainer-ue-form-spreadsheet-submission";
     private static final String PATH_UE_FORM_REST_SUBMISSION = CONTENT_ROOT
-            + "/formContainer-ue-form-rest-submission";
+        + "/formContainer-ue-form-rest-submission";
     private static final String PATH_CC_FORM_SPREADSHEET_SUBMISSION = CONTENT_ROOT
-            + "/formContainer-cc-form-spreadsheet-submission";
+        + "/formContainer-cc-form-spreadsheet-submission";
     private static final String PATH_CC_FORM_REST_SUBMISSION = CONTENT_ROOT
-            + "/formContainer-cc-form-rest-submission";
+        + "/formContainer-cc-form-rest-submission";
 
     private static final String PATH_FORM_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/formcontainerv2-without-fieldtype";
     private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
@@ -657,7 +656,7 @@ public class FormContainerImplTest {
     @Test
     public void testJSONExportWithSubmissionViewWithoutSubmissionAttribute() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Submission.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
@@ -667,7 +666,7 @@ public class FormContainerImplTest {
     @Test
     public void testJSONExportWithoutSubmissionViewWithSubmissionAttribute() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         context.request().setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
@@ -678,29 +677,29 @@ public class FormContainerImplTest {
     @Test
     public void testActionForUEFormSpreadsheetSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
         assertEquals("action should be empty for ue form with submit action supported via submission service", "",
-                formJson.get("action").asText());
+            formJson.get("action").asText());
     }
 
     @Test
     public void testActionForUEFormRestSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_UE_FORM_REST_SUBMISSION,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
         assertTrue("action should not be empty for ue form with submit action not supported via submission service",
-                formJson.get("action").asText().length() > 0);
+            formJson.get("action").asText().length() > 0);
     }
 
     @Test
     public void testActionForCCFormSpreadsheetSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_CC_FORM_SPREADSHEET_SUBMISSION,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
@@ -709,14 +708,14 @@ public class FormContainerImplTest {
         String lastPart = actionParts[actionParts.length - 1];
         String decodedAction = new String(Base64.getDecoder().decode(lastPart));
         assertTrue(
-                "action should end with .model.json for cc forms for submit action  supported via submission service",
-                decodedAction.endsWith(".model.json"));
+            "action should end with .model.json for cc forms for submit action  supported via submission service",
+            decodedAction.endsWith(".model.json"));
     }
 
     @Test
     public void testActionForCCFormRestSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_CC_FORM_REST_SUBMISSION,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
@@ -725,7 +724,7 @@ public class FormContainerImplTest {
         String lastPart = actionParts[actionParts.length - 1];
         String decodedAction = new String(Base64.getDecoder().decode(lastPart));
         assertTrue(
-                "action should notend with .model.json for cc forms for submit action  supported via submission service",
-                !decodedAction.endsWith(".model.json"));
+            "action should notend with .model.json for cc forms for submit action  supported via submission service",
+            !decodedAction.endsWith(".model.json"));
     }
 }
