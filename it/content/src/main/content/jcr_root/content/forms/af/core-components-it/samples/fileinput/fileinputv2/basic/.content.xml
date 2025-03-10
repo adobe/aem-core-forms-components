@@ -87,6 +87,15 @@
                     textIsRich="[true,true]"
                     type="file[]"
                     visible="{Boolean}true"/>
+                <fileinput6
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="File Input - 6"
+                    sling:resourceType="core/fd/components/form/fileinput/v2/fileinput"
+                    accept="[audio/*, video/*, image/*, text/*, application/pdf,.ifc]"
+                    fieldType="file-input"
+                    readOnly="{Boolean}false"
+                    name="fileinput6"
+                    type="file"/>
             <submit
                     jcr:lastModified="{Date}2023-01-17T16:28:58.844+05:30"
                     jcr:lastModifiedBy="admin"

@@ -250,6 +250,23 @@ describe("Form with File Input V-2 - Basic Tests", () => {
         cy.get(fileInput5).should("have.attr", "disabled", "disabled"); 
     });
 
+    it(`file input should not support extenstion which are not in accept property`, () => {
+        const fileInput6 =  "input[name='fileinput6']";
+        cy.attachFile(fileInput6, ['sample.afe']);
+        cy.get('.cmp-adaptiveform-fileinput__filelist')
+            .children()
+            .should('have.length', 0);
+    });
+
+    it(`fileinput should support custom file extensions`, () => {
+        const fileInput6 =  "input[name='fileinput6']";
+        cy.attachFile(fileInput6, ['sample.ifc']);
+        cy.get('.cmp-adaptiveform-fileinput__filelist')
+            .children()
+            .should('have.length', 1)
+            .and('contain.text', 'sample.ifc');
+    });
+
 })
 
 describe("V-2 drag and drop functionality", () => {
