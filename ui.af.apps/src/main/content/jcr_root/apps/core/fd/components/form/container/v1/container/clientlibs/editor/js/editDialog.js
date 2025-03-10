@@ -133,15 +133,18 @@
             if(restEndPointSource.length == 0 || isPostUrlSelected){
                 Utils.showComponent(restEndPointUrlTextBox, 'div');
                 Utils.hideComponent(restEndpointConfigPath, 'div');
+                restEndPointUrlTextBox?.setAttribute("data-rest-endpoint-url-validation", "");
             } else {
                 Utils.showComponent(restEndpointConfigPath, 'div');
                 Utils.hideComponent(restEndPointUrlTextBox, 'div');
+                restEndPointUrlTextBox?.removeAttribute("data-rest-endpoint-url-validation");
             }
         } else {
             Utils.hideComponent(restEndPointSource, 'div');
             Utils.hideComponent(restEndPointUrlTextBox, 'div');
             Utils.hideComponent(restEndpointConfigPath, 'div');
             restEndPointSource.parent('div').parent('div').hide();
+            restEndPointUrlTextBox?.removeAttribute("data-rest-endpoint-url-validation");
         }
     }
 
@@ -176,6 +179,7 @@
             $(document).off('change' + REST_ENDPOINT).on('change' + REST_ENDPOINT, restCheckBox, function(){
                 showPostUrlTextField(dialog);
             });
+            registerRestEndpointUrlValidator();
         }
     }
 
@@ -235,6 +239,22 @@
     }
 
     const initialiseDataModel = window.CQ.FormsCoreComponents.Utils.DataModel.initialiseDataModel;
+
+    function registerRestEndpointUrlValidator() {
+        $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
+            selector: "[data-rest-endpoint-url-validation]",
+            validate: (el) => {
+                const url = el.value;
+                // Regex to validate absolute URLs starting with http:// or https:// only
+                const absoluteUrlPattern = /^https?:\/\/.+$/i;
+                if (!absoluteUrlPattern.test(url)) {
+                    return Granite.I18n.getMessage(
+                       "Please enter the absolute path of the REST endpoint."
+                    );
+                }
+            }
+        });
+    }
 
     Utils.initializeEditDialog(EDIT_DIALOG_FORM)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
         registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel, registerAutoSaveDialogAction);

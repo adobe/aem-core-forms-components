@@ -136,6 +136,10 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="/libs/fd/af/connectors/rendercondition/marketo"/>
                                             </optionConnectormodel>
+                                            <optionFormTemplates
+                                                    jcr:primaryType="nt:unstructured"
+                                                    text="Form Templates"
+                                                    value="formtemplates"/>
                                         </items>
                                     </selectformmodel>
                                     <schemaRef name="./schemaRef"
@@ -185,6 +189,31 @@
                                             </fdmselector>
                                         </items>
                                     </fdmselectorcontainer>
+                                    <formTemplateSelectorContainer
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                            granite:class="cmp-adaptiveform-container__formtemplateselectorcontainer">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <formTemplateSelector
+                                                    granite:class="cmp-adaptiveform-container__formtemplateselector"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    disabled="false"
+                                                    fieldLabel="Select Form Template *"
+                                                    validation="datamodel.config"
+                                                    renderReadOnly="false">
+                                                <datasource
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                                                        guideDataModel="basic"
+                                                        layoutType="fd/af/layouts/panel"
+                                                        type="formtemplates"/>
+                                            </formTemplateSelector>
+                                        </items>
+                                    </formTemplateSelectorContainer>
+                                    <xdpRef name="./xdpRef"
+                                               jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
                                     <marketoselectorcontainer
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container"
