@@ -25,6 +25,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.JcrConstants;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -242,6 +243,15 @@ public class ComponentUtils {
 
     public static boolean isFragmentComponent(Resource resource) {
         return resource != null && resource.getValueMap().get(FormConstants.PROP_FRAGMENT_PATH, String.class) != null;
+    }
+
+    public static boolean shouldIncludeSubmitProperties(SlingHttpServletRequest request) {
+        if (request == null) {
+            return false;
+        }
+        String submissionHeaderName = FormConstants.FORM_DEFINITION_SUBMISSION;
+        return submissionHeaderName.equals(request.getAttribute(FormConstants.X_ADOBE_FORM_DEFINITION)) ||
+            submissionHeaderName.equals(request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION));
     }
 
 }

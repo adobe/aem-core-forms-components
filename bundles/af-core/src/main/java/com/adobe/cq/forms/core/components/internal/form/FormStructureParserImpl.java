@@ -117,7 +117,7 @@ public class FormStructureParserImpl implements FormStructureParser {
 
     public String getFormDefinition() {
         String result = null;
-        if (request != null) {
+        if (ComponentUtils.shouldIncludeSubmitProperties(request)) {
             request.setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
         }
         FormContainer formContainer = resource.adaptTo(FormContainer.class);

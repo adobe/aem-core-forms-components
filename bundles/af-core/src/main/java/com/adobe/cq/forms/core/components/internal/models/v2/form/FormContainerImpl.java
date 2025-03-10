@@ -491,7 +491,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
         Map<String, Object> submitProps = null;
 
-        if (shouldIncludeSubmitProperties()) {
+        if (request == null || ComponentUtils.shouldIncludeSubmitProperties(request)) {
             submitProps = new LinkedHashMap<>();
             List<String> submitActionProperties = Arrays.asList(
                 ReservedProperties.PN_SUBMIT_ACTION_TYPE,
@@ -511,29 +511,15 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                 if (submitActionProperties.contains(entry.getKey())) {
                     submitProps.put(entry.getKey(), entry.getValue());
                 } else if (submitEmailProperties.contains(entry.getKey())) {
-                    if (submitProps.get(SS_EMAIL) == null) {
-                        submitProps.put(SS_EMAIL, new LinkedHashMap<String, Object>());
-                    }
+                    submitProps.computeIfAbsent(SS_EMAIL, k -> new LinkedHashMap<String, Object>());
                     ((Map<String, Object>) submitProps.get(SS_EMAIL)).put(entry.getKey(), entry.getValue());
                 } else if (submitSpreadsheetProperties.contains(entry.getKey())) {
-                    if (submitProps.get(SS_SPREADSHEET) == null) {
-                        submitProps.put(SS_SPREADSHEET, new LinkedHashMap<String, Object>());
-                    }
+                    submitProps.computeIfAbsent(SS_SPREADSHEET, k -> new LinkedHashMap<String, Object>());
                     ((Map<String, Object>) submitProps.get(SS_SPREADSHEET)).put(entry.getKey(), entry.getValue());
                 }
             }
         }
         return submitProps;
-    }
-
-    private boolean shouldIncludeSubmitProperties() {
-        return (request == null)
-            || (request.getAttribute(FormConstants.X_ADOBE_FORM_DEFINITION) != null
-                && request.getAttribute(FormConstants.X_ADOBE_FORM_DEFINITION)
-                    .equals(FormConstants.FORM_DEFINITION_SUBMISSION))
-            || (request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION) != null
-                && request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION)
-                    .equals(FormConstants.FORM_DEFINITION_SUBMISSION));
     }
 
 }
