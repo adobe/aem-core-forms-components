@@ -32,7 +32,6 @@ import java.util.stream.StreamSupport;
 import javax.json.Json;
 import javax.json.JsonReader;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
@@ -658,7 +657,7 @@ public class FormContainerImplTest {
         assertEquals("spreadsheet", submitJson.get("actionName").asText());
         assertEquals("http://localhost/testurl", submitJson.get(SS_SPREADSHEET).get("spreadsheetUrl").asText());
         InputStream is = Utils.class
-                .getResourceAsStream(BASE + "/exporter-submissionViewWithSubmissionAttribute.json");
+            .getResourceAsStream(BASE + "/exporter-submissionViewWithSubmissionAttribute.json");
         if (is != null) {
             JsonReader expectedReader = Json.createReader(is);
             JsonNode expectedJson = mapper.readTree(expectedReader.read().toString());
@@ -679,7 +678,7 @@ public class FormContainerImplTest {
         JsonNode formJson = mapper.readTree(json);
         assertNull("Should not have fd:submit at top level", formJson.get("fd:submit"));
         Utils.testJSONExport(formContainer,
-                Utils.getTestExporterJSONPath(BASE, "submissionViewWithoutSubmissionAttribute"));
+            Utils.getTestExporterJSONPath(BASE, "submissionViewWithoutSubmissionAttribute"));
     }
 
     @Test
@@ -692,7 +691,7 @@ public class FormContainerImplTest {
         JsonNode formJson = mapper.readTree(json);
         assertNull("Should not have fd:submit at top level", formJson.get("fd:submit"));
         Utils.testJSONExport(formContainer,
-                Utils.getTestExporterJSONPath(BASE, "submissionAttributeWithoutSubmissionView"));
+            Utils.getTestExporterJSONPath(BASE, "submissionAttributeWithoutSubmissionView"));
     }
 
     @Test
@@ -705,7 +704,7 @@ public class FormContainerImplTest {
         assertEquals("action should be empty for ue form with submit action supported via submission service", "",
             formJson.get("action").asText());
         Utils.testJSONExport(formContainer,
-                Utils.getTestExporterJSONPath(BASE, PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION));
+            Utils.getTestExporterJSONPath(BASE, PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION));
     }
 
     @Test
@@ -749,8 +748,8 @@ public class FormContainerImplTest {
         String lastPart = actionParts[actionParts.length - 1];
         String decodedAction = new String(Base64.getDecoder().decode(lastPart));
         assertTrue(
-                "action should notend with .model.json for cc forms for submit action not supported via submission service",
-                !decodedAction.endsWith(".model.json"));
+            "action should notend with .model.json for cc forms for submit action not supported via submission service",
+            !decodedAction.endsWith(".model.json"));
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_CC_FORM_REST_SUBMISSION));
     }
 }

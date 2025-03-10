@@ -26,7 +26,6 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -297,7 +296,7 @@ public class ComponentUtils {
      * </p>
      *
      * @param clientBuilderFactory The HTTP client builder factory used to create
-     *                             the HTTP client
+     *            the HTTP client
      * @return A list of supported submit action names, or an empty list if the
      *         request fails
      */
@@ -311,14 +310,14 @@ public class ComponentUtils {
 
         try {
             RequestConfig requestConfig = RequestConfig.custom()
-                    .setConnectTimeout(5000)
-                    .setSocketTimeout(5000)
-                    .setConnectionRequestTimeout(5000)
-                    .build();
+                .setConnectTimeout(5000)
+                .setSocketTimeout(5000)
+                .setConnectionRequestTimeout(5000)
+                .build();
 
             CloseableHttpClient httpClient = clientBuilderFactory.newBuilder()
-                    .setDefaultRequestConfig(requestConfig)
-                    .build();
+                .setDefaultRequestConfig(requestConfig)
+                .build();
 
             HttpGet httpGet = new HttpGet(supportedSubmitActionsUrl);
             try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
@@ -341,7 +340,7 @@ public class ComponentUtils {
 
     private static boolean isSuccessfulResponse(CloseableHttpResponse response) {
         return response.getStatusLine() != null
-                && response.getStatusLine().getStatusCode() == java.net.HttpURLConnection.HTTP_OK;
+            && response.getStatusLine().getStatusCode() == java.net.HttpURLConnection.HTTP_OK;
     }
 
 }
