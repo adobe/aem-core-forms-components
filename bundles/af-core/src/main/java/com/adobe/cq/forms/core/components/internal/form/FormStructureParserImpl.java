@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
+import com.adobe.cq.forms.core.components.models.form.HtlUtil;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.core.SerializableString;
@@ -117,15 +118,26 @@ public class FormStructureParserImpl implements FormStructureParser {
 
     public String getFormDefinition() {
         String result = null;
-        if (ComponentUtils.shouldIncludeSubmitProperties(request)) {
-            request.setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
-        }
         FormContainer formContainer = resource.adaptTo(FormContainer.class);
         try {
             HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
             ObjectMapper mapper = new ObjectMapper();
             Writer writer = new StringWriter();
-            ObjectWriter objectWriter = mapper.writerWithView(Views.Submission.class);
+            ObjectWriter objectWriter;
+            boolean isSubmissionView = false;
+            if (request != null) {
+                HtlUtil htlUtil = request.adaptTo(HtlUtil.class);
+                isSubmissionView = (htlUtil != null && htlUtil.isEdgeDeliveryRequest())
+                    || ComponentUtils.shouldIncludeSubmitProperties(request);
+            }
+
+            if (isSubmissionView) {
+                request.setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
+                objectWriter = mapper.writerWithView(Views.Submission.class);
+            } else {
+                objectWriter = mapper.writerWithView(Views.Publish.class);
+            }
+
             objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
             objectWriter.writeValue(writer, formContainer);
             result = writer.toString();

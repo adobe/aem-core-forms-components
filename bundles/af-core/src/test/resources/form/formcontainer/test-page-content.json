@@ -104,20 +104,18 @@
       "fieldType": "form",
       "spreadsheetUrl": "http://localhost/testurl",
       "textIsRich": "true",
-      "dorType": "none",
       "actionName": "spreadsheet",
-      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet",
-      "numberinput": {
+      "textinput": {
         "jcr:primaryType": "nt:unstructured",
-        "jcr:createdBy": "admin",
-        "jcr:title": "Number Input",
-        "jcr:lastModifiedBy": "admin",
-        "jcr:created": "Mon Mar 03 2025 22:55:19 GMT+0530",
-        "name": "numberinput1741022719935",
-        "jcr:lastModified": "Mon Mar 03 2025 22:55:19 GMT+0530",
-        "sling:resourceType": "forms-components-examples/components/form/numberinput",
-        "fieldType": "number-input"
-      }
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet"
     },
     "formContainer-ue-form-spreadsheet-submission": {
       "jcr:primaryType": "nt:unstructured",
@@ -130,23 +128,18 @@
       "sling:resourceType": "fd/franklin/components/form/v1/form",
       "fieldType": "form",
       "spreadsheetUrl": "https://adobe.sharepoint.com/:x:/r/sites/AFB/Shared%20Documents/afb/website/testcases/submitconfigfinal.xlsx?d=w1b0e4e171eea4f23b299603feaecf23b&csf=1&web=1&e=4fjqT1",
-      "dorType": "none",
       "actionName": "spreadsheet",
-      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet",
-      "submit": {
+      "textinput": {
         "jcr:primaryType": "nt:unstructured",
-        "jcr:createdBy": "ddewanji@adobe.com",
-        "jcr:title": "Submit",
-        "enabled": true,
-        "jcr:lastModifiedBy": "ddewanji@adobe.com",
-        "jcr:created": "Wed Feb 05 2025 05:17:36 GMT+0000",
-        "name": "submit1738732656880",
-        "buttonType": "submit",
-        "visible": true,
-        "jcr:lastModified": "Wed Feb 05 2025 05:17:36 GMT+0000",
-        "sling:resourceType": "core/fd/components/form/actions/submit/v1/submit",
-        "fieldType": "button"
-      }
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet"
     },
     "formContainer-ue-form-rest-submission": {
       "jcr:primaryType": "nt:unstructured",
@@ -158,23 +151,18 @@
       "themeRef": "",
       "sling:resourceType": "fd/franklin/components/form/v1/form",
       "fieldType": "form",
-      "dorType": "none",
       "actionName": "rest",
-      "actionType": "fd/af/components/guidesubmittype/rest",
-      "submit": {
+      "textinput": {
         "jcr:primaryType": "nt:unstructured",
-        "jcr:createdBy": "ddewanji@adobe.com",
-        "jcr:title": "Submit",
-        "enabled": true,
-        "jcr:lastModifiedBy": "ddewanji@adobe.com",
-        "jcr:created": "Wed Feb 05 2025 05:17:36 GMT+0000",
-        "name": "submit1738732656880",
-        "buttonType": "submit",
-        "visible": true,
-        "jcr:lastModified": "Wed Feb 05 2025 05:17:36 GMT+0000",
-        "sling:resourceType": "core/fd/components/form/actions/submit/v1/submit",
-        "fieldType": "button"
-      }
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/rest"
     },
     "formContainer-cc-form-spreadsheet-submission": {
       "jcr:primaryType": "nt:unstructured",
@@ -187,23 +175,18 @@
       "sling:resourceType": "fd/components/form/v1/form",
       "fieldType": "form",
       "spreadsheetUrl": "https://adobe.sharepoint.com/:x:/r/sites/AFB/Shared%20Documents/afb/website/testcases/submitconfigfinal.xlsx?d=w1b0e4e171eea4f23b299603feaecf23b&csf=1&web=1&e=4fjqT1",
-      "dorType": "none",
       "actionName": "spreadsheet",
-      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet",
-      "submit": {
+      "textinput": {
         "jcr:primaryType": "nt:unstructured",
-        "jcr:createdBy": "ddewanji@adobe.com",
-        "jcr:title": "Submit",
-        "enabled": true,
-        "jcr:lastModifiedBy": "ddewanji@adobe.com",
-        "jcr:created": "Wed Feb 05 2025 05:17:36 GMT+0000",
-        "name": "submit1738732656880",
-        "buttonType": "submit",
-        "visible": true,
-        "jcr:lastModified": "Wed Feb 05 2025 05:17:36 GMT+0000",
-        "sling:resourceType": "core/fd/components/form/actions/submit/v1/submit",
-        "fieldType": "button"
-      }
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet"
     },
     "formContainer-cc-form-rest-submission": {
       "jcr:primaryType": "nt:unstructured",
@@ -215,23 +198,18 @@
       "themeRef": "",
       "sling:resourceType": "fd/components/form/v1/form",
       "fieldType": "form",
-      "dorType": "none",
       "actionName": "rest",
-      "actionType": "fd/af/components/guidesubmittype/rest",
-      "submit": {
+      "textinput": {
         "jcr:primaryType": "nt:unstructured",
-        "jcr:createdBy": "ddewanji@adobe.com",
-        "jcr:title": "Submit",
-        "enabled": true,
-        "jcr:lastModifiedBy": "ddewanji@adobe.com",
-        "jcr:created": "Wed Feb 05 2025 05:17:36 GMT+0000",
-        "name": "submit1738732656880",
-        "buttonType": "submit",
-        "visible": true,
-        "jcr:lastModified": "Wed Feb 05 2025 05:17:36 GMT+0000",
-        "sling:resourceType": "core/fd/components/form/actions/submit/v1/submit",
-        "fieldType": "button"
-      }
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/rest"
     }
   }
 }
