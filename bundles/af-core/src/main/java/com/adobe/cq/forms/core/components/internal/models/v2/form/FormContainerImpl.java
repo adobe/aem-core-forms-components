@@ -15,15 +15,19 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -80,8 +84,17 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
     private static final String FD_DATA_URL = "fd:dataUrl";
 
+    /** Constant representing email submit action type */
+    private static final String SS_EMAIL = "email";
+
+    /** Constant representing spreadsheet submit action type */
+    private static final String SS_SPREADSHEET = "spreadsheet";
+
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private HttpClientBuilderFactory clientBuilderFactory;
 
     private static final String DRAFT_PREFILL_SERVICE = "service://FP/draft/";
 
@@ -277,6 +290,16 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getAction() {
+        List<String> supportedSubmitActions = ComponentUtils.getSupportedSubmitActions(clientBuilderFactory);
+        String resourceType = resource.getValueMap().get("sling:resourceType", String.class);
+        if (supportedSubmitActions.contains(resource.getValueMap().get(ReservedProperties.PN_SUBMIT_ACTION_NAME))) {
+            if (resourceType != null && resourceType.contains("/franklin")) {
+                return "";
+            } else {
+                return "https://forms.adobe.com" + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" +
+                    ComponentUtils.getEncodedPath(resource.getPath() + ".model.json");
+            }
+        }
         return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
     }
 
@@ -359,7 +382,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
         properties.put(FD_DATA_URL, getDataUrl());
-
+        Map<String, Object> submitProperties = getSubmitProperties();
+        if (submitProperties != null && !submitProperties.isEmpty()) {
+            properties.put(ReservedProperties.FD_SUBMIT_PROPERTIES, submitProperties);
+        }
         return properties;
     }
 
@@ -422,6 +448,41 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public AutoSaveConfiguration getAutoSaveConfig() {
         return autoSaveConfig;
+    }
+
+    private Map<String, Object> getSubmitProperties() {
+
+        Map<String, Object> submitProps = null;
+
+        if (request == null || ComponentUtils.shouldIncludeSubmitProperties(request)) {
+            submitProps = new LinkedHashMap<>();
+            List<String> submitActionProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_ACTION_TYPE,
+                ReservedProperties.PN_SUBMIT_ACTION_NAME);
+
+            List<String> submitEmailProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_EMAIL_TO,
+                ReservedProperties.PN_SUBMIT_EMAIL_FROM,
+                ReservedProperties.PN_SUBMIT_EMAIL_SUBJECT,
+                ReservedProperties.PN_SUBMIT_EMAIL_CC,
+                ReservedProperties.PN_SUBMIT_EMAIL_BCC);
+
+            List<String> submitSpreadsheetProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_SPREADSHEETURL);
+            ValueMap resourceMap = resource.getValueMap();
+            for (Map.Entry<String, Object> entry : resourceMap.entrySet()) {
+                if (submitActionProperties.contains(entry.getKey())) {
+                    submitProps.put(entry.getKey(), entry.getValue());
+                } else if (submitEmailProperties.contains(entry.getKey())) {
+                    submitProps.computeIfAbsent(SS_EMAIL, k -> new LinkedHashMap<String, Object>());
+                    ((Map<String, Object>) submitProps.get(SS_EMAIL)).put(entry.getKey(), entry.getValue());
+                } else if (submitSpreadsheetProperties.contains(entry.getKey())) {
+                    submitProps.computeIfAbsent(SS_SPREADSHEET, k -> new LinkedHashMap<String, Object>());
+                    ((Map<String, Object>) submitProps.get(SS_SPREADSHEET)).put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+        return submitProps;
     }
 
 }
