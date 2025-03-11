@@ -31,11 +31,11 @@
             }
             let ruleEditorFrame = document.createElement('iframe');
             ruleEditorFrame.setAttribute('id', 'af-rule-editor');
-            let formContainerPath = getFormContainerPath(editable);
+            let formContainerPath = window.CQ.FormsCoreComponents.editorhooks.getFormContainerPath (editable);
             if (!formContainerPath) {
                 showAlert();
             } else {
-                const ruleEditorUri = '/aem/af/expeditor.html' + getFormContainerPath(editable) + "?fieldPath=" + editable.path + "&fieldId=" + getFieldId(editable);
+                const ruleEditorUri = '/aem/af/expeditor.html' + window.CQ.FormsCoreComponents.editorhooks.getFormContainerPath(editable) + "?fieldPath=" + editable.path + "&fieldId=" + getFieldId(editable);
                 ruleEditorFrame.setAttribute('src', ruleEditorUri);
                 ruleEditorFrame.setAttribute('title', 'AF Rule Editor');
                 const styles = {
@@ -52,25 +52,6 @@
                 document.body.appendChild(ruleEditorFrame);
             }
         }
-    }
-
-    function getFormContainerPath(editable) {
-        let path = editable.dom.find("[data-cmp-adaptiveformcontainer-path]").data("cmpAdaptiveformcontainerPath");
-        if (typeof path !== 'string' || !path) {
-            path = getFormContainerFromDom(editable);
-
-        }
-        return path;
-    }
-
-    function getFormContainerFromDom(editable) {
-        let selector = "[data-cmp-is='adaptiveFormContainer']";
-        let elem = $(editable.dom[0]).closest(selector);
-        let path = null;
-        if (elem.length > 0) {
-            path = elem.data("cmp-path");
-        }
-        return path;
     }
 
     function getFieldId(editable) {
