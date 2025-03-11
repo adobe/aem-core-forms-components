@@ -106,7 +106,8 @@ public class Utils {
             fail("Unable to find test file " + expectedJsonResource + ".");
         }
         IOUtils.closeQuietly(is);
-        // this is added so that other components like form portal, aem form etc don't get validated against schema
+        // this is added so that other components like form portal, aem form etc don't
+        // get validated against schema
         if (model instanceof FormComponent) {
             Utils.testSchemaValidation(model);
         }
