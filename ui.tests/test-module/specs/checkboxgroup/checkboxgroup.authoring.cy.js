@@ -234,6 +234,7 @@ describe('Page - Authoring', function () {
         cy.getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().contains("Select 1");
         cy.getRuleEditorIframe().find('.exp-Cancel-Button').click();
         cy.getRuleEditorIframe().find('.exp-Close-Button').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
     });
   });
 /*
