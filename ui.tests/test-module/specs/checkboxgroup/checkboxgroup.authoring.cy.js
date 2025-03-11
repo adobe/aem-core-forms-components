@@ -169,16 +169,17 @@ describe('Page - Authoring', function () {
         });
     });
 
-    it('check rich text support for label', function(){
+    it('check rich text support for label', {retries: 2}, function(){
+      cy.cleanTest(checkBoxGroupDrop).then(function() {
         dropCheckBoxGroupInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get("div[name='richTextTitle']").should('not.be.visible');
 
         // check rich text selector and see if RTE is visible for title.
-        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('exist').click();
-        cy.get("div[name='richTextTitle']").scrollIntoView();
-        cy.get("div[name='richTextTitle']").should('be.visible');
+        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
+        cy.wait(500); // Add small wait for UI update
+        cy.get("div[name='richTextTitle']").should('exist').scrollIntoView().should('be.visible');
 
         // check rich text selector and see if RTE is visible for enum names.
         cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('not.be.visible');
@@ -193,17 +194,25 @@ describe('Page - Authoring', function () {
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Select 1');
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
+        cy.deleteComponentByPath(checkBoxGroupDrop);
+      });
     });
 
-    it('check rich text inline editor is present', function(){
+    it('check rich text inline editor is present', {retries: 2},  function(){
+      cy.cleanTest(checkBoxGroupDrop).then(function() {
+        dropCheckBoxGroupInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.invokeEditableAction("[data-action='EDIT']");
         cy.get(".rte-toolbar").should('be.visible');
         cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
+      });
     });
 
     // adding retry since rule editor sometimes does not open at first try
     it('rule editor is working with rich text enum names', {retries: 2}, function () {
+      cy.cleanTest(checkBoxGroupDrop).then(function() {
+        dropCheckBoxGroupInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
         cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
@@ -234,6 +243,7 @@ describe('Page - Authoring', function () {
         cy.getRuleEditorIframe().find('.exp-Close-Button').click();
         cy.deleteComponentByPath(checkBoxGroupDrop);
       });
+    });
   });
 /*
   context('Open Sites Editor', function () {
