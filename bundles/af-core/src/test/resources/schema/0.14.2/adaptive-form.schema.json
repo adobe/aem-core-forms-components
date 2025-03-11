@@ -1415,7 +1415,8 @@
           "type": "string",
           "maxLength": 140,
           "title": "A user friendly one line title for the form"
-        }
+        },
+        "additionalProperties" : false
       }
     }
   ],
