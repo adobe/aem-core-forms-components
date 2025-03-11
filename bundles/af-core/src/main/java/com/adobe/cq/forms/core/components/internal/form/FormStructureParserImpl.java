@@ -133,11 +133,8 @@ public class FormStructureParserImpl implements FormStructureParser {
 
             if (isSubmissionView) {
                 request.setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
-                objectWriter = mapper.writerWithView(Views.Submission.class);
-            } else {
-                objectWriter = mapper.writerWithView(Views.Publish.class);
             }
-
+            objectWriter = mapper.writerWithView(Views.Publish.class);
             objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
             objectWriter.writeValue(writer, formContainer);
             result = writer.toString();

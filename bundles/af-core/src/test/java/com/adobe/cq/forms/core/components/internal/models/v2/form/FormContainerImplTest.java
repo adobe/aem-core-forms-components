@@ -637,14 +637,14 @@ public class FormContainerImplTest {
     }
 
     @Test
-    public void testJSONExportWithSubmissionViewWithSubmissionAttribute() throws Exception {
+    public void testJSONExportWithSubmissionAttribute() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW, FormContainerImpl.class, context);
         context.request().setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writerWithView(Views.Submission.class).writeValueAsString(formContainer);
+        String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
-        JsonNode submitJson = formJson.get("fd:submit");
-        assertTrue("Should have fd:submit at top level", formJson.has("fd:submit"));
+        JsonNode submitJson = formJson.get("properties").get("fd:submit");
+        assertTrue("Should have fd:submit at top level", submitJson != null);
         assertEquals("fd/af/components/guidesubmittype/franklin/spreadsheet", submitJson.get("actionType").asText());
         assertEquals("test@example.com", submitJson.get(SS_EMAIL).get("mailto").get(0).asText());
         assertEquals("sender@example.com", submitJson.get(SS_EMAIL).get("from").asText());
@@ -653,33 +653,40 @@ public class FormContainerImplTest {
         assertEquals("http://localhost/testurl", submitJson.get(SS_SPREADSHEET).get("spreadsheetUrl").asText());
 
         Utils.testJSONExport(formContainer,
-            Utils.getTestExporterJSONPath(BASE, "submissionViewWithSubmissionAttribute"),
-            Views.Submission.class);
+            Utils.getTestExporterJSONPath(BASE, "withSubmissionAttribute"));
     }
 
     @Test
-    public void testJSONExportWithSubmissionViewWithoutSubmissionAttribute() throws Exception {
+    public void testJSONExportWithSubmissionHeader() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
             FormContainerImpl.class, context);
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writerWithView(Views.Submission.class).writeValueAsString(formContainer);
-        JsonNode formJson = mapper.readTree(json);
-        assertNull("Should not have fd:submit at top level", formJson.get("fd:submit"));
-        Utils.testJSONExport(formContainer,
-            Utils.getTestExporterJSONPath(BASE, "submissionViewWithoutSubmissionAttribute"));
-    }
-
-    @Test
-    public void testJSONExportWithoutSubmissionViewWithSubmissionAttribute() throws Exception {
-        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
-            FormContainerImpl.class, context);
-        context.request().setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
+        context.request().setHeader(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
-        assertNull("Should not have fd:submit at top level", formJson.get("fd:submit"));
+        JsonNode submitJson = formJson.get("properties").get("fd:submit");
+        assertTrue("Should have fd:submit at top level", submitJson != null);
+        assertEquals("fd/af/components/guidesubmittype/franklin/spreadsheet", submitJson.get("actionType").asText());
+        assertEquals("test@example.com", submitJson.get(SS_EMAIL).get("mailto").get(0).asText());
+        assertEquals("sender@example.com", submitJson.get(SS_EMAIL).get("from").asText());
+        assertEquals("Test Subject", submitJson.get(SS_EMAIL).get("subject").asText());
+        assertEquals("spreadsheet", submitJson.get("actionName").asText());
+        assertEquals("http://localhost/testurl", submitJson.get(SS_SPREADSHEET).get("spreadsheetUrl").asText());
+
         Utils.testJSONExport(formContainer,
-            Utils.getTestExporterJSONPath(BASE, "submissionAttributeWithoutSubmissionView"));
+            Utils.getTestExporterJSONPath(BASE, "withSubmissionAttribute"));
+    }
+
+    @Test
+    public void testJSONExportWithoutSubmissionAttribute() throws Exception {
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
+            FormContainerImpl.class, context);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
+        JsonNode formJson = mapper.readTree(json);
+        assertNull("Should not have fd:submit at top level", formJson.get("properties").get("fd:submit"));
+        Utils.testJSONExport(formContainer,
+            Utils.getTestExporterJSONPath(BASE, "withoutSubmissionAttribute"));
     }
 
     @Test

@@ -29,13 +29,4 @@ public class Views {
      */
     public static class Author extends Publish {}
 
-    /**
-     * Use this view for serialising properties required during form submission.
-     * It extends the Publish view and includes additional properties needed for the
-     * submission process.
-     * This view is used when the x-adobe-form-definition header or attribute is set
-     * to "submission".
-     */
-    public static class Submission extends Publish {}
-
 }

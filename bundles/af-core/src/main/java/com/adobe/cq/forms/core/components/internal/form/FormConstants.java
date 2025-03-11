@@ -143,7 +143,9 @@ public final class FormConstants {
     /* The resource type for the pre-selected the linked panel */
     public final static String RT_FD_FORM_REVIEW_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "review/v1/datasource";
 
+    /** Request header/attribute name for form definition jsonview type */
     public static final String X_ADOBE_FORM_DEFINITION = "x-adobe-form-definition";
 
+    /** Form definition type indicating submission view */
     public static final String FORM_DEFINITION_SUBMISSION = "submission";
 }

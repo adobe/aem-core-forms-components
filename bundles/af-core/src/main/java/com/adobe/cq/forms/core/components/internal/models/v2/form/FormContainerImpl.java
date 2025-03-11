@@ -63,8 +63,6 @@ import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -85,7 +83,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
     private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
     private static final String FD_DATA_URL = "fd:dataUrl";
+
+    /** Constant representing email submit action type */
     private static final String SS_EMAIL = "email";
+
+    /** Constant representing spreadsheet submit action type */
     private static final String SS_SPREADSHEET = "spreadsheet";
 
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -381,6 +383,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
         properties.put(FD_DATA_URL, getDataUrl());
+        Map<String, Object> submitProperties = getSubmitProperties();
+        if (submitProperties != null && !submitProperties.isEmpty()) {
+            properties.put(ReservedProperties.FD_SUBMIT_PROPERTIES, submitProperties);
+        }
         return properties;
     }
 
@@ -445,9 +451,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return autoSaveConfig;
     }
 
-    @Override
-    @JsonInclude(Include.NON_NULL)
-    public Map<String, Object> getSubmitProperties() {
+    private Map<String, Object> getSubmitProperties() {
 
         Map<String, Object> submitProps = null;
 

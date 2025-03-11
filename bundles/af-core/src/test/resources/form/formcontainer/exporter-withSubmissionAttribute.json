@@ -14,7 +14,21 @@
         "fd:roleAttribute": null,
         "fd:formDataEnabled": false,
         "fd:customFunctionsUrl": "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-        "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="
+        "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+        "fd:submit": {
+            "spreadsheet": {
+                "spreadsheetUrl": "http://localhost/testurl"
+            },
+            "email": {
+                "subject": "Test Subject",
+                "mailto": [
+                    "test@example.com"
+                ],
+                "from": "sender@example.com"
+            },
+            "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet",
+            "actionName": "spreadsheet"
+        }
     },
     "events": {
         "custom:setProperty": [
@@ -29,20 +43,6 @@
         "version": "1.0.0"
     },
     "adaptiveform": "0.14.2",
-    "fd:submit": {
-        "spreadsheet": {
-            "spreadsheetUrl": "http://localhost/testurl"
-        },
-        "email": {
-            "subject": "Test Subject",
-            "mailto": [
-                "test@example.com"
-            ],
-            "from": "sender@example.com"
-        },
-        "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet",
-        "actionName": "spreadsheet"
-    },
     ":items": {
         "textinput": {
             "id": "textinput-5bac58a9c9",
