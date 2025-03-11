@@ -50,6 +50,7 @@ import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FORM_FIELD_TYPE;
 
@@ -303,38 +304,38 @@ public class ComponentUtils {
     public static List<String> getSupportedSubmitActions(HttpClientBuilderFactory clientBuilderFactory) {
         String supportedSubmitActionsUrl = "https://forms.adobe.com/adobe/forms/af/submit";
         List<String> supportedSubmitActions = new ArrayList<>();
-
         if (clientBuilderFactory == null) {
+            logger.error("clientBuilderFactory is null");
             return supportedSubmitActions;
         }
-
         try {
             RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(5000)
                 .setSocketTimeout(5000)
                 .setConnectionRequestTimeout(5000)
                 .build();
-
             CloseableHttpClient httpClient = clientBuilderFactory.newBuilder()
                 .setDefaultRequestConfig(requestConfig)
                 .build();
-
             HttpGet httpGet = new HttpGet(supportedSubmitActionsUrl);
             try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
                 if (isSuccessfulResponse(response)) {
-                    JsonNode rootNode = new ObjectMapper().readTree(EntityUtils.toString(response.getEntity()));
-                    JsonNode submissionsNode = rootNode.get("submissions");
-
+                    String responseBody = EntityUtils.toString(response.getEntity());
+                    JsonNode rootNode = new ObjectMapper().readTree(responseBody);
+                    ArrayNode submissionsNode = (ArrayNode) rootNode.get("supported");
                     if (submissionsNode != null && submissionsNode.isArray()) {
-                        submissionsNode.forEach(submission -> supportedSubmitActions.add(submission.asText()));
+                        submissionsNode.forEach(submission -> {
+                            String submissionText = submission.asText();
+                            supportedSubmitActions.add(submissionText);
+                        });
+                    } else {
+                        logger.error("supported node was null or not an array");
                     }
                 }
-
             }
         } catch (Exception e) {
             logger.error("Error while fetching supported submit actions", e);
         }
-
         return supportedSubmitActions;
     }
 

@@ -292,7 +292,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     public String getAction() {
         List<String> supportedSubmitActions = ComponentUtils.getSupportedSubmitActions(clientBuilderFactory);
         String resourceType = resource.getValueMap().get("sling:resourceType", String.class);
-        supportedSubmitActions = Arrays.asList("spreadsheet");
         if (supportedSubmitActions.contains(resource.getValueMap().get(ReservedProperties.PN_SUBMIT_ACTION_NAME))) {
             if (resourceType != null && resourceType.contains("/franklin")) {
                 return "";

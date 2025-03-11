@@ -28,6 +28,12 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -68,9 +74,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(AemContextExtension.class)
 public class FormContainerImplTest {
@@ -636,9 +644,33 @@ public class FormContainerImplTest {
         assertNull(formContainer1.getAutoSaveConfig());
     }
 
+    private void setMockClientBuilderFactory(FormContainerImpl formContainer) {
+        HttpClientBuilderFactory mockClientBuilderFactory = mock(HttpClientBuilderFactory.class);
+        HttpClientBuilder mockHttpClientBuilder = mock(HttpClientBuilder.class);
+        CloseableHttpClient mockHttpClient = mock(CloseableHttpClient.class);
+        CloseableHttpResponse mockResponse = mock(CloseableHttpResponse.class);
+
+        // Configure mock response with 200 status and spreadsheet in supported actions
+        when(mockResponse.getStatusLine()).thenReturn(mock(StatusLine.class));
+        when(mockResponse.getStatusLine().getStatusCode()).thenReturn(200);
+        try {
+            when(mockResponse.getEntity()).thenReturn(new StringEntity("{\"supported\":[\"spreadsheet\"]}"));
+
+            // Wire up mock chain
+            when(mockClientBuilderFactory.newBuilder()).thenReturn(mockHttpClientBuilder);
+            when(mockHttpClientBuilder.build()).thenReturn(mockHttpClient);
+            when(mockHttpClient.execute(any())).thenReturn(mockResponse);
+        } catch (Exception e) {}
+
+        // Register and inject mocks
+        context.registerService(HttpClientBuilderFactory.class, mockClientBuilderFactory);
+        Utils.setInternalState(formContainer, "clientBuilderFactory", mockClientBuilderFactory);
+    }
+
     @Test
     public void testJSONExportWithSubmissionAttribute() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW, FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
         context.request().setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
@@ -660,6 +692,7 @@ public class FormContainerImplTest {
     public void testJSONExportWithSubmissionHeader() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
             FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
         context.request().setHeader(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
@@ -681,6 +714,7 @@ public class FormContainerImplTest {
     public void testJSONExportWithoutSubmissionAttribute() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
             FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
@@ -693,6 +727,7 @@ public class FormContainerImplTest {
     public void testActionForUEFormSpreadsheetSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION,
             FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
@@ -706,6 +741,7 @@ public class FormContainerImplTest {
     public void testActionForUEFormRestSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_UE_FORM_REST_SUBMISSION,
             FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
@@ -718,6 +754,7 @@ public class FormContainerImplTest {
     public void testActionForCCFormSpreadsheetSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_CC_FORM_SPREADSHEET_SUBMISSION,
             FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
@@ -735,6 +772,7 @@ public class FormContainerImplTest {
     public void testActionForCCFormRestSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_CC_FORM_REST_SUBMISSION,
             FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
