@@ -51,6 +51,15 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @Nullable
     protected String[] enumNames;
 
+    /**
+     * Default for single and multivalued fields used the same 'default' crx property.
+     * This was not compatible with Universal Editor's Property Rail Configuration.
+     * Therefore, adding this property as an additional way of defining default values.
+     **/
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MULTI_DEFAULT_VALUES)
+    @Nullable
+    protected Object[] multiDefaultValues;
+
     @Override
     public boolean isEnforceEnum() {
         return enforceEnum;
@@ -117,7 +126,9 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     public Object[] getDefault() {
         Object[] typedDefaultValue = null;
         try {
-            if (defaultValue != null) {
+            if (multiDefaultValues != null) {
+                typedDefaultValue = ComponentUtils.coerce(type, multiDefaultValues);
+            } else if (defaultValue != null) {
                 typedDefaultValue = ComponentUtils.coerce(type, defaultValue);
             }
         } catch (Exception exception) {
