@@ -41,6 +41,7 @@ See below for a full list of minimum system requirements for historical versions
 | 3.0.16                | 2.24.2+             | Continual                    | 8, 11 | 3.3.9+ |
 | 3.0.14                | 2.24.2+             | Continual                    | 8, 11 | 3.3.9+ |
 | 3.0.12                | 2.24.2+             | Continual                    | 8, 11 | 3.3.9+ |
+| 3.0.100                | 2.24.6             | Continual                    | 8, 11 | 3.3.9+ |
 | 3.0.10                | 2.24.2+             | Continual                    | 8, 11 | 3.3.9+ |
 | 3.0.8                | 2.24.2+             | Continual                    | 8, 11 | 3.3.9+ |
 | 3.0.6                | 2.24.2+             | Continual                    | 8, 11 | 3.3.9+ |
