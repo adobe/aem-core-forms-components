@@ -15,9 +15,17 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.jackrabbit.JcrConstants;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -29,6 +37,11 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ComponentUtilsTest {
     @Test
@@ -96,4 +109,68 @@ public class ComponentUtilsTest {
         assertNull(ComponentUtils.parseNumber(null));
     }
 
+    @Test
+    public void testSubmitActionsCaching() throws Exception {
+        // Clear cache before test
+        resetCache();
+
+        // Set up mocks
+        HttpClientBuilderFactory mockClientFactory = mock(HttpClientBuilderFactory.class);
+        HttpClientBuilder mockHttpClientBuilder = mock(HttpClientBuilder.class);
+        CloseableHttpClient mockHttpClient = mock(CloseableHttpClient.class);
+        CloseableHttpResponse mockResponse = mock(CloseableHttpResponse.class);
+        StatusLine mockStatusLine = mock(StatusLine.class);
+
+        // Configure mock response
+        when(mockStatusLine.getStatusCode()).thenReturn(200);
+        when(mockResponse.getStatusLine()).thenReturn(mockStatusLine);
+        when(mockResponse.getEntity()).thenReturn(
+            new StringEntity("{\"supported\":[\"spreadsheet\",\"email\"]}"));
+
+        // Wire up mock chain
+        when(mockClientFactory.newBuilder()).thenReturn(mockHttpClientBuilder);
+        when(mockHttpClientBuilder.build()).thenReturn(mockHttpClient);
+        when(mockHttpClient.execute(any())).thenReturn(mockResponse);
+
+        // First call should execute HTTP request
+        List<String> actions1 = ComponentUtils.getSupportedSubmitActions(mockClientFactory);
+
+        // Second call should use cached result
+        List<String> actions2 = ComponentUtils.getSupportedSubmitActions(mockClientFactory);
+
+        // Verify HTTP call only happened once
+        verify(mockHttpClient, times(1)).execute(any());
+
+        // Verify returned actions are the same
+        assertEquals(actions1, actions2);
+        assertEquals(2, actions1.size());
+        assertTrue(actions1.contains("spreadsheet"));
+        assertTrue(actions1.contains("email"));
+
+        // Simulate TTL expiry and verify HTTP call happens again
+        setCacheTimestampToExpired();
+        List<String> actions3 = ComponentUtils.getSupportedSubmitActions(mockClientFactory);
+        verify(mockHttpClient, times(2)).execute(any());
+    }
+
+    // Helper methods to access private cache fields via reflection
+    private void resetCache() throws Exception {
+        Field cacheField = CacheManager.class.getDeclaredField("SUBMIT_ACTIONS_CACHE");
+        cacheField.setAccessible(true);
+        ((Map) cacheField.get(null)).clear();
+
+        Field timestampsField = CacheManager.class.getDeclaredField("CACHE_TIMESTAMPS");
+        timestampsField.setAccessible(true);
+        ((Map) timestampsField.get(null)).clear();
+    }
+
+    private void setCacheTimestampToExpired() throws Exception {
+        Field timestampsField = CacheManager.class.getDeclaredField("CACHE_TIMESTAMPS");
+        timestampsField.setAccessible(true);
+        Map<String, Long> timestamps = (Map<String, Long>) timestampsField.get(null);
+
+        // Set timestamp to 25 hours ago (beyond TTL of 24 hours)
+        timestamps.put(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY,
+            System.currentTimeMillis() - 25 * 60 * 60 * 1000);
+    }
 }
