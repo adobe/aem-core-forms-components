@@ -171,6 +171,6 @@ public class ComponentUtilsTest {
 
         // Set timestamp to 25 hours ago (beyond TTL of 24 hours)
         timestamps.put(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY,
-                System.currentTimeMillis() - 25 * 60 * 60 * 1000);
+            System.currentTimeMillis() - 25 * 60 * 60 * 1000);
     }
 }
