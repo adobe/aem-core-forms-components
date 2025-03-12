@@ -302,6 +302,11 @@ public class ComponentUtils {
      *         request fails
      */
     public static List<String> getSupportedSubmitActions(HttpClientBuilderFactory clientBuilderFactory) {
+        // Check cache first
+        List<String> cachedActions = CacheManager.getFromCache(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY);
+        if (cachedActions != null) {
+            return cachedActions;
+        }
         String supportedSubmitActionsUrl = "https://forms.adobe.com/adobe/forms/af/submit";
         List<String> supportedSubmitActions = new ArrayList<>();
         if (clientBuilderFactory == null) {
@@ -336,6 +341,7 @@ public class ComponentUtils {
         } catch (Exception e) {
             logger.error("Error while fetching supported submit actions", e);
         }
+        CacheManager.putInCache(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY, supportedSubmitActions);
         return supportedSubmitActions;
     }
 
