@@ -66,9 +66,8 @@ describe('Page - Authoring', function () {
         cy.get("[name='./placeholder']").should("exist");
         cy.get("[name='./default']").should("exist");
         cy.get('.cq-dialog-cancel').should('be.visible').click({ force: true }).then(() => {
-            cy.get('.cq-dialog-cancel').should('not.exist');
+            cy.deleteComponentByPath(datePickerDrop);
         });
-        cy.deleteComponentByPath(datePickerDrop);
     }
 
     const testDatePickerValidationTab = function (datePickerEditPathSelector, datePickerDrop, isSites) {
