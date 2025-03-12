@@ -21,11 +21,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -65,30 +62,6 @@ public class ComponentUtils {
     private static final String EDGE_DELIVERY_FRAGMENT_CONTAINER_REL_PATH = "root/section/form";
     private static final String[] EDGE_DELIVERY_RESOURCE_TYPES = new String[] { "core/franklin/components/page/v1/page" };
     private static final Logger logger = LoggerFactory.getLogger(ComponentUtils.class);
-    private static final Map<String, List<String>> SUBMIT_ACTIONS_CACHE = new ConcurrentHashMap<>();
-    private static final Map<String, Long> CACHE_TIMESTAMPS = new ConcurrentHashMap<>();
-    private static final long CACHE_TTL = TimeUnit.HOURS.toMillis(24);
-    private static final String CACHE_KEY = "submit_actions";
-
-    private static List<String> getFromCache() {
-        Long timestamp = CACHE_TIMESTAMPS.get(CACHE_KEY);
-        if (timestamp == null) {
-            return null;
-        }
-
-        if (System.currentTimeMillis() - timestamp > CACHE_TTL) {
-            SUBMIT_ACTIONS_CACHE.remove(CACHE_KEY);
-            CACHE_TIMESTAMPS.remove(CACHE_KEY);
-            return null;
-        }
-
-        return SUBMIT_ACTIONS_CACHE.get(CACHE_KEY);
-    }
-
-    private static void putInCache(List<String> value) {
-        SUBMIT_ACTIONS_CACHE.put(CACHE_KEY, value);
-        CACHE_TIMESTAMPS.put(CACHE_KEY, System.currentTimeMillis());
-    }
 
     /**
      * Private constructor to prevent instantiation of utility class.
@@ -330,7 +303,7 @@ public class ComponentUtils {
      */
     public static List<String> getSupportedSubmitActions(HttpClientBuilderFactory clientBuilderFactory) {
         // Check cache first
-        List<String> cachedActions = getFromCache();
+        List<String> cachedActions = CacheManager.getFromCache(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY);
         if (cachedActions != null) {
             return cachedActions;
         }
@@ -368,7 +341,7 @@ public class ComponentUtils {
         } catch (Exception e) {
             logger.error("Error while fetching supported submit actions", e);
         }
-        putInCache(supportedSubmitActions);
+        CacheManager.putInCache(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY, supportedSubmitActions);
         return supportedSubmitActions;
     }
 

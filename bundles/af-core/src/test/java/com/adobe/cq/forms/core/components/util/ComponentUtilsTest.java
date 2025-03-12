@@ -155,25 +155,22 @@ public class ComponentUtilsTest {
 
     // Helper methods to access private cache fields via reflection
     private void resetCache() throws Exception {
-        Field cacheField = ComponentUtils.class.getDeclaredField("SUBMIT_ACTIONS_CACHE");
+        Field cacheField = CacheManager.class.getDeclaredField("SUBMIT_ACTIONS_CACHE");
         cacheField.setAccessible(true);
         ((Map) cacheField.get(null)).clear();
 
-        Field timestampsField = ComponentUtils.class.getDeclaredField("CACHE_TIMESTAMPS");
+        Field timestampsField = CacheManager.class.getDeclaredField("CACHE_TIMESTAMPS");
         timestampsField.setAccessible(true);
         ((Map) timestampsField.get(null)).clear();
     }
 
     private void setCacheTimestampToExpired() throws Exception {
-        Field timestampsField = ComponentUtils.class.getDeclaredField("CACHE_TIMESTAMPS");
+        Field timestampsField = CacheManager.class.getDeclaredField("CACHE_TIMESTAMPS");
         timestampsField.setAccessible(true);
         Map<String, Long> timestamps = (Map<String, Long>) timestampsField.get(null);
 
-        Field cacheKeyField = ComponentUtils.class.getDeclaredField("CACHE_KEY");
-        cacheKeyField.setAccessible(true);
-        String cacheKey = (String) cacheKeyField.get(null);
-
         // Set timestamp to 25 hours ago (beyond TTL of 24 hours)
-        timestamps.put(cacheKey, System.currentTimeMillis() - 25 * 60 * 60 * 1000);
+        timestamps.put(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY,
+                System.currentTimeMillis() - 25 * 60 * 60 * 1000);
     }
 }
