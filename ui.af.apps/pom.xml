@@ -326,7 +326,6 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/form/pageheader/v1/pageheader/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fragment/v1/fragment/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fragmentcontainer/v1/fragmentcontainer/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
-                                        <replace file="target/jcr_root/libs/core/fd/components/form/checkbox/v1/checkbox/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/termsandconditions/v1/termsandconditions/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/actions/reset/v2/reset/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/actions/submit/v2/submit/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
@@ -335,6 +334,11 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fileinput/v3/fileinput/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/title/v2/title/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/wizard/v2/wizard/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/switch/v1/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/hcaptcha/v1/hcaptcha/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/review/v1/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/toggleablelink/v1/toggleablelink/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/turnstile/v1/turnstile/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                     </target>
                                 </configuration>
                                 <goals>
