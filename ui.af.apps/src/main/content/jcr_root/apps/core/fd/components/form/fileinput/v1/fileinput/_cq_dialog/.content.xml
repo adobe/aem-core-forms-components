@@ -144,6 +144,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
                                                     fieldLabel="Allowed file types"
+                                                    fieldDescription="Specify the allowed file types using MIME types (for example, image/png, application/pdf) or file extensions (for example, .png, .pdf). Ensure that the specified extensions correspond to valid MIME types to avoid upload issues."
                                                     defaultValue="">
                                                 <field
                                                         name="./accept"
