@@ -649,7 +649,8 @@ class FormFieldBase extends FormField {
                     const hasCustomStructure = this.label.children.length > 0;
                     if (!hasCustomStructure) {
                         // Simple case: no custom structure
-                        this.label[isRichText ? 'innerHTML' : 'textContent'] = newContent;
+                        // appending innerHTML directly for backward compatibility
+                        this.label.innerHTML = newContent;
                     } else {
                         // Has custom structure - find direct text nodes
                         const directTextNodes = findDirectTextNodes(this.label);
