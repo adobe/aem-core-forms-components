@@ -598,8 +598,80 @@ class FormFieldBase extends FormField {
     updateLabel(label) {
         if (this.label) {
             if (label.hasOwnProperty("value")) {
-                this.label.innerHTML = label.value;
+                const isRichText = label.richText;
+                const newContent = label.value;
+                // Only update if the content has actually changed
+                // For rich text, compare innerHTML, for plain text compare textContent
+                const currentContent = isRichText ? this.label.innerHTML : this.label.textContent;
+                // Normalize both current and new content before comparison
+                const normalizedCurrentContent = currentContent.trim();
+                const normalizedNewContent = newContent.trim();
+                // optimizeed dom update
+                if (normalizedCurrentContent !== normalizedNewContent) {
+                    // Helper function to find direct text nodes
+                    const findDirectTextNodes = (element) => {
+                        const nodes = [];
+                        for (let i = 0; i < element.childNodes.length; i++) {
+                            const node = element.childNodes[i];
+                            if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() !== '') {
+                                nodes.push(node);
+                            }
+                        }
+                        return nodes;
+                    };
+                    // Helper function to handle rich text insertion
+                    const insertRichText = (container, referenceNode = null) => {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = newContent;
+                        const fragment = document.createDocumentFragment();
+                        while (tempDiv.firstChild) {
+                            fragment.appendChild(tempDiv.firstChild);
+                        }
+                        if (referenceNode) {
+                            // Replace the reference node with the fragment
+                            container.replaceChild(fragment, referenceNode);
+                        } else if (container.firstChild) {
+                            // Insert at the beginning
+                            container.insertBefore(fragment, container.firstChild);
+                        } else {
+                            // Empty container, just append
+                            container.appendChild(fragment);
+                        }
+                    };
+                    // Helper function to insert content at the beginning
+                    const insertAtBeginning = (container, content) => {
+                        if (container.firstChild) {
+                            container.insertBefore(content, container.firstChild);
+                        } else {
+                            container.appendChild(content);
+                        }
+                    };
+                    const hasCustomStructure = this.label.children.length > 0;
+                    if (!hasCustomStructure) {
+                        // Simple case: no custom structure
+                        this.label[isRichText ? 'innerHTML' : 'textContent'] = newContent;
+                    } else {
+                        // Has custom structure - find direct text nodes
+                        const directTextNodes = findDirectTextNodes(this.label);
+                        if (directTextNodes.length > 0) {
+                            // Has text nodes to update
+                            if (isRichText) {
+                                insertRichText(this.label, directTextNodes[0]);
+                            } else {
+                                directTextNodes[0].nodeValue = newContent;
+                            }
+                        } else {
+                            // No text nodes - insert at beginning
+                            if (isRichText) {
+                                insertRichText(this.label);
+                            } else {
+                                insertAtBeginning(this.label, document.createTextNode(newContent));
+                            }
+                        }
+                    }
+                }
             }
+            
             if (label.hasOwnProperty("visible")) {
                 this.toggleAttribute(this.label, label.visible, Constants.ARIA_HIDDEN, true);
                 this.label.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, label.visible);
