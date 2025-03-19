@@ -52,7 +52,7 @@ class FormPanel extends FormFieldBase {
      * Sets the model for the FormPanel.
      * @param {Object} model - The model to be set for the FormPanel.
      */
-    setModel(model) {
+    setModel(model) {        
         super.setModel(model);
         if (model.repeatable) {
             let instanceManager = this.formContainer.getField(model.parent.id);
@@ -178,6 +178,21 @@ class FormPanel extends FormFieldBase {
         const valid = validity.valid;
         this.toggle(valid, Constants.ARIA_INVALID, true);
         this.element.setAttribute(Constants.DATA_ATTRIBUTE_VALID, valid);
+    }
+
+    /**
+     * Updates the HTML state based on the label state of the field.
+     * @param {Object} label - The label.
+     */
+    updateLabel(label) {
+        super.updateLabel(label);
+
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+        const labelContainer = this.element.querySelector(`.${bemClass}__label-container`);
+        if (labelContainer) {
+            labelContainer.querySelector("label").setAttribute(Constants.ROLE, "heading");
+            labelContainer.querySelector("label").setAttribute(Constants.ARIA_LEVEL, "1");
+        }
     }
 
     /**

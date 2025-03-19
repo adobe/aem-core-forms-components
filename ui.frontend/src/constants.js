@@ -361,12 +361,23 @@ export const Constants = {
      */
     ARIA_CURRENT : "aria-current",
 
+    /**
+     * Aria Level attribute.
+     * @type {string}
+     */
+    ARIA_LEVEL : "aria-level",
 
     /**
      * Prefix path for all AF HTTP APIs.
      * @type {string}
      */
     API_PATH_PREFIX : "/adobe/forms/af",
+
+    /**
+     * Role attribute.
+     * @type {string}
+     */
+    ROLE : "role",
 
     /**
      * Field type object.

@@ -604,6 +604,12 @@ class FormFieldBase extends FormField {
                 this.toggleAttribute(this.label, label.visible, Constants.ARIA_HIDDEN, true);
                 this.label.setAttribute(Constants.DATA_ATTRIBUTE_VISIBLE, label.visible);
             }
+
+            const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+            if (bemClass && this.label.parentElement.classList.contains(`${bemClass}__label-container`)) {
+                this.label.setAttribute(Constants.ROLE, "heading");
+                this.label.setAttribute(Constants.ARIA_LEVEL, "1");
+            }
         }
     }
 
