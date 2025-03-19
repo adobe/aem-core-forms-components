@@ -191,7 +191,7 @@ class FormPanel extends FormFieldBase {
         const labelContainer = this.element.querySelector(`.${bemClass}__label-container`);
         if (labelContainer) {
             labelContainer.querySelector("label").setAttribute(Constants.ROLE, "heading");
-            labelContainer.querySelector("label").setAttribute(Constants.ARIA_LEVEL, "1");
+            labelContainer.querySelector("label").setAttribute(Constants.ARIA_LEVEL, "2");
         }
     }
 
