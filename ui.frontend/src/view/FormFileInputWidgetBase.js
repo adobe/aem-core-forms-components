@@ -454,24 +454,24 @@ class FormFileInputWidgetBase {
                             isCurrentInvalidFileName = false,
                             isCurrentInvalidMimeType = false;
                         currFileName = file.name.split("\\").pop();
-                        // Now size is in MB
-                        let size = file.size / 1024 / 1024;
-                        // check if file size limit is within limits
-                        if ((size > parseFloat(this.options.maxFileSize))) {
-                            isInvalidSize = isCurrentInvalidFileSize = true;
-                            inValidSizefileNames = currFileName + "," + inValidSizefileNames;
-                        } else if (!FileInputWidget.isValid(currFileName)) {
-                            // check if file names are valid (ie) there are no control characters in file names
-                            isInvalidFileName = isCurrentInvalidFileName = true;
-                            inValidNamefileNames = currFileName + "," + inValidNamefileNames;
-                        } else {
+                            // Now size is in MB
+                            let size = file.size / 1024 / 1024;
+                            // check if file size limit is within limits
+                            if ((size > parseFloat(this.options.maxFileSize))) {
+                                isInvalidSize = isCurrentInvalidFileSize = true;
+                                inValidSizefileNames = currFileName + "," + inValidSizefileNames;
+                            } else if (!FileInputWidget.isValid(currFileName)) {
+                                // check if file names are valid (ie) there are no control characters in file names
+                                isInvalidFileName = isCurrentInvalidFileName = true;
+                                inValidNamefileNames = currFileName + "," + inValidNamefileNames;
+                            } else {
                             let isMatch = false;
                             let extension = currFileName.split('.').pop().toLowerCase();
                             let mimeType = file.type || self.extensionToMimeTypeMap[extension];
                             
                             // If no MIME type is detected, check if the file extension is in the accept list
                             if (!mimeType) {
-                                isMatch = this.options.accept.some(function(acceptPattern) {
+                                isMatch = this.options.acceptExtensions.some(function(acceptPattern) {
                                     // Remove leading dot if present and convert to lowercase
                                     let cleanPattern = acceptPattern.replace(/^\./, '').toLowerCase();
                                     return cleanPattern === extension;

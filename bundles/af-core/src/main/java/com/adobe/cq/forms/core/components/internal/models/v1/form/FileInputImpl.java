@@ -57,6 +57,9 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FILE_ACCEPT)
     protected String[] accept;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FILE_ACCEPT_EXTENSIONS)
+    protected String[] acceptExtensions;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_BUTTON_TEXT)
     @Default(values = FileInput.DEFAULT_BUTTON_TEXT)
     protected String buttonText;
@@ -118,6 +121,13 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     @Override
     public List<String> getAccept() {
         return Optional.ofNullable(accept)
+            .map(Arrays::asList)
+            .orElse(Collections.emptyList());
+    }
+
+    @Override
+    public List<String> getAcceptExtensions() {
+        return Optional.ofNullable(acceptExtensions)
             .map(Arrays::asList)
             .orElse(Collections.emptyList());
     }
