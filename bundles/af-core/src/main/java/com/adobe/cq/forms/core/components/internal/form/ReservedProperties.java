@@ -128,6 +128,7 @@ public final class ReservedProperties {
     public static final String PN_UNCHECKED_VALUE = "uncheckedValue";
     public static final String PN_MAX_FILE_SIZE = "maxFileSize";
     public static final String PN_FILE_ACCEPT = "accept";
+    public static final String PN_FILE_ACCEPT_EXTENSIONS = "acceptExtensions";
     public static final String PN_BUTTON_TEXT = "buttonText";
     public static final String PN_WRAP_DATA = "wrapData";
     public static final String PN_FRAGMENT_PATH = "fragmentPath";

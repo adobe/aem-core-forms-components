@@ -57,6 +57,10 @@ public interface FileConstraint {
         return DEFAULT_ACCEPT;
     }
 
+    default List<String> getAcceptExtensions() {
+        return Collections.emptyList();
+    }
+
     /**
      * The constraint is
      * applicable for file attachment field. If the type is {@code String}, the format will always be {@code data-url}.

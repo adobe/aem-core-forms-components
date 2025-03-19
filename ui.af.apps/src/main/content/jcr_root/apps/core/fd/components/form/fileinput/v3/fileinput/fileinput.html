@@ -50,7 +50,7 @@
              name="${file.name}"
              disabled="${!file.enabled}"
              required="${file.required}"
-             accept="${file.accept}"
+             accept="${[file.accept, file.acceptExtensions] @ join=','}"
              type="file"
              data-cmp-data-layer="${file.data.json}"
         />

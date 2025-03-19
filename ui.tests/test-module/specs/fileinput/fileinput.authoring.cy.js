@@ -60,7 +60,7 @@ describe('Page - Authoring', function () {
         "File"
     );
     cy.contains("Validation").should("exist");
-
+    
     // Checking some dynamic behaviours
     cy.get("[name='./multiSelection'][type=\"checkbox\"]").should("exist").check();
     cy.get(".cmp-adaptiveform-fileinput__minimumFiles").invoke('css', 'display').should('equal','block');
@@ -68,6 +68,19 @@ describe('Page - Authoring', function () {
    // cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal','none');
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(fileInputDrop);
+  }
+
+  const testFileInputValidationBehaviour = function(fileInputEditPathSelector, fileInputDrop, isSites) {
+    if (isSites) {
+      dropFileInputInSites();
+    } else {
+      dropFileInputInContainer();
+    }
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fileInputEditPathSelector);
+    cy.invokeEditableAction("[data-action='CONFIGURE']");
+    cy.contains("Validation").should("exist");
+    cy.get('._coral-Tabs-itemLabel').contains('Validation').click();
+    cy.contains("Allowed file extensions").should("exist");
   }
 
   context('Open Forms Editor', function() {
@@ -108,6 +121,10 @@ describe('Page - Authoring', function () {
 
     it('open edit dialog of aem forms FileInput', function() {
       testFileInputBehaviour(fileInputEditPathSelector, fileInputDrop, true);
+    });
+
+    it('open edit dialog of aem forms FileInput and check validation', function() {
+      testFileInputValidationBehaviour(fileInputEditPathSelector, fileInputDrop, true);
     });
 
   });
