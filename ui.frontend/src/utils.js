@@ -301,14 +301,19 @@ class Utils {
             funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formJson.id);
         }
         console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
-        if (funcConfig && funcConfig.customFunction) {
-            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
-                if (window[func.id]) {
+        
+        if (funcConfig && funcConfig.clientSideParsingEnabled) {
+            this.registerCustomFunctionsV3(formJson);
+        } else {
+            if (funcConfig && funcConfig.customFunction) {
+                const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
+                    if (window[func.id]) {
                     accumulator[func.id] = window[func.id];
                 }
                 return accumulator;
-            }, {});
-            FunctionRuntime.registerFunctions(funcObj);
+                }, {});
+                FunctionRuntime.registerFunctions(funcObj);
+            }
         }
     }
 
@@ -350,7 +355,7 @@ class Utils {
                     _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 }
                 console.debug("fetched model json", _formJson);
-                await this.registerCustomFunctionsV3( _formJson);
+                await this.registerCustomFunctionsV2( _formJson);
                 await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
