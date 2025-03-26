@@ -1,0 +1,80 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~ Copyright 2025 Adobe
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~     http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+package com.adobe.cq.forms.core.components.internal.models.v1.form.xfa;
+
+import com.adobe.cq.forms.core.components.models.form.xfa.Corner;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class CornerImpl implements Corner {
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String presence;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String stroke;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String radius;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String inverted;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String join;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String thickness;
+
+    @Override
+    public String getPresence() {
+        return presence;
+    }
+
+    @Override
+    public String getStroke() {
+        return stroke;
+    }
+
+    @Override
+    public String getRadius() {
+        return radius;
+    }
+
+    @Override
+    public String getInverted() {
+        return inverted;
+    }
+
+    @Override
+    public String getJoin() {
+        return join;
+    }
+
+    @Override
+    public String getThickness() {
+        return thickness;
+    }
+
+    public static Corner fromString(String corner) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(corner, CornerImpl.class);
+        } catch (JsonProcessingException e) {}
+        return null;
+    }
+}
