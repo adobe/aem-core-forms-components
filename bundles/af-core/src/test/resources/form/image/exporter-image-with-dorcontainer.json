@@ -1,0 +1,221 @@
+{
+  "id": "image-b64e305b5f",
+  "dataRef": "a.b",
+  "fieldType": "image",
+  "name": "abc",
+  "value": "/content/image-with-dorcontainer.img.png",
+  "visible": false,
+  "altText": "abc",
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorContainer": {
+        "id": "dorContainer-9a07a19b89",
+        "type": "imagefield",
+        "name": "ImageField1",
+        "width": "1.5in",
+        "height": "0.5in",
+        "left": "0.5in",
+        "top": "0.5in",
+        "margin": {
+          "topInset": "0.2mm",
+          "bottomInset": "0.2mm",
+          "leftInset": "0.2mm",
+          "rightInset": "0.2mm"
+        },
+        "border": {
+          "edges": {
+            "top": {
+              "stroke": "lowered",
+              "thickness": "0.01mm"
+            },
+            "bottom": {
+              "stroke": "lowered",
+              "thickness": "0.01mm"
+            },
+            "left": {
+              "stroke": "lowered",
+              "thickness": "0.01mm"
+            },
+            "right": {
+              "presence": "hidden",
+              "stroke": "lowered",
+              "thickness": "0.01mm"
+            }
+          },
+          "corners": {
+            "top": {
+              "radius": "0.02mm",
+              "inverted": "1",
+              "thickness": "0.01mm"
+            },
+            "bottom": {
+              "radius": "0.02mm",
+              "inverted": "1",
+              "thickness": "0.01mm"
+            },
+            "left": {
+              "radius": "0.02mm",
+              "inverted": "1",
+              "thickness": "0.01mm"
+            },
+            "right": {
+              "presence": "hidden",
+              "radius": "0.02mm",
+              "inverted": "1",
+              "thickness": "0.01mm"
+            }
+          },
+          "fill": {
+            "color": {
+              "value": "255,102,0"
+            }
+          }
+        },
+        "bind": {
+          "match": "none"
+        },
+        "value": {
+          "image": {
+            "href": "..\\Desktop\\pngtree-loan-icon-png-image_3700428.jpg",
+            "contentType": "image/jpeg"
+          }
+        },
+        "para": {
+          "vAlign": "middle",
+          "hAlign": "middle"
+        },
+        "font": {
+          "typeface": "Arial",
+          "size": "0.3mm",
+          "weight": "bold"
+        },
+        "events": [
+          {
+            "name": "event__form_ready",
+            "script": {
+              "contentType": "application/x-javascript",
+              "content": "var x=0;"
+            },
+            "ref": "$form",
+            "activity": "ready"
+          }
+        ],
+        "ui": {
+          "imageEdit": {
+            "margin": {
+              "topInset": "0.1mm",
+              "bottomInset": "0.1mm",
+              "leftInset": "0.1mm",
+              "rightInset": "0.1mm"
+            },
+            "border": {
+              "edges": {
+                "top": {
+                  "stroke": "lowered",
+                  "thickness": "0.01mm"
+                },
+                "bottom": {
+                  "stroke": "lowered",
+                  "thickness": "0.01mm"
+                },
+                "left": {
+                  "stroke": "lowered",
+                  "thickness": "0.01mm"
+                },
+                "right": {
+                  "presence": "hidden",
+                  "stroke": "lowered",
+                  "thickness": "0.01mm"
+                }
+              }
+            }
+          }
+        },
+        "caption": {
+          "id": "caption-a5fe356a39",
+          "placement": "right",
+          "reserve": "10mm",
+          "value": {
+            "text": {
+              "content": "My Image Caption"
+            }
+          },
+          "para": {
+            "vAlign": "middle",
+            "hAlign": "middle"
+          },
+          "margin": {
+            "topInset": "0.2mm",
+            "bottomInset": "0.2mm",
+            "leftInset": "0.2mm",
+            "rightInset": "0.2mm"
+          },
+          "border": {
+            "edges": {
+              "top": {
+                "stroke": "lowered",
+                "thickness": "0.01mm"
+              },
+              "bottom": {
+                "stroke": "lowered",
+                "thickness": "0.01mm"
+              },
+              "left": {
+                "stroke": "lowered",
+                "thickness": "0.01mm"
+              },
+              "right": {
+                "presence": "hidden",
+                "stroke": "lowered",
+                "thickness": "0.01mm"
+              }
+            },
+            "corners": {
+              "top": {
+                "radius": "0.02mm",
+                "inverted": "1",
+                "thickness": "0.01mm"
+              },
+              "bottom": {
+                "radius": "0.02mm",
+                "inverted": "1",
+                "thickness": "0.01mm"
+              },
+              "left": {
+                "radius": "0.02mm",
+                "inverted": "1",
+                "thickness": "0.01mm"
+              },
+              "right": {
+                "presence": "hidden",
+                "radius": "0.02mm",
+                "inverted": "1",
+                "thickness": "0.01mm"
+              }
+            },
+            "fill": {
+              "color": {
+                "value": "255,102,0"
+              }
+            }
+          },
+          "font": {
+            "typeface": "Arial",
+            "size": "0.3mm",
+            "weight": "bold"
+          },
+          ":type": "core/fd/components/form/caption/v2/caption"
+        },
+        ":type": "core/fd/components/form/dorContainer/v2/dorContainer"
+      }
+    },
+    "fd:path": "/content/image-with-dorcontainer"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":type": "core/fd/components/form/image/v1/image"
+}
