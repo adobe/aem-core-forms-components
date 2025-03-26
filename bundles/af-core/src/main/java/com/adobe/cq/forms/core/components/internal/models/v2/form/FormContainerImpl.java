@@ -59,6 +59,7 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.models.form.PageTemplate;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.models.form.print.PageTemplate;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
@@ -83,7 +84,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String DOR_TYPE = "dorType";
     private static final String DOR_TEMPLATE_REF = "dorTemplateRef";
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
-    public static final String DOR_PAGE_TEMPLATE = "pageTemplate";
+    private static final String DOR_PAGE_TEMPLATE = "pageTemplate";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
     private static final String FD_IS_HAMBURGER_MENU_ENABLED = "fd:isHamburgerMenuEnabled";
@@ -430,6 +431,20 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             customDorProperties.put(ReservedProperties.FD_EXCLUDE_FROM_DOR_IF_HIDDEN, excludeFromDoRIfHidden);
         }
         return customDorProperties;
+    }
+
+    private Map<String, Object> getPageTemplate() {
+        if (resource != null) {
+            Resource pageTemplateResource = resource.getChild("fd:pagetemplate");
+            if (pageTemplateResource != null) {
+                PageTemplate pageTemplate = pageTemplateResource.adaptTo(PageTemplate.class);
+                ObjectMapper objectMapper = new ObjectMapper();
+                if (pageTemplate != null) {
+                    return objectMapper.convertValue(pageTemplate, new TypeReference<Map<String, Object>>() {});
+                }
+            }
+        }
+        return null;
     }
 
     @JsonIgnore
