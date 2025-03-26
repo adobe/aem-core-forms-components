@@ -64,6 +64,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
     private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
     private static final String PATH_TEXTINPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/textinput-without-fieldtype";
+    private static final String PATH_TEXTINPUT_WITH_DORCONTAINER = CONTENT_ROOT + "/textinput-with-dorcontainer";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -360,6 +361,12 @@ public class TextInputImplTest {
     void testFormatJSONExport() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_FORMAT_TEXTINPUT, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_FORMAT_TEXTINPUT));
+    }
+
+    @Test
+    void testJSONExportWithDorContainer() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_WITH_DORCONTAINER, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_WITH_DORCONTAINER));
     }
 
     @Test
