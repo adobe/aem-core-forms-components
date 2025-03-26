@@ -57,6 +57,13 @@ public interface FileConstraint {
         return DEFAULT_ACCEPT;
     }
 
+    /**
+     * Returns the list of file extensions which field can accept. The constraint is
+     * applicable for file attachment field
+     *
+     * @return the list of extensions supported by the field
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
     default List<String> getAcceptExtensions() {
         return Collections.emptyList();
     }
