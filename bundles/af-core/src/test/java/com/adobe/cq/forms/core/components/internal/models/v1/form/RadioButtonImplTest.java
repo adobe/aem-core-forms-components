@@ -32,19 +32,29 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
+import com.adobe.cq.forms.core.components.models.form.CheckBox;
+import com.adobe.cq.forms.core.components.models.form.CheckBoxGroup;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.RadioButton;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class RadioButtonImplTest {
     private static final String BASE = "/form/radiobutton";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED = CONTENT_ROOT + "/radiobutton-customized";
+    private static final String PATH_RADIOBUTTON_WITH_DORCONTAINER = CONTENT_ROOT + "/radiobutton-with-dorcontainer";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED_WITH_LABEL = CONTENT_ROOT + "/radiobutton-customized-withLabel";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED_WITH_NAME = CONTENT_ROOT + "/radiobutton-customized-withName";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED_WITH_DESC = CONTENT_ROOT + "/radiobutton-customized-withDescription";
@@ -345,6 +355,12 @@ public class RadioButtonImplTest {
     void testJSONExport() throws Exception {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
         Utils.testJSONExport(radioButton, Utils.getTestExporterJSONPath(BASE, PATH_RADIOBUTTON));
+    }
+
+    @Test
+    void testJSONExportWithDorContainer() throws Exception {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_WITH_DORCONTAINER);
+        Utils.testJSONExport(radioButton, Utils.getTestExporterJSONPath(BASE, PATH_RADIOBUTTON_WITH_DORCONTAINER));
     }
 
     @Test
