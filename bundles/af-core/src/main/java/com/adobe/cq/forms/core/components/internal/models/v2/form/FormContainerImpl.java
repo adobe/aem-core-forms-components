@@ -59,6 +59,7 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.models.form.PageTemplate;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
@@ -407,6 +408,20 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             customDorProperties.put(DOR_TEMPLATE_TYPE, dorTemplateType);
         }
         return customDorProperties;
+    }
+
+    private Map<String, Object> getPageTemplate() {
+        if (resource != null) {
+            Resource pageTemplateResource = resource.getChild("fd:pagetemplate");
+            if (pageTemplateResource != null) {
+                PageTemplate pageTemplate = pageTemplateResource.adaptTo(PageTemplate.class);
+                ObjectMapper objectMapper = new ObjectMapper();
+                if (pageTemplate != null) {
+                    return objectMapper.convertValue(pageTemplate, new TypeReference<Map<String, Object>>() {});
+                }
+            }
+        }
+        return null;
     }
 
     @JsonIgnore
