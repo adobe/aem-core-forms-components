@@ -1,60 +1,61 @@
 {
-    "id": "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-    "fieldType": "form",
-    "lang": "en",
-    "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-    "properties": {
-      "fd:dor": {
-        "dorType": "generate",
-        "dorTemplateRef": "xyz"
+  "id": "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+  "fieldType": "form",
+  "lang": "en",
+  "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+  "properties": {
+    "fd:dor": {
+      "dorType": "generate",
+      "dorTemplateRef": "xyz"
+    },
+    "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
+    "fd:isHamburgerMenuEnabled": false,
+    "fd:schemaType": "BASIC",
+    "fd:formDataEnabled": true,
+    "customProp": "customPropValue",
+    "fd:roleAttribute":"test-role-attribute",
+    "fd:customFunctionsUrl": "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+    "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":itemsOrder": [
+    "textinput"
+  ],
+  "adaptiveform": "0.15.1",
+  "metadata": {
+    "version": "1.0.0",
+    "grammar": "json-formula-1.0.0"
+  },
+  ":type": "core/fd/components/form/container/v2/container",
+  ":items": {
+    "textinput": {
+      "id": "textinput-9a52c5fa93",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "label": {
+        "visible": true,
+        "value": "def"
       },
-      "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
-      "fd:isHamburgerMenuEnabled": false,
-      "fd:schemaType": "BASIC",
-      "fd:formDataEnabled": true,
-      "customProp": "customPropValue",
-      "fd:roleAttribute":"test-role-attribute",
-      "fd:customFunctionsUrl": "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-      "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="
-    },
-    "events": {
-      "custom:setProperty": [
-        "$event.payload"
-      ]
-    },
-    ":itemsOrder": [
-      "textinput"
-    ],
-    "adaptiveform": "0.15.1",
-    "metadata": {
-      "version": "1.0.0",
-      "grammar": "json-formula-1.0.0"
-    },
-    ":type": "core/fd/components/form/container/v2/container",
-    ":items": {
-      "textinput": {
-        "id": "textinput-9a52c5fa93",
-        "fieldType": "text-input",
-        "name": "abc",
-        "visible": false,
-        "description": "dummy",
-        "type": "string",
-        "label": {
-          "visible": true,
-          "value": "def"
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
         },
-        "events": {
-          "custom:setProperty": [
-            "$event.payload"
-          ]
-        },
-        "properties": {
-          "fd:dor": {
-            "dorExclusion": false
-          },
-          "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/textinput"
-        },
-        ":type": "core/fd/components/form/textinput/v1/textinput"
-      }
+        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/textinput"
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   }
+}
+
