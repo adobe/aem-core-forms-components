@@ -108,6 +108,10 @@
                                                         name="./acceptExtensions"
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+                                                <granite:rendercondition
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                                    toggleName="FT_FORMS-18927"/>
                                             </extensions>
                                             <acceptMessage
                                                     jcr:primaryType="nt:unstructured"

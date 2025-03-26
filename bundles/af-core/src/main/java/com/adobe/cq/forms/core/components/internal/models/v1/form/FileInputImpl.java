@@ -126,13 +126,6 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     }
 
     @Override
-    public List<String> getAcceptExtensions() {
-        return Optional.ofNullable(acceptExtensions)
-            .map(Arrays::asList)
-            .orElse(Collections.emptyList());
-    }
-
-    @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> customProperties = super.getProperties();
         customProperties.put("fd:buttonText", getButtonText());
