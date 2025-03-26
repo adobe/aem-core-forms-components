@@ -46,6 +46,7 @@ public class PanelImplTest {
     private static final String BASE = "/form/panel";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_PANEL = CONTENT_ROOT + "/panel";
+    private static final String PATH_PANEL_WITH_DORCONTAINER = CONTENT_ROOT + "/panel-with-dorcontainer";
     private static final String PATH_ARRAY_PANEL = CONTENT_ROOT + "/array-panel";
     private static final String PATH_RULES_PANEL = CONTENT_ROOT + "/rules-panel";
     private static final String PATH_BOUND_PANEL = CONTENT_ROOT + "/bound-panel";
@@ -112,6 +113,12 @@ public class PanelImplTest {
     void testJSONExport() throws Exception {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_PANEL));
+    }
+
+    @Test
+    void testJSONExportWithDorContainer() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_WITH_DORCONTAINER, Panel.class, context);
+        Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_PANEL_WITH_DORCONTAINER));
     }
 
     @Test
