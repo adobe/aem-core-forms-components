@@ -424,7 +424,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M3</version>
                     <configuration>
-                        <argLine>-Xmx1024m</argLine>
+                        <argLine>-Xmx2048m</argLine>
                         <useSystemClassLoader>false</useSystemClassLoader>
                     </configuration>
                 </plugin>
