@@ -37,6 +37,7 @@ public class TextImplTest {
     private static final String BASE = "/form/text";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_TEXT_CUSTOMIZED = CONTENT_ROOT + "/text-customized";
+    private static final String PATH_TEXT_WITH_DORCONTAINER = CONTENT_ROOT + "/text-with-dorcontainer";
     private static final String PATH_TEXT = CONTENT_ROOT + "/text";
     private static final String PATH_TEXT_DATALAYER = CONTENT_ROOT + "/text-datalayer";
     private static final String PATH_TEXT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/text-without-fieldtype";
@@ -127,6 +128,12 @@ public class TextImplTest {
     void testJSONExportForCustomized() throws Exception {
         Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_CUSTOMIZED));
+    }
+
+    @Test
+    void testJSONExportWithDorContainer() throws Exception {
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_WITH_DORCONTAINER, Text.class, context);
+        Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_WITH_DORCONTAINER));
     }
 
     @Test
