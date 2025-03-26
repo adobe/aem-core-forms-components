@@ -148,4 +148,22 @@ public final class FormConstants {
 
     /** Form definition type indicating submission view */
     public static final String FORM_DEFINITION_SUBMISSION = "submission";
+
+    /** The resource type for page set v1 */
+    public static final String RT_FD_FORM_PAGESET_V1 = RT_FD_FORM_PREFIX + "pageset/v1/pageset";
+
+    /** The resource type for page area v1 */
+    public static final String RT_FD_FORM_PAGEAREA_V1 = RT_FD_FORM_PREFIX + "pagearea/v1/pagearea";
+
+    public static final String RT_FD_FORM_DOR_CONTAINER_V1 = RT_FD_FORM_PREFIX + "dorcontainer/v1/dorcontainer";
+
+    public static final String RT_FD_FORM_DOR_TEMPLATE_V1 = RT_FD_FORM_PREFIX + "template/v1/template";
+
+    public static final String RT_FD_FORM_CAPTION_V1 = RT_FD_FORM_PREFIX + "caption/v1/caption";
+
+    /** The resource type for content area v1 */
+    public static final String RT_FD_FORM_CONTENTAREA_V1 = RT_FD_FORM_PREFIX + "contentarea/v1/contentarea";
+
+    /** The resource type for medium v1 */
+    public static final String RT_FD_FORM_MEDIUM_V1 = RT_FD_FORM_PREFIX + "medium/v1/medium";
 }
