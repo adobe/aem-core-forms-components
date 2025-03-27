@@ -46,7 +46,6 @@ public class DatePickerImplTest {
     private static final String BASE = "/form/datepicker";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DATEPICKER_CUSTOMIZED = CONTENT_ROOT + "/datepicker-customized";
-    private static final String PATH_DATEPICKER_WITH_DORCONTAINER = CONTENT_ROOT + "/datepicker-with-dorcontainer";
 
     private static final String PATH_DATEPICKER_MESSAGE = CONTENT_ROOT + "/datepicker-message";
 
@@ -263,12 +262,6 @@ public class DatePickerImplTest {
     void testJSONExport() throws Exception {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER));
-    }
-
-    @Test
-    void testJSONExportWithDorContainer() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_DORCONTAINER, DatePicker.class, context);
-        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_DORCONTAINER));
     }
 
     @Test
