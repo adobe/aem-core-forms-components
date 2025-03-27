@@ -1,0 +1,158 @@
+{
+  "$id": "classpath:/schema/0.15.1/print/adaptive-form-dor-container-corners.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Border Corners",
+  "description": "Specifies the corners for the border.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "top": {
+      "title": "Top Corner of the border",
+      "description": "Specifies the top corner for the border.",
+      "type": "object",
+      "properties": {
+        "presence": {
+          "title": "Top Corner Presence",
+          "description": "Specifies the presence attribute for the top corner.",
+          "type": "string"
+        },
+        "stroke": {
+          "title": "Top Corner Stroke",
+          "description": "Specifies the stroke attribute for the top corner.",
+          "type": "string"
+        },
+        "thickness": {
+          "title": "Top Corner Thickness",
+          "description": "Specifies the thickness attribute for the top corner.",
+          "type": "string"
+        },
+        "radius": {
+          "title": "Top Corner Radius",
+          "description": "Specifies the radius attribute for the top corner.",
+          "type": "string"
+        },
+        "inverted": {
+          "title": "Top Corner Inverted",
+          "description": "Specifies the inverted attribute for the top corner.",
+          "type": "string"
+        },
+        "join": {
+          "title": "Top Corner Join",
+          "description": "Specifies the join attribute for the top corner.",
+          "type": "string"
+        }
+      }
+    },
+    "left": {
+      "title": "Left Corner of the border",
+      "description": "Specifies the left corner for the border.",
+      "type": "object",
+      "properties": {
+        "presence": {
+          "title": "Left Corner Presence",
+          "description": "Specifies the presence attribute for the left corner.",
+          "type": "string"
+        },
+        "stroke": {
+          "title": "Left Corner Stroke",
+          "description": "Specifies the stroke attribute for the left corner.",
+          "type": "string"
+        },
+        "thickness": {
+          "title": "Left Corner Thickness",
+          "description": "Specifies the thickness attribute for the left corner.",
+          "type": "string"
+        },
+        "radius": {
+          "title": "Left Corner Radius",
+          "description": "Specifies the radius attribute for the left corner.",
+          "type": "string"
+        },
+        "inverted": {
+          "title": "Left Corner Inverted",
+          "description": "Specifies the inverted attribute for the left corner.",
+          "type": "string"
+        },
+        "join": {
+          "title": "Left Corner Join",
+          "description": "Specifies the join attribute for the left corner.",
+          "type": "string"
+        }
+      }
+    },
+    "right": {
+      "title": "Right Corner of the border",
+      "description": "Specifies the right corner for the border.",
+      "type": "object",
+      "properties": {
+        "presence": {
+          "title": "Right Corner Presence",
+          "description": "Specifies the presence attribute for the right corner.",
+          "type": "string"
+        },
+        "stroke": {
+          "title": "Right Corner Stroke",
+          "description": "Specifies the stroke attribute for the right corner.",
+          "type": "string"
+        },
+        "thickness": {
+          "title": "Right Corner Thickness",
+          "description": "Specifies the thickness attribute for the right corner.",
+          "type": "string"
+        },
+        "radius": {
+          "title": "Right Corner Radius",
+          "description": "Specifies the radius attribute for the right corner.",
+          "type": "string"
+        },
+        "inverted": {
+          "title": "Right Corner Inverted",
+          "description": "Specifies the inverted attribute for the right corner.",
+          "type": "string"
+        },
+        "join": {
+          "title": "Right Corner Join",
+          "description": "Specifies the join attribute for the right corner.",
+          "type": "string"
+        }
+      }
+    },
+    "bottom": {
+      "title": "Bottom Corner of the border",
+      "description": "Specifies the bottom corner for the border.",
+      "type": "object",
+      "properties": {
+        "presence": {
+          "title": "Bottom Corner Presence",
+          "description": "Specifies the presence attribute for the bottom corner.",
+          "type": "string"
+        },
+        "stroke": {
+          "title": "Bottom Corner Stroke",
+          "description": "Specifies the stroke attribute for the bottom corner.",
+          "type": "string"
+        },
+        "thickness": {
+          "title": "Bottom Corner Thickness",
+          "description": "Specifies the thickness attribute for the bottom corner.",
+          "type": "string"
+        },
+        "radius": {
+          "title": "Bottom Corner Radius",
+          "description": "Specifies the radius attribute for the bottom corner.",
+          "type": "string"
+        },
+        "inverted": {
+          "title": "Bottom Corner Inverted",
+          "description": "Specifies the inverted attribute for the bottom corner.",
+          "type": "string"
+        },
+        "join": {
+          "title": "Bottom Corner Join",
+          "description": "Specifies the join attribute for the bottom corner.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
