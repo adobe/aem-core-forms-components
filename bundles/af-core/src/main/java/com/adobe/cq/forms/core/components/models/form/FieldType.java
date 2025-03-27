@@ -47,7 +47,10 @@ public enum FieldType {
     PAGEAREA("pagearea"),
     MEDIUM("medium"),
     CONTENTAREA("contentarea"),
-    PROTO("proto");
+    PROTO("proto"),
+    LINE("line"),
+    RECTANGLE("rectangle"),
+    BARCODE("barcode");
 
     private String value;
 
