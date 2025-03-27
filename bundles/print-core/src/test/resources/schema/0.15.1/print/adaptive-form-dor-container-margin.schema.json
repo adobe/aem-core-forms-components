@@ -1,0 +1,29 @@
+{
+  "$id": "classpath:/schema/0.15.1/print/adaptive-form-dor-container-margin.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Specifies the margin properties for the object.",
+  "additionalProperties": false,
+  "properties": {
+    "topInset": {
+      "title": "Top Inset of the margin",
+      "description": "Specifies the top inset margin for the text edit.",
+      "type": "string"
+    },
+    "leftInset": {
+      "title": "Left Inset of the margin",
+      "description": "Specifies the left inset margin for the text edit.",
+      "type": "string"
+    },
+    "rightInset": {
+      "title": "Right Inset of the margin",
+      "description": "Specifies the right inset margin for the text edit.",
+      "type": "string"
+    },
+    "bottomInset": {
+      "title": "Bottom Inset of the margin",
+      "description": "Specifies the bottom inset margin for the text edit.",
+      "type": "string"
+    }
+  }
+}
