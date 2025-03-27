@@ -38,4 +38,13 @@ public class FormConstants {
 
     /** The resource type for proto v1 */
     public static final String RT_FD_FORM_PROTO_V1 = RT_FD_FORM_PREFIX + "proto/v1/proto";
+
+    /** The resource type for line v1 */
+    public static final String RT_FD_FORM_LINE_V1 = RT_FD_FORM_PREFIX + "line/v1/line";
+
+    /** The resource type for rectangle v1 */
+    public static final String RT_FD_FORM_RECTANGLE_V1 = RT_FD_FORM_PREFIX + "rectangle/v1/rectangle";
+
+    /** The resource type for barcode v1 */
+    public static final String RT_FD_FORM_BARCODE_V1 = RT_FD_FORM_PREFIX + "barcode/v1/barcode";
 }
