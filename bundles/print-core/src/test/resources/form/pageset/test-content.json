@@ -1,0 +1,26 @@
+{
+  "pageset": {
+    "name" : "pagesetabc",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/pageset/v1/pageset",
+    "fieldType" : "pageset",
+    "pagearea": {
+      "name" : "pageareaabc",
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/pagearea/v1/pagearea",
+      "fieldType" : "pagearea",
+      "medium": {
+        "name" : "mediumabc",
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType"    : "core/fd/components/form/medium/v1/medium",
+        "fieldType" : "medium"
+      },
+      "contentarea": {
+        "name" : "contentareaabc",
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType"    : "core/fd/components/form/contentarea/v1/contentarea",
+        "fieldType" : "contentarea"
+      }
+    }
+  }
+}

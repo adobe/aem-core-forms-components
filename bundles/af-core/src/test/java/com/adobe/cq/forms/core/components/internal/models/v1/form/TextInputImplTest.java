@@ -363,12 +363,6 @@ public class TextInputImplTest {
     }
 
     @Test
-    void testJSONExportWithDorContainer() throws Exception {
-        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_WITH_DORCONTAINER, TextInput.class, context);
-        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_WITH_DORCONTAINER));
-    }
-
-    @Test
     void testGetProperties() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
         Map<String, Object> properties = textInput.getProperties();

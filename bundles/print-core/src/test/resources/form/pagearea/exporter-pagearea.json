@@ -1,0 +1,83 @@
+{
+  ":items": {
+      "contentarea": {
+          ":type": "core/fd/components/form/contentarea/v1/contentarea",
+          "events": {
+              "custom:setProperty": [
+                  "$event.payload"
+              ]
+          },
+          "fieldType": "contentarea",
+          "id": "contentarea-36e178a1b4",
+          "name": "contentareaabc",
+          "properties": {
+              "fd:dor": {
+                  "dorExclusion": false
+              },
+              "fd:path": "/content/pagearea/contentarea"
+          }
+      },
+      "medium": {
+          ":type": "core/fd/components/form/medium/v1/medium",
+          "events": {
+              "custom:setProperty": [
+                  "$event.payload"
+              ]
+          },
+          "fieldType": "medium",
+          "id": "medium-e053ba1380",
+          "name": "mediumabc",
+          "properties": {
+              "fd:dor": {
+                  "dorExclusion": false
+              },
+              "fd:path": "/content/pagearea/medium"
+          }
+      },
+      "textinput": {
+          ":type": "core/fd/components/form/textinput/v1/textinput",
+          "events": {
+              "custom:setProperty": [
+                  "$event.payload"
+              ]
+          },
+          "fieldType": "text-input",
+          "id": "textinput-7044b3df76",
+          "label": {
+              "value": "def"
+          },
+          "name": "abc",
+          "properties": {
+              "fd:dor": {
+                  "dorExclusion": false
+              },
+              "fd:path": "/content/pagearea/textinput"
+          },
+          "type": "string"
+      }
+  },
+  ":itemsOrder": [
+      "medium",
+      "contentarea",
+      "textinput"
+  ],
+  ":type": "core/fd/components/form/pagearea/v1/pagearea",
+  "events": {
+      "custom:setProperty": [
+          "$event.payload"
+      ]
+  },
+  "fieldType": "pagearea",
+  "id": "pagearea-dff14f726c",
+  "label": {
+      "value": ""
+  },
+  "name": "pageareaabc",
+  "properties": {
+      "fd:dor": {
+          "dorExclusion": false
+      },
+      "fd:path": "/content/pagearea"
+  },
+  "type": "string"
+}
