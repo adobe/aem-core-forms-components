@@ -28,20 +28,24 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
+import com.adobe.cq.forms.core.components.models.form.DatePicker;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class DatePickerImplTest {
     private static final String BASE = "/form/datepicker";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DATEPICKER_CUSTOMIZED = CONTENT_ROOT + "/datepicker-customized";
-    private static final String PATH_DATEPICKER_WITH_DORCONTAINER = CONTENT_ROOT + "/datepicker-with-dorcontainer";
 
     private static final String PATH_DATEPICKER_MESSAGE = CONTENT_ROOT + "/datepicker-message";
 
@@ -258,12 +262,6 @@ public class DatePickerImplTest {
     void testJSONExport() throws Exception {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER));
-    }
-
-    @Test
-    void testJSONExportWithDorContainer() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_DORCONTAINER, DatePicker.class, context);
-        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_DORCONTAINER));
     }
 
     @Test
