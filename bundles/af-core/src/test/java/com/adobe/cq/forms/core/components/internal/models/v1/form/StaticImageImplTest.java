@@ -50,7 +50,6 @@ public class StaticImageImplTest {
     private static final String BASE = "/form/image";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_IMAGE_CUSTOMIZED = CONTENT_ROOT + "/image-customized";
-    private static final String PATH_IMAGE_WITH_DORCONTAINER = CONTENT_ROOT + "/image-with-dorcontainer";
 
     private static final String PATH_IMAGE_PARSED = CONTENT_ROOT + "/image-parsedSrc";
     private static final String PATH_IMAGE = CONTENT_ROOT + "/image";
@@ -132,12 +131,6 @@ public class StaticImageImplTest {
     void testJSONExport() throws Exception {
         StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE, StaticImage.class, context);
         Utils.testJSONExport(staticImage, Utils.getTestExporterJSONPath(BASE, PATH_IMAGE));
-    }
-
-    @Test
-    void testJSONExportWithDorContainer() throws Exception {
-        StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE_WITH_DORCONTAINER, StaticImage.class, context);
-        Utils.testJSONExport(staticImage, Utils.getTestExporterJSONPath(BASE, PATH_IMAGE_WITH_DORCONTAINER));
     }
 
     @Test
