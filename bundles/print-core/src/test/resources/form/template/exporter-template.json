@@ -1,0 +1,48 @@
+{
+    ":items": {
+        "panel": {
+            ":type": "core/fd/components/form/panel/v1/panel",
+            "events": {
+                "custom:setProperty": [
+                    "$event.payload"
+                ]
+            },
+            "fieldType": "panel",
+            "id": "panel-3eb3e5b02a",
+            "label": {
+                "value": "dependent names"
+            },
+            "name": "abc",
+            "properties": {
+                "fd:dor": {
+                    "dorExcludeDescription": false,
+                    "dorExcludeTitle": false,
+                    "dorExclusion": false
+                },
+                "fd:path": "/content/template/panel"
+            }
+        }
+    },
+    ":itemsOrder": [
+        "panel"
+    ],
+    ":type": "core/fd/components/form/template/v1/template",
+    "events": {
+        "custom:setProperty": [
+            "$event.payload"
+        ]
+    },
+    "fieldType": "template",
+    "id": "template-40f6e1230b",
+    "label": {
+        "value": ""
+    },
+    "name": "mytemplate",
+    "properties": {
+        "fd:dor": {
+            "dorExclusion": false
+        },
+        "fd:path": "/content/template"
+    },
+    "type": "string"
+}
