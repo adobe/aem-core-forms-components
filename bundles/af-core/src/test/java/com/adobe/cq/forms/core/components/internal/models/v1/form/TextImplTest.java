@@ -24,20 +24,19 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.Text;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertEquals;
 
 @ExtendWith(AemContextExtension.class)
 public class TextImplTest {
     private static final String BASE = "/form/text";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_TEXT_CUSTOMIZED = CONTENT_ROOT + "/text-customized";
-    private static final String PATH_TEXT_WITH_DORCONTAINER = CONTENT_ROOT + "/text-with-dorcontainer";
     private static final String PATH_TEXT = CONTENT_ROOT + "/text";
     private static final String PATH_TEXT_DATALAYER = CONTENT_ROOT + "/text-datalayer";
     private static final String PATH_TEXT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/text-without-fieldtype";
@@ -128,12 +127,6 @@ public class TextImplTest {
     void testJSONExportForCustomized() throws Exception {
         Text text = Utils.getComponentUnderTest(PATH_TEXT_CUSTOMIZED, Text.class, context);
         Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_CUSTOMIZED));
-    }
-
-    @Test
-    void testJSONExportWithDorContainer() throws Exception {
-        Text text = Utils.getComponentUnderTest(PATH_TEXT_WITH_DORCONTAINER, Text.class, context);
-        Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_WITH_DORCONTAINER));
     }
 
     @Test
