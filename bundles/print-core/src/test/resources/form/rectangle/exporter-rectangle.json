@@ -1,0 +1,72 @@
+{
+    ":type": "core/fd/components/form/rectangle/v1/rectangle",
+    "events": {
+        "custom:setProperty": [
+            "$event.payload"
+        ]
+    },
+    "fieldType": "rectangle",
+    "id": "rectangle-c95d7f79c2",
+    "name": "rectangleabc",
+    "properties": {
+        "fd:dor": {
+            "dorContainer": {
+                ":type": "core/fd/components/form/dorContainer/v1/dorContainer",
+                "height": "100mm",
+                "id": "dorContainer-201811f998",
+                "left": "0mm",
+                "top": "0mm",
+                "type": "rectangle",
+                "value": {
+                    "rectangle": {
+                        "corners": {
+                            "bottom": {
+                                "inverted": "1",
+                                "radius": "0.02mm",
+                                "thickness": "0.01mm"
+                            },
+                            "left": {
+                                "inverted": "1",
+                                "radius": "0.02mm",
+                                "thickness": "0.01mm"
+                            },
+                            "right": {
+                                "inverted": "1",
+                                "presence": "hidden",
+                                "radius": "0.02mm",
+                                "thickness": "0.01mm"
+                            },
+                            "top": {
+                                "inverted": "1",
+                                "radius": "0.02mm",
+                                "thickness": "0.01mm"
+                            }
+                        },
+                        "edges": {
+                            "bottom": {
+                                "stroke": "lowered",
+                                "thickness": "0.01mm"
+                            },
+                            "left": {
+                                "stroke": "lowered",
+                                "thickness": "0.01mm"
+                            },
+                            "right": {
+                                "presence": "hidden",
+                                "stroke": "lowered",
+                                "thickness": "0.01mm"
+                            },
+                            "top": {
+                                "stroke": "lowered",
+                                "thickness": "0.01mm"
+                            }
+                        }
+                    }
+                },
+                "width": "100mm"
+            },
+            "dorExclusion": false
+        },
+        "fd:path": "/content/rectangle"
+    }
+}
