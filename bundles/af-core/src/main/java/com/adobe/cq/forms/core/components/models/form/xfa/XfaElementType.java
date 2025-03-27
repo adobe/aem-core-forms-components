@@ -42,7 +42,8 @@ public enum XfaElementType {
         "exclusiongroup"),
     BARCODE("barcode"),
     LINE("line"),
-    RECTANGLE("rectangle");
+    RECTANGLE("rectangle"),
+    PROTO("proto");
 
     private String value;
 
