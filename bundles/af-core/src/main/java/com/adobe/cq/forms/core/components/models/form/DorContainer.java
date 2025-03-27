@@ -41,6 +41,7 @@ import com.adobe.cq.forms.core.components.models.form.xfa.Para;
 import com.adobe.cq.forms.core.components.models.form.xfa.Traversal;
 import com.adobe.cq.forms.core.components.models.form.xfa.Ui;
 import com.adobe.cq.forms.core.components.models.form.xfa.Value;
+import com.adobe.cq.forms.core.components.models.form.xfa.Variables;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @ConsumerType
@@ -213,6 +214,11 @@ public interface DorContainer extends ContainerExporter {
 
     @Nullable
     default Caption getCaption() {
+        return null;
+    }
+
+    @Nullable
+    default Variables getVariables() {
         return null;
     }
 
