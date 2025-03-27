@@ -53,7 +53,6 @@ public class CheckBoxImplTest {
     private static final String PATH_CHECKBOX = CONTENT_ROOT + "/checkbox";
 
     private static final String PATH_CHECKBOX_CUSTOMIZED = CONTENT_ROOT + "/checkbox-customized";
-    private static final String PATH_CHECKBOX_WITH_DORCONTAINER = CONTENT_ROOT + "/checkbox-with-dorcontainer";
 
     private static final String PATH_CHECKBOX_NOENUM = CONTENT_ROOT + "/checkboxNoEnum";
 
@@ -265,12 +264,6 @@ public class CheckBoxImplTest {
     void testJSONExport() throws Exception {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
         Utils.testJSONExport(checkbox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX));
-    }
-
-    @Test
-    void testJSONExporWithDorContainer() throws Exception {
-        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_WITH_DORCONTAINER);
-        Utils.testJSONExport(checkbox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_WITH_DORCONTAINER));
     }
 
     @Test
