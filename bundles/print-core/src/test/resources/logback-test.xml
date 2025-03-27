@@ -1,0 +1,22 @@
+<configuration>
+
+  <!-- Remove duplicate log messages -->
+  <turboFilter class="ch.qos.logback.classic.turbo.DuplicateMessageFilter">
+    <allowedRepetitions>0</allowedRepetitions>
+  </turboFilter>
+
+  <!-- The default console -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.apache.sling.models.impl.ModelPackageBundleListener" level="OFF"/>
+  <logger name="org.apache.sling.models.impl.AdapterImplementations" level="OFF"/>
+
+  <root level="INFO">          
+    <appender-ref ref="STDOUT" />
+  </root>  
+  
+</configuration>
