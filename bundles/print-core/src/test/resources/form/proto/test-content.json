@@ -1,0 +1,27 @@
+{
+  "proto": {
+    "name" : "protoabc",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/proto/v1/proto",
+    "fieldType" : "proto",
+    "textinput" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+      "name" : "abc",
+      "jcr:title" : "def",
+      "hideTitle" : false,
+      "description" : "dummy",
+      "fieldType" : "text-input",
+      "fd:dorContainer": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType"    : "core/fd/components/form/dorContainer/v1/dorContainer",
+        "type": "textfield",
+        "name": "TextField1",
+        "width": "1.5in",
+        "height": "0.5in",
+        "left": "0.5in",
+        "top": "0.5in"
+      }
+    }
+  }
+}
