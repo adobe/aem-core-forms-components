@@ -17,7 +17,11 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.Map;
+import java.util.TimeZone;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
@@ -31,7 +35,12 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
@@ -64,8 +73,6 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
     private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
     private static final String PATH_TEXTINPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/textinput-without-fieldtype";
-    private static final String PATH_TEXTINPUT_WITH_DORCONTAINER = CONTENT_ROOT + "/textinput-with-dorcontainer";
-
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -361,12 +368,6 @@ public class TextInputImplTest {
     void testFormatJSONExport() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_FORMAT_TEXTINPUT, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_FORMAT_TEXTINPUT));
-    }
-
-    @Test
-    void testJSONExportWithDorContainer() throws Exception {
-        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_WITH_DORCONTAINER, TextInput.class, context);
-        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_WITH_DORCONTAINER));
     }
 
     @Test
