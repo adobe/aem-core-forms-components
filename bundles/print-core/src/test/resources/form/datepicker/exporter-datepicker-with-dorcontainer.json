@@ -1,0 +1,253 @@
+{
+  ":type": "core/fd/components/form/datepicker/v1/datepicker",
+  "constraintMessages": {
+      "type": "incorrect type"
+  },
+  "dataRef": "a.b",
+  "default": "2022-02-07",
+  "description": "dummy",
+  "enabled": false,
+  "events": {
+      "custom:setProperty": [
+          "$event.payload"
+      ]
+  },
+  "fieldType": "date-input",
+  "format": "date",
+  "id": "datepicker-dc5d02e268",
+  "label": {
+      "value": "def",
+      "visible": true
+  },
+  "lang": "it-IT",
+  "maximum": "2022-02-09",
+  "minimum": "2022-02-04",
+  "name": "abc",
+  "properties": {
+      "afs:layout": {
+          "tooltipVisible": false
+      },
+      "fd:dor": {
+          "dorContainer": {
+              ":type": "core/fd/components/form/dorContainer/v1/dorContainer",
+              "assist": {
+                  "role": "TH"
+              },
+              "bind": {
+                  "match": "dataRef",
+                  "ref": "SalesOrder.user.name"
+              },
+              "border": {
+                  "corners": {
+                      "bottom": {
+                          "inverted": "1",
+                          "radius": "0.02mm",
+                          "thickness": "0.01mm"
+                      },
+                      "left": {
+                          "inverted": "1",
+                          "radius": "0.02mm",
+                          "thickness": "0.01mm"
+                      },
+                      "right": {
+                          "inverted": "1",
+                          "presence": "hidden",
+                          "radius": "0.02mm",
+                          "thickness": "0.01mm"
+                      },
+                      "top": {
+                          "inverted": "1",
+                          "radius": "0.02mm",
+                          "thickness": "0.01mm"
+                      }
+                  },
+                  "edges": {
+                      "bottom": {
+                          "stroke": "lowered",
+                          "thickness": "0.01mm"
+                      },
+                      "left": {
+                          "stroke": "lowered",
+                          "thickness": "0.01mm"
+                      },
+                      "right": {
+                          "presence": "hidden",
+                          "stroke": "lowered",
+                          "thickness": "0.01mm"
+                      },
+                      "top": {
+                          "stroke": "lowered",
+                          "thickness": "0.01mm"
+                      }
+                  },
+                  "fill": {
+                      "color": {
+                          "value": "255,102,0"
+                      }
+                  }
+              },
+              "caption": {
+                  ":type": "core/fd/components/form/caption/v1/caption",
+                  "border": {
+                      "corners": {
+                          "bottom": {
+                              "inverted": "1",
+                              "radius": "0.02mm",
+                              "thickness": "0.01mm"
+                          },
+                          "left": {
+                              "inverted": "1",
+                              "radius": "0.02mm",
+                              "thickness": "0.01mm"
+                          },
+                          "right": {
+                              "inverted": "1",
+                              "presence": "hidden",
+                              "radius": "0.02mm",
+                              "thickness": "0.01mm"
+                          },
+                          "top": {
+                              "inverted": "1",
+                              "radius": "0.02mm",
+                              "thickness": "0.01mm"
+                          }
+                      },
+                      "edges": {
+                          "bottom": {
+                              "stroke": "lowered",
+                              "thickness": "0.01mm"
+                          },
+                          "left": {
+                              "stroke": "lowered",
+                              "thickness": "0.01mm"
+                          },
+                          "right": {
+                              "presence": "hidden",
+                              "stroke": "lowered",
+                              "thickness": "0.01mm"
+                          },
+                          "top": {
+                              "stroke": "lowered",
+                              "thickness": "0.01mm"
+                          }
+                      },
+                      "fill": {
+                          "color": {
+                              "value": "255,102,0"
+                          }
+                      }
+                  },
+                  "font": {
+                      "size": "0.3mm",
+                      "typeface": "Arial",
+                      "weight": "bold"
+                  },
+                  "id": "caption-11128267db",
+                  "margin": {
+                      "bottomInset": "0.2mm",
+                      "leftInset": "0.2mm",
+                      "rightInset": "0.2mm",
+                      "topInset": "0.2mm"
+                  },
+                  "para": {
+                      "hAlign": "middle",
+                      "vAlign": "middle"
+                  },
+                  "placement": "right",
+                  "reserve": "10mm",
+                  "value": {
+                      "text": {
+                          "content": "My Date Field Caption"
+                      }
+                  }
+              },
+              "events": [
+                  {
+                      "activity": "ready",
+                      "name": "event__form_ready",
+                      "ref": "$form",
+                      "script": {
+                          "content": "var x=0;",
+                          "contentType": "application/x-javascript"
+                      }
+                  }
+              ],
+              "font": {
+                  "size": "0.3mm",
+                  "typeface": "Arial",
+                  "weight": "bold"
+              },
+              "height": "0.5in",
+              "id": "dorContainer-7ca4c1f219",
+              "keep": {
+                  "intact": "contentArea"
+              },
+              "left": "0.5in",
+              "margin": {
+                  "bottomInset": "0.2mm",
+                  "leftInset": "0.2mm",
+                  "rightInset": "0.2mm",
+                  "topInset": "0.2mm"
+              },
+              "name": "DateField1",
+              "para": {
+                  "hAlign": "middle",
+                  "vAlign": "middle"
+              },
+              "top": "0.5in",
+              "type": "datefield",
+              "ui": {
+                  "dateTimeEdit": {
+                      "border": {
+                          "edges": {
+                              "bottom": {
+                                  "stroke": "lowered",
+                                  "thickness": "0.01mm"
+                              },
+                              "left": {
+                                  "stroke": "lowered",
+                                  "thickness": "0.01mm"
+                              },
+                              "right": {
+                                  "presence": "hidden",
+                                  "stroke": "lowered",
+                                  "thickness": "0.01mm"
+                              },
+                              "top": {
+                                  "stroke": "lowered",
+                                  "thickness": "0.01mm"
+                              }
+                          }
+                      },
+                      "margin": {
+                          "bottomInset": "0.1mm",
+                          "leftInset": "0.1mm",
+                          "rightInset": "0.1mm",
+                          "topInset": "0.1mm"
+                      }
+                  }
+              },
+              "value": {
+                  "date": {
+                      "content": "11/03/2024"
+                  }
+              },
+              "width": "1.5in"
+          },
+          "dorExclusion": false
+      },
+      "fd:path": "/content/datepicker/datepicker-with-dorcontainer"
+  },
+  "readOnly": true,
+  "required": false,
+  "rules": {
+      "enabled": "true()",
+      "label": "{value : 'some label'}",
+      "value": "false()",
+      "visible": "true()"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "tooltip": "test-short-description",
+  "type": "string",
+  "visible": false
+}
