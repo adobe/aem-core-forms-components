@@ -15,11 +15,13 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form.xfa;
 
+import java.util.List;
+
 import org.jetbrains.annotations.Nullable;
 
 public interface Variables {
     @Nullable
-    default Scripts getScripts() {
+    default List<? extends Script> getScripts() {
         return null;
     }
 }
