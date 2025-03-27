@@ -1,0 +1,59 @@
+{
+    ":items": {
+        "textinput": {
+            ":type": "core/fd/components/form/textinput/v1/textinput",
+            "description": "dummy",
+            "events": {
+                "custom:setProperty": [
+                    "$event.payload"
+                ]
+            },
+            "fieldType": "text-input",
+            "id": "textinput-3c836bd391",
+            "label": {
+                "value": "def",
+                "visible": true
+            },
+            "name": "abc",
+            "properties": {
+                "fd:dor": {
+                    "dorContainer": {
+                        ":type": "core/fd/components/form/dorContainer/v1/dorContainer",
+                        "height": "0.5in",
+                        "id": "dorContainer-39348620cc",
+                        "left": "0.5in",
+                        "name": "TextField1",
+                        "top": "0.5in",
+                        "type": "textfield",
+                        "width": "1.5in"
+                    },
+                    "dorExclusion": false
+                },
+                "fd:path": "/content/proto/textinput"
+            },
+            "type": "string"
+        }
+    },
+    ":itemsOrder": [
+        "textinput"
+    ],
+    ":type": "core/fd/components/form/proto/v1/proto",
+    "events": {
+        "custom:setProperty": [
+            "$event.payload"
+        ]
+    },
+    "fieldType": "proto",
+    "id": "proto-b6c19439de",
+    "label": {
+        "value": ""
+    },
+    "name": "protoabc",
+    "properties": {
+        "fd:dor": {
+            "dorExclusion": false
+        },
+        "fd:path": "/content/proto"
+    },
+    "type": "string"
+}

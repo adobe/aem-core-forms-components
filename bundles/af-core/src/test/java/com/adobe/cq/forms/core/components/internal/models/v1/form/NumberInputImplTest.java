@@ -41,7 +41,10 @@ import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -50,7 +53,6 @@ public class NumberInputImplTest {
     private static final String BASE = "/form/numberinput";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_NUMBER_INPUT_CUSTOMIZED = CONTENT_ROOT + "/numberinput-customized";
-    private static final String PATH_NUMBER_INPUT_WITH_DORCONTAINER = CONTENT_ROOT + "/numberinput-with-dorcontainer";
     private static final String PATH_NUMBER_INPUT_INTEGER_TYPE = CONTENT_ROOT + "/numberinput-integer-type";
     private static final String PATH_NUMBER_INPUT_CONSTRAINTS = CONTENT_ROOT + "/numberinput-exclusive";
     private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/numberinput-backwardcompatible";
@@ -279,12 +281,6 @@ public class NumberInputImplTest {
     void testJSONExport() throws Exception {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT, NumberInput.class, context);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT));
-    }
-
-    @Test
-    void testJSONExportWithDorContainer() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_DORCONTAINER, NumberInput.class, context);
-        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_DORCONTAINER));
     }
 
     @Test

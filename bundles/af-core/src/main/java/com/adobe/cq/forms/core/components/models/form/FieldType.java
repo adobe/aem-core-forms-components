@@ -46,7 +46,8 @@ public enum FieldType {
     PAGESET("pageset"),
     PAGEAREA("pagearea"),
     MEDIUM("medium"),
-    CONTENTAREA("contentarea");
+    CONTENTAREA("contentarea"),
+    PROTO("proto");
 
     private String value;
 
