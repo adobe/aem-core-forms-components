@@ -1,0 +1,139 @@
+{
+    ":type": "core/fd/components/form/radiobutton/v1/radiobutton",
+    "constraintMessages": {
+        "required": "This is a required field",
+        "validationExpression": "Required Expression"
+    },
+    "dataRef": "a.b",
+    "default": "0",
+    "description": "long description",
+    "enabled": true,
+    "enforceEnum": true,
+    "enum": [
+        "0",
+        "1"
+    ],
+    "enumNames": [
+        "<p>Item 1</p>",
+        "<p>Item 2</p>"
+    ],
+    "events": {
+        "custom:setProperty": [
+            "$event.payload"
+        ]
+    },
+    "fieldType": "radio-group",
+    "id": "radiobutton-e1d24e6b86",
+    "label": {
+        "value": "Radio Button"
+    },
+    "name": "radiobutton_12345",
+    "properties": {
+        "afs:layout": {
+            "orientation": "vertical",
+            "tooltipVisible": true
+        },
+        "fd:dor": {
+            "dorColspan": "4",
+            "dorContainer": {
+                ":items": {
+                    "radiobutton1": {
+                        ":type": "core/fd/components/form/checkbox/v1/checkbox",
+                        "enforceEnum": true,
+                        "enum": [
+                            "yes",
+                            "no"
+                        ],
+                        "events": {
+                            "custom:setProperty": [
+                                "$event.payload"
+                            ]
+                        },
+                        "fieldType": "checkbox",
+                        "id": "checkbox-cd9d420400",
+                        "label": {
+                            "value": "def"
+                        },
+                        "name": "radiobutton_12345",
+                        "properties": {
+                            "fd:dor": {
+                                "dorContainer": {
+                                    ":type": "core/fd/components/form/dorContainer/v1/dorContainer",
+                                    "height": "0.5in",
+                                    "id": "dorContainer-eda9ad83b9",
+                                    "left": "0.5in",
+                                    "name": "RadioButton1",
+                                    "top": "0.5in",
+                                    "type": "checkbutton",
+                                    "width": "1.5in"
+                                },
+                                "dorExclusion": false
+                            },
+                            "fd:path": "/content/radiobutton/radiobutton-with-dorcontainer/fd:dorContainer/radiobutton1"
+                        },
+                        "type": "string"
+                    },
+                    "radiobutton2": {
+                        ":type": "core/fd/components/form/checkbox/v1/checkbox",
+                        "enforceEnum": true,
+                        "enum": [
+                            "yes",
+                            "no"
+                        ],
+                        "events": {
+                            "custom:setProperty": [
+                                "$event.payload"
+                            ]
+                        },
+                        "fieldType": "checkbox",
+                        "id": "checkbox-e4aecc60b8",
+                        "label": {
+                            "value": "def"
+                        },
+                        "name": "radiobutton_54321",
+                        "properties": {
+                            "fd:dor": {
+                                "dorContainer": {
+                                    ":type": "core/fd/components/form/dorContainer/v1/dorContainer",
+                                    "height": "0.5in",
+                                    "id": "dorContainer-a6e7f0ea0f",
+                                    "left": "0.5in",
+                                    "name": "RadioButton1",
+                                    "top": "0.5in",
+                                    "type": "checkbutton",
+                                    "width": "1.5in"
+                                },
+                                "dorExclusion": false
+                            },
+                            "fd:path": "/content/radiobutton/radiobutton-with-dorcontainer/fd:dorContainer/radiobutton2"
+                        },
+                        "type": "string"
+                    }
+                },
+                ":itemsOrder": [
+                    "radiobutton1",
+                    "radiobutton2"
+                ],
+                ":type": "core/fd/components/form/dorContainer/v1/dorContainer",
+                "bind": {
+                    "match": "none"
+                },
+                "height": "0.5in",
+                "id": "dorContainer-cfeecff1ba",
+                "left": "0.5in",
+                "name": "ExclusionGroup1",
+                "top": "0.5in",
+                "type": "exclusiongroup",
+                "width": "1.5in"
+            },
+            "dorExclusion": true
+        },
+        "fd:path": "/content/radiobutton/radiobutton-with-dorcontainer"
+    },
+    "readOnly": true,
+    "required": true,
+    "screenReaderText": "'custom text'",
+    "tooltip": "<p>short description</p>",
+    "type": "string",
+    "visible": false
+}

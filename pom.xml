@@ -46,6 +46,7 @@
         <module>jsdocs</module>
         <module>bundles/core</module>
         <module>bundles/af-core</module>
+        <module>bundles/print-core</module>
         <module>examples</module>
         <module>all</module>
     </modules>
