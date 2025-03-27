@@ -1,0 +1,25 @@
+{
+  "barcode": {
+    "name" : "barcodeabc",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/barcode/v1/barcode",
+    "fieldType" : "barcode",
+    "fd:dorContainer": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/dorContainer/v1/dorContainer",
+      "type": "barcode",
+      "width": "1.5in",
+      "height": "0.5in",
+      "left": "0.5in",
+      "top": "0.5in",
+      "margin": "{\"topInset\":\"0.2mm\",\"bottomInset\":\"0.2mm\",\"leftInset\":\"0.2mm\",\"rightInset\":\"0.2mm\"}",
+      "border": "{\"edges\":{\"top\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"bottom\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"left\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"right\":{\"presence\":\"hidden\",\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"}},\"corners\":{\"top\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"bottom\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"left\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"right\":{\"presence\":\"hidden\",\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"}},\"fill\":{\"color\":{\"value\":\"255,102,0\"}}}",
+      "bind": "{\"ref\":\"SalesOrder.user.name\",\"match\":\"dataRef\"}",
+      "para": "{\"vAlign\":\"middle\",\"hAlign\":\"middle\"}",
+      "font": "{\"size\":\"0.3mm\",\"typeface\":\"Arial\",\"weight\":\"bold\"}",
+      "assist": "{\"role\":\"TH\"}",
+      "value": "{\"text\":{\"content\":\"hello\"}}",
+      "ui": "{\"barcode\":{\"type\":\"code3Of9\",\"textLocation\":\"belowEmbedded\",\"dataLength\":\"10\", \"wideNarrowRatio\":\"2.5\"}}"
+    }
+  }
+}
