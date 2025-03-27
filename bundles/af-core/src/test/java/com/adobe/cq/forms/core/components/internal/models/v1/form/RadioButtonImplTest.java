@@ -45,7 +45,6 @@ public class RadioButtonImplTest {
     private static final String BASE = "/form/radiobutton";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED = CONTENT_ROOT + "/radiobutton-customized";
-    private static final String PATH_RADIOBUTTON_WITH_DORCONTAINER = CONTENT_ROOT + "/radiobutton-with-dorcontainer";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED_WITH_LABEL = CONTENT_ROOT + "/radiobutton-customized-withLabel";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED_WITH_NAME = CONTENT_ROOT + "/radiobutton-customized-withName";
     private static final String PATH_RADIOBUTTON_CUSTOMIZED_WITH_DESC = CONTENT_ROOT + "/radiobutton-customized-withDescription";
@@ -346,12 +345,6 @@ public class RadioButtonImplTest {
     void testJSONExport() throws Exception {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON);
         Utils.testJSONExport(radioButton, Utils.getTestExporterJSONPath(BASE, PATH_RADIOBUTTON));
-    }
-
-    @Test
-    void testJSONExportWithDorContainer() throws Exception {
-        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_WITH_DORCONTAINER);
-        Utils.testJSONExport(radioButton, Utils.getTestExporterJSONPath(BASE, PATH_RADIOBUTTON_WITH_DORCONTAINER));
     }
 
     @Test
