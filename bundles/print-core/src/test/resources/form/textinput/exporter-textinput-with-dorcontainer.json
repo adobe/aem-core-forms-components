@@ -1,0 +1,238 @@
+{
+    ":type": "core/fd/components/form/textinput/v1/textinput",
+    "dataRef": "a.b",
+    "description": "dummy",
+    "enabled": true,
+    "events": {
+        "custom:setProperty": [
+            "$event.payload"
+        ]
+    },
+    "fieldType": "text-input",
+    "id": "textinput-b129a447d4",
+    "label": {
+        "value": "def"
+    },
+    "name": "abc",
+    "properties": {
+        "fd:dor": {
+            "dorBindRef": "Text1",
+            "dorContainer": {
+                ":type": "core/fd/components/form/dorContainer/v1/dorContainer",
+                "assist": {
+                    "role": "TH"
+                },
+                "bind": {
+                    "match": "dataRef",
+                    "ref": "SalesOrder.user.name"
+                },
+                "border": {
+                    "corners": {
+                        "bottom": {
+                            "inverted": "1",
+                            "radius": "0.02mm",
+                            "thickness": "0.01mm"
+                        },
+                        "left": {
+                            "inverted": "1",
+                            "radius": "0.02mm",
+                            "thickness": "0.01mm"
+                        },
+                        "right": {
+                            "inverted": "1",
+                            "presence": "hidden",
+                            "radius": "0.02mm",
+                            "thickness": "0.01mm"
+                        },
+                        "top": {
+                            "inverted": "1",
+                            "radius": "0.02mm",
+                            "thickness": "0.01mm"
+                        }
+                    },
+                    "edges": {
+                        "bottom": {
+                            "stroke": "lowered",
+                            "thickness": "0.01mm"
+                        },
+                        "left": {
+                            "stroke": "lowered",
+                            "thickness": "0.01mm"
+                        },
+                        "right": {
+                            "presence": "hidden",
+                            "stroke": "lowered",
+                            "thickness": "0.01mm"
+                        },
+                        "top": {
+                            "stroke": "lowered",
+                            "thickness": "0.01mm"
+                        }
+                    },
+                    "fill": {
+                        "color": {
+                            "value": "255,102,0"
+                        }
+                    }
+                },
+                "caption": {
+                    ":type": "core/fd/components/form/caption/v1/caption",
+                    "border": {
+                        "corners": {
+                            "bottom": {
+                                "inverted": "1",
+                                "radius": "0.02mm",
+                                "thickness": "0.01mm"
+                            },
+                            "left": {
+                                "inverted": "1",
+                                "radius": "0.02mm",
+                                "thickness": "0.01mm"
+                            },
+                            "right": {
+                                "inverted": "1",
+                                "presence": "hidden",
+                                "radius": "0.02mm",
+                                "thickness": "0.01mm"
+                            },
+                            "top": {
+                                "inverted": "1",
+                                "radius": "0.02mm",
+                                "thickness": "0.01mm"
+                            }
+                        },
+                        "edges": {
+                            "bottom": {
+                                "stroke": "lowered",
+                                "thickness": "0.01mm"
+                            },
+                            "left": {
+                                "stroke": "lowered",
+                                "thickness": "0.01mm"
+                            },
+                            "right": {
+                                "presence": "hidden",
+                                "stroke": "lowered",
+                                "thickness": "0.01mm"
+                            },
+                            "top": {
+                                "stroke": "lowered",
+                                "thickness": "0.01mm"
+                            }
+                        },
+                        "fill": {
+                            "color": {
+                                "value": "255,102,0"
+                            }
+                        }
+                    },
+                    "font": {
+                        "size": "0.3mm",
+                        "typeface": "Arial",
+                        "weight": "bold"
+                    },
+                    "id": "caption-c712471bb5",
+                    "margin": {
+                        "bottomInset": "0.2mm",
+                        "leftInset": "0.2mm",
+                        "rightInset": "0.2mm",
+                        "topInset": "0.2mm"
+                    },
+                    "para": {
+                        "hAlign": "middle",
+                        "vAlign": "middle"
+                    },
+                    "placement": "right",
+                    "reserve": "10mm",
+                    "value": {
+                        "text": {
+                            "content": "My Caption"
+                        }
+                    }
+                },
+                "events": [
+                    {
+                        "activity": "ready",
+                        "name": "event__form_ready",
+                        "ref": "$form",
+                        "script": {
+                            "content": "var x=0;",
+                            "contentType": "application/x-javascript"
+                        }
+                    }
+                ],
+                "font": {
+                    "size": "0.3mm",
+                    "typeface": "Arial",
+                    "weight": "bold"
+                },
+                "height": "0.5in",
+                "id": "dorContainer-3609936b7b",
+                "keep": {
+                    "intact": "contentArea"
+                },
+                "left": "0.5in",
+                "margin": {
+                    "bottomInset": "0.2mm",
+                    "leftInset": "0.2mm",
+                    "rightInset": "0.2mm",
+                    "topInset": "0.2mm"
+                },
+                "name": "TextField1",
+                "para": {
+                    "hAlign": "middle",
+                    "vAlign": "middle"
+                },
+                "top": "0.5in",
+                "type": "textfield",
+                "ui": {
+                    "textEdit": {
+                        "allowRichText": "1",
+                        "border": {
+                            "edges": {
+                                "bottom": {
+                                    "stroke": "lowered",
+                                    "thickness": "0.01mm"
+                                },
+                                "left": {
+                                    "stroke": "lowered",
+                                    "thickness": "0.01mm"
+                                },
+                                "right": {
+                                    "presence": "hidden",
+                                    "stroke": "lowered",
+                                    "thickness": "0.01mm"
+                                },
+                                "top": {
+                                    "stroke": "lowered",
+                                    "thickness": "0.01mm"
+                                }
+                            }
+                        },
+                        "margin": {
+                            "bottomInset": "0.1mm",
+                            "leftInset": "0.1mm",
+                            "rightInset": "0.1mm",
+                            "topInset": "0.1mm"
+                        },
+                        "multiLine": "1"
+                    }
+                },
+                "value": {
+                    "richText": {
+                        "content": "<body xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:xfa=\"http://www.xfa.org/schema/xfa-data/1.0/\"><p>Hello</p></body>",
+                        "contentType": "text/html"
+                    }
+                },
+                "width": "1.5in"
+            },
+            "dorExclusion": false
+        },
+        "fd:path": "/content/textinput/textinput-with-dorcontainer"
+    },
+    "readOnly": false,
+    "required": true,
+    "screenReaderText": "'null'",
+    "type": "string",
+    "visible": false
+}
