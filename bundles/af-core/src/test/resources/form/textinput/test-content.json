@@ -202,51 +202,5 @@
     "jcr:title" : "def",
     "placeholder": "test-placeholder",
     "fd:viewType": "some/custom/value"
-  },
-  "textinput-with-dorcontainer" : {
-    "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
-    "name" : "abc",
-    "jcr:title" : "def",
-    "fieldType": "text-input",
-    "dorBindRef": "Text1",
-    "description" : "dummy",
-    "visible" : false,
-    "readOnly": false,
-    "enabled": true,
-    "required": true,
-    "assistPriority" : "custom",
-    "dataRef" : "a.b",
-    "fd:dorContainer": {
-      "jcr:primaryType": "nt:unstructured",
-      "sling:resourceType"    : "core/fd/components/form/dorContainer/v2/dorContainer",
-      "type": "textfield",
-      "name": "TextField1",
-      "width": "1.5in",
-      "height": "0.5in",
-      "left": "0.5in",
-      "top": "0.5in",
-      "margin": "{\"topInset\":\"0.2mm\",\"bottomInset\":\"0.2mm\",\"leftInset\":\"0.2mm\",\"rightInset\":\"0.2mm\"}",
-      "border": "{\"edges\":{\"top\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"bottom\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"left\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"right\":{\"presence\":\"hidden\",\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"}},\"corners\":{\"top\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"bottom\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"left\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"right\":{\"presence\":\"hidden\",\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"}},\"fill\":{\"color\":{\"value\":\"255,102,0\"}}}",
-      "bind": "{\"ref\":\"SalesOrder.user.name\",\"match\":\"dataRef\"}",
-      "para": "{\"vAlign\":\"middle\",\"hAlign\":\"middle\"}",
-      "font": "{\"size\":\"0.3mm\",\"typeface\":\"Arial\",\"weight\":\"bold\"}",
-      "events": "[{\"name\": \"event__form_ready\", \"ref\":\"$form\", \"activity\":\"ready\", \"script\":{\"contentType\":\"application/x-javascript\",\"content\":\"var x=0;\"}}]",
-      "keep": "{\"intact\":\"contentArea\"}",
-      "assist": "{\"role\":\"TH\"}",
-      "value": "{\"richText\":{\"contentType\":\"text/html\",\"content\":\"<body xmlns=\\\"http://www.w3.org/1999/xhtml\\\" xmlns:xfa=\\\"http://www.xfa.org/schema/xfa-data/1.0/\\\"><p>Hello</p></body>\"}}",
-      "ui": "{\"textEdit\":{\"allowRichText\":\"1\",\"multiLine\":\"1\",\"margin\":{\"topInset\":\"0.1mm\",\"bottomInset\":\"0.1mm\",\"leftInset\":\"0.1mm\",\"rightInset\":\"0.1mm\"},\"border\":{\"edges\":{\"top\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"bottom\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"left\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"right\":{\"presence\":\"hidden\",\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"}}}}}",
-      "fd:caption": {
-        "jcr:primaryType": "nt:unstructured",
-        "sling:resourceType"    : "core/fd/components/form/caption/v2/caption",
-        "reserve": "10mm",
-        "placement": "right",
-        "para": "{\"vAlign\":\"middle\",\"hAlign\":\"middle\"}",
-        "value": "{\"text\": {\"content\":\"My Caption\"}}",
-        "margin": "{\"topInset\":\"0.2mm\",\"bottomInset\":\"0.2mm\",\"leftInset\":\"0.2mm\",\"rightInset\":\"0.2mm\"}",
-        "border": "{\"edges\":{\"top\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"bottom\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"left\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"right\":{\"presence\":\"hidden\",\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"}},\"corners\":{\"top\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"bottom\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"left\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"right\":{\"presence\":\"hidden\",\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"}},\"fill\":{\"color\":{\"value\":\"255,102,0\"}}}",
-        "font": "{\"size\":\"0.3mm\",\"typeface\":\"Arial\",\"weight\":\"bold\"}" 
-      }
-    }
   }
 }
