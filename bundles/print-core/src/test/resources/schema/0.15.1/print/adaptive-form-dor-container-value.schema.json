@@ -1,0 +1,159 @@
+{
+  "$id": "classpath:/schema/0.15.1/print/adaptive-form-dor-container-value.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Value",
+  "description": "Specifies the value for the object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "text": {
+      "title": "Text Value",
+      "description": "Specifies the text value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Text Content",
+          "description": "Specifies the content for the text.",
+          "type": "string"
+        }
+      }
+    },
+    "integer": {
+      "title": "Integer Value",
+      "description": "Specifies the integer value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Integer Content",
+          "description": "Specifies the content for the integer.",
+          "type": "string"
+        }
+      }
+    },
+    "float": {
+      "title": "Float Value",
+      "description": "Specifies the float value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Float Content",
+          "description": "Specifies the content for the float.",
+          "type": "string"
+        }
+      }
+    },
+    "richText": {
+      "title": "Rich Text Value",
+      "description": "Specifies the rich text value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Rich Text Content",
+          "description": "Specifies the content for the rich text.",
+          "type": "string"
+        },
+        "contentType": {
+          "title": "Rich Text Content Type",
+          "description": "Specifies the content type for the rich text.",
+          "type": "string"
+        }
+      }
+    },
+    "line": {
+      "title": "Line Value",
+      "description": "Specifies the line value for the object.",
+      "type": "object",
+      "properties": {
+        "slope": {
+          "title": "Line Slope",
+          "description": "Specifies the slope for the line.",
+          "type": "string"
+        },
+        "edge": {
+          "title": "Line Edge",
+          "description": "Specifies the edge for the line.",
+          "type": "object",
+          "properties": {
+            "presence": {
+              "title": "Line Edge Presence",
+              "description": "Specifies the presence attribute for the line edge.",
+              "type": "string"
+            },
+            "stroke": {
+              "title": "Line Edge Stroke",
+              "description": "Specifies the stroke attribute for the line edge.",
+              "type": "string"
+            },
+            "thickness": {
+              "title": "Line Edge Thickness",
+              "description": "Specifies the thickness attribute for the line edge.",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "rectangle": {
+      "title": "Rectangle Value",
+      "description": "Specifies the rectangle value for the object.",
+      "type": "object",
+      "properties": {
+        "edges": {
+          "$ref": "./adaptive-form-dor-container-edges.schema.json"
+        },
+        "corners": {
+          "$ref": "./adaptive-form-dor-container-corners.schema.json"
+        },
+        "fill": {
+          "$ref": "./adaptive-form-dor-container-fill.schema.json"
+        }
+      }
+    },
+    "image": {
+      "title": "Image Value",
+      "description": "Specifies the image value for the object.",
+      "type": "object",
+      "properties": {
+        "href": {
+          "title": "Image Href",
+          "description": "Specifies the href for the image.",
+          "type": "string"
+        },
+        "content": {
+          "title": "Image Content",
+          "description": "Specifies the content for the image.",
+          "type": "string"
+        },
+        "contentType": {
+          "title": "Image Content Type",
+          "description": "Specifies the content type for the image.",
+          "type": "string"
+        }
+      }
+    },
+    "date": {
+      "title": "Date Value",
+      "description": "Specifies the date value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Date Content",
+          "description": "Specifies the content for the date.",
+          "type": "string"
+        }
+      }
+    },
+    "dateTime": {
+      "title": "Date Time Value",
+      "description": "Specifies the date time value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Date Time Content",
+          "description": "Specifies the content for the date time.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
