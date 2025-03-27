@@ -1,0 +1,16 @@
+{
+  "medium": {
+    "name" : "mediumabc",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/medium/v1/medium",
+    "fieldType" : "medium",
+    "fd:dorContainer": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/dorContainer/v1/dorContainer",
+      "type": "medium",
+      "stock": "default",
+      "short": "210mm",
+      "long": "297mm"
+    }
+  }
+}
