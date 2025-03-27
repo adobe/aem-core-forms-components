@@ -1,243 +1,60 @@
 {
-  "id": "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-  "fieldType": "form",
-  "lang": "en",
-  "properties": {
-    "customProp": "customPropValue",
-    "fd:dor": {
-      "dorType": "generate",
-      "dorTemplateRef": "xyz",
-      "pageTemplate": {
-        "id": "pageTemplate-ce4dfcf6e9",
-        "config": "<config xmlns=\"http://www.xfa.org/schema/xci/3.0/\"> <agent name=\"designer\">    <!--  [0..n]  -->    <destination>pcl</destination>    <pdf>       <!--  [0..n]  -->       <fontInfo></fontInfo>    </pdf> </agent> <present>    <!--  [0..n]  -->    <pdf>       <!--  [0..n]  -->       <fontInfo>          <embed>0</embed>       </fontInfo>       <tagged>0</tagged>       <version>1.7</version>       <adobeExtensionLevel>11</adobeExtensionLevel>    </pdf>    <xdp>       <packets>*</packets>    </xdp> </present></config>",
-        "localeSet": "<localeSet xmlns=\"http://www.xfa.org/schema/xfa-locale-set/2.7/\"> <locale name=\"en_US\" desc=\"English (United States)\">    <calendarSymbols name=\"gregorian\">       <monthNames>          <month>Januar</month>          <month>February</month>          <month>March</month>          <month>April</month>          <month>May</month>          <month>June</month>          <month>July</month>          <month>August</month>          <month>September</month>          <month>October</month>          <month>November</month>          <month>December</month>       </monthNames>       <monthNames abbr=\"1\">          <month>Jan</month>          <month>Feb</month>          <month>Mar</month>          <month>Apr</month>          <month>May</month>          <month>Jun</month>          <month>Jul</month>          <month>Aug</month>          <month>Sep</month>          <month>Oct</month>          <month>Nov</month>          <month>Dec</month>       </monthNames>       <dayNames>          <day>Sunday</day>          <day>Monday</day>          <day>Tuesday</day>          <day>Wednesday</day>          <day>Thursday</day>          <day>Friday</day>          <day>Saturday</day>       </dayNames>       <dayNames abbr=\"1\">          <day>Sun</day>          <day>Mon</day>          <day>Tue</day>          <day>Wed</day>          <day>Thu</day>          <day>Fri</day>          <day>Sat</day>       </dayNames>       <meridiemNames>          <meridiem>AM</meridiem>          <meridiem>PM</meridiem>       </meridiemNames>       <eraNames>          <era>BC</era>          <era>AD</era>       </eraNames>    </calendarSymbols>    <datePatterns>       <datePattern name=\"full\">EEEE, MMMM D, YYYY</datePattern>       <datePattern name=\"long\">MMMM D, YYYY</datePattern>       <datePattern name=\"med\">MMM D, YYYY</datePattern>       <datePattern name=\"short\">M/D/YY</datePattern>    </datePatterns>    <timePatterns>       <timePattern name=\"full\">h:MM:SS A Z</timePattern>       <timePattern name=\"long\">h:MM:SS A Z</timePattern>       <timePattern name=\"med\">h:MM:SS A</timePattern>       <timePattern name=\"short\">h:MM A</timePattern>    </timePatterns>    <dateTimeSymbols>GyMdkHmsSEDFwWahKzZ</dateTimeSymbols>    <numberPatterns>       <numberPattern name=\"numeric\">z,zz9.zzz</numberPattern>       <numberPattern name=\"currency\">$z,zz9.99|($z,zz9.99)</numberPattern>       <numberPattern name=\"percent\">z,zz9%</numberPattern>    </numberPatterns>    <numberSymbols>       <numberSymbol name=\"decimal\">.</numberSymbol>       <numberSymbol name=\"grouping\">,</numberSymbol>       <numberSymbol name=\"percent\">%</numberSymbol>       <numberSymbol name=\"minus\">-</numberSymbol>       <numberSymbol name=\"zero\">0</numberSymbol>    </numberSymbols>    <currencySymbols>       <currencySymbol name=\"symbol\">$</currencySymbol>       <currencySymbol name=\"isoname\">USD</currencySymbol>       <currencySymbol name=\"decimal\">.</currencySymbol>    </currencySymbols>    <typefaces>       <typeface name=\"Myriad Pro\"></typeface>       <typeface name=\"Minion Pro\"></typeface>       <typeface name=\"Courier Std\"></typeface>       <typeface name=\"Adobe Pi Std\"></typeface>       <typeface name=\"Adobe Hebrew\"></typeface>       <typeface name=\"Adobe Arabic\"></typeface>       <typeface name=\"Adobe Thai\"></typeface>       <typeface name=\"Kozuka Gothic Pro-VI M\"></typeface>       <typeface name=\"Kozuka Mincho Pro-VI R\"></typeface>       <typeface name=\"Adobe Ming Std L\"></typeface>       <typeface name=\"Adobe Song Std L\"></typeface>       <typeface name=\"Adobe Myungjo Std M\"></typeface>       <typeface name=\"Adobe Devanagari\"></typeface>    </typefaces> </locale></localeSet>",
-        "xmpMetaData": "<x:xmpmeta xmlns:x=\"adobe:ns:metaF/\" x:xmptk=\"Adobe XMP Core 9.0-c000 79.cca54b0, 2022/11/26-09:29:55        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">    <rdf:Description xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:pdfuaid=\"http://www.aiim.org/pdfua/ns/id/\" xmlns:pdf=\"http://ns.adobe.com/pdf/1.3/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:desc=\"http://ns.adobe.com/xfa/promoted-desc/\" rdf:about=\"\">       <xmp:MetadataDate>2024-05-20T09:32:29Z</xmp:MetadataDate>       <xmp:CreatorTool>Delrina 2025.01</xmp:CreatorTool>       <pdfuaid:part>1</pdfuaid:part>       <pdf:Producer>Designer 2023.07</pdf:Producer>       <xmpMM:DocumentID>uuid:36f0018a-338d-4185-9f48-13eb5d7236fb</xmpMM:DocumentID>       <desc:version rdf:parseType=\"Resource\">          <rdf:value>2023.07.17.1.</rdf:value>          <desc:ref>/template/subform[1]</desc:ref>       </desc:version>    </rdf:Description> </rdf:RDF></x:xmpmeta>",
-        "datasets": {
-          "dataDescriptions": "<dd:dataDescription xmlns:dd=\"http://ns.adobe.com/data-description/\" dd:name=\"SalesOrder\"><SalesOrder><dd:group dd:model=\"choice\" dd:minOccur=\"0\" dd:maxOccur=\"-1\"><user><name/><contactNumber/></user></dd:group></SalesOrder></dd:dataDescription>"
-        },
-        "connectionSet": "<connectionSet xmlns=\"http://www.xfa.org/schema/xfa-connection-set/2.8/\"><xsdConnection name=\"DataConnection\" dataDescription=\"SalesOrder\"><uri>.\\WKND_Schema.xsd</uri><rootElement>SalesOrder</rootElement></xsdConnection></connectionSet>",
-        "template": {
-          "id": "template-504bdb32e3",
-          "fieldType": "template",
-          "name": "mytemplate",
-          "type": "string",
-          "label": {
-            "value": ""
-          },
-          "properties": {
-            "fd:dor": {
-              "dorExclusion": false
-            },
-            "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/fd:pagetemplate/template"
-          },
-          "events": {
-            "custom:setProperty": [
-              "$event.payload"
-            ]
-          },
-          ":itemsOrder": [
-            "panel"
-          ],
-          ":items": {
-            "panel": {
-              "id": "panel-72b9cb0b98",
-              "fieldType": "panel",
-              "name": "abc",
-              "label": {
-                "value": "dependent names"
-              },
-              "properties": {
-                "fd:dor": {
-                  "dorExclusion": false,
-                  "dorExcludeTitle": false,
-                  "dorExcludeDescription": false
-                },
-                "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/fd:pagetemplate/template/panel"
-              },
-              "events": {
-                "custom:setProperty": [
-                  "$event.payload"
-                ]
-              },
-              ":itemsOrder": [
-                "pageset"
-              ],
-              ":items": {
-                "pageset": {
-                  "id": "pageset-61d971f5b6",
-                  "fieldType": "pageset",
-                  "name": "pagesetabc",
-                  "type": "string",
-                  "label": {
-                    "value": ""
-                  },
-                  "properties": {
-                    "fd:dor": {
-                      "dorExclusion": false
-                    },
-                    "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/fd:pagetemplate/template/panel/pageset"
-                  },
-                  "events": {
-                    "custom:setProperty": [
-                      "$event.payload"
-                    ]
-                  },
-                  ":itemsOrder": [
-                    "pagearea"
-                  ],
-                  ":items": {
-                    "pagearea": {
-                      "id": "pagearea-7be2a49225",
-                      "fieldType": "pagearea",
-                      "name": "pageareaabc",
-                      "type": "string",
-                      "label": {
-                        "value": ""
-                      },
-                      "properties": {
-                        "fd:dor": {
-                          "dorExclusion": false
-                        },
-                        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/fd:pagetemplate/template/panel/pageset/pagearea"
-                      },
-                      "events": {
-                        "custom:setProperty": [
-                          "$event.payload"
-                        ]
-                      },
-                      ":itemsOrder": [
-                        "medium",
-                        "contentarea",
-                        "textinput"
-                      ],
-                      ":items": {
-                        "medium": {
-                          "id": "medium-02b38c5493",
-                          "fieldType": "medium",
-                          "name": "mediumabc",
-                          "properties": {
-                            "fd:dor": {
-                              "dorExclusion": false
-                            },
-                            "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/fd:pagetemplate/template/panel/pageset/pagearea/medium"
-                          },
-                          "events": {
-                            "custom:setProperty": [
-                              "$event.payload"
-                            ]
-                          },
-                          ":type": "core/fd/components/form/medium/v1/medium"
-                        },
-                        "contentarea": {
-                          "id": "contentarea-b5b03639d2",
-                          "fieldType": "contentarea",
-                          "name": "contentareaabc",
-                          "properties": {
-                            "fd:dor": {
-                              "dorExclusion": false
-                            },
-                            "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/fd:pagetemplate/template/panel/pageset/pagearea/contentarea"
-                          },
-                          "events": {
-                            "custom:setProperty": [
-                              "$event.payload"
-                            ]
-                          },
-                          ":type": "core/fd/components/form/contentarea/v1/contentarea"
-                        },
-                        "textinput": {
-                          "id": "textinput-44d5083e06",
-                          "fieldType": "text-input",
-                          "name": "abc",
-                          "type": "string",
-                          "label": {
-                            "value": "def"
-                          },
-                          "properties": {
-                            "fd:dor": {
-                              "dorExclusion": false
-                            },
-                            "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/fd:pagetemplate/template/panel/pageset/pagearea/textinput"
-                          },
-                          "events": {
-                            "custom:setProperty": [
-                              "$event.payload"
-                            ]
-                          },
-                          ":type": "core/fd/components/form/textinput/v1/textinput"
-                        }
-                      },
-                      ":type": "core/fd/components/form/pagearea/v1/pagearea"
-                    }
-                  },
-                  ":type": "core/fd/components/form/pageset/v1/pageset"
-                }
-              },
-              ":type": "core/fd/components/form/panel/v1/panel"
-            }
-          },
-          ":type": "core/fd/components/form/template/v1/template"
-        },
-        ":type": "core/fd/components/form/pageTemplate/v2/pageTemplate"
-      }
+    "id": "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+    "fieldType": "form",
+    "lang": "en",
+    "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+    "properties": {
+      "fd:dor": {
+        "dorType": "generate",
+        "dorTemplateRef": "xyz"
+      },
+      "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
+      "fd:isHamburgerMenuEnabled": false,
+      "fd:schemaType": "BASIC",
+      "fd:formDataEnabled": true,
+      "customProp": "customPropValue",
+      "fd:roleAttribute":"test-role-attribute",
+      "fd:customFunctionsUrl": "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+      "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="
     },
-    "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
-    "fd:schemaType": "BASIC",
-    "fd:isHamburgerMenuEnabled": false,
-    "fd:roleAttribute": "test-role-attribute",
-    "fd:formDataEnabled": true,
-    "fd:customFunctionsUrl": "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-    "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="
-  },
-  "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  ":itemsOrder": [
-    "textinput"
-  ],
-  "adaptiveform": "0.15.2",
-  "metadata": {
-    "version": "1.0.0",
-    "grammar": "json-formula-1.0.0"
-  },
-  "adaptiveform": "0.15.1",
-  ":items": {
-    "textinput": {
-      "id": "textinput-9a52c5fa93",
-      "fieldType": "text-input",
-      "name": "abc",
-      "visible": false,
-      "description": "dummy",
-      "type": "string",
-      "label": {
-        "value": "def",
-        "visible": true
-      },
-      "properties": {
-        "fd:dor": {
-          "dorExclusion": false,
-          "dorContainer": {
-            "id": "dorContainer-a05e66f2fa",
-            "type": "textfield",
-            "name": "TextField1",
-            "width": "1.5in",
-            "height": "0.5in",
-            "left": "0.5in",
-            "top": "0.5in",
-            ":type": "core/fd/components/form/dorContainer/v2/dorContainer"
-          }
+    "events": {
+      "custom:setProperty": [
+        "$event.payload"
+      ]
+    },
+    ":itemsOrder": [
+      "textinput"
+    ],
+    "adaptiveform": "0.15.1",
+    "metadata": {
+      "version": "1.0.0",
+      "grammar": "json-formula-1.0.0"
+    },
+    ":type": "core/fd/components/form/container/v2/container",
+    ":items": {
+      "textinput": {
+        "id": "textinput-9a52c5fa93",
+        "fieldType": "text-input",
+        "name": "abc",
+        "visible": false,
+        "description": "dummy",
+        "type": "string",
+        "label": {
+          "visible": true,
+          "value": "def"
         },
-        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/textinput"
-      },
-      "events": {
-        "custom:setProperty": [
-          "$event.payload"
-        ]
-      },
-      ":type": "core/fd/components/form/textinput/v1/textinput"
+        "events": {
+          "custom:setProperty": [
+            "$event.payload"
+          ]
+        },
+        "properties": {
+          "fd:dor": {
+            "dorExclusion": false
+          },
+          "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/textinput"
+        },
+        ":type": "core/fd/components/form/textinput/v1/textinput"
+      }
     }
   }
-}

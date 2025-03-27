@@ -1,0 +1,105 @@
+{
+  "$id": "classpath:/schema/0.15.1/print/adaptive-form-page-template-properties.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "unique identifier for a form element"
+    },
+    ":type": {
+      "type": "string",
+      "title": "A hint to the rendering engine for rendering custom components."
+    },
+    "config": {
+      "title": "Config for the template",
+      "type": "string",
+      "description": "Contains the xci config"
+    },
+    "connectionSet": {
+      "title": "Data Connection Set",
+      "type": "string",
+      "description": "Contains the data connection details"
+    },
+    "datasets": {
+      "title": "Data Sets for the template",
+      "type": "object",
+      "description": "Contains the data sets",
+      "properties": {
+        "dataDescriptions": {
+          "title": "Data Descriptions",
+          "type": "string",
+          "description": "Contains the data schema"
+        }
+      }
+    },
+    "localeSet": {
+      "title": "Locale Set for the template",
+      "type": "string",
+      "description": "Contains the details about the locales"
+    },
+    "xmpMetaData": {
+      "title": "XMP Metadata",
+      "type": "string",
+      "description": "Contains the details about XMP metadata for the output"
+    },
+    "template": {
+      "title": "Template Details",
+      "type": "object",
+      "description": "Contains the template details",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "unique identifier for a form element"
+        },
+        "items": {
+          "$ref": "../adaptive-form.schema.json#/$defs/Items"
+        },
+        ":items": {
+          "$ref": "../adaptive-form.schema.json#/$defs/ColonItems"
+        },
+        ":itemsOrder": {
+          "$ref": "../adaptive-form.schema.json#/$defs/ColonItemsOrder"
+        },
+        ":type": {
+          "type": "string",
+          "title": "A hint to the rendering engine for rendering custom components."
+        },
+        "events": {
+          "$ref": "../adaptive-form-events.schema.json"
+        },
+        "fieldType": {
+          "title": "Type of widget to show to the user for capturing the data",
+          "description": "It must be template",
+          "enum": [
+            "template"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "title": "Name of the element. It is also the key in the JSON data, if dataRef is not defined explicitly, that the form produces. If two fields/panels under a same panel have the same name, their values will be same"
+        },
+        "label": {
+          "$ref": "../adaptive-form-label.schema.json"
+        },
+        "properties": {
+          "title": "An object containing custom properties that can be modified via rules as well.",
+          "type": "object",
+          "properties": {
+            "fd:dor": {
+              "$ref": "../adaptive-form-dor-properties.schema.json"
+            }
+          },
+          "additionalProperties": true
+        },
+        "type": {
+          "type": [
+            "string"
+          ],
+          "title": "Type of the form element"
+        }
+      }
+    }
+  }
+}
