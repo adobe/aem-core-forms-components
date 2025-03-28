@@ -13,6 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+<<<<<<< HEAD
 <<<<<<<< HEAD:bundles/af-core/src/main/java/com/adobe/cq/forms/core/components/models/form/ChannelType.java
 package com.adobe.cq.forms.core.components.models.form;
 
@@ -30,16 +31,60 @@ public enum ChannelType {
     private String value;
 
     ChannelType(String value) {
+=======
+package com.adobe.cq.forms.core.components.models.form.print;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
+public enum XfaElementType {
+    PAGESET("pageset"),
+    PAGEAREA("pagearea"),
+    CONTENTAREA("contentarea"),
+    MEDIUM("medium"),
+    SUBFORM(
+        "subform"),
+    PANEL("panel"),
+    TEXTFIELD("textfield"),
+    CHECKBUTTON("checkbutton"),
+    BUTTON(
+        "button"),
+    DATEFIELD("datefield"),
+    DATETIMEFIELD("datetimefield"),
+    NUMERICFIELD(
+        "numericfield"),
+    RADIOBUTTON("radiobutton"),
+    TEXTBOX("textbox"),
+    IMAGE(
+        "image"),
+    IMAGEFIELD("imagefield"),
+    EXCLUSIONGROUP(
+        "exclusiongroup"),
+    BARCODE("barcode"),
+    LINE("line"),
+    RECTANGLE("rectangle"),
+    PROTO("proto");
+
+    private String value;
+
+    XfaElementType(String value) {
+>>>>>>> daf496488 (feat(print-properties): RTC - Adding UTs for print specific interfaces)
         this.value = value;
     }
 
     /**
+<<<<<<< HEAD
      * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
      * representation. If no representation is found, {@link #TEXT_INPUT} will be returned.
+=======
+     * Given a {@link String} <code>value</code>, this method returns the enum's value that
+     * corresponds to the provided string representation. If no representation is found,
+     * {@link #TEXT_INPUT} will be returned.
+>>>>>>> daf496488 (feat(print-properties): RTC - Adding UTs for print specific interfaces)
      *
      * @param value the string representation for which an enum value should be returned
      * @return the corresponding enum value, if one was found, or {@link #TEXT_INPUT}
      */
+<<<<<<< HEAD
     public static ChannelType fromString(String value) {
         for (ChannelType type : ChannelType.values()) {
             if (StringUtils.equals(value, type.value)) {
@@ -47,6 +92,15 @@ public enum ChannelType {
             }
         }
         return WEB;
+=======
+    public static XfaElementType fromString(String value) {
+        for (XfaElementType type : XfaElementType.values()) {
+            if (value.equals(type.value)) {
+                return type;
+            }
+        }
+        return SUBFORM;
+>>>>>>> daf496488 (feat(print-properties): RTC - Adding UTs for print specific interfaces)
     }
 
     /**
