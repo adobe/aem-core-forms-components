@@ -18,7 +18,11 @@
       "margin": "{\"topInset\":\"0.2mm\",\"bottomInset\":\"0.2mm\",\"leftInset\":\"0.2mm\",\"rightInset\":\"0.2mm\"}",
       "border": "{\"edges\":{\"top\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"bottom\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"left\":{\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"},\"right\":{\"presence\":\"hidden\",\"stroke\":\"lowered\",\"thickness\":\"0.01mm\"}},\"corners\":{\"top\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"bottom\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"left\":{\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"},\"right\":{\"presence\":\"hidden\",\"inverted\":\"1\",\"radius\":\"0.02mm\",\"thickness\":\"0.01mm\"}},\"fill\":{\"color\":{\"value\":\"255,102,0\"}}}",
       "bind": "{\"match\":\"none\"}",
-      "variables": "{\"scripts\":[{\"contentType\":\"application/x-javascript\",\"content\":\"this.rawValue = hello\"}]}"
+      "variables": "{\"scripts\":[{\"contentType\":\"application/x-javascript\",\"content\":\"this.rawValue = hello\"}]}",
+      "breakBefore": "{\"target\":\"Page1\",\"targetType\":\"page\",\"startNew\":\"1\"}",
+      "breakAfter": "{\"target\":\"Page1\",\"targetType\":\"page\",\"startNew\":\"1\"}",
+      "traversal": "{\"traverse\":\"none\"}",
+      "desc": "{\"text\":{\"content\":\"This is a description\"}}"
     },
     "textinput" : {
       "jcr:primaryType": "nt:unstructured",
