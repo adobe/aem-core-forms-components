@@ -22,8 +22,8 @@ import org.apache.sling.models.annotations.Model;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.models.form.Barcode;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.print.Barcode;
 import com.adobe.cq.forms.core.components.print.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 
