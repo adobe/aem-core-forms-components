@@ -13,9 +13,33 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.models.form;
+package com.adobe.cq.forms.core.components.models.form.print;
 
-import org.osgi.annotation.versioning.ConsumerType;
+import org.jetbrains.annotations.Nullable;
 
-@ConsumerType
-public interface Barcode extends FormComponent {}
+public interface Script {
+    @Nullable
+    default String getName() {
+        return "";
+    }
+
+    @Nullable
+    default String getRunAt() {
+        return "";
+    }
+
+    @Nullable
+    default String getUseHref() {
+        return "";
+    }
+
+    @Nullable
+    default String getContentType() {
+        return "";
+    }
+
+    @Nullable
+    default String getContent() {
+        return "";
+    }
+}
