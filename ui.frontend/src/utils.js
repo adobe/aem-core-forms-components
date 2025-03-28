@@ -343,6 +343,7 @@ class Utils {
         }
     }
 
+    
     /**
      * For backward compatibility with older data formats of prefill services like FDM.
      * @param {object} prefillJson - The prefill JSON object.
