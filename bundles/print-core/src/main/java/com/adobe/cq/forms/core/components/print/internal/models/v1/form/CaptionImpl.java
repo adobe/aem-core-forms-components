@@ -27,18 +27,18 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.models.form.Caption;
-import com.adobe.cq.forms.core.components.models.form.xfa.Border;
-import com.adobe.cq.forms.core.components.models.form.xfa.Font;
-import com.adobe.cq.forms.core.components.models.form.xfa.Margin;
-import com.adobe.cq.forms.core.components.models.form.xfa.Para;
-import com.adobe.cq.forms.core.components.models.form.xfa.Value;
+import com.adobe.cq.forms.core.components.models.form.print.Border;
+import com.adobe.cq.forms.core.components.models.form.print.Caption;
+import com.adobe.cq.forms.core.components.models.form.print.Font;
+import com.adobe.cq.forms.core.components.models.form.print.Margin;
+import com.adobe.cq.forms.core.components.models.form.print.Para;
+import com.adobe.cq.forms.core.components.models.form.print.Value;
 import com.adobe.cq.forms.core.components.print.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.print.internal.models.v1.form.xfa.BorderImpl;
-import com.adobe.cq.forms.core.components.print.internal.models.v1.form.xfa.FontImpl;
-import com.adobe.cq.forms.core.components.print.internal.models.v1.form.xfa.MarginImpl;
-import com.adobe.cq.forms.core.components.print.internal.models.v1.form.xfa.ParaImpl;
-import com.adobe.cq.forms.core.components.print.internal.models.v1.form.xfa.ValueImpl;
+import com.adobe.cq.forms.core.components.print.internal.models.v1.form.print.BorderImpl;
+import com.adobe.cq.forms.core.components.print.internal.models.v1.form.print.FontImpl;
+import com.adobe.cq.forms.core.components.print.internal.models.v1.form.print.MarginImpl;
+import com.adobe.cq.forms.core.components.print.internal.models.v1.form.print.ParaImpl;
+import com.adobe.cq.forms.core.components.print.internal.models.v1.form.print.ValueImpl;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 
 @Model(
