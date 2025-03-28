@@ -13,9 +13,29 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.models.form;
+package com.adobe.cq.forms.core.components.models.form.print;
 
-import org.osgi.annotation.versioning.ConsumerType;
+import org.jetbrains.annotations.Nullable;
 
-@ConsumerType
-public interface Rectangle extends FormComponent {}
+public interface Border {
+
+    @Nullable
+    default String getPresence() {
+        return "";
+    }
+
+    @Nullable
+    default Edges getEdges() {
+        return null;
+    }
+
+    @Nullable
+    default Corners getCorners() {
+        return null;
+    }
+
+    @Nullable
+    default Fill getFill() {
+        return null;
+    }
+}
