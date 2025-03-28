@@ -13,9 +13,29 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.models.form;
+package com.adobe.cq.forms.core.components.models.form.print;
 
-import org.osgi.annotation.versioning.ConsumerType;
+import org.jetbrains.annotations.Nullable;
 
-@ConsumerType
-public interface Line extends FormComponent {}
+public interface Edges {
+
+    @Nullable
+    default Edge getTop() {
+        return null;
+    }
+
+    @Nullable
+    default Edge getBottom() {
+        return null;
+    }
+
+    @Nullable
+    default Edge getLeft() {
+        return null;
+    }
+
+    @Nullable
+    default Edge getRight() {
+        return null;
+    }
+}
