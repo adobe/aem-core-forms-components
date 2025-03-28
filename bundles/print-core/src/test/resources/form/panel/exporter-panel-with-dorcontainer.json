@@ -1,0 +1,138 @@
+{
+    ":items": {
+        "textinput": {
+            ":type": "core/fd/components/form/textinput/v1/textinput",
+            "events": {
+                "custom:setProperty": [
+                    "$event.payload"
+                ]
+            },
+            "fieldType": "text-input",
+            "id": "textinput-02aef8f103",
+            "label": {
+                "value": "def"
+            },
+            "name": "abc",
+            "properties": {
+                "fd:dor": {
+                    "dorExclusion": false
+                },
+                "fd:path": "/content/panel/panel-with-dorcontainer/textinput"
+            },
+            "type": "string"
+        }
+    },
+    ":itemsOrder": [
+        "textinput"
+    ],
+    ":type": "core/fd/components/form/panel/v1/panel",
+    "events": {
+        "custom:setProperty": [
+            "$event.payload"
+        ]
+    },
+    "fieldType": "panel",
+    "id": "panel-fd68518925",
+    "label": {
+        "value": "dependent names"
+    },
+    "name": "abc",
+    "properties": {
+        "customProp": "customPropValue",
+        "fd:dor": {
+            "dorContainer": {
+                ":type": "core/fd/components/form/dorContainer/v1/dorContainer",
+                "bind": {
+                    "match": "none"
+                },
+                "border": {
+                    "corners": {
+                        "bottom": {
+                            "inverted": "1",
+                            "radius": "0.02mm",
+                            "thickness": "0.01mm"
+                        },
+                        "left": {
+                            "inverted": "1",
+                            "radius": "0.02mm",
+                            "thickness": "0.01mm"
+                        },
+                        "right": {
+                            "inverted": "1",
+                            "presence": "hidden",
+                            "radius": "0.02mm",
+                            "thickness": "0.01mm"
+                        },
+                        "top": {
+                            "inverted": "1",
+                            "radius": "0.02mm",
+                            "thickness": "0.01mm"
+                        }
+                    },
+                    "edges": {
+                        "bottom": {
+                            "stroke": "lowered",
+                            "thickness": "0.01mm"
+                        },
+                        "left": {
+                            "stroke": "lowered",
+                            "thickness": "0.01mm"
+                        },
+                        "right": {
+                            "presence": "hidden",
+                            "stroke": "lowered",
+                            "thickness": "0.01mm"
+                        },
+                        "top": {
+                            "stroke": "lowered",
+                            "thickness": "0.01mm"
+                        }
+                    },
+                    "fill": {
+                        "color": {
+                            "value": "255,102,0"
+                        }
+                    }
+                },
+                "breakAfter": {
+                    "startNew": "1",
+                    "target": "Page1",
+                    "targetType": "page"
+                },
+                "breakBefore": {
+                    "startNew": "1",
+                    "target": "Page1",
+                    "targetType": "page"
+                },
+                "height": "0.5in",
+                "id": "dorContainer-31433e3dcc",
+                "left": "0.5in",
+                "margin": {
+                    "bottomInset": "0.2mm",
+                    "leftInset": "0.2mm",
+                    "rightInset": "0.2mm",
+                    "topInset": "0.2mm"
+                },
+                "name": "Subform1",
+                "top": "0.5in",
+                "traversal": {
+                    "traverse": "none"
+                },
+                "type": "subform",
+                "variables": {
+                    "scripts": [
+                        {
+                            "content": "this.rawValue = hello",
+                            "contentType": "application/x-javascript"
+                        }
+                    ]
+                },
+                "width": "1.5in"
+            },
+            "dorExcludeDescription": false,
+            "dorExcludeTitle": false,
+            "dorExclusion": false
+        },
+        "fd:path": "/content/panel/panel-with-dorcontainer"
+    }
+}
