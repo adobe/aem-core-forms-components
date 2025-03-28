@@ -28,10 +28,10 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
-import com.adobe.cq.forms.core.components.models.form.PageTemplate;
-import com.adobe.cq.forms.core.components.models.form.Template;
-import com.adobe.cq.forms.core.components.models.form.xfa.DataSets;
-import com.adobe.cq.forms.core.components.print.internal.models.v1.form.xfa.DataSetsImpl;
+import com.adobe.cq.forms.core.components.models.form.print.DataSets;
+import com.adobe.cq.forms.core.components.models.form.print.PageTemplate;
+import com.adobe.cq.forms.core.components.models.form.print.Template;
+import com.adobe.cq.forms.core.components.print.internal.models.v1.form.print.DataSetsImpl;
 import com.adobe.cq.forms.core.components.util.AbstractComponentImpl;
 
 @Model(
