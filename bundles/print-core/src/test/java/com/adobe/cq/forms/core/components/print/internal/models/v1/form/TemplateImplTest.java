@@ -33,7 +33,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
-import com.adobe.cq.forms.core.components.models.form.Template;
+import com.adobe.cq.forms.core.components.models.form.print.Template;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
