@@ -294,6 +294,7 @@ class Utils {
      */
     static async registerCustomFunctionsV2(formJson) {
         let funcConfig;
+        let customFunctions = [];
         const customFunctionsUrl = formJson.properties['fd:customFunctionsUrl'];
         if (customFunctionsUrl) {
             funcConfig = await HTTPAPILayer.getJson(customFunctionsUrl);
@@ -303,18 +304,18 @@ class Utils {
         console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
         
         if (funcConfig && funcConfig.clientSideParsingEnabled) {
-            this.registerCustomFunctionsV3(formJson);
-        } else {
-            if (funcConfig && funcConfig.customFunction) {
-                const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
-                    if (window[func.id]) {
-                    accumulator[func.id] = window[func.id];
-                }
-                return accumulator;
-                }, {});
-                FunctionRuntime.registerFunctions(funcObj);
-            }
+            customFunctions = this.extractFunctionNames(formJson);
+        } else if (funcConfig && funcConfig.customFunction) {
+            customFunctions = funcConfig.customFunction;
         }
+
+        const funcObj = customFunctions.reduce((accumulator, func) => {
+            if (window[func.id] && typeof window[func.id] === 'function') {
+                accumulator[func.id] = window[func.id];
+            }
+            return accumulator;
+        }, {});
+        FunctionRuntime.registerFunctions(funcObj);
     }
 
     /**
@@ -390,77 +391,70 @@ class Utils {
         }
     }
 
+    
     /**
-     * Registers custom functions from form json.
+     * Extract custom functions from form json and return them in the required format.
      * @param {object} formJson - The Sling model exporter representation of the form
+     * @returns {Array<{id: string}>} - Array of objects with function names as ids
      */
-    static async registerCustomFunctionsV3(formJson) {
-        // Extract custom function names from form events
-        const extractFunctionNames = (formJson) => {
-            const functionNames = new Set();
+    static extractFunctionNames = (formJson) => {
+        const functionNames = new Set();
+        const exclusionList = ['dispatchEvent'];
+        
+        // Helper function to extract function names from event strings
+        const extractFromEventString = (eventString) => {
+            // Match patterns like functionName() with optional parameters
+            const functionPattern = /(\w+)\s*\(/g;
+            let match;
             
-            // Helper function to extract function names from event strings
-            const extractFromEventString = (eventString) => {
-                // Match patterns like functionName() with optional parameters
-                const functionPattern = /(\w+)\s*\(/g;
-                let match;
-                
-                while ((match = functionPattern.exec(eventString)) !== null) {
-                    // Add the function name to our set
+            while ((match = functionPattern.exec(eventString)) !== null) {
+                // Add the function name to our set
+                if (!exclusionList.includes(match[1])) {
                     functionNames.add(match[1]);
                 }
-            };
-            
-            // Process events at the form level
-            if (formJson.events) {
-                Object.values(formJson.events).forEach(eventArray => {
-                    eventArray.forEach(eventString => {
-                        extractFromEventString(eventString);
-                    });
-                });
             }
-            
-            // Recursively process events in form items
-            const processItems = (items) => {
-                if (!items) return;
-                
-                Object.values(items).forEach(item => {
-                    if (item.events) {
-                        Object.values(item.events).forEach(eventArray => {
-                            eventArray.forEach(eventString => {
-                                extractFromEventString(eventString);
-                            });
-                        });
-                    }
-                    
-                    // Process nested items if they exist
-                    if (item[':items']) {
-                        processItems(item[':items']);
-                    }
-                });
-            };
-            
-            if (formJson[':items']) {
-                processItems(formJson[':items']);
-            }
-            
-            return Array.from(functionNames);
         };
         
-        // Get function names from form JSON before fetching config
-        const customFunctionNames = extractFunctionNames(formJson);
-        console.debug("Extracted custom function names from form JSON:", customFunctionNames);
-        
-        if (customFunctionNames.length > 0) {
-            const funcObj = customFunctionNames.reduce((accumulator, funcName) => {
-                if (window[funcName]) {
-                    accumulator[funcName] = window[funcName];
-                }
-                return accumulator;
-            }, {});
-            FunctionRuntime.registerFunctions(funcObj);
+        // Process events at the form level
+        if (formJson.events) {
+            Object.values(formJson.events).forEach(eventArray => {
+                eventArray.forEach(eventString => {
+                    extractFromEventString(eventString);
+                });
+            });
         }
-    }
+        
+        // Recursively process events in form items
+        const processItems = (items) => {
+            if (!items) return;
+            
+            Object.values(items).forEach(item => {
+                if (item.events) {
+                    Object.values(item.events).forEach(eventArray => {
+                        eventArray.forEach(eventString => {
+                            extractFromEventString(eventString);
+                        });
+                    });
+                }
+                
+                // Process nested items if they exist
+                if (item[':items']) {
+                    processItems(item[':items']);
+                }
+            });
+        };
+        
+        if (formJson[':items']) {
+            processItems(formJson[':items']);
+        }
+
+        console.debug("Extracted custom function names from form JSON:", functionNames);
+
+        // Convert the array of function names to the required format
+        return Array.from(functionNames).map(functionName => ({
+            id: functionName
+        }));
+    };
 
     static async registerCustomFunctionsByUrl(url) {
         try {
