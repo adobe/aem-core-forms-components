@@ -83,7 +83,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String DOR_TYPE = "dorType";
     private static final String DOR_TEMPLATE_REF = "dorTemplateRef";
     private static final String DOR_TEMPLATE_TYPE = "dorTemplateType";
-    private static final String DOR_PAGE_TEMPLATE = "pageTemplate";
+    public static final String DOR_PAGE_TEMPLATE = "pageTemplate";
     private static final String FD_SCHEMA_TYPE = "fd:schemaType";
     private static final String FD_SCHEMA_REF = "fd:schemaRef";
     private static final String FD_IS_HAMBURGER_MENU_ENABLED = "fd:isHamburgerMenuEnabled";
