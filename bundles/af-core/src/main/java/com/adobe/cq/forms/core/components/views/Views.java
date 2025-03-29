@@ -29,4 +29,10 @@ public class Views {
      */
     public static class Author extends Publish {}
 
+    /**
+     * Use this view for including the print-specific properties
+     * Eg; dorContainer and pageTemplate
+     */
+    public static class DoR extends Author {}
+
 }
