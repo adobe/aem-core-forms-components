@@ -60,7 +60,6 @@ import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
-import com.adobe.cq.forms.core.components.models.form.print.PageTemplate;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.commons.LanguageUtil;
