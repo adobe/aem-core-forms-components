@@ -29,7 +29,7 @@
       "dorTemplateRef": "xyz",
       "clientLibRef": "abc",
       "customProp": "customPropValue",
-      "fd:pagetemplate": {
+      "fd:pageTemplate": {
         "jcr:primaryType": "nt:unstructured",
         "sling:resourceType"    : "core/fd/components/form/pageTemplate/v1/pageTemplate",
         "config": "<config xmlns=\"http://www.xfa.org/schema/xci/3.0/\"> <agent name=\"designer\">    <!--  [0..n]  -->    <destination>pcl</destination>    <pdf>       <!--  [0..n]  -->       <fontInfo></fontInfo>    </pdf> </agent> <present>    <!--  [0..n]  -->    <pdf>       <!--  [0..n]  -->       <fontInfo>          <embed>0</embed>       </fontInfo>       <tagged>0</tagged>       <version>1.7</version>       <adobeExtensionLevel>11</adobeExtensionLevel>    </pdf>    <xdp>       <packets>*</packets>    </xdp> </present></config>",
