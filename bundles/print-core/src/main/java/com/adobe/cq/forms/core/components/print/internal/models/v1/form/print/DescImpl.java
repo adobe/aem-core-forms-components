@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.print.internal.models.v1.form.print;
 
 import com.adobe.cq.forms.core.components.models.form.print.Desc;
 import com.adobe.cq.forms.core.components.models.form.print.value.TextValue;
+import com.adobe.cq.forms.core.components.print.internal.models.v1.form.print.value.TextValueImpl;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class DescImpl implements Desc {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private TextValue text;
+    private TextValueImpl text;
 
     @Override
     public TextValue getText() {
