@@ -428,9 +428,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return customDorProperties;
     }
 
-    private Map<String, Object> getPageTemplate() {
+    @JsonIgnore
+    @Override
+    public Map<String, Object> getPageTemplate() {
         if (resource != null) {
-            Resource pageTemplateResource = resource.getChild("fd:pagetemplate");
+            Resource pageTemplateResource = resource.getChild("fd:pageTemplate");
             if (pageTemplateResource != null) {
                 PageTemplate pageTemplate = pageTemplateResource.adaptTo(PageTemplate.class);
                 ObjectMapper objectMapper = new ObjectMapper();
