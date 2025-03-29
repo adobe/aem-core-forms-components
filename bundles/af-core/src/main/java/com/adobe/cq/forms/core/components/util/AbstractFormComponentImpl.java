@@ -587,6 +587,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     @JsonIgnore
+    @Override
     public Map<String, Object> getDorContainer() {
         if (resource != null) {
             Resource dorContainerResource = resource.getChild("fd:dorContainer");
