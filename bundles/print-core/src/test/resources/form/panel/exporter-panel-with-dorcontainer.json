@@ -104,6 +104,11 @@
                     "target": "Page1",
                     "targetType": "page"
                 },
+                "desc": {
+                    "text": {
+                        "content": "This is a description"
+                    }
+                },
                 "height": "0.5in",
                 "id": "dorContainer-31433e3dcc",
                 "left": "0.5in",
