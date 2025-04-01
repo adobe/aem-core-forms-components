@@ -85,10 +85,12 @@ class FormFileInputWidgetBase {
             // initialize the regex initially
             this.regexMimeTypeList = this.options.accept.map(function (value, i) {
                 try {
+                    // Special case for */* to match all MIME types
+                    if (value.trim() === '*/*') {
+                        return /.*/;  // Match any MIME type
+                    }
                     return new RegExp(value.trim());
                 } catch (e) {
-                    // failure during regex parsing, don't return anything specific to this value since the value contains
-                    // incorrect regex string
                     if (window.console) {
                         console.log(e);
                     }
@@ -470,8 +472,11 @@ class FormFileInputWidgetBase {
                             let mimeType = file.type || self.extensionToMimeTypeMap[extension];
                             
                             // If no MIME type is detected, check if the file extension is in the accept list
-                            if (!mimeType) {
+                            if (!mimeType && this.options.acceptExtensions) {
                                 isMatch = this.options.acceptExtensions.some(function(acceptPattern) {
+                                    if(!acceptPattern) {
+                                        return false;
+                                    }
                                     // Remove leading dot if present and convert to lowercase
                                     let cleanPattern = acceptPattern.replace(/^\./, '').toLowerCase();
                                     return cleanPattern === extension;
