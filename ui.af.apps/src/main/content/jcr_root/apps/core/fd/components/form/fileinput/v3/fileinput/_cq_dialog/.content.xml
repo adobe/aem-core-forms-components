@@ -18,7 +18,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Adaptive Form File Attachment"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.forms.components.fileinput.v1.editor]"
+    extraClientlibs="[core.forms.components.fileinput.v3.editor]"
     helpPath="https://www.adobe.com/go/aem_af_cmp_fileinput_v2"
     trackingFeature="core-components:adaptiveform-fileinput:v3">
     <content
@@ -98,7 +98,19 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
+                                            <mimeType
+                                                    wrapperClass="cmp-adaptiveform-fileinput__mimeType"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
+                                                    fieldLabel="Allowed file types"
+                                                    defaultValue="">
+                                                <field
+                                                        name="./accept"
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+                                            </mimeType>
                                             <extensions
+                                                    wrapperClass="cmp-adaptiveform-fileinput__extensions"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
                                                     fieldLabel="Allowed file extensions"
