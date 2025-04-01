@@ -101,6 +101,28 @@ describe('Page - Authoring', function () {
     it ('open edit dialog of FileInput', function(){
       testFileInputBehaviour(fileInputEditPathSelector, fileInputDrop);
     })
+
+    it('verify mime type is disabled when extensions are present', function() {
+        // Setup component
+        dropFileInputInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fileInputEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        
+        // Add an extension
+        cy.get('.cmp-adaptiveform-fileinput__extensions coral-multifield-add').click();
+        cy.get('.cmp-adaptiveform-fileinput__extensions input').first().type('.pdf');
+        
+        // Verify MIME type is disabled and has single */* value
+        cy.get('.cmp-adaptiveform-fileinput__mimeType coral-multifield')
+            .should('have.css', 'pointer-events', 'none')
+            .find('coral-multifield-item')
+            .should('have.length', 1)
+            .find('input')
+            .should('have.value', '*/*');
+        
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(fileInputDrop);
+    });
   })
 
   context('Open Sites Editor', function () {
@@ -123,8 +145,10 @@ describe('Page - Authoring', function () {
       testFileInputBehaviour(fileInputEditPathSelector, fileInputDrop, true);
     });
 
-    it('open edit dialog of aem forms FileInput and check validation', function() {
-      testFileInputValidationBehaviour(fileInputEditPathSelector, fileInputDrop, true);
+    it('open edit dialog of aem forms FileInput and check validation', () => {
+      if(toggle_array.includes("FT_FORMS-18927")) {
+          testFileInputValidationBehaviour(fileInputEditPathSelector, fileInputDrop, true);
+      }
     });
 
   });
