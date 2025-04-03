@@ -132,7 +132,6 @@ class RuleUtils {
 
         console.debug("Extracted custom function names from form JSON:", functionNames);
 
-        // Convert the array of function names to the required format
         return Array.from(functionNames).map(functionName => ({
             id: functionName
         }));
