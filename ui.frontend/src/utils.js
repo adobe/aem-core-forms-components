@@ -19,7 +19,7 @@ import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core';
 import {loadXfa} from "./handleXfa";
-import RuleUtils from "./ruleUtils.js";
+import RuleUtils from "./RuleUtils.js";
 
 /**
  * @module FormView
