@@ -36,7 +36,7 @@
          style="${container.backgroundStyle @ context='styleString'}">
         <div class="cmp-adaptiveform-fragment__label-container">
           <div data-sly-call="${label.label @componentId=fragment.id, labelValue=label.label.value, labelVisible=label.label.visible, bemBlock='cmp-adaptiveform-fragment'}" data-sly-unwrap></div>
-          <div data-sly-call="${questionMark.questionMark @componentId=fragment.id, longDescription=fragment.description, bemBlock='cmp-adaptiveform-fragment'}" data-sly-unwrap></div>
+          <div data-sly-call="${questionMark.questionMark @componentId=fragment.id, longDescription=fragment.description, bemBlock='cmp-adaptiveform-fragment', componentTitle=label.label.value}" data-sly-unwrap></div>
         </div>
         <div data-sly-call="${shortDescription.shortDescription @componentId=fragment.id, shortDescriptionVisible=fragment.tooltipVisible, shortDescription=fragment.tooltip, bemBlock='cmp-adaptiveform-fragment'}" data-sly-unwrap></div>
         <div data-sly-call="${longDescription.longDescription @componentId=fragment.id, longDescription=fragment.description, bemBlock='cmp-adaptiveform-fragment'}" data-sly-unwrap></div>

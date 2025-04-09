@@ -1,4 +1,6 @@
-<template data-sly-template.questionMark="${@ componentId, longDescription, bemBlock}">
-  <button class="${bemBlock}__questionmark" data-sly-test="${longDescription}" title="Help text">
+<template data-sly-template.questionMark="${@ componentId, longDescription, bemBlock, componentTitle}">
+  <sly data-sly-set.namedTitle="${componentTitle} help text" />
+  <sly data-sly-set.fullTitle="${componentTitle ? namedTitle : 'Help text'}" />
+  <button class="${bemBlock}__questionmark" data-sly-test="${longDescription}" title="${fullTitle}">
   </button>
 </template>
