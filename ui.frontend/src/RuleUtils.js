@@ -83,13 +83,13 @@ class RuleUtils {
         const functionNames = new Set();
         const exclusionList = ['dispatchEvent'];
         
-        // Helper function to extract function names from event strings
-        const extractFromEventString = (eventString) => {
+        // Helper function to extract function names from rule expressions
+        const extractFunctionNamesFromRuleExpression = (ruleExpression) => {
             // Match patterns like functionName() with optional parameters
             const functionPattern = /(\w+)\s*\(/g;
             let match;
             
-            while ((match = functionPattern.exec(eventString)) !== null) {
+            while ((match = functionPattern.exec(ruleExpression)) !== null) {
                 // Add the function name to our set
                 if (!exclusionList.includes(match[1])) {
                     functionNames.add(match[1]);
@@ -101,12 +101,19 @@ class RuleUtils {
         if (formJson.events) {
             Object.values(formJson.events).forEach(eventArray => {
                 eventArray.forEach(eventString => {
-                    extractFromEventString(eventString);
+                    extractFunctionNamesFromRuleExpression(eventString);
                 });
             });
         }
+
+        // Process rules at the form level
+        if (formJson.rules) {
+            Object.values(formJson.rules).forEach(ruleExpression => {
+                extractFunctionNamesFromRuleExpression(ruleExpression);
+            });
+        }
         
-        // Recursively process events in form items
+        // Recursively process events and rules in form items
         const processItems = (items) => {
             if (!items) return;
             
@@ -114,8 +121,15 @@ class RuleUtils {
                 if (item.events) {
                     Object.values(item.events).forEach(eventArray => {
                         eventArray.forEach(eventString => {
-                            extractFromEventString(eventString);
+                            extractFunctionNamesFromRuleExpression(eventString);
                         });
+                    });
+                }
+
+                // Process rules within items
+                if (item.rules) {
+                    Object.values(item.rules).forEach(ruleExpression => {
+                        extractFunctionNamesFromRuleExpression(ruleExpression);
                     });
                 }
                 
