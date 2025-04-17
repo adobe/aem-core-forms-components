@@ -66,11 +66,12 @@ class RuleUtils {
         }
 
         const funcObj = customFunctions.reduce((accumulator, func) => {
-            if (window[func.id] && typeof window[func.id] === 'function') {
+            if (Object.prototype.hasOwnProperty.call(window, func.id) && typeof window[func.id] === 'function') {
                 accumulator[func.id] = window[func.id];
             }
             return accumulator;
         }, {});
+        console.debug("Registering custom functions:", funcObj);
         FunctionRuntime.registerFunctions(funcObj);
     }
     
@@ -81,7 +82,6 @@ class RuleUtils {
      */
     static extractFunctionNames = (formJson) => {
         const functionNames = new Set();
-        const exclusionList = ['dispatchEvent'];
         
         // Helper function to extract function names from rule expressions
         const extractFunctionNamesFromRuleExpression = (ruleExpression) => {
@@ -91,9 +91,7 @@ class RuleUtils {
             
             while ((match = functionPattern.exec(ruleExpression)) !== null) {
                 // Add the function name to our set
-                if (!exclusionList.includes(match[1])) {
-                    functionNames.add(match[1]);
-                }
+                functionNames.add(match[1]);
             }
         };
         
@@ -144,7 +142,7 @@ class RuleUtils {
             processItems(formJson[':items']);
         }
 
-        console.debug("Extracted custom function names from form JSON:", functionNames);
+        console.debug("Extracted function names from form JSON:", functionNames);
 
         return Array.from(functionNames).map(functionName => ({
             id: functionName
