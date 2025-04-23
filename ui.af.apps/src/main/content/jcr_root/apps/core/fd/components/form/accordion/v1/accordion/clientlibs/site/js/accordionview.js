@@ -97,7 +97,6 @@
                 this.expandItem(item)
             }
 
-
             #collapseAllItems() {
                 var items = this.getCachedItems();
                 if (items) {
@@ -245,6 +244,16 @@
                 return accordionItemDivToBeRepeated;
             }
 
+            focusOnRepeatableInstances(id) {
+                const panelId = id.replace(Accordion.idSuffixes.item, "");
+                const form = this.formContainer.getModel();
+                const tab = this.getModel().getState().items.find(item => item.type === 'array')?.items?.find(subItem => subItem.id === panelId)
+                const field = form.getElement(tab?.id);
+                if (field) {
+                    setTimeout(() => {form.setFocus(field)}, 0);
+                }
+            }
+
             handleChildAddition(childView) {
                 var itemDivToExpand;
                 this.cacheElements(this._elements.self);
@@ -263,22 +272,44 @@
                 const newIndex = cachedItems.indexOf(itemDivToExpand);
                 this.getCachedButtons()[newIndex].classList.remove(this.constructor.cssClasses.button.stepped);
                 this.getCachedPanels()[newIndex].classList.remove(this.constructor.cssClasses.panel.stepped);
-                
+
+                this.focusOnRepeatableInstances(itemDivToExpand.id);
+
                 this.#showHideRepeatableButtons(childView.getInstanceManager());
             }
 
             handleChildRemoval(removedInstanceView) {
                 var removedAccordionItemDivId = removedInstanceView.element.id + Accordion.idSuffixes.item;
                 var removedAccordionItemDiv = this.getItemById(removedAccordionItemDivId);
+                
+                // Find the previous item before removing the current one
+                var cachedItems = this.getCachedItems();
+                var currentIndex = cachedItems.indexOf(removedAccordionItemDiv);
+                var itemDivToExpand = null;
+                
+                // If there are items and current item is found
+                if (cachedItems && cachedItems.length > 0 && currentIndex > -1) {
+                    // If there's a previous item, use it
+                    if (currentIndex > 0) {
+                        itemDivToExpand = cachedItems[currentIndex - 1];
+                    } else {
+                        // If we're removing the first item, use the next one if available
+                        itemDivToExpand = cachedItems[1] || null;
+                    }
+                }
+                
+                // Now remove the item
                 removedAccordionItemDiv.remove();
                 this.children.splice(this.children.indexOf(removedInstanceView), 1);
                 this.cacheElements(this._elements.self);
-                var cachedItems = this.getCachedItems();
-                if (cachedItems && cachedItems.length > 0) {
-                    var firstItem = cachedItems[0];
-                    this.expandItem(firstItem);
-                    this.collapseAllOtherItems(firstItem.id);
+                
+                // Expand the target item if found
+                if (itemDivToExpand) {
+                    this.expandItem(itemDivToExpand);
+                    this.collapseAllOtherItems(itemDivToExpand.id);
+                    this.focusOnRepeatableInstances(itemDivToExpand.id)
                 }
+
                 this.#showHideRepeatableButtons(removedInstanceView.getInstanceManager());
             }
 
