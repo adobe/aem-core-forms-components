@@ -142,6 +142,18 @@ Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365),
 please only use `autoInstallPackage` and `autoInstallPackagePublish` when 
 working with the AEM as a Cloud Service SDK!
 
+### Important Note for AEM as a Cloud Service SDK
+
+When working with the AEM as a Cloud Service local SDK, be aware that Forms Core Components are already included as part of the product in the `/libs` directory. Installing additional versions in `/apps/core/fd` may cause duplicate component installations and related issues.
+
+If you encounter problems with components or clientlibs:
+
+1. Check if you have duplicate installations of core components (both in `/libs` and `/apps`)
+2. Remove any duplicated components in `/apps/core/fd` if they conflict with the built-in ones
+3. Rebuild the client library cache by accessing: `http://<host>:<port>/libs/granite/ui/content/dumplibs.rebuild.html`
+
+This ensures your environment uses the correct component versions and avoids conflicts that can occur with multiple installations.
+
 ### UberJar
 
 This project relies on the AEM 6.4.4 `cq-quickstart` UberJar and [AEM Forms SDK API](https://repo.maven.apache.org/maven2/com/adobe/aem/aem-forms-sdk-api/). This is publicly available on https://repo.adobe.com
