@@ -182,8 +182,11 @@
             "label",
             "lang",
             "maximum",
+            "maxLength",
             "minimum",
+            "minLength",
             "name",
+            "pattern",
             "placeholder",
             "properties",
             "readOnly",
@@ -426,7 +429,7 @@
             "const": "string"
           },
           "format": {
-            "const": "date-time"
+            "const": "datetime-input"
           },
           "rules": {
             "type": "object",
@@ -1098,8 +1101,7 @@
                 "type",
                 "uniqueItems",
                 "validationExpression",
-                "visible",
-                "fragmentPath"
+                "visible"
               ],
               "errorMessage": {
                 "enum": "${0} property is not allowed in Panel"

@@ -292,11 +292,6 @@
           "type": "boolean",
           "title": "whether the field should be visible to author or not"
         },
-        "fragmentPath": {
-          "type": "string",
-          "title": "The path to the fragment that is used to render the fragment",
-          "description": "This property would only be present if fd:viewType is set to fragment"
-        },
         "id": {
           "type": "string",
           "title": "unique identifier for a form element"
