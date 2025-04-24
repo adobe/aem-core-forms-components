@@ -17,11 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
@@ -35,12 +31,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.Base;
-import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
-import com.adobe.cq.forms.core.components.models.form.ConstraintType;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.Label;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
@@ -73,6 +64,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
     private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
     private static final String PATH_TEXTINPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/textinput-without-fieldtype";
+
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -395,7 +387,7 @@ public class TextInputImplTest {
         assertArrayEquals(new Long[] { 345L, 576L }, (Object[]) result.get("customPropLongArray"));
         Assertions.assertEquals(new BigDecimal("45.67"), (BigDecimal) result.get("customPropDecimal"));
         assertArrayEquals(new BigDecimal[] { new BigDecimal("45.67"), new BigDecimal("90.34") }, (BigDecimal[]) result.get(
-            "customPropDecimalArray"));
+                "customPropDecimalArray"));
         Assertions.assertEquals(new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
             {
                 set(Calendar.MILLISECOND, 0);
@@ -403,21 +395,21 @@ public class TextInputImplTest {
             }
         }, (Calendar) result.get("customPropDate"));
         assertArrayEquals(
-            new Calendar[] {
-                new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
-                    {
-                        set(Calendar.MILLISECOND, 0);
-                        setTimeZone(TimeZone.getTimeZone("UTC"));
-                    }
+                new Calendar[] {
+                        new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
+                            {
+                                set(Calendar.MILLISECOND, 0);
+                                setTimeZone(TimeZone.getTimeZone("UTC"));
+                            }
+                        },
+                        new GregorianCalendar(2024, Calendar.JUNE, 22, 14, 0, 0) {
+                            {
+                                set(Calendar.MILLISECOND, 0);
+                                setTimeZone(TimeZone.getTimeZone("UTC"));
+                            }
+                        }
                 },
-                new GregorianCalendar(2024, Calendar.JUNE, 22, 14, 0, 0) {
-                    {
-                        set(Calendar.MILLISECOND, 0);
-                        setTimeZone(TimeZone.getTimeZone("UTC"));
-                    }
-                }
-            },
-            (Calendar[]) result.get("customPropDateArray"));
+                (Calendar[]) result.get("customPropDateArray"));
         Assertions.assertNull(result.get("fd:accidentalPrefix"));
         Assertions.assertNull(result.get("sling:accidentalPrefix"));
         Assertions.assertNull(result.get("jcr:accidentalPrefix"));
