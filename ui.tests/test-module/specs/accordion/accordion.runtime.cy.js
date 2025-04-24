@@ -197,7 +197,6 @@ describe("Form with Accordion Layout Container with focus", () => {
             cy.get(`#${secondChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
             cy.get(`#${firstChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
             cy.get(`#${firstChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
-
             cy.get(`#${firstChildComponentButtonId}`).then(() => {
                 formContainer.setFocus(id);
                 cy.get(`#${firstChildComponentButtonId}`).isElementInViewport().should("eq", true);
@@ -212,6 +211,27 @@ describe("Form with Accordion Layout Container with focus", () => {
             });
         });
     });
+
+    it("on clicking of expand button, focus should be visible on first component in the current tab ", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        const firstChildComponentId = formContainer._model.items[0].items[0].id;
+        const firstChildComponentButtonId = firstChildComponentId + "-button";
+        const firstChildComponentPanelId = firstChildComponentId + "-panel";
+
+        const secondChildComponentId = formContainer._model.items[0].items[1].id;
+        const secondChildComponentButtonId = secondChildComponentId + "-button";
+        const secondChildComponentPanelId = secondChildComponentId + "-panel";
+
+        cy.get(`#${secondChildComponentButtonId}`).click({force: true}).then(() => {
+            cy.get('input[name="textinputfa2"]').should('be.focused');
+            cy.get(`#${secondChildComponentPanelId}`).should('have.class', 'cmp-accordion__panel--expanded');
+        })
+
+        cy.get(`#${firstChildComponentButtonId}`).click({force: true}).then(() => {
+            cy.get('input[name="textinputfa1"]').should('be.focused');
+            cy.get(`#${firstChildComponentPanelId}`).should('have.class', 'cmp-accordion__panel--expanded');
+        })
+    })
 });
 
 describe("Form with Accordion Layout Container with Hidden Children", () => {
