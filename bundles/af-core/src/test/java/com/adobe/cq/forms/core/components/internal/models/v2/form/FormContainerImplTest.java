@@ -35,6 +35,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
 import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
@@ -195,7 +196,7 @@ public class FormContainerImplTest {
     void testGetAdaptiveFormDefaultVersion() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNotNull(formContainer.getAdaptiveFormVersion());
-        assertEquals("0.15.1", formContainer.getAdaptiveFormVersion());
+        assertEquals("0.15.2", formContainer.getAdaptiveFormVersion());
     }
 
     @Test
@@ -447,6 +448,7 @@ public class FormContainerImplTest {
     @Test
     public void testRequestAttributeIfContainerPageDifferent() {
         Resource resource = Mockito.mock(Resource.class);
+        Mockito.when(resource.getValueMap()).thenReturn(ValueMap.EMPTY);
         Page afPage = Mockito.mock(Page.class);
         Mockito.when(afPage.getPath()).thenReturn(AF_PATH);
         PageManager pageManager = Mockito.mock(PageManager.class);
