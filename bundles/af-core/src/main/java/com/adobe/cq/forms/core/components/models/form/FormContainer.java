@@ -67,7 +67,7 @@ public interface FormContainer extends Container {
      */
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
-    String DEFAULT_FORMS_SPEC_VERSION = "0.15.1";
+    String DEFAULT_FORMS_SPEC_VERSION = "0.15.2";
 
     /**
      * Returns form metadata {@link FormMetaData}
