@@ -15,7 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -43,7 +45,7 @@ import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
-import com.adobe.cq.forms.core.components.views.Views;
+import com.day.cq.commons.jcr.JcrConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -72,6 +74,16 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @PostConstruct
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
+        // if (request != null && request.getAttribute("channel") != null && request.getAttribute("channel").equals("print")) {
+        // fragmentPath = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + request.getAttribute("channel");
+        // // throw new IllegalArgumentException("Fragment path is not valid for print channel" + fragmentPath);
+        // }
+        // if (request != null) {
+        // this.channel = request.getAttribute("channel") != null ? request.getAttribute("channel").toString() : "";
+        // }
+        if (this.channel != null && this.channel.equals("print")) {
+            fragmentPath = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + this.channel;
+        }
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
         if (request != null) {
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
