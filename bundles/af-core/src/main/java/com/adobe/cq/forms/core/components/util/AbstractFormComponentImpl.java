@@ -116,6 +116,11 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Nullable
     protected String dorColspan;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fd:channel")
+    @Nullable
+    @JsonIgnore
+    protected String channel;
+
     @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected Style currentStyle;
