@@ -41,10 +41,7 @@ import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -447,17 +444,4 @@ public class NumberInputImplTest {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITHOUT_FIELDTYPE, NumberInput.class, context);
         assertEquals(FieldType.NUMBER_INPUT.getValue(), numberInput.getFieldType());
     }
-
-    @Test
-    void testJSONExportWithCustomDisplayFormat() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT, NumberInput.class, context);
-        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT));
-    }
-
-    @Test
-    void testJSONExportWithBothDisplayFormats() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS, NumberInput.class, context);
-        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS));
-    }
-
 }

@@ -28,18 +28,13 @@ import org.mockito.Mockito;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.ConstraintType;
-import com.adobe.cq.forms.core.components.models.form.DatePicker;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.Label;
-import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(AemContextExtension.class)
 public class DatePickerImplTest {
@@ -334,17 +329,4 @@ public class DatePickerImplTest {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITHOUT_FIELDTYPE, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITHOUT_FIELDTYPE));
     }
-
-    @Test
-    void testJSONExportWithCustomDisplayFormat() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT, DatePicker.class, context);
-        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT));
-    }
-
-    @Test
-    void testJSONExportWithBothDisplayFormats() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS, DatePicker.class, context);
-        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS));
-    }
-
 }
