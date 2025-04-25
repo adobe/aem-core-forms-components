@@ -24,6 +24,7 @@
         let mimeTypeWrapper = dialog.find(FILEINPUT_MIMETYPE);
         let mimeTypeField = mimeTypeWrapper.find("coral-multifield");
         let extensionsField = dialog.find(FILEINPUT_EXTENSIONS + " coral-multifield");
+        let mimeTypeFieldInfoIcon = mimeTypeWrapper.find('coral-icon.coral-Form-fieldinfo');
         
         function updateMimeTypeState() {
             let hasExtensions = extensionsField.find('coral-multifield-item').length > 0;
@@ -44,10 +45,25 @@
             if (hasExtensions) {
                 // Keep first item, remove others
                 let firstItem = mimeTypeField.find('coral-multifield-item').first();
+
+                // If no first item exists, create one
+                if (firstItem.length === 0) {
+                    // Click the add button to create a new item
+                    mimeTypeField.find('button[coral-multifield-add]').click();
+                    firstItem = mimeTypeField.find('coral-multifield-item').first();
+                }
+
                 mimeTypeField.find('coral-multifield-item:not(:first)').remove();
                 
                 // Set value of first item to */*
                 firstItem.find('input').val('*/*');
+            }
+
+            if(mimeTypeFieldInfoIcon.length > 0) {
+                // show the info icon
+                mimeTypeFieldInfoIcon.css({
+                    'display': hasExtensions ? '' : 'none'
+                });
             }
         }
 

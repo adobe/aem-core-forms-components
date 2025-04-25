@@ -70,6 +70,12 @@ public class FileInputImplV3 extends FileInputImplV2 {
 
     @Override
     public List<String> getAcceptExtensions() {
+        // adding . in front of the accept extensions
+        if (acceptExtensions != null) {
+            for (int i = 0; i < acceptExtensions.length; i++) {
+                acceptExtensions[i] = "." + acceptExtensions[i];
+            }
+        }
         return Optional.ofNullable(acceptExtensions)
             .map(Arrays::asList)
             .orElse(Collections.emptyList());
