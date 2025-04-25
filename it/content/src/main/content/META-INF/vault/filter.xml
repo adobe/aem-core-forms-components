@@ -9,7 +9,6 @@
     <filter root="/conf/global/settings/forms" mode="update"/>
     <filter root="/conf/global/settings/cloudconfigs/edge-delivery-service-configuration" mode="update"/>
     <filter root="/conf/global/settings/cloudconfigs/marketo" mode="update"/>
-    <filter root="/conf/forms/core-components-it/samples/customfunctionedgedelivery" mode="update"/>
     <filter root="/conf/core-components-it" mode="update"/>
     <filter root="/conf/wknd" mode="update"/>
     <filter root="/conf/datalayerContainer" mode="update"/>
