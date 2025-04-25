@@ -57,9 +57,6 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FILE_ACCEPT)
     protected String[] accept;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FILE_ACCEPT_EXTENSIONS)
-    protected String[] acceptExtensions;
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_BUTTON_TEXT)
     @Default(values = FileInput.DEFAULT_BUTTON_TEXT)
     protected String buttonText;
