@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v3.form;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -41,7 +42,7 @@ import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -59,7 +60,6 @@ public class FileInputImplV3Test {
     private static final String PATH_FILEINPUT_DATALAYER = CONTENT_ROOT + "/fileinput-datalayer";
     private static final String PATH_MULTISELECT_FILEINPUT = CONTENT_ROOT + "/multiselect-fileinput";
     private static final String PATH_MULTISELECT_FILEINPUT_WITHNOTYPE = CONTENT_ROOT + "/multiselect-fileinput-withNoType";
-    private static final String PATH_FILEINPUT_WITH_MIME_TYPE = CONTENT_ROOT + "/fileinput-with-mime-type";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -404,11 +404,18 @@ public class FileInputImplV3Test {
 
     @Test
     void testGetAcceptExtensions() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_DATALAYER, FileInput.class, context);
         // assert fileInput.getAcceptExtensions() to return empty list
         assertEquals(Collections.emptyList(), fileInput.getAcceptExtensions());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getAcceptExtensions()).thenCallRealMethod();
         assertEquals(Collections.emptyList(), fileInput.getAcceptExtensions());
+    }
+
+    @Test
+    void testGetAcceptExtensionsWithExtensions() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
+        List<String> extensions = fileInput.getAcceptExtensions();
+        assertThat(Arrays.asList(".jpg", ".png"), is(extensions));
     }
 }
