@@ -22,6 +22,7 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  * Testing FileInput with Sites Editor
  */
 describe('Page - Authoring', function () {
+  let toggle_array = [];
   // we can use these values to log in
 
   const dropFileInputInContainer = function() {
@@ -91,6 +92,11 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      cy.fetchFeatureToggles().then((response) => {
+        if (response.status === 200) {
+            toggle_array = response.body.enabled;
+        }
+      });
     });
 
     it('insert FileInput in form container', function () {
@@ -103,6 +109,7 @@ describe('Page - Authoring', function () {
     })
 
     it('verify mime type is disabled when extensions are present', function() {
+      if(toggle_array.includes("FT_FORMS-18927")) {
         // Setup component
         dropFileInputInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fileInputEditPathSelector);
@@ -122,11 +129,12 @@ describe('Page - Authoring', function () {
         
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(fileInputDrop);
+      }
     });
   })
 
   context('Open Sites Editor', function () {
-    const   pagePath = "/content/core-components-examples/library/adaptive-form/fileinput",
+    const pagePath = "/content/core-components-examples/library/adaptive-form/fileinput",
         fileInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/fileinput",
         fileInputEditPathSelector = "[data-path='" + fileInputEditPath + "']",
         fileInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formfileinput.split("/").pop();
@@ -134,6 +142,11 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      cy.fetchFeatureToggles().then((response) => {
+        if (response.status === 200) {
+            toggle_array = response.body.enabled;
+        }
+    });
     });
 
     it('insert aem forms FileInput', function () {
