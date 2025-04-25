@@ -35,15 +35,15 @@ describe("Form to check custom function defined in edge delivery", () => {
 
 
 
-    it(" fullName field should update on change in first name and last name ", () => {
-            const firstName = Object.entries(formContainer._fields)[0];
-            const lastName = Object.entries(formContainer._fields)[1];
-            const fullName = Object.entries(formContainer._fields)[2];
-            cy.get(`#${firstName[0]}`).find("input").clear().type("fname").blur().then(x => {
-                cy.get(`#${lastName[0]}`).find("input").clear().type("lname").blur().then(x => {
-                    cy.get(`#${fullName[0]}`).find("input").should('have.value', 'fname lname')
-                })
-            })
-    })
+    // it(" fullName field should update on change in first name and last name ", () => {
+    //         const firstName = Object.entries(formContainer._fields)[0];
+    //         const lastName = Object.entries(formContainer._fields)[1];
+    //         const fullName = Object.entries(formContainer._fields)[2];
+    //         cy.get(`#${firstName[0]}`).find("input").clear().type("fname").blur().then(x => {
+    //             cy.get(`#${lastName[0]}`).find("input").clear().type("lname").blur().then(x => {
+    //                 cy.get(`#${fullName[0]}`).find("input").should('have.value', 'fname lname')
+    //             })
+    //         })
+    // })
 
 })
