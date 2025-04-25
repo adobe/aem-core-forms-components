@@ -21,10 +21,6 @@
     "video/*",
     "image/*"
   ],
-  "acceptExtensions": [
-    "jpg",
-    "png"
-  ],
   "dataRef":"a.b",
   "events": {
     "custom:setProperty": [
