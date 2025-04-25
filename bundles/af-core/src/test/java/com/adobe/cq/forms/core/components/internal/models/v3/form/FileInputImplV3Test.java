@@ -59,6 +59,7 @@ public class FileInputImplV3Test {
     private static final String PATH_FILEINPUT_DATALAYER = CONTENT_ROOT + "/fileinput-datalayer";
     private static final String PATH_MULTISELECT_FILEINPUT = CONTENT_ROOT + "/multiselect-fileinput";
     private static final String PATH_MULTISELECT_FILEINPUT_WITHNOTYPE = CONTENT_ROOT + "/multiselect-fileinput-withNoType";
+    private static final String PATH_FILEINPUT_WITH_MIME_TYPE = CONTENT_ROOT + "/fileinput-with-mime-type";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -399,5 +400,15 @@ public class FileInputImplV3Test {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_DATALAYER, FileInput.class, context);
         FieldUtils.writeField(fileInput, "dataLayerEnabled", true, true);
         Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_DATALAYER));
+    }
+
+    @Test
+    void testGetAcceptExtensions() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
+        // assert fileInput.getAcceptExtensions() to return empty list
+        assertEquals(Collections.emptyList(), fileInput.getAcceptExtensions());
+        FileInput fileInputMock = Mockito.mock(FileInput.class);
+        Mockito.when(fileInputMock.getAcceptExtensions()).thenCallRealMethod();
+        assertEquals(Collections.emptyList(), fileInput.getAcceptExtensions());
     }
 }
