@@ -150,9 +150,6 @@
              * @param {Number} index The index of the tab to navigate to
              */
             navigate(index) {
-                if (this._active === index) {
-                    return; // already on this tab
-                }
                 this._active = index;
                 this.addSteppedClass();
                 this.refreshActive();

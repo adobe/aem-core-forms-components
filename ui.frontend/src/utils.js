@@ -19,7 +19,6 @@ import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core';
 import {loadXfa} from "./handleXfa";
-import RuleUtils from "./RuleUtils.js";
 
 /**
  * @module FormView
@@ -271,6 +270,49 @@ class Utils {
     }
 
     /**
+     * @deprecated Use `registerCustomFunctionsV2` instead.
+     * Registers custom functions from clientlibs.
+     * @param {string} formId - The form ID.
+     */
+    static async registerCustomFunctions(formId) {
+        const funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formId);
+        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
+        if (funcConfig && funcConfig.customFunction) {
+            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
+                if (window[func.id]) {
+                    accumulator[func.id] = window[func.id];
+                }
+                return accumulator;
+            }, {});
+            FunctionRuntime.registerFunctions(funcObj);
+        }
+    }
+
+    /**
+     * Registers custom functions from clientlibs.
+     * @param {object} formJson - The Sling model exporter representation of the form
+     */
+    static async registerCustomFunctionsV2(formJson) {
+        let funcConfig;
+        const customFunctionsUrl = formJson.properties['fd:customFunctionsUrl'];
+        if (customFunctionsUrl) {
+            funcConfig = await HTTPAPILayer.getJson(customFunctionsUrl);
+        } else {
+            funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formJson.id);
+        }
+        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
+        if (funcConfig && funcConfig.customFunction) {
+            const funcObj = funcConfig.customFunction.reduce((accumulator, func) => {
+                if (window[func.id]) {
+                    accumulator[func.id] = window[func.id];
+                }
+                return accumulator;
+            }, {});
+            FunctionRuntime.registerFunctions(funcObj);
+        }
+    }
+
+    /**
      * Sets up the Form Container.
      * @param {Function} createFormContainer - The function to create a form container.
      * @param {string} formContainerSelector - The CSS selector to identify the form container.
@@ -308,8 +350,8 @@ class Utils {
                     _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 }
                 console.debug("fetched model json", _formJson);
-                await RuleUtils.registerCustomFunctionsV2( _formJson);
-                await RuleUtils.registerCustomFunctionsByUrl(customFunctionUrl);
+                await this.registerCustomFunctionsV2( _formJson);
+                await this.registerCustomFunctionsByUrl(customFunctionUrl);
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
@@ -343,7 +385,29 @@ class Utils {
         }
     }
 
-    
+    static async registerCustomFunctionsByUrl(url) {
+        try {
+            if (url != null && url.trim().length > 0) {
+                // webpack ignore is added because webpack was converting this to a static import upon bundling resulting in error.
+                //This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.
+                const customFunctionModule = await import(/*webpackIgnore: true*/ url);
+                const keys = Object.keys(customFunctionModule);
+                const functions = [];
+                for (const name of keys) {
+                    const funcDef = customFunctionModule[name];
+                    if (typeof funcDef === 'function') {
+                        functions[name] = funcDef;
+                    }
+                }
+                FunctionRuntime.registerFunctions(functions);
+            }
+        } catch (e) {
+            if(window.console){
+                console.error("error in loading custom functions from url "+url+" with message "+e.message);
+            }
+        }
+    }
+
     /**
      * For backward compatibility with older data formats of prefill services like FDM.
      * @param {object} prefillJson - The prefill JSON object.

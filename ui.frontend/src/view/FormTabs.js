@@ -249,10 +249,9 @@ class FormTabs extends FormPanel {
         if (this.#_active !== tabId) {
             this.navigate(tabId);
             this.focusWithoutScroll(this.#getTabNavElementById(tabId));
-            const id = this.getActiveTabId(this.#getCachedTabs()).replace(this.#tabIdSuffix,"");
-            this.focusToFirstVisibleField(id);
         }
     }
+
 
 
     #getTabNavElementById(tabId) {
@@ -328,6 +327,7 @@ class FormTabs extends FormPanel {
             return result;
         }
     }
+
 
     /**
      * Synchronizes tab labels with their corresponding tab panels.
@@ -434,30 +434,12 @@ class FormTabs extends FormPanel {
         var removedTabNavId = removedInstanceView.element.id + this.#tabIdSuffix;
         var tabPanelElement = this.#getTabPanelElementById(removedTabPanelId);
         var tabNavElement = this.#getTabNavElementById(removedTabNavId);
-        const tabs = this.#getCachedTabs();
-        const currentIndex = Array.from(tabs).findIndex(tab => tab.id === removedTabNavId);
-        let nextTab = null;
-    
-        if (currentIndex === 0) {
-            nextTab = tabs[1];  // Simply get the next tab
-        } else {
-            // Look for previous visible tab
-            for (let i = currentIndex - 1; i >= 0; i--) {
-                nextTab = tabs[i];
-                break;
-            }
-        }
-        
         tabNavElement.remove();
         tabPanelElement.remove();
         this.children.splice(this.children.indexOf(removedInstanceView), 1);
         this.#cacheElements(this._elements.self);
+        this.#_active = this.getActiveTabId(this._elements["tab"]);
         this.#refreshActive();
-
-        // Only navigate if the next tab is not already active
-        if (nextTab) {
-            this.navigateAndFocusTab(nextTab.id);
-        }
     }
 
     /**

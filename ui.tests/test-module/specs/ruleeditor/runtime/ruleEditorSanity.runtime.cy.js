@@ -79,7 +79,7 @@ describe('Rule editor runtime sanity for core-components',function(){
     it("should change textinput label on button click", () => {
         if (toggle_array.includes("FT_FORMS-11541")) {
             expect(formContainer, "formcontainer is initialized").to.not.be.null;
-            cy.get('.cmp-adaptiveform-button__widget[type="button"]').click()
+            cy.get(`.cmp-adaptiveform-button__widget`).click()
             const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[2];
             cy.get(`#${textbox1}`).find("div > label").should('have.text', "Changed Label")
         }
