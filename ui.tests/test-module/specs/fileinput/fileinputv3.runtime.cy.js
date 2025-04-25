@@ -250,7 +250,7 @@ describe('Click on button tag (V-3)', () => {
      });
 
     it(`file input should not support extenstion which are not in accept property`, () => {
-        const fileinput7 =  "input[name='fileinput7']";
+        const fileInput7 =  "input[name='fileinput7']";
         cy.attachFile(fileInput7, ['sample.afe']);
         cy.get('.cmp-adaptiveform-fileinput__filelist')
             .children()
