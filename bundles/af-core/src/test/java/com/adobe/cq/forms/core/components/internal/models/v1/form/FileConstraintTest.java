@@ -15,6 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Collections;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -41,5 +43,12 @@ public class FileConstraintTest {
         FileConstraint fileConstraintMock = Mockito.mock(FileConstraint.class);
         Mockito.when(fileConstraintMock.getAccept()).thenCallRealMethod();
         assertThat(FileConstraint.DEFAULT_ACCEPT, is(fileConstraintMock.getAccept()));
+    }
+
+    @Test
+    void testGetAcceptExtensions() {
+        FileConstraint fileConstraintMock = Mockito.mock(FileConstraint.class);
+        Mockito.when(fileConstraintMock.getAcceptExtensions()).thenCallRealMethod();
+        assertEquals(Collections.emptyList(), fileConstraintMock.getAcceptExtensions());
     }
 }
