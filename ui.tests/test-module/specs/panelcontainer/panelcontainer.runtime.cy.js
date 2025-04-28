@@ -260,11 +260,11 @@ describe( "Form Runtime with Panel Container - Basic Tests", () => {
         const numberInputOfPanelId=formContainer._model.items[4].items[0].id;
         const textInputOfPanelId=formContainer._model.items[4].items[1].id;
         const textInputOfFormElemId=formContainer._model.items[3].id;
-        debugger;
         cy.get(`#${numberInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
         cy.get(`#${textInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
         cy.get(`#${textInputOfFormElemId}`).find(".cmp-adaptiveform-textinput__widget")
             .type("b").blur().then(() => {
+                // this test was incorrectly written earlier
             cy.get(`#${numberInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'true');
             cy.get(`#${textInputOfPanelId}`).should('have.attr', 'data-cmp-enabled', 'false');
         });
