@@ -295,8 +295,7 @@ describe("Form Runtime with Date Picker", () => {
             cy.get(`#${datePicker7}`).find("input").should('have.attr',"type", "text");
             cy.get(`#${datePicker7}`).find("input").clear().wait(1000).type(incorrectInput).trigger('input').blur()
                 .then(x => {
-                    // display format would work, even if the input is invalid, check commit id, 82878c620f6cdf205ead758f4f23eb6312bff360
-                // cy.get(`#${datePicker7}`).find("input").should('have.value', incorrectInput); // Check if the input is the same
+                cy.get(`#${datePicker7}`).find("input").should('have.value', incorrectInput); // Check if the input is the same
                 cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text',"Date format expected is d/M/y")
             });
         });
