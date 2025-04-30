@@ -432,6 +432,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return customDorProperties;
     }
 
+    /**
+     * Returns the page template properties.
+     * 
+     * @return Map of page template properties if `fd:pageTemplate` node is present otherwise returns null
+     */
     @JsonIgnore
     @Override
     public Map<String, Object> getPageTemplate() {
