@@ -41,7 +41,6 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
-import com.adobe.cq.forms.core.components.models.form.ChannelType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
@@ -75,7 +74,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @PostConstruct
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
-        if (StringUtils.isNotEmpty(this.channel) && this.channel.equals(ChannelType.PRINT.getValue())) {
+        if (StringUtils.isNotEmpty(this.channel) && this.channel.equals("print")) {
             fragmentPath = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + this.channel;
         }
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
