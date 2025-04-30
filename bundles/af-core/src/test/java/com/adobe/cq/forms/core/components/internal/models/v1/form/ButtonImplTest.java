@@ -41,7 +41,6 @@ public class ButtonImplTest {
     private static final String PATH_BUTTON_1 = CONTENT_ROOT + "/button";
     private static final String PATH_BUTTON_CUSTOMIZED = CONTENT_ROOT + "/button-customized";
     private static final String PATH_BUTTON_NO_FIELDTYPE = CONTENT_ROOT + "/button-without-fieldtype";
-    private static final String PATH_BUTTON_WITH_DORCONTAINER = CONTENT_ROOT + "/button-with-dorcontainer";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
