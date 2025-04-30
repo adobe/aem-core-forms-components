@@ -13,6 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+<<<<<<< HEAD
 <<<<<<<< HEAD:bundles/af-core/src/main/java/com/adobe/cq/forms/core/components/models/form/ChannelType.java
 package com.adobe.cq.forms.core.components.models.form;
 
@@ -20,6 +21,11 @@ import org.apache.commons.lang3.StringUtils;
 ========
 package com.adobe.cq.forms.core.components.models.form.print;
 >>>>>>>> 1ffc451ff (feat(print-properties): RTC - Adding UTs for print specific interfaces):bundles/af-core/src/main/java/com/adobe/cq/forms/core/components/models/form/print/XfaElementType.java
+=======
+package com.adobe.cq.forms.core.components.models.form;
+
+import org.apache.commons.lang3.StringUtils;
+>>>>>>> 6a8925dd0 (feat(print-properties): Refactoring changes)
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
