@@ -591,6 +591,11 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return new ArrayList<>(disabledScripts);
     }
 
+    /**
+     * Returns the dor container properties.
+     * 
+     * @return Map of dor container properties if `fd:dorContainer` node is present otherwise returns null
+     */
     @JsonIgnore
     @Override
     public Map<String, Object> getDorContainer() {
