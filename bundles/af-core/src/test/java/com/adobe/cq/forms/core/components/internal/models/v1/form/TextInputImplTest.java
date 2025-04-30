@@ -387,7 +387,7 @@ public class TextInputImplTest {
         assertArrayEquals(new Long[] { 345L, 576L }, (Object[]) result.get("customPropLongArray"));
         Assertions.assertEquals(new BigDecimal("45.67"), (BigDecimal) result.get("customPropDecimal"));
         assertArrayEquals(new BigDecimal[] { new BigDecimal("45.67"), new BigDecimal("90.34") }, (BigDecimal[]) result.get(
-                "customPropDecimalArray"));
+            "customPropDecimalArray"));
         Assertions.assertEquals(new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
             {
                 set(Calendar.MILLISECOND, 0);
@@ -395,21 +395,21 @@ public class TextInputImplTest {
             }
         }, (Calendar) result.get("customPropDate"));
         assertArrayEquals(
-                new Calendar[] {
-                        new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
-                            {
-                                set(Calendar.MILLISECOND, 0);
-                                setTimeZone(TimeZone.getTimeZone("UTC"));
-                            }
-                        },
-                        new GregorianCalendar(2024, Calendar.JUNE, 22, 14, 0, 0) {
-                            {
-                                set(Calendar.MILLISECOND, 0);
-                                setTimeZone(TimeZone.getTimeZone("UTC"));
-                            }
-                        }
+            new Calendar[] {
+                new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
+                    {
+                        set(Calendar.MILLISECOND, 0);
+                        setTimeZone(TimeZone.getTimeZone("UTC"));
+                    }
                 },
-                (Calendar[]) result.get("customPropDateArray"));
+                new GregorianCalendar(2024, Calendar.JUNE, 22, 14, 0, 0) {
+                    {
+                        set(Calendar.MILLISECOND, 0);
+                        setTimeZone(TimeZone.getTimeZone("UTC"));
+                    }
+                }
+            },
+            (Calendar[]) result.get("customPropDateArray"));
         Assertions.assertNull(result.get("fd:accidentalPrefix"));
         Assertions.assertNull(result.get("sling:accidentalPrefix"));
         Assertions.assertNull(result.get("jcr:accidentalPrefix"));
