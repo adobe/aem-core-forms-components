@@ -155,7 +155,6 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
             } else {
                 try {
                     model = resourceToAdapt.adaptTo(modelClass);
-                    // model = child.adaptTo(modelClass);
                     if (model instanceof Base && i18n != null) {
                         ((Base) model).setI18n(i18n);
                     }
