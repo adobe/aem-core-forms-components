@@ -41,6 +41,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.ChannelType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
@@ -74,14 +75,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @PostConstruct
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
-        // if (request != null && request.getAttribute("channel") != null && request.getAttribute("channel").equals("print")) {
-        // fragmentPath = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + request.getAttribute("channel");
-        // // throw new IllegalArgumentException("Fragment path is not valid for print channel" + fragmentPath);
-        // }
-        // if (request != null) {
-        // this.channel = request.getAttribute("channel") != null ? request.getAttribute("channel").toString() : "";
-        // }
-        if (this.channel != null && this.channel.equals("print")) {
+        if (StringUtils.isNotEmpty(this.channel) && this.channel.equals(ChannelType.PRINT.getValue())) {
             fragmentPath = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + this.channel;
         }
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);

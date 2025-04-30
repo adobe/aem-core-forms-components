@@ -91,6 +91,7 @@
         <core.wcm.components.version>2.24.6</core.wcm.components.version>
         <core.wcm.components.library.version>2.24.6</core.wcm.components.library.version>
 
+        <core.print.api.version>1.0.6</core.print.api.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatter.version>2.16.0</formatter.version>
@@ -424,7 +425,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M3</version>
                     <configuration>
-                        <argLine>-Xmx2048m</argLine>
+                        <argLine>-Xmx1024m</argLine>
                         <useSystemClassLoader>false</useSystemClassLoader>
                     </configuration>
                 </plugin>
@@ -1073,6 +1074,11 @@
                 <groupId>com.adobe.cq</groupId>
                 <artifactId>core.wcm.components.core</artifactId>
                 <version>${core.wcm.components.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>core-forms-print-components-print-dor-api</artifactId>
+                <version>${core.print.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>

@@ -182,11 +182,8 @@
             "label",
             "lang",
             "maximum",
-            "maxLength",
             "minimum",
-            "minLength",
             "name",
-            "pattern",
             "placeholder",
             "properties",
             "readOnly",
@@ -429,7 +426,7 @@
             "const": "string"
           },
           "format": {
-            "const": "datetime-input"
+            "const": "date-time"
           },
           "rules": {
             "type": "object",

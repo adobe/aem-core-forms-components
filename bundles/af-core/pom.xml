@@ -656,7 +656,6 @@
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>core-forms-print-components-print-dor-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.apache.sling</groupId>
