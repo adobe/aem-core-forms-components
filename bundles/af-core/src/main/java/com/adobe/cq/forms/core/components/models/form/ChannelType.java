@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ChannelType {
