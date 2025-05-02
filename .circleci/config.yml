@@ -51,7 +51,7 @@ common:
           command: npm install chrome-launcher
       - run:
           name: Install lighthouse
-          command: npm install lighthouse
+          command: npm install lighthouse@12.5.0
       - run:
           name: Install Web Driver
           command: npm install selenium-webdriver
