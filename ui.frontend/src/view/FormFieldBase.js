@@ -167,6 +167,7 @@ class FormFieldBase extends FormField {
     #syncLabel() {
         let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
         if (labelElement) {
+            labelElement.setAttribute('id', `${this.getId()}__label`);
             labelElement.setAttribute('for', this.getWidgetId());
         }
     }
@@ -176,6 +177,7 @@ class FormFieldBase extends FormField {
         let errorElement = typeof this.getErrorDiv === 'function' ? this.getErrorDiv() : null;
         if (errorElement) {
             errorElement.setAttribute('id', `${this.getId()}__errormessage`);
+            errorElement.setAttribute('aria-describedby', `${this.getId()}__label`);
         }
     }   
 
@@ -249,7 +251,7 @@ class FormFieldBase extends FormField {
         this.#syncLabel()
         this.#syncWidget()
         this.#syncShortDesc()
-        this. #syncLongDesc()
+        this.#syncLongDesc()
         this.#syncAriaDescribedBy()
         this.#syncError()
         this.#syncAriaLabel()
