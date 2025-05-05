@@ -210,6 +210,67 @@
         "visible": false
       },
       "actionType": "fd/af/components/guidesubmittype/rest"
+    },
+    "formcontainerv2-with-fragment": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/print/container/v1/container",
+      "thankYouMessage": "Thank you for submitting.",
+      "fd:roleAttribute": "test-role-attribute",
+      "thankYouOption": "message",
+      "redirect": "/content/wknd",
+      "prefillService": "FDM",
+      "fieldType" : "form",
+      "dorType": "generate",
+      "dorTemplateRef": "xyz",
+      "clientLibRef": "abc",
+      "customProp": "customPropValue",
+      "fragment": {
+        "jcr:primaryType": "nt:unstructured",
+        "wrapData": true,
+        "jcr:title": "Fragment",
+        "minOccur": "0",
+        "jcr:lastModifiedBy": "admin",
+        "name": "fragment-123",
+        "maxOccur": "4",
+        "jcr:lastModified": "Fri Jun 02 2023 12:34:24 GMT+0530",
+        "repeatable": true,
+        "sling:resourceType": "core/fd/components/form/fragment/v1/fragment",
+        "fieldType": "panel",
+        "fragmentPath": "/content/forms/af/demo/jcr:content/printfragment",
+        "customProp": "customPropValue"
+      }
+    },
+    "printfragment": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "AF Fragment (v2)",
+      "jcr:content": {
+        "jcr:primaryType": "cq:PageContent",
+        "jcr:title": "AF Fragment (v2)",
+        "print": {
+          "jcr:primaryType": "nt:unstructured",
+          "jcr:title": "AF Fragment (v2)",
+          "jcr:content": {
+            "jcr:primaryType": "cq:PageContent",
+            "jcr:title": "AF Fragment (v2)",
+            "guideContainer": {
+              "jcr:primaryType": "nt:unstructured",
+              "thankYouOption": "page",
+              "fd:version": "2.1",
+              "title": "AF Fragment (v2)",
+              "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
+              "fieldType": "form",
+              "dorType": "none",
+              "textinput": {
+                "jcr:primaryType": "nt:unstructured",
+                "jcr:title": "Text Input",
+                "name": "fragmenttextinput",
+                "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+                "fieldType": "text-input"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

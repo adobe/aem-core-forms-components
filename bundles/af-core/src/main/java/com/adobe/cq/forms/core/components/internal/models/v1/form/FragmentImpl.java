@@ -92,7 +92,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         String fragmentPathOfChannel = fragmentPath;
         while (formContainerResource != null) {
             String resourceType = formContainerResource.getValueMap().get("sling:resourceType", String.class);
-            if (resourceType != null && resourceType.contains("printcontainer")) {
+            if (resourceType != null && resourceType.contains("print")) {
                 fragmentPathOfChannel = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + "print";
                 break;
             }

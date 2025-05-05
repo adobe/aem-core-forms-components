@@ -103,6 +103,7 @@ public class FormContainerImplTest {
         + "/formContainer-cc-form-spreadsheet-submission";
     private static final String PATH_CC_FORM_REST_SUBMISSION = CONTENT_ROOT
         + "/formContainer-cc-form-rest-submission";
+    private static final String PATH_FORM_WITH_FRAGMENT = CONTENT_ROOT + "/formcontainerv2-with-fragment";
 
     private static final String PATH_FORM_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/formcontainerv2-without-fieldtype";
     private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
@@ -822,5 +823,11 @@ public class FormContainerImplTest {
         Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
         assertTrue(dorProperties.containsKey("fd:excludeFromDoRIfHidden"));
         assertEquals(false, dorProperties.get("fd:excludeFromDoRIfHidden"));
+    }
+
+    @Test
+    void testJSONExportWithFragment() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_FRAGMENT, FormContainerImpl.class, context);
+        Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_WITH_FRAGMENT));
     }
 }
