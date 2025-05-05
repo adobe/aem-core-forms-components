@@ -74,9 +74,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @PostConstruct
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
-        if (StringUtils.isNotEmpty(this.channel) && this.channel.equals("print")) {
-            fragmentPath = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + this.channel;
-        }
+
+        fragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
+
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
         if (request != null) {
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
@@ -87,7 +87,21 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         }
     }
 
-    @JsonView(Views.Author.class)
+    private String getFragmentPathBasedOnChannel(String fragmentPath) {
+        Resource formContainerResource = resource;
+        String fragmentPathOfChannel = fragmentPath;
+        while (formContainerResource != null) {
+            String resourceType = formContainerResource.getValueMap().get("sling:resourceType", String.class);
+            if (resourceType != null && resourceType.contains("printcontainer")) {
+                fragmentPathOfChannel = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + "print";
+                break;
+            }
+            formContainerResource = formContainerResource.getParent();
+        }
+        return fragmentPathOfChannel;
+    }
+
+    @JsonIgnore
     public String getFragmentPath() {
         return fragmentPath;
     }
