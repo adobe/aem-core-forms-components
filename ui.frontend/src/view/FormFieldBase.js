@@ -540,6 +540,8 @@ class FormFieldBase extends FormField {
             // Check if the validationMessage is different from the current content
             if (this.errorDiv.innerHTML !== state.validationMessage) {
                 this.errorDiv.innerHTML = state.validationMessage;
+                this.errorDiv.removeAttribute('tabindex');
+                this.errorDiv.removeAttribute('role');
                 if (state.validity.valid === false) {
                     // Find the first key whose value is true
                     const validationType = Object.keys(state.validity).find(key => key !== 'valid' && state.validity[key] === true);
@@ -552,7 +554,9 @@ class FormFieldBase extends FormField {
                     if (!state.validationMessage) {
                         this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
                     }
-                } 
+                    this.errorDiv.setAttribute('tabindex', 0);
+                    this.errorDiv.setAttribute('role', 'complementary');
+                }
                 this.#syncAriaDescribedBy();
             }
         }
