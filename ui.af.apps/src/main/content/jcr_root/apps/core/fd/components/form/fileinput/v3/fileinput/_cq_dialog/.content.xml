@@ -103,7 +103,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
                                                     fieldLabel="Allowed file types"
-                                                    fieldDescription="This field got disabled as the allowed file extensions are specified."
+                                                    fieldDescription="Specify allowed MIME types (for example, image/jpeg) to filter uploads. You can use this option or 'Allowed file extensions'. However, this setting is disabled if any 'Allowed file extensions' are specified."
                                                     defaultValue="">
                                                 <field
                                                         name="./accept"
@@ -115,7 +115,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="fd/af/authoring/components/granite/form/formsmultifield"
                                                     fieldLabel="Allowed file extensions"
-                                                    fieldDescription="Specify the allowed file extensions (for example, .png, .pdf). Ensure that the specified extensions correspond to valid MIME types to avoid upload issues."
+                                                    fieldDescription="Specify allowed file extensions (for example, jpg, pdf) to filter uploads. Using this option will disable and override the 'Allowed file types' setting."
                                                     defaultValue="">
                                                 <field
                                                         name="./acceptExtensions"
