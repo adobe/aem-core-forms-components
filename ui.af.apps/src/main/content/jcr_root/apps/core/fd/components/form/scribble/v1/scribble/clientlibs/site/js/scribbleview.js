@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2024 Adobe
+ * Copyright 2025 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -328,6 +328,7 @@
                 }
         
                 this._signSubmitted = false;
+                this.setModelValue(null);
             };
         
             clearSignButton.addEventListener('click', handleClearSign);
@@ -346,7 +347,7 @@
             // html sets undefined value as undefined string in input value, hence this check is added
             let widgetValue = typeof value === "undefined" ? null : value;
             const signedImage = this.getSignedCanvasImage();
-            if (signedImage) {
+            if (signedImage && widgetValue) {
                 signedImage.src = widgetValue;
                 super.updateEmptyStatus();
             }
@@ -431,7 +432,7 @@
             const img = this.getSignedCanvasImage();
             img.src = newData;
             img.style.width = '100%';
-            img.style.height = '250px';
+            img.style.height = '150px';
         }
 
         addClearSignButton() {
@@ -484,7 +485,6 @@
             
             // Ensure the canvas has valid dimensions
             if (signCanvas.width === 0 || signCanvas.height === 0) {
-                console.error('Canvas has invalid dimensions.');
                 return;
             }
             
@@ -667,7 +667,7 @@
             const fontStyle = "italic";
             keyboardSignBox.style.font = `${fontStyle} 2rem ${fontFamily}`;
             const value = keyboardSignBox.value;
-            this.context.font = `${fontStyle} 2rem ${fontFamily}`;
+            this.context.font = `${fontStyle} 10rem ${fontFamily}`;
             this.context.fillText(value, 0, this.getCanvas().height / 2);
         }
 
@@ -691,10 +691,15 @@
 
         resizeAndFixCanvas() {
             const dpr = window.devicePixelRatio || 1;
-            const imgData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+            let imgData = null;
+            if (this.canvas.width > 0 && this.canvas.height > 0) {
+                imgData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+            }
             this.canvas.width = this.canvas.offsetWidth * dpr;
             this.canvas.height = this.canvas.offsetHeight * dpr;
-            this.context.putImageData(imgData, 0, 0);
+            if (imgData) {
+                this.context.putImageData(imgData, 0, 0);
+            }
         }
 
         handleCanvasEvent(event) {
@@ -766,7 +771,6 @@
         startDrawing(event) {
             // Ensure the context is initialized
             if (!this.context) {
-                console.error('Canvas context is not initialized.');
                 return;
             }
         
