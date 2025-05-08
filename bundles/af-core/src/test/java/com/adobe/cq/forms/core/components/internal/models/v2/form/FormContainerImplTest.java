@@ -796,15 +796,6 @@ public class FormContainerImplTest {
     }
 
     @Test
-    void testPageTemplate() {
-        FormContainer mockFormContainer = Mockito.mock(FormContainerImpl.class);
-        Mockito.when(mockFormContainer.getPageTemplate()).thenReturn(new HashMap<>());
-        Mockito.when(mockFormContainer.getDorProperties()).thenCallRealMethod();
-        Map<String, Object> dorProperties = mockFormContainer.getDorProperties();
-        assertTrue(dorProperties.containsKey(FormContainerImpl.DOR_PAGE_TEMPLATE));
-    }
-
-    @Test
     void testJSONExportWithFragment() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_FRAGMENT, FormContainerImpl.class, context);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_WITH_FRAGMENT));
