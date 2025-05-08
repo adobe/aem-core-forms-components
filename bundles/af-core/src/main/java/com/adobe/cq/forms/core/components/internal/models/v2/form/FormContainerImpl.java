@@ -428,27 +428,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         return customDorProperties;
     }
 
-    /**
-     * Returns the page template properties.
-     * 
-     * @return Map of page template properties if `fd:pageTemplate` node is present otherwise returns null
-     */
-    @JsonIgnore
-    @Override
-    public Map<String, Object> getPageTemplate() {
-        if (resource != null) {
-            Resource pageTemplateResource = resource.getChild("fd:pageTemplate");
-            if (pageTemplateResource != null) {
-                PageTemplate pageTemplate = pageTemplateResource.adaptTo(PageTemplate.class);
-                ObjectMapper objectMapper = new ObjectMapper();
-                if (pageTemplate != null) {
-                    return objectMapper.convertValue(pageTemplate, new TypeReference<Map<String, Object>>() {});
-                }
-            }
-        }
-        return null;
-    }
-
     @JsonIgnore
     @Override
     public void visit(Consumer<ComponentExporter> callback) throws Exception {
