@@ -17,100 +17,6 @@
 
 (function() {
     "use strict";
-    const PNGGeneratorUtil = (() => {
-        // Helper function to initialize CRC table
-        const initCrcTable = () => {
-            const table = new Uint32Array(256);
-            for (let n = 0; n < 256; n++) {
-                let c = n;
-                for (let k = 0; k < 8; k++) {
-                    c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
-                }
-                table[n] = c;
-            }
-            return table;
-        };
-    
-        // Helper function to convert 32-bit integer to string
-        const u32IntToStr = (n) => String.fromCharCode(
-            (n >>> 24) & 0xFF,
-            (n >>> 16) & 0xFF,
-            (n >>> 8) & 0xFF,
-            n & 0xFF
-        );
-    
-        // Helper function to calculate CRC
-        const updateCrc = (crc, data) => {
-            let c = crc;
-            for (let i = 0; i < data.length; i++) {
-                c = crcTable[(c ^ data.charCodeAt(i)) & 0xff] ^ (c >>> 8);
-            }
-            return c;
-        };
-    
-        // Helper function to calculate CRC
-        const CRC = (data) => updateCrc(0xffffffff, data) ^ 0xffffffff;
-    
-        // Helper function to prepare text chunk
-        const prepareTextChunk = (content) => {
-            const len = content.length;
-            const lenStr = u32IntToStr(len);
-            const chunkType = "tEXt";
-            const checkSumStr = u32IntToStr(CRC(chunkType + content));
-            return lenStr + chunkType + content + checkSumStr;
-        };
-    
-        // Initialize CRC table
-        const crcTable = initCrcTable();
-    
-        const _LC_Scribble_MetaDataKey = "LC_SCIBBLE_METADATA";
-    
-        // Main API
-        return {
-            // Function to check if data is a PNG
-            _isPng: (b64data) => {
-                return b64data && b64data.replace(/\s+/g, "").startsWith("iVBORw0KGgo");
-            },
-    
-            // Function to make PNG read-only
-            _makeReadOnly: (b64data) => {
-                const bindata = atob(b64data.replace(/\s+/g, '')); // remove white spaces
-                const pngctx = { p: 8, d: bindata }; // Skip PNG header
-                const metadataChunk = prepareTextChunk(_LC_Scribble_MetaDataKey + String.fromCharCode(0) + "true");
-                const newdata = pngctx.d.substring(0, pngctx.p) + metadataChunk + pngctx.d.substring(pngctx.p);
-                return btoa(newdata);
-            },
-    
-            // Function to decode base64
-            _atob: (input) => window.atob ? atob(input) : Base64.decode(input),
-    
-            // Function to encode to base64
-            _btoa: (input) => window.btoa ? btoa(input) : Base64.encode(input),
-    
-            // Function to check if PNG is read-only
-            _isReadOnly: (b64data) => {
-                if (this._isPng(b64data)) {
-                    const testStr = _LC_Scribble_MetaDataKey + String.fromCharCode(0) + "true";
-                    const bindata = this._atob(b64data.replace(/\s+/g, ''));
-                    const pngctx = { p: 8, d: bindata }; // Skip PNG header
-                    while (pngctx.p < pngctx.d.length) {
-                        const size = (pngctx.d.charCodeAt(pngctx.p) << 24) |
-                                     (pngctx.d.charCodeAt(pngctx.p + 1) << 16) |
-                                     (pngctx.d.charCodeAt(pngctx.p + 2) << 8) |
-                                     pngctx.d.charCodeAt(pngctx.p + 3);
-                        const type = pngctx.d.slice(pngctx.p + 4, pngctx.p + 8);
-                        pngctx.p += 8; // Move past size and type
-                        if (type === "tEXt" && pngctx.d.indexOf(testStr, pngctx.p) === pngctx.p) {
-                            return true;
-                        }
-                        pngctx.p += size + 4; // Move past data and CRC
-                    }
-                }
-                return false;
-            }
-        };
-    })();
-
     /**
      * class definition for GeoLocationQueryRequest
      * encapsulated success and error handlers
@@ -348,7 +254,7 @@
             let widgetValue = typeof value === "undefined" ? null : value;
             const signedImage = this.getSignedCanvasImage();
             if (signedImage && widgetValue) {
-                signedImage.src = widgetValue;
+                signedImage.src = `data:image/png;base64,${widgetValue}`;
                 super.updateEmptyStatus();
             }
         }
@@ -383,17 +289,13 @@
                 sigCnv.height = mainCanvas.height;
                 sigCnv.parentNode.replaceChild(mainCanvas, sigCnv);
         
-                const newData = mainCanvas.toDataURL("image/png");
+                let submitData = mainCanvas.toDataURL("image/png");
                 this.existingSign = mainCanvas;
-                let val;
-                if ((val = this.extractData(newData))) {
-                    // const pngGeneratorUtil = PNGGeneratorUtil();
-                    val = PNGGeneratorUtil._makeReadOnly(val);
-                    this._is_readonly = true;
-                }
+                
+                submitData = submitData.replace(/^data:image\/png;base64,/, '');
         
-                this.updateSignedImage(newData);
-                this.setModelValue(newData);
+                this.updateSignedImage(submitData);
+                this.setModelValue(submitData);
                 this.addClearSignButton();
         
                 if (this._geoLocQuery) {
@@ -430,7 +332,7 @@
 
         updateSignedImage(newData) {
             const img = this.getSignedCanvasImage();
-            img.src = newData;
+            img.src = `data:image/png;base64,${newData}`;
             img.style.width = '100%';
             img.style.height = '150px';
         }
