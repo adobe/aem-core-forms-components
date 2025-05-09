@@ -91,7 +91,7 @@
         <core.wcm.components.version>2.24.6</core.wcm.components.version>
         <core.wcm.components.library.version>2.24.6</core.wcm.components.library.version>
 
-        <core.print.api.version>1.0.6</core.print.api.version>
+        <core.print.api.version>1.0.8</core.print.api.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatter.version>2.16.0</formatter.version>
