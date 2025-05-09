@@ -38,7 +38,7 @@
      data-sly-test.widgetId="${'{0}-{1}' @ format=[scribble.id, 'widget']}">
 
     <div class="cmp-adaptiveform-scribble__label-container">
-      <div data-sly-call="${label.label @componentId=widgetId, labelValue=scribble.label.value, labelVisible=scribble.label.visible, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=scribble.label.value, labelVisible=scribble.label.visible, labelRichText=scribble.label.richText, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
       <div data-sly-call="${questionMark.questionMark @componentId=scribble.id, longDescription=scribble.description, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
     </div>
 

@@ -134,7 +134,7 @@ executors:
       - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
     machine:
-      image: ubuntu-2204:2023.10.1
+      image: ubuntu-2204:2024.01.1
       docker_layer_caching: true
 
 jobs:
