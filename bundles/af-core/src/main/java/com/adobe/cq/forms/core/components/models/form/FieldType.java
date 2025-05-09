@@ -41,16 +41,7 @@ public enum FieldType {
     RANGE("range"),
     COLOR("color"),
     URL("url"),
-    HIDDEN("hidden"),
-    TEMPLATE("template"),
-    PAGESET("pageset"),
-    PAGEAREA("pagearea"),
-    MEDIUM("medium"),
-    CONTENTAREA("contentarea"),
-    PROTO("proto"),
-    LINE("line"),
-    RECTANGLE("rectangle"),
-    BARCODE("barcode");
+    HIDDEN("hidden");
 
     private String value;
 
