@@ -15,7 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -43,6 +45,7 @@ import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.day.cq.commons.jcr.JcrConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
@@ -70,6 +73,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @PostConstruct
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
+
+        fragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
+
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
         if (request != null) {
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
@@ -78,6 +84,20 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                 formClientLibManager.addClientLibRef(clientLibRef);
             }
         }
+    }
+
+    private String getFragmentPathBasedOnChannel(String fragmentPath) {
+        Resource formContainerResource = resource;
+        String fragmentPathOfChannel = fragmentPath;
+        while (formContainerResource != null) {
+            String resourceType = formContainerResource.getValueMap().get("sling:resourceType", String.class);
+            if (resourceType != null && resourceType.contains("print")) {
+                fragmentPathOfChannel = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + "print";
+                break;
+            }
+            formContainerResource = formContainerResource.getParent();
+        }
+        return fragmentPathOfChannel;
     }
 
     @JsonIgnore
