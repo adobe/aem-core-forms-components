@@ -19,6 +19,8 @@ import javax.annotation.Nullable;
 
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Defines the form {@code panel} Sling Model used for the {@code /apps/core/fd/components/form/panel/v1/panel} component.
  *
@@ -36,4 +38,16 @@ public interface Panel extends Container, ContainerConstraint {
     default Boolean isReadOnly() {
         return null;
     }
+
+    /**
+     * Checks if the container is wrap data.
+     *
+     * @return {@code true} if the container is wrap data, {@code false} otherwise
+     * @since com.adobe.cq.forms.core.components.models.form 5.3.0
+     */
+    @JsonIgnore
+    default boolean isWrapData() {
+        return false;
+    }
+
 }
