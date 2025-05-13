@@ -59,6 +59,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class FragmentImpl extends PanelImpl implements Fragment {
 
     public static final String CUSTOM_FRAGMENT_PROPERTY_WRAPPER = "fd:fragment";
+    private static final String PRINT_CHANNEL_PATH = "/" + JcrConstants.JCR_CONTENT + "/" + "print";
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
@@ -92,8 +93,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         String fragmentPathOfChannel = fragmentPath;
         while (formContainerResource != null) {
             String resourceType = formContainerResource.getValueMap().get("sling:resourceType", String.class);
-            if (resourceType != null && resourceType.contains("print")) {
-                fragmentPathOfChannel = fragmentPath + "/" + JcrConstants.JCR_CONTENT + "/" + "print";
+            if (resourceType != null && resourceType.contains(FormConstants.PRINT_CHANNEL_MARKER)) {
+                fragmentPathOfChannel = fragmentPath + PRINT_CHANNEL_PATH;
                 break;
             }
             formContainerResource = formContainerResource.getParent();
