@@ -38,7 +38,7 @@ public enum FieldType {
     IMAGE("image"),
     TELEPHONE("tel"),
     PASSWORD("password"),
-    DATETIME("date-time"),
+    DATETIME_INPUT("datetime-input"),
     RANGE("range"),
     COLOR("color"),
     URL("url"),

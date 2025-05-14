@@ -137,7 +137,6 @@ public final class FormConstants {
 
     public static final String PROP_FRAGMENT_PATH = "fragmentPath";
 
-<<<<<<< HEAD
     /** The resource type for review v1 */
     public static final String RT_FD_FORM_REVIEW_V1 = RT_FD_FORM_PREFIX + "review/v1/review";
 
