@@ -87,6 +87,14 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Nullable
     protected Date maximumDate;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MINIMUM_DATE_TIME)
+    @Nullable
+    protected String minimumDateTime;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAXIMUM_DATE_TIME)
+    @Nullable
+    protected String maximumDateTime;
+
     /** Do not do any changes, this is just present for backward compatibility **/
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAXIMUM)
     @Nullable

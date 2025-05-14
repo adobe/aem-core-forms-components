@@ -42,7 +42,7 @@
         "grammar": "json-formula-1.0.0",
         "version": "1.0.0"
     },
-    "adaptiveform": "0.14.2",
+    "adaptiveform": "0.15.0",
     ":items": {
         "textinput": {
             "id": "textinput-5bac58a9c9",
