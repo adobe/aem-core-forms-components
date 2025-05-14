@@ -152,7 +152,7 @@ public class Utils {
                 ((ObjectNode) formContainerTemplateNode).putArray("items").add(json);
                 json = formContainerTemplateNode;
             }
-            // create set of validation message and store result in it
+            // create set of validation message and st ore result in it
             Set<ValidationMessage> validationResult = schema.validate(json);
             // show the validation errors
             if (!validationResult.isEmpty()) {
