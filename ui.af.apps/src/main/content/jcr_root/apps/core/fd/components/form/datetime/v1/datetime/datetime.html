@@ -1,5 +1,5 @@
 <!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2024 Adobe
+  ~ Copyright 2025 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -41,10 +41,12 @@
         id="${widgetId}" type="datetime-local"
         name="${datetime.name}"
         data-cmp-data-layer="${datetime.data.json}"
-        value="${datetime.default}"
+        value="${datetime.default? datetime.default : ''}"
         disabled="${!datetime.enabled}"
         readonly="${datetime.readOnly}"
         required="${datetime.required}"
+        min = "${datetime.minimumDateTime}"
+        max = "${datetime.maximumDateTime}"
         placeholder="${datetime.placeHolder}"
         dir="auto"
         aria-label="datetime" />

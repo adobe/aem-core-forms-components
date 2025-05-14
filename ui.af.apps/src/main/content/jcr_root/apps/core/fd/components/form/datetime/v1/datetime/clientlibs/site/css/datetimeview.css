@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2024 Adobe
+ * Copyright 2025 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,10 +97,10 @@
  }
 
  .cmp-adaptiveform-datetime[data-cmp-valid=false]{
-   background: $light-error;
-   border: 0 solid $error;
-   border-inline-start-width: 4px;
-   padding-inline-start: 5px;
+     background: rgb(235 60 54 / 5%);
+     border: 0 solid #eb3c36;
+     border-inline-start-width: 4px;
+     padding-inline-start: 5px;
  }
 
  .cmp-adaptiveform-datetime[data-cmp-valid=true]{

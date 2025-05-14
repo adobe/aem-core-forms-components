@@ -1,7 +1,7 @@
 {
   "id": "datetime-cb8e90e488",
   "dataRef": "a.b",
-  "fieldType": "date-time",
+  "fieldType": "datetime-input",
   "name": "abc",
   "visible": false,
   "description": "dummy",
@@ -39,7 +39,7 @@
     "value": "false()",
     "enabled": "true()"
   },
-  "format": "date",
+  "format": "date-time",
   "minimum": "2022-02-04",
   "maximum": "2022-02-09",
   ":type": "core/fd/components/form/dateime/v1/dateime"

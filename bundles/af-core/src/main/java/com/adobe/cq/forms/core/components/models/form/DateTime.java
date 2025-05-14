@@ -1,6 +1,6 @@
 
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2024 Adobe
+ ~ Copyright 2025 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -22,17 +22,9 @@ import org.osgi.annotation.versioning.ConsumerType;
 /**
  * Interface for {@code Password} Sling Model used for the {@code /apps/core/fd/components/form/password/v1/password} component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+ * @since com.adobe.cq.forms.core.components.models.form 5.11.0
  */
 @ConsumerType
-public interface DateTime extends Field, StringConstraint, NumberConstraint {
-
-    /**
-     * Returns the validation pattern (regex) for the password field.
-     *
-     * @return the validation pattern
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
-     */
-    String getPattern();
+public interface DateTime extends Field, DateTimeConstraint {
 
 }

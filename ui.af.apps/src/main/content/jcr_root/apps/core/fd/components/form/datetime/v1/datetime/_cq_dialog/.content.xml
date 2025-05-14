@@ -29,13 +29,13 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <value
+                                            <default
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                    fieldLabel="Default value"
-                                                    name="./default"
-                                                    sling:hideResource="{Boolean}true"
-                                                    wrapperClass="cmp-adaptiveform-datetime__value"/>
+                                                    fieldDescription="Please enter the date and time in the required format  &quot;YYYY-MM-DD HH:mm:ss&quot;."
+                                                    fieldLabel="Default date and time"
+                                                    emptyText="YYYY-MM-DD HH:mm:ss"
+                                                    name="./default"/>
 
                                         </items>
                                     </column>
@@ -56,68 +56,38 @@
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <maxLength
+                                            <minimum
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                                    defaultValue="\0"
-                                                    fieldLabel="Maximum Number of characters"
-                                                    min="0"
-                                                    name="./maxLength"
-                                                    wrapperClass="cmp-adaptiveform-datetime__maxlength"/>
-                                            <maxLengthMessage
-                                                    granite:class="cmp-adaptiveform-base__maxlengthmessage"
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                    fieldDescription="Error message shown when more than maximum characters are entered."
-                                                    fieldLabel="Maximum characters error message"
-                                                    name="./maxLengthMessage"/>
-                                            <minLength
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                                    defaultValue="\0"
-                                                    fieldLabel="Minimum number of characters"
-                                                    min="0"
-                                                    name="./minLength"
-                                                    wrapperClass="cmp-adaptiveform-datetime__minlength"/>
-                                            <minLengthMessage
-                                                    granite:class="cmp-adaptiveform-base__minlengthmessage"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
+                                                    fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
+                                                    fieldLabel="Minimum date"
+                                                    type="datetime"
+                                                    emptyText="YYYY-MM-DD HH:mm"
+                                                    name="./minimumDateTime"
+                                                    valueFormat="YYYY-MM-DD[T]HH:mm:ss.000-00:00"/> <!-- Enforce UTC timezone to be timezone agnostic -->
+                                            <minimumMessage
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                    fieldDescription="Error message shown when less than minimum characters are entered."
-                                                    fieldLabel="Minimum characters error message"
-                                                    name="./minLengthMessage"/>
-                                            <validationPatternGroup
+                                                    fieldDescription="Error message shown when the date entered is before the minimum date."
+                                                    granite:class="cmp-adaptiveform-datepicker__minimummessage"
+                                                    fieldLabel="Minimum error message"
+                                                    name="./minimumMessage"/>
+                                            <maximum
                                                     jcr:primaryType="nt:unstructured"
-                                                    jcr:title="Validation Pattern"
-                                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
-                                                    title="Validation Pattern">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <validationPatternType
-                                                            granite:class="cmp-adaptiveform-datetime__validationpattern"
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                                            fieldLabel="Type"
-                                                            name="./validationPatternType">
-                                                        <datasource
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
-                                                                fieldType="datetime"
-                                                                type="formatters"/>
-                                                    </validationPatternType>
-                                                    <validateFormat
-                                                            granite:class="cmp-adaptiveform-datetime__validationformat"
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                            fieldDescription="Regular Expression is permitted."
-                                                            fieldLabel="Pattern"
-                                                            name="./pattern"/>
-                                                    <validatePictureClauseMessage
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                            fieldLabel="Error message"
-                                                            name="./validatePictureClauseMessage"/>
-                                                </items>
-                                            </validationPatternGroup>
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
+                                                    fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
+                                                    fieldLabel="Maximum date"
+                                                    emptyText="YYYY-MM-DD HH:mm"
+                                                    type="datetime"
+                                                    name="./maximumDateTime"
+                                                    valueFormat="YYYY-MM-DD[T]HH:mm:ss.000-00:00"/> <!-- Enforce UTC timezone to be timezone agnostic -->
+                                            <maximumMessage
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                    fieldDescription="Error message shown when the date entered is after the maximum date."
+                                                    granite:class="cmp-adaptiveform-datepicker__maximummessage"
+                                                    fieldLabel="Maximum error message"
+                                                    name="./maximumMessage"/>
                                         </items>
                                     </column>
                                 </items>

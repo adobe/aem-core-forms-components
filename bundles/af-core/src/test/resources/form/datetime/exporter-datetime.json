@@ -1,8 +1,9 @@
 {
-  "id": "datetime-00447787e6",
-  "fieldType": "date-time",
+  "id": "datetime-ca22ece300",
+  "fieldType": "datetime-input",
   "name": "abc",
   "type": "string",
+  "format": "date-time",
   "label": {
     "value": "def"
   },
@@ -12,12 +13,11 @@
     ]
   },
   "properties": {
+    "customProp": "customPropValue",
     "fd:dor": {
       "dorExclusion": false
     },
-    "fd:path": "/content/datetime",
-    "customProp": "customPropValue"
+    "fd:path": "/content/datetime"
   },
-  "format": "date",
   ":type": "core/fd/components/form/datetime/v1/datetime"
 }

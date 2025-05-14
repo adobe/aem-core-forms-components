@@ -1,5 +1,5 @@
 /**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2024 Adobe
+ ~ Copyright 2025 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -16,6 +16,10 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
 import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
 
@@ -25,13 +29,15 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.DateTime;
+import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
-import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.adobe.xfa.ut.StringUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -41,70 +47,60 @@ import com.adobe.cq.forms.core.components.util.ComponentUtils;
     name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class DateTimeImpl extends AbstractFieldImpl implements DateTime {
-
-    private Object exclusiveMinimumVaue;
-    private Object exclusiveMaximumValue;
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String pattern;
 
     @Override
     public String getFieldType() {
-        return super.getFieldType();
-    }
-
-    @Override
-    public Integer getMinLength() {
-        return minLength;
-    }
-
-    @Override
-    public Integer getMaxLength() {
-        return maxLength;
-    }
-
-    @Override
-    public Long getMinimum() {
-        return minimum;
-    }
-
-    @Override
-    public Long getMaximum() {
-        return maximum;
-    }
-
-    @Override
-    public String getFormat() {
-        return displayFormat;
-    }
-
-    @Override
-    public String getPattern() {
-        return pattern;
-    }
-
-    @Override
-    public Long getExclusiveMaximum() {
-        return (Long) exclusiveMaximumValue;
-    }
-
-    @Override
-    public Long getExclusiveMinimum() {
-        return (Long) exclusiveMinimumVaue;
+        return super.getFieldType(FieldType.DATETIME_INPUT);
     }
 
     @PostConstruct
-    private void initTextInput() {
-        exclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximum, null);
-        exclusiveMinimumVaue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimum, null);
-        // in json either, exclusiveMaximum or maximum should be present
-        if (exclusiveMaximumValue != null) {
-            maximum = null;
+    private void initTextInput() {}
+
+    @Override
+    public String getMinimumDateTime() {
+        return getFormattedDate(minimumDateTime);
+    }
+
+    @Override
+    public String getMaximumDateTime() {
+        return getFormattedDate(maximumDateTime);
+    }
+
+    private String getFormattedDate(String dateTime) {
+        if (!StringUtils.isEmpty(dateTime)) {
+            OffsetDateTime formattedTime = OffsetDateTime.parse(dateTime);
+            return formattedTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
         }
-        if (exclusiveMinimumVaue != null) {
-            minimum = null;
+        return dateTime;
+
+    }
+
+    public @NotNull Map<ConstraintType, String> getConstraintMessages() {
+        Map<ConstraintType, String> res = super.getConstraintMessages();
+        String msg = getConstraintMessage(ConstraintType.MINIMUM);
+        if (msg != null) {
+            res.put(ConstraintType.MINIMUM, msg);
         }
+        msg = getConstraintMessage(ConstraintType.MAXIMUM);
+        if (msg != null) {
+            res.put(ConstraintType.MAXIMUM, msg);
+        }
+        return res;
+    }
+
+    @Override
+    @Nullable
+    public String getFormat() {
+        return "date-time";
+    }
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_TIME_FORMATTER, timezone = "UTC")
+    @Override
+    public Object[] getDefault() {
+        return defaultValue;
     }
 
 }

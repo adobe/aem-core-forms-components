@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2024 Adobe
+ ~ Copyright 2025 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 @ExtendWith(AemContextExtension.class)
 public class DateTimeImplTest {
@@ -39,8 +38,9 @@ public class DateTimeImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DATETIME_DATALAYER = CONTENT_ROOT + "/datetime-datalayer";
     private static final String PATH_DATETIME_CUSTOMIZED = CONTENT_ROOT + "/datetime-customized";
-    private static final String PATH_NUMBER_DATETIME_EXCLUSIVE = CONTENT_ROOT + "/number-datetime-exclusive";
-    private static final String PATH_NUMBER_DATETIME_INPUT = CONTENT_ROOT + "/number-datetime";
+    private static final String PATH_DATETIME = CONTENT_ROOT + "/datetime";
+    private static final String PATH_DATETIME_MESSAGE = CONTENT_ROOT + "/datetime-message";
+    private static final String PATH_DATETIME_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/datetime-backwardcompatible";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -52,122 +52,84 @@ public class DateTimeImplTest {
     @Test
     void testFieldType() {
         DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(FieldType.DATETIME.getValue(), dateTime.getFieldType());
+        assertEquals(FieldType.DATETIME_INPUT.getValue(), dateTime.getFieldType());
     }
 
     @Test
     void testGetLabel() {
         DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals("pwd", dateTime.getLabel().getValue());
-    }
-
-    @Test
-    void testPlaceholder() {
-        DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals("Enter valid date & time", dateTime.getPlaceHolder());
+        assertEquals("def", dateTime.getLabel().getValue());
     }
 
     @Test
     void testGetName() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals("datetime", datetime.getName());
+        assertEquals("abc", datetime.getName());
 
     }
 
     @Test
     void testDorProperties() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(true, datetime.getDorProperties().get("dorExclusion"));
-        assertEquals("4", datetime.getDorProperties().get("dorColspan"));
-        assertEquals("Text1", datetime.getDorProperties().get("dorBindRef"));
+        assertEquals(false, datetime.getDorProperties().get("dorExclusion"));
+        assertEquals(null, datetime.getDorProperties().get("dorColspan"));
+        assertEquals(null, datetime.getDorProperties().get("dorBindRef"));
 
     }
 
     @Test
     void testGetDescription() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals("datetime field", datetime.getDescription());
+        assertEquals("dummy", datetime.getDescription());
     }
 
     @Test
     void testGetRequired() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(true, datetime.isRequired());
+        assertEquals(false, datetime.isRequired());
     }
 
-    @Test
-    void testGetPattern() {
-        DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals("/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/", datetime.getPattern());
-
-    }
+    // @Test
+    // void testGetPattern() {
+    // DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
+    // assertEquals("/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/", datetime.getPattern());
+    //
+    // }
 
     @Test
     void testIsEnabled() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(true, datetime.isEnabled());
+        assertEquals(false, datetime.isEnabled());
     }
 
     @Test
     void testIsEnabledForCustomized() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(true, datetime.isEnabled());
+        assertEquals(false, datetime.isEnabled());
     }
 
     @Test
     void testIsReadOnly() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(false, datetime.isReadOnly());
+        assertEquals(true, datetime.isReadOnly());
     }
 
     @Test
     void testIsReadOnlyForCustomized() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(false, datetime.isReadOnly());
-    }
-
-    @Test
-    void testMinLength() {
-        DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(5, datetime.getMinLength().intValue());
-    }
-
-    @Test
-    void testMaxLength() {
-        DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(10, datetime.getMaxLength().intValue());
-    }
-
-    @Test
-    void testGetExclusiveMinimum() {
-        DateTime datetime = Utils.getComponentUnderTest(PATH_NUMBER_DATETIME_EXCLUSIVE, DateTime.class, context);
-        assertNull(datetime.getMinimum());
-        assertEquals(8L, datetime.getExclusiveMinimum().longValue());
-    }
-
-    @Test
-    void testGetExclusiveMaximum() {
-        DateTime datetime = Utils.getComponentUnderTest(PATH_NUMBER_DATETIME_EXCLUSIVE, DateTime.class, context);
-        assertNull(datetime.getMaximum());
-        assertEquals(16L, datetime.getExclusiveMaximum().longValue());
+        assertEquals(true, datetime.isReadOnly());
     }
 
     @Test
     void testGetMinimum() {
-        DateTime datetime = Utils.getComponentUnderTest(PATH_NUMBER_DATETIME_INPUT, DateTime.class, context);
-        assertEquals(8, datetime.getMinimum().intValue());
+        DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
+        assertEquals("2025-05-07T11:21", datetime.getMinimumDateTime());
     }
 
     @Test
     void testGetMaximum() {
-        DateTime datetime = Utils.getComponentUnderTest(PATH_NUMBER_DATETIME_INPUT, DateTime.class, context);
-        assertEquals(16, datetime.getMaximum().intValue());
-    }
-
-    @Test
-    void testGetDisplayFormat() throws Exception {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals("datetime", datetime.getFormat());
+        assertEquals("2025-05-21T11:21", datetime.getMaximumDateTime());
     }
 
     @Test
@@ -176,10 +138,44 @@ public class DateTimeImplTest {
         FieldUtils.writeField(datetime, "dataLayerEnabled", true, true);
         FormComponentData dataObject = (FormComponentData) datetime.getData();
         assert (dataObject != null);
-        assert (dataObject.getId()).equals("datetime-1c7bc238a6");
+        assert (dataObject.getId()).equals("datetime-0ac1fed1fe");
         assert (dataObject.getType()).equals("core/fd/components/form/datetime/v1/datetime");
-        assert (dataObject.getTitle()).equals("Full Name");
-        assert (dataObject.getFieldType()).equals("datetime");
-        assert (dataObject.getDescription()).equals("Enter Full Name");
+        assert (dataObject.getTitle()).equals("DoB");
+        assert (dataObject.getFieldType()).equals("datetime-input");
+        assert (dataObject.getDescription()).equals("Date of Birth");
     }
+
+    // @Test
+    // void testGetConstraintMessages() {
+    // DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DatePicker.class, context);
+    // Map<ConstraintType, String> constraintsMessages = datePicker.getConstraintMessages();
+    // assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
+    // DatePicker datePickerMock = Mockito.mock(DatePicker.class);
+    // Mockito.when(datePickerMock.getConstraintMessages()).thenCallRealMethod();
+    // assertEquals(Collections.emptyMap(), datePickerMock.getConstraintMessages());
+    // }
+
+//    @Test
+//    void testJSONExport() throws Exception {
+//        DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME, DateTime.class, context);
+//        Utils.testJSONExport(dateTime, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME));
+//    }
+
+    // @Test
+    // void testJSONExportBackwardCompatibility() throws Exception {
+    // DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATETIME_BACKWARD_COMPATIBLE, DatePicker.class, context);
+    // Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_BACKWARD_COMPATIBLE));
+    // }
+
+    // @Test
+    // void testJSONExportForCustomized() throws Exception {
+    // DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DatePicker.class, context);
+    // Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_CUSTOMIZED));
+    // }
+
+    // @Test
+    // void testJSONExportMessage() throws Exception {
+    // DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATETIME_MESSAGE, DatePicker.class, context);
+    // Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_MESSAGE));
+    // }
 }

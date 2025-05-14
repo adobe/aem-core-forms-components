@@ -1,5 +1,5 @@
 {
-  "$id": "classpath:/schema/0.14.2/adaptive-form.schema.json",
+  "$id": "classpath:/schema/0.15.0/adaptive-form.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$defs": {
     "FormElement": {
@@ -406,6 +406,93 @@
           }
         }
       }
+    },
+    "DateTimeField": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "const": "datetime-input"
+          }
+        },
+        "required": ["fieldType"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "const": "datetime-input"
+          },
+          "type": {
+            "const": "string"
+          },
+          "format": {
+            "const": "date-time"
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "description",
+                "enabled",
+                "label",
+                "maximum",
+                "minimum",
+                "properties",
+                "readOnly",
+                "required",
+                "value",
+                "visible"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            ":type",
+            "appliedCssClassNames",
+            "constraintMessages",
+            "dataFormat",
+            "dataLayer",
+            "dataRef",
+            "default",
+            "description",
+            "displayFormat",
+            "editFormat",
+            "enabled",
+            "events",
+            "exclusiveMaximum",
+            "exclusiveMinimum",
+            "fieldType",
+            "format",
+            "id",
+            "label",
+            "lang",
+            "maximum",
+            "minimum",
+            "name",
+            "placeholder",
+            "properties",
+            "readOnly",
+            "required",
+            "rules",
+            "screenReaderText",
+            "step",
+            "tooltip",
+            "type",
+            "validationExpression",
+            "visible"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in DateTime Field"
+          }
+        },
+          "errorMessage": {
+            "properties": {
+              "fieldType": "${0/fieldType} is not a valid DateTime field type. It should be datetime-input"
+            }
+          }
+        }
     },
     "EmailField": {
       "if": {
@@ -1345,6 +1432,9 @@
             },
             {
               "const": "0.14.2"
+            },
+            {
+              "const": "0.15.0"
             }
           ]
         },
