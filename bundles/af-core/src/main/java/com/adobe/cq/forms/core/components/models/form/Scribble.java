@@ -21,16 +21,19 @@ import org.osgi.annotation.versioning.ConsumerType;
 /**
  * Defines the form Scribble Sling Model used for the Scribble component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 1.0.0
+ * @since com.adobe.cq.forms.core.components.models.form 5.11.0
  */
 @ConsumerType
 public interface Scribble extends Field {
+
+    String DEFAULT_DIALOG_LABEL = "Please sign here";
 
     /**
      * Returns the base64 encoded string of the scribble.
      *
      * @return Base64 encoded string representing the scribble
-     * @since com.adobe.cq.forms.core.components.models.form 1.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 5.11.0
      */
     String getValue();
+
 }

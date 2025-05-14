@@ -1,7 +1,7 @@
 
 <!--/*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2024 Adobe
+  ~ Copyright 2025 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -32,7 +32,6 @@
      data-cmp-visible="${scribble.visible ? 'true' : 'false'}"
      data-cmp-enabled="${scribble.enabled ? 'true' : 'false'}"
      data-cmp-required="${scribble.required ? 'true': 'false'}"
-     data-cmp-readonly="${scribble.readOnly ? 'true' : 'false'}"
      id="${scribble.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[scribble.id, 'widget']}">
@@ -53,12 +52,12 @@
 
     <div data-sly-call="${errorMessage.errorMessage @componentId=scribble.id, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
       <div class="cmp-adaptiveform-scribble__container" tabindex="0" role="dialog" aria-label="pleaseSignText">
-      <div class="cmp-adaptiveform-scribble__header">Please sign here</div>
+      <div class="cmp-adaptiveform-scribble__header">${scribble.dialogLabel}</div>
         <div class="cmp-adaptiveform-scribble__content">
           <div class="cmp-adaptiveform-scribble__canvases">
             <div class="cmp-adaptiveform-scribble__signcanvases" style="display:inline-block; vertical-align:top;">
               <canvas class="cmp-adaptiveform-scribble__canvas"></canvas>
-              <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="Type Your Signature Here">
+              <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="${scribble.placeHolder}">
             </div>
             <canvas class="cmp-adaptiveform-scribble__geocanvasright" width="0" height="0" ></canvas>
           </div>
@@ -79,10 +78,10 @@
         </div>
       </div>
       <div class="cmp-adaptiveform-scribble__clearsign-container">
-        <h1 class="cmp-adaptiveform-scribble__clearsign-title">Clear all?</h1>
+        <h1 class="cmp-adaptiveform-scribble__clearsign-title">Erase Current Signature?</h1>
         <div class="cmp-adaptiveform-scribble__clearsign-content" class="msgBoxTypenull">
           <div class="cmp-adaptiveform-scribble__clearsign-message">
-            Are you sure you want to start over? 
+            This will permanently remove the signature you've drawn. Do you wish to proceed and begin again?
           </div>
           <div class="cmp-adaptiveform-scribble__clearsign-panel">
             <button type="button" id="msgBox_No" class="cmp-adaptiveform-scribble__clearsign-no">Cancel</button>

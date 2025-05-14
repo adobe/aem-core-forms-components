@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2024 Adobe
+ ~ Copyright 2025 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -16,17 +16,23 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Map;
+
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Scribble;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -41,9 +47,26 @@ public class ScribbleImpl extends AbstractFieldImpl implements Scribble {
     @Default(values = "")
     private String value;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_DIALOG_LABEL)
+    @Default(values = Scribble.DEFAULT_DIALOG_LABEL)
+    protected String dialogLabel;
+
     @Override
     public String getValue() {
         return value;
+    }
+
+    @JsonIgnore
+    public String getDialogLabel() {
+        return dialogLabel;
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> customProperties = super.getProperties();
+        if (getDialogLabel() != null)
+            customProperties.put(ReservedProperties.FD_DIALOG_LABEL, getDialogLabel());
+        return customProperties;
     }
 
 }

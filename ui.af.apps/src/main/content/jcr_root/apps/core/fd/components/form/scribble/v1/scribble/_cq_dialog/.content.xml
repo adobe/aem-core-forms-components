@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2024 Adobe
+  ~ Copyright 2025 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -53,9 +53,15 @@
                                             <readonly
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true" />
-                                            <placeholder
+                                            <!-- <placeholder
                                                     jcr:primaryType="nt:unstructured"
-                                                    sling:hideResource="{Boolean}true" />
+                                                    sling:hideResource="{Boolean}true" /> -->
+                                            <dialogLabel
+                                                     jcr:primaryType="nt:unstructured"
+                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                     fieldLabel="Signature Dialog Title"
+                                                     fieldDescription="Sets the title displayed at the top of the signature capture dialog. This text guides the user when they are prompted to sign. Example: 'Please sign here'."
+                                                     name="./fd:dialogLabel" />
                                         </items>
                                     </column>
                                 </items>
