@@ -114,5 +114,45 @@ export const customFunctions = {
      *
      * @returns {number} - The number of days since the Unix epoch
      */
-    dateToDaysSinceEpoch: cf.dateToDaysSinceEpoch
+    dateToDaysSinceEpoch: cf.dateToDaysSinceEpoch,
+
+    /**
+     * Set global variable
+     * @param {string} variableName Name of the variable to set
+     * @param {string|object} variableValue Value to set for the variable
+     * @param {scope} globals Global scope object
+     */
+    setGlobalVariable: cf.setGlobalVariable,
+
+    /**
+     * Set a local variable value on current rule field
+     * @param {string} variableName Name of the variable to set
+     * @param {string|object} variableValue Value to set for the variable
+     * @param {scope} globals Global scope object
+     */
+    setLocalVariable: cf.setLocalVariable,
+
+    /**
+     * Get a local variable value from given field or panel
+     * @param {string} variableName - Name of the variable to get (supports dot notation e.g. 'address.city')
+     * @param {object} [normalFieldOrPanel] - Field or panel component to get the property from (defaults to current field)
+     * @param {scope} globals - Global scope object containing the current field context
+     * @returns {string|object|Array} The value of the requested variable or undefined if not found
+     */
+    getLocalVariable: cf.getLocalVariable,
+
+    /**
+     * Get a global variable value
+     * @param {string} variableName - Name of the variable to get (supports dot notation e.g. 'address.city')
+     * @param {scope} globals - Global scope object containing the current field context
+     * @returns {object|string|Array} The value of the requested variable or undefined if not found
+     */
+    getGlobalVariable: cf.getGlobalVariable,
+
+    /**
+     * Gets the form data by exporting all field values and converts to JSON string
+     * @param {scope} globals - Global scope object containing form context
+     * @returns {string} The complete form data as a JSON string
+     */
+    getFormDataAsString: cf.getFormDataAsString
 };
