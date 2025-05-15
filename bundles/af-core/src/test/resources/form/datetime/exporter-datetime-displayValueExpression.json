@@ -1,0 +1,23 @@
+{
+  "id": "datetime-c7fc29dc99",
+  "fieldType": "date-time",
+  "name": "abc",
+  "type": "string",
+  "displayValueExpression": "($field.$value & abc)",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/dateime-displayValueExpression"
+  },
+  "format": "date",
+  ":type": "core/fd/components/form/dateime/v1/dateime"
+}

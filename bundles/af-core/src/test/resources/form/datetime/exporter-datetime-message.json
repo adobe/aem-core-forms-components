@@ -1,0 +1,45 @@
+{
+  "id": "datetime-fffa242824",
+  "dataRef": "a.b",
+  "fieldType": "date-time",
+  "name": "abc",
+  "visible": false,
+  "description": "dummy",
+  "tooltip": "test-short-description",
+  "type": "string",
+  "required": true,
+  "constraintMessages": {
+    "type": "incorrect type",
+    "minimum": "Date should be greater than 4th Feb 2022",
+    "maximum": "Date should be less than 9th Feb 2022"
+  },
+  "default": "2022-02-07",
+  "label": {
+    "value": "def"
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "rules": {
+    "visible": "true()",
+    "label": "{value : 'some label'}",
+    "value": "false()",
+    "enabled": "true()"
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datetime-message"
+  },
+  "format": "date",
+  "exclusiveMinimum": "2022-02-05",
+  "exclusiveMaximum": "2022-02-08",
+  ":type": "core/fd/components/form/dateime/v1/dateime"
+}
