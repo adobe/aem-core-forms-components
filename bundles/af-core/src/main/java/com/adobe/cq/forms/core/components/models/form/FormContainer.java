@@ -156,6 +156,17 @@ public interface FormContainer extends Container {
         return false;
     }
 
+    /**
+     * Returns the path to the custom functions file
+     *
+     * @return the path to the custom functions file
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.0
+     */
+    @JsonIgnore
+    default String getCustomFunctionsPath() {
+        return null;
+    }
+
     @Override
     @JsonIgnore
     default Label getLabel() {
