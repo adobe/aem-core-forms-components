@@ -150,9 +150,19 @@ export const customFunctions = {
     getGlobalVariable: cf.getGlobalVariable,
 
     /**
-     * Gets the form data by exporting all field values and converts to JSON string
+     * Gets the form data by exporting all field values, optionally converts to JSON string
+     * @param {boolean} [stringify] - Convert the form data to a JSON string, defaults to true
      * @param {scope} globals - Global scope object containing form context
-     * @returns {string} The complete form data as a JSON string
+     * @returns {string|object} The complete form data as a JSON string
      */
-    getFormDataAsString: cf.getFormDataAsString
+    getFormData: cf.getFormData,
+
+    /**
+     * Gets value for a given key from the form data, optionally converts to JSON string
+     * @param {string} key - The key to get the value for (supports dot notation e.g. 'address.city')
+     * @param {boolean} [stringify] - Convert the value to a JSON string, defaults to true
+     * @param {scope} globals - Global scope object containing form context
+     * @returns {string|object|Array} The value for the given key
+     */
+    getValueFromFormData: cf.getValueFromFormData
 };
