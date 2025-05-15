@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v3.form;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -41,7 +42,7 @@ import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -399,5 +400,22 @@ public class FileInputImplV3Test {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_DATALAYER, FileInput.class, context);
         FieldUtils.writeField(fileInput, "dataLayerEnabled", true, true);
         Utils.testJSONExport(fileInput, Utils.getTestExporterJSONPath(BASE, PATH_FILEINPUT_DATALAYER));
+    }
+
+    @Test
+    void testGetAcceptExtensions() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_DATALAYER, FileInput.class, context);
+        // assert fileInput.getAcceptExtensions() to return empty list
+        assertEquals(Collections.emptyList(), fileInput.getAcceptExtensions());
+        FileInput fileInputMock = Mockito.mock(FileInput.class);
+        Mockito.when(fileInputMock.getAcceptExtensions()).thenCallRealMethod();
+        assertEquals(Collections.emptyList(), fileInput.getAcceptExtensions());
+    }
+
+    @Test
+    void testGetAcceptExtensionsWithExtensions() {
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
+        List<String> extensions = fileInput.getAcceptExtensions();
+        assertThat(Arrays.asList(".jpg", ".png"), is(extensions));
     }
 }
