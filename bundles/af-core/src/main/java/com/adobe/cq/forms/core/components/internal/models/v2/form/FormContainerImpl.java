@@ -83,6 +83,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
     private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
     private static final String FD_DATA_URL = "fd:dataUrl";
+    private static final String CUSTOM_FUNCTIONS_PATH = "customFunctionsPath";
 
     /** Constant representing email submit action type */
     private static final String SS_EMAIL = "email";
@@ -119,6 +120,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     protected String contextPath = StringUtils.EMPTY;
     private boolean formDataEnabled = false;
+
+    @ValueMapValue(name = CUSTOM_FUNCTIONS_PATH, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String customFunctionsPath;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TITLE)
     @Nullable
@@ -212,6 +217,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     public String getSchemaRef() {
         return GuideContainer.from(resource).getSchemaRef();
+    }
+
+    @Override
+    public String getCustomFunctionsPath() {
+        return customFunctionsPath;
     }
 
     @Override
@@ -379,6 +389,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         if (this.autoSaveConfig != null && this.autoSaveConfig.isEnableAutoSave()) {
             properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
+        }
+        if (StringUtils.isNotBlank(getCustomFunctionsPath())) { 
+            properties.put(CUSTOM_FUNCTIONS_PATH, getCustomFunctionsPath());
         }
         properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
         properties.put(FD_DATA_URL, getDataUrl());
