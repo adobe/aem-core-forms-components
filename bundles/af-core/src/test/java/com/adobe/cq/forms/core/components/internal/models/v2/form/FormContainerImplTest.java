@@ -103,6 +103,7 @@ public class FormContainerImplTest {
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
     private static final String PATH_FORM_WITH_SPEC = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2withspecversion";
+    private static final String PATH_FORM_WITH_FRAGMENT = CONTENT_ROOT + "/formcontainerv2-with-fragment";
     private static final String LIB_FORM_CONTAINER = "/libs/core/fd/components/form/container/v2/container";
 
     protected static final String SITES_PATH = "/content/exampleSite";
@@ -784,5 +785,11 @@ public class FormContainerImplTest {
             "action should notend with .model.json for cc forms for submit action not supported via submission service",
             !decodedAction.endsWith(".model.json"));
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_CC_FORM_REST_SUBMISSION));
+    }
+
+    @Test
+    void testJSONExportWithFragment() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_FRAGMENT, FormContainerImpl.class, context);
+        Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_WITH_FRAGMENT));
     }
 }

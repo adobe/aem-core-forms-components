@@ -55,6 +55,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class FragmentImpl extends PanelImpl implements Fragment {
 
     public static final String CUSTOM_FRAGMENT_PROPERTY_WRAPPER = "fd:fragment";
+    private static final String PRINT_CHANNEL_PATH = "/" + "print";
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
@@ -70,6 +71,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @PostConstruct
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
+        fragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
         if (request != null) {
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
@@ -78,6 +80,20 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                 formClientLibManager.addClientLibRef(clientLibRef);
             }
         }
+    }
+
+    private String getFragmentPathBasedOnChannel(String fragmentPath) {
+        Resource formContainerResource = resource;
+        String fragmentPathOfChannel = fragmentPath;
+        while (formContainerResource != null) {
+            String resourceType = formContainerResource.getValueMap().get("sling:resourceType", String.class);
+            if (resourceType != null && resourceType.contains(FormConstants.PRINT_CHANNEL_MARKER)) {
+                fragmentPathOfChannel = fragmentPath + PRINT_CHANNEL_PATH;
+                break;
+            }
+            formContainerResource = formContainerResource.getParent();
+        }
+        return fragmentPathOfChannel;
     }
 
     @JsonIgnore

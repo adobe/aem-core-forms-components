@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -38,8 +39,7 @@ import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @ExtendWith(AemContextExtension.class)
 public class PanelImplTest {
@@ -136,5 +136,14 @@ public class PanelImplTest {
     void testNoFieldType() {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL_WITHOUT_FIELDTYPE, Panel.class, context);
         assertEquals(FieldType.PANEL.getValue(), panel.getFieldType());
+    }
+
+    @Test
+    void testDorContainer() {
+        Panel mockPanel = Mockito.mock(PanelImpl.class);
+        Mockito.when(mockPanel.getDorContainer()).thenReturn(new HashMap<>());
+        Mockito.when(mockPanel.getDorProperties()).thenCallRealMethod();
+        Map<String, Object> dorProperties = mockPanel.getDorProperties();
+        assertTrue(dorProperties.containsKey(PanelImpl.CUSTOM_DOR_CONTAINER_WRAPPER));
     }
 }
