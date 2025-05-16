@@ -117,52 +117,29 @@ export const customFunctions = {
     dateToDaysSinceEpoch: cf.dateToDaysSinceEpoch,
 
     /**
-     * Set global variable
-     * @param {string} variableName Name of the variable to set
-     * @param {string|object} variableValue Value to set for the variable
-     * @param {scope} globals Global scope object
-     */
-    setGlobalVariable: cf.setGlobalVariable,
+    * Set variable value on a field or form
+    * @param {string} variableName Name of the variable
+    * @param {string|object|Array} variableValue Value to set for the variable
+    * @param {object} [normalFieldOrPanel] - Field or panel component to set the variable on (defaults to Form)
+    * @param {scope} globals Global scope object
+    */
+    setVariable: cf.setVariable,
 
     /**
-     * Set a local variable value on current rule field
-     * @param {string} variableName Name of the variable to set
-     * @param {string|object} variableValue Value to set for the variable
-     * @param {scope} globals Global scope object
-     */
-    setLocalVariable: cf.setLocalVariable,
+    * Get variable value from a field or form
+    * @param {string} variableName - Name of the variable (supports dot notation e.g. 'address.city')
+    * @param {object} [normalFieldOrPanel] - Field or panel component to get the value from (defaults to Form)
+    * @param {scope} globals - Global scope object containing the current field context
+    * @returns {string|object|Array} The value of the requested variable or undefined if not found
+    */
+    getVariable: cf.getVariable,
 
     /**
-     * Get a local variable value from given field or panel
-     * @param {string} variableName - Name of the variable to get (supports dot notation e.g. 'address.city')
-     * @param {object} [normalFieldOrPanel] - Field or panel component to get the property from (defaults to current field)
-     * @param {scope} globals - Global scope object containing the current field context
-     * @returns {string|object|Array} The value of the requested variable or undefined if not found
-     */
-    getLocalVariable: cf.getLocalVariable,
-
-    /**
-     * Get a global variable value
-     * @param {string} variableName - Name of the variable to get (supports dot notation e.g. 'address.city')
-     * @param {scope} globals - Global scope object containing the current field context
-     * @returns {object|string|Array} The value of the requested variable or undefined if not found
-     */
-    getGlobalVariable: cf.getGlobalVariable,
-
-    /**
-     * Gets the form data by exporting all field values, optionally converts to JSON string
-     * @param {boolean} [stringify] - Convert the form data to a JSON string, defaults to true
-     * @param {scope} globals - Global scope object containing form context
-     * @returns {string|object} The complete form data as a JSON string
-     */
-    getFormData: cf.getFormData,
-
-    /**
-     * Gets value for a given key from the form data, optionally converts to JSON string
-     * @param {string} key - The key to get the value for (supports dot notation e.g. 'address.city')
-     * @param {boolean} [stringify] - Convert the value to a JSON string, defaults to true
-     * @param {scope} globals - Global scope object containing form context
-     * @returns {string|object|Array} The value for the given key
-     */
-    getValueFromFormData: cf.getValueFromFormData
+    * Export form data as a JSON string
+    * @param {boolean} [stringify] - Convert the form data to a JSON string, defaults to true
+    * @param {string} [key] - The key to get the value for (supports dot notation e.g. 'address.city'), defaults to all form data
+    * @param {scope} globals - Global scope object containing form context
+    * @returns {string|object} The complete form data as a JSON string
+    */
+    exportFormData: cf.exportFormData
 };
