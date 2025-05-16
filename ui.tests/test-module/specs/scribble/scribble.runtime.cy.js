@@ -90,7 +90,7 @@ describe("Form Runtime with Scribble Input", () => {
         cy.get('button[aria-label="save"]').should('not.be.disabled').click();
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('have.attr', 'src');
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('.cmp-adaptiveform-scribble__clear-sign').click(); 
-        cy.get('.cmp-adaptiveform-scribble__clearsign-container').find('.cmp-adaptiveform-scribble__clearsign-yes').click();
+        cy.get('.cmp-adaptiveform-scribble__clearsign-container').find('.cmp-adaptiveform-scribble__button--primary').click();
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('not.have.attr', 'src'); 
     });
 

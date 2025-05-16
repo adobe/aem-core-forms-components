@@ -73,7 +73,7 @@ BLOCK cmp-adaptiveform-scribble
                         MODIFIER cmp-adaptiveform-scribble__button
                     ELEMENT cmp-adaptiveform-scribble__control-message
                 ELEMENT cmp-adaptiveform-scribble__controlpanel__controls
-                    ELEMENT cmp-adaptiveform-scribble__button-close
+                    ELEMENT cmp-adaptiveform-scribble__close-button
                     ELEMENT cmp-adaptiveform-scribble__save-button
         ELEMENT cmp-adaptiveform-scribble__clearsign-container
             ELEMENT cmp-adaptiveform-scribble__clearsign-title

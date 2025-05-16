@@ -36,7 +36,7 @@
             scribbleContainerPanel: `.${Scribble.bemBlock}__panel`,
             keyboardSignBox: `.${Scribble.bemBlock}__keyboard-sign-box`,
             scribbleControlPanel: `.${Scribble.bemBlock}__controlpanel`,
-            geoCanvasRight: `.${Scribble.bemBlock}__geocanvasright`,
+            geoCanvas: `.${Scribble.bemBlock}__geocanvas`,
             canvasSignedContainer: `.${Scribble.bemBlock}__canvas-signed-container`,
             canvas: `.${Scribble.bemBlock}__canvas`,
             label: `.${Scribble.bemBlock}__label`,
@@ -50,13 +50,13 @@
             clearControl: `.${Scribble.bemBlock}__control-clear`,
             scribbleTextControl: `.${Scribble.bemBlock}__control-text`,
             scribbleMessage: `.${Scribble.bemBlock}__control-message`,
-            clearSignButton: `.${Scribble.bemBlock}__clearsign-yes`,
-            cancelClearSignButton: `.${Scribble.bemBlock}__clearsign-no`,
+            clearSignButton: `.${Scribble.bemBlock}__button--primary`,
+            cancelClearSignButton: `.${Scribble.bemBlock}__button--secondary`,
             clearSignContainer: `.${Scribble.bemBlock}__clearsign-container`,
-            scribbleSubmitControl: `.${Scribble.bemBlock}__control-submit`,
+            scribbleSubmitControl: `.${Scribble.bemBlock}__save-button`,
             scribbleBrushList: `.${Scribble.bemBlock}__brushlist`,
             signCanvases: `.${Scribble.bemBlock}__signcanvases`,
-            saveCanvas: `.${Scribble.bemBlock}__control-submit`,
+            saveCanvas: `.${Scribble.bemBlock}__save-button`,
             canvasSignedImage: `.${Scribble.bemBlock}__canvas-signed-image`,
             mainCanvas: `.${Scribble.bemBlock}__canvas__main`
         };
@@ -147,8 +147,8 @@
             return document.querySelector(Scribble.selectors.keyboardSignBox);
         }
 
-        getGeoCanvasRight() {
-            return document.querySelector(Scribble.selectors.geoCanvasRight);
+        getGeoCanvas() {
+            return document.querySelector(Scribble.selectors.geoCanvas);
         }
 
         getCanvasContainer() {
@@ -216,13 +216,13 @@
                     ctx.clearRect(0, 0, existingCanvas.width, existingCanvas.height);
                 }
         
-                const geoCanvas = this.getGeoCanvasRight();
+                const geoCanvas = this.getGeoCanvas();
                 if (geoCanvas) {
                     const geoCtx = geoCanvas.getContext('2d');
                     geoCtx.clearRect(0, 0, geoCanvas.width, geoCanvas.height);
                 }
         
-                this.enableControls(['brush', 'geo', 'clear', 'text', 'submit']);
+                this.enableControls(['brush', 'geo', 'clear', 'text', 'save']);
         
                 const signedImage = this.getSignedCanvasImage();
                 if (signedImage) {
@@ -281,7 +281,7 @@
             if (!this.isCanvasEmpty(this.canvas)) {
                 const mainCanvas = this.createMainCanvas();
                 const sigCnv = this.getCanvas(); // Get the sign canvas
-                const geoCnv = this.getGeoCanvasRight(); // Get the geo canvas
+                const geoCnv = this.getGeoCanvas(); // Get the geo canvas
         
                 this.drawCanvasesOnMainCanvas(mainCanvas, sigCnv, geoCnv);
         
@@ -419,15 +419,15 @@
         }
 
         updateGeoCanvas(latStr, longStr, timeStr) {
-            const geoCanvasRight = this.getGeoCanvasRight();
-            geoCanvasRight.style.height = '50px';
-            geoCanvasRight.style.width = '200px';
-            geoCanvasRight.style.display = 'block';
+            const geoCanvas = this.getGeoCanvas();
+            geoCanvas.style.height = '50px';
+            geoCanvas.style.width = '200px';
+            geoCanvas.style.display = 'block';
 
-            if (geoCanvasRight) {
-                const ctx = geoCanvasRight.getContext('2d');
-                geoCanvasRight.width = geoCanvasRight.offsetWidth;
-                geoCanvasRight.height = geoCanvasRight.offsetHeight;
+            if (geoCanvas) {
+                const ctx = geoCanvas.getContext('2d');
+                geoCanvas.width = geoCanvas.offsetWidth;
+                geoCanvas.height = geoCanvas.offsetHeight;
 
                 ctx.font = 'bold 10px Arial'; // Font size and type
                 ctx.fillStyle = 'black'; // Text color
@@ -460,7 +460,7 @@
 
         enableControls(controls) {
             controls.forEach(control => {
-                const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control);
+                const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control) || document.querySelector('.' + Scribble.bemBlock + '__' + control + '-button');;
                 element?.classList.remove('disable_button');
                 element.removeAttribute('disabled');
                 element.setAttribute('aria-disabled', 'false');
@@ -469,7 +469,7 @@
 
         disableControl(controls) {
             controls.forEach(control => {
-                const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control);
+                const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control) || document.querySelector('.' + Scribble.bemBlock + '__' + control + '-button');
                 element?.classList.add('disable_button');
                 element.setAttribute('disabled', 'true');
                 element.setAttribute('aria-disabled', 'true');
@@ -537,9 +537,9 @@
         
             keyboardSignBox.addEventListener('input', (event) => {
                 if (event?.target?.value) {
-                    this.enableControls(['submit', 'clear']);
+                    this.enableControls(['save', 'clear']);
                 } else {
-                    this.disableControl(['submit', 'clear']);
+                    this.disableControl(['save', 'clear']);
                 }
             });
         
@@ -581,14 +581,14 @@
 
         eraseSignature() {
             this.context?.clearRect(0, 0, this.canvas?.width, this.canvas?.height);
-            const geoCnv = this.getGeoCanvasRight();
+            const geoCnv = this.getGeoCanvas();
             if(geoCnv) {
                 const geoCanvasContext = geoCnv?.getContext('2d');
                 geoCanvasContext?.clearRect(0, 0, geoCnv.width, geoCnv.height);
                 geoCnv.style.display = 'none';
             }
             this.getKeyboardSignBox().value='';
-            this.disableControl(['clear','submit']);
+            this.disableControl(['clear','save']);
         }
 
         resizeAndFixCanvas() {
@@ -635,7 +635,7 @@
                 this.getCanvasContainer().style.width = '100%';
                 this.getMainCanvas().style.border = '1px solid black';
                 this.getKeyboardSignBox().style.display = 'none';
-                this.disableControl(['brush','geo','clear','text','submit']);
+                this.disableControl(['brush','geo','clear','text','save']);
             } else {
                 this.canvas = this.getCanvas();
                 this.canvas.style.display = 'block';
@@ -656,7 +656,7 @@
 
         showScribbleModal() {
             if(window.getComputedStyle(this.getScribbleContainer()).display !== 'block') {
-                this.disableControl(['clear','submit']);
+                this.disableControl(['clear','save']);
             }
             this.getScribbleContainer().style.display = 'block';
         }
@@ -713,7 +713,7 @@
             const { offsetX, offsetY } = this.getEventCoordinates(event);
             this.context.lineTo(offsetX, offsetY);
             this.context.stroke();
-            this.enableControls(['clear','submit']);
+            this.enableControls(['clear','save']);
         }
 
         stopDrawing() {

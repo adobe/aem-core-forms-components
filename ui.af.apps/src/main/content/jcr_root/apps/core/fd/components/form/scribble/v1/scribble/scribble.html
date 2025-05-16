@@ -59,7 +59,7 @@
               <canvas class="cmp-adaptiveform-scribble__canvas"></canvas>
               <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="${scribble.placeHolder}">
             </div>
-            <canvas class="cmp-adaptiveform-scribble__geocanvasright" width="0" height="0" ></canvas>
+            <canvas class="cmp-adaptiveform-scribble__geocanvas" width="0" height="0" ></canvas>
           </div>
           <div class="cmp-adaptiveform-scribble__controlpanel">
             <div class="cmp-adaptiveform-scribble__controls">
@@ -71,8 +71,8 @@
               <div class="cmp-adaptiveform-scribble__control-message"></div>
             </div>
             <div class="cmp-adaptiveform-scribble__controlpanel__controls">
-              <button class="cmp-adaptiveform-scribble__button-close" tabindex="0" type="button" aria-label="close">${"Close" @ i18n}</button>
-              <button class="cmp-adaptiveform-scribble__control-submit" tabindex="0" type="button" aria-label="save">${"Save" @ i18n}</button>
+              <button class="cmp-adaptiveform-scribble__close-button" tabindex="0" type="button" aria-label="close">${"Close" @ i18n}</button>
+              <button class="cmp-adaptiveform-scribble__save-button" tabindex="0" type="button" aria-label="save">${"Save" @ i18n}</button>
             </div>
           </div>
         </div>
@@ -84,8 +84,8 @@
             ${"This will permanently remove the signature you've drawn. Do you wish to proceed and begin again?" @ i18n}
           </div>
           <div class="cmp-adaptiveform-scribble__clearsign-panel">
-            <button type="button" id="msgBox_No" class="cmp-adaptiveform-scribble__clearsign-no">${"Cancel" @ i18n}</button>
-            <button type="button" id="msgBox_Yes" class="cmp-adaptiveform-scribble__clearsign-yes">${"Clear" @ i18n}</button>
+            <button type="button" id="msgBox_No" class="cmp-adaptiveform-scribble__button--secondary">${"Cancel" @ i18n}</button>
+            <button type="button" id="msgBox_Yes" class="cmp-adaptiveform-scribble__button--primary">${"Clear" @ i18n}</button>
           </div>
         </div>
       </div>
