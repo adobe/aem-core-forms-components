@@ -162,6 +162,7 @@ public final class ReservedProperties {
     public static final String FD_ENABLE_AUTO_SAVE = "fd:enableAutoSave";
     public static final String FD_AUTO_SAVE_STRATEGY_TYPE = "fd:autoSaveStrategyType";
     public static final String FD_AUTO_SAVE_INTERVAL = "fd:autoSaveInterval";
+    public static final String FD_DIALOG_LABEL = "fd:dialogLabel";
 
     public static final String FD_XFA_SCRIPTS = "fd:xfaScripts";
 
