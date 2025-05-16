@@ -80,8 +80,8 @@ BLOCK cmp-adaptiveform-scribble
             ELEMENT cmp-adaptiveform-scribble__clearsign-content
                 ELEMENT cmp-adaptiveform-scribble__clearsign-message
                 ELEMENT cmp-adaptiveform-scribble__clearsign-panel
-                    ELEMENT cmp-adaptiveform-scribble__clearsign-cancel-button cmp-adaptiveform-scribble__button--secondary
-                    ELEMENT cmp-adaptiveform-scribble__clearsign-confirm-button cmp-adaptiveform-scribble__button--primary
+                    ELEMENT cmp-adaptiveform-scribble__button--secondary
+                    ELEMENT cmp-adaptiveform-scribble__button--primary
 ```
 
 ### Note
