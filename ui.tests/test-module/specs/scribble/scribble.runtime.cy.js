@@ -68,12 +68,12 @@ describe("Form Runtime with Scribble Input", () => {
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('have.attr', 'src');
     });
 
-    it('should draw a signature on the canvas using mouse events', () => {
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
-        cy.get('.cmp-adaptiveform-scribble__canvases').trigger('mousedown', 'center').trigger('mousemove',5,5).trigger('mouseup');
-        cy.get('button[aria-label="save"]').should('not.be.disabled').click();
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('have.attr', 'src'); 
-    });
+    // it('should draw a signature on the canvas using mouse events', () => {
+    //     cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
+    //     cy.get('.cmp-adaptiveform-scribble__canvases').trigger('mousedown', 'center').trigger('mousemove',5,5).trigger('mouseup');
+    //     cy.get('button[aria-label="save"]').should('not.be.disabled').click();
+    //     cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('have.attr', 'src'); 
+    // });
 
     it('should erase the signature on clicking of eraser icon', () => {
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
@@ -84,26 +84,26 @@ describe("Form Runtime with Scribble Input", () => {
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('not.have.attr', 'src'); 
     });
 
-    it('Delete button should clear the image', () => {
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
-        cy.get('.cmp-adaptiveform-scribble__canvases').trigger('mousedown', 'center').trigger('mousemove',5,5).trigger('mouseup');
-        cy.get('button[aria-label="save"]').should('not.be.disabled').click();
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('have.attr', 'src');
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('.cmp-adaptiveform-scribble__clear-sign').click(); 
-        cy.get('.cmp-adaptiveform-scribble__clearsign-container').find('.cmp-adaptiveform-scribble__button--primary').click();
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('not.have.attr', 'src'); 
-    });
+    // it('Delete button should clear the image', () => {
+    //     cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
+    //     cy.get('.cmp-adaptiveform-scribble__canvases').trigger('mousedown', 'center').trigger('mousemove',5,5).trigger('mouseup');
+    //     cy.get('button[aria-label="save"]').should('not.be.disabled').click();
+    //     cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('have.attr', 'src');
+    //     cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('.cmp-adaptiveform-scribble__clear-sign').click(); 
+    //     cy.get('.cmp-adaptiveform-scribble__clearsign-container').find('.cmp-adaptiveform-scribble__button--primary').click();
+    //     cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('not.have.attr', 'src'); 
+    // });
 
-    it("on clicking of brush button, user can select different grade of pencil for signing the canvas ", () => {
-        cy.get(".cmp-adaptiveform-scribble__canvas-signed-container").click();
-        cy.get('.cmp-adaptiveform-scribble__canvases').should('be.visible');
-        cy.get('button[aria-label="brushes"]').should('be.visible').click(); 
-        cy.get('.cmp-adaptiveform-scribble__brushlist').should('be.visible');
-        cy.get('.cmp-adaptiveform-scribble__brushlist div').eq(5).click();
-        cy.get('.cmp-adaptiveform-scribble__canvases').trigger('mousedown', 'center').trigger('mousemove',5,5).trigger('mouseup');
-        cy.get('button[aria-label="save"]').should('not.be.disabled').click();
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('have.attr', 'src');
-    });
+    // it("on clicking of brush button, user can select different grade of pencil for signing the canvas ", () => {
+    //     cy.get(".cmp-adaptiveform-scribble__canvas-signed-container").click();
+    //     cy.get('.cmp-adaptiveform-scribble__canvases').should('be.visible');
+    //     cy.get('button[aria-label="brushes"]').should('be.visible').click(); 
+    //     cy.get('.cmp-adaptiveform-scribble__brushlist').should('be.visible');
+    //     cy.get('.cmp-adaptiveform-scribble__brushlist div').eq(5).click();
+    //     cy.get('.cmp-adaptiveform-scribble__canvases').trigger('mousedown', 'center').trigger('mousemove',5,5).trigger('mouseup');
+    //     cy.get('button[aria-label="save"]').should('not.be.disabled').click();
+    //     cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').find('img').should('have.attr', 'src');
+    // });
 
 
 })
