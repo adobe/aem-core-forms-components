@@ -51,28 +51,28 @@
     <div data-sly-call="${longDescription.longDescription @componentId= scribble.id, longDescription=scribble.description, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
 
     <div data-sly-call="${errorMessage.errorMessage @componentId=scribble.id, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
-      <div class="cmp-adaptiveform-scribble__container" tabindex="0" role="dialog" aria-label="pleaseSignText">
+      <div class="cmp-adaptiveform-scribble__container" tabindex="0" role="dialog" aria-label="${'pleaseSignText' @ i18n}">
       <div class="cmp-adaptiveform-scribble__header">${scribble.dialogLabel}</div>
         <div class="cmp-adaptiveform-scribble__content">
           <div class="cmp-adaptiveform-scribble__canvases">
             <div class="cmp-adaptiveform-scribble__signcanvases" style="display:inline-block; vertical-align:top;">
-              <canvas class="cmp-adaptiveform-scribble__canvas"></canvas>
+              <canvas class="cmp-adaptiveform-scribble__canvas" aria-label="${'signature canvas' @ i18n}"></canvas>
               <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="${scribble.placeHolder}">
             </div>
-            <canvas class="cmp-adaptiveform-scribble__geocanvas" width="0" height="0" ></canvas>
+            <canvas class="cmp-adaptiveform-scribble__geocanvas" width="0" height="0" aria-label="${'geolocation' @ i18n}" ></canvas>
           </div>
           <div class="cmp-adaptiveform-scribble__controlpanel">
             <div class="cmp-adaptiveform-scribble__controls">
-              <button type="button" class="cmp-adaptiveform-scribble__control-brush cmp-adaptiveform-scribble__button" tabindex="0" aria-label="brushes"></button>
+              <button type="button" class="cmp-adaptiveform-scribble__control-brush cmp-adaptiveform-scribble__button" tabindex="0" aria-label="${'brushes' @ i18n}"></button>
               <div class="cmp-adaptiveform-scribble__brushlist"></div>
-              <button type="button" class="cmp-adaptiveform-scribble__control-clear cmp-adaptiveform-scribble__button" tabindex="0" aria-label="clearSign" ></button>
-              <button type="button" class="cmp-adaptiveform-scribble__control-geo cmp-adaptiveform-scribble__button" tabindex="0" aria-label="geolocation" ></button>
-              <button type="button" class="cmp-adaptiveform-scribble__control-text cmp-adaptiveform-scribble__button" tabindex="0" aria-label="textSign"></button>
+              <button type="button" class="cmp-adaptiveform-scribble__control-clear cmp-adaptiveform-scribble__button" tabindex="0" aria-label="${'clearSign' @ i18n}" ></button>
+              <button type="button" class="cmp-adaptiveform-scribble__control-geo cmp-adaptiveform-scribble__button" tabindex="0" aria-label="${'geolocation' @ i18n}" ></button>
+              <button type="button" class="cmp-adaptiveform-scribble__control-text cmp-adaptiveform-scribble__button" tabindex="0" aria-label="${'textSign' @ i18n}"></button>
               <div class="cmp-adaptiveform-scribble__control-message"></div>
             </div>
             <div class="cmp-adaptiveform-scribble__controlpanel__controls">
-              <button class="cmp-adaptiveform-scribble__close-button" tabindex="0" type="button" aria-label="close">${"Close" @ i18n}</button>
-              <button class="cmp-adaptiveform-scribble__save-button" tabindex="0" type="button" aria-label="save">${"Save" @ i18n}</button>
+              <button class="cmp-adaptiveform-scribble__close-button" tabindex="0" type="button" aria-label="${'close' @ i18n}">${"Close" @ i18n}</button>
+              <button class="cmp-adaptiveform-scribble__save-button" tabindex="0" type="button" aria-label="${'save' @ i18n}">${"Save" @ i18n}</button>
             </div>
           </div>
         </div>
