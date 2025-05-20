@@ -172,6 +172,7 @@
             "text-input",
             "number-input",
             "date-input",
+            "datetime-input",
             "file-input",
             "multiline-input",
             "drop-down",

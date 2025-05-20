@@ -1,5 +1,5 @@
 {
-  "id": "datetime-cb8e90e488",
+  "id": "datetime-b3cd19b469",
   "dataRef": "a.b",
   "fieldType": "datetime-input",
   "name": "abc",
@@ -9,21 +9,18 @@
   "type": "string",
   "required": false,
   "enabled": false,
+  "lang": "it-IT",
   "constraintMessages": {
     "type": "incorrect type"
   },
   "readOnly": true,
-  "lang" : "it-IT",
+  "default": "2025-05-11T11:21",
+  "format": "date-time",
   "label": {
-    "visible": true,
-    "value": "def"
+    "value": "def",
+    "visible": true
   },
   "screenReaderText": "'Custom screen reader text'",
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
   "properties": {
     "afs:layout": {
       "tooltipVisible": false
@@ -39,8 +36,12 @@
     "value": "false()",
     "enabled": "true()"
   },
-  "format": "date-time",
-  "minimum": "2022-02-04",
-  "maximum": "2022-02-09",
-  ":type": "core/fd/components/form/dateime/v1/dateime"
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "minimum": "2025-05-07T11:21",
+  "maximum": "2025-05-21T11:21",
+  ":type": "core/fd/components/form/datetime/v1/datetime"
 }
