@@ -1,7 +1,7 @@
 {
-  "id": "datetime-fffa242824",
+  "id": "datetime-741585d8a3",
   "dataRef": "a.b",
-  "fieldType": "date-time",
+  "fieldType": "datetime-input",
   "name": "abc",
   "visible": false,
   "description": "dummy",
@@ -10,25 +10,15 @@
   "required": true,
   "constraintMessages": {
     "type": "incorrect type",
-    "minimum": "Date should be greater than 4th Feb 2022",
-    "maximum": "Date should be less than 9th Feb 2022"
+    "minimum": "Date should be greater than 7th May 2025",
+    "maximum": "Date should be less than 21st May 2025"
   },
-  "default": "2022-02-07",
+  "default": "2025-05-11T11:21",
+  "format": "date-time",
   "label": {
     "value": "def"
   },
   "screenReaderText": "'Custom screen reader text'",
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  "rules": {
-    "visible": "true()",
-    "label": "{value : 'some label'}",
-    "value": "false()",
-    "enabled": "true()"
-  },
   "properties": {
     "afs:layout": {
       "tooltipVisible": false
@@ -38,8 +28,18 @@
     },
     "fd:path": "/content/datetime-message"
   },
-  "format": "date",
-  "exclusiveMinimum": "2022-02-05",
-  "exclusiveMaximum": "2022-02-08",
-  ":type": "core/fd/components/form/dateime/v1/dateime"
+  "rules": {
+    "visible": "true()",
+    "label": "{value : 'some label'}",
+    "value": "false()",
+    "enabled": "true()"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "minimum": "2025-05-07T11:21",
+  "maximum": "2025-05-21T11:21",
+  ":type": "core/fd/components/form/datetime/v1/datetime"
 }

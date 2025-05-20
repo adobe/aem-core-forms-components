@@ -30,6 +30,32 @@
       }
     },
     {
+      "title": "Default field for capturing date types is datetime-input",
+      "if": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "const": "string"
+          },
+          "format": {
+            "const": "date-time"
+          }
+        },
+        "required": [
+          "type",
+          "format"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "default": "datetime-input"
+          }
+        }
+      }
+    },
+    {
       "title": "Default field for capturing file types is file-input",
       "if": {
         "type": "object",

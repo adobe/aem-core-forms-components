@@ -49,6 +49,7 @@
         "checkbox",
         "switch",
         "plain-text",
+        "datetime-input",
         "button",
         "panel",
         "image",
