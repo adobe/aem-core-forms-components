@@ -41,6 +41,8 @@ public class DateTimeImplTest {
     private static final String PATH_DATETIME = CONTENT_ROOT + "/datetime";
     private static final String PATH_DATETIME_MESSAGE = CONTENT_ROOT + "/datetime-message";
     private static final String PATH_DATETIME_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/datetime-backwardcompatible";
+    private static final String PATH_DATETIME_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/datetime-without-fieldtype";
+
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -155,27 +157,22 @@ public class DateTimeImplTest {
     // assertEquals(Collections.emptyMap(), datePickerMock.getConstraintMessages());
     // }
 
-//    @Test
-//    void testJSONExport() throws Exception {
-//        DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME, DateTime.class, context);
-//        Utils.testJSONExport(dateTime, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME));
-//    }
+    @Test
+    void testJSONExport() throws Exception {
+        DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME, DateTime.class, context);
+        Utils.testJSONExport(dateTime, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME));
+    }
 
-    // @Test
-    // void testJSONExportBackwardCompatibility() throws Exception {
-    // DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATETIME_BACKWARD_COMPATIBLE, DatePicker.class, context);
-    // Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_BACKWARD_COMPATIBLE));
-    // }
+     @Test
+     void testJSONExportBackwardCompatibility() throws Exception {
+     DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_BACKWARD_COMPATIBLE, DateTime.class, context);
+     Utils.testJSONExport(dateTime, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_BACKWARD_COMPATIBLE));
+     }
 
-    // @Test
-    // void testJSONExportForCustomized() throws Exception {
-    // DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DatePicker.class, context);
-    // Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_CUSTOMIZED));
-    // }
 
-    // @Test
-    // void testJSONExportMessage() throws Exception {
-    // DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATETIME_MESSAGE, DatePicker.class, context);
-    // Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_MESSAGE));
-    // }
+    @Test
+    void testNoFieldType() throws Exception {
+        DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_WITHOUT_FIELDTYPE, DateTime.class, context);
+        Utils.testJSONExport(dateTime, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_WITHOUT_FIELDTYPE));
+    }
 }
