@@ -16,23 +16,23 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.forms.core.components.models.form.ConstraintType;
+import java.util.Collections;
+import java.util.Map;
+
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.DateTime;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
-import org.mockito.Mockito;
-
-import java.util.Collections;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -144,15 +144,15 @@ public class DateTimeImplTest {
         assert (dataObject.getDescription()).equals("Date of Birth");
     }
 
-     @Test
-     void testGetConstraintMessages() {
-     DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-     Map<ConstraintType, String> constraintsMessages = dateTime.getConstraintMessages();
-     assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
-     DateTime dateTimeMock = Mockito.mock(DateTime.class);
-     Mockito.when(dateTimeMock.getConstraintMessages()).thenCallRealMethod();
-     assertEquals(Collections.emptyMap(), dateTimeMock.getConstraintMessages());
-     }
+    @Test
+    void testGetConstraintMessages() {
+        DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
+        Map<ConstraintType, String> constraintsMessages = dateTime.getConstraintMessages();
+        assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
+        DateTime dateTimeMock = Mockito.mock(DateTime.class);
+        Mockito.when(dateTimeMock.getConstraintMessages()).thenCallRealMethod();
+        assertEquals(Collections.emptyMap(), dateTimeMock.getConstraintMessages());
+    }
 
     @Test
     void testJSONExport() throws Exception {
