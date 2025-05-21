@@ -100,7 +100,7 @@ public class DateTimeImpl extends AbstractFieldImpl implements DateTime {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_TIME_FORMATTER, timezone = "UTC")
     @Override
     public Object[] getDefault() {
-        return defaultValue;
+        return defaultValue != null ? defaultValue.clone() : null;
     }
 
 }
