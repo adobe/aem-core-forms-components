@@ -16,6 +16,7 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,10 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+import org.mockito.Mockito;
+
+import java.util.Collections;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -42,7 +47,6 @@ public class DateTimeImplTest {
     private static final String PATH_DATETIME_MESSAGE = CONTENT_ROOT + "/datetime-message";
     private static final String PATH_DATETIME_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/datetime-backwardcompatible";
     private static final String PATH_DATETIME_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/datetime-without-fieldtype";
-
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -90,13 +94,6 @@ public class DateTimeImplTest {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
         assertEquals(false, datetime.isRequired());
     }
-
-    // @Test
-    // void testGetPattern() {
-    // DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-    // assertEquals("/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/", datetime.getPattern());
-    //
-    // }
 
     @Test
     void testIsEnabled() {
@@ -147,15 +144,15 @@ public class DateTimeImplTest {
         assert (dataObject.getDescription()).equals("Date of Birth");
     }
 
-    // @Test
-    // void testGetConstraintMessages() {
-    // DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DatePicker.class, context);
-    // Map<ConstraintType, String> constraintsMessages = datePicker.getConstraintMessages();
-    // assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
-    // DatePicker datePickerMock = Mockito.mock(DatePicker.class);
-    // Mockito.when(datePickerMock.getConstraintMessages()).thenCallRealMethod();
-    // assertEquals(Collections.emptyMap(), datePickerMock.getConstraintMessages());
-    // }
+     @Test
+     void testGetConstraintMessages() {
+     DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
+     Map<ConstraintType, String> constraintsMessages = dateTime.getConstraintMessages();
+     assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
+     DateTime dateTimeMock = Mockito.mock(DateTime.class);
+     Mockito.when(dateTimeMock.getConstraintMessages()).thenCallRealMethod();
+     assertEquals(Collections.emptyMap(), dateTimeMock.getConstraintMessages());
+     }
 
     @Test
     void testJSONExport() throws Exception {
@@ -163,12 +160,11 @@ public class DateTimeImplTest {
         Utils.testJSONExport(dateTime, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME));
     }
 
-     @Test
-     void testJSONExportBackwardCompatibility() throws Exception {
-     DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_BACKWARD_COMPATIBLE, DateTime.class, context);
-     Utils.testJSONExport(dateTime, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_BACKWARD_COMPATIBLE));
-     }
-
+    @Test
+    void testJSONExportBackwardCompatibility() throws Exception {
+        DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_BACKWARD_COMPATIBLE, DateTime.class, context);
+        Utils.testJSONExport(dateTime, Utils.getTestExporterJSONPath(BASE, PATH_DATETIME_BACKWARD_COMPATIBLE));
+    }
 
     @Test
     void testNoFieldType() throws Exception {
