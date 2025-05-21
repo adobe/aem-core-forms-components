@@ -43,7 +43,9 @@ import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -80,7 +82,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         }
     }
 
-    @JsonIgnore
+    @JsonView(Views.Author.class)
     public String getFragmentPath() {
         return fragmentPath;
     }
