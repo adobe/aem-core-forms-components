@@ -85,10 +85,12 @@ class FormFileInputWidgetBase {
             // initialize the regex initially
             this.regexMimeTypeList = this.options.accept.map(function (value, i) {
                 try {
+                    // Special case for */* to match all MIME types
+                    if (value.trim() === '*/*') {
+                        return /.*/;  // Match any MIME type
+                    }
                     return new RegExp(value.trim());
                 } catch (e) {
-                    // failure during regex parsing, don't return anything specific to this value since the value contains
-                    // incorrect regex string
                     if (window.console) {
                         console.log(e);
                     }
@@ -446,7 +448,7 @@ class FormFileInputWidgetBase {
                 let isInvalidSize = false,
                     isInvalidFileName = false,
                     isInvalidMimeType = false;
-                //this.resetIfNotMultiSelect();
+
                 if (typeof files !== "undefined") {
                     let invalidFilesIndexes = [];
                     Array.from(files).forEach(function (file, fileIndex) {
@@ -454,21 +456,32 @@ class FormFileInputWidgetBase {
                             isCurrentInvalidFileName = false,
                             isCurrentInvalidMimeType = false;
                         currFileName = file.name.split("\\").pop();
-                        // Now size is in MB
-                        let size = file.size / 1024 / 1024;
-                        // check if file size limit is within limits
-                        if ((size > parseFloat(this.options.maxFileSize))) {
-                            isInvalidSize = isCurrentInvalidFileSize = true;
-                            inValidSizefileNames = currFileName + "," + inValidSizefileNames;
-                        } else if (!FileInputWidget.isValid(currFileName)) {
-                            // check if file names are valid (ie) there are no control characters in file names
-                            isInvalidFileName = isCurrentInvalidFileName = true;
-                            inValidNamefileNames = currFileName + "," + inValidNamefileNames;
-                        } else {
+                            // Now size is in MB
+                            let size = file.size / 1024 / 1024;
+                            // check if file size limit is within limits
+                            if ((size > parseFloat(this.options.maxFileSize))) {
+                                isInvalidSize = isCurrentInvalidFileSize = true;
+                                inValidSizefileNames = currFileName + "," + inValidSizefileNames;
+                            } else if (!FileInputWidget.isValid(currFileName)) {
+                                // check if file names are valid (ie) there are no control characters in file names
+                                isInvalidFileName = isCurrentInvalidFileName = true;
+                                inValidNamefileNames = currFileName + "," + inValidNamefileNames;
+                            } else {
                             let isMatch = false;
-                            let extension = currFileName.split('.').pop();
-                            let mimeType = (file.type) ? file.type : self.extensionToMimeTypeMap[extension];
-                            if (mimeType != undefined && mimeType.trim().length > 0) {
+                            let extension = currFileName.split('.').pop().toLowerCase();
+                            let mimeType = file.type || self.extensionToMimeTypeMap[extension];
+                            
+                            // If no MIME type is detected, check if the file extension is in the accept list
+                            if (!mimeType && this.options.acceptExtensions) {
+                                isMatch = this.options.acceptExtensions.some(function(acceptPattern) {
+                                    if(!acceptPattern) {
+                                        return false;
+                                    }
+                                    // Remove leading dot if present and convert to lowercase
+                                    let cleanPattern = acceptPattern.replace(/^\./, '').toLowerCase();
+                                    return cleanPattern === extension;
+                                });
+                            } else {
                                 isMatch = this.regexMimeTypeList.some(function (rx) {
                                     return rx.test(mimeType);
                                 });

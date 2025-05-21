@@ -248,4 +248,21 @@ describe('Click on button tag (V-3)', () => {
             expect(alertText).to.equal(model.getState().constraintMessages.maxFileSize);
         });
      });
+
+    it(`file input should not support extenstion which are not in accept property`, () => {
+        const fileInput7 =  "input[name='fileinput7']";
+        cy.attachFile(fileInput7, ['sample.afe']);
+        cy.get('.cmp-adaptiveform-fileinput__filelist')
+            .children()
+            .should('have.length', 0);
+    });
+
+    it(`fileinput should support custom file extensions`, () => {
+        const fileInput7 =  "input[name='fileinput7']";
+        cy.attachFile(fileInput7, ['sample.ifc']);
+        cy.get('.cmp-adaptiveform-fileinput__filelist')
+            .children()
+            .should('have.length', 1)
+            .and('contain.text', 'sample.ifc');
+    });
 })
