@@ -792,7 +792,7 @@ public class FormContainerImplTest {
     void testExcludeFromDoRIfHiddenFromViewPrint() throws Exception {
         // Setup: create a resource structure with fd:view/print child and excludeFromDoRIfHidden property
         context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN,
-    "sling:resourceType", "core/fd/components/form/container/v2/container");
+            "sling:resourceType", "core/fd/components/form/container/v2/container");
         context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN + "/fd:view/print",
             "excludeFromDoRIfHidden", true);
 
