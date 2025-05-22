@@ -11,7 +11,9 @@
   "enabled": false,
   "lang": "it-IT",
   "constraintMessages": {
-    "type": "incorrect type"
+    "type": "incorrect type",
+    "minimum": "minimum message",
+    "maximum": "maximum message"
   },
   "readOnly": true,
   "default": "2025-05-11T11:21",

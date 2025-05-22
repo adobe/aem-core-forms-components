@@ -149,6 +149,8 @@ public class DateTimeImplTest {
         DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
         Map<ConstraintType, String> constraintsMessages = dateTime.getConstraintMessages();
         assertEquals(constraintsMessages.get(ConstraintType.TYPE), "incorrect type");
+        assertEquals(constraintsMessages.get(ConstraintType.MINIMUM), "Date should be greater than 7th May 2025");
+        assertEquals(constraintsMessages.get(ConstraintType.MAXIMUM), "Date should be less than 21st May 2025");
         DateTime dateTimeMock = Mockito.mock(DateTime.class);
         Mockito.when(dateTimeMock.getConstraintMessages()).thenCallRealMethod();
         assertEquals(Collections.emptyMap(), dateTimeMock.getConstraintMessages());
