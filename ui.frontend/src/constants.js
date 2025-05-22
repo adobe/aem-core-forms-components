@@ -362,12 +362,6 @@ export const Constants = {
     ARIA_CURRENT : "aria-current",
 
     /**
-     * Aria Level attribute.
-     * @type {string}
-     */
-    ARIA_LEVEL : "aria-level",
-
-    /**
      * Role attribute.
      * @type {string}
      */

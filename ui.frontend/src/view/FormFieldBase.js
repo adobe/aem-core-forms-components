@@ -608,7 +608,6 @@ class FormFieldBase extends FormField {
             const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
             if (bemClass && this.label.parentElement.classList.contains(`${bemClass}__label-container`)) {
                 this.label.setAttribute(Constants.ROLE, "heading");
-                this.label.setAttribute(Constants.ARIA_LEVEL, "2");
             }
         }
     }
