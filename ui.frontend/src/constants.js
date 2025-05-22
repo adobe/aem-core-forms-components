@@ -361,6 +361,11 @@ export const Constants = {
      */
     ARIA_CURRENT : "aria-current",
 
+    /**
+     * Role attribute.
+     * @type {string}
+     */
+    ROLE : "role",
 
     /**
      * Prefix path for all AF HTTP APIs.
