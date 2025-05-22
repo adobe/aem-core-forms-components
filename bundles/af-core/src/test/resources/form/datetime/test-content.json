@@ -28,6 +28,8 @@
     "tooltip": "test-short-description",
     "minimumDateTime": "2025-05-07T11:21:00.000Z",
     "maximumDateTime": "2025-05-21T11:21:00.000Z",
+    "minimumMessage": "Date should be greater than 7th May 2025",
+    "maximumMessage": "Date should be less than 21st May 2025",
     "default": "2025-05-11T11:21",
     "fd:rules" : {
       "jcr:primaryType": "nt:unstructured",
