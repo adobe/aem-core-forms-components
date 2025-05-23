@@ -20,6 +20,7 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
+import com.adobe.granite.ui.components.ds.ValueMapResource;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -41,7 +42,6 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
-import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
 import com.fasterxml.jackson.annotation.JsonInclude;
