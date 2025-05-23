@@ -20,13 +20,11 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
-import org.apache.sling.models.annotations.injectorspecific.Self;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
@@ -84,6 +82,11 @@ public abstract class AbstractComponentImpl implements Component {
     @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private Page currentPage;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fd:channel")
+    @Nullable
+    @JsonIgnore
+    protected String channel;
 
     /**
      * The ID for this component.
