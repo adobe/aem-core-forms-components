@@ -24,7 +24,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
@@ -45,6 +44,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
@@ -150,7 +150,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         Map<String, T> models = new LinkedHashMap<>();
         for (Resource child : filteredChildrenResources) {
             T model = null;
-            if (this.channel != null && this.channel.equals("print")) {
+            if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
                 // Create a ValueMap with additional properties
                 ValueMap additionalProperties = new ValueMapDecorator(new HashMap<>());
                 additionalProperties.put("fd:channel", this.channel);

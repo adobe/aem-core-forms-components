@@ -44,6 +44,7 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
@@ -332,7 +333,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             return customRulesProperties;
         }
         addValidationStatus(ruleNode, customRulesProperties);
-        if (isPrintChannel()) {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
             populateAdditionalRulesProperties(ruleNode, customRulesProperties);
         }
         return customRulesProperties;
@@ -360,10 +361,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private void addRuleProperty(@NotNull ValueMap props, Map<String, Object> customRulesProperties, String rule) {
         Optional<String[]> propertyValue = Optional.ofNullable(props.get(rule, String[].class));
         propertyValue.ifPresent(value -> customRulesProperties.put(rule, value));
-    }
-
-    private boolean isPrintChannel() {
-        return "print".equals(this.channel);
     }
 
     /***
