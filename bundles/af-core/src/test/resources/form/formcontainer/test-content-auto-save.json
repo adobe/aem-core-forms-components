@@ -8,6 +8,7 @@
   "fd:enableAutoSave": "true",
   "fd:autoSaveInterval": "2",
   "fd:autoSaveStrategyType": "time",
+  "adaptiveform": "0.14.2",
   "textinput" : {
     "jcr:primaryType": "nt:unstructured",
     "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
