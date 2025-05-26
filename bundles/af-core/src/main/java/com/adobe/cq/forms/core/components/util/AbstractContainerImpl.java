@@ -20,7 +20,6 @@ import java.util.*;
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
-import com.adobe.granite.ui.components.ds.ValueMapResource;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -41,6 +40,7 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
+import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -142,7 +142,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         Map<String, T> models = new LinkedHashMap<>();
         for (Resource child : filteredChildrenResources) {
             T model = null;
-            if(this.channel != null && this.channel.equals("print")){
+            if (this.channel != null && this.channel.equals("print")) {
                 // Create a ValueMap with additional properties
                 ValueMap additionalProperties = new ValueMapDecorator(new HashMap<>());
                 additionalProperties.put("fd:channel", this.channel);

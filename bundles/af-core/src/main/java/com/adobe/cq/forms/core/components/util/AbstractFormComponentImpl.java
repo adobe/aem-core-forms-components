@@ -15,6 +15,31 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.annotation.Nonnull;
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
@@ -39,29 +64,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ValueMap;
-import org.apache.sling.models.annotations.Default;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
@@ -80,7 +82,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * 1) the value is not of type string and non empty or
      * 2) the value is of type string[] and has more than 1 elements
      */
-    private final Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String && ((String) obj.getValue()).length() > 0) || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
+    private final Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String && ((String) obj
+        .getValue()).length() > 0) || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATAREF)
     @Nullable
     protected String dataRef;
@@ -279,16 +282,19 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @NotNull
     public Map<String, String> getRules() {
-        String[] VALID_RULES = new String[]{"description", "enabled", "enum", "enumNames", "exclusiveMaximum", "exclusiveMinimum", "label", "maximum", "minimum", "readOnly", "required", "value", "visible"};
+        String[] VALID_RULES = new String[] { "description", "enabled", "enum", "enumNames", "exclusiveMaximum", "exclusiveMinimum",
+            "label", "maximum", "minimum", "readOnly", "required", "value", "visible" };
 
-        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj.getKey()));
+        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj
+            .getKey()));
 
         Predicate<Map.Entry<String, Object>> isRuleValid = isEntryNonEmpty.and(isRuleNameValid);
 
         Resource ruleNode = resource.getChild("fd:rules");
         if (ruleNode != null) {
             ValueMap ruleNodeProps = ruleNode.getValueMap();
-            Map<String, String> rules = ruleNodeProps.entrySet().stream().filter(isRuleValid).map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (String) entry.getValue())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            Map<String, String> rules = ruleNodeProps.entrySet().stream().filter(isRuleValid).map(entry -> new AbstractMap.SimpleEntry<>(
+                entry.getKey(), (String) entry.getValue())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
             return rules;
         }
         return Collections.emptyMap();
@@ -305,7 +311,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         addValidationStatus(ruleNode, customRulesProperties);
         if (isPrintChannel()) {
-            addPrintChannelRuleEvents(ruleNode, customRulesProperties);
+            populateAdditionalRulesProperties(ruleNode, customRulesProperties);
         }
         return customRulesProperties;
     }
@@ -317,8 +323,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
     }
 
-    private void addPrintChannelRuleEvents(Resource ruleNode, Map<String, Object> customRulesProperties) {
-        final String[] ruleEvents = {"fd:formReady", "fd:layoutReady", "fd:calc", "fd:init", "fd:validate"};
+    private void populateAdditionalRulesProperties(@NotNull Resource ruleNode, Map<String, Object> customRulesProperties) {
+        String[] RULES = { "fd:formReady", "fd:layoutReady", "fd:calc", "fd:init", "fd:validate", "fd:indexChange" };
 
         ValueMap props = ruleNode.adaptTo(ValueMap.class);
         if (props == null) {
@@ -326,14 +332,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             return;
         }
 
-        Arrays.stream(ruleEvents).forEach(event -> addRuleEvent(props, customRulesProperties, event));
+        Arrays.stream(RULES).forEach(rule -> addRuleProperty(props, customRulesProperties, rule));
     }
 
-    private void addRuleEvent(ValueMap props, Map<String, Object> customRulesProperties, String event) {
-        String eventValue = props.get(event, String.class);
-        if (StringUtils.isNotEmpty(eventValue)) {
-            customRulesProperties.put(event, eventValue);
-        }
+    private void addRuleProperty(@NotNull ValueMap props, Map<String, Object> customRulesProperties, String rule) {
+        Optional<String[]> propertyValue = Optional.ofNullable(props.get(rule, String[].class));
+        propertyValue.ifPresent(value -> customRulesProperties.put(rule, value));
     }
 
     private boolean isPrintChannel() {
@@ -374,9 +378,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return the updated event entry
      */
     private Stream<Map.Entry<String, String[]>> sanitizeEvent(Map.Entry<String, Object> entry) {
-        String[] VALID_EVENTS = new String[]{"click", "submit", "initialize", "load", "change", "submitSuccess", "submitError"};
+        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change", "submitSuccess", "submitError" };
 
-        Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") || Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
+        Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") || Arrays.stream(VALID_EVENTS)
+            .anyMatch(validKey -> validKey.equals(obj.getKey()));
         Predicate<Map.Entry<String, Object>> isEventValid = isEntryNonEmpty.and(isEventNameValid);
 
         Stream<Map.Entry<String, String[]>> updatedEntry;
@@ -410,7 +415,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             ValueMap eventNodeProps = eventNode.getValueMap();
             eventSet.addAll(eventNodeProps.entrySet());
         }
-        Map<String, String[]> userEvents = eventSet.stream().flatMap(this::sanitizeEvent).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        Map<String, String[]> userEvents = eventSet.stream().flatMap(this::sanitizeEvent).collect(Collectors.toMap(Map.Entry::getKey,
+            Map.Entry::getValue));
         return userEvents;
     }
 
@@ -467,7 +473,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             if (this.dataLayerEnabled == null) {
                 if (this.getCurrentPage() != null) {
                     // Check at page level to allow components embedded via containers in editable templates to inherit the setting
-                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.getCurrentPage().getContentResource());
+                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.getCurrentPage()
+                        .getContentResource());
                 } else {
                     this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
                 }
@@ -480,7 +487,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     private boolean isAllowedType(Object value) {
-        return value instanceof String || value instanceof String[] || value instanceof Boolean || value instanceof Boolean[] || value instanceof Calendar || value instanceof Calendar[] || value instanceof BigDecimal || value instanceof BigDecimal[] || value instanceof Long || value instanceof Long[];
+        return value instanceof String || value instanceof String[] || value instanceof Boolean || value instanceof Boolean[]
+            || value instanceof Calendar || value instanceof Calendar[] || value instanceof BigDecimal || value instanceof BigDecimal[]
+            || value instanceof Long || value instanceof Long[];
     }
 
     /**
@@ -495,10 +504,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         Set<String> reservedProperties = ReservedProperties.getReservedProperties();
 
         ValueMap resourceMap = resource.getValueMap();
-        Map<String, Object> nodeBasedCustomProperties = resourceMap.entrySet().stream().filter(entry -> isAllowedType(entry.getValue()) && !reservedProperties.contains(entry.getKey()) && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix))).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        Map<String, Object> nodeBasedCustomProperties = resourceMap.entrySet().stream().filter(entry -> isAllowedType(entry.getValue())
+            && !reservedProperties.contains(entry.getKey()) && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(
+                prefix))).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         nodeBasedCustomProperties.forEach(customProperties::putIfAbsent);
         try {
-            templateBasedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class)).map(CustomPropertyInfo::getProperties).orElse(Collections.emptyMap());
+            templateBasedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class)).map(
+                CustomPropertyInfo::getProperties).orElse(Collections.emptyMap());
         } catch (NoClassDefFoundError e) {
             logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon.");
             templateBasedCustomProperties = Collections.emptyMap();
