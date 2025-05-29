@@ -33,6 +33,7 @@ import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Scribble;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -43,8 +44,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ScribbleImpl extends AbstractFieldImpl implements Scribble {
 
-    @ValueMapValue
-    @Default(values = "")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String value;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_DIALOG_LABEL)
