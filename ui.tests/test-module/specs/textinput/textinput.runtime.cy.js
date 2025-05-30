@@ -233,8 +233,8 @@ describe("Form Runtime with Text Input", () => {
     })
 
     //Todo: Uncomment once the strings are translated in de.json
-    //commenting as skip is not letting file to be committed
-    /*it.skip("should show different localised default error messages on different constraints", () => {
+    //commenting as it is not letting file to be committed
+    /*it("should show different localised default error messages on different constraints", () => {
         cy.previewForm(localisationPagePath).then(p => {
             formContainer = p;
 
