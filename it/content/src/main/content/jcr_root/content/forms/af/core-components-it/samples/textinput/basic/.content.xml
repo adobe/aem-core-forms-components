@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2024-03-18T15:35:43.912+05:30"
+            cq:lastModified="{Date}2025-05-30T12:35:54.082+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -213,6 +213,23 @@
                         validationStatus="valid"/>
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </textinput_1477533951>
+            <textmultiline
+                    jcr:created="{Date}2025-05-30T12:33:57.718+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2025-05-30T12:35:54.075+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Multiline 1"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    enabled="{Boolean}true"
+                    fieldType="text-input"
+                    hideTitle="false"
+                    multiLine="true"
+                    name="textmultiline1"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
