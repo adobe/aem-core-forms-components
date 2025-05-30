@@ -81,6 +81,16 @@
                 this.setWidgetValueToModelValue();
                 this.triggerEnter();
             });
+            if (model.fieldType === "multiline-input") {
+                this.widget.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        // Prevent default action of Enter key to avoid form submission
+                        event.preventDefault();
+                        // Append a newline character to the widget value
+                        this.widget.value = this.widget.value + '\n';
+                    }
+                });
+            }
         }
     }
 

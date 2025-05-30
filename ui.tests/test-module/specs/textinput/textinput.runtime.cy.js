@@ -139,6 +139,19 @@ describe("Form Runtime with Text Input", () => {
         cy.get(`#${id} > .cmp-adaptiveform-textinput__widget`).should('not.have.attr', 'aria-disabled');
     })
 
+    it("Text Area can have new line characters", () => {
+
+        const [textmultiline, textMultilineFieldView] = Object.entries(formContainer._fields)[11];
+        const input = "adobe\ntest";
+
+        cy.get(`#${textmultiline}`).find("textarea").clear().type(input).blur().then(x => {
+            cy.get(`#${textmultiline}`).find("textarea").should('have.value', input);
+            cy.get(`#${textmultiline}`).find("textarea").type('{enter}').type('multiline').blur().then(x => {
+                cy.get(`#${textmultiline}`).find("textarea").should('have.value', "adobe\ntest\nmultiline");
+            });
+        });
+    })
+
     it("should set valid to false and errorMessage other textfields on a certain string input", () => {
         // Rule on textbox9: When textbox9 is changed => set valid and error message property of textbox10
 
