@@ -281,68 +281,6 @@ jobs:
             rm -rf /home/circleci/.gnupg
             rm -rf /home/circleci/.npmrc
       - run:
-          name: Update github with release notes and upload released artifacts
-          command: |
-            # Extract tag from CIRCLE_TAG environment variable
-            TAG=${CIRCLE_TAG}
-
-            # Maximum number of retries
-            MAX_RETRIES=3
-
-            # Function to create the release using GitHub API
-            create_release() {
-              local response
-              response=$(curl -s -X POST \
-                -H "Authorization: token $GITHUB_TOKEN" \
-                -H "Content-Type: application/json" \
-                -d '{
-                  "tag_name": "'"$TAG"'",
-                  "name": "'"$TAG"'",
-                  "body": "Release notes for version '"$TAG"'"
-                }' \
-                "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases")
-
-              echo "$response"
-            }
-
-            # Function to extract upload URL from GitHub API response
-            extract_upload_url() {
-              local response="$1"
-              echo "$response" | jq -r '.upload_url' | sed -e 's/{.*}//'
-            }
-
-            # Create the release with retries
-            for ((retry_count=1; retry_count<=MAX_RETRIES; retry_count++)); do
-              echo "Attempt $retry_count to create the release..."
-
-              RESPONSE=$(create_release)
-              echo "RESPONSE: $RESPONSE"
-              UPLOAD_URL=$(extract_upload_url "$RESPONSE")
-              echo "UPLOAD_URL: $UPLOAD_URL"
-
-              # Check if UPLOAD_URL is not null or empty
-              if [ -n "$UPLOAD_URL" ] && [ "$UPLOAD_URL" != "null" ]; then
-                echo "Release successfully created."
-                break  # Successful response, exit the loop
-              elif [ "$retry_count" -lt "$MAX_RETRIES" ]; then
-                echo "Failed to create release. Retrying..."
-                sleep 3  # Add a delay before the next attempt
-              else
-                echo "Error: Unable to create release after $MAX_RETRIES attempts."
-                exit 1
-              fi
-            done
-
-
-            # Upload release artifacts
-            for ARTIFACT in ./all/target/*.zip; do
-              curl -X POST \
-                -H "Authorization: token $GITHUB_TOKEN" \
-                -H "Content-Type: application/octet-stream" \
-                --data-binary @"$ARTIFACT" \
-                "$UPLOAD_URL?name=$(basename "$ARTIFACT")"
-            done
-      - run:
           name: Configure git user name
           command: |
             git config user.email "ci-build@aemforms"
@@ -350,86 +288,6 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "ba:61:80:74:5e:67:7e:ee:15:4c:5d:58:8a:47:12:05"
-      - run:
-          name: Update VERSIONS.md and README.md with the new released version
-          command: |
-            # Echo Git version
-            echo "Git Version: $(git --version)"
-
-            # Echo Circle CI tag
-            echo "CIRCLE_TAG: $CIRCLE_TAG"
-            # Hardcoding the branch on master, since finding branch name with tag does not return correct output
-            RELEASE_BRANCH="master"
-
-            # Debugging output
-            echo "RELEASE_BRANCH: $RELEASE_BRANCH"
-
-            # Checkout branch
-            git checkout $RELEASE_BRANCH
-
-            # Fetch all branches and tags from the remote repository
-            git fetch --tags
-
-            # Retrieve the branch name
-            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-
-            # Debugging output
-            echo "BRANCH_NAME: $BRANCH_NAME"
-
-            # Find the last tag on the branch, ignoring the private release
-            LAST_TAG=$(git tag -l --sort=-v:refname "core-forms-components-reactor-*" | grep -v -- '-[[:alnum:]]*$' | awk -v tag="$CIRCLE_TAG" '$0 < tag' | head -n 1)
-
-            # Debugging output
-            # echo "LAST_TWO_TAGS: $LAST_TWO_TAGS"
-
-            # Extract the last released from the output
-            # LAST_TAG=$(echo "$LAST_TWO_TAGS" | tail -n 1)
-
-            # Debugging output
-            echo "LAST_TAG: $LAST_TAG"
-
-            # If there is no previous release, use an empty string
-            if [[ -z "$LAST_TAG" ]]; then
-              LAST_TAG=""
-            fi
-
-            # Fetch the new version
-            NEW_VERSION=$(echo ${CIRCLE_TAG} | sed 's/^core-forms-components-reactor-//')
-            # Debugging output
-            echo "NEW_VERSION: $NEW_VERSION"
-
-            # Fetch the last released version
-            LAST_VERSION=$(echo "${LAST_TAG}" | sed 's/core-forms-components-reactor-//')
-            # Debugging output
-            echo "LAST_VERSION: $LAST_VERSION"
-
-            # Fetch the wcm core component version
-            WCM_CORE_COMPONENTS_VERSION=$(mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout)
-            # Debugging output
-            echo "WCM_CORE_COMPONENTS_VERSION: $WCM_CORE_COMPONENTS_VERSION"
-
-            # echo "Before sed: $(cat VERSIONS.md)"
-            # update versions.md
-            sed -i "/$LAST_VERSION/ { p; b; }; 1,/$LAST_VERSION/ { p; d; }" VERSIONS.md
-            sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\+?\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
-            # echo "After sed: $(cat VERSIONS.md)"
-
-            # echo "Before sed: $(cat README.md)"
-            # update readme.md
-            sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\+? \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
-            # echo "After sed: $(cat README.md)"
-
-            # Check if package-lock.json is modified
-            if [[ $(git status --porcelain | grep "package-lock.json") ]]; then
-              # Discard the changes to package-lock.json (if needed)
-              git checkout -- '**/package-lock.json'
-            fi
-
-            git add VERSIONS.md README.md
-            git commit -m "Update VERSIONS.md and README.md to include version ${NEW_VERSION}"
-            git push origin $RELEASE_BRANCH
-
-
 workflows:
   version: 2
   build-and-release:
@@ -438,14 +296,6 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - jsdocs-deploy:
-          requires:
-            - build-java-11
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
 #      - cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
 #          filters:
 ##            branches:
