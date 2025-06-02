@@ -460,7 +460,7 @@
 
         enableControls(controls) {
             controls.forEach(control => {
-                const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control) || document.querySelector('.' + Scribble.bemBlock + '__' + control + '-button');;
+                const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control) || document.querySelector('.' + Scribble.bemBlock + '__' + control + '-button');
                 element?.classList.remove('disable_button');
                 element.removeAttribute('disabled');
                 element.setAttribute('aria-disabled', 'false');
