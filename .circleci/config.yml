@@ -307,7 +307,6 @@ workflows:
       - release:
           requires:
             - build-java-11
-            - jsdocs-deploy
 #            - cypress-chrome-cloudready-with-latest-addon-and-old-core-components
           filters:
             branches:
