@@ -119,7 +119,7 @@ public class DatePickerImplTest {
     @Test
     void testGetScreenReaderText() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
-        assertEquals("'Custom screen reader text'", datePicker.getScreenReaderText());
+        assertEquals("Custom screen reader text", datePicker.getScreenReaderText());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, datePickerMock.getScreenReaderText());
