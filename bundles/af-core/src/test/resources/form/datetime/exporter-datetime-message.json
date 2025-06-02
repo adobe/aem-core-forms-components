@@ -18,7 +18,7 @@
   "label": {
     "value": "def"
   },
-  "screenReaderText": "'Custom screen reader text'",
+  "screenReaderText": "Custom screen reader text",
   "properties": {
     "afs:layout": {
       "tooltipVisible": false
