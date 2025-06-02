@@ -135,7 +135,7 @@ public class DropDownImplTest {
     @Test
     void testGetScreenReaderText() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
-        assertEquals("'Custom screen reader text'", dropdown.getScreenReaderText());
+        assertEquals("Custom screen reader text", dropdown.getScreenReaderText());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, dropdownMock.getScreenReaderText());

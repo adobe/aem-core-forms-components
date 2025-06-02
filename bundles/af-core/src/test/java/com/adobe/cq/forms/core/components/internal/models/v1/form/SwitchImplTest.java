@@ -118,7 +118,7 @@ public class SwitchImplTest {
     @Test
     void testGetScreenReaderText() {
         Switch switchObj = getSwitchUnderTest(PATH_SWITCH);
-        assertEquals("'Custom screen reader text'", switchObj.getScreenReaderText());
+        assertEquals("Custom screen reader text", switchObj.getScreenReaderText());
         Switch switchMock = Mockito.mock(Switch.class);
         Mockito.when(switchMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, switchMock.getScreenReaderText());
