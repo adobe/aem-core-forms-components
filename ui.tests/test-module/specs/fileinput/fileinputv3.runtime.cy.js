@@ -251,7 +251,7 @@ describe('Click on button tag (V-3)', () => {
 
      it('file when uploaded again should give actual size', () => {
         let sampleFileNames = ['sample.svg'];
-        const fileInput = "input[name='fileinput1']";
+        const fileInput = "input[name='fileinput2']";
         cy.attachFile(fileInput, [sampleFileNames[0]]);
         cy.get('.cmp-adaptiveform-fileinput__filesize').should('contain.text', '508 bytes');
         cy.attachFile(fileInput, [sampleFileNames[0]]);
