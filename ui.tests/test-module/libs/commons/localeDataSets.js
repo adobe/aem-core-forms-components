@@ -52,7 +52,8 @@ const languages = [
             "FileSizeGreater"       :       "File(s) ${0} are greater than the expected size: ${1}MB.",
             "FileNameInvalid"       :       "Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
             "FileMimeTypeInvalid"   :       "File(s) ${0} are unsupported file types",
-            "InternalFormSubmissionError" :  "Encountered an internal error while submitting the form."
+            "InternalFormSubmissionError" :  "Encountered an internal error while submitting the form.",
+            "FileSizeZero"          :       "File(s) ${0} cannot have 0MB size."
         }
     }, {
         LANGUAGE: 'German', LOCALE: 'de', TRANSLATION: {
