@@ -53,7 +53,7 @@ const languages = [
             "FileNameInvalid"       :       "Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
             "FileMimeTypeInvalid"   :       "File(s) ${0} are unsupported file types",
             "InternalFormSubmissionError" :  "Encountered an internal error while submitting the form.",
-            "FileSizeZero"          :       "File(s) ${0} cannot have 0MB size."
+            "FileSizeZero"          :       "The uploaded file(s) ${0} cannot be empty. Please select valid file(s)."
         }
     }, {
         LANGUAGE: 'German', LOCALE: 'de', TRANSLATION: {
