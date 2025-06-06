@@ -1,0 +1,35 @@
+
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2023 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+  <template data-sly-template.widget="${ @ checkboxgroup }">
+    <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}" id="${widgetId}">
+      <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
+        <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
+          <label class="cmp-adaptiveform-checkboxgroup__option-label"
+                 title="${checkboxgroup.tooltipVisible ? '' : checkboxgroup.tooltipText}">
+            <input class="cmp-adaptiveform-checkboxgroup__option__widget" type="checkbox"
+                   name="${checkboxgroup.name}"
+                   value="${checkboxgroup.enums[itemList.index].toString}"
+                   checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
+                   disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"
+                   aria-readonly="${checkboxgroup.readOnly ? 'true' : ''}"/>
+            <span>${checkboxgroup.enumNames[itemList.index] @ context = 'html'}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </template>
+  
