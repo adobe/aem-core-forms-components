@@ -4,7 +4,7 @@
   "FileNameInvalid"             :   "Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
   "FileMimeTypeInvalid"         :   "File(s) ${0} are unsupported file types",
   "InternalFormSubmissionError" :   "Encountered an internal error while submitting the form.",
-  "FileSizeZero"                :   "File(s) ${0} cannot have 0MB size.",
+  "FileSizeZero"                :   "The uploaded file(s) ${0} cannot be empty. Please select valid file(s).",
   "type"                        :   "Please enter a valid value.",
   "required"                    :   "Please fill in this field.",
   "minimum"                     :   "Value must be greater than or equal to ${0}.",
