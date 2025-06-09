@@ -1,0 +1,23 @@
+{
+  "$id": "classpath:/schema/0.15.2/print/adaptive-form-dor-container-border.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Specifies the border properties for the object.",
+  "additionalProperties": false,
+  "properties": {
+    "presence": {
+      "title": "Border Presence",
+      "description": "Specifies the presence attribute for the border.",
+      "type": "string"
+    },
+    "edges": {
+      "$ref": "./adaptive-form-dor-container-edges.schema.json"
+    },
+    "corners": {
+      "$ref": "./adaptive-form-dor-container-corners.schema.json"
+    },
+    "fill": {
+      "$ref": "./adaptive-form-dor-container-fill.schema.json"
+    }
+  }
+}
