@@ -87,11 +87,7 @@
                         // Prevent default action of Enter key to avoid form submission
                         event.preventDefault();
                         // Append a newline character to the widget value
-                        let cursorPosition = this.widget.selectionStart;
-                        let textBefore = this.widget.value.substring(0, cursorPosition);
-                        let textAfter = this.widget.value.substring(this.widget.selectionEnd);
-                        this.widget.value = textBefore + '\n' + textAfter;
-                        this.widget.selectionStart = this.widget.selectionEnd = cursorPosition + 1;
+                        this.widget.value = this.widget.value + '\n';
                     }
                 });
             }
