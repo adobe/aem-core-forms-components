@@ -798,8 +798,8 @@ public class FormContainerImplTest {
 
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, FormContainer.class, context);
         Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
-        assertTrue(dorProperties.containsKey("excludeFromDoRIfHidden"));
-        assertEquals(true, dorProperties.get("excludeFromDoRIfHidden"));
+        assertTrue(dorProperties.containsKey("fd:excludeFromDoRIfHidden"));
+        assertEquals(true, dorProperties.get("fd:excludeFromDoRIfHidden"));
     }
 
     @Test
@@ -812,7 +812,7 @@ public class FormContainerImplTest {
 
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, FormContainer.class, context);
         Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
-        assertTrue(dorProperties.containsKey("excludeFromDoRIfHidden"));
-        assertEquals(false, dorProperties.get("excludeFromDoRIfHidden"));
+        assertTrue(dorProperties.containsKey("fd:excludeFromDoRIfHidden"));
+        assertEquals(false, dorProperties.get("fd:excludeFromDoRIfHidden"));
     }
 }
