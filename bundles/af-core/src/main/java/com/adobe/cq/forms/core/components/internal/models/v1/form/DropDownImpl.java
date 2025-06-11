@@ -65,9 +65,9 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
         if (baseType == null) {
             return null;
         }
-        
+
         String typeValue = baseType.getValue();
-        
+
         // Handle multiSelect logic: append [] if multiSelect is true and not already array type
         // or remove [] if multiSelect is false and it's currently array type
         if (isMultiSelect()) {
@@ -79,7 +79,7 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
                 typeValue = typeValue.substring(0, typeValue.length() - 2);
             }
         }
-        
+
         return Type.fromString(typeValue);
     }
 
