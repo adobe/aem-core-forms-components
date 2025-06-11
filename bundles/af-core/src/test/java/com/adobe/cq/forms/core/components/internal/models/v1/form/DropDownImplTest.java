@@ -479,4 +479,56 @@ public class DropDownImplTest {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_WITHOUT_FIELDTYPE, DropDown.class, context);
         Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_DROPDOWN_WITHOUT_FIELDTYPE));
     }
+
+    @Test
+    void testGetTypeWithNullBaseType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "type", null, true);
+        assertNull(dropdown.getType());
+    }
+
+    @Test
+    void testGetTypeWithStringType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "type", Type.STRING, true);
+        assertEquals(Type.STRING, dropdown.getType());
+
+        // Test multi-select with string type
+        FieldUtils.writeField(dropdown, "multiSelect", true, true);
+        assertEquals(Type.STRING_ARRAY, dropdown.getType());
+    }
+
+    @Test
+    void testGetTypeWithNumberType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "type", Type.NUMBER, true);
+        assertEquals(Type.NUMBER, dropdown.getType());
+
+        // Test multi-select with number type
+        FieldUtils.writeField(dropdown, "multiSelect", true, true);
+        assertEquals(Type.NUMBER_ARRAY, dropdown.getType());
+    }
+
+    @Test
+    void testGetTypeWithBooleanType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "type", Type.BOOLEAN, true);
+        assertEquals(Type.BOOLEAN, dropdown.getType());
+
+        // Test multi-select with boolean type
+        FieldUtils.writeField(dropdown, "multiSelect", true, true);
+        assertEquals(Type.BOOLEAN_ARRAY, dropdown.getType());
+    }
+
+    @Test
+    void testGetTypeWithExistingArrayType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "multiSelect", true, true);
+        FieldUtils.writeField(dropdown, "type", Type.STRING_ARRAY, true);
+        assertEquals(Type.STRING_ARRAY, dropdown.getType());
+
+        // Test single-select with array type (should remove array suffix)
+        FieldUtils.writeField(dropdown, "multiSelect", false, true);
+        assertEquals(Type.STRING, dropdown.getType());
+    }
 }
