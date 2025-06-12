@@ -463,7 +463,6 @@
                 const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control) || document.querySelector('.' + Scribble.bemBlock + '__' + control + '-button');
                 element?.classList.remove('disable_button');
                 element.removeAttribute('disabled');
-                element.setAttribute('aria-disabled', 'false');
             });
         }
 
@@ -472,7 +471,6 @@
                 const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control) || document.querySelector('.' + Scribble.bemBlock + '__' + control + '-button');
                 element?.classList.add('disable_button');
                 element.setAttribute('disabled', 'true');
-                element.setAttribute('aria-disabled', 'true');
             });
         }
 
