@@ -57,14 +57,14 @@
           <div class="cmp-adaptiveform-scribble__canvases">
             <div class="cmp-adaptiveform-scribble__signcanvases" style="display:inline-block; vertical-align:top;">
               <canvas class="cmp-adaptiveform-scribble__canvas" aria-label="${'signature canvas' @ i18n}"></canvas>
-              <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="${scribble.placeHolder}">
+              <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="${scribble.placeHolder}" aria-label="${'signature text' @ i18n}">
             </div>
             <canvas class="cmp-adaptiveform-scribble__geocanvas" width="0" height="0" aria-label="${'geolocation' @ i18n}" ></canvas>
           </div>
           <div class="cmp-adaptiveform-scribble__controlpanel">
             <div class="cmp-adaptiveform-scribble__controls">
               <button type="button" class="cmp-adaptiveform-scribble__control-brush cmp-adaptiveform-scribble__button" tabindex="0" aria-label="${'brushes' @ i18n}"></button>
-              <div class="cmp-adaptiveform-scribble__brushlist"></div>
+              <div class="cmp-adaptiveform-scribble__brushlist" aria-label="${'brush size selection' @ i18n}"></div>
               <button type="button" class="cmp-adaptiveform-scribble__control-clear cmp-adaptiveform-scribble__button" tabindex="0" aria-label="${'clearSign' @ i18n}" ></button>
               <button type="button" class="cmp-adaptiveform-scribble__control-geo cmp-adaptiveform-scribble__button" tabindex="0" aria-label="${'geolocation' @ i18n}" ></button>
               <button type="button" class="cmp-adaptiveform-scribble__control-text cmp-adaptiveform-scribble__button" tabindex="0" aria-label="${'textSign' @ i18n}"></button>
@@ -78,7 +78,7 @@
         </div>
       </div>
       <div class="cmp-adaptiveform-scribble__clearsign-container">
-        <h1 class="cmp-adaptiveform-scribble__clearsign-title">${"Erase Current Signature?" @ i18n}</h1>
+        <h2 class="cmp-adaptiveform-scribble__clearsign-title">${"Erase Current Signature?" @ i18n}</h2>
         <div class="cmp-adaptiveform-scribble__clearsign-content" class="msgBoxTypenull">
           <div class="cmp-adaptiveform-scribble__clearsign-message">
             ${"This will permanently remove the signature you've drawn. Do you wish to proceed and begin again?" @ i18n}
