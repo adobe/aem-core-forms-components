@@ -1,0 +1,7 @@
+<template data-sly-template.legend="${@ componentId, labelValue, labelVisible, labelRichText, bemBlock}">
+    <legend class="${bemBlock}__legend"
+            data-sly-test="${labelValue && (labelVisible == null || labelVisible == true)}">
+      <span class="${bemBlock}__group-label"
+            data-richtext="${labelRichText}">${labelValue @ context = labelRichText ? 'html' : 'text'}</span>
+    </legend>
+  </template>
