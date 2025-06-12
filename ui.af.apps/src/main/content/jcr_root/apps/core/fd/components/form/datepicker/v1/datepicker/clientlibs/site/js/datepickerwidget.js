@@ -231,6 +231,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
           });
       this.caption = this.#dp.getElementsByClassName("dp-caption")[0];
+      this.caption.setAttribute("role", "button");
       this.caption.addEventListener("click",
           function (evnt) {
             if (self.view && self.#curInstance) {
@@ -640,6 +641,17 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.view = nextView;
         this.caption.classList.toggle("disabled",
             !this.#viewAction[this.view].caption);
+        let ariaLabel = "";
+        if (this.view === "Month") {
+          ariaLabel = this.#options.locale.months[this.currentMonth] + " " + this.currentYear;
+        } else if (this.view === "Year") {
+          ariaLabel = this.currentYear;
+        } else if (this.view === "Yearset") {
+          const startYear = this.currentYear - this.#options.yearsPerView / 2;
+          const endYear = startYear + this.#options.yearsPerView - 1;
+          ariaLabel = startYear + "-" + endYear;
+        }
+        this.caption.setAttribute("aria-label", ariaLabel);
         this['$' + this.view.toLowerCase()].style.display = "block";
         this["show" + this.view]();
       }
