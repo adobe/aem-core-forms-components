@@ -33,7 +33,8 @@ class FormFileInputWidgetBase {
     invalidFeature = {
         "SIZE": 1,
         "NAME": 2,
-        "MIMETYPE": 3
+        "MIMETYPE": 3,
+        "SIZE_ZERO": 4
     }
     extensionToMimeTypeMap = {
         "bat": "application/x-msdownload",
@@ -318,30 +319,27 @@ class FormFileInputWidgetBase {
             }
         }
 
-        showInvalidMessage(fileName, invalidFeature){
+        showInvalidMessage(fileName, invalidFeature) {
             let that = this;
             let IS_IPAD = navigator.userAgent.match(/iPad/i) !== null,
                 IS_IPHONE = (navigator.userAgent.match(/iPhone/i) !== null);
             if(IS_IPAD || IS_IPHONE){
-                setTimeout(function() {
-                    that.invalidMessage(that,fileName, invalidFeature);
-                }, 0);
-            }
-            else {
-                this.invalidMessage(fileName, invalidFeature);
+                // For iOS, just return the message (no setTimeout/alert)
+                return that.invalidMessage(fileName, invalidFeature);
+            } else {
+                return this.invalidMessage(fileName, invalidFeature);
             }
         }
 
         invalidMessage(fileName, invalidFeature) {
             const customMessages = this.options.constraintMessages || {};
-        
             const messages = {
                 [this.invalidFeature.SIZE]: customMessages.maxFileSize || FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeGreater", [fileName, this.options.maxFileSize]),
+                [this.invalidFeature.SIZE_ZERO]: customMessages.zeroFileSize || FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeZero", [fileName]),
                 [this.invalidFeature.NAME]: customMessages.invalidFileName || FormView.LanguageUtils.getTranslatedString(this.lang, "FileNameInvalid", [fileName]),
                 [this.invalidFeature.MIMETYPE]: customMessages.invalidMimeType || FormView.LanguageUtils.getTranslatedString(this.lang, "FileMimeTypeInvalid", [fileName])
             };
-        
-            alert(messages[invalidFeature]);
+            return messages[invalidFeature];
         }
 
 
@@ -437,33 +435,36 @@ class FormFileInputWidgetBase {
         handleChange(filesUploaded) {
             if (!this.isFileUpdate) {
                 let currFileName = '',
-                    inValidSizefileNames = '',
-                    inValidNamefileNames = '',
-                    inValidMimeTypefileNames = '',
                     self = this,
                     files = filesUploaded;
-                // Initially set the invalid flag to false
-                let isInvalidSize = false,
-                    isInvalidFileName = false,
-                    isInvalidMimeType = false;
+                // Group invalid filenames by error type
+                let invalidFilesByType = {
+                    SIZE: [],
+                    SIZE_ZERO: [],
+                    NAME: [],
+                    MIMETYPE: []
+                };
                 //this.resetIfNotMultiSelect();
                 if (typeof files !== "undefined") {
                     let invalidFilesIndexes = [];
                     Array.from(files).forEach(function (file, fileIndex) {
                         let isCurrentInvalidFileSize = false,
                             isCurrentInvalidFileName = false,
-                            isCurrentInvalidMimeType = false;
+                            isCurrentInvalidMimeType = false,
+                            isCurrentInvalidFileSizeZero = false;
                         currFileName = file.name.split("\\").pop();
                         // Now size is in MB
                         let size = file.size / 1024 / 1024;
                         // check if file size limit is within limits
                         if ((size > parseFloat(this.options.maxFileSize))) {
-                            isInvalidSize = isCurrentInvalidFileSize = true;
-                            inValidSizefileNames = currFileName + "," + inValidSizefileNames;
+                            isCurrentInvalidFileSize = true;
+                            invalidFilesByType.SIZE.push(currFileName);
+                        } else if (size === 0) {
+                            isCurrentInvalidFileSizeZero = true;
+                            invalidFilesByType.SIZE_ZERO.push(currFileName);
                         } else if (!FileInputWidget.isValid(currFileName)) {
-                            // check if file names are valid (ie) there are no control characters in file names
-                            isInvalidFileName = isCurrentInvalidFileName = true;
-                            inValidNamefileNames = currFileName + "," + inValidNamefileNames;
+                            isCurrentInvalidFileName = true;
+                            invalidFilesByType.NAME.push(currFileName);
                         } else {
                             let isMatch = false;
                             let extension = currFileName.split('.').pop();
@@ -474,13 +475,13 @@ class FormFileInputWidgetBase {
                                 });
                             }
                             if (!isMatch) {
-                                isInvalidMimeType = isCurrentInvalidMimeType = true;
-                                inValidMimeTypefileNames = currFileName + "," + inValidMimeTypefileNames;
+                                isCurrentInvalidMimeType = true;
+                                invalidFilesByType.MIMETYPE.push(currFileName);
                             }
                         }
 
                         // if the file is not invalid, show it and push it to internal array
-                        if (!isCurrentInvalidFileSize && !isCurrentInvalidFileName && !isCurrentInvalidMimeType) {
+                        if (!isCurrentInvalidFileSize && !isCurrentInvalidFileName && !isCurrentInvalidMimeType && !isCurrentInvalidFileSizeZero) {
                             if(this.isMultiSelect()) {
                                 this.values.push(currFileName);
                                 this.fileArr.push(file);
@@ -491,8 +492,6 @@ class FormFileInputWidgetBase {
                         } else {
                             invalidFilesIndexes.push(fileIndex);
                         }
-
-
                     }, this);
 
                     if (invalidFilesIndexes.length > 0 && this.widget !== null) {
@@ -504,12 +503,22 @@ class FormFileInputWidgetBase {
                 this.model.value = this.fileArr;
                 //this.model.validate();
 
-                if (isInvalidSize) {
-                    this.showInvalidMessage(inValidSizefileNames.substring(0, inValidSizefileNames.lastIndexOf(',')), this.invalidFeature.SIZE);
-                } else if (isInvalidFileName) {
-                    this.showInvalidMessage(inValidNamefileNames.substring(0, inValidNamefileNames.lastIndexOf(',')), this.invalidFeature.NAME);
-                } else if (isInvalidMimeType) {
-                    this.showInvalidMessage(inValidMimeTypefileNames.substring(0, inValidMimeTypefileNames.lastIndexOf(',')), this.invalidFeature.MIMETYPE);
+                // Show error messages for all invalid features using showInvalidMessage
+                let errorMessages = [];
+                if (invalidFilesByType.SIZE.length > 0) {
+                    errorMessages.push(this.showInvalidMessage(invalidFilesByType.SIZE.join(', '), this.invalidFeature.SIZE));
+                }
+                if (invalidFilesByType.SIZE_ZERO.length > 0) {
+                    errorMessages.push(this.showInvalidMessage(invalidFilesByType.SIZE_ZERO.join(', '), this.invalidFeature.SIZE_ZERO));
+                }
+                if (invalidFilesByType.NAME.length > 0) {
+                    errorMessages.push(this.showInvalidMessage(invalidFilesByType.NAME.join(', '), this.invalidFeature.NAME));
+                }
+                if (invalidFilesByType.MIMETYPE.length > 0) {
+                    errorMessages.push(this.showInvalidMessage(invalidFilesByType.MIMETYPE.join(', '), this.invalidFeature.MIMETYPE));
+                }
+                if (errorMessages.length > 0) {
+                    alert(errorMessages.join('\n'));
                 }
             }
             this.widget.value = null;
