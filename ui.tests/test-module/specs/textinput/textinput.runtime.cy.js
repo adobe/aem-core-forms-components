@@ -148,6 +148,13 @@ describe("Form Runtime with Text Input", () => {
             cy.get(`#${textmultiline}`).find("textarea").should('have.value', input);
             cy.get(`#${textmultiline}`).find("textarea").type('{enter}').type('multiline').blur().then(x => {
                 cy.get(`#${textmultiline}`).find("textarea").should('have.value', "adobe\ntest\nmultiline");
+                cy.get(`#${textmultiline}`).find("textarea").then($el => {
+                    const el = $el[0];
+                    el.setSelectionRange(1, 2); //selects the second character of value
+                });
+                cy.get(`#${textmultiline}`).find("textarea").type('{enter}').type('new line').blur().then(x => {
+                    cy.get(`#${textmultiline}`).find("textarea").should('have.value', "a\nnew lineobe\ntest\nmultiline");
+                });
             });
         });
     })
