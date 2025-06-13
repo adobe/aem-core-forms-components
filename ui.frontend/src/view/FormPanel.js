@@ -236,6 +236,20 @@ class FormPanel extends FormFieldBase {
     }
 
     /**
+     * Updates the HTML state based on the label state of the field.
+     * @param {Object} label - The label.
+     */
+    updateLabel(label) {
+        super.updateLabel(label);
+
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+        const labelContainer = this.element.querySelector(`.${bemClass}__label-container`);
+        if (labelContainer) {
+            labelContainer.querySelector("label").setAttribute(Constants.ROLE, "heading");
+        }
+    }
+
+    /**
      * Gets the child view at the specified index.
      * This method needs to be implemented in every layout.
      * @param {number} index - The index of the child view.
