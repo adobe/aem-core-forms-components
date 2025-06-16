@@ -30,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Scribble;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,6 +53,10 @@ public class ScribbleImpl extends AbstractFieldImpl implements Scribble {
     @Default(values = Scribble.DEFAULT_DIALOG_LABEL)
     protected String dialogLabel;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FORMAT)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    protected String format;
+
     @Override
     public String getValue() {
         return value;
@@ -63,11 +68,21 @@ public class ScribbleImpl extends AbstractFieldImpl implements Scribble {
     }
 
     @Override
+    public String getFormat() {
+        return format;
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.FILE_INPUT);
+    }
+
+    @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> customProperties = super.getProperties();
+        customProperties.put(ReservedProperties.PN_VIEWTYPE, "signature");
         if (getDialogLabel() != null)
             customProperties.put(ReservedProperties.FD_DIALOG_LABEL, getDialogLabel());
         return customProperties;
     }
-
 }

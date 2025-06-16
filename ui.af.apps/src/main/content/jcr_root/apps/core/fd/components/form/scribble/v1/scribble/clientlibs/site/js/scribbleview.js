@@ -189,15 +189,6 @@
              },15000);
         }
 
-        extractData(datauri){
-            var idx;
-            if(datauri!=null&&datauri.length>0&&datauri.indexOf("data:")==0){
-                if((idx=datauri.indexOf(","))>0) {
-                    return datauri.substr(idx+1);
-                }
-            }
-        }
-
         openClearSignModal() {
             const clearSignContainer = this.getClearSignContainer();
             const clearSignButton = this.getClearSignButton();
@@ -234,7 +225,7 @@
                 }
         
                 this._signSubmitted = false;
-                this.setModelValue(null);
+                this.setModelValue(undefined);
             };
         
             clearSignButton.addEventListener('click', handleClearSign);
@@ -249,14 +240,23 @@
             mainCanvas.classList.add('cmp-adaptiveform-scribble__canvasImage');
         }
 
+        updateEmptyStatus () {
+            super.updateEmptyStatus();
+        }
+
         updateValue(value) {
-            // html sets undefined value as undefined string in input value, hence this check is added
-            let widgetValue = typeof value === "undefined" ? null : value;
-            const signedImage = this.getSignedCanvasImage();
-            if (signedImage && widgetValue) {
-                signedImage.src = `data:image/png;base64,${widgetValue}`;
-                super.updateEmptyStatus();
-            }
+            let that = this;
+            this._model.serialize().then((files) => {
+                if (files && files.length > 0 && files[0]) {
+                    let signatureDataUrl = files[0].data;
+                    signatureDataUrl = typeof signatureDataUrl === "undefined" ? null : signatureDataUrl;
+                    const signedImage = that.getSignedCanvasImage();
+                    if (signedImage && signatureDataUrl) {
+                        signedImage.src = signatureDataUrl;
+                        that.updateEmptyStatus();
+                    }
+                }
+            });
         }
 
         isCanvasEmpty(canvas) {
@@ -290,9 +290,8 @@
                 sigCnv.parentNode.replaceChild(mainCanvas, sigCnv);
         
                 let submitData = mainCanvas.toDataURL("image/png");
+                submitData = submitData.replace("data:image/png;base64,", "data:image/png;name=fd_type_signature.png;base64,")
                 this.existingSign = mainCanvas;
-                
-                submitData = submitData.replace(/^data:image\/png;base64,/, '');
         
                 this.updateSignedImage(submitData);
                 this.setModelValue(submitData);
@@ -332,7 +331,7 @@
 
         updateSignedImage(newData) {
             const img = this.getSignedCanvasImage();
-            img.src = `data:image/png;base64,${newData}`;
+            img.src = newData;
             img.style.width = '100%';
             img.style.height = '150px';
         }
@@ -373,7 +372,6 @@
                     e.stopPropagation();
                     this.context.lineWidth=brush;
                     this.toggleBrushList();
-                    // this.handleBrush(e);
                 })
                 this.getBrushList().append(divel);
              });
@@ -494,6 +492,7 @@
                     break;
                 case 'clearSign':
                     this.eraseSignature();
+                    this.widget.value = '';
                     break;
                 case 'textSign':
                     this.enableSignatureTextBox();
@@ -518,10 +517,12 @@
 
         handleBrush(evt){
             this.getKeyboardSignBox().style.display = 'none';
-            this.canvas.style.display = "block";
-            this.context.clearRect(0, 0, this.canvas?.width, this.canvas?.height);
-            this.eraseSignature();
-            this.initializeCanvas();
+            if (this.canvas.style.display == "none") {
+                this.canvas.style.display = "block";
+                this.context.clearRect(0, 0, this.canvas?.width, this.canvas?.height);
+                this.eraseSignature();
+                this.initializeCanvas();
+            }
         }
         initScribbleModal() {
             const controlPanel = this.getScribbleControlPanel();

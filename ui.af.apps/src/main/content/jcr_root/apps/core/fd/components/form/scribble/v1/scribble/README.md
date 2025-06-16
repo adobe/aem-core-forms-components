@@ -19,18 +19,15 @@ Adaptive Form Scribble field component written in HTL.
 
 ## Features
 
-* Provides the following type of input:
-  * text
-  * textarea
+The Adaptive Form Scribble component allows users to draw or sign directly on a canvas within an adaptive form. It supports the following features:
 * Custom constraint messages for the above types
 * Styles
-* Allows replacing this component with other component (as mentioned below).
 
 ### Use Object
-The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.Scribble` Sling Model for its Use-object.
+The Form Scribble component uses the `com.adobe.cq.forms.core.components.models.form.Scribble` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Text component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Form Scribble component and are expected to be available as `Resource` properties:
 
 1. `./jcr:title` - defines the label to use for this field
 2. `./hideTitle` - if set to `true`, the label of this field will be hidden

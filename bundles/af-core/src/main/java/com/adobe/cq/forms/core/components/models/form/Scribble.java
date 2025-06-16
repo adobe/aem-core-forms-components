@@ -29,11 +29,19 @@ public interface Scribble extends Field {
     String DEFAULT_DIALOG_LABEL = "Please sign here";
 
     /**
-     * Returns the base64 encoded string of the scribble.
+     * Returns the data-url string of the scribble.
      *
-     * @return Base64 encoded string representing the scribble
+     * @return data-url string representing the scribble
      * @since com.adobe.cq.forms.core.components.models.form 5.11.0
      */
     String getValue();
+
+    /**
+     * Returns the format of the scribble.
+     *
+     * @return the format of the scribble, e.g., data-url
+     * @since com.adobe.cq.forms.core.components.models.form 5.11.0
+     */
+    String getFormat();
 
 }
