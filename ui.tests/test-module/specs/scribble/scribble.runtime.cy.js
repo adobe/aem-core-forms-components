@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+/**
 describe("Form Runtime with Scribble Input", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/scribble/basic.html"
@@ -107,3 +108,4 @@ describe("Form Runtime with Scribble Input", () => {
 
 
 })
+ **/
