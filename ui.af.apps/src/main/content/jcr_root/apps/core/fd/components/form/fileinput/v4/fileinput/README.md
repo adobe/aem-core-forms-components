@@ -95,7 +95,7 @@ The following attributes must be added for the initialization of the file-input 
  
 ## Information
 * **Vendor**: Adobe
-* **Version**: v3
+* **Version**: v4
 * **Compatibility**: Cloud
 * **Status**: production-ready
 
