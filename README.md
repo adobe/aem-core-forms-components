@@ -154,6 +154,10 @@ If you encounter problems with components or clientlibs:
 
 This ensures your environment uses the correct component versions and avoids conflicts that can occur with multiple installations.
 
+### Important Note for AEM Cloud Service
+
+We identified that core component based forms fail to render due to a version mismatch in the forms core component package. If the version in the product is 3.0.104 and the customer project (archetype project) includes a version equal to or higher than 3.0.104, the customer's package gets used.
+
 ### UberJar
 
 This project relies on the AEM 6.4.4 `cq-quickstart` UberJar and [AEM Forms SDK API](https://repo.maven.apache.org/maven2/com/adobe/aem/aem-forms-sdk-api/). This is publicly available on https://repo.adobe.com
