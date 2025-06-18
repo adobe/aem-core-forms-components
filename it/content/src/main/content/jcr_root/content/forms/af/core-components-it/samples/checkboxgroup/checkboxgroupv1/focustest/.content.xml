@@ -9,7 +9,7 @@
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="focustest"
-        sling:configRef="/conf/forms/core-components-it/samples/checkboxgroup/focustest/"
+        sling:configRef="/conf/forms/core-components-it/samples/checkboxgroup/checkboxgroupv1/focustest/"
         sling:resourceType="forms-components-examples/components/page">
         <guideContainer
             fd:version="2.1"
@@ -46,7 +46,7 @@
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Check Box Group"
-                sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                sling:resourceType="core/fd/components/form/checkboxgroup/v1/checkboxgroup"
                 enum="[0,1]"
                 enumNames="[Item 1, Item 2]"
                 fieldType="checkbox-group"
