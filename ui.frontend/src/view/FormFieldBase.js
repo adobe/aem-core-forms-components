@@ -156,7 +156,7 @@ class FormFieldBase extends FormField {
       let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
       widgetElement = widgetElements || widgetElement;
       if (widgetElement) {
-          widgetElement.setAttribute('id', this.getWidgetId());
+        widgetElement.setAttribute('id', this.getWidgetId());
       }
     }
 
@@ -243,10 +243,24 @@ class FormFieldBase extends FormField {
             // Some elements have the Widget hidden by default and other are Panels
             // So this container mimics having a single, showing widget to attach the Accessibility label to.
             if(regionContainer) {
-                regionContainer.setAttribute('role', 'region');
+                regionContainer.setAttribute('tabindex', '1');
                 regionContainer.setAttribute('aria-label', screenReaderText);
             } else if (widgetElement) {
                 widgetElement.setAttribute('aria-label', screenReaderText);
+            }
+        }
+    }
+
+    #syncLabelledBy() {
+        let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+        let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+        let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+        widgetElement = widgetElements || widgetElement;
+
+        if (widgetElement && widgetElement.hasAttribute('role') && (widgetElement.getAttribute('role') === 'group' || widgetElement.getAttribute('role') === 'radiogroup')) {
+            if (labelElement) {
+                labelElement.setAttribute('id', `${this.getId()}__label`);
+                widgetElement.setAttribute('aria-labelledby', `${this.getId()}__label`);
             }
         }
     }
@@ -263,6 +277,7 @@ class FormFieldBase extends FormField {
         this.#syncAriaDescribedBy()
         this.#syncError()
         this.#syncAriaLabel()
+        this.#syncLabelledBy()
     }
 
     /**
