@@ -77,6 +77,7 @@ public final class ReservedProperties {
     public static final String PN_MULTI_DEFAULT_VALUES = "fd:multiDefaultValues";
     public static final String PN_FORMAT = "format";
     public static final String PN_DISPLAY_FORMAT = "displayFormat";
+    public static final String PN_CUSTOM_DISPLAY_FORMAT = "fd:customDisplayFormat";
     public static final String PN_EDIT_FORMAT = "editFormat";
     public static final String PN_DISPLAY_VALUE_EXPRESSION = "displayValueExpression";
     public static final String PN_DATA_FORMAT = "dataFormat";
