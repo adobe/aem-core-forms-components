@@ -1,0 +1,22 @@
+{
+  "id": "datetime-without-fieldtype1",
+  "fieldType": "datetime-input",
+  "name": "abc",
+  "type": "string",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datetime-without-fieldtype"
+  },
+  "format": "date-time",
+  ":type": "core/fd/components/form/datetime/v1/datetime"
+}

@@ -126,19 +126,19 @@ public class Utils {
         // create an instance of the JsonSchemaFactory using version flag
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         try {
-            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/0.14.2/adaptive-form.schema.json");
+            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/0.15.0/adaptive-form.schema.json");
             JsonSchema schema = schemaFactory.getSchema(schemaStream);
             // read data from the stream and store it into JsonNode
             JsonNode json = objectMapper.readTree(jsonStream);
             // if there is a version bump of schema, then it needs to be validated against its corresponding sling model here
             // by explicitly checking the model implementation
             if (!(model instanceof FormContainerImpl)) {
-                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.14.2/form.json");
+                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.15.0/form.json");
                 JsonNode formContainerTemplateNode = objectMapper.readTree(formContainerTemplate);
                 ((ObjectNode) formContainerTemplateNode).putArray("items").add(json);
                 json = formContainerTemplateNode;
             }
-            // create set of validation message and store result in it
+            // create set of validation message and st ore result in it
             Set<ValidationMessage> validationResult = schema.validate(json);
             // show the validation errors
             if (!validationResult.isEmpty()) {

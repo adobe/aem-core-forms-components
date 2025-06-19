@@ -148,4 +148,5 @@ public final class FormConstants {
 
     /** Form definition type indicating submission view */
     public static final String FORM_DEFINITION_SUBMISSION = "submission";
+    public static final String RT_FD_FORM_DATETIME_V1 = RT_FD_FORM_PREFIX + "datetime/v1/datetime";
 }
