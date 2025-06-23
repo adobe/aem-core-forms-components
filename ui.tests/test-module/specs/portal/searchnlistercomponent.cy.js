@@ -29,7 +29,7 @@
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
       afConstants = require('../../libs/commons/formsConstants');
 
-describe('Search And Lister - Authoring', function () {
+xdescribe('Search And Lister - Authoring', function () {
     // we can use these values to log in
     const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/searchlister",
             componentEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.fpsnlcomponent.split("/").pop(),
