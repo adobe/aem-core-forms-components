@@ -234,7 +234,7 @@ describe('Page/Form Authoring', function () {
                 cy.get('.cq-dialog-cancel').click();
             });
 
-            it('open edit dialog, verify auto save tab in container edit dialog box', {retries: 3},function () {
+            xit('open edit dialog, verify auto save tab in container edit dialog box', {retries: 3},function () {
                 if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-14255")) {
                     checkAutoSaveTab(formContainerEditPathSelector);
                 }

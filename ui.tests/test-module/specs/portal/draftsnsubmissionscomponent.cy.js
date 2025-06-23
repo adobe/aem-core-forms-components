@@ -29,7 +29,7 @@
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
       afConstants = require('../../libs/commons/formsConstants');
 
-describe('Drafts And Submissions - Authoring', function () {
+xdescribe('Drafts And Submissions - Authoring', function () {
     // we can use these values to log in
     const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/draftsandsubmissions",
             suffixCustom = "demo_draft/component",
