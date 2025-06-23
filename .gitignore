@@ -10,6 +10,9 @@
 # auto-generated clientlib
 ui.af.apps/src/main/content/jcr_root/apps/core/fd/af-clientlibs/core-forms-components-runtime-base/**
 
+# xfa not supported in 650 yet
+ui.af.apps/src/main/content/jcr_root/apps/core/fd/af-clientlibs/core-forms-components-runtime-base-xfa/**
+
 # Ignore Maven stuff
 target/
 pom.xml.tag
