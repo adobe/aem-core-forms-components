@@ -27,6 +27,7 @@
         _enforceGeoLoc=!!navigator.userAgent.match(/iPad/i);
         existingSign = '';
         existingCanvas = '';
+        lang = "en";
         static NS = FormView.Constants.NS;
         static IS = "adaptiveFormScribble";
         static bemBlock = 'cmp-adaptiveform-scribble';
@@ -66,6 +67,11 @@
             this.initializeScribble();
         }
 
+        setModel(model) {
+            super.setModel(model);
+            this.lang = model.lang;
+        }
+
         initializeScribble() {
             this.getCanvasContainer().addEventListener('click', () => this.scribbleContainerClickHandler());
             this.initScribbleModal();
@@ -92,63 +98,63 @@
         }
 
         getScribbleControlPanel() {
-            return document.querySelector(Scribble.selectors.scribbleControlPanel);
+            return this.element.querySelector(Scribble.selectors.scribbleControlPanel);
         }
 
         getScribbleContainer() {
-            return document.querySelector(Scribble.selectors.scribbleContainer);
+            return this.element.querySelector(Scribble.selectors.scribbleContainer);
         }
 
         getMessage() {
-            return document.querySelector(Scribble.selectors.scribbleMessage);
+            return this.element.querySelector(Scribble.selectors.scribbleMessage);
         }
 
         getClearSignContainer() {
-            return document.querySelector(Scribble.selectors.clearSignContainer);
+            return this.element.querySelector(Scribble.selectors.clearSignContainer);
         }
 
         getClearSignButton() {
-            return document.querySelector(Scribble.selectors.clearSignButton);
+            return this.element.querySelector(Scribble.selectors.clearSignButton);
         }
 
         getCancelClearSignButton() {
-            return document.querySelector(Scribble.selectors.cancelClearSignButton);
+            return this.element.querySelector(Scribble.selectors.cancelClearSignButton);
         }
 
         getBrushList() {
-            return document.querySelector(Scribble.selectors.scribbleBrushList);
+            return this.element.querySelector(Scribble.selectors.scribbleBrushList);
         }
 
         getBrush() {
-            return document.querySelector(Scribble.selectors.brushControl);
+            return this.element.querySelector(Scribble.selectors.brushControl);
         }
 
         getClearControl() {
-            return document.querySelector(Scribble.selectors.clearControl);
+            return this.element.querySelector(Scribble.selectors.clearControl);
         }
 
         getSaveControl() {
-            return document.querySelector(Scribble.selectors.saveCanvas);
+            return this.element.querySelector(Scribble.selectors.saveCanvas);
         }
 
         getGeoLocationIcon() {
-            return document.querySelector(Scribble.selectors.scribbleGeoControl);
+            return this.element.querySelector(Scribble.selectors.scribbleGeoControl);
         }
 
         getTextSignControl() {
-            return document.querySelector(Scribble.selectors.scribbleTextControl);
+            return this.element.querySelector(Scribble.selectors.scribbleTextControl);
         }
 
         getScribbleContainerPanel() {
-            return document.querySelector(Scribble.selectors.scribbleContainerPanel);
+            return this.element.querySelector(Scribble.selectors.scribbleContainerPanel);
         }
 
         getKeyboardSignBox() {
-            return document.querySelector(Scribble.selectors.keyboardSignBox);
+            return this.element.querySelector(Scribble.selectors.keyboardSignBox);
         }
 
         getGeoCanvas() {
-            return document.querySelector(Scribble.selectors.geoCanvas);
+            return this.element.querySelector(Scribble.selectors.geoCanvas);
         }
 
         getCanvasContainer() {
@@ -176,7 +182,7 @@
         }
 
         getSignedCanvasImage() {
-            return document.querySelector(Scribble.selectors.canvasSignedImage);
+            return this.element.querySelector(Scribble.selectors.canvasSignedImage);
         }
 
         showMessage(msg){
@@ -213,13 +219,13 @@
                     geoCtx.clearRect(0, 0, geoCanvas.width, geoCanvas.height);
                 }
         
-                this.enableControls(['brush', 'geo', 'clear', 'text', 'save']);
+                this.enableControls(['brushes', 'geolocation', 'clearSign', 'textSign', 'save']);
         
                 const signedImage = this.getSignedCanvasImage();
                 if (signedImage) {
                     signedImage.removeAttribute('src');
                     signedImage.removeAttribute('style');
-                    document.querySelector('.cmp-adaptiveform-scribble__clear-sign')?.remove();
+                    this.element.querySelector('.cmp-adaptiveform-scribble__clear-sign')?.remove();
                     clearSignContainer.style.display = 'none';
                     this.getKeyboardSignBox().value = '';
                 }
@@ -309,6 +315,7 @@
         createMainCanvas() {
             const mainCanvas = document.createElement('canvas');
             mainCanvas.classList.add('cmp-adaptiveform-scribble__canvas__main');
+            mainCanvas.ariaLabel = FormView.LanguageUtils.getTranslatedString(this.lang, "SignatureCanvas");
             return mainCanvas;
         }
 
@@ -361,7 +368,8 @@
                 cnv.style.border='1px solid #AAAAAA';
                 cnv.width=100;
                 cnv.height=20;
-                cnv.style.backgroundColor='white'
+                cnv.style.backgroundColor = 'white';
+                cnv.ariaLabel = FormView.LanguageUtils.getTranslatedString(this.lang, "Brush Size: ") + brush;
                 ctx.lineWidth=brush;
                 ctx.beginPath();
                 ctx.moveTo(10,cnv.height/2);
@@ -448,17 +456,19 @@
                     this.geoQueryErrorHandler.bind(this)
                 );
                 this._geoLocQuery.query();
-                this.showMessage('Fetching Geo Location...');
+                var message = FormView.LanguageUtils.getTranslatedString(this.lang, 'Fetching Geo Location...') || 'Fetching Geo Location...';
+                this.showMessage(message);
             }
         }
 
         geoQueryErrorHandler(err) {
-            this.showMessage('Error fetching geolocation');
+            var message = FormView.LanguageUtils.getTranslatedString(this.lang, 'Error fetching geolocation') || 'Error fetching geolocation';
+            this.showMessage(message);
         }
 
         enableControls(controls) {
             controls.forEach(control => {
-                const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control) || document.querySelector('.' + Scribble.bemBlock + '__' + control + '-button');
+                const element = this.element.querySelector('[data-cmp-scribble-button="'+ control +'"]');
                 element?.classList.remove('disable_button');
                 element.removeAttribute('disabled');
             });
@@ -466,7 +476,7 @@
 
         disableControl(controls) {
             controls.forEach(control => {
-                const element = document.querySelector('.' + Scribble.bemBlock + '__control-' + control) || document.querySelector('.' + Scribble.bemBlock + '__' + control + '-button');
+                const element = this.element.querySelector('[data-cmp-scribble-button="'+ control +'"]');
                 element?.classList.add('disable_button');
                 element.setAttribute('disabled', 'true');
             });
@@ -482,8 +492,8 @@
         }
 
         controlPanelClickHandler(event) {
-            const ariaLabel = event.target.getAttribute('aria-label');
-            switch(ariaLabel){
+            const scribbleButton = event.target.getAttribute('data-cmp-scribble-button');
+            switch(scribbleButton){
                 case 'save':
                     this.submitSign();
                     break;
@@ -536,9 +546,9 @@
         
             keyboardSignBox.addEventListener('input', (event) => {
                 if (event?.target?.value) {
-                    this.enableControls(['save', 'clear']);
+                    this.enableControls(['save', 'clearSign']);
                 } else {
-                    this.disableControl(['save', 'clear']);
+                    this.disableControl(['save', 'clearSign']);
                 }
             });
         
@@ -587,7 +597,7 @@
                 geoCnv.style.display = 'none';
             }
             this.getKeyboardSignBox().value='';
-            this.disableControl(['clear','save']);
+            this.disableControl(['clearSign','save']);
         }
 
         resizeAndFixCanvas() {
@@ -634,7 +644,7 @@
                 this.getCanvasContainer().style.width = '100%';
                 this.getMainCanvas().style.border = '1px solid black';
                 this.getKeyboardSignBox().style.display = 'none';
-                this.disableControl(['brush','geo','clear','text','save']);
+                this.disableControl(['brushes','geolocation','clearSign','textSign','save']);
             } else {
                 this.canvas = this.getCanvas();
                 this.canvas.style.display = 'block';
@@ -655,7 +665,7 @@
 
         showScribbleModal() {
             if(window.getComputedStyle(this.getScribbleContainer()).display !== 'block') {
-                this.disableControl(['clear','save']);
+                this.disableControl(['clearSign','save']);
             }
             this.getScribbleContainer().style.display = 'block';
         }
@@ -712,7 +722,7 @@
             const { offsetX, offsetY } = this.getEventCoordinates(event);
             this.context.lineTo(offsetX, offsetY);
             this.context.stroke();
-            this.enableControls(['clear','save']);
+            this.enableControls(['clearSign','save']);
         }
 
         stopDrawing() {
