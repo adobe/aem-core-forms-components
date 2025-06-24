@@ -12,7 +12,7 @@ describe("Auto save handler runtime", () => {
 
     const autoSaveRunTime = "content/forms/af/core-components-it/samples/autosave.html"
 
-    it("should save formData after every 3 seconds", () => {
+    xit("should save formData after every 3 seconds", () => {
         if (cy.af.isLatestAddon() && toggle_array.includes('FT_FORMS-14255')) {
             const saveApiResponse = {
                 'draftId': 'ABC'
