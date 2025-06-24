@@ -122,6 +122,13 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
 
     @Override
     @JsonIgnore
+    @Nullable
+    public boolean isWrapData() {
+        return wrapData;
+    }
+
+    @Override
+    @JsonIgnore
     @NotNull
     public Map<String, Object> getDorProperties() {
         Map<String, Object> customDorProperties = new LinkedHashMap<>();

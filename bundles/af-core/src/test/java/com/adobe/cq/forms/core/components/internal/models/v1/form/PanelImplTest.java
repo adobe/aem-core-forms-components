@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -136,5 +137,11 @@ public class PanelImplTest {
     void testNoFieldType() {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL_WITHOUT_FIELDTYPE, Panel.class, context);
         assertEquals(FieldType.PANEL.getValue(), panel.getFieldType());
+    }
+
+    @Test
+    void testWrapData() {
+        Panel panel = Utils.getComponentUnderTest(PATH_BOUND_PANEL, Panel.class, context);
+        Assert.assertEquals(false, panel.isWrapData());
     }
 }
