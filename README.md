@@ -148,7 +148,7 @@ Contents in the pre-release are contained in the `pre-release` branch.
 
 ## Code Formatting
 
-### Java
+### Java ###
 
 You can find the code formatting rules in the `eclipse-formatter.xml` file. The code formatting is automatically checked for each build. To automatically format your code, please run:
 
