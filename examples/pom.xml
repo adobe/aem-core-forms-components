@@ -18,7 +18,7 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-        <version>3.0.106-scribbleB012</version>
+        <version>3.0.106-scribbleB013-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
