@@ -86,5 +86,9 @@
     "less": "表示を減らす"
   },
   "saveDraftSuccessMessage"     :   "下書きは正常に保存されました。",
-  "saveDraftErrorMessage"       :   "エラーが発生したため、下書きを保存できませんでした。もう一度試してください。"
+  "saveDraftErrorMessage"       :   "エラーが発生したため、下書きを保存できませんでした。もう一度試してください。",
+  "SignatureCanvas": "Signature Canvas",
+  "brushSize": "Brush Size: ",
+  "geoLocationError": "Error fetching geolocation",
+  "geoLocationFetch": "Fetching Geo Location..."
 }

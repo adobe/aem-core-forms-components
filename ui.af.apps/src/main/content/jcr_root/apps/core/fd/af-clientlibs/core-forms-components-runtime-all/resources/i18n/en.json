@@ -38,5 +38,9 @@
     "less": "less"
   },
   "saveDraftSuccessMessage"     :   "The draft is saved successfully.",
-  "saveDraftErrorMessage"       :   "There was an error preventing us from saving your draft. Please try again."
+  "saveDraftErrorMessage"       :   "There was an error preventing us from saving your draft. Please try again.",
+  "SignatureCanvas": "Signature Canvas",
+  "brushSize": "Brush Size: ",
+  "geoLocationError": "Error fetching geolocation",
+  "geoLocationFetch": "Fetching Geo Location..."
 }

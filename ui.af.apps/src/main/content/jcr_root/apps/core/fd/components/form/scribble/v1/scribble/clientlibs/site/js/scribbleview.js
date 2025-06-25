@@ -369,7 +369,7 @@
                 cnv.width=100;
                 cnv.height=20;
                 cnv.style.backgroundColor = 'white';
-                cnv.ariaLabel = FormView.LanguageUtils.getTranslatedString(this.lang, "Brush Size: ") + brush;
+                cnv.ariaLabel = FormView.LanguageUtils.getTranslatedString(this.lang, "brushSize") + brush;
                 ctx.lineWidth=brush;
                 ctx.beginPath();
                 ctx.moveTo(10,cnv.height/2);
@@ -456,13 +456,13 @@
                     this.geoQueryErrorHandler.bind(this)
                 );
                 this._geoLocQuery.query();
-                var message = FormView.LanguageUtils.getTranslatedString(this.lang, 'Fetching Geo Location...') || 'Fetching Geo Location...';
+                var message = FormView.LanguageUtils.getTranslatedString(this.lang, 'geoLocationFetch');
                 this.showMessage(message);
             }
         }
 
         geoQueryErrorHandler(err) {
-            var message = FormView.LanguageUtils.getTranslatedString(this.lang, 'Error fetching geolocation') || 'Error fetching geolocation';
+            var message = FormView.LanguageUtils.getTranslatedString(this.lang, 'geoLocationError')
             this.showMessage(message);
         }
 
