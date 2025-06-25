@@ -156,7 +156,11 @@ This ensures your environment uses the correct component versions and avoids con
 
 ### Important Note for AEM Cloud Service
 
-We identified that core component based forms fail to render due to a version mismatch in the forms core component package. If the version in the product is 3.0.104 and the customer project (archetype project) includes a version equal to or higher than 3.0.104, the customer's package gets used.
+We've identified that core component-based forms fail to render due to a version mismatch in the Forms Core Components package. This occurs when the version used in the customer's project (archetype project) is equal to or higher than the version bundled with the product (e.g., 3.0.104).
+To resolve this, either:
+
+1. Use a lower version than the one included in the product, or
+2. Remove the Forms Core Components dependency from the customer's code entirely, as it is already included as part of the product.
 
 ### UberJar
 
