@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2025 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  ******************************************************************************/
 describe("Form Runtime with CheckBoxGroup Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv1/basic.html"
+    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv2/basic.html"
     const bemBlock = 'cmp-adaptiveform-checkboxgroup'
     const IS = "adaptiveFormCheckBoxGroup"
     const selectors = {
@@ -253,7 +253,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
 
 describe("setFocus on checkboxgroup via rules", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv1/focustest.html"
+    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv2/focustest.html"
     let formContainer = null
 
     beforeEach(() => {

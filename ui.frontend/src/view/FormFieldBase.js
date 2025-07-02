@@ -166,8 +166,11 @@ class FormFieldBase extends FormField {
      */
     #syncLabel() {
         let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
-        if (labelElement) {
+        if (labelElement && labelElement.tagName?.toUpperCase() === 'LABEL') {
             labelElement.setAttribute('for', this.getWidgetId());
+        } else if (labelElement) {
+            //remove the 'for' attribute if it exists on non-label
+            labelElement.removeAttribute('for');
         }
     }
 
