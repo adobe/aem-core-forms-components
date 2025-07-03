@@ -44,6 +44,7 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
@@ -327,11 +328,39 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private Map<String, Object> getRulesProperties() {
         Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
         Map<String, Object> customRulesProperties = new LinkedHashMap<>();
-        String status = getRulesStatus(ruleNode);
-        if (!STATUS_NONE.equals(status)) {
-            customRulesProperties.put(RULES_STATUS_PROP_NAME, getRulesStatus(ruleNode));
+        if (ruleNode == null) {
+            logger.debug("No rules node found for resource: {}", resource.getPath());
+            return customRulesProperties;
+        }
+        addValidationStatus(ruleNode, customRulesProperties);
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
+            populateAdditionalRulesProperties(ruleNode, customRulesProperties);
         }
         return customRulesProperties;
+    }
+
+    private void addValidationStatus(Resource ruleNode, Map<String, Object> customRulesProperties) {
+        String status = getRulesStatus(ruleNode);
+        if (!STATUS_NONE.equals(status)) {
+            customRulesProperties.put(RULES_STATUS_PROP_NAME, status);
+        }
+    }
+
+    private void populateAdditionalRulesProperties(@NotNull Resource ruleNode, Map<String, Object> customRulesProperties) {
+        String[] RULES = { "fd:formReady", "fd:layoutReady", "fd:docReady", "fd:calc", "fd:init", "fd:validate", "fd:indexChange" };
+
+        ValueMap props = ruleNode.adaptTo(ValueMap.class);
+        if (props == null) {
+            logger.warn("Could not adapt rule node to ValueMap for resource: {}", resource.getPath());
+            return;
+        }
+
+        Arrays.stream(RULES).forEach(rule -> addRuleProperty(props, customRulesProperties, rule));
+    }
+
+    private void addRuleProperty(@NotNull ValueMap props, Map<String, Object> customRulesProperties, String rule) {
+        Optional<String[]> propertyValue = Optional.ofNullable(props.get(rule, String[].class));
+        propertyValue.ifPresent(value -> customRulesProperties.put(rule, value));
     }
 
     /***
@@ -567,4 +596,5 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         return new ArrayList<>(disabledScripts);
     }
+
 }
