@@ -158,7 +158,7 @@ public class TextInputImplTest {
     @Test
     void testGetScreenReaderText() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
-        assertEquals("'Custom screen reader text'", textInput.getScreenReaderText());
+        assertEquals("Custom screen reader text", textInput.getScreenReaderText());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, textInputMock.getScreenReaderText());

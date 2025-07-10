@@ -128,7 +128,7 @@ public class CheckBoxGroupImplTest {
     @Test
     void testGetScreenReaderText() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertEquals("'Custom screen reader text'", checkboxGroup.getScreenReaderText());
+        assertEquals("Custom screen reader text", checkboxGroup.getScreenReaderText());
         CheckBoxGroup checkboxGroupMock = Mockito.mock(CheckBoxGroup.class);
         Mockito.when(checkboxGroupMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, checkboxGroupMock.getScreenReaderText());

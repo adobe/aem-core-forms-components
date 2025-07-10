@@ -115,6 +115,8 @@ public class FormContainerImplTest {
     private static final String SS_EMAIL = "email";
     private static final String SS_SPREADSHEET = "spreadsheet";
 
+    private static final String PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN = "/content/forms/af/demo/jcr:content/formcontainerv2-excludeFromDoRIfHidden";
+
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -784,5 +786,33 @@ public class FormContainerImplTest {
             "action should notend with .model.json for cc forms for submit action not supported via submission service",
             !decodedAction.endsWith(".model.json"));
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_CC_FORM_REST_SUBMISSION));
+    }
+
+    @Test
+    void testExcludeFromDoRIfHiddenFromViewPrint() throws Exception {
+        // Setup: create a resource structure with fd:view/print child and excludeFromDoRIfHidden property
+        context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN,
+            "sling:resourceType", "core/fd/components/form/container/v2/container");
+        context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN + "/fd:view/print",
+            "excludeFromDoRIfHidden", true);
+
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, FormContainer.class, context);
+        Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
+        assertTrue(dorProperties.containsKey("excludeFromDoRIfHidden"));
+        assertEquals(true, dorProperties.get("excludeFromDoRIfHidden"));
+    }
+
+    @Test
+    void testExcludeFromDoRIfHiddenFromViewPrintFalse() throws Exception {
+        // Setup: create a resource structure with fd:view/print child and excludeFromDoRIfHidden property set to false
+        context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN,
+            "sling:resourceType", "core/fd/components/form/container/v2/container");
+        context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN + "/fd:view/print",
+            "excludeFromDoRIfHidden", false);
+
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, FormContainer.class, context);
+        Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
+        assertTrue(dorProperties.containsKey("excludeFromDoRIfHidden"));
+        assertEquals(false, dorProperties.get("excludeFromDoRIfHidden"));
     }
 }
