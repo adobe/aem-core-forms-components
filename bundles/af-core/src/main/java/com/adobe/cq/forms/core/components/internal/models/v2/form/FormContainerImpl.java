@@ -83,6 +83,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
     private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
     private static final String FD_DATA_URL = "fd:dataUrl";
+    private static final String FD_VIEW_PRINT_PATH = "fd:view/print";
+    private static final String EXCLUDE_FROM_DOR_IF_HIDDEN = "excludeFromDoRIfHidden";
 
     /** Constant representing email submit action type */
     private static final String SS_EMAIL = "email";
@@ -140,6 +142,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private String data;
 
+    @Nullable
+    private Boolean excludeFromDoRIfHidden;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
@@ -169,6 +174,17 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
             if (formClientLibManager != null && clientLibRef != null) {
                 formClientLibManager.addClientLibRef(clientLibRef);
+            }
+        }
+    }
+
+    @PostConstruct
+    private void initExcludeFromDoRIfHidden() {
+        Resource viewPrintResource = resource.getChild(FD_VIEW_PRINT_PATH);
+        if (viewPrintResource != null) {
+            ValueMap vm = viewPrintResource.getValueMap();
+            if (vm.containsKey(EXCLUDE_FROM_DOR_IF_HIDDEN)) {
+                excludeFromDoRIfHidden = vm.get(EXCLUDE_FROM_DOR_IF_HIDDEN, Boolean.class);
             }
         }
     }
@@ -401,6 +417,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         if (dorTemplateType != null) {
             customDorProperties.put(DOR_TEMPLATE_TYPE, dorTemplateType);
+        }
+        if (excludeFromDoRIfHidden != null) {
+            customDorProperties.put(EXCLUDE_FROM_DOR_IF_HIDDEN, excludeFromDoRIfHidden);
         }
         return customDorProperties;
     }
