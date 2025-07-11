@@ -92,3 +92,7 @@ Applying `data-cmp-custom-functions-module-url` attribute to the div to point to
 This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.
 
 Applying `data-cmp-auto-save` attribute to the `cmp-adaptiveform-container` block to control the auto-save functionality. If the attribute's value is set to true, auto-save will be enabled for the form; otherwise, it will not be triggered. This attribute will be set to true in published mode if enableAutoSave is enabled.
+
+Applying `data-cmp-schema-type` attribute to the `cmp-adaptiveform-container` block to indicate the schema type of the form. This attribute is used to determine the appropriate form loading mechanism, particularly for XDP forms which require special handling. The value corresponds to the schema type from the FormContainer model (e.g., 'XDP', 'XSD', 'JSON', etc.).
+
+Applying `data-cmp-hamburger-menu-enabled` attribute to the `cmp-adaptiveform-container` block to control the hamburger meu. If the attribute's value is set to true, hamburger menu will be enabled in the mobile view.

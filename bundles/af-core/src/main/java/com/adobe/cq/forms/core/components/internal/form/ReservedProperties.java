@@ -74,6 +74,7 @@ public final class ReservedProperties {
     public static final String PN_PLACEHOLDER = "placeholder";
     public static final String PN_READ_ONLY = "readOnly";
     public static final String PN_DEFAULT_VALUE = "default";
+    public static final String PN_MULTI_DEFAULT_VALUES = "fd:multiDefaultValues";
     public static final String PN_FORMAT = "format";
     public static final String PN_DISPLAY_FORMAT = "displayFormat";
     public static final String PN_EDIT_FORMAT = "editFormat";
@@ -162,8 +163,23 @@ public final class ReservedProperties {
     public static final String FD_ENABLE_AUTO_SAVE = "fd:enableAutoSave";
     public static final String FD_AUTO_SAVE_STRATEGY_TYPE = "fd:autoSaveStrategyType";
     public static final String FD_AUTO_SAVE_INTERVAL = "fd:autoSaveInterval";
+    public static final String FD_EXCLUDE_FROM_DOR_IF_HIDDEN = "excludeFromDoRIfHidden";
+
+    public static final String FD_XFA_SCRIPTS = "fd:xfaScripts";
 
     public static final String FD_DRAFT_ID = "fd:draftId";
+
+    // Begin: Form submission related properties
+    public static final String FD_SUBMIT_PROPERTIES = "fd:submit";
+    public static final String PN_SUBMIT_ACTION_TYPE = "actionType";
+    public static final String PN_SUBMIT_ACTION_NAME = "actionName";
+    public static final String PN_SUBMIT_EMAIL_TO = "mailto";
+    public static final String PN_SUBMIT_EMAIL_FROM = "from";
+    public static final String PN_SUBMIT_EMAIL_SUBJECT = "subject";
+    public static final String PN_SUBMIT_EMAIL_CC = "cc";
+    public static final String PN_SUBMIT_EMAIL_BCC = "bcc";
+    public static final String PN_SUBMIT_SPREADSHEETURL = "spreadsheetUrl";
+    // End: Form submission related properties
     private static final Set<String> reservedProperties = aggregateReservedProperties();
 
     private static Set<String> aggregateReservedProperties() {

@@ -250,10 +250,12 @@ function clearValueCustomFunction(field, globals) {
  * @param {scope} globals
  */
 function customMessageUsingInvalidApi(field, globals) {
-    const minLength = 15;
+    const minLength = field.$minLength;
     const comments = field.$value.trim();
+    // api to get the error message for a particular constraint
+    const ootbErrrorMessage = field.getErrorMessage("minLength");
     if (comments.length < minLength) {
-        globals.functions.setProperty(field, {valid: false, errorMessage : "Comments must be at least 15 characters long."});
+        globals.functions.setProperty(field, {valid: false, errorMessage : `Comments must be at least ${minLength} characters long.`});
     } else {
         globals.functions.setProperty(field, {valid : true});
     }

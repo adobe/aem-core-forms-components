@@ -84,6 +84,19 @@
                     type="string"
                     typeIndex="0"
                     visible="{Boolean}true"/>
+            <fileinput
+                    fd:dragDropText="Drag and drop to Upload"
+                    jcr:created="{Date}2025-06-04T15:37:31.303+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2025-06-04T15:37:31.303+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="File Attachment"
+                    sling:resourceType="forms-components-examples/components/form/fileinput"
+                    accept="[audio/*, video/*, image/*, text/*, application/pdf]"
+                    buttonText="Attach"
+                    fieldType="file-input"
+                    name="fileinput1749031651340"/>        
             <button
                     jcr:lastModified="{Date}2022-12-13T15:44:11.564+05:30"
                     jcr:lastModifiedBy="admin"

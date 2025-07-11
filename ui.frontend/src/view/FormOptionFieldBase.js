@@ -122,7 +122,9 @@ class FormOptionFieldBase extends FormFieldBase {
         } else {
             [...this.getOptions()].forEach((option, index) => {
                 let span = option.querySelector('span');
-                span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(newEnumNames[index]) : newEnumNames[index];
+                if(span) {
+                    span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(newEnumNames[index]) : newEnumNames[index];
+                }
             });
         }
     }

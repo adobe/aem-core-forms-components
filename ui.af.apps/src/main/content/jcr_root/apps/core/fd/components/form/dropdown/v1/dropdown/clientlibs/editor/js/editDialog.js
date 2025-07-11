@@ -21,39 +21,9 @@
         DROPDOWN_DEFAULTVALUEMULTISELCET = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__defaultvaluemultiselect",
         DROPDOWN_SAVEVALUE = EDIT_DIALOG + " .cmp-adaptiveform-dropdown__savevaluetype",
         DROPDOWN_ENUM = EDIT_DIALOG + " .cmp-adaptiveform-base__enum",
-        TYPE = EDIT_DIALOG + " input[name='./type']",
         DEFAULTINPUT = DROPDOWN_DEFAULTVALUE + " input",
         DEFAULTMUTIINPUT = DROPDOWN_DEFAULTVALUEMULTISELCET + " input[type='text']",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
-
-
-    /**
-     * Updates the save value types to their array equivalents when multi-select is toggled.
-     * @param {HTMLElement} dialog The dialog on which the operation is to be performed.
-     */
-    function handleSaveValueDropDown(dialog) {
-        var multiSelect = dialog.find(DROPDOWN_ALLOWMULTISELECT)[0],
-            saveValueDropdown = dialog.find(DROPDOWN_SAVEVALUE),
-            type = dialog.find(TYPE),
-            saveTypes = ['string', 'number', 'boolean'];
-
-        var updateSaveValueType = function() {
-            var index = parseInt(saveValueDropdown.val());
-            if(multiSelect.checked) {
-               type.val(saveTypes[index] + '[]');
-            } else {
-                type.val(saveTypes[index]);
-            }
-        }
-        // triggered when dialog is launched
-        updateSaveValueType();
-        saveValueDropdown.on("change", function() {
-            updateSaveValueType();
-        });
-        multiSelect.on("change", function() {
-            updateSaveValueType();
-        });
-    }
 
     /**
      * Handles the default value field in the dialog appropriately when multi-select is toggled.
@@ -124,5 +94,5 @@
         }
     );
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleSaveValueDropDown, handleDefaultValue, registerDialogValidator);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDefaultValue, registerDialogValidator);
 })(jQuery);

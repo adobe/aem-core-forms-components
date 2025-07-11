@@ -10,7 +10,7 @@
     "value": "def",
     "visible": true
   },
-  "screenReaderText":"'Custom screen reader text'",
+  "screenReaderText":"Custom screen reader text",
   "constraintMessages":{"type":"incorrect type"},
   "type": "file",
   "description" : "dummy",

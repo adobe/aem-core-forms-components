@@ -124,7 +124,7 @@ public class RadioButtonImplTest {
     @Test
     void testGetScreenReaderText() {
         RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_CUSTOMIZED);
-        assertEquals("'custom text'", radioButton.getScreenReaderText());
+        assertEquals("custom text", radioButton.getScreenReaderText());
         RadioButton radioButtonMock = Mockito.mock(RadioButton.class);
         Mockito.when(radioButtonMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, radioButtonMock.getScreenReaderText());

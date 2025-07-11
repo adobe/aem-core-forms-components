@@ -15,15 +15,20 @@
  ******************************************************************************/
 const path = require('path');
 
-module.exports = {
+module.exports = (env = {}) => ({
     entry: './src/index.js',
     output: {
-        filename: 'main.js',
+        filename: env.xfa ? '[name]-xfa.js' : '[name].js',
         path: path.resolve(__dirname, 'dist'),
-        clean: true,
+        clean: !env.xfa,
         library: {
             name: 'FormView',
             type: 'window'
         },
     },
-};
+    resolve: env.xfa ? {
+        alias: {
+            '@aemforms/af-core': '@aemforms/af-core-xfa'
+        }
+    } : {}
+});

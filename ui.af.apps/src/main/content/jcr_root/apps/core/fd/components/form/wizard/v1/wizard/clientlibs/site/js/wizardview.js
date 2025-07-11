@@ -199,6 +199,12 @@
             }
 
 
+            getFocusElementId() {
+                const activeIndex = this._active;
+                const activeTabElement = this.getCachedTabs()[activeIndex];
+                return activeTabElement.id.substring(0, activeTabElement.id.lastIndexOf(Wizard.#tabIdSuffix));
+            }
+
             #navigateToNextTab() {
                 const activeIndex = this._active;
                 const activeTabElement = this.getCachedTabs()[activeIndex];
@@ -334,6 +340,8 @@
             #navigateAndFocusTab(index) {
                 this.navigate(index);
                 this.focusWithoutScroll(this.getCachedTabs()[index]);
+                const id = this.getFocusElementId();
+                this.focusToFirstVisibleField(id);
             }
    
             #syncWizardNavLabels() {
@@ -414,12 +422,33 @@
                 let removedTabNavId = removedTabPanelId.substring(0, removedTabPanelId.lastIndexOf("__")) + Wizard.#tabIdSuffix;
                 let wizardPanelElement = this.#getWizardPanelElementById(removedTabPanelId);
                 let tabNavElement = this.getTabNavElementById(removedTabNavId);
+
+                const tabs = this.getCachedTabs();
+                const currentIndex = Array.from(tabs).findIndex(tab => tab.id === removedTabNavId);
+                let nextIndex = -1;
+                
+                if (currentIndex === 0) {
+                    // If removing first tab, focus on the next one
+                    nextIndex = 1;
+                } else {
+                    // Look for previous visible tab
+                    for (let i = currentIndex - 1; i >= 0; i--) {
+                        nextIndex = i;
+                        break;
+                    }
+                }
+                
                 tabNavElement.remove();
                 wizardPanelElement.remove();
                 this.children.splice(this.children.indexOf(removedInstanceView), 1);
                 this.cacheElements(this._elements.self);
                 this._active = this.getActiveIndex(this.getCachedTabs());
                 this.refreshActive();
+
+                // Focus the next tab after active state is updated
+                if (nextIndex !== -1 && tabs[nextIndex]) {
+                    this.#navigateAndFocusTab(nextIndex);    
+                }
             }
 
             addChild(childView) {

@@ -57,6 +57,7 @@ public class CheckBoxGroupImplTest {
     private static final String PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER = CONTENT_ROOT + "/checkboxgroup-insertion-order";
     private static final String PATH_CHECKBOX_GROUP_FOR_BOOLEAN = CONTENT_ROOT + "/checkboxgroup-boolean";
     private static final String PATH_CHECKBOX_GROUP_NO_FIELDTYPE = CONTENT_ROOT + "/checkboxgroup-without-fieldtype";
+    private static final String PATH_CHECKBOX_GROUP_WITH_NULL_VALUES = CONTENT_ROOT + "/checkboxgroup-with-null-values";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -127,7 +128,7 @@ public class CheckBoxGroupImplTest {
     @Test
     void testGetScreenReaderText() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
-        assertEquals("'Custom screen reader text'", checkboxGroup.getScreenReaderText());
+        assertEquals("Custom screen reader text", checkboxGroup.getScreenReaderText());
         CheckBoxGroup checkboxGroupMock = Mockito.mock(CheckBoxGroup.class);
         Mockito.when(checkboxGroupMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, checkboxGroupMock.getScreenReaderText());
@@ -296,6 +297,18 @@ public class CheckBoxGroupImplTest {
     void testGetEnumNames() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
         assertArrayEquals(new String[] { "m", "f", "o" }, checkboxGroup.getEnumNames());
+    }
+
+    @Test
+    void testGetEnumNamesWithNullValues() throws Exception {
+        // Get the checkbox group under test
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP);
+        String[] modifiedEnumNames = new String[] { null, "", "value3" };
+        FieldUtils.writeField(checkboxGroup, "enumNames", modifiedEnumNames, true);
+        // Now call getEnumNames() which should handle the null value by converting it to an empty string
+        String[] result = checkboxGroup.getEnumNames();
+        // Verify that nulls are converted to empty strings
+        assertArrayEquals(new String[] { "", "", "value3" }, result);
     }
 
     @Test

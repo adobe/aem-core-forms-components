@@ -61,7 +61,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"
                                                     fieldLabel="Autofill attribute"
-                                                    forceSelection="{Boolean}true"
+                                                    forceSelection="{Boolean}false"
                                                     name="./autocomplete"
                                                     value="">
                                                 <options
@@ -152,10 +152,10 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             text="country-name"
                                                             value="country-name"/>
-                                                    <cc-name
+                                                    <!-- <cc-name
                                                             jcr:primaryType="nt:unstructured"
                                                             text="cc-name"
-                                                            value="cc-name"/>
+                                                            value="cc-name"/> -->
                                                     <cc-given-name
                                                             jcr:primaryType="nt:unstructured"
                                                             text="cc-given-name"

@@ -80,6 +80,12 @@
                         "useiframe" : "true",
                         "usePageLocale" : "true",
                         "enableFocusOnFirstField" : true
+                    },
+                    "aemformv2_slingmappings" : {
+                        "jcr:primaryType": "nt:unstructured",
+                        "jcr:title": "",
+                        "sling:resourceType": "core/fd/components/aemform/v1/aemform",
+                        "thankyouPage": "/content/_jcr_content/thank/page"
                     }
                 }
             }

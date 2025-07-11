@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.apache.sling.models.annotations.Default;
@@ -49,6 +50,15 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENUM_NAMES)
     @Nullable
     protected String[] enumNames;
+
+    /**
+     * Default for single and multivalued fields used the same 'default' crx property.
+     * This was not compatible with Universal Editor's Property Rail Configuration.
+     * Therefore, adding this property as an additional way of defining default values.
+     **/
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MULTI_DEFAULT_VALUES)
+    @Nullable
+    protected Object[] multiDefaultValues;
 
     @Override
     public boolean isEnforceEnum() {
@@ -106,9 +116,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             Map<Object, String> map = getEnumPairs();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
-                .map(p -> {
-                    return this.translate(ReservedProperties.PN_ENUM_NAMES, p);
-                })
+                .map(p -> Optional.ofNullable(translate(ReservedProperties.PN_ENUM_NAMES, p)).orElse(""))
                 .toArray(String[]::new);
         }
         return null;
@@ -118,7 +126,9 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     public Object[] getDefault() {
         Object[] typedDefaultValue = null;
         try {
-            if (defaultValue != null) {
+            if (multiDefaultValues != null) {
+                typedDefaultValue = ComponentUtils.coerce(type, multiDefaultValues);
+            } else if (defaultValue != null) {
                 typedDefaultValue = ComponentUtils.coerce(type, defaultValue);
             }
         } catch (Exception exception) {

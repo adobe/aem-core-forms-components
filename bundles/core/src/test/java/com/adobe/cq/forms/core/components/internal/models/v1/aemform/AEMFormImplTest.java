@@ -41,8 +41,10 @@ class AEMFormImplTest {
     private static final String GRID_LANG = ROOT_PAGE_LANG + "/jcr:content/root/responsivegrid";
     private static final String FORM_1 = "/aemform-1";
     private static final String FORM_2 = "/aemform-2";
+    private static final String FORM_WITH_SLINGMAPPINGS = "/aemformv2_slingmappings";
     private static final String PATH_FORM_1 = GRID + FORM_1;
     private static final String PATH_FORM_2 = GRID + FORM_2;
+    private static final String PATH_FORM_SLINGMAPPINGS = GRID + FORM_WITH_SLINGMAPPINGS;
     private static final String PATH_FORM_LANG = GRID_LANG + FORM_1;
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
@@ -292,6 +294,16 @@ class AEMFormImplTest {
     void testJSONExport() throws Exception {
         AEMForm aemform = getAEMFormUnderTest(PATH_FORM_1);
         Utils.testJSONExport(aemform, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));
+    }
+
+    @Test
+    void testGetThankYouPageWithResourceResolver() {
+        // Get form under test using test resource that has _jcr_content in thankyou page path
+        AEMForm aemForm = getAEMFormUnderTest(PATH_FORM_SLINGMAPPINGS);
+
+        // Test the method - verify _jcr_content replacement
+        String result = aemForm.getThankyouPage();
+        assertEquals("/content/jcr:content/thank/page.html", result);
     }
 
     private AEMForm getAEMFormUnderTest(String resourcePath) {

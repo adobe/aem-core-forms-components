@@ -30,6 +30,7 @@
                     jcr:lastModified="{Date}2024-08-12T10:50:30.221Z"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
+                    minLength = "15"
                     jcr:title="Text Input"
                     required="true"
                     sling:resourceType="forms-components-examples/components/form/textinput"

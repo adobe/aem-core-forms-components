@@ -48,7 +48,14 @@ class FormCheckBox extends FormFieldBase {
             const value = this.widget.checked ? this._onValue : this._offValue;
             this._model.dispatch(new FormView.Actions.UIChange({'value': value}));
         })
-
+        this.widget.addEventListener('focus', (e) => {
+            this.setActive();
+            this.triggerEnter();
+        });
+        this.widget.addEventListener('blur', (e) => {
+            this.setInactive();
+            this.triggerExit();
+        });
     }
 }
 

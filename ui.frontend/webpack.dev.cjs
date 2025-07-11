@@ -17,15 +17,18 @@
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.cjs');
-const path = require('path');
 
-module.exports = () => {
-    return merge(common, {
+module.exports = (env = {}) => {
+    const sourcemapPath = env.xfa ? 
+        '/libs/core/fd/clientlibs/core-forms-components-runtime-xfa/resources/[name].js.map' :
+        '/libs/core/fd/clientlibs/core-forms-components-runtime/resources/[name].js.map';
+    
+    return merge(common(env), {
         mode: 'development',
         devtool: false,
         plugins: [new webpack.SourceMapDevToolPlugin({
-            append: '\n//# sourceMappingURL=/libs/core/fd/clientlibs/core-forms-components-runtime/resources/[name].js.map',
-            filename: '[name].js.map'
-        })],
+            append: `\n//# sourceMappingURL=${sourcemapPath}`,
+            filename: env.xfa ? '[name]-xfa.js.map' : '[name].js.map'
+        })]
     });
 };

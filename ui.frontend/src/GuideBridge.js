@@ -80,9 +80,16 @@ class GuideBridge {
         let customEvent = document.createEvent("CustomEvent");
         customEvent.initCustomEvent(Constants.GUIDE_BRIDGE_INITIALIZE_START, true, true, {"guideBridge": this});
         window.dispatchEvent(customEvent);
+        // Safely handle cross-origin parent window communication
         if (window !== window.parent) {
-            window.parent.document.getElementById(window.name);
-            window.parent.dispatchEvent(customEvent);
+            try {
+                // Try to access parent window
+                window.parent.document.getElementById(window.name);
+                window.parent.dispatchEvent(customEvent);
+            } catch (e) {
+                // Silently handle cross-origin security errors
+                console.debug('Cross-origin access to parent window blocked');
+            }
         }
         let self = this;
         function onFormContainerInitialised(e) {

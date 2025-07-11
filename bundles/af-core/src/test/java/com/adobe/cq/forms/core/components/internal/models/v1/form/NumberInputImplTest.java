@@ -129,7 +129,7 @@ public class NumberInputImplTest {
     @Test
     void testGetScreenReaderText() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
-        assertEquals("'Custom screen reader text'", numberInput.getScreenReaderText());
+        assertEquals("Custom screen reader text", numberInput.getScreenReaderText());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, numberInputMock.getScreenReaderText());

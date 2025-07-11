@@ -27,6 +27,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.BaseConstraint.Type;
 import com.adobe.cq.forms.core.components.models.form.DropDown;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
@@ -56,6 +57,30 @@ public class DropDownImpl extends AbstractOptionsFieldImpl implements DropDown {
     @Override
     public Boolean isMultiSelect() {
         return multiSelect;
+    }
+
+    @Override
+    public Type getType() {
+        Type baseType = super.getType();
+        if (baseType == null) {
+            return null;
+        }
+
+        String typeValue = baseType.getValue();
+
+        // Handle multiSelect logic: append [] if multiSelect is true and not already array type
+        // or remove [] if multiSelect is false and it's currently array type
+        if (isMultiSelect()) {
+            if (!typeValue.endsWith("[]")) {
+                typeValue += "[]";
+            }
+        } else {
+            if (typeValue.endsWith("[]")) {
+                typeValue = typeValue.substring(0, typeValue.length() - 2);
+            }
+        }
+
+        return Type.fromString(typeValue);
     }
 
     @Override

@@ -14,43 +14,17 @@
  * limitations under the License.
  ******************************************************************************/
 
-const path = require('path');
+const baseConfig = require('./clientlib.config.cjs');
 
-const CLIENTLIB_DIR = path.join(
-    __dirname,
-    '..',
-    'ui.af.apps',
-    'src',
-    'main',
-    'content',
-    'jcr_root',
-    'apps',
-    'core',
-    'fd',
-    'af-clientlibs'
-);
-
-const libsBaseConfig = {
-  allowProxy: true,
-  serializationFormat: 'xml',
-  cssProcessor: ['default:none', 'min:none'],
-  jsProcessor: ['default:none', 'min:none']
-};
-
-// Config for `aem-clientlib-generator`
 module.exports = {
-  context: __dirname,
-  clientLibRoot: CLIENTLIB_DIR,
-  libs: [
-    {
-      ...libsBaseConfig,
-      name: 'core-forms-components-runtime-base',
-      categories: ['core.forms.components.runtime.base'],
-      dependencies: ['granite.csrf.standalone.fetchsupport', 'af.rum', 'dompurify'],
-      assets: {
-        js: ['dist/main.js'],
-        resources: ['dist/main.js.map']
-      }
-    }
-  ]
+    ...baseConfig,
+    libs: [
+        {
+            ...baseConfig.libs[0],
+            assets: {
+                js: ['dist/main.js'],
+                resources: ['dist/main.js.map']
+            }
+        }
+    ]
 };

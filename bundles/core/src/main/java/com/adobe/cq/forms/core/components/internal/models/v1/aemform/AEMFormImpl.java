@@ -279,6 +279,12 @@ public class AEMFormImpl extends AbstractComponentImpl implements AEMForm {
 
     @Override
     public String getThankyouPage() {
+        if (request != null && StringUtils.isNotBlank(thankyouPage)) {
+            ResourceResolver resourceResolver = request.getResourceResolver();
+            if (resourceResolver != null) {
+                thankyouPage = StringUtils.replace(resourceResolver.map(thankyouPage), "_jcr_content", "jcr:content");
+            }
+        }
         return GuideUtils.getRedirectUrl(thankyouPage, null);
     }
 

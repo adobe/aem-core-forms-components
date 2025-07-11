@@ -278,8 +278,8 @@ describe('visibility of navigation buttons', function () {
                 // check if repeatable instance is removed honouring rule
                 // first tab gets active and previous nav button is invisible
                 // and next nav button is visible
-                getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
-                cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+                getWizardPanelAtIndex(1).should('have.class', wizardPanelActive);
+                cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'true');
                 cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
             });
         });

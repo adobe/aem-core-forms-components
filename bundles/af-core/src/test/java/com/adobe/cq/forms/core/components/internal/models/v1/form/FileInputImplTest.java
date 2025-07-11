@@ -143,7 +143,7 @@ public class FileInputImplTest {
     @Test
     void testGetScreenReaderText() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
-        assertEquals("'Custom screen reader text'", fileInput.getScreenReaderText());
+        assertEquals("Custom screen reader text", fileInput.getScreenReaderText());
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, fileInputMock.getScreenReaderText());

@@ -78,7 +78,7 @@ class FormField {
         if (!this.isActive()) {
             this.element.setAttribute(Constants.DATA_ATTRIBUTE_ACTIVE, true);
             // optimizing the performance to check if the activeChild is different, else this will be a redundant call
-            if (this.parentView?._model?.activeChild !== this._model) {
+            if (this.parentView && this.parentView?._model?.activeChild !== this._model) {
                 this.parentView._model.activeChild = this._model; // updating the activeChild of the model when a field is focused in view
             }
             this.active = true;
@@ -100,6 +100,14 @@ class FormField {
      */
     isActive() {
         return this.element.getAttribute(Constants.DATA_ATTRIBUTE_ACTIVE) === 'true';
+    }
+
+    triggerExit() {
+        this._model.dispatch(new FormView.Actions.CustomEvent('xfaexit'));
+    }
+
+    triggerEnter() {
+        this._model.dispatch(new FormView.Actions.CustomEvent('xfaenter'));
     }
 
     /**

@@ -31,25 +31,36 @@ const CLIENTLIB_DIR = path.join(
 );
 
 const libsBaseConfig = {
-  allowProxy: true,
-  serializationFormat: 'xml',
-  cssProcessor: ['default:none', 'min:none'],
-  jsProcessor: ['default:none', 'min:none']
+    allowProxy: true,
+    serializationFormat: 'xml',
+    cssProcessor: ['default:none', 'min:none'],
+    jsProcessor: ['default:none', 'min:none']
 };
+
+const xfaDependencies = [
+    'xfaforms.3rdparty',
+    'xfaforms.I18N.en',
+    'xfaforms.formbridge',
+    'xfaforms.xfalibutil',
+    'xfaforms.xfalibwidgets',
+    'xfaforms.formcalc',
+    'xfaforms.xfalibModel'
+];
 
 // Config for `aem-clientlib-generator`
 module.exports = {
-  context: __dirname,
-  clientLibRoot: CLIENTLIB_DIR,
-  libs: [
-    {
-      ...libsBaseConfig,
-      name: 'core-forms-components-runtime-base',
-      categories: ['core.forms.components.runtime.base'],
-      dependencies: ['granite.csrf.standalone.fetchsupport', 'af.rum', 'dompurify'],
-      assets: {
-        js: ['dist/main.js']
-      }
-    }
-  ]
+    context: __dirname,
+    clientLibRoot: CLIENTLIB_DIR,
+    libs: [
+        {
+            ...libsBaseConfig,
+            name: 'core-forms-components-runtime-base',
+            categories: ['core.forms.components.runtime.base'],
+            dependencies: ['granite.csrf.standalone.fetchsupport', 'af.rum', 'dompurify'],
+            assets: {
+                js: ['dist/main.js']
+            }
+        }
+    ],
+    xfaDependencies
 };
