@@ -13,26 +13,23 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.views;
+package com.adobe.cq.forms.core.components.models.form;
 
-public class Views {
+import java.util.Collections;
 
-    /**
-     * This view is used as the default view for serialising sling models to AF2.0 compliant schema
-     */
-    public static class Publish {}
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.osgi.annotation.versioning.ProviderType;
 
-    /**
-     * Use this view for serialising the property required in control plane.
-     * It is a superset of properties in Publish view.
-     * Eg: DoR related properties of forms core components
-     */
-    public static class Author extends Publish {}
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    /**
-     * Use this view for including the print-specific properties
-     * Eg; dorContainer and pageTemplate
-     */
-    public static class DoR extends Author {}
+@ProviderType
+public class FormComponentTest {
+    @Test
+    public void testGetDorContainer() {
+        FormComponent formComponent = Mockito.mock(FormComponent.class);
+        Mockito.when(formComponent.getDorContainer()).thenCallRealMethod();
+        assertEquals(Collections.emptyMap(), formComponent.getDorContainer());
+    }
 
 }
