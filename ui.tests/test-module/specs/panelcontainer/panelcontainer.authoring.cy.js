@@ -74,9 +74,64 @@ describe('Page - Authoring', function () {
         cy.get("[name='./custom']")
             .should("exist");
 
-        cy.get('.cq-dialog-cancel').should('be.visible');
-        cy.get('.cq-dialog-cancel').focus().click({force: true}).then(() => {
-            cy.deleteComponentByPath(panelContainerDrop);
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(panelContainerDrop);
+    };
+
+    const testSaveAsFragmentBehaviour = (pagePath, panelContainerEditPathSelector, panelContainerPath, isSites) => {
+        if (isSites) {
+            dropPanelInSites();
+        } else {
+            dropPanelInContainer();
+        }
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='saveAsFragment']"); // this line is causing frame busting which is causing cypress to fail
+        // Check If Dialog Options Are Visible
+        cy.get("[name='name']")
+            .should("be.visible");
+        cy.get("[name='jcr:title']")
+            .should("exist");
+        cy.get("[name='targetPath']")
+            .should("be.visible")
+            .invoke('val', "/content/dam/formsanddocuments");
+        cy.get("[name='./schemaType']")
+            .should("exist");
+        cy.get("[name='templatePath']")
+            .should("be.visible");
+        // Assuming there is one fragment component (in most cases) so this field should not be visible
+        cy.get("[name='fragmentComponent']").should("not.be.visible");
+
+        cy.intercept('POST' , '**/adobe/forms/fm/v1/saveasfragment').as('saveAsFragment');
+        cy.get("[name='name']").clear().type("panel-saved-as-fragment");
+        // Coral autocomplete component is taking some time to initialisation
+        cy.get('.cmp-adaptiveform-saveasfragment__templateselector')
+            .should(($el) => {
+                expect($el.data('autocomplete')).to.exist;
+            });
+        cy.get("[name='templatePath']")
+            .invoke("val", "/conf/core-components-examples/settings/wcm/templates/afv2frag-template")
+            .trigger("change");
+        cy.get(".cq-dialog-submit").click();
+        cy.wait('@saveAsFragment').then(({request, response}) => {
+            expect(response.statusCode).to.equal(200);
+            expect(response.body).to.have.property('formPath', '/content/dam/formsanddocuments/panel-saved-as-fragment');
+        });
+        cy.openSiteAuthoring(pagePath);
+        cy.deleteComponentByPath(panelContainerPath)
+    }
+
+    const deleteSavedFragment = () => {
+        cy.openPage("/aem/forms.html/content/dam/formsanddocuments", {noLogin: true});
+        cy.get("body").then(($body) => {
+            const selector = "[data-foundation-collection-item-id='/content/dam/formsanddocuments/panel-saved-as-fragment']";
+            if ($body.find(selector).length > 0) {
+                cy.get(selector)
+                    .trigger('mouseenter')
+                    .trigger('mouseover');
+                cy.get(`${selector} [title='Select']`).click({ force: true });
+                cy.get(".formsmanager-admin-action-delete").click();
+                cy.get("#fmbase-id-modal-template button[variant='warning']").click();
+            }
         });
     }
 
@@ -96,7 +151,7 @@ describe('Page - Authoring', function () {
 
         it('open edit dialog of Panel', function () {
             testPanelBehaviour(panelContainerPathSelector, panelEditPath);
-        });
+        })
 
         it('check rich text support for label', function(){
             dropPanelInContainer();
@@ -110,6 +165,17 @@ describe('Page - Authoring', function () {
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(panelEditPath);
         });
+
+        if (cy.af.isLatestAddon()) {
+            it('Save panel as fragment via toolbar', { retries: 3}, function () {
+                cy.cleanTest(panelEditPath).then(function () {
+                    deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    testSaveAsFragmentBehaviour(pagePath, panelContainerPathSelector, panelEditPath);
+                    deleteSavedFragment();
+                })
+            })
+       }
     })
 
     context('Open Sites Editor', function () {
@@ -131,5 +197,15 @@ describe('Page - Authoring', function () {
             testPanelBehaviour(panelContainerEditPathSelector, panelContainerEditPath, true);
         });
 
+        if (cy.af.isLatestAddon()) {
+            it('Save panel as fragment via toolbar', { retries: 3}, function () {
+                cy.cleanTest(panelContainerEditPath).then(function () {
+                    deleteSavedFragment();
+                    cy.openSiteAuthoring(pagePath);
+                    testSaveAsFragmentBehaviour(pagePath, panelContainerEditPathSelector, panelContainerEditPath, true);
+                    deleteSavedFragment();
+                })
+            });
+        }
     });
 });

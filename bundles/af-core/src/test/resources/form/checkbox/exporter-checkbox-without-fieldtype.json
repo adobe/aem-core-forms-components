@@ -20,7 +20,7 @@
     "value": "def"
   },
   "dataRef":"a.b",
-  "screenReaderText": "'Custom screen reader text'",
+  "screenReaderText": "Custom screen reader text",
   "constraintMessages":{
     "type":"incorrect type"
   },

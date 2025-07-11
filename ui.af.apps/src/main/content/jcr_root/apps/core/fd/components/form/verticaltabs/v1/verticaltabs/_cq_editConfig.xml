@@ -36,6 +36,11 @@
                 jcr:primaryType="nt:unstructured"
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
                 text="Replace"/>
+        <saveAsFragment
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.saveAsFragment"
+                icon="fragmentAdd"
+                text="Save as Fragment"/>
         <qualifiedName
                 jcr:primaryType="nt:unstructured"
                 handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"

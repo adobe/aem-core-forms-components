@@ -20,10 +20,21 @@
                 handler="CQ.FormsCoreComponents.editorhooks.replace"
                 icon="shuffle"
                 text="Replace"/>
+        <saveAsFragment
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.saveAsFragment"
+                icon="fragmentAdd"
+                text="Save as Fragment"/>
         <qualifiedName
                 jcr:primaryType="nt:unstructured"
                 handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"
                 icon="viewSOMExpression"
                 text="View Qualified Name"/>
+        <viewXFAScripts
+                jcr:primaryType="nt:unstructured"
+                condition="CQ.FormsCoreComponents.editorhooks.hasXfaScripts"
+                handler="CQ.FormsCoreComponents.editorhooks.viewXfaScripts"
+                icon="code"
+                text="View XFA Scripts"/>
     </cq:actionConfigs>
 </jcr:root>

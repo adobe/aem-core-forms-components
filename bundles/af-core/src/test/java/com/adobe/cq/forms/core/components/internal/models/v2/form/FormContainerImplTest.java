@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
 import java.lang.reflect.Method;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +28,12 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
@@ -49,6 +56,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.NameConstants;
@@ -56,6 +64,8 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -65,9 +75,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(AemContextExtension.class)
 public class FormContainerImplTest {
@@ -76,8 +88,17 @@ public class FormContainerImplTest {
     private static final String CONTENT_ROOT = CONTENT_PAGE_ROOT + "/jcr:content";
     private static final String CONTENT_DAM_ROOT = "/content/dam/formsanddocuments/demo";
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
-    private static final String PATH_FORM_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/formcontainerv2-without-fieldtype";
+    private static final String PATH_FORM_SUBMISSION_VIEW = CONTENT_ROOT + "/formcontainer-submissionView";
+    private static final String PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION = CONTENT_ROOT
+        + "/formContainer-ue-form-spreadsheet-submission";
+    private static final String PATH_UE_FORM_REST_SUBMISSION = CONTENT_ROOT
+        + "/formContainer-ue-form-rest-submission";
+    private static final String PATH_CC_FORM_SPREADSHEET_SUBMISSION = CONTENT_ROOT
+        + "/formContainer-cc-form-spreadsheet-submission";
+    private static final String PATH_CC_FORM_REST_SUBMISSION = CONTENT_ROOT
+        + "/formContainer-cc-form-rest-submission";
 
+    private static final String PATH_FORM_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/formcontainerv2-without-fieldtype";
     private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
     private static final String PATH_FORM_1_WITHOUT_REDIRECT = CONTENT_ROOT + "/formcontainerv2WithoutRedirect";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
@@ -92,6 +113,10 @@ public class FormContainerImplTest {
         + "/jcr:content/root/sitecontainer/formcontainer";
 
     protected static final String AF_PATH = "/content/forms/af/testAf";
+    private static final String SS_EMAIL = "email";
+    private static final String SS_SPREADSHEET = "spreadsheet";
+
+    private static final String PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN = "/content/forms/af/demo/jcr:content/formcontainerv2-excludeFromDoRIfHidden";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -622,4 +647,173 @@ public class FormContainerImplTest {
         assertNull(formContainer1.getAutoSaveConfig());
     }
 
+    private void setMockClientBuilderFactory(FormContainerImpl formContainer) {
+        HttpClientBuilderFactory mockClientBuilderFactory = mock(HttpClientBuilderFactory.class);
+        HttpClientBuilder mockHttpClientBuilder = mock(HttpClientBuilder.class);
+        CloseableHttpClient mockHttpClient = mock(CloseableHttpClient.class);
+        CloseableHttpResponse mockResponse = mock(CloseableHttpResponse.class);
+
+        // Configure mock response with 200 status and spreadsheet in supported actions
+        when(mockResponse.getStatusLine()).thenReturn(mock(StatusLine.class));
+        when(mockResponse.getStatusLine().getStatusCode()).thenReturn(200);
+        try {
+            when(mockResponse.getEntity()).thenReturn(new StringEntity("{\"supported\":[\"spreadsheet\"]}"));
+
+            // Wire up mock chain
+            when(mockClientBuilderFactory.newBuilder()).thenReturn(mockHttpClientBuilder);
+            when(mockHttpClientBuilder.build()).thenReturn(mockHttpClient);
+            when(mockHttpClient.execute(any())).thenReturn(mockResponse);
+        } catch (Exception e) {}
+
+        // Register and inject mocks
+        context.registerService(HttpClientBuilderFactory.class, mockClientBuilderFactory);
+        Utils.setInternalState(formContainer, "clientBuilderFactory", mockClientBuilderFactory);
+    }
+
+    @Test
+    public void testJSONExportWithSubmissionAttribute() throws Exception {
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW, FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
+        context.request().setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
+        JsonNode formJson = mapper.readTree(json);
+        JsonNode submitJson = formJson.get("properties").get("fd:submit");
+        assertTrue("Should have fd:submit at top level", submitJson != null);
+        assertEquals("fd/af/components/guidesubmittype/franklin/spreadsheet", submitJson.get("actionType").asText());
+        assertEquals("test@example.com", submitJson.get(SS_EMAIL).get("mailto").get(0).asText());
+        assertEquals("sender@example.com", submitJson.get(SS_EMAIL).get("from").asText());
+        assertEquals("Test Subject", submitJson.get(SS_EMAIL).get("subject").asText());
+        assertEquals("spreadsheet", submitJson.get("actionName").asText());
+        assertEquals("http://localhost/testurl", submitJson.get(SS_SPREADSHEET).get("spreadsheetUrl").asText());
+
+        Utils.testJSONExport(formContainer,
+            Utils.getTestExporterJSONPath(BASE, "withSubmissionAttribute"));
+    }
+
+    @Test
+    public void testJSONExportWithSubmissionHeader() throws Exception {
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
+            FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
+        context.request().setHeader(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
+        JsonNode formJson = mapper.readTree(json);
+        JsonNode submitJson = formJson.get("properties").get("fd:submit");
+        assertTrue("Should have fd:submit at top level", submitJson != null);
+        assertEquals("fd/af/components/guidesubmittype/franklin/spreadsheet", submitJson.get("actionType").asText());
+        assertEquals("test@example.com", submitJson.get(SS_EMAIL).get("mailto").get(0).asText());
+        assertEquals("sender@example.com", submitJson.get(SS_EMAIL).get("from").asText());
+        assertEquals("Test Subject", submitJson.get(SS_EMAIL).get("subject").asText());
+        assertEquals("spreadsheet", submitJson.get("actionName").asText());
+        assertEquals("http://localhost/testurl", submitJson.get(SS_SPREADSHEET).get("spreadsheetUrl").asText());
+
+        Utils.testJSONExport(formContainer,
+            Utils.getTestExporterJSONPath(BASE, "withSubmissionAttribute"));
+    }
+
+    @Test
+    public void testJSONExportWithoutSubmissionAttribute() throws Exception {
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
+            FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
+        JsonNode formJson = mapper.readTree(json);
+        assertNull("Should not have fd:submit at top level", formJson.get("properties").get("fd:submit"));
+        Utils.testJSONExport(formContainer,
+            Utils.getTestExporterJSONPath(BASE, "withoutSubmissionAttribute"));
+    }
+
+    @Test
+    public void testActionForUEFormSpreadsheetSubmission() throws Exception {
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION,
+            FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
+        JsonNode formJson = mapper.readTree(json);
+        assertEquals("action should be empty for ue form with submit action supported via submission service", "",
+            formJson.get("action").asText());
+        Utils.testJSONExport(formContainer,
+            Utils.getTestExporterJSONPath(BASE, PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION));
+    }
+
+    @Test
+    public void testActionForUEFormRestSubmission() throws Exception {
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_UE_FORM_REST_SUBMISSION,
+            FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
+        JsonNode formJson = mapper.readTree(json);
+        assertTrue("action should not be empty for ue form with submit action not supported via submission service",
+            formJson.get("action").asText().length() > 0);
+        Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_UE_FORM_REST_SUBMISSION));
+    }
+
+    @Test
+    public void testActionForCCFormSpreadsheetSubmission() throws Exception {
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_CC_FORM_SPREADSHEET_SUBMISSION,
+            FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
+        JsonNode formJson = mapper.readTree(json);
+        String action = formJson.get("action").asText();
+        String[] actionParts = action.split("/");
+        String lastPart = actionParts[actionParts.length - 1];
+        String decodedAction = new String(Base64.getDecoder().decode(lastPart));
+        assertTrue(
+            "action should end with .model.json for cc forms for submit action  supported via submission service",
+            decodedAction.endsWith(".model.json"));
+        Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_CC_FORM_SPREADSHEET_SUBMISSION));
+    }
+
+    @Test
+    public void testActionForCCFormRestSubmission() throws Exception {
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_CC_FORM_REST_SUBMISSION,
+            FormContainerImpl.class, context);
+        setMockClientBuilderFactory(formContainer);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
+        JsonNode formJson = mapper.readTree(json);
+        String action = formJson.get("action").asText();
+        String[] actionParts = action.split("/");
+        String lastPart = actionParts[actionParts.length - 1];
+        String decodedAction = new String(Base64.getDecoder().decode(lastPart));
+        assertTrue(
+            "action should notend with .model.json for cc forms for submit action not supported via submission service",
+            !decodedAction.endsWith(".model.json"));
+        Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_CC_FORM_REST_SUBMISSION));
+    }
+
+    @Test
+    void testExcludeFromDoRIfHiddenFromViewPrint() throws Exception {
+        // Setup: create a resource structure with fd:view/print child and excludeFromDoRIfHidden property
+        context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN,
+            "sling:resourceType", "core/fd/components/form/container/v2/container");
+        context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN + "/fd:view/print",
+            "excludeFromDoRIfHidden", true);
+
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, FormContainer.class, context);
+        Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
+        assertTrue(dorProperties.containsKey("excludeFromDoRIfHidden"));
+        assertEquals(true, dorProperties.get("excludeFromDoRIfHidden"));
+    }
+
+    @Test
+    void testExcludeFromDoRIfHiddenFromViewPrintFalse() throws Exception {
+        // Setup: create a resource structure with fd:view/print child and excludeFromDoRIfHidden property set to false
+        context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN,
+            "sling:resourceType", "core/fd/components/form/container/v2/container");
+        context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN + "/fd:view/print",
+            "excludeFromDoRIfHidden", false);
+
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, FormContainer.class, context);
+        Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
+        assertTrue(dorProperties.containsKey("excludeFromDoRIfHidden"));
+        assertEquals(false, dorProperties.get("excludeFromDoRIfHidden"));
+    }
 }

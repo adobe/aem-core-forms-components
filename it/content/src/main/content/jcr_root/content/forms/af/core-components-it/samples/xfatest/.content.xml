@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2025-02-28T12:14:58.923+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-xfa-blank-v2"
+        fd:ignoreTranslationInvalidation="{Boolean}true"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="xfatest"
+        sling:configRef="/conf/forms/xfatest/"
+        sling:resourceType="forms-components-examples/components/xfa-page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            schemaType="formtemplates"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="xfatest"
+            xdpRef="/content/dam/formsanddocuments/core-components-it/samples/showHideRule.xdp">
+            <_x0031_740725085254 jcr:primaryType="nt:unstructured"/>
+            <form11740725095396
+                fd:xfajson="\{&quot;visible&quot;:true,&quot;hideTitle&quot;:true,&quot;icon&quot;:&quot;article&quot;,&quot;name&quot;:&quot;form1&quot;,&quot;sling:resourceType&quot;:&quot;core/fd/components/form/panelcontainer/v1/panelcontainer&quot;,&quot;jcr:title&quot;:&quot;Form 1&quot;,&quot;dataRef&quot;:&quot;xfa[0].form[0].form1[0]&quot;,&quot;fieldType&quot;:&quot;panel&quot;,&quot;enabled&quot;:true}"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Form 1"
+                sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
+                dataRef="xfa[0].form[0].form1[0]"
+                enabled="{Boolean}true"
+                fieldType="panel"
+                hideTitle="{Boolean}true"
+                icon="article"
+                name="form1"
+                visible="{Boolean}true"/>
+            <_unnamed0_subform1740725098862
+                fd:xfajson="\{&quot;visible&quot;:true,&quot;hideTitle&quot;:true,&quot;icon&quot;:&quot;article&quot;,&quot;name&quot;:&quot;_unnamed0_subform&quot;,&quot;sling:resourceType&quot;:&quot;core/fd/components/form/panelcontainer/v1/panelcontainer&quot;,&quot;jcr:title&quot;:&quot;Unnamed 0 Subform&quot;,&quot;dataRef&quot;:&quot;xfa[0].form[0].form1[0].#subform[0]&quot;,&quot;fieldType&quot;:&quot;panel&quot;,&quot;enabled&quot;:true}"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Unnamed 0 Subform"
+                sling:resourceType="core/fd/components/form/panelcontainer/v1/panelcontainer"
+                dataRef="xfa[0].form[0].form1[0].#subform[0]"
+                enabled="{Boolean}true"
+                fieldType="panel"
+                hideTitle="{Boolean}true"
+                icon="article"
+                name="_unnamed0_subform"
+                visible="{Boolean}true">
+                <Button1
+                    fd:xfajson="\{&quot;visible&quot;:true,&quot;icon&quot;:&quot;button&quot;,&quot;name&quot;:&quot;Button1&quot;,&quot;fd:xfaScripts&quot;:&quot;[{\\&quot;activity\\&quot;:\\&quot;initialize\\&quot;,\\&quot;value\\&quot;:\\&quot;\\\\n\\\\nthis.\\\\n\\&quot;,\\&quot;runAt\\&quot;:\\&quot;\\&quot;,\\&quot;contentType\\&quot;:\\&quot;application/x-javascript\\&quot;},{\\&quot;activity\\&quot;:\\&quot;click\\&quot;,\\&quot;value\\&quot;:\\&quot;TextField1.presence = \\\\\\&quot;visible\\\\\\&quot;;\\\\n\\&quot;,\\&quot;runAt\\&quot;:\\&quot;\\&quot;,\\&quot;contentType\\&quot;:\\&quot;application/x-javascript\\&quot;}]&quot;,&quot;sling:resourceType&quot;:&quot;core/fd/components/form/button/v1/button&quot;,&quot;jcr:title&quot;:&quot;Show&quot;,&quot;dorExclusion&quot;:&quot;true&quot;,&quot;dataRef&quot;:&quot;xfa[0].form[0].form1[0].#subform[0].Button1[0]&quot;,&quot;fieldType&quot;:&quot;button&quot;,&quot;enabled&quot;:true,&quot;required&quot;:false}"
+                    fd:xfaScripts="\[{&quot;activity&quot;:&quot;initialize&quot;,&quot;value&quot;:&quot;\\n\\nthis.\\n&quot;,&quot;runAt&quot;:&quot;&quot;,&quot;contentType&quot;:&quot;application/x-javascript&quot;},{&quot;activity&quot;:&quot;click&quot;,&quot;value&quot;:&quot;TextField1.presence = \\&quot;visible\\&quot;;\\n&quot;,&quot;runAt&quot;:&quot;&quot;,&quot;contentType&quot;:&quot;application/x-javascript&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Show"
+                    sling:resourceType="core/fd/components/form/button/v1/button"
+                    dataRef="xfa[0].form[0].form1[0].#subform[0].Button1[0]"
+                    dorExclusion="true"
+                    enabled="{Boolean}true"
+                    fieldType="button"
+                    icon="button"
+                    name="Button1"
+                    required="{Boolean}false"
+                    visible="{Boolean}true"/>
+                <TextField1
+                    fd:xfajson="\{&quot;visible&quot;:true,&quot;icon&quot;:&quot;abc&quot;,&quot;name&quot;:&quot;TextField1&quot;,&quot;sling:resourceType&quot;:&quot;core/fd/components/form/textinput/v1/textinput&quot;,&quot;jcr:title&quot;:&quot;Text Field&quot;,&quot;dataRef&quot;:&quot;xfa[0].form[0].form1[0].#subform[0].TextField1[0]&quot;,&quot;fieldType&quot;:&quot;text-input&quot;,&quot;enabled&quot;:true,&quot;required&quot;:false}"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Field"
+                    sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                    dataRef="xfa[0].form[0].form1[0].#subform[0].TextField1[0]"
+                    enabled="{Boolean}true"
+                    fieldType="text-input"
+                    icon="abc"
+                    name="TextField1"
+                    required="{Boolean}false"
+                    visible="{Boolean}true"/>
+                <Button2
+                    fd:xfajson="\{&quot;visible&quot;:true,&quot;icon&quot;:&quot;button&quot;,&quot;name&quot;:&quot;Button2&quot;,&quot;fd:xfaScripts&quot;:&quot;[{\\&quot;activity\\&quot;:\\&quot;click\\&quot;,\\&quot;value\\&quot;:\\&quot;TextField1.presence = \\\\\\&quot;hidden\\\\\\&quot;;\\\\n\\&quot;,\\&quot;runAt\\&quot;:\\&quot;\\&quot;,\\&quot;contentType\\&quot;:\\&quot;application/x-javascript\\&quot;}]&quot;,&quot;sling:resourceType&quot;:&quot;core/fd/components/form/button/v1/button&quot;,&quot;jcr:title&quot;:&quot;Hide&quot;,&quot;dorExclusion&quot;:&quot;true&quot;,&quot;dataRef&quot;:&quot;xfa[0].form[0].form1[0].#subform[0].Button2[0]&quot;,&quot;fieldType&quot;:&quot;button&quot;,&quot;enabled&quot;:true,&quot;required&quot;:false}"
+                    fd:xfaScripts="\[{&quot;activity&quot;:&quot;click&quot;,&quot;value&quot;:&quot;TextField1.presence = \\&quot;hidden\\&quot;;\\n&quot;,&quot;runAt&quot;:&quot;&quot;,&quot;contentType&quot;:&quot;application/x-javascript&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Hide"
+                    sling:resourceType="core/fd/components/form/button/v1/button"
+                    dataRef="xfa[0].form[0].form1[0].#subform[0].Button2[0]"
+                    dorExclusion="true"
+                    enabled="{Boolean}true"
+                    fieldType="button"
+                    icon="button"
+                    name="Button2"
+                    required="{Boolean}false"
+                    visible="{Boolean}true"/>
+            </_unnamed0_subform1740725098862>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>

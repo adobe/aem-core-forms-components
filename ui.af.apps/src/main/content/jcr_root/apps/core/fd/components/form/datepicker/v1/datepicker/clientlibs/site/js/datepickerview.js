@@ -99,10 +99,12 @@
                     this.widgetObject.setDisplayValue(this._model.value);
                     this.widgetObject.setCalendarWidgetValue(this._model.value);
                     this.setInactive();
+                    this.triggerExit();
                 }, this.getWidget());
                 this.widgetObject.addEventListener('focus', (e) => {
                     this.widgetObject.setValue(e.target.value);
                     this.setActive();
+                    this.triggerEnter();
                 }, this.getWidget());
                 this.widgetObject.addEventListener('input', (e) => {
                     if( e.target.value === '') {
@@ -117,9 +119,11 @@
                 this.widget.addEventListener('blur', (e) => {
                     this.setModelValue(e.target.value);
                     this.setInactive();
+                    this.triggerExit();
                 });
                 this.widget.addEventListener('focus', (e) => {
                     this.setActive();
+                    this.triggerEnter();
                 });
             }
         }

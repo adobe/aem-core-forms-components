@@ -48,25 +48,6 @@
         }
     }
 
-    function getFormContainerPath(editable) {
-        let path = editable.dom.find("[data-cmp-adaptiveformcontainer-path]").data("cmpAdaptiveformcontainerPath");
-        if (typeof path !== 'string' || !path) {
-            path = getFormContainerFromDom(editable);
-
-        }
-        return path;
-    }
-
-    function getFormContainerFromDom(editable) {
-        let selector = "[data-cmp-is='adaptiveFormContainer']";
-        let elem = $(editable.dom[0]).closest(selector);
-        let path = null;
-        if (elem.length > 0) {
-            path = elem.data("cmp-path");
-        }
-        return path;
-    }
-
     function getFieldId(editable) {
         return editable.dom.find("[data-cmp-adaptiveformcontainer-path]").attr('id');
     }
