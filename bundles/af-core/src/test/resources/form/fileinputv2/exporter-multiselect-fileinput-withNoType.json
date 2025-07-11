@@ -16,7 +16,7 @@
       "text/*",
       "application/pdf"
     ],
-    "screenReaderText": "'Custom screen reader text'",
+    "screenReaderText": "Custom screen reader text",
     "label": {
       "value": "def"
     },
