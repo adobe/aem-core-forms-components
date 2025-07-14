@@ -47,7 +47,7 @@
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="AfFormData.html">AfFormData</a></li><li><a href="GuideBridge.html">GuideBridge</a></li><li><a href="module-FormView-HTTPAPILayer.html">FormView~HTTPAPILayer</a></li><li><a href="module-FormView-LanguageUtils.html">FormView~LanguageUtils</a></li><li><a href="module-FormView-Response.html">FormView~Response</a></li><li><a href="module-FormView-Utils.html">FormView~Utils</a></li><li><a href="FormCheckBox.html">FormCheckBox</a></li><li><a href="module-FormView-FormContainer.html">FormView~FormContainer</a></li><li><a href="module-FormView-FormField.html">FormView~FormField</a></li><li><a href="module-FormView-FormFieldBase.html">FormView~FormFieldBase</a></li><li><a href="FormFileInput.html">FormFileInput</a></li><li><a href="FormFileInputWidget.html">FormFileInputWidget</a></li><li><a href="FormFileInputWidgetBase.html">FormFileInputWidgetBase</a></li><li><a href="FormOptionFieldBase.html">FormOptionFieldBase</a></li><li><a href="module-FormView-FormPanel.html">FormView~FormPanel</a></li><li><a href="module-FormView-FormTabs.html">FormView~FormTabs</a></li><li><a href="module-FormView-InstanceManager.html">FormView~InstanceManager</a></li>
+					<li><a href="AfFormData.html">AfFormData</a></li><li><a href="GuideBridge.html">GuideBridge</a></li><li><a href="module-FormView-HTTPAPILayer.html">FormView~HTTPAPILayer</a></li><li><a href="module-FormView-LanguageUtils.html">FormView~LanguageUtils</a></li><li><a href="module-FormView-Response.html">FormView~Response</a></li><li><a href="module-FormView-RuleUtils.html">FormView~RuleUtils</a></li><li><a href="module-FormView-Utils.html">FormView~Utils</a></li><li><a href="FormCheckBox.html">FormCheckBox</a></li><li><a href="module-FormView-FormContainer.html">FormView~FormContainer</a></li><li><a href="module-FormView-FormField.html">FormView~FormField</a></li><li><a href="module-FormView-FormFieldBase.html">FormView~FormFieldBase</a></li><li><a href="FormFileInput.html">FormFileInput</a></li><li><a href="FormFileInputWidget.html">FormFileInputWidget</a></li><li><a href="FormFileInputWidgetBase.html">FormFileInputWidgetBase</a></li><li><a href="FormOptionFieldBase.html">FormOptionFieldBase</a></li><li><a href="module-FormView-FormPanel.html">FormView~FormPanel</a></li><li><a href="module-FormView-FormTabs.html">FormView~FormTabs</a></li><li><a href="module-FormView-InstanceManager.html">FormView~InstanceManager</a></li>
 				</ul>
 			</li>
 			
@@ -177,6 +177,66 @@
     
     <div class="description">
         <p>Converts a JSON string to an object.</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".externalize">
+    <h4 id=".externalize"><span class="type-signature">&lt;static> </span>externalize<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Prefixes the URL with the context path.</p>
     </div>
     
 
@@ -588,82 +648,20 @@ including both integer and decimal parts. In this case, only the integer part is
     
 </dd>
 
-        </dl>
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
+        
             
 <hr>
-<dt>
-    <h4 class="name" id=".externalize"><span class="type-signature">&lt;static> </span>externalize(url)</h4>
-    
+<dt class="name" id=".downloadDoR">
+    <h4 id=".downloadDoR"><span class="type-signature">&lt;static> </span>downloadDoR<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
-
     
     <div class="description">
-        <p>Prefixes the URL with the context path.</p>
+        <p>Downloads the Document of Record (DoR) for the form.</p>
     </div>
     
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The URL to externalize.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
     
 
@@ -708,47 +706,75 @@ including both integer and decimal parts. In this case, only the integer part is
 
 
     
+</dd>
 
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <ul>
-<li>The externalized URL.</li>
-</ul>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
         
-<span class="param-type">string</span>
+            
+<hr>
+<dt class="name" id=".exportFormData">
+    <h4 id=".exportFormData"><span class="type-signature">&lt;static> </span>exportFormData<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Export form data as a JSON string</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
 
 
 
-    </dd>
+	
+
+	
+
+	
+
+	
 </dl>
 
-
-        
 
     
 </dd>
 
-        
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
             
 <hr>
 <dt>
