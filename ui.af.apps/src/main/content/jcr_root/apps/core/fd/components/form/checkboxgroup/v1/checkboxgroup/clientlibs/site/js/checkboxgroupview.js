@@ -100,9 +100,10 @@
             })
 
             let optionLinks = this.element.querySelectorAll(`.${CheckBoxGroup.selectors.optionLink}`);
+            const actionKeys = ['Enter', ' ', 'Spacebar', 'Space'];
             optionLinks.forEach(optionLink => {
                 optionLink.addEventListener('keydown', (e)=>{
-                    if(e.key === 'Enter' || e.key ===' ') {
+                    if(actionKeys.includes(e.key)) {
                         optionLink.click();
                     }
                 });
