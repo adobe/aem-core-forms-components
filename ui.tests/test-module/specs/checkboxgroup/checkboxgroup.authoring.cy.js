@@ -179,16 +179,17 @@ describe('Page - Authoring', function () {
         });
     });
 
-    it('check rich text support for label', function(){
+    it('check rich text support for label', {retries: 2}, function(){
+      cy.cleanTest(checkBoxGroupDrop).then(function() {
         dropCheckBoxGroupInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get("div[name='richTextTitle']").should('not.be.visible');
 
         // check rich text selector and see if RTE is visible for title.
-        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('exist').click();
-        cy.get("div[name='richTextTitle']").scrollIntoView();
-        cy.get("div[name='richTextTitle']").should('be.visible');
+        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
+        cy.wait(500); // Add small wait for UI update
+        cy.get("div[name='richTextTitle']").should('exist').scrollIntoView().should('be.visible');
 
         // check rich text selector and see if RTE is visible for enum names.
         cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('not.be.visible');
@@ -204,9 +205,10 @@ describe('Page - Authoring', function () {
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Select 1');
         getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
+      });
     });
 
-    it('check rich text inline editor is present', function(){
+    it('check rich text inline editor is present', {retries: 2}, function(){
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.invokeEditableAction("[data-action='EDIT']");
         cy.get(".rte-toolbar").should('be.visible');
@@ -216,35 +218,34 @@ describe('Page - Authoring', function () {
     // adding retry since rule editor sometimes does not open at first try
     it('rule editor is working with rich text enum names', {retries: 2}, function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.invokeEditableAction("[data-action='editexpression']");
-        cy.get("#af-rule-editor").should("be.visible");
-        getRuleEditorIframe().find("#objectNavigationTree").should("be.visible");
-        getRuleEditorIframe().find("#create-rule-button").click();
-        getRuleEditorIframe().find('#create-rule-button').then(($el) => {
-            $el[0].click();
-            getRuleEditorIframe().find('.child-choice-name').click();
-            getRuleEditorIframe().find('coral-selectlist-item[value="EVENT_SCRIPTS"]').then(($el) => {
-                $el[0].scrollIntoView();
-                $el[0].click();
-                getRuleEditorIframe().find('.EVENT_AND_COMPARISON_OPERATOR').then(($el) => {
-                    $el[0].click();
-                    getRuleEditorIframe().find('coral-selectlist-item[value="CONTAINS"]').then(($el) => {
-                        $el[0].click();
-                        getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').then(($el) => {
-                            $el[0].click();
-                            getRuleEditorIframe().find('.PRIMITIVE_EXPRESSION .NUMERIC_LITERAL button').then(($el) => {
-                                $el[0].click();
-                                //skipping assertion as it is currently flaky
-                                // getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().should("have.text", "Select 1");
-                            });
-                        });
-                    });
-                });
-            });
-            getRuleEditorIframe().find('.exp-Close-Button').then(($el) => {
-                $el[0].click();
-            });
-        });
+        cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+        cy.get(formsSelectors.ruleEditor.action.editRule).click();
+
+        // click on  create option from rule editor header
+        cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
+            .click({force: true});
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.CONTAINS).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.CONTAINS).click();
+
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PRIMITIVE_EXPRESSION + " .NUMERIC_LITERAL button").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PRIMITIVE_EXPRESSION + " .NUMERIC_LITERAL button").first().click();
+
+        cy.getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().contains("Select 1");
+        cy.getRuleEditorIframe().find('.exp-Cancel-Button').click();
+        cy.getRuleEditorIframe().find('.exp-Close-Button').click();
+        cy.deleteComponentByPath(checkBoxGroupDrop);
     });
   });
 /*

@@ -16,20 +16,31 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.osgi.services.HttpClientBuilderFactory;
+import org.apache.http.util.EntityUtils;
 import org.apache.jackrabbit.JcrConstants;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
@@ -37,6 +48,9 @@ import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FORM_FIELD_TYPE;
 
@@ -47,6 +61,7 @@ public class ComponentUtils {
 
     private static final String EDGE_DELIVERY_FRAGMENT_CONTAINER_REL_PATH = "root/section/form";
     private static final String[] EDGE_DELIVERY_RESOURCE_TYPES = new String[] { "core/franklin/components/page/v1/page" };
+    private static final Logger logger = LoggerFactory.getLogger(ComponentUtils.class);
 
     /**
      * Private constructor to prevent instantiation of utility class.
@@ -242,6 +257,97 @@ public class ComponentUtils {
 
     public static boolean isFragmentComponent(Resource resource) {
         return resource != null && resource.getValueMap().get(FormConstants.PROP_FRAGMENT_PATH, String.class) != null;
+    }
+
+    /**
+     * Determines whether submit properties should be included in the form
+     * definition.
+     * 
+     * <p>
+     * This method checks if the request contains x-adobe-form-definition attribute
+     * or header and if it is equal to submission
+     * that indicates submit properties should be included in the form definition.
+     * </p>
+     *
+     * @param request the {@link SlingHttpServletRequest} to check
+     * @return true if submit properties should be included, false otherwise
+     */
+    public static boolean shouldIncludeSubmitProperties(SlingHttpServletRequest request) {
+        if (request == null) {
+            return false;
+        }
+        String submissionHeaderName = FormConstants.FORM_DEFINITION_SUBMISSION;
+        return submissionHeaderName.equals(request.getAttribute(FormConstants.X_ADOBE_FORM_DEFINITION)) ||
+            submissionHeaderName.equals(request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION));
+    }
+
+    /**
+     * Retrieves a list of supported submit actions from the Adobe Forms service.
+     * 
+     * <p>
+     * This method makes an HTTP GET request to the Adobe Forms service to fetch
+     * the list of supported submit actions. The response is expected to be a
+     * JSON object containing a "submissions" array of action names, which is then
+     * converted to a list.
+     * </p>
+     * 
+     * <p>
+     * If the request fails or an error occurs during processing, an error is logged
+     * and an empty list is returned.
+     * </p>
+     *
+     * @param clientBuilderFactory The HTTP client builder factory used to create
+     *            the HTTP client
+     * @return A list of supported submit action names, or an empty list if the
+     *         request fails
+     */
+    public static List<String> getSupportedSubmitActions(HttpClientBuilderFactory clientBuilderFactory) {
+        // Check cache first
+        List<String> cachedActions = CacheManager.getFromCache(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY);
+        if (cachedActions != null) {
+            return cachedActions;
+        }
+        String supportedSubmitActionsUrl = "https://forms.adobe.com/adobe/forms/af/submit";
+        List<String> supportedSubmitActions = new ArrayList<>();
+        if (clientBuilderFactory == null) {
+            logger.error("clientBuilderFactory is null");
+            return supportedSubmitActions;
+        }
+        try {
+            RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(5000)
+                .setSocketTimeout(5000)
+                .setConnectionRequestTimeout(5000)
+                .build();
+            CloseableHttpClient httpClient = clientBuilderFactory.newBuilder()
+                .setDefaultRequestConfig(requestConfig)
+                .build();
+            HttpGet httpGet = new HttpGet(supportedSubmitActionsUrl);
+            try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+                if (isSuccessfulResponse(response)) {
+                    String responseBody = EntityUtils.toString(response.getEntity());
+                    JsonNode rootNode = new ObjectMapper().readTree(responseBody);
+                    ArrayNode submissionsNode = (ArrayNode) rootNode.get("supported");
+                    if (submissionsNode != null && submissionsNode.isArray()) {
+                        submissionsNode.forEach(submission -> {
+                            String submissionText = submission.asText();
+                            supportedSubmitActions.add(submissionText);
+                        });
+                    } else {
+                        logger.error("supported node was null or not an array");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Error while fetching supported submit actions", e);
+        }
+        CacheManager.putInCache(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY, supportedSubmitActions);
+        return supportedSubmitActions;
+    }
+
+    private static boolean isSuccessfulResponse(CloseableHttpResponse response) {
+        return response.getStatusLine() != null
+            && response.getStatusLine().getStatusCode() == java.net.HttpURLConnection.HTTP_OK;
     }
 
 }

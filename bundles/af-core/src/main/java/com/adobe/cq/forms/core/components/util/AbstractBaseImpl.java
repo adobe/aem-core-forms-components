@@ -189,7 +189,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         } else if (AssistPriority.DESCRIPTION.equals(assistPriority)) {
             screenReaderText = getDescription();
         } else if (AssistPriority.CUSTOM.equals(assistPriority)) {
-            screenReaderText = "'" + customAssistPriorityMsg + "'"; // json formula string literal
+            screenReaderText = customAssistPriorityMsg;
         }
         return screenReaderText;
     }
