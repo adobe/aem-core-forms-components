@@ -76,7 +76,18 @@ describe('Page/Form Authoring', function () {
         cy.get("coral-numberinput[name='./fd:autoSaveInterval']").should("exist");
     }
 
-
+    const checkValidatorFunctioning = function(formContainerEditPathSelector) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cmp-adaptiveform-container__editdialog').contains('Submission').click({force:true});   
+        cy.get(".cmp-adaptiveform-container__submitaction").children('button[is="coral-button"][aria-haspopup="listbox"]').first().click({force: true});
+        cy.get('coral-selectlist-item[value="fd/af/components/guidesubmittype/restendpoint"]').should('be.visible').click();
+        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().clear({force: true}).type("invalid-url", {force: true});
+        cy.get('.coral-Form-errorlabel').should('contain.text', "Please enter the absolute path of the REST endpoint.");
+        cy.get("[name='./restEndpointPostUrl']").clear({force: true}).type("http://localhost:4502/some/endpoint", {force: true}); 
+        cy.get('.coral-Form-errorlabel').should('not.exist');
+        cy.get('.cq-dialog-submit').click();
+    };
 
     const checkAndSaveSubmitAction = function(formContainerEditPathSelector) {
         // click configure action on adaptive form container component
@@ -104,6 +115,7 @@ describe('Page/Form Authoring', function () {
         cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
 
         //save the configuration
+        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").clear().type("http://localhost:4502/some/endpoint");
         cy.get('.cq-dialog-submit').click();
     };
 
@@ -240,6 +252,9 @@ describe('Page/Form Authoring', function () {
                 }
             });
 
+            it('check validator functioning for REST endpoint URL', function() {
+                checkValidatorFunctioning(formContainerEditPathSelector);
+            });
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
@@ -293,6 +308,10 @@ describe('Page/Form Authoring', function () {
                     checkEditDialog(formContainerEditPathSelector);
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 })
+
+                it('check validator functioning for REST endpoint URL', function() {
+                    checkValidatorFunctioning(formContainerEditPathSelector);
+                });
         });
 
         context("Render Forms in Disabled mode", function () {

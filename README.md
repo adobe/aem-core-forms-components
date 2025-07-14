@@ -27,7 +27,7 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Text Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
 -   [Number Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/numberinput/v1/numberinput)
 -   [Date Picker](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/datepicker/v1/datepicker)
--   [File Attachment](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v1/fileinput)
+-   [File Attachment](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v3/fileinput)
 -   [Dropdown List](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown)
 -   [Checkbox Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup)
 -   [Radio Button Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton)
@@ -52,6 +52,12 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Review](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/review/v1/review)
 -   [Turnstile](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/turnstile/v1/turnstile)
 
+
+### XFA-based Form
+
+-   [XFA Page](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/xfa-page/v1/xfa-page)
+
+To create XFA-based core component forms, you need to use the XFA Page component. This component serves as the foundation for rendering XFA forms.
 
 ## System Requirements
 
@@ -125,6 +131,26 @@ To allow recompilation of the HTL scripts, you should disable `aem-precompiled-s
 Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365),
 please only use `autoInstallPackage` and `autoInstallPackagePublish` when
 working with the AEM as a Cloud Service SDK!
+
+### Important Note for AEM as a Cloud Service SDK
+
+When working with the AEM as a Cloud Service local SDK, be aware that Forms Core Components are already included as part of the product in the `/libs` directory. Installing additional versions in `/apps/core/fd` may cause duplicate component installations and related issues.
+
+If you encounter problems with components or clientlibs:
+
+1. Check if you have duplicate installations of core components (both in `/libs` and `/apps`)
+2. Remove any duplicated components in `/apps/core/fd` if they conflict with the built-in ones
+3. Rebuild the client library cache by accessing: `http://<host>:<port>/libs/granite/ui/content/dumplibs.rebuild.html`
+
+This ensures your environment uses the correct component versions and avoids conflicts that can occur with multiple installations.
+
+### Important Note for AEM Cloud Service
+
+We've identified that core component-based forms fail to render due to a version mismatch in the Forms Core Components package. This occurs when the version used in the customer's project (archetype project) is equal to or higher than the version bundled with the product (e.g., 3.0.104).
+To resolve this, either:
+
+1. Use a lower version than the one included in the product, or
+2. Remove the Forms Core Components dependency from the customer's code entirely, as it is already included as part of the product.
 
 ### UberJar
 

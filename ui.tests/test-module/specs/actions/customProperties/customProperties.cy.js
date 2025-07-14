@@ -69,7 +69,7 @@ describe("Custom Properties Tests", () => {
                 cy.get("coral-selectlist-item[role='option']").contains("Group 1").click({force: true});
                 cy.get(".fd-CustomProperties-select").click(); // does the job of blur
 
-                cy.get(".fd-CustomProperties-additionalCustomPropertiesCheck").click();
+                cy.get(".fd-CustomProperties-additionalCustomPropertiesCheck").click({force: true});
                 cy.get(".fd-CustomProperties-additionalMultifield").contains("Add").click();
                 cy.get(".fd-CustomProperties-additionalKeys").focus().type("addonKey1");
                 cy.get(".fd-CustomProperties-additionalValues").focus().type("addonValue1");
