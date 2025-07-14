@@ -209,7 +209,7 @@ jobs:
       FT: 'true'
     resource_class: large
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon-without-ft:
@@ -222,7 +222,7 @@ jobs:
       FT: 'false'
     resource_class: large
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
 #  cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
