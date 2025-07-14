@@ -224,6 +224,7 @@
       "dorTemplateRef": "xyz",
       "clientLibRef": "abc",
       "customProp": "customPropValue",
+      "fd:channel": "print",
       "fragment": {
         "jcr:primaryType": "nt:unstructured",
         "wrapData": true,
@@ -245,28 +246,28 @@
       "jcr:title": "AF Fragment (v2)",
       "jcr:content": {
         "jcr:primaryType": "cq:PageContent",
+        "jcr:title": "AF Fragment (v2)"
+      },
+      "print": {
+        "jcr:primaryType": "nt:unstructured",
         "jcr:title": "AF Fragment (v2)",
-        "print": {
-          "jcr:primaryType": "nt:unstructured",
+        "jcr:content": {
+          "jcr:primaryType": "cq:PageContent",
           "jcr:title": "AF Fragment (v2)",
-          "jcr:content": {
-            "jcr:primaryType": "cq:PageContent",
-            "jcr:title": "AF Fragment (v2)",
-            "guideContainer": {
+          "guideContainer": {
+            "jcr:primaryType": "nt:unstructured",
+            "thankYouOption": "page",
+            "fd:version": "2.1",
+            "title": "AF Fragment (v2)",
+            "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
+            "fieldType": "form",
+            "dorType": "none",
+            "textinput": {
               "jcr:primaryType": "nt:unstructured",
-              "thankYouOption": "page",
-              "fd:version": "2.1",
-              "title": "AF Fragment (v2)",
-              "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
-              "fieldType": "form",
-              "dorType": "none",
-              "textinput": {
-                "jcr:primaryType": "nt:unstructured",
-                "jcr:title": "Text Input",
-                "name": "fragmenttextinput",
-                "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
-                "fieldType": "text-input"
-              }
+              "jcr:title": "Text Input",
+              "name": "fragmenttextinput",
+              "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+              "fieldType": "text-input"
             }
           }
         }

@@ -10,7 +10,7 @@
             ]
           },
           "fieldType": "text-input",
-          "id": "textinput-dea7152197",
+          "id": "textinput-a286959469",
           "label": {
             "value": "Text Input"
           },
@@ -19,7 +19,7 @@
             "fd:dor": {
               "dorExclusion": false
             },
-            "fd:path": "/content/forms/af/demo/jcr:content/printfragment/jcr:content/print/jcr:content/guideContainer/textinput"
+            "fd:path": "/content/forms/af/demo/jcr:content/printfragment/print/jcr:content/guideContainer/textinput"
           },
           "type": "string"
         }

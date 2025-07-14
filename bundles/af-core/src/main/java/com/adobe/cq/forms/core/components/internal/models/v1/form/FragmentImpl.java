@@ -45,7 +45,6 @@ import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
-import com.day.cq.commons.jcr.JcrConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -59,7 +58,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class FragmentImpl extends PanelImpl implements Fragment {
 
     public static final String CUSTOM_FRAGMENT_PROPERTY_WRAPPER = "fd:fragment";
-    private static final String PRINT_CHANNEL_PATH = "/" + JcrConstants.JCR_CONTENT + "/" + "print";
+    private static final String PRINT_CHANNEL_PATH = "/" + "print";
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
@@ -76,9 +75,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
 
-        fragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
-
-        fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
+        String updatedFragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
+        fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, updatedFragmentPath);
         if (request != null) {
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
             String clientLibRef = getClientLibForFragment();
@@ -89,17 +87,10 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     private String getFragmentPathBasedOnChannel(String fragmentPath) {
-        Resource formContainerResource = resource;
-        String fragmentPathOfChannel = fragmentPath;
-        while (formContainerResource != null) {
-            String resourceType = formContainerResource.getValueMap().get("sling:resourceType", String.class);
-            if (resourceType != null && resourceType.contains(FormConstants.PRINT_CHANNEL_MARKER)) {
-                fragmentPathOfChannel = fragmentPath + PRINT_CHANNEL_PATH;
-                break;
-            }
-            formContainerResource = formContainerResource.getParent();
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
+            return fragmentPath + PRINT_CHANNEL_PATH;
         }
-        return fragmentPathOfChannel;
+        return fragmentPath;
     }
 
     @JsonIgnore

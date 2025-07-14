@@ -55,6 +55,7 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
@@ -588,13 +589,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     /**
      * Returns the dor container properties.
-     * 
+     *
      * @return Map of dor container properties if `fd:dorContainer` node is present otherwise returns null
      */
     @JsonIgnore
     @Override
     public Map<String, Object> getDorContainer() {
-        if (resource != null) {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel) && resource != null) {
             Resource dorContainerResource = resource.getChild("fd:dorContainer");
             if (dorContainerResource != null) {
                 DorContainer dorContainer = dorContainerResource.adaptTo(DorContainer.class);
