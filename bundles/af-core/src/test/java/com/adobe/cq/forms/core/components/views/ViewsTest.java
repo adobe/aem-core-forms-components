@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2022 Adobe
+ ~ Copyright 2025 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -15,24 +15,27 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.views;
 
-public class Views {
+import org.junit.Test;
 
-    /**
-     * This view is used as the default view for serialising sling models to AF2.0 compliant schema
-     */
-    public static class Publish {}
+import static org.junit.jupiter.api.Assertions.*;
 
-    /**
-     * Use this view for serialising the property required in control plane.
-     * It is a superset of properties in Publish view.
-     * Eg: DoR related properties of forms core components
-     */
-    public static class Author extends Publish {}
+public class ViewsTest {
 
-    /**
-     * Use this view for including the print-specific properties
-     * Eg; dorContainer and pageTemplate
-     */
-    public static class DoR extends Author {}
+    @Test
+    public void testPublish() {
+        Views.Publish publish = new Views.Publish();
+        assertNotNull(publish);
+    }
 
+    @Test
+    public void testAuthor() {
+        Views.Author author = new Views.Author();
+        assertTrue(author instanceof Views.Publish);
+    }
+
+    @Test
+    public void testDor() {
+        Views.DoR dor = new Views.DoR();
+        assertTrue(dor instanceof Views.Author);
+    }
 }

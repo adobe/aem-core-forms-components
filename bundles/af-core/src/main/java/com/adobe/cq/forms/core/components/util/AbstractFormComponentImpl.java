@@ -17,7 +17,18 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -44,11 +55,13 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
@@ -58,6 +71,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -258,6 +272,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    public static final String CUSTOM_DOR_CONTAINER_WRAPPER = "dorContainer";
     // used for DOR and SPA editor to work
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
@@ -544,6 +559,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (dorBindRef != null) {
             customDorProperties.put("dorBindRef", dorBindRef);
         }
+        Map<String, Object> dorContainer = getDorContainer();
+        if (dorContainer != null) {
+            customDorProperties.put(CUSTOM_DOR_CONTAINER_WRAPPER, dorContainer);
+        }
         return customDorProperties;
     }
 
@@ -567,4 +586,26 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         return new ArrayList<>(disabledScripts);
     }
+
+    /**
+     * Returns the dor container properties.
+     *
+     * @return Map of dor container properties if `fd:dorContainer` node is present otherwise returns null
+     */
+    @JsonIgnore
+    @Override
+    public Map<String, Object> getDorContainer() {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel) && resource != null) {
+            Resource dorContainerResource = resource.getChild("fd:dorContainer");
+            if (dorContainerResource != null) {
+                DorContainer dorContainer = dorContainerResource.adaptTo(DorContainer.class);
+                ObjectMapper objectMapper = new ObjectMapper();
+                if (dorContainer != null) {
+                    return objectMapper.convertValue(dorContainer, new TypeReference<Map<String, Object>>() {});
+                }
+            }
+        }
+        return null;
+    }
+
 }
