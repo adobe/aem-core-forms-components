@@ -87,7 +87,6 @@ public final class ReservedProperties {
     public static final String PN_MINIMUM_DATE = "minimumDate";
     public static final String PN_MAXIMUM_DATE = "maximumDate";
     public static final String PN_MINIMUM_DATE_TIME = "minimumDateTime";
-    public static final String PN_DEFAULT_DATE_TIME = "defaultDateTime";
     public static final String PN_MAXIMUM_DATE_TIME = "maximumDateTime";
     public static final String PN_MAXIMUM = "maximum";
     public static final String PN_MINIMUM = "minimum";

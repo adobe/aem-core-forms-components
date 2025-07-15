@@ -94,7 +94,7 @@
       ],
       "fd:version": "2.1",
       "schemaType": "none",
-      "specVersion": "0.15.0",
+      "specVersion": "0.14.2",
       "useExternalEmailTemplate": "true",
       "from": "sender@example.com",
       "title": "afv2",

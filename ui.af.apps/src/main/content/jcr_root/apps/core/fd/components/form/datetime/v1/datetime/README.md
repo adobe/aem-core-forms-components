@@ -36,6 +36,11 @@ The following properties are written to JCR for this Form Date & Time component 
 5. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 6. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
 7. `./readOnly` - if set to `true`, the filed will be read only
+8. './minimumDateTime' - defines the minimum date and time that can be selected
+9. './maximumDateTime' - defines the maximum date and time that can be selected
+10. './minimumMessage' - defines the minimum date and time message that will come when the selected date and time is before the minimum date and time
+11. './maximumMessage' - defines the maximum date and time message that will come when the selected date and time is after the maximum date and time
+12. './default' - defines the default date and time that will be selected when the form is loaded
 
 ## Client Libraries
 The component provides a `core.forms.components.datetime.v1.runtime` client library category that contains the Javascript runtime for the component.
@@ -60,7 +65,7 @@ BLOCK cmp-adaptiveform-datetime
 By placing the class names `cmp-adaptiveform-datetime__label` and `cmp-adaptiveform-datetime__questionmark` within the `cmp-adaptiveform-datetime__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
 
 ## Replace feature:
-We support replace feature that allows replacing Reset Button component to any of the below components:
+We support replace feature that allows replacing Date Time component to any of the below components:
 
 * Button
 * Date Picker

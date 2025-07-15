@@ -21,7 +21,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import javax.annotation.Nullable;
-import javax.annotation.PostConstruct;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -55,9 +54,6 @@ public class DateTimeImpl extends AbstractFieldImpl implements DateTime {
     public String getFieldType() {
         return super.getFieldType(FieldType.DATETIME_INPUT);
     }
-
-    @PostConstruct
-    private void initTextInput() {}
 
     @Override
     public String getMinimumDateTime() {
