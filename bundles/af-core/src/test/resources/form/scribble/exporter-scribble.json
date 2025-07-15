@@ -1,22 +1,23 @@
 {
-    "id": "scribble-178a5c65c2",
-    "fieldType": "text-input",
+    "id": "scribble-ca4ee66cea",
+    "fieldType": "file-input",
     "name": "scribble1710484027357",
-    "value": "",
     "type": "string",
+    "properties": {
+        "fd:dor": {
+            "dorExclusion": false
+        },
+        "fd:path": "/content/scribble",
+        "fd:viewType": "signature",
+        "fd:dialogLabel": "Scribble"
+    },
     "label": {
-    "value": "Scribble"
+        "value": "Scribble"
     },
     "events": {
-    "custom:setProperty": [
-    "$event.payload"
-    ]
+        "custom:setProperty": [
+            "$event.payload"
+        ]
     },
-    "properties": {
-    "fd:dor": {
-    "dorExclusion": false
-    },
-    "fd:path": "/content/forms/af/scribbletest/jcr:content/guideContainer/scribble"
-    },
-    ":type": "forms-components-examples/components/form/scribble"
+    ":type": "core/fd/components/form/scribble/v1/scribble"
 }
