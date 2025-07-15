@@ -15,9 +15,10 @@
  ******************************************************************************/
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.cjs');
+const path = require('path');
 
-module.exports = (env = {}) => {
-    return merge(common(env), {
-        mode: 'production'
+module.exports = () => {
+    return merge(common, {
+        mode: 'production',
     });
 };

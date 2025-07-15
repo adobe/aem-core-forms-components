@@ -269,25 +269,5 @@
     ],
     "jcr:lastModified": "Tue Jul 30 2024 15:16:00 GMT+0530",
     "sling:resourceType": "forms-components-examples/components/form/checkboxgroup"
-  },
-  "checkboxgroup-with-null-values": {
-    "id": "checkboxgroup-with-null-values",
-    "jcr:primaryType": "nt:unstructured",
-    "sling:resourceType": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
-    "name": "nullValues",
-    "jcr:title": "Null Values Test",
-    "fieldType": "checkbox-group",
-    "type": "number[]",
-    "enum": [
-      0,
-      1,
-      2
-    ],
-    "enforceEnum": true,
-    "enumNames": [
-      "",
-      "",
-      "value3"
-    ]
   }
 }

@@ -17,7 +17,17 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -58,12 +68,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATAREF)
@@ -290,10 +297,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         Map<String, Object> rulesProperties = getRulesProperties();
         if (rulesProperties.size() > 0) {
             properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
-        }
-        List<String> disabledScripts = getDisabledXFAScripts();
-        if (!disabledScripts.isEmpty()) {
-            properties.put("fd:disabledXfaScripts", disabledScripts);
         }
         return properties;
     }
@@ -547,24 +550,4 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return customDorProperties;
     }
 
-    private List<String> getDisabledXFAScripts() {
-        Set<String> disabledScripts = new HashSet<>();
-        String xfaScripts = resource.getValueMap().get(ReservedProperties.FD_XFA_SCRIPTS, "");
-        if (StringUtils.isNotEmpty(xfaScripts)) {
-            // read string xfaScripts to jsonNode
-            ObjectMapper mapper = new ObjectMapper();
-            try {
-                ArrayNode node = (ArrayNode) mapper.readTree(xfaScripts);
-                // iterate through the array node and add the elements which have disabled property set to true
-                for (JsonNode jsonNode : node) {
-                    if (jsonNode.has("disabled") && jsonNode.get("disabled").asBoolean()) {
-                        disabledScripts.add(jsonNode.get("activity").asText());
-                    }
-                }
-            } catch (IOException e) {
-                logger.error("Error while parsing xfaScripts {} {}", e, resource.getPath());
-            }
-        }
-        return new ArrayList<>(disabledScripts);
-    }
 }
