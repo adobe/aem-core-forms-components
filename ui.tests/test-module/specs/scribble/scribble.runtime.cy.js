@@ -63,67 +63,84 @@ describe('Form Runtime with Scribble Input', () => {
     });
 
     it('should open the scribble modal when signed container is clicked', () => {
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
-        cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click().then(() => {
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+        });
     });
 
     it('should clear the signature when clear', () => {
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
-        cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
-        cy.get('.cmp-adaptiveform-scribble__control-clear').should('be.visible').and('be.disabled');
-        cy.get('.cmp-adaptiveform-scribble__control-text').should('be.visible').click();
-        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('be.visible').should('have.value', '').type('test').should('have.value', 'test');
-        cy.get('.cmp-adaptiveform-scribble__control-clear').should('be.visible').and('be.enabled').click();
-        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('have.value', '');
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click().then(() => {
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+            cy.get('.cmp-adaptiveform-scribble__control-clear').should('be.visible').and('be.disabled');
+            cy.get('.cmp-adaptiveform-scribble__control-text').should('be.visible').click().then(() => {
+                cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('be.visible').should('have.value', '').type('test').should('have.value', 'test');
+                cy.get('.cmp-adaptiveform-scribble__control-clear').should('be.visible').and('be.enabled').click().then(() => {
+                    cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('have.value', '');
+                });
+            });
+        });
     });
 
     it('should not clear and clear the signature when clear is cancelled and confirmed respectively', () => {
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
-        cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
-        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.visible').and('be.disabled')
-        cy.get('.cmp-adaptiveform-scribble__control-text').should('be.visible').click();
-        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('be.visible').type('test').should('have.value', 'test');
-        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.visible').and('be.enabled').click();
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'title').and('not.be.empty');
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'alt').and('not.be.empty');
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'src').and('not.be.empty');
-        cy.get('.cmp-adaptiveform-scribble__clear-sign').should('be.visible').should('have.attr', 'role', 'button').should('have.attr', 'tabindex', '0').should('have.attr', 'aria-label', 'Clear Signature').click();
-        cy.get('.cmp-adaptiveform-scribble__clearsign-container').should('be.visible');
-        cy.get('.cmp-adaptiveform-scribble__button--secondary').click(); // Cancel clear
-        cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'title').and('not.be.empty');
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'alt').and('not.be.empty');
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'src').and('not.be.empty');
-        cy.get('.cmp-adaptiveform-scribble__clear-sign').should('be.visible').click();
-        cy.get('.cmp-adaptiveform-scribble__button--primary').click(); // Confirm clear
-        cy.get('.cmp-adaptiveform-scribble__clear-sign').should('not.exist');
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('not.have.attr', 'src');
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click().then(() => {
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.visible').and('be.disabled')
+            cy.get('.cmp-adaptiveform-scribble__control-text').should('be.visible').click().then(() => {
+                cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('be.visible').type('test').should('have.value', 'test');
+                cy.get('.cmp-adaptiveform-scribble__save-button').should('be.visible').and('be.enabled').click().then(() => {
+                    cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'title').and('not.be.empty');
+                    cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'alt').and('not.be.empty');
+                    cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'src').and('not.be.empty');
+                    cy.get('.cmp-adaptiveform-scribble__clear-sign').should('be.visible').should('have.attr', 'role', 'button').should('have.attr', 'tabindex', '0').should('have.attr', 'aria-label', 'Clear Signature').click().then(() => {
+                        cy.get('.cmp-adaptiveform-scribble__clearsign-container').should('be.visible');
+                        cy.get('.cmp-adaptiveform-scribble__button--secondary').click().then(() => {
+                            cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+                            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'title').and('not.be.empty');
+                            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'alt').and('not.be.empty');
+                            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'src').and('not.be.empty');
+                            cy.get('.cmp-adaptiveform-scribble__clear-sign').should('be.visible').click().then(() => {
+                                cy.get('.cmp-adaptiveform-scribble__button--primary').click().then(() => {
+                                    cy.get('.cmp-adaptiveform-scribble__clear-sign').should('not.exist');
+                                    cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('not.have.attr', 'src');
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
     });
 
+
     it('should close the modal when close button is clicked', () => {
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
-        cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
-        cy.get('.cmp-adaptiveform-scribble__close-button').click();
-        cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click().then(() => {
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+            cy.get('.cmp-adaptiveform-scribble__close-button').click().then(() => {
+                cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+            });
+        });
     });
 
     it('should display brushlist with correct accessibility attributes', () => {
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
-        cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
-        // Brushlist should be hidden initially
-        cy.get('.cmp-adaptiveform-scribble__brushlist').should('not.be.visible');
-        // Open brushlist
-        cy.get('.cmp-adaptiveform-scribble__control-brush').click();
-        cy.get('.cmp-adaptiveform-scribble__brushlist').should('be.visible')
-            .and('have.attr', 'aria-label', 'brush size selection');
-        // Check that each brush option (canvas) has an accessible label
-        cy.get('.cmp-adaptiveform-scribble__brushlist canvas').each(($canvas) => {
-            // The aria-label is set via JS, so check for its presence
-            expect($canvas[0].getAttribute('aria-label')).to.match(/Brush Size: \d+/);
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click().then(() => {
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+            // Brushlist should be hidden initially
+            cy.get('.cmp-adaptiveform-scribble__brushlist').should('not.be.visible');
+            // Open brushlist
+            cy.get('.cmp-adaptiveform-scribble__control-brush').click().then(() => {
+                cy.get('.cmp-adaptiveform-scribble__brushlist').should('be.visible')
+                    .and('have.attr', 'aria-label', 'brush size selection');
+                // Check that each brush option (canvas) has an accessible label
+                cy.get('.cmp-adaptiveform-scribble__brushlist canvas').each(($canvas) => {
+                    // The aria-label is set via JS, so check for its presence
+                    expect($canvas[0].getAttribute('aria-label')).to.match(/Brush Size: \d+/);
+                });
+                // Toggle brushlist closed
+                cy.get('.cmp-adaptiveform-scribble__control-brush').click().then(() => {
+                    cy.get('.cmp-adaptiveform-scribble__brushlist').should('not.be.visible');
+                });
+            });
         });
-        // Toggle brushlist closed
-        cy.get('.cmp-adaptiveform-scribble__control-brush').click();
-        cy.get('.cmp-adaptiveform-scribble__brushlist').should('not.be.visible');
     });
 
     it('should have 2 attachments with correct data prefix in getFormDataObject', () => {
@@ -131,15 +148,18 @@ describe('Form Runtime with Scribble Input', () => {
         cy.previewForm(ssPagePath).then(formContainer => {
             cy.get('.cmp-adaptiveform-scribble').each(($scribble) => {
                 cy.wrap($scribble).within(() => {
-                    cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').should('be.visible').click();
-                    cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
-                    cy.get('.cmp-adaptiveform-scribble__control-text').should('be.visible').click();
-                    cy.get('.cmp-adaptiveform-scribble__save-button').should('be.visible').and('be.disabled');
-                    cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('be.visible').type('test');
-                    cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
-                    cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
-                    cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'title').and('not.be.empty');
-                    cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'alt').and('not.be.empty');
+                    cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').should('be.visible').click().then(() => {
+                        cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+                        cy.get('.cmp-adaptiveform-scribble__control-text').should('be.visible').click().then(() => {
+                            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.visible').and('be.disabled');
+                            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('be.visible').type('test');
+                            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click().then(() => {
+                                cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+                                cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'title').and('not.be.empty');
+                                cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'alt').and('not.be.empty');
+                            });
+                        });
+                    });
                 });
             }).then(() => {
                 cy.window().then($window => {
