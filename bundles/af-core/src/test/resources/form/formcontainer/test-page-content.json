@@ -225,6 +225,7 @@
       "clientLibRef": "abc",
       "customProp": "customPropValue",
       "fd:channel": "print",
+      "specVersion": "0.15.2",
       "textinput": {
         "jcr:primaryType": "nt:unstructured",
         "jcr:title": "Text Input",

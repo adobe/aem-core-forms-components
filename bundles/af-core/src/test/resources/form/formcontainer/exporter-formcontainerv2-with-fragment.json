@@ -83,7 +83,7 @@
   ],
   ":type": "core/fd/components/print/container/v1/container",
   "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-  "adaptiveform": "0.14.2",
+  "adaptiveform": "0.15.2",
   "events": {
     "custom:setProperty": [
       "$event.payload"
