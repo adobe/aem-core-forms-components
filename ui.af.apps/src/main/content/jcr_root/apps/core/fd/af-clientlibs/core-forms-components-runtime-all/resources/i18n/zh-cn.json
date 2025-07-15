@@ -4,6 +4,7 @@
   "FileNameInvalid": "请勿附加文件名以 (.) 开头、包含 \\ / : * ? \" < > | ; % $ 或为保留关键字（如 nul、prn、con、lpt 或 com）的文件。",
   "FileMimeTypeInvalid": "文件 ${0} 的类型不受支持",
   "InternalFormSubmissionError": "提交表单时遇到内部错误。",
+  "FileSizeZero": "上传的文件 ${0} 为空。请确保您上传的是有内容的文件。",
   "type": "请输入有效的值。",
   "required": "请填写此字段。",
   "minimum": "值必须大于或等于 ${0}。",
