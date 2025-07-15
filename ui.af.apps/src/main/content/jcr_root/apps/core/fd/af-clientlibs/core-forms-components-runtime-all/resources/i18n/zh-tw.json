@@ -4,6 +4,7 @@
   "FileNameInvalid": "不要附加以下檔案：檔案名稱以 (.) 開頭且包含 \\ / : * ? \" < > | ; % $，或檔案名稱為保留關鍵字，例如 nul、prn、con、lpt 或 com。",
   "FileMimeTypeInvalid": "${0} 檔案的檔案類型不受支援",
   "InternalFormSubmissionError": "提交表單時發生內部錯誤。",
+  "FileSizeZero": "上傳的檔案 ${0} 為空。請確保您上傳的是有內容的檔案。",
   "type": "請輸入有效值。",
   "required": "請填寫此欄位。",
   "minimum": "值必須大於或等於 ${0}。",

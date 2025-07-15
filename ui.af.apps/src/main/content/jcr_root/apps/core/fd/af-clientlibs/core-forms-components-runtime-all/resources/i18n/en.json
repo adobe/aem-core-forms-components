@@ -10,6 +10,7 @@
   "nextYear"                    :   "Next year",
   "previousSetOfYears"          :   "Previous set of years",
   "nextSetOfYears"              :   "Next set of years",
+  "FileSizeZero"                :   "The uploaded file(s) ${0} are empty. Make sure you're uploading file(s) with content.",
   "type"                        :   "Please enter a valid value.",
   "required"                    :   "Please fill in this field.",
   "minimum"                     :   "Value must be greater than or equal to ${0}.",

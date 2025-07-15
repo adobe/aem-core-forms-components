@@ -119,4 +119,13 @@ export const customFunctions = {
      * @returns {void}
      */
     downloadDoR: cf.downloadDoR,
+
+    /**
+    * Export form data as a JSON string
+    * @param {boolean} [stringify] - Convert the form data to a JSON string, defaults to true
+    * @param {string} [key] - The key to get the value for (supports dot notation and array brackets e.g. 'address.city' or 'items[0].name'), defaults to all form data
+    * @param {scope} globals - Global scope object containing form context
+    * @returns {string|object} The complete form data as a JSON string
+    */
+    exportFormData: cf.exportFormData
 };
