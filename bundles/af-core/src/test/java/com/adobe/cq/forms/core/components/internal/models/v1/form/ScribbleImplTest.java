@@ -15,19 +15,20 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import com.adobe.cq.forms.core.Utils;
-import com.adobe.cq.forms.core.components.models.form.FieldType;
-import com.adobe.cq.forms.core.components.models.form.Scribble;
-import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
-import io.wcm.testing.mock.aem.junit5.AemContext;
-import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+import java.util.Map;
+
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
-import java.util.Map;
+import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.Scribble;
+import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import io.wcm.testing.mock.aem.junit5.AemContext;
+import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.*;
 
