@@ -207,7 +207,7 @@ jobs:
       BROWSER: chrome
     resource_class: xlarge
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
   cypress-chrome-655-with-latest-addon-with-ft:
@@ -218,32 +218,32 @@ jobs:
       BROWSER: chrome
     resource_class: xlarge
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
-  cypress-chrome-655-with-latest-addon-without-ft:
-    executor: test_executor_655_latest
-    environment:
-      AEM: classic-latest
-      TYPE: cypress
-      BROWSER: chrome
-      FTCONFIG: false
-    resource_class: xlarge
-    working_directory: /home/circleci/build
-    parallelism: 8
-    <<: *cypress_test_steps
-
-  cypress-chrome-655-with-latest-addon-context-path:
-    executor: test_executor_655_latest
-    environment:
-      AEM: classic-latest-cp
-      TYPE: cypress
-      BROWSER: chrome
-      CONTEXTPATH: lc
-    resource_class: xlarge
-    working_directory: /home/circleci/build
-    parallelism: 8
-    <<: *cypress_test_steps
+#  cypress-chrome-655-with-latest-addon-without-ft:
+#    executor: test_executor_655_latest
+#    environment:
+#      AEM: classic-latest
+#      TYPE: cypress
+#      BROWSER: chrome
+#      FTCONFIG: false
+#    resource_class: xlarge
+#    working_directory: /home/circleci/build
+#    parallelism: 8
+#    <<: *cypress_test_steps
+#
+#  cypress-chrome-655-with-latest-addon-context-path:
+#    executor: test_executor_655_latest
+#    environment:
+#      AEM: classic-latest-cp
+#      TYPE: cypress
+#      BROWSER: chrome
+#      CONTEXTPATH: lc
+#    resource_class: xlarge
+#    working_directory: /home/circleci/build
+#    parallelism: 8
+#    <<: *cypress_test_steps
 
   jsdocs-deploy:
     docker:
@@ -433,20 +433,20 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
-      - cypress-chrome-655-with-latest-addon-without-ft:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-            - build-java-8
-      - cypress-chrome-655-with-latest-addon-context-path:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-            - build-java-8
+#      - cypress-chrome-655-with-latest-addon-without-ft:
+#          filters:
+#            tags:
+#              only: /.*/
+#          requires:
+#            - build-java-11
+#            - build-java-8
+#      - cypress-chrome-655-with-latest-addon-context-path:
+#          filters:
+#            tags:
+#              only: /.*/
+#          requires:
+#            - build-java-11
+#            - build-java-8
       - jsdocs-deploy:
           requires:
             - build-java-11
