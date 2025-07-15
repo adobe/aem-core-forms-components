@@ -54,9 +54,31 @@
       },
       "repeatable": true,
       "type": "object"
+    },
+    "textinput": {
+      ":type": "core/fd/components/form/textinput/v1/textinput",
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "fieldType": "text-input",
+      "id": "textinput-98750b73f9",
+      "label": {
+        "value": "Text Input"
+      },
+      "name": "fragmenttextinput",
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2-with-fragment/textinput"
+      },
+      "type": "string"
     }
   },
   ":itemsOrder": [
+    "textinput",
     "fragment"
   ],
   ":type": "core/fd/components/print/container/v1/container",

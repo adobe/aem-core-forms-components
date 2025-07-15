@@ -225,6 +225,23 @@
       "clientLibRef": "abc",
       "customProp": "customPropValue",
       "fd:channel": "print",
+      "textinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Text Input",
+        "name": "fragmenttextinput",
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "fieldType": "text-input",
+        "fd:dorContainer": {
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType"    : "core/fd/components/print/fielddorcontainer/v1/fielddorcontainer",
+          "type": "textfield",
+          "name": "TextField1",
+          "width": "1.5in",
+          "height": "0.5in",
+          "left": "0.5in",
+          "top": "0.5in"
+        }
+      },
       "fragment": {
         "jcr:primaryType": "nt:unstructured",
         "wrapData": true,
