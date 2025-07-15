@@ -341,4 +341,5 @@ public class DatePickerImplTest {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS));
     }
+
 }

@@ -456,4 +456,5 @@ public class NumberInputImplTest {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS, NumberInput.class, context);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS));
     }
+
 }
