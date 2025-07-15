@@ -1,0 +1,46 @@
+{
+  "$id": "classpath:/schema/0.15.2/print/adaptive-form-dor-container-value.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Value",
+  "description": "Specifies the value for the object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "text": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/TextValue"
+    },
+    "integer": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/IntegerValue"
+    },
+    "float": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/FloatValue"
+    },
+    "richText": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/RichTextValue"
+    },
+    "line": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/LineValue"
+    },
+    "rectangle": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/RectangleValue"
+    },
+    "image": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/ImageValue"
+    },
+    "date": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/DateValue"
+    },
+    "dateTime": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/DateTimeValue"
+    },
+    "boolean": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/BooleanValue"
+    },
+    "decimal": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/DecimalValue"
+    },
+    "time": {
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/TimeValue"
+    }
+  }
+}

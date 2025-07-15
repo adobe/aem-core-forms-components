@@ -53,7 +53,7 @@ import static org.junit.Assert.*;
  */
 public class Utils {
 
-    public static InputStream getJson(Object model) {
+    public static InputStream getJson(Object model, Class<? extends Views.Publish> viewType) {
         Writer writer = new StringWriter();
         ObjectMapper mapper = new ObjectMapper();
         PageModuleProvider pageModuleProvider = new PageModuleProvider();
@@ -61,7 +61,7 @@ public class Utils {
         DefaultMethodSkippingModuleProvider defaultMethodSkippingModuleProvider = new DefaultMethodSkippingModuleProvider();
         mapper.registerModule(defaultMethodSkippingModuleProvider.getModule());
         try {
-            mapper.writerWithView(Views.Publish.class).writeValue(writer, model);
+            mapper.writerWithView(viewType).writeValue(writer, model);
         } catch (IOException e) {
             fail(String.format("Unable to generate JSON export for model %s: %s", model.getClass().getName(),
                 e.getMessage()));
@@ -77,7 +77,7 @@ public class Utils {
         DefaultMethodSkippingModuleProvider defaultMethodSkippingModuleProvider = new DefaultMethodSkippingModuleProvider();
         mapper.registerModule(defaultMethodSkippingModuleProvider.getModule());
         try {
-            mapper.writer().writeValue(writer, model);
+            mapper.writerWithView(Views.Author.class).writeValue(writer, model);
         } catch (IOException e) {
             fail(String.format("Unable to generate JSON export for model %s: %s", model.getClass().getName(),
                 e.getMessage()));
@@ -95,8 +95,8 @@ public class Utils {
      * @param expectedJsonResource
      *            the class path resource providing the expected JSON object
      */
-    public static void testJSONExport(Object model, String expectedJsonResource) {
-        InputStream modeInputStream = getJson(model);
+    public static void testJSONExport(Object model, String expectedJsonResource, Class<? extends Views.Publish> viewType) {
+        InputStream modeInputStream = getJson(model, viewType);
         JsonReader outputReader = Json.createReader(modeInputStream);
         InputStream is = Utils.class.getResourceAsStream(expectedJsonResource);
         if (is != null) {
@@ -114,6 +114,20 @@ public class Utils {
     }
 
     /**
+     * Provided a {@code model} object and an {@code expectedJsonResource} identifying a JSON file in the class path,
+     * this method will test the JSON export of the model and compare it to the JSON object provided by the
+     * {@code expectedJsonResource}.
+     *
+     * @param model
+     *            the Sling Model
+     * @param expectedJsonResource
+     *            the class path resource providing the expected JSON object
+     */
+    public static void testJSONExport(Object model, String expectedJsonResource) {
+        testJSONExport(model, expectedJsonResource, Views.Publish.class);
+    }
+
+    /**
      * The given model is validated against adaptive form specification
      *
      * @param model reference to the sling model
@@ -126,14 +140,14 @@ public class Utils {
         // create an instance of the JsonSchemaFactory using version flag
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         try {
-            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/0.14.2/adaptive-form.schema.json");
+            InputStream schemaStream = Utils.class.getResourceAsStream("/schema/0.15.2/adaptive-form.schema.json");
             JsonSchema schema = schemaFactory.getSchema(schemaStream);
             // read data from the stream and store it into JsonNode
             JsonNode json = objectMapper.readTree(jsonStream);
             // if there is a version bump of schema, then it needs to be validated against its corresponding sling model here
             // by explicitly checking the model implementation
             if (!(model instanceof FormContainerImpl)) {
-                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.14.2/form.json");
+                InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.15.2/form.json");
                 JsonNode formContainerTemplateNode = objectMapper.readTree(formContainerTemplate);
                 ((ObjectNode) formContainerTemplateNode).putArray("items").add(json);
                 json = formContainerTemplateNode;
