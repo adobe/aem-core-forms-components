@@ -4,6 +4,7 @@
   "FileNameInvalid": "ファイル名が (.) で始まる、\\ / : * ? \" < > | ; % $ を含む、または nul、prn、con、lpt、com などの予約キーワードを含むファイルは添付しないでください。",
   "FileMimeTypeInvalid": "${0} ファイルの形式はサポートされていません",
   "InternalFormSubmissionError": "フォームを送信中に内部エラーが発生しました。",
+  "FileSizeZero": "アップロードされたファイル ${0} は空です。コンテンツのあるファイルをアップロードしていることを確認してください。",
   "type": "有効な値を入力してください。",
   "required": "このフィールドに入力してください。",
   "minimum": "値は ${0} 以上にする必要があります。",
@@ -87,8 +88,10 @@
   },
   "saveDraftSuccessMessage"     :   "下書きは正常に保存されました。",
   "saveDraftErrorMessage"       :   "エラーが発生したため、下書きを保存できませんでした。もう一度試してください。",
-  "SignatureCanvas": "Signature Canvas",
-  "brushSize": "Brush Size: ",
-  "geoLocationError": "Error fetching geolocation",
-  "geoLocationFetch": "Fetching Geo Location..."
+  "signature": "サイン",
+  "SignatureCanvas": "シグネチャーキャンバス",
+  "clearSign": "明確な署名",
+  "brushSize": "ブラシサイズ:",
+  "geoLocationError": "位置情報の取得中にエラーが発生しました",
+  "geoLocationFetch": "地理的位置を取得しています..."
 }

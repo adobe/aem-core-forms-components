@@ -4,6 +4,7 @@
   "FileNameInvalid"             :   "Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
   "FileMimeTypeInvalid"         :   "File(s) ${0} are unsupported file types",
   "InternalFormSubmissionError" :   "Encountered an internal error while submitting the form.",
+  "FileSizeZero"                :   "The uploaded file(s) ${0} are empty. Make sure you're uploading file(s) with content.",
   "type"                        :   "Please enter a valid value.",
   "required"                    :   "Please fill in this field.",
   "minimum"                     :   "Value must be greater than or equal to ${0}.",
@@ -39,7 +40,9 @@
   },
   "saveDraftSuccessMessage"     :   "The draft is saved successfully.",
   "saveDraftErrorMessage"       :   "There was an error preventing us from saving your draft. Please try again.",
+  "signature": "Signature",
   "SignatureCanvas": "Signature Canvas",
+  "clearSign": "Clear Signature",
   "brushSize": "Brush Size: ",
   "geoLocationError": "Error fetching geolocation",
   "geoLocationFetch": "Fetching Geo Location..."

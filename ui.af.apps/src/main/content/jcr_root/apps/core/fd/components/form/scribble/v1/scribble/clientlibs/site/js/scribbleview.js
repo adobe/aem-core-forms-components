@@ -201,6 +201,9 @@
             const cancelClearSignButton = this.getCancelClearSignButton();
         
             clearSignContainer.style.display = 'inline-block';
+            // Set focus to the clear sign modal container for accessibility
+            clearSignContainer.setAttribute('tabindex', '-1');
+            clearSignContainer.focus();
         
             const handleClearSign = () => {
                 this.existingSign = '';
@@ -223,6 +226,8 @@
         
                 const signedImage = this.getSignedCanvasImage();
                 if (signedImage) {
+                    signedImage.removeAttribute('alt');
+                    signedImage.removeAttribute('title');
                     signedImage.removeAttribute('src');
                     signedImage.removeAttribute('style');
                     this.element.querySelector('.cmp-adaptiveform-scribble__clear-sign')?.remove();
@@ -259,6 +264,8 @@
                     const signedImage = that.getSignedCanvasImage();
                     if (signedImage && signatureDataUrl) {
                         signedImage.src = signatureDataUrl;
+                        signedImage.setAttribute('alt', FormView.LanguageUtils.getTranslatedString(this.lang, 'signature') || 'Signature');
+                        signedImage.setAttribute('title', FormView.LanguageUtils.getTranslatedString(this.lang, 'signature') || 'Signature');
                         that.updateEmptyStatus();
                     }
                 }
@@ -345,6 +352,9 @@
 
         addClearSignButton() {
             const clearSignButton = document.createElement('div');
+            clearSignButton.setAttribute('role', 'button');
+            clearSignButton.setAttribute('tabindex', '0');
+            clearSignButton.setAttribute('aria-label', FormView.LanguageUtils.getTranslatedString(this.lang, 'clearSign') || 'Clear Signature');
             clearSignButton.classList.add('cmp-adaptiveform-scribble__clear-sign');
 
             const mainCanvasImageContainer = this.getCanvasContainer();
@@ -353,6 +363,13 @@
             clearSignButton.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.openClearSignModal();
+            });
+            // Keyboard accessibility: allow Enter/Space to trigger clear
+            clearSignButton.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.openClearSignModal();
+                }
             });
         }
 
@@ -470,7 +487,7 @@
             controls.forEach(control => {
                 const element = this.element.querySelector('[data-cmp-scribble-button="'+ control +'"]');
                 element?.classList.remove('disable_button');
-                element.removeAttribute('disabled');
+                element?.removeAttribute('disabled');
             });
         }
 
@@ -478,7 +495,7 @@
             controls.forEach(control => {
                 const element = this.element.querySelector('[data-cmp-scribble-button="'+ control +'"]');
                 element?.classList.add('disable_button');
-                element.setAttribute('disabled', 'true');
+                element?.setAttribute('disabled', 'true');
             });
         }
 
@@ -578,8 +595,25 @@
             const fontStyle = "italic";
             keyboardSignBox.style.font = `${fontStyle} 2rem ${fontFamily}`;
             const value = keyboardSignBox.value;
-            this.context.font = `${fontStyle} 10rem ${fontFamily}`;
-            this.context.fillText(value, 0, this.getCanvas().height / 2);
+            const canvas = this.getCanvas();
+            const ctx = this.context;
+            const maxFontSize = 10; // rem
+            const minFontSize = 1;  // rem
+            // Set to max font size to measure
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Find the largest font size that fits the text within the canvas width
+            let fontSize = maxFontSize;
+            ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
+            let textWidth = ctx.measureText(value).width;
+            const canvasWidth = canvas.width;
+            while (fontSize > minFontSize && textWidth > canvasWidth) {
+                fontSize -= 0.5;
+                ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
+                textWidth = ctx.measureText(value).width;
+            }
+            fontSize = Math.max(minFontSize, fontSize);
+            ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
+            ctx.fillText(value, 0, canvas.height / 2);
         }
 
         enableSignatureTextBox() {
@@ -667,7 +701,11 @@
             if(window.getComputedStyle(this.getScribbleContainer()).display !== 'block') {
                 this.disableControl(['clearSign','save']);
             }
-            this.getScribbleContainer().style.display = 'block';
+            const container = this.getScribbleContainer();
+            container.style.display = 'block';
+            // Set focus to the modal container for accessibility
+            container.setAttribute('tabindex', '-1');
+            container.focus();
         }
 
         hideScribbleModal() {
