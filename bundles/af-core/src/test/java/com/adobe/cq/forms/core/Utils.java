@@ -113,34 +113,6 @@ public class Utils {
         }
     }
 
-        /**
-     * Provided a {@code model} object and an {@code expectedJsonResource} identifying a JSON file in the class path,
-     * this method will test the JSON export of the model and compare it to the JSON object provided by the
-     * {@code expectedJsonResource}.
-     *
-     * @param model
-     *            the Sling Model
-     * @param expectedJsonResource
-     *            the class path resource providing the expected JSON object
-     */
-    public static void testJSONExport(Object model, String expectedJsonResource) {
-        testJSONExport(model, expectedJsonResource, Views.Publish.class);
-    }
-
-    /**
-     * Provided a {@code model} object and an {@code expectedJsonResource} identifying a JSON file in the class path,
-     * this method will test the JSON export of the model and compare it to the JSON object provided by the
-     * {@code expectedJsonResource}.
-     *
-     * @param model
-     *            the Sling Model
-     * @param expectedJsonResource
-     *            the class path resource providing the expected JSON object
-     */
-    public static void testJSONExport(Object model, String expectedJsonResource) {
-        testJSONExport(model, expectedJsonResource, Views.Publish.class);
-    }
-
     /**
      * Provided a {@code model} object and an {@code expectedJsonResource} identifying a JSON file in the class path,
      * this method will test the JSON export of the model and compare it to the JSON object provided by the
