@@ -113,7 +113,7 @@ public class Utils {
         }
     }
 
-        /**
+    /**
      * Provided a {@code model} object and an {@code expectedJsonResource} identifying a JSON file in the class path,
      * this method will test the JSON export of the model and compare it to the JSON object provided by the
      * {@code expectedJsonResource}.
