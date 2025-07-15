@@ -1,0 +1,23 @@
+{
+  "id": "datepicker-b80fc90202",
+  "fieldType": "date-input",
+  "name": "abc",
+  "type": "string",
+  "displayFormat": "DD/MM/YYYY",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datepicker-with-custom-display-format"
+  },
+  "format": "date",
+  ":type": "core/fd/components/form/datepicker/v1/datepicker"
+} 
