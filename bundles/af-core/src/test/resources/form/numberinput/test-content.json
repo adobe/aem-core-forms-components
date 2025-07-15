@@ -192,6 +192,23 @@
     "jcr:primaryType": "nt:unstructured",
     "sling:resourceType"    : "core/fd/components/form/numberinput/v1/numberinput",
     "name" : "abc",
-    "jcr:title" : "def"
+    "jcr:title" : "def",
+  },
+  "numberinput-with-custom-display-format" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/numberinput/v1/numberinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "number-input",
+    "fd:customDisplayFormat": "customCurrency"
+  },
+  "numberinput-with-both-display-formats" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/numberinput/v1/numberinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "number-input",
+    "displayFormat": "currency",
+    "fd:customDisplayFormat": "customCurrency"
   }
 }

@@ -444,4 +444,16 @@ public class NumberInputImplTest {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITHOUT_FIELDTYPE, NumberInput.class, context);
         assertEquals(FieldType.NUMBER_INPUT.getValue(), numberInput.getFieldType());
     }
+
+    @Test
+    void testJSONExportWithCustomDisplayFormat() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT, NumberInput.class, context);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT));
+    }
+
+    @Test
+    void testJSONExportWithBothDisplayFormats() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS, NumberInput.class, context);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS));
+    }
 }
