@@ -87,5 +87,11 @@
     "less": "moins"
   },
   "saveDraftSuccessMessage"     :   "Le brouillon est enregistré avec succès.",
-  "saveDraftErrorMessage"       :   "Une erreur s'est produite nous empêchant d'enregistrer votre brouillon. Veuillez réessayer."
+  "saveDraftErrorMessage"       :   "Une erreur s'est produite nous empêchant d'enregistrer votre brouillon. Veuillez réessayer.",
+  "signature": "Signature",
+  "SignatureCanvas": "Toile emblématique",
+  "clearSign": "Signature claire",
+  "brushSize": "Taille du pinceau :",
+  "geoLocationError": "Erreur lors de la récupération de la géolocalisation",
+  "geoLocationFetch": "Récupération de la géolocalisation..."
 }

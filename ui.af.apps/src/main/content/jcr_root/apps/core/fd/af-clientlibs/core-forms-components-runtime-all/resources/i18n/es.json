@@ -87,5 +87,11 @@
     "less": "menos"
   },
   "saveDraftSuccessMessage"     :   "El borrador se guarda correctamente.",
-  "saveDraftErrorMessage"       :   "Hubo un error que nos impidió guardar su borrador. Por favor inténtalo de nuevo."
+  "saveDraftErrorMessage"       :   "Hubo un error que nos impidió guardar su borrador. Por favor inténtalo de nuevo.",
+  "signature": "Firma",
+  "SignatureCanvas": "Lienzo de firma",
+  "clearSign": "Borrar firma",
+  "brushSize": "Tamaño del pincel:",
+  "geoLocationError": "Error al obtener la geolocalización",
+  "geoLocationFetch": "Obteniendo ubicación geográfica..."
 }
