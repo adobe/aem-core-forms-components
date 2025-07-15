@@ -45,6 +45,7 @@ import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -93,7 +94,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         return fragmentPath;
     }
 
-    @JsonIgnore
+    @JsonView(Views.Author.class)
     public String getFragmentPath() {
         return fragmentPath;
     }
