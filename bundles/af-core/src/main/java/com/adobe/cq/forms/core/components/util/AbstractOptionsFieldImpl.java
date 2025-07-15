@@ -18,7 +18,6 @@ package com.adobe.cq.forms.core.components.util;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.apache.sling.models.annotations.Default;
@@ -116,7 +115,9 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             Map<Object, String> map = getEnumPairs();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
-                .map(p -> Optional.ofNullable(translate(ReservedProperties.PN_ENUM_NAMES, p)).orElse(""))
+                .map(p -> {
+                    return this.translate(ReservedProperties.PN_ENUM_NAMES, p);
+                })
                 .toArray(String[]::new);
         }
         return null;

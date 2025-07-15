@@ -102,14 +102,6 @@ class FormField {
         return this.element.getAttribute(Constants.DATA_ATTRIBUTE_ACTIVE) === 'true';
     }
 
-    triggerExit() {
-        this._model.dispatch(new FormView.Actions.CustomEvent('xfaexit'));
-    }
-
-    triggerEnter() {
-        this._model.dispatch(new FormView.Actions.CustomEvent('xfaenter'));
-    }
-
     /**
      * Returns the form container path of the form field.
      * @returns {string} The form container path.
