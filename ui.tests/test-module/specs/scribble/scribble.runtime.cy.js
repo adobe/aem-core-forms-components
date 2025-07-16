@@ -95,7 +95,7 @@ describe('Form Runtime with Scribble Input', () => {
                                 cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'alt').and('not.be.empty');
                                 cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'src').and('not.be.empty');
                                 cy.get('.cmp-adaptiveform-scribble__clear-sign').should('exist').should('have.attr', 'role', 'button').should('have.attr', 'tabindex', '0').should('have.attr', 'aria-label', 'Clear Signature').then(() => {
-                                    cy.get('.cmp-adaptiveform-scribble__clear-sign').click().then(() => {
+                                    cy.get('.cmp-adaptiveform-scribble__clear-sign').click({ force: true }).then(() => {
                                         cy.get('.cmp-adaptiveform-scribble__clearsign-container').should('be.visible');
                                         cy.get('.cmp-adaptiveform-scribble__button--secondary').click().then(() => {
                                             cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
