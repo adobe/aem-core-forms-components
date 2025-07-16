@@ -27,7 +27,6 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
@@ -44,7 +43,6 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.components.ComponentContext;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // this class is copied from WCM, since for forms adapting via slingRequest is optional
 
@@ -86,11 +84,6 @@ public abstract class AbstractComponentImpl implements Component {
     @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private Page currentPage;
-
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fd:channel")
-    @Nullable
-    @JsonIgnore
-    protected String channel;
 
     /**
      * The ID for this component.

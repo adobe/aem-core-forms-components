@@ -148,7 +148,4 @@ public final class FormConstants {
 
     /** Form definition type indicating submission view */
     public static final String FORM_DEFINITION_SUBMISSION = "submission";
-
-    /** The channel for print */
-    public static final String CHANNEL_PRINT = "print";
 }
