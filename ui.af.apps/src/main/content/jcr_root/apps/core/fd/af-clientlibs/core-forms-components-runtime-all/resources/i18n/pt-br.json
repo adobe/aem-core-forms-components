@@ -87,5 +87,11 @@
     "less": "menos"
   },
   "saveDraftSuccessMessage"     :   "O rascunho foi salvo com sucesso.",
-  "saveDraftErrorMessage"       :   "Ocorreu um erro que nos impediu de salvar seu rascunho. Por favor, tente novamente."
+  "saveDraftErrorMessage"       :   "Ocorreu um erro que nos impediu de salvar seu rascunho. Por favor, tente novamente.",
+  "signature": "Assinatura",
+  "SignatureCanvas": "Tela de assinatura",
+  "clearSign": "Assinatura clara",
+  "brushSize": "Tamanho do pincel:",
+  "geoLocationError": "Erro ao buscar geolocalização",
+  "geoLocationFetch": "Buscando localização geográfica..."
 }

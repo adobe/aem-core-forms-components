@@ -87,5 +87,11 @@
     "less": "weniger"
   },
   "saveDraftSuccessMessage"     :   "Der Entwurf wurde erfolgreich gespeichert.",
-  "saveDraftErrorMessage"       :   "Es ist ein Fehler aufgetreten, der uns daran gehindert hat, Ihren Entwurf zu speichern. Bitte versuchen Sie es erneut."
+  "saveDraftErrorMessage"       :   "Es ist ein Fehler aufgetreten, der uns daran gehindert hat, Ihren Entwurf zu speichern. Bitte versuchen Sie es erneut.",
+  "signature": "Unterschrift",
+  "SignatureCanvas": "Signatur-Leinwand",
+  "clearSign": "Klare Signatur",
+  "brushSize": "Pinselgröße:",
+  "geoLocationError": "Fehler beim Abrufen der Geolokalisierung",
+  "geoLocationFetch": "Geostandort wird abgerufen ..."
 }
