@@ -19,8 +19,11 @@ Adaptive Form Scribble field component written in HTL.
 
 ## Features
 
-The Adaptive Form Scribble component allows users to draw or sign directly on a canvas within an adaptive form. It supports the following features:
-* Custom constraint messages for the above types
+* Allows users to draw or sign directly on a canvas within an adaptive form
+* Keyboard input for signature (text-to-sign)
+* Geolocation capture (optional)
+* Custom brush size and style
+* Custom constraint messages
 * Styles
 
 ### Use Object
@@ -35,6 +38,14 @@ The following properties are written to JCR for this Form Scribble component and
 4. `./description` - defines a help message that can be rendered in the field as a hint for the user
 5. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
 6. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
+7. `./fd:dialogLabel` - sets the title displayed at the top of the signature capture dialog (e.g., 'Please sign here')
+8. `./placeHolder` - placeholder text for the keyboard signature input
+
+### Other Properties (from template)
+1. `fieldType` - set to `file-input`
+2. `fd:viewType` - set to `signature`
+3. `type` - set to `string`
+4. `format` - set to `data-url`
 
 ## Client Libraries
 The component provides a `core.forms.components.scribble.v1.runtime` client library category that contains the Javascript runtime for the component. 
@@ -46,39 +57,39 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-scribble
-    ELEMENT cmp-adaptiveform-scribble__label-container
-    ELEMENT cmp-adaptiveform-scribble__canvas-signed-container
-        ELEMENT cmp-adaptiveform-scribble__canvas-signed-image
-    ELEMENT cmp-adaptiveform-scribble__container
-        ELEMENT cmp-adaptiveform-scribble__header
-        ELEMENT cmp-adaptiveform-scribble__content
-            ELEMENT cmp-adaptiveform-scribble__canvases
-                ELEMENT cmp-adaptiveform-scribble__signcanvases
-                    ELEMENT cmp-adaptiveform-scribble__canvas
-                    ELEMENT cmp-adaptiveform-scribble__keyboard-sign-box
-                ELEMENT cmp-adaptiveform-scribble__geocanvas
-            ELEMENT cmp-adaptiveform-scribble__controlpanel
-                ELEMENT cmp-adaptiveform-scribble__controls
-                    ELEMENT cmp-adaptiveform-scribble__control-brush
-                        MODIFIER cmp-adaptiveform-scribble__button
-                    ELEMENT cmp-adaptiveform-scribble__brushlist
-                    ELEMENT cmp-adaptiveform-scribble__control-clear
-                        MODIFIER cmp-adaptiveform-scribble__button
-                    ELEMENT cmp-adaptiveform-scribble__control-geo
-                        MODIFIER cmp-adaptiveform-scribble__button
-                    ELEMENT cmp-adaptiveform-scribble__control-text
-                        MODIFIER cmp-adaptiveform-scribble__button
-                    ELEMENT cmp-adaptiveform-scribble__control-message
-                ELEMENT cmp-adaptiveform-scribble__controlpanel__controls
-                    ELEMENT cmp-adaptiveform-scribble__close-button
-                    ELEMENT cmp-adaptiveform-scribble__save-button
-        ELEMENT cmp-adaptiveform-scribble__clearsign-container
-            ELEMENT cmp-adaptiveform-scribble__clearsign-title
-            ELEMENT cmp-adaptiveform-scribble__clearsign-content
-                ELEMENT cmp-adaptiveform-scribble__clearsign-message
-                ELEMENT cmp-adaptiveform-scribble__clearsign-panel
-                    ELEMENT cmp-adaptiveform-scribble__button--secondary
-                    ELEMENT cmp-adaptiveform-scribble__button--primary
+    ELEMENT cmp-adaptiveform-scribble__label-container
+    ELEMENT cmp-adaptiveform-scribble__canvas-signed-container
+        ELEMENT cmp-adaptiveform-scribble__canvas-signed-image
+    ELEMENT cmp-adaptiveform-scribble__container
+        ELEMENT cmp-adaptiveform-scribble__header
+        ELEMENT cmp-adaptiveform-scribble__content
+            ELEMENT cmp-adaptiveform-scribble__canvases
+                ELEMENT cmp-adaptiveform-scribble__signcanvases
+                    ELEMENT cmp-adaptiveform-scribble__canvas
+                    ELEMENT cmp-adaptiveform-scribble__keyboard-sign-box
+                ELEMENT cmp-adaptiveform-scribble__geocanvas
+            ELEMENT cmp-adaptiveform-scribble__controlpanel
+                ELEMENT cmp-adaptiveform-scribble__controls
+                    ELEMENT cmp-adaptiveform-scribble__control-brush
+                        MODIFIER cmp-adaptiveform-scribble__button
+                    ELEMENT cmp-adaptiveform-scribble__brushlist
+                    ELEMENT cmp-adaptiveform-scribble__control-clear
+                        MODIFIER cmp-adaptiveform-scribble__button
+                    ELEMENT cmp-adaptiveform-scribble__control-geo
+                        MODIFIER cmp-adaptiveform-scribble__button
+                    ELEMENT cmp-adaptiveform-scribble__control-text
+                        MODIFIER cmp-adaptiveform-scribble__button
+                    ELEMENT cmp-adaptiveform-scribble__control-message
+                ELEMENT cmp-adaptiveform-scribble__controlpanel__controls
+                    ELEMENT cmp-adaptiveform-scribble__close-button
+                    ELEMENT cmp-adaptiveform-scribble__save-button
+        ELEMENT cmp-adaptiveform-scribble__clearsign-container
+            ELEMENT cmp-adaptiveform-scribble__clearsign-title
+            ELEMENT cmp-adaptiveform-scribble__clearsign-content
+                ELEMENT cmp-adaptiveform-scribble__clearsign-message
+                ELEMENT cmp-adaptiveform-scribble__clearsign-panel
+                    ELEMENT cmp-adaptiveform-scribble__button--secondary
+                    ELEMENT cmp-adaptiveform-scribble__button--primary
 ```
 
 ### Note
@@ -86,10 +97,9 @@ By placing the class names `cmp-adaptiveform-scribble__label` and `cmp-adaptivef
 
 ## JavaScript Data Attribute Bindings
 
-The following attributes must be added for the initialization of the text-input component in the form view:  
+The following attributes must be added for the initialization of the scribble component in the form view:  
  1. `data-cmp-is="adaptiveFormScribble"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
-
 
 The following are optional attributes that can be added to the component in the form view:
 1. `data-cmp-valid` having a boolean value to indicate whether the field is currently valid or not
@@ -97,3 +107,7 @@ The following are optional attributes that can be added to the component in the 
 3. `data-cmp-active` having a boolean value to indicate whether the field is currently active or not 
 4. `data-cmp-visible` having a boolean value to indicate whether the field is currently visible or not
 5. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
+
+## Information
+* **Vendor**: Adobe
+* **Version**: v1

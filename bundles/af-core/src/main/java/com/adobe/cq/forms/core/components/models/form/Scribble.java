@@ -21,7 +21,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 /**
  * Defines the form Scribble Sling Model used for the Scribble component.
  *
- * @since com.adobe.cq.forms.core.components.models.form 5.11.0
+ * @since com.adobe.cq.forms.core.components.models.form 5.12.0
  */
 @ConsumerType
 public interface Scribble extends Field {
