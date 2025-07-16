@@ -249,7 +249,7 @@ class FormFieldBase extends FormField {
         this.#syncLabel()
         this.#syncWidget()
         this.#syncShortDesc()
-        this. #syncLongDesc()
+        this.#syncLongDesc()
         this.#syncAriaDescribedBy()
         this.#syncError()
         this.#syncAriaLabel()
