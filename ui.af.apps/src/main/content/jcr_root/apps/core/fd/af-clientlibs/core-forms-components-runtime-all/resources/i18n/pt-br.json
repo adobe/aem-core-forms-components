@@ -4,6 +4,7 @@
   "FileNameInvalid": "Não anexe arquivos cujos nomes comecem com (.), contenham \\ / : * ? \" < > | ; % $, ou sejam palavras-chave reservadas, como nul, prn, con, lpt ou com.",
   "FileMimeTypeInvalid": "O(s) arquivo(s) ${0} não é(são) suportado(s)",
   "InternalFormSubmissionError": "Encontrou um erro interno ao enviar o formulário.",
+  "FileSizeZero": "Os arquivos enviados ${0} estão vazios. Certifique-se de que está enviando arquivos com conteúdo.\n\n",
   "type": "Insira um valor válido.",
   "required": "Preencha este campo.",
   "minimum": "O valor precisa ser superior ou igual a ${0}.",

@@ -273,6 +273,25 @@ describe("Form with Wizard Layout Container with focus", () => {
         });
     });
 
+    it("first component should always have focus when navigated", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+       
+        cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true}).then(() => {
+            cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+            cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+            cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+            cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+            cy.get('input[name="textinputfw2"]').should('be.focused');
+        });
+        cy.get(".cmp-adaptiveform-wizard__nav--previous").click({force: true}).then(() => {
+            cy.get(".cmp-adaptiveform-wizard__tab").eq(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+            cy.get(".cmp-adaptiveform-wizard__tab").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--active');
+            cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+            cy.get(".cmp-adaptiveform-wizard__wizardpanel").eq(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+            cy.get('input[name="textinputfw1"]').should('be.focused');
+        });
+    })
+
 });
 
 describe("Form with wizard Layout Container with Hidden Children", () => {

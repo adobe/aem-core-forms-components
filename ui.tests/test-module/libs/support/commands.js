@@ -652,6 +652,9 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     .should('not.exist');
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`)
     .should('contain.text', shortDescriptionText);
+    //initially long description should have data-cmp-visible="false" to avoid flickering on page load
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
+    .should('eq', 'false');
     // click on ? mark
     cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).click();
     // long description should be shown

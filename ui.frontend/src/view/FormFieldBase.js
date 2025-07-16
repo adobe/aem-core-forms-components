@@ -261,7 +261,7 @@ class FormFieldBase extends FormField {
      */
     setFocus(id) {
         const fieldType = this.parentView?.getModel()?.fieldType;
-        if (fieldType !== 'form' && this.parentView.setFocus) {
+        if (fieldType !== 'form' && this.parentView?.setFocus) {
             this.parentView.setFocus(this.getId());
         }
         if(!this.isActive()) {
@@ -382,7 +382,7 @@ class FormFieldBase extends FormField {
      * @private
      */
     #getPanelName() {
-        return this.parentView.getModel().name;
+        return this.parentView?.getModel()?.name;
     }
 
     setWidgetValueToDisplayValue() {

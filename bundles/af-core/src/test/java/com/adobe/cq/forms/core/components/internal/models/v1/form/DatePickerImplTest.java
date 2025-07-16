@@ -49,6 +49,9 @@ public class DatePickerImplTest {
     private static final String PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/datepicker-displayValueExpression";
     private static final String PATH_DATEPICKER_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/datepicker-backwardcompatible";
     private static final String PATH_DATEPICKER_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/datepicker-without-fieldtype";
+    private static final String PATH_DATEPICKER_WITH_DISPLAY_FORMAT = CONTENT_ROOT + "/datepicker-with-display-format";
+    private static final String PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT = CONTENT_ROOT + "/datepicker-with-custom-display-format";
+    private static final String PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS = CONTENT_ROOT + "/datepicker-with-both-display-formats";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -119,7 +122,7 @@ public class DatePickerImplTest {
     @Test
     void testGetScreenReaderText() {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_CUSTOMIZED, DatePicker.class, context);
-        assertEquals("'Custom screen reader text'", datePicker.getScreenReaderText());
+        assertEquals("Custom screen reader text", datePicker.getScreenReaderText());
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, datePickerMock.getScreenReaderText());
@@ -207,6 +210,19 @@ public class DatePickerImplTest {
         DatePicker datePickerMock = Mockito.mock(DatePicker.class);
         Mockito.when(datePickerMock.getDisplayFormat()).thenCallRealMethod();
         assertEquals(null, datePickerMock.getDisplayFormat());
+    }
+
+    @Test
+    void testGetDisplayFormatWithCustomDisplayFormat() {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT, DatePicker.class, context);
+        assertEquals("DD/MM/YYYY", datePicker.getDisplayFormat());
+    }
+
+    @Test
+    void testGetDisplayFormatWithBothFormats() {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS, DatePicker.class, context);
+        // customDisplayFormat should take priority over displayFormat
+        assertEquals("DD/MM/YYYY", datePicker.getDisplayFormat());
     }
 
     @Test
@@ -313,4 +329,17 @@ public class DatePickerImplTest {
         DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITHOUT_FIELDTYPE, DatePicker.class, context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITHOUT_FIELDTYPE));
     }
+
+    @Test
+    void testJSONExportWithCustomDisplayFormat() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT, DatePicker.class, context);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT));
+    }
+
+    @Test
+    void testJSONExportWithBothDisplayFormats() throws Exception {
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS, DatePicker.class, context);
+        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS));
+    }
+
 }

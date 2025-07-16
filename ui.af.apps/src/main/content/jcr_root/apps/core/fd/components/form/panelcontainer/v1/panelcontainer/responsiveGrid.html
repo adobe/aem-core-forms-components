@@ -26,7 +26,7 @@
          title="${panel.tooltipVisible ? '' : panel.tooltipText}"
          role="${container.roleAttribute}"
          style="${container.backgroundStyle @ context='styleString'}">
-        <div class="cmp-container__label-container">
+        <div class="cmp-container__label-container" role="heading">
           <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, labelRichText=panel.label.richText, bemBlock='cmp-container'}" data-sly-unwrap></div>
           <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container', componentTitle=panel.label.value}" data-sly-unwrap></div>
         </div>
