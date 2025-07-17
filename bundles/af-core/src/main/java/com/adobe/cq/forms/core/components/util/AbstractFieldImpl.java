@@ -38,6 +38,42 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Field {
 
+    /**
+     * Enum representing the possible values for emptyValue property.
+     */
+    public static enum EmptyValue {
+        NULL("null"),
+        UNDEFINED("undefined"),
+        EMPTY_STRING("");
+
+        private final String value;
+
+        EmptyValue(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        /**
+         * Converts a string value to EmptyValue enum.
+         * Returns EMPTY_STRING for any unrecognized values.
+         */
+        public static EmptyValue fromString(String value) {
+            if (value == null) {
+                return null;
+            }
+            for (EmptyValue emptyValue : EmptyValue.values()) {
+                if (emptyValue.getValue().equals(value)) {
+                    return emptyValue;
+                }
+            }
+            // Default to empty string for any unrecognized values
+            return EMPTY_STRING;
+        }
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(AbstractFieldImpl.class);
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_READ_ONLY)
@@ -48,6 +84,11 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DEFAULT_VALUE)
     @Nullable
     protected Object[] defaultValue;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EMPTY_VALUE)
+    @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    protected String emptyValue;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_PLACEHOLDER)
     @Nullable
@@ -158,6 +199,16 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
                 .toArray();
         }
         return null;
+    }
+
+    @Override
+    @Nullable
+    public String getEmptyValue() {
+        if (emptyValue == null) {
+            return null;
+        }
+        EmptyValue enumValue = EmptyValue.fromString(emptyValue);
+        return enumValue != null ? enumValue.getValue() : EmptyValue.EMPTY_STRING.getValue();
     }
 
     @Override
