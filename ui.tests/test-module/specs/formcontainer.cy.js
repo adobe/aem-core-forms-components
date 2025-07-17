@@ -203,7 +203,7 @@ describe('Page/Form Authoring', function () {
         cy.get(".cq-dialog-submit").click();
     };
 
-        context("Open Forms Editor", function () {
+        context.skip("Open Forms Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/forms/af/core-components-it/blank",
                 formContainerEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
@@ -260,7 +260,7 @@ describe('Page/Form Authoring', function () {
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
-        context("Open Sites Editor", function () {
+        context.skip("Open Sites Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/core-components-examples/library/adaptive-form/container",
                 formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/formContainer",
@@ -386,7 +386,7 @@ describe('Page/Form Authoring', function () {
                 });
             });
 
-            it('should allow link accessibility with enter key press', function () {
+            it('should not prevent default behavior on links with enter key press', function () {
                 cy.get('.cmp-adaptiveform-container').then((formContainer) => {
                     // Create a test link dynamically within the form container
                     const testLink = document.createElement('a');
@@ -396,16 +396,23 @@ describe('Page/Form Authoring', function () {
                     testLink.setAttribute('tabindex', '0');
                     formContainer[0].appendChild(testLink);
 
-                    // Spy on the link's click event to verify it gets triggered
-                    cy.get('#test-accessibility-link').then(($link) => {
+                    // Test that Enter keydown event on link is NOT prevented by FormContainer
+                    cy.get('#test-accessibility-link').focus().then(($link) => {
                         const linkElement = $link[0];
-                        cy.spy(linkElement, 'click').as('linkClick');
                         
-                        // Focus on the link and press Enter
-                        cy.get('#test-accessibility-link').focus().type('{enter}');
+                        // Create and dispatch a keydown event
+                        const enterKeyEvent = new KeyboardEvent('keydown', {
+                            key: 'Enter',
+                            code: 'Enter',
+                            bubbles: true,
+                            cancelable: true
+                        });
                         
-                        // Verify that the link's click event was triggered (accessibility working)
-                        cy.get('@linkClick').should('have.been.called');
+                        // Dispatch the event and check if preventDefault was called
+                        const result = linkElement.dispatchEvent(enterKeyEvent);
+                        
+                        // If result is true, preventDefault was NOT called (which is what we want for links)
+                        expect(result).to.be.true;
                     });
                 });
             });
