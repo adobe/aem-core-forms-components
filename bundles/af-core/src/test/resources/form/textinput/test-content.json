@@ -111,7 +111,8 @@
     "fieldType": "text-input",
     "readOnly": false,
     "enabled": true,
-    "format" : "email"
+    "format" : "email",
+    "fd:emptyValue" : "null"
   },
   "textinput-datalayer" : {
     "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
