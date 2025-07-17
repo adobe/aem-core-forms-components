@@ -36,6 +36,7 @@ var formsConstants = {
                 "tabsontop": "/apps/forms-components-examples/components/form/tabsontop",
                 "verticaltabs":"/apps/forms-components-examples/components/form/verticaltabs",
                 "datepicker": "/apps/forms-components-examples/components/form/datepicker",
+                "datetime" : "/apps/forms-components-examples/components/form/datetime",
                 "formdropdown": "/apps/forms-components-examples/components/form/dropdown",
                 "formbutton": "/apps/forms-components-examples/components/form/button",
                 "formimage": "/apps/forms-components-examples/components/form/image",
