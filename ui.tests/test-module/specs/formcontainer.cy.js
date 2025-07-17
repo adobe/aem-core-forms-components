@@ -203,7 +203,7 @@ describe('Page/Form Authoring', function () {
         cy.get(".cq-dialog-submit").click();
     };
 
-        context.skip("Open Forms Editor", function () {
+        context("Open Forms Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/forms/af/core-components-it/blank",
                 formContainerEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX,
@@ -260,7 +260,7 @@ describe('Page/Form Authoring', function () {
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
-        context.skip("Open Sites Editor", function () {
+        context("Open Sites Editor", function () {
             // we can use these values to log in
             const pagePath = "/content/core-components-examples/library/adaptive-form/container",
                 formContainerEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/formContainer",
