@@ -130,5 +130,22 @@
     "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
     "name" : "abc",
     "jcr:title" : "def"
+  },
+  "datepicker-with-custom-display-format" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "date-input",
+    "fd:customDisplayFormat": "DD/MM/YYYY"
+  },
+  "datepicker-with-both-display-formats" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/datepicker/v1/datepicker",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "date-input",
+    "displayFormat": "YYYY-MM-DD",
+    "fd:customDisplayFormat": "DD/MM/YYYY"
   }
 }

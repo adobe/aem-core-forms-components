@@ -20,7 +20,7 @@
     sling:resourceType="cq/gui/components/authoring/dialog"
     extraClientlibs="[core.forms.components.fileinput.v1.editor]"
     helpPath="https://www.adobe.com/go/aem_af_cmp_fileinput_v2"
-    trackingFeature="core-components:adaptiveform-fileinput:v2">
+    trackingFeature="core-components:adaptiveform-fileinput:v3">
     <content
         granite:class="cmp-adaptiveform-fileinput__editdialog"
         jcr:primaryType="nt:unstructured"

@@ -209,7 +209,7 @@ jobs:
       FT: 'true'
     resource_class: large
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon-without-ft:
@@ -222,7 +222,7 @@ jobs:
       FT: 'false'
     resource_class: large
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
 #  cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
@@ -337,6 +337,17 @@ jobs:
                 exit 1
               fi
             done
+
+            # Create the release using GitHub API
+            RESPONSE=$(curl -s -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "tag_name": "'"$TAG"'",
+                "name": "'"$TAG"'",
+                "body": "Release notes for version '"$TAG"'"
+              }' \
+              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases")
 
 
             # Upload release artifacts

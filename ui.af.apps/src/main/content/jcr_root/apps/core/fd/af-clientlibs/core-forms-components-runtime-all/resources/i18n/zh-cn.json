@@ -4,6 +4,7 @@
   "FileNameInvalid": "请勿附加文件名以 (.) 开头、包含 \\ / : * ? \" < > | ; % $ 或为保留关键字（如 nul、prn、con、lpt 或 com）的文件。",
   "FileMimeTypeInvalid": "文件 ${0} 的类型不受支持",
   "InternalFormSubmissionError": "提交表单时遇到内部错误。",
+  "FileSizeZero": "上传的文件 ${0} 为空。请确保您上传的是有内容的文件。",
   "type": "请输入有效的值。",
   "required": "请填写此字段。",
   "minimum": "值必须大于或等于 ${0}。",
@@ -86,5 +87,11 @@
     "less": "更少"
   },
   "saveDraftSuccessMessage"     :   "草稿保存成功。",
-  "saveDraftErrorMessage"       :   "出現錯誤，導致我們無法儲存您的草稿。請再試一次。"
+  "saveDraftErrorMessage"       :   "出現錯誤，導致我們無法儲存您的草稿。請再試一次。",
+  "signature": "签名",
+  "SignatureCanvas": "簽名畫布",
+  "clearSign": "清晰的签名",
+  "brushSize": "刷子尺寸：",
+  "geoLocationError": "取得地理位置時出錯",
+  "geoLocationFetch": "正在取得地理位置..."
 }
