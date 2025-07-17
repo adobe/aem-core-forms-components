@@ -1,0 +1,30 @@
+{
+  "$id": "classpath:/schema/0.15.2/print/adaptive-form-dor-container-corners.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Border Corners",
+  "description": "Specifies the corners for the border.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "top": {
+      "title": "Top Corner of the border",
+      "description": "Specifies the top corner for the border.",
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/Corner"
+    },
+    "left": {
+      "title": "Left Corner of the border",
+      "description": "Specifies the left corner for the border.",
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/Corner"
+    },
+    "right": {
+      "title": "Right Corner of the border",
+      "description": "Specifies the right corner for the border.",
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/Corner"
+    },
+    "bottom": {
+      "title": "Bottom Corner of the border",
+      "description": "Specifies the bottom corner for the border.",
+      "$ref": "./adaptive-form-dor-container-type-definitions.schema.json#/$defs/Corner"
+    }
+  }
+}

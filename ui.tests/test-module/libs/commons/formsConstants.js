@@ -50,6 +50,7 @@ var formsConstants = {
                 "termsandconditions": "/apps/forms-components-examples/components/form/termsandconditions",
                 "submitButton": "/apps/forms-components-examples/components/form/actions/submit",
                 "review": "/apps/forms-components-examples/components/form/review",
+                "scribble": "/apps/forms-components-examples/components/form/scribble"
             }
         },
         resourceType : {

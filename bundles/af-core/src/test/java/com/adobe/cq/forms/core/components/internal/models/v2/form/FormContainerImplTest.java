@@ -35,6 +35,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.testing.mock.sling.MockResourceBundle;
 import org.apache.sling.testing.mock.sling.MockResourceBundleProvider;
@@ -54,7 +55,13 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
-import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.models.form.AutoSaveConfiguration;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
+import com.adobe.cq.forms.core.components.models.form.FormContainer;
+import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.i18n.I18n;
@@ -96,6 +103,7 @@ public class FormContainerImplTest {
         + "/formContainer-cc-form-spreadsheet-submission";
     private static final String PATH_CC_FORM_REST_SUBMISSION = CONTENT_ROOT
         + "/formContainer-cc-form-rest-submission";
+    private static final String PATH_FORM_WITH_FRAGMENT = CONTENT_ROOT + "/formcontainerv2-with-fragment";
 
     private static final String PATH_FORM_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/formcontainerv2-without-fieldtype";
     private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
@@ -189,7 +197,7 @@ public class FormContainerImplTest {
     void testGetAdaptiveFormDefaultVersion() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertNotNull(formContainer.getAdaptiveFormVersion());
-        assertEquals("0.14.2", formContainer.getAdaptiveFormVersion());
+        assertEquals("0.15.2", formContainer.getAdaptiveFormVersion());
     }
 
     @Test
@@ -441,6 +449,7 @@ public class FormContainerImplTest {
     @Test
     public void testRequestAttributeIfContainerPageDifferent() {
         Resource resource = Mockito.mock(Resource.class);
+        Mockito.when(resource.getValueMap()).thenReturn(ValueMap.EMPTY);
         Page afPage = Mockito.mock(Page.class);
         Mockito.when(afPage.getPath()).thenReturn(AF_PATH);
         PageManager pageManager = Mockito.mock(PageManager.class);
@@ -798,8 +807,8 @@ public class FormContainerImplTest {
 
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, FormContainer.class, context);
         Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
-        assertTrue(dorProperties.containsKey("excludeFromDoRIfHidden"));
-        assertEquals(true, dorProperties.get("excludeFromDoRIfHidden"));
+        assertTrue(dorProperties.containsKey("fd:excludeFromDoRIfHidden"));
+        assertEquals(true, dorProperties.get("fd:excludeFromDoRIfHidden"));
     }
 
     @Test
@@ -812,7 +821,13 @@ public class FormContainerImplTest {
 
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, FormContainer.class, context);
         Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
-        assertTrue(dorProperties.containsKey("excludeFromDoRIfHidden"));
-        assertEquals(false, dorProperties.get("excludeFromDoRIfHidden"));
+        assertTrue(dorProperties.containsKey("fd:excludeFromDoRIfHidden"));
+        assertEquals(false, dorProperties.get("fd:excludeFromDoRIfHidden"));
+    }
+
+    @Test
+    void testJSONExportWithFragment() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_FRAGMENT, FormContainerImpl.class, context);
+        Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_WITH_FRAGMENT));
     }
 }
