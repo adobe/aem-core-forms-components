@@ -104,7 +104,7 @@ public interface Field extends Base, BaseConstraint {
      * 
      * Valid values (enforced by enum):
      * - "null" - represents null value
-     * - "undefined" - represents undefined value  
+     * - "undefined" - represents undefined value
      * - "" - represents empty string
      * 
      *
