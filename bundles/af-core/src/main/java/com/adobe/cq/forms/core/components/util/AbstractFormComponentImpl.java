@@ -362,14 +362,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     private void populateAdditionalRulesProperties(@NotNull Resource ruleNode, Map<String, Object> customRulesProperties) {
         String[] RULES = { "fd:formReady", "fd:layoutReady", "fd:docReady", "fd:calc", "fd:init", "fd:validate", "fd:indexChange" };
-
         ValueMap props = ruleNode.adaptTo(ValueMap.class);
-        if (props == null) {
-            logger.warn("Could not adapt rule node to ValueMap for resource: {}", resource.getPath());
-            return;
+        if (props != null) {
+            Arrays.stream(RULES).forEach(rule -> addRuleProperty(props, customRulesProperties, rule));
         }
-
-        Arrays.stream(RULES).forEach(rule -> addRuleProperty(props, customRulesProperties, rule));
     }
 
     private void addRuleProperty(@NotNull ValueMap props, Map<String, Object> customRulesProperties, String rule) {
