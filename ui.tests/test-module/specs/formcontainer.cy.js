@@ -385,5 +385,29 @@ describe('Page/Form Authoring', function () {
                     cy.get('.cmp-adaptiveform-numberinput__widget').eq(0).should('be.visible');
                 });
             });
+
+            it('should allow link accessibility with enter key press', function () {
+                cy.get('.cmp-adaptiveform-container').then((formContainer) => {
+                    // Create a test link dynamically within the form container
+                    const testLink = document.createElement('a');
+                    testLink.href = '#test-link';
+                    testLink.textContent = 'Test Link';
+                    testLink.id = 'test-accessibility-link';
+                    testLink.setAttribute('tabindex', '0');
+                    formContainer[0].appendChild(testLink);
+
+                    // Spy on the link's click event to verify it gets triggered
+                    cy.get('#test-accessibility-link').then(($link) => {
+                        const linkElement = $link[0];
+                        cy.spy(linkElement, 'click').as('linkClick');
+                        
+                        // Focus on the link and press Enter
+                        cy.get('#test-accessibility-link').focus().type('{enter}');
+                        
+                        // Verify that the link's click event was triggered (accessibility working)
+                        cy.get('@linkClick').should('have.been.called');
+                    });
+                });
+            });
         });
 });
