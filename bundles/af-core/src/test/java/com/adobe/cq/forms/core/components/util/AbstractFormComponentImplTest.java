@@ -53,6 +53,7 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_DISABLED_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponent";
     private static final String PATH_COMPONENT_WITH_INVALID_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentinvalid";
     private static final String PATH_COMPONENT_WITH_NO_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentnone";
+    private static final String PATH_COMPONENT_WITH_RULES = CONTENT_ROOT + "/textinputWithPrintRule";
     private static final String AF_PATH = "/content/forms/af/testAf";
     private static final String PAGE_PATH = "/content/testPage";
 
@@ -202,5 +203,16 @@ public class AbstractFormComponentImplTest {
 
         assertThrows(java.lang.IllegalArgumentException.class, () -> abstractFormComponentImpl.getDorContainer());
 
+    }
+
+    @Test
+    public void testPrintChannelRule() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Object rulesProperties = properties.get("fd:rules");
+        assertNotNull(rulesProperties);
+        Object formReadyRule = ((Map<String, Object>) rulesProperties).get("fd:formReady");
+        assertNotNull(formReadyRule);
     }
 }
