@@ -203,5 +203,39 @@
     "jcr:title" : "def",
     "placeholder": "test-placeholder",
     "fd:viewType": "some/custom/value"
+  },
+  "textinput-emptyvalue-null" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fd:emptyValue": "null"
+  },
+  "textinput-emptyvalue-undefined" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fd:emptyValue": "undefined"
+  },
+  "textinput-emptyvalue-empty-string" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fd:emptyValue": ""
+  },
+  "textinput-emptyvalue-invalid" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fd:emptyValue": "invalid-value"
+  },
+  "textinput-emptyvalue-not-set" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def"
   }
 }
