@@ -105,7 +105,7 @@ if (typeof window.FileInputWidget !== 'undefined') {
                 //this.resetIfNotMultiSelect();
                 if (typeof files !== "undefined") {
                     let invalidFilesIndexes = [];
-                    let validFileNames = [];
+                    let validFiles = [];
                     Array.from(files).forEach(function (file, fileIndex) {
                         let isCurrentInvalidFileSize = false,
                             isCurrentInvalidFileName = false,
@@ -139,29 +139,26 @@ if (typeof window.FileInputWidget !== 'undefined') {
                         // if the file is not invalid, show it and push it to internal array
                         if (!isCurrentInvalidFileSize && !isCurrentInvalidFileName && !isCurrentInvalidMimeType) {
                             // We'll update this.values with the complete URL later
-                            validFileNames.push(currFileName);
-                            if(this.isMultiSelect()) {
-                                this.fileArr.push(file);
-                            } else {
-                                this.fileArr = [file];
-                            }
+                            validFiles.push(file);
                         } else {
                             invalidFilesIndexes.push(fileIndex);
                         }
                     }, this);
 
                     // Handle file upload for valid files
-                    if (validFileNames.length > 0) {
+                    if (validFiles.length > 0) {
                         // Upload file and get URL
-                        let fileUrl = this.uploadFile(files);
+                        let fileUrl = this.uploadFile(validFiles);
                         if (this.isMultiSelect()) {
-                            Array.from(files).forEach(function (file, fileIndex) {
+                            Array.from(validFiles).forEach(function (file, fileIndex) {
                                 let completeUrl = fileUrl + "/" + file.name;
-                                this.values.push(completeUrl);
+                                this.fileArr.push(completeUrl);
+                                this.values.push(file.name);
                             }, this);
                         } else {
                             let completeUrl = fileUrl + "/" + files[0].name;
-                            this.values = [completeUrl];
+                            this.values = [validFiles[0].name];
+                            this.fileArr = [completeUrl];
                         }
                     }
 
