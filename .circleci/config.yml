@@ -338,17 +338,6 @@ jobs:
               fi
             done
 
-            # Create the release using GitHub API
-            RESPONSE=$(curl -s -X POST \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Content-Type: application/json" \
-              -d '{
-                "tag_name": "'"$TAG"'",
-                "name": "'"$TAG"'",
-                "body": "Release notes for version '"$TAG"'"
-              }' \
-              "https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases")
-
 
             # Upload release artifacts
             for ARTIFACT in ./all/target/*.zip; do
