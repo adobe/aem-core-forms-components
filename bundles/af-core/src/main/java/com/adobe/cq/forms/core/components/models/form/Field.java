@@ -102,14 +102,14 @@ public interface Field extends Base, BaseConstraint {
      * The value that represents an empty state for the field.
      * This can be used to distinguish between null, empty string, or undefined values.
      * 
-     * Valid values (enforced by enum):
+     * Valid values for this property are:
      * - "null" - represents null value
      * - "undefined" - represents undefined value
      * - "" - represents empty string
      * 
      *
-     * @return empty value representation for the field, defaults to "" for invalid values
-     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     * @return empty value representation for the field
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.1
      */
     @Nullable
     default String getEmptyValue() {
