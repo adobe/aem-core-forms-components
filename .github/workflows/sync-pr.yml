@@ -46,4 +46,4 @@ jobs:
           git rebase ${{ steps.validate.outputs.base_ref }}
           git push --force origin ${{ steps.validate.outputs.head_ref }}
         env:
-          ADOBE_BOT_GITHUB_TOKEN: ${{ secrets.ADOBE_BOT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
