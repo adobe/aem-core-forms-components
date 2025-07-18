@@ -97,6 +97,7 @@ if (typeof window.FileInputWidget !== 'undefined') {
                     inValidNamefileNames = '',
                     inValidMimeTypefileNames = '',
                     self = this,
+                    uris = [],
                     files = filesUploaded;
                 // Initially set the invalid flag to false
                 let isInvalidSize = false,
@@ -152,13 +153,15 @@ if (typeof window.FileInputWidget !== 'undefined') {
                         if (this.isMultiSelect()) {
                             Array.from(validFiles).forEach(function (file, fileIndex) {
                                 let completeUrl = fileUrl + "/" + file.name;
+                                uris.push(completeUrl);
                                 this.fileArr.push(completeUrl);
-                                this.values.push(file.name);
+                                this.values.push(completeUrl);
                             }, this);
                         } else {
-                            let completeUrl = fileUrl + "/" + files[0].name;
-                            this.values = [validFiles[0].name];
+                            let completeUrl = fileUrl + "/" + validFiles[0].name;
+                            this.values = [completeUrl];
                             this.fileArr = [completeUrl];
+                            uris.push(completeUrl);
                         }
                     }
 
@@ -169,7 +172,10 @@ if (typeof window.FileInputWidget !== 'undefined') {
 
                 // set the new model value.
                 this.model.value = this.fileArr;
-                //this.model.validate();
+
+                Array.from(uris).forEach(function (uri, fileIndex) {
+                    this.fileList.querySelectorAll('.cmp-adaptiveform-fileinput__filename')[fileIndex].dataset.key = uri;
+                }, this);
 
                 if (isInvalidSize) {
                     this.showInvalidMessage(inValidSizefileNames.substring(0, inValidSizefileNames.lastIndexOf(',')), this.invalidFeature.SIZE);
