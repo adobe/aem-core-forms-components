@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class FileInputV3 extends FormView.FormFileInput {
+    class FileInputV3 extends FormView.FormCustomFileInput {
 
         static NS = FormView.Constants.NS;
         /**
@@ -25,7 +25,7 @@
          * data-{NS}-{IS}-x=""
          * @type {string}
          */
-        static IS = "adaptiveFormFileInput";
+        static IS = "adaptiveFormCustomFileInput";
         static bemBlock = 'cmp-adaptiveform-fileinput'
         static selectors  = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
@@ -100,7 +100,7 @@
 
         updateValue(value) {
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.widgetFields);
+                this.widgetObject = new CustomFileInputWidget(this.widgetFields);
             }
             this.widgetObject.setValue(value);
             super.updateEmptyStatus();
@@ -109,7 +109,7 @@
         setModel(model) {
             super.setModel(model);
             if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.widgetFields);
+                this.widgetObject = new CustomFileInputWidget(this.widgetFields);
             }
             this.getAttachButtonLabel().addEventListener('focus', () => {
                 this.setActive();
