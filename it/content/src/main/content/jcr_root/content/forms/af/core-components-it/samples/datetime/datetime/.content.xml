@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2025-07-17T17:14:05.925+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        fd:ignoreTranslationInvalidation="{Boolean}true"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="datetime"
+        sling:configRef="/conf/forms/core-components-it/samples/datetime/datetime/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            schemaType="none"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="datetime">
+            <datetime
+                jcr:created="{Date}2025-07-17T14:41:06.296+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-07-17T14:41:06.296+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Date and Time"
+                sling:resourceType="forms-components-examples/components/form/datetime"
+                fieldType="datetime-input"
+                name="datetime1752743466416"/>
+            <datetime_1831993639
+                jcr:created="{Date}2025-07-17T15:58:55.842+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-07-17T15:58:55.842+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Date and Time"
+                sling:resourceType="forms-components-examples/components/form/datetime"
+                fieldType="datetime-input"
+                name="datetime_18319936391752748136098">
+                <fd:rules
+                    fd:enabled="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ACCESS_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime_18319936391752748136098&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;name&quot;:&quot;datetime_18319936391752748136098&quot;}}\,{&quot;nodeName&quot;:&quot;When&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITIONORALWAYS&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime1752743466416&quot;\,&quot;displayName&quot;:&quot;Date and Time&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Date and Time/&quot;\,&quot;name&quot;:&quot;datetime1752743466416&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2023-01-01T00:00&quot;}}]}}\,{&quot;nodeName&quot;:&quot;Else&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;DONOTHING_OR_DISABLE&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;Disable&quot;\,&quot;value&quot;:null}}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;datetime1752743466416.$value == '2023-01-01T00:00'&quot;\,&quot;eventName&quot;:&quot;Enabled&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    enabled="datetime1752743466416.$value == '2023-01-01T00:00'"
+                    validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </datetime_1831993639>
+            <datetime_2141503285
+                jcr:created="{Date}2025-07-17T15:59:00.132+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-07-17T15:59:00.132+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Date and Time"
+                sling:resourceType="forms-components-examples/components/form/datetime"
+                fieldType="datetime-input"
+                name="datetime_21415032851752748140197"/>
+            <datetime_1609346285
+                jcr:created="{Date}2025-07-17T15:59:03.237+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-07-17T16:21:48.680+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Date and Time"
+                sling:resourceType="forms-components-examples/components/form/datetime"
+                default="2023-01-01T00:00"
+                enabled="{Boolean}true"
+                fieldType="datetime-input"
+                hideTitle="false"
+                name="datetime_16093462851752748143323"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true,true]"
+                unboundFormElement="{Boolean}false"
+                validationExpression="$field.$value == '2023-01-01T00:00'"
+                visible="{Boolean}false">
+                <fd:rules
+                    fd:enabled="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime_16093462851752748143323&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|STRING&quot;\,&quot;name&quot;:&quot;datetime_16093462851752748143323&quot;}}\,{&quot;nodeName&quot;:&quot;When&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITIONORALWAYS&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime1752743466416&quot;\,&quot;displayName&quot;:&quot;Date and Time&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Date and Time/&quot;\,&quot;name&quot;:&quot;datetime1752743466416&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2023-01-01T00:00&quot;}}]}}\,{&quot;nodeName&quot;:&quot;Else&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;DONOTHING_OR_ENABLE&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;Enable&quot;\,&quot;value&quot;:null}}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;!(datetime1752743466416.$value == '2023-01-01T00:00')&quot;\,&quot;eventName&quot;:&quot;Enabled&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime_16093462851752748143323&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;datetime_16093462851752748143323&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime_16093462851752748143323&quot;\,&quot;displayName&quot;:&quot;Date and Time&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Date and Time/&quot;\,&quot;name&quot;:&quot;datetime_16093462851752748143323&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2023-01-01T00:00&quot;}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field.$value == '2023-01-01T00:00'&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    fd:visible="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime_16093462851752748143323&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|STRING&quot;\,&quot;name&quot;:&quot;datetime_16093462851752748143323&quot;}}\,{&quot;nodeName&quot;:&quot;When&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITIONORALWAYS&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime1752743466416&quot;\,&quot;displayName&quot;:&quot;Date and Time&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Date and Time/&quot;\,&quot;name&quot;:&quot;datetime1752743466416&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2023-01-01T00:00&quot;}}]}}\,{&quot;nodeName&quot;:&quot;Else&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;DONOTHING_OR_HIDE&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;Hide&quot;\,&quot;value&quot;:null}}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;datetime1752743466416.$value == '2023-01-01T00:00'&quot;\,&quot;eventName&quot;:&quot;Visibility&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    enabled="!(datetime1752743466416.$value == '2023-01-01T00:00')"
+                    validationStatus="valid"
+                    visible="datetime1752743466416.$value == '2023-01-01T00:00'"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </datetime_1609346285>
+            <datetime_1986192999
+                jcr:created="{Date}2025-07-17T15:59:07.127+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-07-17T17:00:39.507+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Date and Time"
+                sling:resourceType="forms-components-examples/components/form/datetime"
+                enabled="{Boolean}true"
+                fieldType="datetime-input"
+                hideTitle="false"
+                mandatoryMessage="Please enter a valid value"
+                minimumDateTime="{Date}2025-07-17T16:43:00.000Z"
+                minimumMessage="Please enter a valid value."
+                name="datetime_19861929991752748147220"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <datetime_985592349
+                jcr:created="{Date}2025-07-17T16:25:23.850+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-07-17T16:25:23.850+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Date and Time"
+                sling:resourceType="forms-components-examples/components/form/datetime"
+                fieldType="datetime-input"
+                name="datetime_9855923491752749723927">
+                <fd:rules
+                    fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime_9855923491752749723927&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;datetime_9855923491752749723927&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2023-01-12T00:00&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CLEAR_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.datetime1752743466416&quot;\,&quot;displayName&quot;:&quot;Date and Time&quot;\,&quot;type&quot;:&quot;STRING&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Date and Time/&quot;\,&quot;name&quot;:&quot;datetime1752743466416&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if($field.$value == '2023-01-12T00:00'\, dispatchEvent(datetime1752743466416\, 'custom:setProperty'\, {value : `null`})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="[if(contains($event.payload.changes[].propertyName\, 'value')\, if($field.$value == '2023-01-12T00:00'\, dispatchEvent(datetime1752743466416\, 'custom:setProperty'\, {value : `null`})\, {})\, {})]"/>
+            </datetime_985592349>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>

@@ -1,0 +1,31 @@
+{
+  "id": "datetime-0ac1fed1fe",
+  "fieldType": "date-time",
+  "name": "DoB",
+  "description": "Date of Birth",
+  "type": "string",
+  "label": {
+    "value": "DoB"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/dateime-datalayer"
+  },
+  "format": "date",
+  ":type": "core/fd/components/form/dateime/v1/dateime",
+  "dataLayer": {
+    "datepicker-0ac1fed1fe": {
+      "dc:title": "DoB",
+      "dc:description": "Date of Birth",
+      "@type": "core/fd/components/form/dateime/v1/dateime",
+      "fieldType": "date-time"
+    }
+  }
+}
