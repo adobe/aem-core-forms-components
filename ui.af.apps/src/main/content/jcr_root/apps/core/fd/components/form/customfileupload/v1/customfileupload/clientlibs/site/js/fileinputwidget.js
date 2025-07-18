@@ -175,6 +175,7 @@ if (typeof window.FileInputWidget !== 'undefined') {
 
                 Array.from(uris).forEach(function (uri, fileIndex) {
                     this.fileList.querySelectorAll('.cmp-adaptiveform-fileinput__filename')[fileIndex].dataset.key = uri;
+                    this.fileList.querySelectorAll('.cmp-adaptiveform-fileinput__filesize')[fileIndex].hidden = true;
                 }, this);
 
                 if (isInvalidSize) {
