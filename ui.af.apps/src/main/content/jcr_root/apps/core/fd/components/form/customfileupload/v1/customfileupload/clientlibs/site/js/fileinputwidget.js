@@ -51,6 +51,7 @@ if (typeof window.CustomFileInputWidget === 'undefined') {
 
             fileSizeDom.setAttribute('class', "cmp-adaptiveform-fileinput__filesize");
             fileSizeDom.setAttribute('id', id);
+            fileSizeDom.setAttribute('hidden', true);
             fileSizeDom.textContent = this.formatBytes(fileSize);
 
             fileNameDom.setAttribute('tabindex', '0');
