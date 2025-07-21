@@ -16,7 +16,7 @@
 (function() {
 
     "use strict";
-    class FileInputV3 extends FormView.FormCustomFileInput {
+    class FileInputV3 extends FormView.FormFieldBase {
 
         static NS = FormView.Constants.NS;
         /**
@@ -130,6 +130,19 @@
                     this.getAttachButtonLabel().removeAttribute('for');
                 }
             }
+        }
+
+        syncLabel() {
+            let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+            if (labelElement) {
+                labelElement.setAttribute('for', this.getId());
+            }
+        }
+
+        syncMarkupWithModel() {
+            super.syncMarkupWithModel();
+            this.syncWidget();
+            this.syncLabel();
         }
     }
 

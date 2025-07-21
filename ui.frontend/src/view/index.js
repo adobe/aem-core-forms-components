@@ -20,10 +20,9 @@ import FormPanel from "./FormPanel.js";
 import FormTabs from "./FormTabs.js";
 import FormCheckBox from "./FormCheckBox.js";
 import FormFileInput from "./FormFileInput.js";
-import FormCustomFileInput from "./FormCustomFileInput.js";
 import FormFileInputWidgetBase from "./FormFileInputWidgetBase.js";
 import FormOptionFieldBase from "./FormOptionFieldBase";
 import FormFileInputWidget from "./FormFileInputWidget.js";
 
 
-export {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs, FormCheckBox, FormOptionFieldBase, FormFileInput, FormCustomFileInput, FormFileInputWidgetBase, FormFileInputWidget }
+export {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs, FormCheckBox, FormOptionFieldBase, FormFileInput, FormFileInputWidgetBase, FormFileInputWidget }
