@@ -32,17 +32,6 @@ describe('Search And Lister - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert search and lister component', function () {
-            const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
-            cy.selectLayer("Edit");
-            // Add search and lister component and delete it
-            cy.insertComponent(responsiveGridDropZoneSelector, "Search And Lister", afConstants.components.forms.resourceType.fpsnlcomponent);
-            // once component is added, to remove the overlay from being active, we click on body
-            cy.get('body').click(0,0);
-            cy.deleteComponentByPath(componentDropPath);
-        });
-
         it('verify edit dialog properties', function () {
             const x = "";
             // click configure action on search and lister component

@@ -19,6 +19,6 @@ describe('Search And Lister - Runtime', function () {
 
     it("should render search & lister component", () => {
         cy.openPage(pagePath);
-        cy.get('cmp-portallister__item-card').should('exist');
+        cy.get('.cmp-portallister__item-card').should('exist');
     });
 });
