@@ -305,6 +305,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
       widget.onblur = deactivateField;
 
       if (options.showCalendarIcon) {
+        let existingCalendarIcons = widget.parentNode.querySelectorAll('.cmp-adaptiveform-datepicker__calendar-icon');
+        existingCalendarIcons.forEach(icon => icon.remove());
+
         let calendarIcon = document.createElement("div");
         calendarIcon.classList.add("cmp-adaptiveform-datepicker__calendar-icon");
 
@@ -319,6 +322,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
         });
         calendarIcon.addEventListener("keydown", function (event) {
           if (event.keyCode === 32 || event.keyCode === 13) {
+            event.preventDefault();
+            event.stopPropagation();
+            self._iconClicked = true;
             widget.click();
           }
         });
@@ -417,9 +423,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
           if (evnt.target.classList.contains("cmp-adaptiveform-datepicker__calendar-icon")) {
             if (!DatePickerWidget.#visible) {
               this.#show();
-              return;
+              handled = true;
+            } else {
+              this.$focusedDate.classList.add("dp-focus");
+              handled = true;
             }
-            this.$focusedDate.classList.add("dp-focus");
           }
           break;
         case 40: //down arrow key
