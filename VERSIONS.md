@@ -8,6 +8,8 @@ See below for a full list of minimum system requirements for historical versions
 | 3.0.114                | 2.24.6             | Continual                    | 11 | 3.3.9+ |
 | 3.0.112                | 2.24.6             | Continual                    | 11 | 3.3.9+ |
 | 3.0.106-scribbleB016                | 2.24.6             | Continual                    | 11 | 3.3.9+ |
+| 3.0.106-scribbleB016                | 2.24.6             | Continual                    | 11 | 3.3.9+ |
+| 3.0.106-formLocaleB002                | 2.24.6             | Continual                    | 11 | 3.3.9+ |
 | 3.0.106                | 2.24.6             | Continual                    | 11 | 3.3.9+ |
 | 3.0.104                | 2.24.6             | Continual                    | 11 | 3.3.9+ |
 | 3.0.102               | 2.24.6+             | Continual                    | 11 | 3.3.9+ |
