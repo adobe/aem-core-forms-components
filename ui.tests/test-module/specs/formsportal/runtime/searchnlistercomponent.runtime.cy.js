@@ -18,7 +18,7 @@ describe('Search And Lister - Runtime', function () {
     const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/searchlister.html";
 
     it("should render search & lister component", () => {
-        cy.previewForm(pagePath);
+        cy.openPage(pagePath);
         cy.get('cmp-portallister__item-card').should('exist');
     });
 });
