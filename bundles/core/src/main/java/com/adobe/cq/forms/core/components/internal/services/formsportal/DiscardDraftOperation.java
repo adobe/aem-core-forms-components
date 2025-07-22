@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +37,7 @@ import com.adobe.fd.fp.api.service.DraftService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Component(
-    service = Operation.class,
-    immediate = true)
+    service = Operation.class)
 public class DiscardDraftOperation implements Operation {
     private static final String OPERATION_NAME = "discardDraft";
     private static final String OPERATION_TITLE = "Discard";
@@ -45,8 +46,8 @@ public class DiscardDraftOperation implements Operation {
 
     private String actionURL;
 
-    @Reference
-    private DraftService draftService;
+    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL)
+    private transient volatile DraftService draftService;
 
     @Override
     public String getName() {
@@ -77,8 +78,13 @@ public class DiscardDraftOperation implements Operation {
             .collect(Collectors.toMap(Map.Entry::getKey, value -> (String[]) value.getValue()));
         String modelID = Arrays.stream(Objects.requireNonNull(map.get(Operation.OPERATION_MODEL_ID))).findFirst().orElse(null);
         try {
-            draftService.deleteDraft(modelID);
-            result.put("status", "success");
+            if (draftService != null) {
+                draftService.deleteDraft(modelID);
+                result.put("status", "success");
+            } else {
+                LOGGER.error("DraftService is not available to delete draft with id " + modelID);
+                result.put("status", "fail");
+            }
         } catch (FormsPortalException e) {
             LOGGER.error("Failed to delete draft with id " + modelID, e);
             result.put("status", "fail");

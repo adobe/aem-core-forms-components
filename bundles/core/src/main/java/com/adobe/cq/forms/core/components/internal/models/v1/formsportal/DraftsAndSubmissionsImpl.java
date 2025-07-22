@@ -154,6 +154,10 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
         switch (typeEnum) {
             case DRAFT:
                 try {
+                    if (draftService == null) {
+                        LOGGER.error("DraftService is not available. Please check the OSGi configuration.");
+                        return itemList;
+                    }
                     List<DraftModel> list = draftService.getAllDraft(query);
                     for (DraftModel draftModel : list) {
                         PortalLister.Item item = getItem(draftModel.getFormPath(), typeEnum, draftModel.getId(),
@@ -166,6 +170,10 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                 break;
             case SUBMISSION:
                 try {
+                    if (submitService == null) {
+                        LOGGER.error("DraftService is not available. Please check the OSGi configuration.");
+                        return itemList;
+                    }
                     List<SubmitModel> list = submitService.getAllSubmission(query);
                     for (SubmitModel submitModel : list) {
                         PortalLister.Item item = getItem(submitModel.getFormPath(), typeEnum, submitModel.getId(),

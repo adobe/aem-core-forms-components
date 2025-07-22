@@ -28,7 +28,7 @@ const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env
 const latestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg');
 const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.1328'; // Use the latest version if available, otherwise default to '6.0.1256'
 // this value is for 6.5.21.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
-const classicFormReleasedAddonVersion = '6.0.1328';
+const classicFormReleasedAddonVersion = '6.0.1360';
 
 try {
     ci.stage("Integration Tests");
