@@ -155,7 +155,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
             case DRAFT:
                 try {
                     if (draftService == null) {
-                        LOGGER.error("DraftService is not available. Please check the OSGi configuration.");
+                        LOGGER.info("DraftService is not available, please ensure AEM 6.5 Forms Service Pack 24 or later is installed.");
                         return itemList;
                     }
                     List<DraftModel> list = draftService.getAllDraft(query);
@@ -171,7 +171,7 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
             case SUBMISSION:
                 try {
                     if (submitService == null) {
-                        LOGGER.error("DraftService is not available. Please check the OSGi configuration.");
+                        LOGGER.info("SubmitService is not available. Please ensure AEM 6.5 Forms Service Pack 24 or later is installed.");
                         return itemList;
                     }
                     List<SubmitModel> list = submitService.getAllSubmission(query);

@@ -98,7 +98,7 @@ public class OpenDraftOperation implements Operation {
                 result.put("formLink", formLink);
                 result.put("status", "success");
             } else {
-                LOGGER.error("DraftService is not available to fetch draft with id " + modelID);
+                LOGGER.info("Failed to fetch draft with ID  {}. Ensure AEM 6.5 Forms Service Pack 24 or later is installed.", modelID);
                 result.put("status", "fail");
             }
         } catch (FormsPortalException e) {

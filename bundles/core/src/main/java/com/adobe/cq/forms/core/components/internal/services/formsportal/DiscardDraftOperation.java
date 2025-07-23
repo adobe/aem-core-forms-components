@@ -82,7 +82,7 @@ public class DiscardDraftOperation implements Operation {
                 draftService.deleteDraft(modelID);
                 result.put("status", "success");
             } else {
-                LOGGER.error("DraftService is not available to delete draft with id " + modelID);
+                LOGGER.info("Failed to fetch draft with ID  {}. Ensure AEM 6.5 Forms Service Pack 24 or later is installed.", modelID);
                 result.put("status", "fail");
             }
         } catch (FormsPortalException e) {
