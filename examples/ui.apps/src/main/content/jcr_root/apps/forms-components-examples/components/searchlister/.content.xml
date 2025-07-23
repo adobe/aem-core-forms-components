@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:description="Search and Lister Component for the Core Components Library"
+    jcr:primaryType="cq:Component"
+    jcr:title="Search and Lister"
+    sling:resourceSuperType="core/fd/components/formsportal/searchlister/v1/searchlister"
+    componentGroup="Core Components Examples - Forms And Communications Portal"/>

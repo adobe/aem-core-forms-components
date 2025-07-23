@@ -1,35 +1,23 @@
-/*
- *  Copyright 2021 Adobe Systems Incorporated
+/*******************************************************************************
+ * Copyright 2025 Adobe
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 
+const sitesSelectors = require('../../../libs/commons/sitesSelectors'),
+      afConstants = require('../../../libs/commons/formsConstants');
 
-/// <reference types="cypress" />
-
-// This recipe is to test the AEM Forms Portal Link Component functionality
-
-// We are going to test:
-// 1. Search and Lister Component can be added and deleted
-// 2. Verify default values set in proxy component
-
-// Be sure to run the aem server
-// before running the tests below.
-
-const sitesSelectors = require('../../libs/commons/sitesSelectors'),
-      afConstants = require('../../libs/commons/formsConstants');
-
-xdescribe('Search And Lister - Authoring', function () {
+describe('Search And Lister - Authoring', function () {
     // we can use these values to log in
     const   pagePath = "/content/core-components-examples/library/forms-and-communications-portal/searchlister",
             componentEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/" + afConstants.components.forms.resourceType.fpsnlcomponent.split("/").pop(),
@@ -42,17 +30,6 @@ xdescribe('Search And Lister - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
-        });
-
-        it('insert search and lister component', function () {
-            const responsiveGridDropZone = "Drag components here", // todo:  need to localize this
-                responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='" + responsiveGridDropZone + "']";
-            cy.selectLayer("Edit");
-            // Add search and lister component and delete it
-            cy.insertComponent(responsiveGridDropZoneSelector, "Search And Lister", afConstants.components.forms.resourceType.fpsnlcomponent);
-            // once component is added, to remove the overlay from being active, we click on body
-            cy.get('body').click(0,0);
-            cy.deleteComponentByPath(componentDropPath);
         });
 
         it('verify edit dialog properties', function () {

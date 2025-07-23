@@ -26,6 +26,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.settings.SlingSettingsService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,8 +42,7 @@ import com.day.cq.commons.Externalizer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Component(
-    service = Operation.class,
-    immediate = true)
+    service = Operation.class)
 public class OpenDraftOperation implements Operation {
     private static final String OPERATION_NAME = "openDraft";
     private static final String OPERATION_TITLE = "Open";
@@ -52,8 +53,8 @@ public class OpenDraftOperation implements Operation {
 
     private String actionURL;
 
-    @Reference
-    private DraftService draftService;
+    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL)
+    private transient volatile DraftService draftService;
 
     @Reference
     private SlingSettingsService slingSettings;
@@ -89,12 +90,17 @@ public class OpenDraftOperation implements Operation {
             .collect(Collectors.toMap(Map.Entry::getKey, v -> (String[]) v.getValue()));
         String modelID = Arrays.stream(Objects.requireNonNull(map.get(OPERATION_MODEL_ID))).findFirst().orElse(null);
         try {
-            DraftModel dm = draftService.getDraft(modelID);
-            String formPath = GuideUtils.convertFMAssetPathToFormPagePath(GuideUtils.convertGuideContainerPathToFMAssetPath(dm
-                .getFormPath()));
-            String formLink = String.format(DRAFT_LINK, formPath, modelID, suffix);
-            result.put("formLink", formLink);
-            result.put("status", "success");
+            if (draftService != null) {
+                DraftModel dm = draftService.getDraft(modelID);
+                String formPath = GuideUtils.convertFMAssetPathToFormPagePath(GuideUtils.convertGuideContainerPathToFMAssetPath(dm
+                    .getFormPath()));
+                String formLink = String.format(DRAFT_LINK, formPath, modelID, suffix);
+                result.put("formLink", formLink);
+                result.put("status", "success");
+            } else {
+                LOGGER.info("Failed to fetch draft with ID  {}. Ensure AEM 6.5 Forms Service Pack 24 or later is installed.", modelID);
+                result.put("status", "fail");
+            }
         } catch (FormsPortalException e) {
             LOGGER.error("Failed to fetch link for draft with id " + modelID, e);
             result.put("status", "fail");
