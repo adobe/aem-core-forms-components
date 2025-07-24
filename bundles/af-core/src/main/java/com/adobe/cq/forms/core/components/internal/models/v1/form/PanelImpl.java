@@ -145,10 +145,6 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
         if (dorLayoutType != null) {
             customDorProperties.put(DOR_LAYOUT_TYPE, dorLayoutType);
         }
-        Map<String, Object> dorContainer = getDorContainer();
-        if (dorContainer != null) {
-            customDorProperties.put(CUSTOM_DOR_CONTAINER_WRAPPER, dorContainer);
-        }
         return customDorProperties;
     }
 

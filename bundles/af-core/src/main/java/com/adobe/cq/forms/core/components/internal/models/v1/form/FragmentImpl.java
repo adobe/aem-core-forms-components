@@ -15,9 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.PostConstruct;
 
@@ -59,7 +57,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class FragmentImpl extends PanelImpl implements Fragment {
 
     public static final String CUSTOM_FRAGMENT_PROPERTY_WRAPPER = "fd:fragment";
-    private static final String PRINT_CHANNEL_PATH = "/" + "print";
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
@@ -75,9 +72,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @PostConstruct
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
-
-        String updatedFragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
-        fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, updatedFragmentPath);
+        fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
         if (request != null) {
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
             String clientLibRef = getClientLibForFragment();
@@ -85,13 +80,6 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                 formClientLibManager.addClientLibRef(clientLibRef);
             }
         }
-    }
-
-    private String getFragmentPathBasedOnChannel(String fragmentPath) {
-        if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
-            return fragmentPath + PRINT_CHANNEL_PATH;
-        }
-        return fragmentPath;
     }
 
     @JsonView(Views.Author.class)

@@ -77,17 +77,6 @@ public interface FormComponent extends Component {
     }
 
     /**
-     * DOR container
-     *
-     * @since com.adobe.cq.forms.core.components.models.form 2.1.0
-     */
-    @JsonView(Views.DoR.class)
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    default Map<String, Object> getDorContainer() {
-        return Collections.emptyMap();
-    }
-
-    /**
      * Returns getPath of the form field
      *
      * @return getPath of the field

@@ -109,10 +109,6 @@ public class ButtonImpl extends AbstractBaseImpl implements Button {
         if (dorColspan != null) {
             customDorProperties.put("dorColspan", dorColspan);
         }
-        Map<String, Object> dorContainer = getDorContainer();
-        if (dorContainer != null) {
-            customDorProperties.put(CUSTOM_DOR_CONTAINER_WRAPPER, dorContainer);
-        }
         return customDorProperties;
     }
 
