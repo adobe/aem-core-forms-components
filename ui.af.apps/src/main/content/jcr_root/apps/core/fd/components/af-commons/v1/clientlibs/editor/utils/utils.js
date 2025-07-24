@@ -169,6 +169,10 @@
             patternComponent.addEventListener("change", _managePatternDynamicBehaviour );
             function _managePatternDynamicBehaviour() {
                 // below the pattern was compared based on the name rather than the value ("No Pattern" instead of ####.####) which was creating issue in other languages therefore now it has changed to value.
+                if (!patternComponent || !patternComponent.selectedItem) {
+                    return;
+                }
+                
                 let displayPatternSelectedValue = patternComponent.selectedItem.value;
                 let patternComponentOptionsNodeList=patternComponent.querySelectorAll('coral-select-item');
                 if(patternComponentOptionsNodeList.length<=2 ){

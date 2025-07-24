@@ -64,9 +64,6 @@ describe('Custom Prefill Test', function () {
 
     it('', function() {
         let sampleFileNames = ['sample.txt'];
-        if (cy.af.isOldCoreComponent()) {
-            genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
-        }
         // filling the form
         cy.get(nameTextBox).type("John Doe");
         cy.get(dobDropdown).type("1999-10-10");
@@ -91,9 +88,6 @@ describe('Custom Prefill Test', function () {
 
     it('prefill using service in dataRef', function() {
         let sampleFileNames = ['sample2.txt'];
-        if (cy.af.isOldCoreComponent()) {
-            genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
-        }
         // filling the form
         cy.get(nameTextBox).type("John Doe");
         cy.get(dobDropdown).type("1999-10-10");

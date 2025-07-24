@@ -80,7 +80,7 @@ describe('Page/Form Authoring', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get('.cmp-adaptiveform-container__editdialog').contains('Submission').click({force:true});   
-        cy.get(".cmp-adaptiveform-container__submitaction").children('button[is="coral-button"][aria-haspopup="listbox"]').first().click({force: true});
+        cy.get(".cmp-adaptiveform-container__submitaction").children('[is="coral-button"][aria-haspopup="listbox"]').first().click({force: true});
         cy.get('coral-selectlist-item[value="fd/af/components/guidesubmittype/restendpoint"]').should('be.visible').click();
         cy.get("[name='./restEndpointPostUrl']").scrollIntoView().clear({force: true}).type("invalid-url", {force: true});
         cy.get('.coral-Form-errorlabel').should('contain.text', "Please enter the absolute path of the REST endpoint.");
