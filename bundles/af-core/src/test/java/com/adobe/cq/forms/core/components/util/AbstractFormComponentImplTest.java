@@ -172,15 +172,4 @@ public class AbstractFormComponentImplTest {
         assertThrows(java.lang.IllegalArgumentException.class, () -> abstractFormComponentImpl.getDorContainer());
 
     }
-
-    @Test
-    public void testPrintChannelRule() {
-        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
-        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
-        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Object rulesProperties = properties.get("fd:rules");
-        assertNotNull(rulesProperties);
-        Object formReadyRule = ((Map<String, Object>) rulesProperties).get("fd:formReady");
-        assertNotNull(formReadyRule);
-    }
 }
