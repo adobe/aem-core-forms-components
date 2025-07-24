@@ -27,6 +27,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
     #dp = null;
     #curInstance = null;
     #calendarIcon = null;
+    #documentTouchListener = null;
     static #visible = false;
     static #clickedWindow;
 
@@ -558,6 +559,17 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.#focusedOnLi = false;
         DatePickerWidget.#visible = true;
         this.#position();
+        
+        // Add document touch listener for mobile to close datepicker when tapping outside
+        if (this.#touchSupported && !this.#documentTouchListener) {
+          this.#documentTouchListener = (evt) => {
+            if (DatePickerWidget.#visible && this.#curInstance) {
+              this.#checkWindowClicked(evt);
+            }
+          };
+          document.addEventListener("touchstart", this.#documentTouchListener, false);
+        }
+        
         if (this.#options.showCalendarIcon) {
           this.#curInstance.$field.setAttribute('readonly', true);    // when the datepicker is active, deactivate the field
         }
@@ -931,6 +943,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
         if (this.#keysEnabled) {
           document.removeEventListener("keydown", self.#hotKeysCallBack);
           this.#keysEnabled = false;
+        }
+        // Remove document touch listener if it exists
+        if (this.#documentTouchListener) {
+          document.removeEventListener("touchstart", this.#documentTouchListener);
+          this.#documentTouchListener = null;
         }
         // Issue LC-7049:
         // datepickerTarget should be added when activate the field and should be removed

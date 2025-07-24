@@ -292,7 +292,7 @@ jobs:
 
             # Create the release using GitHub API
             RESPONSE=$(curl -s -X POST \
-              -H "Authorization: token $ADOBE_BOT_GITHUB_TOKEN" \
+              -H "Authorization: token $GITHUB_TOKEN" \
               -H "Content-Type: application/json" \
               -d '{
                 "tag_name": "'"$TAG"'",
@@ -307,7 +307,7 @@ jobs:
             # Upload release artifacts
             for ARTIFACT in ./all/target/*.zip; do
               curl -X POST \
-                -H "Authorization: token $ADOBE_BOT_GITHUB_TOKEN" \
+                -H "Authorization: token $GITHUB_TOKEN" \
                 -H "Content-Type: application/octet-stream" \
                 --data-binary @"$ARTIFACT" \
                 "$UPLOAD_URL?name=$(basename "$ARTIFACT")"

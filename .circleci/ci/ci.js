@@ -189,7 +189,7 @@ module.exports = class CI {
 
     async postCommentToGitHubFromCI(commentText){
 
-        const {CIRCLE_PROJECT_USERNAME, CIRCLE_PROJECT_REPONAME, CIRCLE_PULL_REQUEST, ADOBE_BOT_GITHUB_TOKEN } = process.env
+        const {CIRCLE_PROJECT_USERNAME, CIRCLE_PROJECT_REPONAME, CIRCLE_PULL_REQUEST, GITHUB_TOKEN } = process.env
         if(!CIRCLE_PULL_REQUEST) // its not a PULL request
          return
         const prNumber = CIRCLE_PULL_REQUEST.split('/').pop();
@@ -200,7 +200,7 @@ module.exports = class CI {
         const options = {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${ADOBE_BOT_GITHUB_TOKEN}`,
+            'Authorization': `Bearer ${GITHUB_TOKEN}`,
             'User-Agent': 'CircleCI'
           }
         };

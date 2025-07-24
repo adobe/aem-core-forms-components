@@ -74,6 +74,7 @@ public final class ReservedProperties {
     public static final String PN_PLACEHOLDER = "placeholder";
     public static final String PN_READ_ONLY = "readOnly";
     public static final String PN_DEFAULT_VALUE = "default";
+    public static final String PN_EMPTY_VALUE = "fd:emptyValue";
     public static final String PN_MULTI_DEFAULT_VALUES = "fd:multiDefaultValues";
     public static final String PN_FORMAT = "format";
     public static final String PN_DISPLAY_FORMAT = "displayFormat";
@@ -85,6 +86,8 @@ public final class ReservedProperties {
     public static final String PN_MAX_LENGTH = "maxLength";
     public static final String PN_MINIMUM_DATE = "minimumDate";
     public static final String PN_MAXIMUM_DATE = "maximumDate";
+    public static final String PN_MINIMUM_DATE_TIME = "minimumDateTime";
+    public static final String PN_MAXIMUM_DATE_TIME = "maximumDateTime";
     public static final String PN_MAXIMUM = "maximum";
     public static final String PN_MINIMUM = "minimum";
     public static final String PN_EXCLUSIVE_MINIMUM = "exclusiveMinimum";
@@ -165,7 +168,7 @@ public final class ReservedProperties {
     public static final String FD_AUTO_SAVE_STRATEGY_TYPE = "fd:autoSaveStrategyType";
     public static final String FD_AUTO_SAVE_INTERVAL = "fd:autoSaveInterval";
     public static final String FD_EXCLUDE_FROM_DOR_IF_HIDDEN = "fd:excludeFromDoRIfHidden";
-
+    public static final String FD_DIALOG_LABEL = "fd:dialogLabel";
     public static final String FD_XFA_SCRIPTS = "fd:xfaScripts";
 
     public static final String FD_DRAFT_ID = "fd:draftId";
