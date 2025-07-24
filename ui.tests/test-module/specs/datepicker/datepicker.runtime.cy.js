@@ -383,4 +383,64 @@ describe("Form Runtime with Date Picker", () => {
             cy.get('.datetimepicker').should('be.visible');
         });
     })
+
+    it("should have only one calendar icon per datepicker component", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("have.length", 1);
+        cy.get(`#${datePicker7}`).find("input").focus().blur().focus().blur();
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("have.length", 1);
+    });
+
+    it("should open datepicker calendar when Enter key is pressed on calendar icon", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+        
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").focus().type("{enter}");
+        cy.get(".datetimepicker").should("be.visible");
+        cy.get("body").click(10, 10);
+        cy.get(".datetimepicker").should("not.be.visible");
+    });
+
+    it("should open datepicker calendar when Space key is pressed on calendar icon", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+        
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").focus().type(" ");
+        cy.get(".datetimepicker").should("be.visible");
+        cy.get("body").type("{esc}");
+        cy.get(".datetimepicker").should("not.be.visible");
+    });
+
+    it("should handle keyboard accessibility with custom display formats", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+
+        cy.get(`#${datePicker7}`).find("input").should("have.attr", "type", "text"); // Custom format uses text input
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("have.attr", "tabindex", "0");
+        cy.get(`#${datePicker7}`).find("input").focus().tab();
+        cy.focused().should("have.class", "cmp-adaptiveform-datepicker__calendar-icon");
+        cy.focused().type("{enter}");
+        cy.get(".datetimepicker").should("be.visible");
+        cy.get("body").type("{esc}");
+        cy.get(".datetimepicker").should("not.be.visible");
+    });
+
+    it("should prevent calendar icon duplication during component re-initialization", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+        
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("have.length", 1);
+        
+        const testDate = "15/08/2023";
+        
+        cy.get(`#${datePicker7}`).find("input").clear().type(testDate);
+        cy.get(`#${datePicker7}`).find("input").focus().blur().focus().blur();
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click();
+        cy.get(".datetimepicker").should("be.visible");
+        cy.get("body").click(10, 10);
+        cy.get(".datetimepicker").should("not.be.visible");
+        cy.get(`#${datePicker7}`).find("input").clear();
+        cy.get(`#${datePicker7}`).find("input").focus().blur();
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("have.length", 1);
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").focus().type("{enter}");
+        cy.get(".datetimepicker").should("be.visible");
+        cy.get("body").type("{esc}");
+    });
 })
