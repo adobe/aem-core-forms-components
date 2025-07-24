@@ -21,6 +21,7 @@
     <groupId>com.adobe.aem</groupId>
     <artifactId>core-forms-components-parent</artifactId>
     <packaging>pom</packaging>
+    <version>3.0.117-SNAPSHOT</version>
 
     <version>1.1.71-SNAPSHOT</version>
     <name>AEM Forms Core Components - Parent</name>
@@ -91,6 +92,7 @@
         <core.wcm.components.version>2.24.6</core.wcm.components.version>
         <core.wcm.components.library.version>2.24.6</core.wcm.components.library.version>
 
+        <core.print.api.version>1.0.12</core.print.api.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatter.version>2.16.0</formatter.version>
@@ -1073,6 +1075,11 @@
                 <groupId>com.adobe.cq</groupId>
                 <artifactId>core.wcm.components.core</artifactId>
                 <version>${core.wcm.components.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>core-forms-print-components-print-dor-api</artifactId>
+                <version>${core.print.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>

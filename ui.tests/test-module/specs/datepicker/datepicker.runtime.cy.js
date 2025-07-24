@@ -383,4 +383,72 @@ describe("Form Runtime with Date Picker", () => {
             cy.get('.datetimepicker').should('be.visible');
         });
     })
+
+    // Mobile Touch Functionality Tests
+    describe("Mobile Touch Functionality", () => {
+        beforeEach(() => {
+            // Set mobile viewport for touch testing
+            cy.viewport('iphone-x')
+        });
+
+        it("should open datepicker on mobile touch", () => {
+            const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[4]
+            
+            // Touch the datepicker field
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(() => {
+                cy.get('.datetimepicker').should('be.visible')
+                cy.get('.dp-monthview').should('be.visible')
+            })
+        });
+
+        it("should close datepicker when tapping outside on mobile", () => {
+            const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[4]
+            
+            // Open the datepicker
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(() => {
+                cy.get('.datetimepicker').should('be.visible')
+            })
+            
+            // Tap outside the datepicker (on the body)
+            cy.get('body').click(0, 0).then(() => {
+                cy.get('.datetimepicker').should('not.be.visible')
+            })
+        });
+
+        it("should not close datepicker when tapping inside the calendar", () => {
+            const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[4]
+            
+            // Open the datepicker
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(() => {
+                cy.get('.datetimepicker').should('be.visible')
+            })
+            
+            // Tap inside the calendar (on a day)
+            cy.get('.dp-monthview li').not('.header').first().click({force: true}).then(() => {
+                cy.get('.datetimepicker').should('be.visible')
+            })
+        });
+
+        it("should work correctly with multiple datepicker fields on the same page", () => {
+            // Test with multiple datepicker fields
+            const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[4]
+            const [datePicker6, datePicker6FieldView] = Object.entries(formContainer._fields)[6]
+            const datepickerIds = [datePicker4, datePicker6]
+            
+            datepickerIds.forEach((id, index) => {
+                // Open datepicker
+                cy.get(`#${id}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(() => {
+                    cy.get('.datetimepicker').should('be.visible')
+                })
+                
+                // Tap outside to close
+                cy.get('body').click(0, 0).then(() => {
+                    cy.get('.datetimepicker').should('not.be.visible')
+                })
+                
+                // Small delay between tests
+                cy.wait(100)
+            })
+        });
+    });
 })
