@@ -163,13 +163,13 @@ jobs:
           root: /home/circleci/build
           paths:
             - configuration.json
-            - bundles/core/target
-            - bundles/af-core/target
+            - bundles/core/target/*.jar
+            - bundles/af-core/target/*.jar
             - ui.apps/target/*.zip
             - ui.af.apps/target/*.zip
             - examples/ui.apps/target/*.zip
             - examples/ui.content/target/*.zip
-            - examples/core/target
+            - examples/core/target/*.jar
             - it/core/target/*.jar
             - it/apps/target/*.zip
             - it/content/target/*.zip
@@ -208,6 +208,7 @@ jobs:
     resource_class: xlarge
     working_directory: /home/circleci/build
     parallelism: 4
+    parallelism: 4
     <<: *cypress_test_steps
 
   cypress-chrome-655-with-latest-addon-with-ft:
@@ -216,8 +217,12 @@ jobs:
       AEM: classic-latest
       TYPE: cypress
       BROWSER: chrome
+      PRERELEASE: 'true'
+      FT: 'false'
+    resource_class: large
     resource_class: xlarge
     working_directory: /home/circleci/build
+    parallelism: 4
     parallelism: 4
     <<: *cypress_test_steps
 

@@ -429,7 +429,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             customDorProperties.put(DOR_TEMPLATE_TYPE, dorTemplateType);
         }
         if (excludeFromDoRIfHidden != null) {
-            customDorProperties.put(EXCLUDE_FROM_DOR_IF_HIDDEN, excludeFromDoRIfHidden);
+            customDorProperties.put(ReservedProperties.FD_EXCLUDE_FROM_DOR_IF_HIDDEN, excludeFromDoRIfHidden);
         }
         return customDorProperties;
     }
