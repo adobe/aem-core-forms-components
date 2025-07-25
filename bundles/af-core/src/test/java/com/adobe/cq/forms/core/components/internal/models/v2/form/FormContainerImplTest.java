@@ -221,6 +221,66 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testGetActionWithResourceResolverMapping() throws Exception {
+        // Create a spy of the resource resolver to mock the map method
+        org.apache.sling.api.resource.ResourceResolver resourceResolver = Mockito.spy(context.resourceResolver());
+
+        // Mock the map method to return a mapped path
+        String originalPath = "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
+        String mappedPath = "/content/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
+        Mockito.when(resourceResolver.map("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==")).thenReturn(mappedPath);
+
+        // Set the mocked resource resolver in the context
+        context.registerService(org.apache.sling.api.resource.ResourceResolver.class, resourceResolver);
+
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        String action = formContainer.getAction();
+
+        // Verify that the mapped path is used in the action URL
+        assertTrue(action.contains(mappedPath));
+
+        // Verify that the map method was called with the correct path (called during mock setup + actual execution)
+        Mockito.verify(resourceResolver, times(2)).map("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==");
+    }
+
+    @Test
+    void testGetDataUrlWithResourceResolverMapping() throws Exception {
+        // Create a spy of the resource resolver to mock the map method
+        org.apache.sling.api.resource.ResourceResolver resourceResolver = Mockito.spy(context.resourceResolver());
+
+        // Mock the map method to return a mapped path
+        String originalPath = "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
+        String mappedPath = "/content/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
+        Mockito.when(resourceResolver.map("/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==")).thenReturn(mappedPath);
+
+        // Set the mocked resource resolver in the context
+        context.registerService(org.apache.sling.api.resource.ResourceResolver.class, resourceResolver);
+
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        String dataUrl = formContainer.getDataUrl();
+
+        // Verify that the mapped path is used in the data URL
+        assertTrue(dataUrl.contains(mappedPath));
+        assertEquals(mappedPath, dataUrl);
+
+        // Verify that the map method was called with the correct path (called during mock setup + actual execution)
+        Mockito.verify(resourceResolver, times(2)).map("/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==");
+    }
+
+    @Test
+    void testResourceResolverMappingIdentityWhenNoMapping() throws Exception {
+        // Test the case where resourceResolver.map() returns the same path (no mapping configured)
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+
+        String action = formContainer.getAction();
+        String dataUrl = formContainer.getDataUrl();
+
+        // These should match the original expected values when no mapping is applied
+        assertEquals("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", action);
+        assertEquals("/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", dataUrl);
+    }
+
+    @Test
     void testGetDorProperties() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("generate", formContainer.getDorProperties().get("dorType"));
@@ -587,6 +647,30 @@ public class FormContainerImplTest {
     void testCustomFunctionUrl() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getCustomFunctionUrl());
+    }
+
+    @Test
+    void testGetCustomFunctionUrlWithResourceResolverMapping() throws Exception {
+        // Create a spy of the resource resolver to mock the map method
+        org.apache.sling.api.resource.ResourceResolver resourceResolver = Mockito.spy(context.resourceResolver());
+
+        // Mock the map method to return a mapped path
+        String originalPath = "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
+        String mappedPath = "/content/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
+        Mockito.when(resourceResolver.map("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==")).thenReturn(mappedPath);
+
+        // Set the mocked resource resolver in the context
+        context.registerService(org.apache.sling.api.resource.ResourceResolver.class, resourceResolver);
+
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        String customFunctionUrl = formContainer.getCustomFunctionUrl();
+
+        // Verify that the mapped path is used in the custom function URL
+        assertTrue(customFunctionUrl.contains(mappedPath));
+        assertEquals(mappedPath, customFunctionUrl);
+
+        // Verify that the map method was called with the correct path (called during mock setup + actual execution)
+        Mockito.verify(resourceResolver, times(2)).map("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==");
     }
 
     @Test
