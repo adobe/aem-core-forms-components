@@ -17,17 +17,7 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -330,11 +320,24 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private Map<String, Object> getRulesProperties() {
         Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
         Map<String, Object> customRulesProperties = new LinkedHashMap<>();
+        if (ruleNode == null) {
+            logger.debug("No rules node found for resource: {}", resource.getPath());
+            return customRulesProperties;
+        }
+        addValidationStatus(ruleNode, customRulesProperties);
+        return customRulesProperties;
+    }
+
+    private void addValidationStatus(Resource ruleNode, Map<String, Object> customRulesProperties) {
         String status = getRulesStatus(ruleNode);
         if (!STATUS_NONE.equals(status)) {
-            customRulesProperties.put(RULES_STATUS_PROP_NAME, getRulesStatus(ruleNode));
+            customRulesProperties.put(RULES_STATUS_PROP_NAME, status);
         }
-        return customRulesProperties;
+    }
+
+    private void addRuleProperty(@NotNull ValueMap props, Map<String, Object> customRulesProperties, String rule) {
+        Optional<String[]> propertyValue = Optional.ofNullable(props.get(rule, String[].class));
+        propertyValue.ifPresent(value -> customRulesProperties.put(rule, value));
     }
 
     /***

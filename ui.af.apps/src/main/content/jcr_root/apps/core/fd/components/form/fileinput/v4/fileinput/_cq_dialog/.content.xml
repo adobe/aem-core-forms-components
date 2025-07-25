@@ -1,0 +1,8 @@
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Adaptive Form File Attachment"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[core.forms.components.fileinput.v1.editor]"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_fileinput_v2"
+    sling:resourceSuperType="core/fd/components/form/fileinput/v3/fileinput/cq:dialog"
+    trackingFeature="core-components:adaptiveform-fileinput:v4"/>

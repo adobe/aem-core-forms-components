@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
-import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
+import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -149,8 +149,8 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
             } else {
                 try {
                     model = child.adaptTo(modelClass);
-                    if (model instanceof Base && i18n != null) {
-                        ((Base) model).setI18n(i18n);
+                    if (model instanceof FormComponent && i18n != null) {
+                        ((FormComponent) model).setI18n(i18n);
                     }
                 } catch (Exception e) {
                     // Log the exception as info, since there can be site component inside form, but we don't care about they being adapted
