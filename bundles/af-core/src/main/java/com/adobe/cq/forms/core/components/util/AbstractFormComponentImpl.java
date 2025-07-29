@@ -18,6 +18,7 @@ package com.adobe.cq.forms.core.components.util;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -54,11 +55,13 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
@@ -68,9 +71,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATAREF)
@@ -265,6 +272,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    public static final String CUSTOM_DOR_CONTAINER_WRAPPER = "dorContainer";
     // used for DOR and SPA editor to work
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
@@ -330,11 +338,35 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private Map<String, Object> getRulesProperties() {
         Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
         Map<String, Object> customRulesProperties = new LinkedHashMap<>();
-        String status = getRulesStatus(ruleNode);
-        if (!STATUS_NONE.equals(status)) {
-            customRulesProperties.put(RULES_STATUS_PROP_NAME, getRulesStatus(ruleNode));
+        if (ruleNode == null) {
+            logger.debug("No rules node found for resource: {}", resource.getPath());
+            return customRulesProperties;
+        }
+        addValidationStatus(ruleNode, customRulesProperties);
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
+            populateAdditionalRulesProperties(ruleNode, customRulesProperties);
         }
         return customRulesProperties;
+    }
+
+    private void addValidationStatus(Resource ruleNode, Map<String, Object> customRulesProperties) {
+        String status = getRulesStatus(ruleNode);
+        if (!STATUS_NONE.equals(status)) {
+            customRulesProperties.put(RULES_STATUS_PROP_NAME, status);
+        }
+    }
+
+    private void populateAdditionalRulesProperties(@NotNull Resource ruleNode, Map<String, Object> customRulesProperties) {
+        String[] RULES = { "fd:formReady", "fd:layoutReady", "fd:docReady", "fd:calc", "fd:init", "fd:validate", "fd:indexChange" };
+        ValueMap props = ruleNode.adaptTo(ValueMap.class);
+        if (props != null) {
+            Arrays.stream(RULES).forEach(rule -> addRuleProperty(props, customRulesProperties, rule));
+        }
+    }
+
+    private void addRuleProperty(@NotNull ValueMap props, Map<String, Object> customRulesProperties, String rule) {
+        Optional<String[]> propertyValue = Optional.ofNullable(props.get(rule, String[].class));
+        propertyValue.ifPresent(value -> customRulesProperties.put(rule, value));
     }
 
     /***
@@ -547,7 +579,53 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (dorBindRef != null) {
             customDorProperties.put("dorBindRef", dorBindRef);
         }
+        Map<String, Object> dorContainer = getDorContainer();
+        if (dorContainer != null) {
+            customDorProperties.put(CUSTOM_DOR_CONTAINER_WRAPPER, dorContainer);
+        }
         return customDorProperties;
+    }
+
+    private List<String> getDisabledXFAScripts() {
+        Set<String> disabledScripts = new HashSet<>();
+        String xfaScripts = resource.getValueMap().get(ReservedProperties.FD_XFA_SCRIPTS, "");
+        if (StringUtils.isNotEmpty(xfaScripts)) {
+            // read string xfaScripts to jsonNode
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                ArrayNode node = (ArrayNode) mapper.readTree(xfaScripts);
+                // iterate through the array node and add the elements which have disabled property set to true
+                for (JsonNode jsonNode : node) {
+                    if (jsonNode.has("disabled") && jsonNode.get("disabled").asBoolean()) {
+                        disabledScripts.add(jsonNode.get("activity").asText());
+                    }
+                }
+            } catch (IOException e) {
+                logger.error("Error while parsing xfaScripts {} {}", e, resource.getPath());
+            }
+        }
+        return new ArrayList<>(disabledScripts);
+    }
+
+    /**
+     * Returns the dor container properties.
+     *
+     * @return Map of dor container properties if `fd:dorContainer` node is present otherwise returns null
+     */
+    @JsonIgnore
+    @Override
+    public Map<String, Object> getDorContainer() {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel) && resource != null) {
+            Resource dorContainerResource = resource.getChild("fd:dorContainer");
+            if (dorContainerResource != null) {
+                DorContainer dorContainer = dorContainerResource.adaptTo(DorContainer.class);
+                ObjectMapper objectMapper = new ObjectMapper();
+                if (dorContainer != null) {
+                    return objectMapper.convertValue(dorContainer, new TypeReference<Map<String, Object>>() {});
+                }
+            }
+        }
+        return null;
     }
 
 }

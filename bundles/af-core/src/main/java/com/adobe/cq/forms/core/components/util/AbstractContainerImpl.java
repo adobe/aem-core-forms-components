@@ -15,13 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
@@ -29,6 +23,10 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceUtil;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.wrappers.ValueMapDecorator;
+import org.apache.sling.api.wrappers.ValueMapUtil;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.factory.ModelFactory;
@@ -39,9 +37,11 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
-import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
+import com.adobe.cq.forms.core.components.models.form.FormComponent;
+import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -143,14 +143,21 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         Map<String, T> models = new LinkedHashMap<>();
         for (Resource child : filteredChildrenResources) {
             T model = null;
+            if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
+                // Create a ValueMap with additional properties
+                ValueMap additionalProperties = new ValueMapDecorator(new HashMap<>());
+                additionalProperties.put("fd:channel", this.channel);
+                ValueMap properties = ValueMapUtil.merge(ResourceUtil.getValueMap(child), additionalProperties);
+                child = new ValueMapResource(child.getResourceResolver(), child.getPath(), child.getResourceType(), properties);
+            }
             if (request != null) {
                 // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
                 model = modelFactory.getModelFromWrappedRequest(request, child, modelClass);
             } else {
                 try {
                     model = child.adaptTo(modelClass);
-                    if (model instanceof Base && i18n != null) {
-                        ((Base) model).setI18n(i18n);
+                    if (model instanceof FormComponent && i18n != null) {
+                        ((FormComponent) model).setI18n(i18n);
                     }
                 } catch (Exception e) {
                     // Log the exception as info, since there can be site component inside form, but we don't care about they being adapted

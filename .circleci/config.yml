@@ -207,7 +207,7 @@ jobs:
       BROWSER: chrome
     resource_class: xlarge
     working_directory: /home/circleci/build
-    parallelism: 4
+    parallelism: 8
     <<: *cypress_test_steps
 
   cypress-chrome-655-with-latest-addon-with-ft:
