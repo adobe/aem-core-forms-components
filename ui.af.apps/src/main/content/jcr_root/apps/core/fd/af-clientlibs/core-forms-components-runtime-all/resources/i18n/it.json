@@ -4,7 +4,7 @@
   "FileNameInvalid": "Non allegare file il cui nome inizia con (.), contiene \\ / : * ? \" < > | ; % $ oppure è una parola chiave riservata come nul, prn, con, lpt o com.",
   "FileMimeTypeInvalid": "I file ${0} non sono tipi di file supportati",
   "InternalFormSubmissionError": "Errore interno durante l'invio del modulo.",
-  "FileSizeZero": "Il/I file caricati ${0} sono vuoti. Assicurati di caricare file con contenuto.",
+  "FileSizeZero": "I file caricati ${0} sono vuoti. Assicurati di caricare file con contenuti.",
   "type": "Immetti un valore valido.",
   "required": "Compila questo campo.",
   "minimum": "Il valore deve essere maggiore di o uguale a ${0}.",
@@ -86,12 +86,12 @@
     "more": "più",
     "less": "meno"
   },
-  "saveDraftSuccessMessage"     :   "La bozza è stata salvata con successo.",
-  "saveDraftErrorMessage"       :   "Si è verificato un errore che ci ha impedito di salvare la tua bozza. Per favore riprova.",
+  "saveDraftSuccessMessage": "La bozza è stata salvata correttamente.",
+  "saveDraftErrorMessage": "Si è verificato un errore che ha impedito di salvare la bozza. Riprova.",
   "signature": "Firma",
-  "SignatureCanvas": "Tela firmata",
-  "clearSign": "Firma chiara",
-  "brushSize": "Dimensione del pennello:",
-  "geoLocationError": "Errore durante il recupero della geolocalizzazione",
-  "geoLocationFetch": "Recupero della posizione geografica in corso..."
+  "SignatureCanvas": "Area di lavoro firma",
+  "clearSign": "Cancella firma",
+  "brushSize": "Dimensione pennello: ",
+  "geoLocationError": "Errore nel recupero della geolocalizzazione",
+  "geoLocationFetch": "Recupero geolocalizzazione in corso..."
 }
