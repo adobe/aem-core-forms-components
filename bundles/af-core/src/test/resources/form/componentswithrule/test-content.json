@@ -43,5 +43,16 @@
       "jcr:primaryType": "nt:unstructured",
       "validationStatus" : "someInvalidStatus"
     }
+  },
+  "textinputWithPrintRule": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "name",
+    "sling:resourceType": "forms-components-examples/components/form/textinput",
+    "fieldType": "text-input",
+    "fd:channel": "print",
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured",
+      "fd:formReady": ["form Ready"]
+    }
   }
 }

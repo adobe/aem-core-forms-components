@@ -163,13 +163,13 @@ jobs:
           root: /home/circleci/build
           paths:
             - configuration.json
-            - bundles/core/target
-            - bundles/af-core/target
+            - bundles/core/target/*.jar
+            - bundles/af-core/target/*.jar
             - ui.apps/target/*.zip
             - ui.af.apps/target/*.zip
             - examples/ui.apps/target/*.zip
             - examples/ui.content/target/*.zip
-            - examples/core/target
+            - examples/core/target/*.jar
             - it/core/target/*.jar
             - it/apps/target/*.zip
             - it/content/target/*.zip
