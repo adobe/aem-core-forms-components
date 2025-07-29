@@ -319,6 +319,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         });
         calendarIcon.addEventListener("keydown", function (event) {
           if (event.keyCode === 32 || event.keyCode === 13) {
+            self._iconClicked = true;
             widget.click();
           }
         });
