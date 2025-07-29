@@ -35,6 +35,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public interface Base extends FormComponent {
     public final String DATE_FORMATTER = "yyyy-MM-dd";
 
+    public final String DATE_TIME_FORMATTER = "yyyy-MM-dd'T'HH:mm:ss";
+
     /**
      * Constant representing the default language used, typically "en-US".
      *
