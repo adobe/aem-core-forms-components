@@ -15,7 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -43,7 +45,9 @@ import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -55,6 +59,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class FragmentImpl extends PanelImpl implements Fragment {
 
     public static final String CUSTOM_FRAGMENT_PROPERTY_WRAPPER = "fd:fragment";
+    private static final String PRINT_CHANNEL_PATH = "/" + "print";
 
     @OSGiService
     private SlingModelFilter slingModelFilter;
@@ -70,7 +75,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @PostConstruct
     private void initFragmentModel() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
-        fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, fragmentPath);
+
+        String updatedFragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
+        fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, updatedFragmentPath);
         if (request != null) {
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
             String clientLibRef = getClientLibForFragment();
@@ -80,7 +87,14 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         }
     }
 
-    @JsonIgnore
+    private String getFragmentPathBasedOnChannel(String fragmentPath) {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
+            return fragmentPath + PRINT_CHANNEL_PATH;
+        }
+        return fragmentPath;
+    }
+
+    @JsonView(Views.Author.class)
     public String getFragmentPath() {
         return fragmentPath;
     }

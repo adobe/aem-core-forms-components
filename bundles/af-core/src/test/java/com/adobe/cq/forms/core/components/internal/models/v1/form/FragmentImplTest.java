@@ -38,6 +38,7 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -55,6 +56,7 @@ public class FragmentImplTest {
     private static final String PATH_FRAGMENT = CONTENT_ROOT + "/fragment";
     private static final String PATH_FRAGMENT_DAMPATH = CONTENT_ROOT + "/fragment-dampath";
     private static final String PATH_FRAGMENT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/fragment-without-fieldtype";
+    private static final String PATH_FRAGMENT_WITH_FRAGMENT_PATH = CONTENT_ROOT + "/fragment-with-fragment-path";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -131,6 +133,12 @@ public class FragmentImplTest {
     void testJSONExportWithDamPath() throws Exception {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_DAMPATH, Fragment.class, context);
         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT_DAMPATH));
+    }
+
+    @Test
+    void testJSONExportWithFragmentPath() throws Exception {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_FRAGMENT_PATH, Fragment.class, context);
+        Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT_WITH_FRAGMENT_PATH), Views.Author.class);
     }
 
     @Test

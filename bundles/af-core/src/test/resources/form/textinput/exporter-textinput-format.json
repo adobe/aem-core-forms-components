@@ -11,6 +11,7 @@
   "constraintMessages": {
     "type": "incorrect type"
   },
+  "emptyValue": "null",
   "readOnly": false,
   "format": "email",
   "default": "abc",
