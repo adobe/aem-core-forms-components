@@ -27,6 +27,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
     #dp = null;
     #curInstance = null;
     #calendarIcon = null;
+    #documentTouchListener = null;
     static #visible = false;
     static #clickedWindow;
 
@@ -305,6 +306,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
       widget.onblur = deactivateField;
 
       if (options.showCalendarIcon) {
+        let existingCalendarIcons = widget.parentNode.querySelectorAll('.cmp-adaptiveform-datepicker__calendar-icon');
+        existingCalendarIcons.forEach(icon => icon.remove());
+
         let calendarIcon = document.createElement("div");
         calendarIcon.classList.add("cmp-adaptiveform-datepicker__calendar-icon");
 
@@ -319,6 +323,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
         });
         calendarIcon.addEventListener("keydown", function (event) {
           if (event.keyCode === 32 || event.keyCode === 13) {
+            event.preventDefault();
+            event.stopPropagation();
+            self._iconClicked = true;
             widget.click();
           }
         });
@@ -417,9 +424,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
           if (evnt.target.classList.contains("cmp-adaptiveform-datepicker__calendar-icon")) {
             if (!DatePickerWidget.#visible) {
               this.#show();
-              return;
+              handled = true;
+            } else {
+              this.$focusedDate.classList.add("dp-focus");
+              handled = true;
             }
-            this.$focusedDate.classList.add("dp-focus");
           }
           break;
         case 40: //down arrow key
@@ -550,6 +559,17 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.#focusedOnLi = false;
         DatePickerWidget.#visible = true;
         this.#position();
+        
+        // Add document touch listener for mobile to close datepicker when tapping outside
+        if (this.#touchSupported && !this.#documentTouchListener) {
+          this.#documentTouchListener = (evt) => {
+            if (DatePickerWidget.#visible && this.#curInstance) {
+              this.#checkWindowClicked(evt);
+            }
+          };
+          document.addEventListener("touchstart", this.#documentTouchListener, false);
+        }
+        
         if (this.#options.showCalendarIcon) {
           this.#curInstance.$field.setAttribute('readonly', true);    // when the datepicker is active, deactivate the field
         }
@@ -923,6 +943,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
         if (this.#keysEnabled) {
           document.removeEventListener("keydown", self.#hotKeysCallBack);
           this.#keysEnabled = false;
+        }
+        // Remove document touch listener if it exists
+        if (this.#documentTouchListener) {
+          document.removeEventListener("touchstart", this.#documentTouchListener);
+          this.#documentTouchListener = null;
         }
         // Issue LC-7049:
         // datepickerTarget should be added when activate the field and should be removed

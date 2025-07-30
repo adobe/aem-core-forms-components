@@ -50,7 +50,6 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Terms and Conditions](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/termsandconditions/v1/termsandconditions)
 -   [Checkbox](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkbox/v1/checkbox)
 -   [Review](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/review/v1/review)
--   [Turnstile](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/turnstile/v1/turnstile)
 
 
 ## System Requirements

@@ -50,7 +50,8 @@ const languages = [
             "FileSizeGreater"       :       "File(s) ${0} are greater than the expected size: ${1}MB.",
             "FileNameInvalid"       :       "Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
             "FileMimeTypeInvalid"   :       "File(s) ${0} are unsupported file types",
-            "InternalFormSubmissionError" :  "Encountered an internal error while submitting the form."
+            "InternalFormSubmissionError" :  "Encountered an internal error while submitting the form.",
+            "FileSizeZero"          :       "The uploaded file(s) ${0} are empty. Make sure you're uploading file(s) with content."
         }
     }, {
         LANGUAGE: 'German', LOCALE: 'de', TRANSLATION: {
@@ -134,7 +135,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Premete Invio per eliminare il file ",
-            "FileSizeGreater"       :        "I file ${0} superano le dimensioni previste: ${1} MB.",
+            "FileSizeGreater"       :       "I file ${0} superano le dimensioni previste: ${1} MB.",
             "FileNameInvalid"       :       'Non allegare file il cui nome inizia con (.), contiene \\ / : * ? " < > | ; % $ oppure è una parola chiave riservata come nul, prn, con, lpt o com.',
             "FileMimeTypeInvalid"   :       "I file ${0} non sono tipi di file supportati",
             "InternalFormSubmissionError" :  "Errore interno durante l'invio del modulo."
@@ -163,7 +164,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Appuyer sur Entrée pour supprimer le fichier ",
-            "FileSizeGreater"       :       '${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.',
+            "FileSizeGreater"       :       "${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.",
             "FileNameInvalid"       :       "Ne joignez pas de fichiers dont le nom commence par (.), contient \\ / : * ?  \" < > | ; % $, ou est un mot-clé réservé comme nul, prn, con, lpt ou com.",
             "FileMimeTypeInvalid"   :       "Le ou les fichiers ${0} sont des types de fichiers non pris en charge",
             "InternalFormSubmissionError" :  "Une erreur interne s'est produite lors de l'envoi du formulaire."
