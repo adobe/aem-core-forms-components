@@ -170,7 +170,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Appuyer sur Entrée pour supprimer le fichier ",
-            "FileSizeGreater"       :       '${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.',
+            "FileSizeGreater"       :       "${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.",
             "FileNameInvalid"       :       "Ne joignez pas de fichiers dont le nom commence par (.), contient \\ / : * ?  \" < > | ; % $, ou est un mot-clé réservé comme nul, prn, con, lpt ou com.",
             "FileMimeTypeInvalid"   :       "Le ou les fichiers ${0} sont des types de fichiers non pris en charge",
             "InternalFormSubmissionError" :  "Une erreur interne s'est produite lors de l'envoi du formulaire."
