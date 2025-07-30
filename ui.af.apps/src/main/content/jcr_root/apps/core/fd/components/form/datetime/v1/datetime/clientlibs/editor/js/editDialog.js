@@ -15,25 +15,4 @@
  ******************************************************************************/
 (function($) {
     "use strict";
-
-    var EDIT_DIALOG = ".cmp-adaptiveform-datetime__editdialog",
-        DATETIME_MAXLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-datetime__maxlength",
-        DATETIME_MINLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-datetime__minlength",
-        BASE_PLACEHOLDER = EDIT_DIALOG + " .cmp-adaptiveform-base__placeholder",
-        DATETIME_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-datetime__value",
-        DATETIME_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-datetime__richtextvalue",
-        DATETIME_VALIDATIONPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-datetime__validationpattern",
-        DATETIME_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-datetime__validationformat",
-        Utils = window.CQ.FormsCoreComponents.Utils.v1;
-
-    function handleValidationPatternDropDown(dialog) {
-        Utils.handlePatternDropDown(dialog,DATETIME_VALIDATIONPATTERN,DATETIME_VALIDATIONFORMAT);
-    }
-
-    function handleValidationFormat(dialog){
-        Utils.handlePatternFormat(dialog,DATETIME_VALIDATIONPATTERN,DATETIME_VALIDATIONFORMAT);
-    }
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown,handleValidationFormat);
-
 })(jQuery);
