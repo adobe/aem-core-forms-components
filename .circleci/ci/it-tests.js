@@ -85,9 +85,9 @@ try {
         // this is used in case of re-run failed test scenario
         ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt")
         
-        // // Update OpenSSL to latest version for security in classic AEM environments only
+        // Update to OpenSSL 3 for security in classic AEM environments only
         // if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
-        //     ci.stage('Updating OpenSSL in AEM Docker Container');
+        //     ci.stage('Updating to OpenSSL 3 in AEM Docker Container');
         //     try {
         //         // Find containers running the specific circleci-aem:6.5 image
         //         const containerInfo = ci.sh('docker ps --format "{{.Names}}\t{{.Image}}"', true, false)
@@ -97,30 +97,36 @@ try {
         //                 const [name, image] = line.split('\t');
         //                 return { name: name.trim(), image: image.trim() };
         //             });
-        //
+
         //         console.log('Running containers:', containerInfo);
-        //
+
         //         // Filter for only the specific AEM image we want to update
         //         const targetContainers = containerInfo.filter(container =>
         //             container.image.includes('circleci-aem:6.5')
         //         );
-        //
+
         //         if (targetContainers.length === 0) {
-        //             console.log('No circleci-aem:6.5 containers found, skipping OpenSSL update');
+        //             console.log('No circleci-aem:6.5 containers found, skipping OpenSSL 3 update');
         //         } else {
-        //             // Update OpenSSL only in the specific AEM containers
+        //             // Update to OpenSSL 3 in the specific AEM containers
         //             for (const container of targetContainers) {
-        //                 console.log(`Updating OpenSSL in container: ${container.name} (image: ${container.image})`);
+        //                 console.log(`Updating to OpenSSL 3 in container: ${container.name} (image: ${container.image})`);
         //                 try {
-        //                     ci.sh(`docker exec ${container.name} sh -c "apt-get update -qq && apt-get install -y --only-upgrade openssl libssl-dev || (sudo apt-get update -qq && sudo apt-get install -y --only-upgrade openssl libssl-dev)" || echo "Update failed for ${container.name}"`);
-        //                     ci.sh(`docker exec ${container.name} openssl version || echo "Version check failed for ${container.name}"`);
+        //                     // Check current OpenSSL version
+        //                     ci.sh(`docker exec ${container.name} openssl version || echo "Current version check failed for ${container.name}"`);
+                            
+        //                     // Update package lists and install OpenSSL 3
+        //                     ci.sh(`docker exec ${container.name} sh -c "apt-get update -qq && apt-get install -y openssl libssl3 libssl-dev || (sudo apt-get update -qq && sudo apt-get install -y openssl libssl3 libssl-dev)" || echo "OpenSSL 3 install failed for ${container.name}"`);
+                            
+        //                     // Verify OpenSSL 3 installation
+        //                     ci.sh(`docker exec ${container.name} sh -c "openssl version && openssl version | grep -q '3\\.' && echo 'OpenSSL 3 successfully installed' || echo 'Warning: OpenSSL 3 not detected'" || echo "Version verification failed for ${container.name}"`);
         //                 } catch (containerError) {
-        //                     console.log(`Failed to update OpenSSL in ${container.name}:`, containerError.message);
+        //                     console.log(`Failed to update OpenSSL 3 in ${container.name}:`, containerError.message);
         //                 }
         //             }
         //         }
         //     } catch (error) {
-        //         console.log('OpenSSL update in containers failed, continuing with existing version:', error.message);
+        //         console.log('OpenSSL 3 update in containers failed, continuing with existing version:', error.message);
         //     }
         // }
         
