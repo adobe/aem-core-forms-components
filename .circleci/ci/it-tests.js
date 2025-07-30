@@ -85,44 +85,44 @@ try {
         // this is used in case of re-run failed test scenario
         ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt")
         
-        // Update OpenSSL to latest version for security in classic AEM environments only
-        if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
-            ci.stage('Updating OpenSSL in AEM Docker Container');
-            try {
-                // Find containers running the specific circleci-aem:6.5 image
-                const containerInfo = ci.sh('docker ps --format "{{.Names}}\t{{.Image}}"', true, false)
-                    .split('\n')
-                    .filter(line => line.trim())
-                    .map(line => {
-                        const [name, image] = line.split('\t');
-                        return { name: name.trim(), image: image.trim() };
-                    });
-                
-                console.log('Running containers:', containerInfo);
-                
-                // Filter for only the specific AEM image we want to update
-                const targetContainers = containerInfo.filter(container => 
-                    container.image.includes('circleci-aem:6.5')
-                );
-                
-                if (targetContainers.length === 0) {
-                    console.log('No circleci-aem:6.5 containers found, skipping OpenSSL update');
-                } else {
-                    // Update OpenSSL only in the specific AEM containers
-                    for (const container of targetContainers) {
-                        console.log(`Updating OpenSSL in container: ${container.name} (image: ${container.image})`);
-                        try {
-                            ci.sh(`docker exec ${container.name} sh -c "apt-get update -qq && apt-get install -y --only-upgrade openssl libssl-dev || (sudo apt-get update -qq && sudo apt-get install -y --only-upgrade openssl libssl-dev)" || echo "Update failed for ${container.name}"`);
-                            ci.sh(`docker exec ${container.name} openssl version || echo "Version check failed for ${container.name}"`);
-                        } catch (containerError) {
-                            console.log(`Failed to update OpenSSL in ${container.name}:`, containerError.message);
-                        }
-                    }
-                }
-            } catch (error) {
-                console.log('OpenSSL update in containers failed, continuing with existing version:', error.message);
-            }
-        }
+        // // Update OpenSSL to latest version for security in classic AEM environments only
+        // if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
+        //     ci.stage('Updating OpenSSL in AEM Docker Container');
+        //     try {
+        //         // Find containers running the specific circleci-aem:6.5 image
+        //         const containerInfo = ci.sh('docker ps --format "{{.Names}}\t{{.Image}}"', true, false)
+        //             .split('\n')
+        //             .filter(line => line.trim())
+        //             .map(line => {
+        //                 const [name, image] = line.split('\t');
+        //                 return { name: name.trim(), image: image.trim() };
+        //             });
+        //
+        //         console.log('Running containers:', containerInfo);
+        //
+        //         // Filter for only the specific AEM image we want to update
+        //         const targetContainers = containerInfo.filter(container =>
+        //             container.image.includes('circleci-aem:6.5')
+        //         );
+        //
+        //         if (targetContainers.length === 0) {
+        //             console.log('No circleci-aem:6.5 containers found, skipping OpenSSL update');
+        //         } else {
+        //             // Update OpenSSL only in the specific AEM containers
+        //             for (const container of targetContainers) {
+        //                 console.log(`Updating OpenSSL in container: ${container.name} (image: ${container.image})`);
+        //                 try {
+        //                     ci.sh(`docker exec ${container.name} sh -c "apt-get update -qq && apt-get install -y --only-upgrade openssl libssl-dev || (sudo apt-get update -qq && sudo apt-get install -y --only-upgrade openssl libssl-dev)" || echo "Update failed for ${container.name}"`);
+        //                     ci.sh(`docker exec ${container.name} openssl version || echo "Version check failed for ${container.name}"`);
+        //                 } catch (containerError) {
+        //                     console.log(`Failed to update OpenSSL in ${container.name}:`, containerError.message);
+        //                 }
+        //             }
+        //         }
+        //     } catch (error) {
+        //         console.log('OpenSSL update in containers failed, continuing with existing version:', error.message);
+        //     }
+        // }
         
         // Start CQ
         ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
