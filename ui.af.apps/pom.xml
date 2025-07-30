@@ -333,7 +333,6 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/form/switch/v1/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/review/v1/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/toggleablelink/v1/toggleablelink/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
-                                        <replace file="target/jcr_root/libs/core/fd/components/form/turnstile/v1/turnstile/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fileinput/v4/fileinput/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/datetime/v1/datetime/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                     </target>
