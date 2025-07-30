@@ -4,7 +4,7 @@
   "FileNameInvalid": "No adjunte archivos cuyo nombre comience con (.), contenga \\ / : * ? \" < > | ; % $, o sea una palabra clave reservada como nul, prn, con, lpt o com.",
   "FileMimeTypeInvalid": "Los tipos de archivo ${0} no son compatibles",
   "InternalFormSubmissionError": "Error interno al enviar el formulario.",
-  "FileSizeZero": "Los archivos subidos ${0} están vacíos. Asegúrate de que estén subiendo archivos con contenido",
+  "FileSizeZero": "Los archivos cargados ${0} están vacíos. Asegúrese de cargar archivos con contenido.",
   "type": "Introduzca un valor válido.",
   "required": "Rellene este campo.",
   "minimum": "El valor debe ser mayor que o igual a ${0}.",
@@ -86,12 +86,12 @@
     "more": "más",
     "less": "menos"
   },
-  "saveDraftSuccessMessage"     :   "El borrador se guarda correctamente.",
-  "saveDraftErrorMessage"       :   "Hubo un error que nos impidió guardar su borrador. Por favor inténtalo de nuevo.",
+  "saveDraftSuccessMessage": "El borrador se ha guardado correctamente.",
+  "saveDraftErrorMessage": "Se ha producido un error que impide guardar el borrador. Inténtelo de nuevo.",
   "signature": "Firma",
   "SignatureCanvas": "Lienzo de firma",
   "clearSign": "Borrar firma",
-  "brushSize": "Tamaño del pincel:",
-  "geoLocationError": "Error al obtener la geolocalización",
-  "geoLocationFetch": "Obteniendo ubicación geográfica..."
+  "brushSize": "Tamaño de pincel: ",
+  "geoLocationError": "Error al obtener la localización geográfica",
+  "geoLocationFetch": "Obteniendo localización geográfica…"
 }
