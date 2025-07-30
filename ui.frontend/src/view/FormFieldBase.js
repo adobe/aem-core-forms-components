@@ -167,6 +167,7 @@ class FormFieldBase extends FormField {
     #syncLabel() {
         let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
         if (labelElement) {
+            labelElement.setAttribute('id', `${this.getId()}__label`);
             labelElement.setAttribute('for', this.getWidgetId());
         }
     }
@@ -176,6 +177,7 @@ class FormFieldBase extends FormField {
         let errorElement = typeof this.getErrorDiv === 'function' ? this.getErrorDiv() : null;
         if (errorElement) {
             errorElement.setAttribute('id', `${this.getId()}__errormessage`);
+            errorElement.setAttribute('aria-describedby', `${this.getId()}__label`);
         }
     }   
 
@@ -249,7 +251,7 @@ class FormFieldBase extends FormField {
         this.#syncLabel()
         this.#syncWidget()
         this.#syncShortDesc()
-        this. #syncLongDesc()
+        this.#syncLongDesc()
         this.#syncAriaDescribedBy()
         this.#syncError()
         this.#syncAriaLabel()
@@ -538,6 +540,8 @@ class FormFieldBase extends FormField {
             // Check if the validationMessage is different from the current content
             if (this.errorDiv.innerHTML !== state.validationMessage) {
                 this.errorDiv.innerHTML = state.validationMessage;
+                this.errorDiv.removeAttribute('tabindex');
+                this.errorDiv.removeAttribute('role');
                 if (state.validity.valid === false) {
                     // Find the first key whose value is true
                     const validationType = Object.keys(state.validity).find(key => key !== 'valid' && state.validity[key] === true);
@@ -550,7 +554,9 @@ class FormFieldBase extends FormField {
                     if (!state.validationMessage) {
                         this.errorDiv.innerHTML = LanguageUtils.getTranslatedString(this.formContainer.getModel().lang, "defaultError");
                     }
-                } 
+                    this.errorDiv.setAttribute('tabindex', 0);
+                    this.errorDiv.setAttribute('role', 'complementary');
+                }
                 this.#syncAriaDescribedBy();
             }
         }
