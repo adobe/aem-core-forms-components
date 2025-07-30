@@ -140,7 +140,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Premete Invio per eliminare il file ",
-            "FileSizeGreater"       :        "I file ${0} superano le dimensioni previste: ${1} MB.",
+            "FileSizeGreater"       :       "${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.",
             "FileNameInvalid"       :       'Non allegare file il cui nome inizia con (.), contiene \\ / : * ? " < > | ; % $ oppure è una parola chiave riservata come nul, prn, con, lpt o com.',
             "FileMimeTypeInvalid"   :       "I file ${0} non sono tipi di file supportati",
             "InternalFormSubmissionError" :  "Errore interno durante l'invio del modulo."
