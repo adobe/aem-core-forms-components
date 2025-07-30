@@ -4,7 +4,7 @@
   "FileNameInvalid": "不要附加以下檔案：檔案名稱以 (.) 開頭且包含 \\ / : * ? \" < > | ; % $，或檔案名稱為保留關鍵字，例如 nul、prn、con、lpt 或 com。",
   "FileMimeTypeInvalid": "${0} 檔案的檔案類型不受支援",
   "InternalFormSubmissionError": "提交表單時發生內部錯誤。",
-  "FileSizeZero": "上傳的檔案 ${0} 為空。請確保您上傳的是有內容的檔案。",
+  "FileSizeZero": "上傳的檔案 ${0} 是空的。請確定您上傳的檔案包含內容。",
   "type": "請輸入有效值。",
   "required": "請填寫此欄位。",
   "minimum": "值必須大於或等於 ${0}。",
@@ -86,12 +86,12 @@
     "more": "超過",
     "less": "少於"
   },
-  "saveDraftSuccessMessage"     :   "草稿保存成功。",
-  "saveDraftErrorMessage"       :   "出现错误，导致我们无法保存您的草稿。请再试一次。",
+  "saveDraftSuccessMessage": "草稿已成功儲存。",
+  "saveDraftErrorMessage": "發生錯誤，導致我們無法儲存您的草稿。請再試一次。",
   "signature": "簽名",
-  "SignatureCanvas": "签名画布",
-  "clearSign": "清晰的簽名",
-  "brushSize": "刷子尺寸：",
-  "geoLocationError": "获取地理位置时出错",
-  "geoLocationFetch": "正在获取地理位置..."
+  "SignatureCanvas": "簽名畫布",
+  "clearSign": "清除簽名",
+  "brushSize": "筆刷大小：",
+  "geoLocationError": "擷取地理位置時出錯",
+  "geoLocationFetch": "正在擷取地理位置…"
 }
