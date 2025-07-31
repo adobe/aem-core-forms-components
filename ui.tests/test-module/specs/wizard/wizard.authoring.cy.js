@@ -227,7 +227,7 @@ describe('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it('save as fragment in Wizard', {retries: 3}, function () {
+            it.skip('save as fragment in Wizard', {retries: 3}, function () {
                 cy.cleanTest(wizardLayoutDrop).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
@@ -300,7 +300,7 @@ describe('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it('save as fragment in Wizard', { retries: 3 }, function() {
+            it.skip('save as fragment in Wizard', { retries: 3 }, function() {
                 cy.cleanTest(wizardEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);

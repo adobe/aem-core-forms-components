@@ -131,7 +131,8 @@ describe('Page - Authoring', function () {
                 getContentFrameBody().find('.cmp-adaptiveform-fragment__placeholderContainer').should("be.visible");
             });
 
-            it('embed fragment in form', function () {
+            // todo: embed fragment pending to be merged in 650
+            it.skip('embed fragment in form', function () {
                 if (toggle_array.includes("FT_FORMS-2494")) {
                     // Textfield should not exist before embeding fragment
                     getContentFrameBody().find('.cmp-adaptiveform-textinput').should("not.exist");
