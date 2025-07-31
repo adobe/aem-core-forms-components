@@ -442,6 +442,7 @@ describe("Form Runtime with Date Picker", () => {
         cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").focus().type("{enter}");
         cy.get(".datetimepicker").should("be.visible");
         cy.get("body").type("{esc}");
+    });
 
     // Mobile Touch Functionality Tests
     describe("Mobile Touch Functionality", () => {
@@ -510,4 +511,4 @@ describe("Form Runtime with Date Picker", () => {
             })
         });
     });
-})
+});
