@@ -60,20 +60,18 @@ describe('Document of Record Test', () => {
           body: formdata,
           redirect: 'follow'
         };
-        if (cy.af.isLatestAddon()) {
-            const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-          // use cursor based API if latest AddOn
-          return getFormId(formPath)
-          .then(formId => {
-            return fetch(`${contextPath}/adobe/forms/af/dor/${formId}`, requestOptions)
-            .then(response => {
-              const contentType = response.headers.get('Content-Type');
-              expect(contentType).to.equal("application/pdf")
-              const blob = new Blob([response.data], {type: 'application/pdf'});
-              expect(blob.size).not.to.equal(0)
-            })
-          })
-        }
+        const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+      // use cursor based API if latest AddOn
+      return getFormId(formPath)
+      .then(formId => {
+        return fetch(`${contextPath}/adobe/forms/af/dor/${formId}`, requestOptions)
+        .then(response => {
+          const contentType = response.headers.get('Content-Type');
+          expect(contentType).to.equal("application/pdf")
+          const blob = new Blob([response.data], {type: 'application/pdf'});
+          expect(blob.size).not.to.equal(0)
+        })
+      })
       }
     });
   })
