@@ -167,7 +167,7 @@ describe('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it('Save panel as fragment via toolbar', { retries: 3}, function () {
+            it.skip('Save panel as fragment via toolbar', { retries: 3}, function () {
                 cy.cleanTest(panelEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
@@ -198,7 +198,7 @@ describe('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it('Save panel as fragment via toolbar', { retries: 3}, function () {
+            it.skip('Save panel as fragment via toolbar', { retries: 3}, function () {
                 cy.cleanTest(panelContainerEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);

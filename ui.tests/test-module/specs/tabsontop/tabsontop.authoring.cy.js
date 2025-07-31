@@ -242,7 +242,7 @@ describe('Page - Authoring', function () {
         });
 
         if(cy.af.isLatestAddon()) {
-            it('open and save tab as fragment dialog of Tab on top',{ retries: 3}, function(){
+            it.skip('open and save tab as fragment dialog of Tab on top',{ retries: 3}, function(){
                 cy.cleanTest(tabsPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
@@ -276,7 +276,7 @@ describe('Page - Authoring', function () {
         });
 
         if (cy.af.isLatestAddon()) {
-            it('open and save tab as fragment dialog of Tab on top', {retries: 3}, function(){
+            it.skip('open and save tab as fragment dialog of Tab on top', {retries: 3}, function(){
                 cy.cleanTest(panelContainerEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);

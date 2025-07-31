@@ -85,51 +85,6 @@ try {
         // this is used in case of re-run failed test scenario
         ci.sh("sed -i 's/false/true/' /home/circleci/build/TEST_EXECUTION_STATUS.txt")
         
-        // Update to OpenSSL 3 for security in classic AEM environments only
-        // if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
-        //     ci.stage('Updating to OpenSSL 3 in AEM Docker Container');
-        //     try {
-        //         // Find containers running the specific circleci-aem:6.5 image
-        //         const containerInfo = ci.sh('docker ps --format "{{.Names}}\t{{.Image}}"', true, false)
-        //             .split('\n')
-        //             .filter(line => line.trim())
-        //             .map(line => {
-        //                 const [name, image] = line.split('\t');
-        //                 return { name: name.trim(), image: image.trim() };
-        //             });
-
-        //         console.log('Running containers:', containerInfo);
-
-        //         // Filter for only the specific AEM image we want to update
-        //         const targetContainers = containerInfo.filter(container =>
-        //             container.image.includes('circleci-aem:6.5')
-        //         );
-
-        //         if (targetContainers.length === 0) {
-        //             console.log('No circleci-aem:6.5 containers found, skipping OpenSSL 3 update');
-        //         } else {
-        //             // Update to OpenSSL 3 in the specific AEM containers
-        //             for (const container of targetContainers) {
-        //                 console.log(`Updating to OpenSSL 3 in container: ${container.name} (image: ${container.image})`);
-        //                 try {
-        //                     // Check current OpenSSL version
-        //                     ci.sh(`docker exec ${container.name} openssl version || echo "Current version check failed for ${container.name}"`);
-                            
-        //                     // Update package lists and install OpenSSL 3
-        //                     ci.sh(`docker exec ${container.name} sh -c "apt-get update -qq && apt-get install -y openssl libssl3 libssl-dev || (sudo apt-get update -qq && sudo apt-get install -y openssl libssl3 libssl-dev)" || echo "OpenSSL 3 install failed for ${container.name}"`);
-                            
-        //                     // Verify OpenSSL 3 installation
-        //                     ci.sh(`docker exec ${container.name} sh -c "openssl version && openssl version | grep -q '3\\.' && echo 'OpenSSL 3 successfully installed' || echo 'Warning: OpenSSL 3 not detected'" || echo "Version verification failed for ${container.name}"`);
-        //                 } catch (containerError) {
-        //                     console.log(`Failed to update OpenSSL 3 in ${container.name}:`, containerError.message);
-        //                 }
-        //             }
-        //         }
-        //     } catch (error) {
-        //         console.log('OpenSSL 3 update in containers failed, continuing with existing version:', error.message);
-        //     }
-        // }
-        
         // Start CQ
         ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
