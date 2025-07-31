@@ -51,6 +51,23 @@ common:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
       - run:
+          name: Verify OpenSSL Versions in Containers
+          command: |
+            echo "=== Checking OpenSSL in Primary Container (QP) ==="
+            docker ps --format "table {{.Names}}\t{{.Image}}"
+            PRIMARY_CONTAINER=$(docker ps --format "{{.Names}}" | head -1)
+            echo "Primary container: $PRIMARY_CONTAINER"
+            docker exec $PRIMARY_CONTAINER openssl version || echo "OpenSSL check failed in primary container"
+            
+            echo "=== Checking OpenSSL in AEM Container ==="
+            AEM_CONTAINER=$(docker ps --format "{{.Names}}\t{{.Image}}" | grep "circleci-aem:6.5" | cut -f1)
+            echo "AEM container: $AEM_CONTAINER"
+            if [ -n "$AEM_CONTAINER" ]; then
+              docker exec $AEM_CONTAINER openssl version || echo "OpenSSL check failed in AEM container"
+            else
+              echo "AEM container not found"
+            fi
+      - run:
           name: UI tests
           no_output_timeout: 20m
           # Supports 'Re-run failed tests only'. See this for more info: https://circleci.com/docs/rerun-failed-tests-only/
@@ -130,13 +147,13 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.23.0-openssl3-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.23.0-openssl-openjdk11
         <<: *docker_auth
   test_executor_655_latest:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.23.0-openssl3-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.23.0-openssl-openjdk11
         <<: *docker_auth
 
 jobs:
