@@ -47,8 +47,9 @@ describe('Document of Record Test', () => {
       }
     });
   }
-
-    it('should download document of record', () => {
+    // todo: DOR requires some additional dependencies for 650, as per, https://experienceleague.adobe.com/en/docs/experience-manager-65/content/implementing/deploying/introduction/technical-requirements
+    //  hence skipping this as it would require changing cif docker image
+    it.skip('should download document of record', () => {
     return cy.window().then($window => {
       if($window.guideBridge && $window.guideBridge.isConnected()) {
        const bridge = $window.guideBridge;
