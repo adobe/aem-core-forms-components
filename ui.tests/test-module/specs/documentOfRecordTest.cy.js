@@ -47,9 +47,8 @@ describe('Document of Record Test', () => {
       }
     });
   }
-    // todo: DOR requires some additional dependencies for 650, as per, https://experienceleague.adobe.com/en/docs/experience-manager-65/content/implementing/deploying/introduction/technical-requirements
-    //  hence skipping this as it would require changing cif docker image
-    it.skip('should download document of record', () => {
+
+    it('should download document of record', () => {
     return cy.window().then($window => {
       if($window.guideBridge && $window.guideBridge.isConnected()) {
        const bridge = $window.guideBridge;
@@ -61,18 +60,20 @@ describe('Document of Record Test', () => {
           body: formdata,
           redirect: 'follow'
         };
-        const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-      // use cursor based API if latest AddOn
-      return getFormId(formPath)
-      .then(formId => {
-        return fetch(`${contextPath}/adobe/forms/af/dor/${formId}`, requestOptions)
-        .then(response => {
-          const contentType = response.headers.get('Content-Type');
-          expect(contentType).to.equal("application/pdf")
-          const blob = new Blob([response.data], {type: 'application/pdf'});
-          expect(blob.size).not.to.equal(0)
-        })
-      })
+        if (cy.af.isLatestAddon()) {
+            const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+          // use cursor based API if latest AddOn
+          return getFormId(formPath)
+          .then(formId => {
+            return fetch(`${contextPath}/adobe/forms/af/dor/${formId}`, requestOptions)
+            .then(response => {
+              const contentType = response.headers.get('Content-Type');
+              expect(contentType).to.equal("application/pdf")
+              const blob = new Blob([response.data], {type: 'application/pdf'});
+              expect(blob.size).not.to.equal(0)
+            })
+          })
+        }
       }
     });
   })
