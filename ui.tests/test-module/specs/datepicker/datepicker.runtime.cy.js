@@ -415,7 +415,7 @@ describe("Form Runtime with Date Picker", () => {
 
         cy.get(`#${datePicker7}`).find("input").should("have.attr", "type", "text"); // Custom format uses text input
         cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("have.attr", "tabindex", "0");
-        cy.get(`#${datePicker7}`).find("input").focus().tab();
+        cy.get(`#${datePicker7}`).find("input").focus().type('{tab}');
         cy.focused().should("have.class", "cmp-adaptiveform-datepicker__calendar-icon");
         cy.focused().type("{enter}");
         cy.get(".datetimepicker").should("be.visible");
