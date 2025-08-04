@@ -455,7 +455,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+-\w+$/
+              only: /^core-forms-components-reactor-*/
       - release:
           requires:
             - build-java-11
@@ -464,4 +464,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+-\w+$/
+              only: /^core-forms-components-reactor-*/
