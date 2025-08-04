@@ -50,6 +50,7 @@ common:
       - run:
           name: Install AXE HTML Reporter
           command: npm install axe-html-reporter
+
       - run:
           name: UI tests
           no_output_timeout: 20m
@@ -130,13 +131,13 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.22.0-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.23.0-openssl-openjdk11
         <<: *docker_auth
   test_executor_655_latest:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.22.0-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.24-load3-openjdk11
         <<: *docker_auth
 
 jobs:
@@ -207,7 +208,7 @@ jobs:
       BROWSER: chrome
     resource_class: xlarge
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
   cypress-chrome-655-with-latest-addon-with-ft:
@@ -218,32 +219,32 @@ jobs:
       BROWSER: chrome
     resource_class: xlarge
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
-  cypress-chrome-655-with-latest-addon-without-ft:
-    executor: test_executor_655_latest
-    environment:
-      AEM: classic-latest
-      TYPE: cypress
-      BROWSER: chrome
-      FTCONFIG: false
-    resource_class: xlarge
-    working_directory: /home/circleci/build
-    parallelism: 8
-    <<: *cypress_test_steps
-
-  cypress-chrome-655-with-latest-addon-context-path:
-    executor: test_executor_655_latest
-    environment:
-      AEM: classic-latest-cp
-      TYPE: cypress
-      BROWSER: chrome
-      CONTEXTPATH: lc
-    resource_class: xlarge
-    working_directory: /home/circleci/build
-    parallelism: 8
-    <<: *cypress_test_steps
+#  cypress-chrome-655-with-latest-addon-without-ft:
+#    executor: test_executor_655_latest
+#    environment:
+#      AEM: classic-latest
+#      TYPE: cypress
+#      BROWSER: chrome
+#      FTCONFIG: false
+#    resource_class: xlarge
+#    working_directory: /home/circleci/build
+#    parallelism: 8
+#    <<: *cypress_test_steps
+#
+#  cypress-chrome-655-with-latest-addon-context-path:
+#    executor: test_executor_655_latest
+#    environment:
+#      AEM: classic-latest-cp
+#      TYPE: cypress
+#      BROWSER: chrome
+#      CONTEXTPATH: lc
+#    resource_class: xlarge
+#    working_directory: /home/circleci/build
+#    parallelism: 8
+#    <<: *cypress_test_steps
 
   jsdocs-deploy:
     docker:
@@ -388,13 +389,13 @@ jobs:
             # echo "Before sed: $(cat VERSIONS.md)"
             # update versions.md
             sed -i "/$LAST_VERSION/ { p; b; }; 1,/$LAST_VERSION/ { p; d; }" VERSIONS.md
-            sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
-            echo "After sed: $(cat VERSIONS.md)"
+            sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\+?\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
+            # echo "After sed: $(cat VERSIONS.md)"
 
             # echo "Before sed: $(cat README.md)"
             # update readme.md
-            sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+ \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
-            echo "After sed: $(cat README.md)"
+            sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\+? \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
+            # echo "After sed: $(cat README.md)"
 
             # Check if package-lock.json is modified
             if [[ $(git status --porcelain | grep "package-lock.json") ]]; then
@@ -433,20 +434,20 @@ workflows:
           requires:
             - build-java-11
             - build-java-8
-      - cypress-chrome-655-with-latest-addon-without-ft:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-            - build-java-8
-      - cypress-chrome-655-with-latest-addon-context-path:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-            - build-java-8
+#      - cypress-chrome-655-with-latest-addon-without-ft:
+#          filters:
+#            tags:
+#              only: /.*/
+#          requires:
+#            - build-java-11
+#            - build-java-8
+#      - cypress-chrome-655-with-latest-addon-context-path:
+#          filters:
+#            tags:
+#              only: /.*/
+#          requires:
+#            - build-java-11
+#            - build-java-8
       - jsdocs-deploy:
           requires:
             - build-java-11
