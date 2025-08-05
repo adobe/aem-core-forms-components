@@ -559,7 +559,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.#focusedOnLi = false;
         DatePickerWidget.#visible = true;
         this.#position();
-        
+
         // Add document touch listener for mobile to close datepicker when tapping outside
         if (this.#touchSupported && !this.#documentTouchListener) {
           this.#documentTouchListener = (evt) => {
@@ -569,7 +569,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
           };
           document.addEventListener("touchstart", this.#documentTouchListener, false);
         }
-        
+
         if (this.#options.showCalendarIcon) {
           this.#curInstance.$field.setAttribute('readonly', true);    // when the datepicker is active, deactivate the field
         }
@@ -1209,11 +1209,36 @@ if (typeof window.DatePickerWidget === 'undefined') {
         // If value is already a Date object and it's valid, use it as is
         currDate = value;
       } else {
-        // Otherwise, construct a new Date object
-        currDate = new Date(value);
-        const timezoneOffset = currDate.getTimezoneOffset();
-        currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+        // Check if value is empty
+        if (!value || value.trim() === '') {
+          currDate = new Date();
+        } else {
+          let displayFormat = this.#model._jsonModel?.displayFormat;
+
+          // First check if value is in ISO format (YYYY-MM-DD) - handle it directly
+          if (value.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            currDate = new Date(value);
+          }
+          // Only apply dd/MM/yyyy parsing for values that contain '/' and have the right format
+          else if (displayFormat && (displayFormat.includes('dd/MM/yyyy') || displayFormat.includes('DD/MM/YYYY')) && value.includes('/')) {
+            const parts = value.split('/');
+            if (parts.length === 3 && parts[0] && parts[1] && parts[2]) {
+              currDate = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+            } else {
+              currDate = new Date(value);
+            }
+          } else {
+            currDate = new Date(value);
+          }
+        }
       }
+
+      // Commenting it as it changes timezone and create another issue for 1st of every month make it 31st of previous month
+      // if (currDate && !isNaN(currDate)) {
+      //   const timezoneOffset = currDate.getTimezoneOffset();
+      //   currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+      // }
+      // }
 
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
