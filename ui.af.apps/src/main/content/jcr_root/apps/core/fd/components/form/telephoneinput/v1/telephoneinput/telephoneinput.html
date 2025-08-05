@@ -34,7 +34,7 @@
      data-sly-test.widgetId="${'{0}-{1}' @ format=[telText.id, 'widget']}">
     <div class="cmp-adaptiveform-telephoneinput__label-container">
       <div data-sly-call="${label.label @componentId=widgetIdd, labelValue=telText.label.value, labelVisible=telText.label.visible, labelRichText=telText.label.richText, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
-      <div data-sly-call="${questionMark.questionMark @componentId=telText.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=telText.id, longDescription=telText.description, bemBlock='cmp-adaptiveform-telephoneinput', componentTitle=telText.label.value}" data-sly-unwrap></div>
     </div>
     <input title="${telText.tooltipVisible ? '' : telText.tooltipText}"
            class="cmp-adaptiveform-telephoneinput__widget"
