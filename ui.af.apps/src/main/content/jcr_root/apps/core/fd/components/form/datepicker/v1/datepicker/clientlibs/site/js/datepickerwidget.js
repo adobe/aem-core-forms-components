@@ -1219,7 +1219,6 @@ if (typeof window.DatePickerWidget === 'undefined') {
           currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
         }
       }
-      // NO TIMEZONE ADJUSTMENT - removed to prevent month boundary issues
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
         this.selectedMonth = currDate.getMonth();
