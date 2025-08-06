@@ -1213,6 +1213,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
         // Use FormView.Formatters.parseDate for dd/MM/yyyy format
         if (displayFormat && (displayFormat.includes('dd/MM/yyyy') || displayFormat.includes('DD/MM/YYYY')) && value.includes('/')) {
           currDate = FormView.Formatters.parseDate(value, this.#lang || 'en', displayFormat);
+          const timezoneOffset = currDate.getTimezoneOffset();
+          currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
         } else {
           currDate = new Date(value);
           const timezoneOffset = currDate.getTimezoneOffset();
