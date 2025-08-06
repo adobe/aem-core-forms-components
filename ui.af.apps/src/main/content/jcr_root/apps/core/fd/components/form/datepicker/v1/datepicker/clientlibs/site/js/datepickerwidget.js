@@ -1209,16 +1209,27 @@ if (typeof window.DatePickerWidget === 'undefined') {
         // If value is already a Date object and it's valid, use it as is
         currDate = value;
       } else {
-        let displayFormat = this.#model._jsonModel?.displayFormat;
-        // Use FormView.Formatters.parseDate for dd/MM/yyyy format
-        if (displayFormat && (displayFormat.includes('dd/MM/yyyy') || displayFormat.includes('DD/MM/YYYY')) && value.includes('/')) {
-          currDate = FormView.Formatters.parseDate(value, this.#lang || 'en', displayFormat);
+        // Check if value is empty
+        if (!value || value.trim() === '') {
+          currDate = new Date();
         } else {
-          currDate = new Date(value);
+          let displayFormat = this.#model._jsonModel?.displayFormat;
+          // If displayFormat is null/undefined, use default parsing
+          if (!displayFormat) {
+            currDate = new Date(value);
+          } else {
+            // Use FormView.Formatters.parseDate for custom formats
+            currDate = FormView.Formatters.parseDate(value, this.#lang || 'en', displayFormat);
+            // If parseDate failed (returned null), fallback to default parsing
+            if (currDate === null) {
+              currDate = new Date(value);
+            }
+            const timezoneOffset = currDate.getTimezoneOffset();
+            currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+          }
         }
-        const timezoneOffset = currDate.getTimezoneOffset();
-        currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
       }
+
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
         this.selectedMonth = currDate.getMonth();
@@ -1227,7 +1238,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
       } else {
         this.selectedYear
             = this.selectedMonth
-            = this.selectedYear
+            = this.selectedDay  // FIXED: was this.selectedYear
             = -1;
       }
       if (this.#curInstance != null) {
@@ -1261,5 +1272,4 @@ if (typeof window.DatePickerWidget === 'undefined') {
     }
 
   }
-
 }
