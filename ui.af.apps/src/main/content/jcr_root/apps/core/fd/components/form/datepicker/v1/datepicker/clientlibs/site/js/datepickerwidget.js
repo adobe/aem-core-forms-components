@@ -1209,37 +1209,15 @@ if (typeof window.DatePickerWidget === 'undefined') {
         // If value is already a Date object and it's valid, use it as is
         currDate = value;
       } else {
-        // Check if value is empty
-        if (!value || value.trim() === '') {
-          currDate = new Date();
+        let displayFormat = this.#model._jsonModel?.displayFormat;
+        // Use FormView.Formatters.parseDate for dd/MM/yyyy format
+        if (displayFormat && (displayFormat.includes('dd/MM/yyyy') || displayFormat.includes('DD/MM/YYYY')) && value.includes('/')) {
+          currDate = FormView.Formatters.parseDate(value, this.#lang || 'en', displayFormat);
         } else {
-          let displayFormat = this.#model._jsonModel?.displayFormat;
-
-          // First check if value is in ISO format (YYYY-MM-DD) - handle it directly
-          if (value.match(/^\d{4}-\d{2}-\d{2}$/)) {
-            currDate = new Date(value);
-          }
-          // Only apply dd/MM/yyyy parsing for values that contain '/' and have the right format
-          else if (displayFormat && (displayFormat.includes('dd/MM/yyyy') || displayFormat.includes('DD/MM/YYYY')) && value.includes('/')) {
-            const parts = value.split('/');
-            if (parts.length === 3 && parts[0] && parts[1] && parts[2]) {
-              currDate = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
-            } else {
-              currDate = new Date(value);
-            }
-          } else {
-            currDate = new Date(value);
-          }
+          currDate = new Date(value);
         }
       }
-
-      // Commenting it as it changes timezone and create another issue for 1st of every month make it 31st of previous month
-      // if (currDate && !isNaN(currDate)) {
-      //   const timezoneOffset = currDate.getTimezoneOffset();
-      //   currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
-      // }
-      // }
-
+      // NO TIMEZONE ADJUSTMENT - removed to prevent month boundary issues
       if (!isNaN(currDate) && value != null) {
         //in case the value is directly updated from the field without using calendar widget
         this.selectedMonth = currDate.getMonth();
