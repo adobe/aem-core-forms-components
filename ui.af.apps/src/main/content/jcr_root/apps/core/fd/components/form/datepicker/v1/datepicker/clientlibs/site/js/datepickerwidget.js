@@ -1215,6 +1215,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
           currDate = FormView.Formatters.parseDate(value, this.#lang || 'en', displayFormat);
         } else {
           currDate = new Date(value);
+          const timezoneOffset = currDate.getTimezoneOffset();
+          currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
         }
       }
       // NO TIMEZONE ADJUSTMENT - removed to prevent month boundary issues
