@@ -513,4 +513,82 @@ describe("Form Runtime with Date Picker", () => {
             })
         });
     });
+
+    it("Test calendar widget opens to correct month for dd/MM/yyyy format", () => {
+        // This is the core test for the original issue
+        const [datePicker, datePickerFieldView] = Object.entries(formContainer._fields)[6];
+
+        // Test the specific case that was failing: 03/07/2025 should show July, not March
+        const problematicDate = "03/07/2025";
+
+        cy.get(`#${datePicker}`).find("input").clear().wait(500).type(problematicDate).blur().then(() => {
+
+            // Verify no error message appears for valid date
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text', "");
+
+            // Open calendar
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+                .should("be.visible").click({force: true}).then(() => {
+
+                // Verify we're in July 2025, NOT March 2025
+                cy.get(".dp-caption").should("be.visible").then(($caption) => {
+                    const captionText = $caption.text();
+                    cy.log(`Calendar opened to: ${captionText}`);
+
+                    // Should contain July and 2025
+                    expect(captionText).to.include("July");
+                    expect(captionText).to.include("2025");
+
+                    // Should NOT contain March
+                    expect(captionText).to.not.include("March");
+                });
+
+                // Verify the 3rd day is selected
+                cy.get("#li-day-4").should("have.class", "dp-selected"); // +1 for 1-based indexing
+
+                // Close calendar
+                cy.get("body").click(10, 10);
+                cy.get(".datetimepicker").should("not.be.visible");
+            });
+        });
+    });
+
+    it.only("Test calendar widget opens to correct month for dd/MM/yyyy format", () => {
+        // This is the core test for the original issue
+        const [datePicker, datePickerFieldView] = Object.entries(formContainer._fields)[6];
+
+        // Test the specific case that was failing: 03/07/2025 should show July, not March
+        const problematicDate = "03/08/2025";
+
+        cy.get(`#${datePicker}`).find("input").clear().wait(500).type(problematicDate).blur().then(() => {
+
+            // Verify no error message appears for valid date
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__errormessage").should('have.text', "");
+
+            // Open calendar
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+                .should("be.visible").click({force: true}).then(() => {
+
+                // Verify we're in July 2025, NOT March 2025
+                cy.get(".dp-caption").should("be.visible").then(($caption) => {
+                    const captionText = $caption.text();
+                    cy.log(`Calendar opened to: ${captionText}`);
+
+                    // Should contain July and 2025
+                    expect(captionText).to.include("August");
+                    expect(captionText).to.include("2025");
+
+                    // Should NOT contain March
+                    expect(captionText).to.not.include("March");
+                });
+
+                // Verify the 3rd day is selected
+                cy.get("#li-day-4").should("have.class", "dp-selected"); // +1 for 1-based indexing
+
+                // Close calendar
+                cy.get("body").click(10, 10);
+                cy.get(".datetimepicker").should("not.be.visible");
+            });
+        });
+    });
 });

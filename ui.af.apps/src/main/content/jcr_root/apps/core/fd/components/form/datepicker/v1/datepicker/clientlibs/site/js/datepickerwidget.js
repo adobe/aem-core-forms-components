@@ -1238,7 +1238,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
       } else {
         this.selectedYear
             = this.selectedMonth
-            = this.selectedDay  // FIXED: was this.selectedYear
+            = this.selectedDay
             = -1;
       }
       if (this.#curInstance != null) {
