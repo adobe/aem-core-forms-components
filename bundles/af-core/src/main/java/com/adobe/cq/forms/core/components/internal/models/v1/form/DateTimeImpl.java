@@ -17,6 +17,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
@@ -97,6 +98,19 @@ public class DateTimeImpl extends AbstractFieldImpl implements DateTime {
     @Override
     public Object[] getDefault() {
         return defaultValue != null ? defaultValue.clone() : null;
+    }
+
+    /**
+     * Returns the server timezone identifier for client-side consumption.
+     *
+     * @return server timezone identifier (e.g., "America/New_York", "Asia/Kolkata")
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.0
+     */
+    @Override
+    public String getServerTimezone() {
+        ZoneId serverZone = ZoneId.systemDefault();
+
+        return serverZone.getId();
     }
 
 }
