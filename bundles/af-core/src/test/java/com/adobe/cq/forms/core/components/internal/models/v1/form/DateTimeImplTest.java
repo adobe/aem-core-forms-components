@@ -35,6 +35,8 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 @ExtendWith(AemContextExtension.class)
 public class DateTimeImplTest {
@@ -71,7 +73,15 @@ public class DateTimeImplTest {
     void testGetName() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
         assertEquals("abc", datetime.getName());
+    }
 
+    @Test
+    void testGetServerTimezone() {
+        DateTime dateTime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
+        String timezone = dateTime.getServerTimezone();
+
+        assertNotNull(timezone);
+        assertFalse(timezone.isEmpty());
     }
 
     @Test
