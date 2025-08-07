@@ -65,7 +65,6 @@ function getCurrentDateInServerTimezone() {
 
 // Set current date as default value
 const currentServerDate = getCurrentDateInServerTimezone();
-document.querySelector('.cmp-adaptiveform-datetime__widget').value = currentServerDate;
 ```
 
 ## Client Libraries
