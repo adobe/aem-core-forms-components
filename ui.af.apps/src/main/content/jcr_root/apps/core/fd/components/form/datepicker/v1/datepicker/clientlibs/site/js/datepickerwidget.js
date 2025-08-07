@@ -1209,10 +1209,25 @@ if (typeof window.DatePickerWidget === 'undefined') {
         // If value is already a Date object and it's valid, use it as is
         currDate = value;
       } else {
-        // Otherwise, construct a new Date object
-        currDate = new Date(value);
-        const timezoneOffset = currDate.getTimezoneOffset();
-        currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+        // Check if value is empty
+        if (!value || value.trim() === '') {
+          currDate = new Date();
+        } else {
+          let displayFormat = this.#model._jsonModel?.displayFormat;
+          // If displayFormat is null/undefined, use default parsing
+          if (!displayFormat) {
+            currDate = new Date(value);
+          } else {
+            // Use FormView.Formatters.parseDate for custom formats
+            currDate = FormView.Formatters.parseDate(value, this.#lang || 'en', displayFormat);
+            // If parseDate failed (returned null), fallback to default parsing
+            if (currDate === null) {
+              currDate = new Date(value);
+            }
+            const timezoneOffset = currDate.getTimezoneOffset();
+            currDate.setMinutes(currDate.getMinutes() + timezoneOffset);
+          }
+        }
       }
 
       if (!isNaN(currDate) && value != null) {
@@ -1223,7 +1238,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
       } else {
         this.selectedYear
             = this.selectedMonth
-            = this.selectedYear
+            = this.selectedDay
             = -1;
       }
       if (this.#curInstance != null) {
@@ -1257,5 +1272,4 @@ if (typeof window.DatePickerWidget === 'undefined') {
     }
 
   }
-
 }
