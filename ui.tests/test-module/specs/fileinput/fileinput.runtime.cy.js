@@ -235,7 +235,7 @@ describe("Form with File Input - Basic Tests", () => {
         const fileInput = "input[name='fileinput1']";
         cy.attachFile(fileInput, [sampleFileNames[0]]);
         cy.attachFile(fileInput, [sampleFileNames[1]]);
-        cy.attachFile(fileInput, [sampleFileNames[0]]);
+        cy.attachFile(fileInput, [sampleFileNames[2]]);
 
         checkFilePreviewInFileAttachment(fileInput);
 
