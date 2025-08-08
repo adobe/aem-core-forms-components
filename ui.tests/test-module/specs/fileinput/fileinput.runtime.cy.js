@@ -53,10 +53,11 @@ const checkFilePreviewInFileAttachment = (component) => {
 
 const deleteSelectedFiles = (component, fileNames) => {
     cy.get(component).then(() => {
-        fileNames.forEach((fileName) => {
-            cy.get(".cmp-adaptiveform-fileinput__filedelete").should('have.attr', 'role', 'button');
-            cy.get(".cmp-adaptiveform-fileinput__filename").contains(fileName).next().click();
-        })
+        cy.wrap(fileNames).each((fileName) => {
+            cy.get('.cmp-adaptiveform-fileinput__filedelete').should('have.attr', 'role', 'button');
+            cy.get('.cmp-adaptiveform-fileinput__filename').contains(fileName).first().next().click();
+            cy.wait(500);
+        });
     });
 };
 
