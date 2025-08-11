@@ -61,13 +61,6 @@ const deleteSelectedFiles = (component, fileNames) => {
     });
 };
 
-const deleteIndividualFile = (component, fileName) => {
-    cy.get(component).then(() => {
-        cy.get('.cmp-adaptiveform-fileinput__filedelete').should('have.attr', 'role', 'button');
-        cy.get('.cmp-adaptiveform-fileinput__filename').contains(fileName).first().next().click();
-        cy.wait(500);
-    });
-}
 
 const checkFileNamesInFileAttachmentView = (component, fileNames) => {
     // check if file present in view
@@ -239,23 +232,53 @@ describe("Form with File Input - Basic Tests", () => {
         })
     })
 
-    it("check preview and delete functionality of duplicate files", () => {
-        let sampleFileNames = ['sample2.txt','sample.txt','sample2.txt'];
+    it.only("check preview and delete functionality of duplicate files", () => {
+        let sampleFileNames = ['sample2.txt', 'sample.txt', 'sample2.txt'];
         const fileInput = "input[name='fileinput1']";
+        
+        // Attach files
         cy.attachFile(fileInput, [sampleFileNames[0]]);
         cy.attachFile(fileInput, [sampleFileNames[1]]);
         cy.attachFile(fileInput, [sampleFileNames[2]]);
-
+    
         checkFilePreviewInFileAttachment(fileInput);
-
-        sampleFileNames.forEach((fileName) => {
-            deleteIndividualFile(fileInput, fileName);
-        });
-
-        // deleteSelectedFiles(fileInput, sampleFileNames)
-
+    
+        // Verify initial state
+        cy.get('.cmp-adaptiveform-fileinput__fileitem').should('have.length', 3);
+        
+        // Delete files by index with verification
+        deleteFilesByIndexWithVerification(fileInput, sampleFileNames);
+    
+        // Final verification
         cy.get('.cmp-adaptiveform-fileinput__filelist').eq(0).children().should('have.length', 0);
-    })
+    });
+    
+    const deleteFilesByIndexWithVerification = (fileInput, fileNames) => {
+        cy.get(fileInput).closest('.cmp-adaptiveform-fileinput').then(() => {
+            // Delete from end to beginning
+            for (let i = fileNames.length - 1; i >= 0; i--) {
+                const expectedFileName = fileNames[i];
+                
+                cy.log(`Deleting file at index ${i}: ${expectedFileName}`);
+                
+                // Get file item at index and verify content
+                cy.get('.cmp-adaptiveform-fileinput__fileitem')
+                    .eq(i)
+                    .within(() => {
+                        // Verify filename before deletion
+                        cy.get('.cmp-adaptiveform-fileinput__filename')
+                            .should('contain.text', expectedFileName);
+                        
+                        // Delete the file
+                        cy.get('.cmp-adaptiveform-fileinput__filedelete').should('have.attr', 'role', 'button').click();
+                    });
+                
+                // Verify deletion by checking remaining count
+                cy.get('.cmp-adaptiveform-fileinput__fileitem')
+                    .should('have.length', i);
+            }
+        });
+    };
 
     it(`fielinput is disabled when readonly property is true`, () => {
         const fileInput5 =  "input[name='fileinput5']";
