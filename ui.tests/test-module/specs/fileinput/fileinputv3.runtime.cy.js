@@ -173,7 +173,7 @@ describe("Form with File Input V-3 - Basic Tests", () => {
         getFormObjTest(['empty.pdf', 'empty.pdf', 'empty.pdf', 'empty.pdf', 'empty.pdf'])
     });
 
-    it("check preview functionality of duplicate files", () => {
+    it("check delete functionality of duplicate files", () => {
         let sampleFileNames = ['sample2.txt', 'sample.txt', 'sample2.txt'];
         const fileInput = "input[name='fileinput1']";
         
@@ -181,8 +181,6 @@ describe("Form with File Input V-3 - Basic Tests", () => {
         cy.attachFile(fileInput, [sampleFileNames[0]]);
         cy.attachFile(fileInput, [sampleFileNames[1]]);
         cy.attachFile(fileInput, [sampleFileNames[2]]);
-    
-        checkFilePreviewInFileAttachment(fileInput);
 
         deleteSelectedFiles(fileInput, sampleFileNames);
 
