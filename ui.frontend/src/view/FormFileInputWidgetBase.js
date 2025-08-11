@@ -227,7 +227,7 @@ class FormFileInputWidgetBase {
         handleClick (event){
             let elem = event.target,
                 text = elem.previousSibling.textContent,
-                index = this.getIndexOfText(text, elem.parentElement),
+                index = this.getIndexOfText(text, elem),
                 url = elem.previousSibling.dataset.key,
                 objectUrl = elem.previousSibling.dataset.objectUrl;
             if (index !== -1) {
