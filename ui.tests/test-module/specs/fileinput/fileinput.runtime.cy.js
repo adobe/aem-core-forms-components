@@ -239,7 +239,7 @@ describe("Form with File Input - Basic Tests", () => {
         })
     })
 
-    it.only("check preview and delete functionality of duplicate files", () => {
+    it("check preview and delete functionality of duplicate files", () => {
         let sampleFileNames = ['sample2.txt','sample.txt','sample2.txt'];
         const fileInput = "input[name='fileinput1']";
         cy.attachFile(fileInput, [sampleFileNames[0]]);
