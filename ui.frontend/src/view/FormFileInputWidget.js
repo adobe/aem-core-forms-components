@@ -49,7 +49,7 @@ import FormFileInputWidgetBase from "./FormFileInputWidgetBase";
         handleClick (event){
             let elem = event.target,
                 text = elem.parentElement.previousSibling.textContent,
-                index = this.getIndexOfText(text, elem),
+                index = this.getIndexOfText(text, elem.parentElement),
                 url = elem.parentElement.previousSibling.dataset.key,
                 objectUrl = elem.parentElement.previousSibling.dataset.objectUrl;   
             if (index !== -1) {
