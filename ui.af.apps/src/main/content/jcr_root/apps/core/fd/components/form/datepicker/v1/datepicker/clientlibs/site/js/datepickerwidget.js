@@ -218,6 +218,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         }
       });
       this.prevNavWidthBtn = this.#dp.getElementsByClassName("dp-leftnav")[0];
+      this.prevNavWidthBtn.setAttribute("role", "button");
       this.prevNavWidthBtn.addEventListener("click",
           function (evnt) {
             if (self.view && self.#curInstance) {
@@ -225,6 +226,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
           });
       this.nextNavWidthBtn = this.#dp.getElementsByClassName("dp-rightnav")[0];
+      this.nextNavWidthBtn.setAttribute("role", "button");
       this.nextNavWidthBtn.addEventListener("click",
           function (evnt) {
             if (self.view && self.#curInstance) {
@@ -661,6 +663,34 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.caption.classList.toggle("disabled",
             !this.#viewAction[this.view].caption);
         this['$' + this.view.toLowerCase()].style.display = "block";
+        if (this.view === "Month") {
+          this.prevNavWidthBtn.setAttribute(
+            "aria-label",
+            FormView.LanguageUtils.getTranslatedString(this.#lang, "previousMonth")
+          );
+          this.nextNavWidthBtn.setAttribute(
+            "aria-label",
+            FormView.LanguageUtils.getTranslatedString(this.#lang, "nextMonth")
+          );
+        } else if (this.view === "Year") {
+          this.prevNavWidthBtn.setAttribute(
+            "aria-label",
+            FormView.LanguageUtils.getTranslatedString(this.#lang, "previousYear")
+          );
+          this.nextNavWidthBtn.setAttribute(
+            "aria-label",
+            FormView.LanguageUtils.getTranslatedString(this.#lang, "nextYear")
+          );
+        } else if (this.view === "Yearset") {
+          this.prevNavWidthBtn.setAttribute(
+            "aria-label",
+            FormView.LanguageUtils.getTranslatedString(this.#lang, "previousSetOfYears")
+          );
+          this.nextNavWidthBtn.setAttribute(
+            "aria-label",
+            FormView.LanguageUtils.getTranslatedString(this.#lang, "nextSetOfYears")
+          );
+        }
         this["show" + this.view]();
       }
       return this;
