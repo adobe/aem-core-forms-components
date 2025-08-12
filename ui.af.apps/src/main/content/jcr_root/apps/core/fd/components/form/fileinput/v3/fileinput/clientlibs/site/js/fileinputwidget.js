@@ -89,5 +89,40 @@ if (typeof window.FileInputWidget === 'undefined') {
             fileItem.appendChild(fileEndContainer);
             return fileItem;
         }
+
+        handleClick (event){
+            let elem = event.target,
+                text = elem.parentElement.previousSibling.textContent,
+                index = this.getIndexOfText(text, elem.parentElement),
+                url = elem.parentElement.previousSibling.dataset.key,
+                objectUrl = elem.parentElement.previousSibling.dataset.objectUrl;   
+            if (index !== -1) {
+                this.values.splice(index, 1);
+                this.fileArr.splice(index, 1);
+                // set the model with the new value
+                this.model.value = this.fileArr;
+                // value and fileArr contains items of both URL and file types, hence while removing from DOM
+                // get the correct index as per this.#widget.files
+                let domIndex = Array.from(this.widget.files).findIndex(function(file) {
+                return file.name === text;
+                });
+                this.deleteFilesFromInputDom([domIndex]);
+                if (url != null) {
+                    // remove the data so that others don't use this url
+                    delete elem.parentElement.previousSibling.dataset.key;
+                }
+                if(objectUrl) {
+                    // revoke the object URL to avoid memory leaks in browser
+                    // since file is anyways getting deleted, remove the object URL's too
+                    window.URL.revokeObjectURL(objectUrl);
+                }
+            }
+            // Remove the dom from view
+            //All bound events and jQuery data associated with the element are also removed
+            elem.parentElement.parentElement.remove();
+            // Set the focus on file upload button after click of close
+            this.widget.focus();
+
+        }
     }
 }
