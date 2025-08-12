@@ -53,14 +53,12 @@ const checkFilePreviewInFileAttachment = (component) => {
 
 const deleteSelectedFiles = (component, fileNames) => {
     cy.get(component).then(() => {
-        cy.wrap(fileNames).each((fileName) => {
-            cy.get('.cmp-adaptiveform-fileinput__filedelete').should('have.attr', 'role', 'button');
-            cy.get('.cmp-adaptiveform-fileinput__filename').contains(fileName).first().next().click();
-            cy.wait(500);
-        });
+        fileNames.forEach((fileName) => {
+            cy.get(".cmp-adaptiveform-fileinput__filedelete").should('have.attr', 'role', 'button');
+            cy.get(".cmp-adaptiveform-fileinput__filename").contains(fileName).next().click();
+        })
     });
 };
-
 
 const checkFileNamesInFileAttachmentView = (component, fileNames) => {
     // check if file present in view
@@ -233,21 +231,19 @@ describe("Form with File Input - Basic Tests", () => {
     })
 
     it("check preview and delete functionality of duplicate files", () => {
-        let sampleFileNames = ['sample2.txt', 'sample.txt', 'sample2.txt'];
+        let sampleFileNames = ['sample2.txt','sample.txt','sample2.txt'];
         const fileInput = "input[name='fileinput1']";
-        
-        // Attach files
         cy.attachFile(fileInput, [sampleFileNames[0]]);
         cy.attachFile(fileInput, [sampleFileNames[1]]);
-        cy.attachFile(fileInput, [sampleFileNames[2]]);
-    
+        cy.attachFile(fileInput, [sampleFileNames[0]]);
+
         checkFilePreviewInFileAttachment(fileInput);
 
-        deleteSelectedFiles(fileInput, sampleFileNames);
+        deleteSelectedFiles(fileInput, sampleFileNames)
 
-        cy.get('.cmp-adaptiveform-fileinput__fileitem').should('have.length', 0);
-    });
-    
+        cy.get('.cmp-adaptiveform-fileinput__filelist').eq(0).children().should('have.length', 0);
+    })
+
     it(`fielinput is disabled when readonly property is true`, () => {
         const fileInput5 =  "input[name='fileinput5']";
         cy.get(fileInput5).should("have.attr", "disabled", "disabled"); 
