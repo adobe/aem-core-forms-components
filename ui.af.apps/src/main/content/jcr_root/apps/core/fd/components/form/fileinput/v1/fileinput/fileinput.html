@@ -35,7 +35,7 @@
       <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
     </div>
     </br>
-    <div class="cmp-adaptiveform-fileinput__widget-container">
+    <div class="cmp-adaptiveform-fileinput__widget-container" role="region">
       <label data-sly-test="${file.buttonText}" for="${file.id}_widget" tabindex="0" role="button" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
       <input class="cmp-adaptiveform-fileinput__widget"
             data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"

@@ -243,7 +243,6 @@ class FormFieldBase extends FormField {
             // Some elements have the Widget hidden by default and other are Panels
             // So this container mimics having a single, showing widget to attach the Accessibility label to.
             if(regionContainer) {
-                regionContainer.setAttribute('tabindex', '1');
                 regionContainer.setAttribute('aria-label', screenReaderText);
             } else if (widgetElement) {
                 widgetElement.setAttribute('aria-label', screenReaderText);
