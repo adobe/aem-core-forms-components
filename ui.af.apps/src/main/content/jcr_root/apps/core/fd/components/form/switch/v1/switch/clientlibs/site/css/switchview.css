@@ -58,3 +58,7 @@ input:checked + .cmp-adaptiveform-switch__widget-slider:before {
 }
 .cmp-adaptiveform-switch__unhide-labels .cmp-adaptiveform-switch__option--off {
 }
+.cmp-adaptiveform-switch__widget:focus ~ .cmp-adaptiveform-switch__widget-slider {
+    outline: 2px auto -webkit-focus-ring-color;
+    outline-offset: 2px;
+}
