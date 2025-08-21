@@ -101,7 +101,7 @@ public class HtmlPageItemImpl implements HtmlPageItem {
                 }
             }
         }
-        return attributes;
+        return new LinkedHashMap<>(attributes);
     }
 
     private void addAttributes(String name, String value) {
