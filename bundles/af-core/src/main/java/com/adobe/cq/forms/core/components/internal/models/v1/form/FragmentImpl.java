@@ -16,7 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -58,8 +58,6 @@ import com.adobe.cq.forms.core.components.views.Views;
 import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
-
-import java.util.LinkedHashMap;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
