@@ -582,7 +582,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
     private Map<String, Object> getCustomProperties() {
-        Map<String, Object> customProperties = new HashMap<>();
+        Map<String, Object> customProperties = new LinkedHashMap<>();
         Map<String, String> templateBasedCustomProperties;
         List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
         Set<String> reservedProperties = ReservedProperties.getReservedProperties();
