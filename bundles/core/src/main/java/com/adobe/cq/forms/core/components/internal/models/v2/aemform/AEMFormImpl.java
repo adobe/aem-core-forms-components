@@ -92,7 +92,7 @@ public class AEMFormImpl extends com.adobe.cq.forms.core.components.internal.mod
                 }
             }
         }
-        return htmlPageItems;
+        return htmlPageItems != null ? new LinkedList<>(htmlPageItems) : null;
     }
 
     @JsonIgnore

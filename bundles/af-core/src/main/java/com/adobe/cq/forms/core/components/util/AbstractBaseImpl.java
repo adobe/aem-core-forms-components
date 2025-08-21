@@ -294,7 +294,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
             putConstraintMessage(ConstraintType.VALIDATION_EXPRESSION, msgs.getValidationExpressionConstraintMessage());
             putConstraintMessage(ConstraintType.UNIQUE_ITEMS, msgs.getUniqueItemsConstraintMessage());
         }
-        return constraintMessages;
+        return new LinkedHashMap<>(constraintMessages);
     }
 
     /**
