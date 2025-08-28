@@ -244,7 +244,8 @@ class FormFieldBase extends FormField {
             // So this container mimics having a single, showing widget to attach the Accessibility label to.
             if(regionContainer) {
                 regionContainer.setAttribute('aria-label', screenReaderText);
-            } else if (widgetElement) {
+            }
+            if (widgetElement) {
                 widgetElement.setAttribute('aria-label', screenReaderText);
             }
         }
