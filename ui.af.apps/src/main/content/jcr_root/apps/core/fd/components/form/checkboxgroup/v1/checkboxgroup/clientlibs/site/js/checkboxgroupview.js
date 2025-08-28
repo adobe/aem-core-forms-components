@@ -40,7 +40,8 @@
             errorDiv: `.${CheckBoxGroup.bemBlock}__errormessage`,
             tooltipDiv: `.${CheckBoxGroup.bemBlock}__shortdescription`,
             item:  `.${CheckBoxGroup.bemBlock}-item`,
-            optionLabel: `${CheckBoxGroup.bemBlock}__option-label`
+            optionLabel: `${CheckBoxGroup.bemBlock}__option-label`,
+            optionLink: `${CheckBoxGroup.bemBlock}__links`
         };
 
         constructor(params) {
@@ -97,6 +98,16 @@
                     this.setInactive();
                 });
             })
+
+            let optionLinks = this.element.querySelectorAll(`.${CheckBoxGroup.selectors.optionLink}`);
+            const actionKeys = ['Enter', ' ', 'Spacebar', 'Space'];
+            optionLinks.forEach(optionLink => {
+                optionLink.addEventListener('keydown', (e)=>{
+                    if(actionKeys.includes(e.key)) {
+                        optionLink.click();
+                    }
+                });
+            });
         }
 
         #updateModelValue(widget) {
