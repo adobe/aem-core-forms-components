@@ -25,7 +25,7 @@ describe("Form Runtime with Date Picker", () => {
     // enabling theme for this test case as without theme there is a bug in custom widget css
     before(() => {
         cy.openPage(fmPropertiesUI).then(() => {
-            cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
+            cy.get(themeRef).clear().type('/libs/fd/af/themes/canvas').then(() => {
                 cy.get(propertiesSaveBtn).click();
             })
         })

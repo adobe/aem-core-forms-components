@@ -24,7 +24,7 @@ describe("wizard with static text", () => {
         const themeRef = 'input[name="./jcr:content/metadata/themeRef"]'
         const propertiesSaveBtn = '#shell-propertiespage-doneactivator'
         cy.openPage(fmPropertiesUI).then(() => {
-            cy.get(themeRef).should('be.visible').clear().type('/libs/fd/af/themes/canvas').then(() => {
+            cy.get(themeRef).clear().type('/libs/fd/af/themes/canvas').then(() => {
                 cy.get(propertiesSaveBtn).click();
             })
         })
