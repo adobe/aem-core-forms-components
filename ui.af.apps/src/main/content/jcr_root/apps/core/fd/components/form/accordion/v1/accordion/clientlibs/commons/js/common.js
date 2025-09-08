@@ -87,7 +87,7 @@
                 }
             }
 
-            
+
             /**
              * Returns all expanded items.
              *
@@ -225,26 +225,14 @@
                     panel.classList.add(this.constructor.cssClasses.panel.expanded);
                     panel.classList.remove(this.constructor.cssClasses.panel.hidden);
                     panel.setAttribute("aria-hidden", false);
-                     
+
                     // To set the focus on the field when tab expands
                     if (document.activeElement === button) {
-                            const panelId = panel.id.replace(this.constructor.idSuffixes.panel, "");
-                            const form = this.formContainer.getModel();
-                            //Find repeatable tab
-                            let tab = this.getModel().getState().items.find(item => item.type === 'array')?.items?.find(subItem => subItem.id === panelId);
-                            // If not found, try non-repeatable tab
-                            if (!tab) {
-                                tab = this.getModel().getState().items.find(item => item.id === panelId);
-                            }
-                            if (tab && Array.isArray(tab.items) && tab.items.length > 0) {
-                                const field = form.getElement(tab.id);
-                                if (field) {
-                                    setTimeout(() => {form.setFocus(field)}, 0);
-                                }
-                            }
-                        }
+                        const focusPanelId = panel.id.replace(this.constructor.idSuffixes.panel, "");
+                        this.focusToFirstVisibleField(focusPanelId);
                     }
                 }
+            }
 
             /**
              * Annotates the item and its internals with
@@ -277,7 +265,7 @@
             }
         };
     }
-     
+
 
     window.Forms = window.Forms || {};
     window.Forms.CoreComponentsCommons = window.Forms.CoreComponentsCommons || {};
