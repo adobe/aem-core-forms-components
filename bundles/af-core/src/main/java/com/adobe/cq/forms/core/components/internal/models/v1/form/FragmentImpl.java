@@ -127,7 +127,18 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                 }
             };
         }
-        return getChildrenModels(wrappedSlingHttpServletRequest, modelClass, filteredChildrenResources);
+        Map<String, T> models = getChildrenModels(wrappedSlingHttpServletRequest, modelClass, filteredChildrenResources);
+        
+        // Set i18n for fragment children since they are processed with request != null
+        if (i18n != null) {
+            for (T model : models.values()) {
+                if (model instanceof FormComponent) {
+                    ((FormComponent) model).setI18n(i18n);
+                }
+            }
+        }
+        
+        return models;
     }
 
     @Override
