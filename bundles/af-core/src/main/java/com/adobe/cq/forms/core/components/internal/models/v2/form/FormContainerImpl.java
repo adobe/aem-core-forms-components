@@ -146,6 +146,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Nullable
     private Boolean excludeFromDoRIfHidden;
+    private String lang = null;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
@@ -332,12 +333,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getLang() {
-        // todo: uncomment once forms sdk is released
-        if (request != null) {
+        if (lang != null) {
+            return lang;
+        } else if (request != null) {
             return GuideUtils.getAcceptLang(request);
         } else {
             return FormContainer.super.getLang();
         }
+    }
+
+    @Override
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     @Override

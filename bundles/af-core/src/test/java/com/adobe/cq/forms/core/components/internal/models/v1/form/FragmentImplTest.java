@@ -16,6 +16,7 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
@@ -200,5 +202,18 @@ public class FragmentImplTest {
     void testNoFieldType() {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITHOUT_FIELDTYPE, Fragment.class, context);
         assertEquals(FieldType.PANEL.getValue(), fragment.getFieldType());
+    }
+
+    @Test
+    void testGetFragmentContainerI18n() throws Exception {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
+        // Use reflection to access the private method
+        Method getFragmentContainerI18nMethod = FragmentImpl.class.getDeclaredMethod("getFragmentContainerI18n");
+        getFragmentContainerI18nMethod.setAccessible(true);
+        // Test the method execution
+        I18n result = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl);
+        // Verify that the method returns a non-null I18n object
+        Assertions.assertNotNull(result, "getFragmentContainerI18n should return a non-null I18n object");
     }
 }
