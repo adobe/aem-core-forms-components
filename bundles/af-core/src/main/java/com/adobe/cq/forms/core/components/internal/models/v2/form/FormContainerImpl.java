@@ -65,6 +65,7 @@ import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -331,9 +332,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     }
 
     @Override
+    @JsonProperty("lang")
     public String getLang() {
-        // todo: uncomment once forms sdk is released
-        if (request != null) {
+        if (lang != null) {
+            return lang;
+        } else if (request != null) {
             return GuideUtils.getAcceptLang(request);
         } else {
             return FormContainer.super.getLang();

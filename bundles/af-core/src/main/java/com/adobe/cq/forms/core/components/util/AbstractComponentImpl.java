@@ -94,6 +94,7 @@ public abstract class AbstractComponentImpl implements Component {
     private String id;
 
     protected I18n i18n = null;
+    protected String lang = null;
 
     protected static final String REQ_ATTR_RESOURCE_CALLER_PATH = "resourceCallerPath";
 
