@@ -150,6 +150,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
             for (T model : models.values()) {
                 if (model instanceof FormComponent) {
                     ((FormComponent) model).setI18n(fragmentI18n);
+                    ((FormComponent) model).setLang(lang);
                 }
             }
         }
@@ -165,16 +166,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
      * @return a new I18n object configured for the fragment container resource
      */
     private @Nonnull I18n getFragmentContainerI18n() {
-        // Get the locale from the existing i18n object
-        Resource formContainerResource = ComponentUtils.getFormContainer(resource);
-        String lang = null;
+        // Get the locale from the lang setter
         ResourceBundle resourceBundle = null;
-        if (formContainerResource != null) {
-            FormContainer formContainer = formContainerResource.adaptTo(FormContainer.class);
-            if (formContainer != null) {
-                lang = formContainer.getLang();
-            }
-        }
         if (lang != null) {
             Locale desiredLocale = new Locale(lang);
             // Get the resource resolver from the fragment container

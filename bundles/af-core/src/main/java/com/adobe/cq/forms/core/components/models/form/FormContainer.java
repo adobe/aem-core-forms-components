@@ -19,8 +19,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
@@ -308,16 +306,6 @@ public interface FormContainer extends Container {
      */
     default String getLang() {
         return Base.DEFAULT_LANGUAGE;
-    }
-
-    /**
-     * Sets the language in which the form is to be rendered
-     *
-     * @param lang the language code for the form
-     * @since com.adobe.cq.forms.core.components.models.form 5.12.2
-     */
-    default void setLang(@Nonnull String lang) {
-        // empty body
     }
 
     /**

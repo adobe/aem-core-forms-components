@@ -65,6 +65,7 @@ import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -146,7 +147,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Nullable
     private Boolean excludeFromDoRIfHidden;
-    private String lang = null;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
@@ -332,6 +332,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     }
 
     @Override
+    @JsonProperty("lang")
     public String getLang() {
         if (lang != null) {
             return lang;
@@ -340,11 +341,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         } else {
             return FormContainer.super.getLang();
         }
-    }
-
-    @Override
-    public void setLang(String lang) {
-        this.lang = lang;
     }
 
     @Override

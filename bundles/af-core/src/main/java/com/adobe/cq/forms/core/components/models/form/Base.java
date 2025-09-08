@@ -145,16 +145,4 @@ public interface Base extends FormComponent {
     default boolean isTooltipVisible() {
         return false;
     }
-
-    /**
-     * Returns the language to use for formatting the field.
-     *
-     * @return returns the language to use for formatting the field.
-     * @since com.adobe.cq.forms.core.components.models.form 5.3.1
-     */
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Nullable
-    default String getLang() {
-        return DEFAULT_LANGUAGE;
-    }
 }
