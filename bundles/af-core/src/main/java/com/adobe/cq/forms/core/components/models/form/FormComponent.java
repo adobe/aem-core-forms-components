@@ -29,6 +29,7 @@ import com.adobe.cq.wcm.core.components.models.Component;
 import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @ProviderType
@@ -154,6 +155,39 @@ public interface FormComponent extends Component {
     @JsonIgnore
     default void setI18n(@Nonnull I18n i18n) {
         // empty body
+    }
+
+    /**
+     * Sets the language for the form component
+     *
+     * @param lang the language code
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.2
+     */
+    default void setLang(@Nullable String lang) {
+        // empty body
+    }
+
+    /**
+     * Returns the language to use for formatting the field.
+     *
+     * @return returns the language to use for formatting the field.
+     * @since com.adobe.cq.forms.core.components.models.form 5.3.1
+     */
+    @Nullable
+    default String getLang() {
+        return Base.DEFAULT_LANGUAGE;
+    }
+
+    /**
+     * Returns the language if it is present as a property in JCR
+     *
+     * @return the language code if present in JCR, null otherwise
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.2
+     */
+    @JsonProperty("lang")
+    @Nullable
+    default String getLangIfPresent() {
+        return null;
     }
 
 }
