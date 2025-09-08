@@ -215,7 +215,7 @@ public class FragmentImplTest {
         FragmentImpl fragmentImpl = (FragmentImpl) fragment;
 
         // Use reflection to access the private method
-        Method getFragmentContainerI18nMethod = FragmentImpl.class.getDeclaredMethod("getFragmentContainerI18n");
+        Method getFragmentContainerI18nMethod = FragmentImpl.class.getDeclaredMethod("getFragmentContainerI18n", String.class);
         getFragmentContainerI18nMethod.setAccessible(true);
 
         // Create mocks for the dependencies
@@ -242,15 +242,13 @@ public class FragmentImplTest {
         Mockito.when(mockResourceBundleProvider.getResourceBundle(Mockito.anyString(), Mockito.any(Locale.class)))
             .thenReturn(mockResourceBundle);
 
-        // Test case 1: When lang is null - should return I18n with null resource bundle
-        fragmentImpl.setLang(null);
-        I18n result1 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl);
-        Assertions.assertNotNull(result1, "getFragmentContainerI18n should return a non-null I18n object even when lang is null");
+        // Test case 1: When localeLang is null - should return I18n with null resource bundle
+        I18n result1 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, (String) null);
+        Assertions.assertNotNull(result1, "getFragmentContainerI18n should return a non-null I18n object even when localeLang is null");
 
-        // Test case 2: When lang is set and resourceBundleProvider is available - should return I18n with resource bundle
-        fragmentImpl.setLang("en");
-        I18n result2 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl);
-        Assertions.assertNotNull(result2, "getFragmentContainerI18n should return a non-null I18n object when lang is set");
+        // Test case 2: When localeLang is set and resourceBundleProvider is available - should return I18n with resource bundle
+        I18n result2 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "en");
+        Assertions.assertNotNull(result2, "getFragmentContainerI18n should return a non-null I18n object when localeLang is set");
 
         // Verify that the method called the expected dependencies
         Mockito.verify(mockFragmentContainer, Mockito.atLeastOnce()).getResourceResolver();
@@ -261,21 +259,18 @@ public class FragmentImplTest {
 
         // Test case 3: When resourceBundleProvider is null - should still return I18n object
         resourceBundleProviderField.set(fragmentImpl, null);
-        fragmentImpl.setLang("fr");
-        I18n result3 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl);
+        I18n result3 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "fr");
         Assertions.assertNotNull(result3,
             "getFragmentContainerI18n should return a non-null I18n object even when resourceBundleProvider is null");
 
         // Test case 4: When baseResource is null - should still work
         Mockito.when(mockResourceResolver.getResource(Mockito.anyString())).thenReturn(null);
         resourceBundleProviderField.set(fragmentImpl, mockResourceBundleProvider);
-        fragmentImpl.setLang("de");
-        I18n result4 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl);
+        I18n result4 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "de");
         Assertions.assertNotNull(result4, "getFragmentContainerI18n should handle null baseResource");
 
-        // Test case 5: Test with empty string lang
-        fragmentImpl.setLang("");
-        I18n result5 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl);
-        Assertions.assertNotNull(result5, "getFragmentContainerI18n should handle empty string lang");
+        // Test case 5: Test with empty string localeLang
+        I18n result5 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "");
+        Assertions.assertNotNull(result5, "getFragmentContainerI18n should handle empty string localeLang");
     }
 }

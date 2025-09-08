@@ -146,11 +146,12 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         // Set i18n for fragment children since they are processed with request != null
         // Use fragment container-specific i18n to ensure correct resource bundle path
         if (i18n != null) {
-            I18n fragmentI18n = getFragmentContainerI18n();
+            String tempLang = request != null ? GuideUtils.getAcceptLang(request) : lang;
+            I18n fragmentI18n = getFragmentContainerI18n(tempLang);
             for (T model : models.values()) {
                 if (model instanceof FormComponent) {
                     ((FormComponent) model).setI18n(fragmentI18n);
-                    ((FormComponent) model).setLang(lang);
+                    ((FormComponent) model).setLang(tempLang);
                 }
             }
         }
@@ -165,11 +166,11 @@ public class FragmentImpl extends PanelImpl implements Fragment {
      * 
      * @return a new I18n object configured for the fragment container resource
      */
-    private @Nonnull I18n getFragmentContainerI18n() {
+    private @Nonnull I18n getFragmentContainerI18n(@Nonnull String localeLang) {
         // Get the locale from the lang setter
         ResourceBundle resourceBundle = null;
-        if (lang != null) {
-            Locale desiredLocale = new Locale(lang);
+        if (localeLang != null) {
+            Locale desiredLocale = new Locale(localeLang);
             // Get the resource resolver from the fragment container
             ResourceResolver resourceResolver = fragmentContainer.getResourceResolver();
             // Get the dictionary path for the fragment container instead of the parent form
