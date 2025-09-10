@@ -116,7 +116,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         if (childrenModels == null) {
             childrenModels = new ArrayList<>(getChildrenModels(request, ComponentExporter.class).values());
         }
-        return childrenModels;
+        return new ArrayList<>(childrenModels);
     }
 
     @NotNull
@@ -179,7 +179,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         if (itemModels == null) {
             itemModels = getChildrenModels(request, ComponentExporter.class);
         }
-        return itemModels;
+        return new LinkedHashMap<>(itemModels);
     }
 
     protected List<Resource> getFilteredChildrenResources() {
