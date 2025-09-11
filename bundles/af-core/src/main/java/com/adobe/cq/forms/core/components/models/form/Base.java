@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
-import com.adobe.cq.export.json.ComponentExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -112,16 +111,6 @@ public interface Base extends FormComponent {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     default Map<ConstraintType, String> getConstraintMessages() {
         return Collections.emptyMap();
-    }
-
-    /**
-     * @see ComponentExporter#getExportedType()
-     * @since com.adobe.cq.wcm.core.components.models.form 14.2.0
-     */
-    @NotNull
-    @Override
-    default String getExportedType() {
-        return "";
     }
 
     /**
