@@ -85,6 +85,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean visible;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LANG)
+    @Nullable
+    protected String langJcr;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_UNBOUND_FORM_ELEMENT)
     @Nullable
     protected Boolean unboundFormElement;
@@ -152,6 +156,21 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public void setI18n(@Nonnull I18n i18n) {
         this.i18n = i18n;
+    }
+
+    public void setLang(@Nullable String lang) {
+        this.lang = lang;
+    }
+
+    @Override
+    @Nullable
+    public String getLang() {
+        return langJcr != null ? langJcr : lang;
+    }
+
+    @JsonProperty("lang")
+    public String getLangIfPresent() {
+        return langJcr;
     }
 
     public BaseConstraint.Type getType() {

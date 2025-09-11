@@ -900,4 +900,21 @@ public class FormContainerImplTest {
         assertTrue(dorProperties.containsKey("fd:excludeFromDoRIfHidden"));
         assertEquals(false, dorProperties.get("fd:excludeFromDoRIfHidden"));
     }
+
+    @Test
+    void testSetLang() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        // Test setting a language
+        String testLang = "fr";
+        formContainer.setLang(testLang);
+        // Verify that the language was set correctly
+        assertEquals(testLang, formContainer.getLang());
+        // Test setting another language
+        String anotherLang = "es";
+        formContainer.setLang(anotherLang);
+        assertEquals(anotherLang, formContainer.getLang());
+        // Test setting null language
+        formContainer.setLang(null);
+        assertEquals(formContainer.getLang(), "en");
+    }
 }
