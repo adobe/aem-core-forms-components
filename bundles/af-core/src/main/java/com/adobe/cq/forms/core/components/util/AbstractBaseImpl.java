@@ -114,9 +114,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAX_ITEMS)
     protected Integer maxItems;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LANG)
-    protected String lang;
-
     @Nullable
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VIEWTYPE)
     protected String viewType;
@@ -157,11 +154,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Override
     public boolean isTooltipVisible() {
         return tooltipVisible;
-    }
-
-    @Override
-    public String getLang() {
-        return lang;
     }
 
     @JsonIgnore

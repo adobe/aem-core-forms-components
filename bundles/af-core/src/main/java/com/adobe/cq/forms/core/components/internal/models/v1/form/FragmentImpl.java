@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.*;
 
+import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +26,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.api.wrappers.SlingHttpServletRequestWrapper;
+import org.apache.sling.i18n.ResourceBundleProvider;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -34,16 +36,20 @@ import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.aemds.guide.utils.GuideUtils;
+import com.adobe.aemds.guide.utils.TranslationUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
+import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.components.views.Views;
+import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -63,6 +69,11 @@ public class FragmentImpl extends PanelImpl implements Fragment {
 
     @OSGiService
     private ModelFactory modelFactory;
+
+    @OSGiService(
+        filter = "(service.pid=org.apache.sling.i18n.impl.JcrResourceBundleProvider)",
+        injectionStrategy = InjectionStrategy.OPTIONAL)
+    private ResourceBundleProvider resourceBundleProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FRAGMENT_PATH)
     private String fragmentPath;
@@ -115,7 +126,52 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                 }
             };
         }
-        return getChildrenModels(wrappedSlingHttpServletRequest, modelClass, filteredChildrenResources);
+        Map<String, T> models = getChildrenModels(wrappedSlingHttpServletRequest, modelClass, filteredChildrenResources);
+
+        // Set i18n for fragment children since they are processed with request != null
+        // Use fragment container-specific i18n to ensure correct resource bundle path
+        if (i18n != null) {
+            String tempLang = request != null ? GuideUtils.getAcceptLang(request) : lang;
+            I18n fragmentI18n = getFragmentContainerI18n(tempLang);
+            for (T model : models.values()) {
+                if (model instanceof FormComponent) {
+                    ((FormComponent) model).setI18n(fragmentI18n);
+                    ((FormComponent) model).setLang(tempLang);
+                }
+            }
+        }
+
+        return models;
+    }
+
+    /**
+     * Creates a new I18n object for fragment children using the fragment container resource path
+     * instead of the parent form's resource path. This ensures that fragment children use the
+     * correct resource bundle path for translations.
+     * 
+     * @return a new I18n object configured for the fragment container resource
+     */
+    private @Nonnull I18n getFragmentContainerI18n(@Nonnull String localeLang) {
+        // Get the locale from the lang setter
+        ResourceBundle resourceBundle = null;
+        if (localeLang != null) {
+            Locale desiredLocale = new Locale(localeLang);
+            // Get the resource resolver from the fragment container
+            ResourceResolver resourceResolver = fragmentContainer.getResourceResolver();
+            // Get the dictionary path for the fragment container instead of the parent form
+            String baseName = TranslationUtils.getDictionaryPath(resourceResolver, fragmentContainer.getPath());
+            Resource baseResource = resourceResolver.getResource(baseName);
+            if (resourceBundleProvider != null) {
+                if (GuideUtils.isDesiredLocaleDictPresent(baseResource, desiredLocale)) {
+                    // Use the fragment container's resource bundle if available
+                    resourceBundle = resourceBundleProvider.getResourceBundle(baseName, desiredLocale);
+                } else {
+                    // Fallback to a random UUID-based resource bundle if fragment-specific translations are not available
+                    resourceBundle = resourceBundleProvider.getResourceBundle("/" + UUID.randomUUID(), desiredLocale);
+                }
+            }
+        }
+        return new I18n(resourceBundle);
     }
 
     @Override

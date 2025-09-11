@@ -151,6 +151,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
                     model = child.adaptTo(modelClass);
                     if (model instanceof FormComponent && i18n != null) {
                         ((FormComponent) model).setI18n(i18n);
+                        ((FormComponent) model).setLang(lang);
                     }
                 } catch (Exception e) {
                     // Log the exception as info, since there can be site component inside form, but we don't care about they being adapted
