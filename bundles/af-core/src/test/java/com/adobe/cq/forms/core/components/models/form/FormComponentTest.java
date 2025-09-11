@@ -15,8 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
-import java.util.Collections;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.osgi.annotation.versioning.ProviderType;
