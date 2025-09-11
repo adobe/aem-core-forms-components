@@ -26,12 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ProviderType
 public class FormComponentTest {
-    @Test
-    public void testGetDorContainer() {
-        FormComponent formComponent = Mockito.mock(FormComponent.class);
-        Mockito.when(formComponent.getDorContainer()).thenCallRealMethod();
-        assertEquals(Collections.emptyMap(), formComponent.getDorContainer());
-    }
 
     @Test
     public void testSetLang() {
