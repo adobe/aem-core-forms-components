@@ -114,10 +114,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAX_ITEMS)
     protected Integer maxItems;
 
-    @Nullable
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VIEWTYPE)
-    protected String viewType;
-
     /** End **/
 
     @SlingObject
@@ -441,14 +437,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
             return translate(ReservedProperties.PN_VALIDATION_EXPRESSION_MESSAGE, properties.get(
                 ReservedProperties.PN_VALIDATION_EXPRESSION_MESSAGE, String.class));
         }
-    }
-
-    @Override
-    public @NotNull String getExportedType() {
-        if (viewType != null) {
-            return viewType;
-        }
-        return resource.getResourceType();
     }
 
     @Override

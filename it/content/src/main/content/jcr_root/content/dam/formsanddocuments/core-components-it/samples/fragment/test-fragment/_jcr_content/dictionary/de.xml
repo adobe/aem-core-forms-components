@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:language="de"
+    jcr:mixinTypes="[mix:language]"
+    jcr:primaryType="sling:OrderedFolder"
+    sling:basename="/content/dam/formsanddocuments/core-components-it/samples/fragment/test-fragment/jcr:content/dictionary">
+    <f637df35-7e60-4edb-b153-1c8d29fab0d3
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="jcr:title##1547"
+        sling:message="AF Fragment (v2) de"/>
+    <_x0030_24800a0-12d6-48c0-9325-4a392b6c0d93
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput##jcr:title##8695"
+        sling:message="Text Input de"/>
+    <a1a94d6e-7974-46b1-a0d2-0412a8791e7d
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##textinput1##jcr:title##4788"
+        sling:message="Responsive Text Input de"/>
+    <_x0035_4753142-cd4a-4d87-9d30-9fce9b2ecfc2
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##panelcontainer##jcr:title##9703"
+        sling:message="Panel de"/>
+    <c0df2873-af0e-48fa-b99d-8c5d876e795a
+        jcr:mixinTypes="[sling:Message]"
+        jcr:primaryType="nt:folder"
+        sling:key="guideContainer##panelcontainer##text##jcr:title##6510"
+        sling:message="Text de"/>
+</jcr:root>
