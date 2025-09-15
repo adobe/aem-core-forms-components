@@ -13,7 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-(function() {
+  (function() {
 
     "use strict";
     class Button extends FormView.FormFieldBase {
@@ -35,6 +35,59 @@
             qm: `.${Button.bemBlock}__questionmark`,
             tooltipDiv: `.${Button.bemBlock}__shortdescription`
         };
+
+        _formEventHandlersInstalled = false;
+        _container = null;
+
+        _getContainer() {
+            if (this._container) return this._container;
+            const container = this.formContainer?.getFormElement?.();
+            if (container) this._container = container;
+            return this._container;
+        }
+
+        _showLoader() {
+            const container = this._getContainer();
+            if (container) {
+                container.classList.add('cmp-adaptiveform-container--loading');
+            }
+            this._installFormEventHandlers();
+        }
+
+        _hideLoader() {
+            const container = this._getContainer();
+            if (container) {
+                container.classList.remove('cmp-adaptiveform-container--loading');
+            }
+        }
+
+        _installFormEventHandlers() {
+            if (this._formEventHandlersInstalled) { return; }
+            try {
+                const formModel = this.formContainer?.getModel?.();
+                if (!formModel) { return; }
+
+                // End loading if validation fails (no submit performed)
+                formModel.subscribe((action) => {
+                    const errors = action?.payload;
+                    if (Array.isArray(errors) && errors.length > 0) {
+                        this._hideLoader();
+                    }
+                }, 'validationComplete');
+
+                // End loading on submit outcomes
+                formModel.subscribe(() => {
+                    this._hideLoader();
+                }, 'submitSuccess');
+
+                formModel.subscribe(() => {
+                    this._hideLoader();
+                }, 'submitError');
+
+                this._formEventHandlersInstalled = true;
+            } catch (e) { /* no-op */ }
+        }
+        // End: Loading state management
 
         getQuestionMarkDiv() {
             return this.element.querySelector(Button.selectors.qm);
@@ -69,6 +122,9 @@
             this.getWidget().addEventListener("click", (event) => {
                 if (this.widget.type === 'submit' || this.widget.type === 'reset') {
                     event.preventDefault();
+                }
+                if (this.widget.type === 'submit') {
+                    this._showLoader();
                 }
                 this._model.dispatch(new FormView.Actions.Click());
             });
