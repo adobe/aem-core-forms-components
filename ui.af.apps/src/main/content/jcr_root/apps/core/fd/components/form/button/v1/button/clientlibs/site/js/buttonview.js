@@ -36,7 +36,27 @@
             tooltipDiv: `.${Button.bemBlock}__shortdescription`
         };
 
-        _formEventHandlersInstalled = false;
+        constructor(params) {
+            super(params);
+            const formModel = this.formContainer?.getModel?.();
+            if (!formModel) { return; }
+            
+            formModel.subscribe((action) => { // hide loader if validation fails (no submit performed)
+                const errors = action?.payload;
+                if (Array.isArray(errors) && errors.length > 0) {
+                    this._hideLoader();
+                }
+            }, 'validationComplete');
+
+            formModel.subscribe(() => { // hide loader on submit success
+                this._hideLoader();
+            }, 'submitSuccess');
+            
+            formModel.subscribe(() => { // hide loader on submit error
+                this._hideLoader();
+            }, 'submitError');
+        }
+
         _container = null;
 
         _getContainer() {
@@ -51,7 +71,6 @@
             if (container) {
                 container.classList.add('cmp-adaptiveform-container--loading');
             }
-            this._installFormEventHandlers();
         }
 
         _hideLoader() {
@@ -60,34 +79,6 @@
                 container.classList.remove('cmp-adaptiveform-container--loading');
             }
         }
-
-        _installFormEventHandlers() {
-            if (this._formEventHandlersInstalled) { return; }
-            try {
-                const formModel = this.formContainer?.getModel?.();
-                if (!formModel) { return; }
-
-                // End loading if validation fails (no submit performed)
-                formModel.subscribe((action) => {
-                    const errors = action?.payload;
-                    if (Array.isArray(errors) && errors.length > 0) {
-                        this._hideLoader();
-                    }
-                }, 'validationComplete');
-
-                // End loading on submit outcomes
-                formModel.subscribe(() => {
-                    this._hideLoader();
-                }, 'submitSuccess');
-
-                formModel.subscribe(() => {
-                    this._hideLoader();
-                }, 'submitError');
-
-                this._formEventHandlersInstalled = true;
-            } catch (e) { /* no-op */ }
-        }
-        // End: Loading state management
 
         getQuestionMarkDiv() {
             return this.element.querySelector(Button.selectors.qm);
