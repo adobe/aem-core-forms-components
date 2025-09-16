@@ -31,6 +31,15 @@
                     sling:resourceType="granite/ui/components/coral/foundation/tabs"
                     maximized="{Boolean}true">
                 <items jcr:primaryType="nt:unstructured">
+                    <formats
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Formats"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            granite:hide="{Boolean}true"
+                            margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                        </items>
+                    </formats>
                     <validation
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Validation patterns"
