@@ -40,6 +40,43 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/container">
                                 <items jcr:primaryType="nt:unstructured">
+                                    <allowedFormats
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                            fieldDescription="The text input formats that are allowed to be selected by an author."
+                                            fieldLabel="Allowed Formats"
+                                            name="./allowedFormats">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <pattern1
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat1"
+                                                    text="Phone Number"
+                                                    value="Phone Number=phonenumber"/>
+                                            <pattern2
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat2"
+                                                    text="Social Security Number"
+                                                    value="Social Security Number=socialsecuritynumber"/>
+                                            <pattern3
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat3"
+                                                    text="Email Alphanumeric"
+                                                    value="Email Alphanumeric=email-alphanumeric"/>
+                                            <pattern4
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    checked="true"
+                                                    name="./allowedFormat4"
+                                                    text="Zip Code"
+                                                    value="Zip Code=zipcode"/>
+                                        </items>
+                                    </allowedFormats>
                                     <customFormats
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/form/multifield"

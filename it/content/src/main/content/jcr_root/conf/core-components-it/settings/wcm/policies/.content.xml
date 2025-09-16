@@ -531,6 +531,20 @@
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </default>
                 </datepicker>
+                <textinput jcr:primaryType="nt:unstructured">
+                    <default
+                            jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="textinput-default-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            allowedFormat1="Phone Number=phonenumber"
+                            allowedFormat2="Social Security Number=socialsecuritynumber"
+                            allowedFormat3="Email Alphanumeric=email-alphanumeric"
+                            allowedFormat4="Zip Code=zipcode">
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"/>
+                    </default>
+                </textinput>
                 <panelcontainer jcr:primaryType="nt:unstructured">
                     <default
                         jcr:lastModified="{Date}2023-03-07T11:41:57.902+05:30"
