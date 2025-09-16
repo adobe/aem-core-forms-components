@@ -189,6 +189,23 @@ class FormPanel extends FormFieldBase {
     }
 
     /**
+     * Extends the standard updateLabel by applying the panel title as an aria-label
+     * Useful for panel components like "Terms and Conditions" which were being ignored by NVDA
+     * @param {Object} label - The label.
+     */
+    updateLabel(label) {
+        super.updateLabel(label);
+
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+        const labelContainer = this.element.querySelector(`.${bemClass}__label-container`).querySelector(`.${bemClass}__label`);
+        const regionContainer = this.element.querySelector(`.${bemClass}__widget-container`);
+
+        if(regionContainer && regionContainer.hasAttribute('role') && (regionContainer.getAttribute('role') === 'region')) {
+            regionContainer.setAttribute('aria-label', labelContainer.innerHTML);
+        }
+    }
+
+    /**
      * Applies the full state of the field to the HTML.
      * Generally done just after the model is bound to the field.
      * @param {Object} state - The state to be applied.
