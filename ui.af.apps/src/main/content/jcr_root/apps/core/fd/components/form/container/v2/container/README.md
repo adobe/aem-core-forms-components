@@ -89,7 +89,7 @@ Apply a `data-cmp-is="adaptiveFormContainer"` attribute to the `cmp-adaptiveform
 
 Applying `data-cmp-adaptiveform-container-loader` attribute to the div specifically for applying the loader class on it, it is to ensure that the loading icon should not appear over components. 
 
-During the form submission, the form element `form.cmp-adaptiveform-container` toggles the class `cmp-adaptiveform-container--loading` and the loader inside becomes visible. The class is removed once validation fails, submission succeeds or errors out, or the thank you page/message is shown.
+During the form submission, the form element `form.cmp-adaptiveform-container` toggles the class `cmp-adaptiveform-container--submitting` and the loader inside becomes visible. The class is removed once validation fails, submission succeeds or errors out, or the thank you page/message is shown.
 
 Applying `data-cmp-custom-functions-module-url` attribute to the div to point to the edge delivery URL of the custom functions file. Custom Functions exported from this file will be registered in Function Runtime. 
 This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.
