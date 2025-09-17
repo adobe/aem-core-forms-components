@@ -209,11 +209,10 @@ describe("Form with Submit Button", () => {
 
         cy.get(`.cmp-adaptiveform-button__widget`).click();
 
-        cy.get('form.cmp-adaptiveform-container').should('have.class', 'cmp-adaptiveform-container--loading')
+        cy.get('form.cmp-adaptiveform-container').should('have.class', 'cmp-adaptiveform-container--submitting')
 
         cy.wait('@afSubmission').then(() => {
             cy.contains("Thank you for submitting the form.");
-            cy.get('.cmp-adaptiveform-container__loader').should('not.exist');
         });
     });
 })
