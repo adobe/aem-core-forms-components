@@ -69,14 +69,14 @@
         _showLoader() {
             const container = this._getContainer();
             if (container) {
-                container.classList.add('cmp-adaptiveform-container--loading');
+                container.classList.add('cmp-adaptiveform-container--submitting');
             }
         }
 
         _hideLoader() {
             const container = this._getContainer();
             if (container) {
-                container.classList.remove('cmp-adaptiveform-container--loading');
+                container.classList.remove('cmp-adaptiveform-container--submitting');
             }
         }
 
