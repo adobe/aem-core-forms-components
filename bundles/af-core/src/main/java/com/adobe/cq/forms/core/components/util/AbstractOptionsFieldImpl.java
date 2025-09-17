@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Field;
+import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
 
 /**
@@ -135,5 +136,21 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             logger.error("Error while type casting default value to value type. Exception: ", exception);
         }
         return typedDefaultValue;
+    }
+
+    @Override
+    public String[] getAriaLabels() {
+        String[] enumNames = getEnumNames();
+        Label label = getLabel();
+        String labelValue = label != null ? label.getValue() : null;
+        if (enumNames != null) {
+            String[] ariaLabels = new String[enumNames.length];
+            for (int i = 0; i < enumNames.length; i++) {
+                ariaLabels[i] = labelValue + ": " + enumNames[i];
+                ariaLabels[i] = ariaLabels[i].replaceAll("<[^>]*>", "");
+            }
+            return ariaLabels;
+        }
+        return null;
     }
 }

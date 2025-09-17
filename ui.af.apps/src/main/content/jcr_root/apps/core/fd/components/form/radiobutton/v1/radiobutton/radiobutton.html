@@ -13,7 +13,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<!--//TOFIX: Rich text in aria-label!-->
 <sly data-sly-use.renderer="${'radiobutton.js'}"
      data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
      data-sly-use.label="${renderer.labelPath}"
@@ -50,7 +49,7 @@
                         disabled="${!radioButton.enabled || radioButton.readOnly}"
                         checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
                         aria-readonly="${radioButton.readOnly ? 'true' : ''}"
-                        aria-label="${radioButton.label.value}: ${radioButton.enumNames[itemList.index]}" tabindex="0"/>
+                        aria-label="${radioButton.ariaLabels[itemList.index]}" tabindex="0"/>
                   <span>${radioButton.enumNames[itemList.index] @ context = 'html'}</span>
               </label>
           </div>

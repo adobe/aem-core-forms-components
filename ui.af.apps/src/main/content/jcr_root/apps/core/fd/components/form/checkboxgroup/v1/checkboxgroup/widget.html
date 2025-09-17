@@ -13,7 +13,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<!--//TOFIX: Rich text in aria-label!-->
 <template data-sly-template.widget="${ @ checkboxgroup }">
   <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}" id="${widgetId}">
     <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
@@ -26,7 +25,7 @@
                  checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
                  disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"
                  aria-readonly="${checkboxgroup.readOnly ? 'true' : ''}"
-                 aria-label="${checkboxgroup.label.value}: ${checkboxgroup.enumNames[itemList.index]}" tabindex="0"/>
+                 aria-label="${checkboxgroup.ariaLabels[itemList.index]}" tabindex="0"/>
           <span>${checkboxgroup.enumNames[itemList.index] @ context = 'html'}</span>
         </label>
       </div>
