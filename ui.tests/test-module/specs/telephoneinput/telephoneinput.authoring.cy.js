@@ -92,7 +92,7 @@ describe('Page - Authoring', function () {
     });
   });
 
-  context.only('Adding removing patterns from design policy', function () {
+  context('Adding removing patterns from design policy', function () {
     const templateDataPath = '/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure',
         telephoneInputPolicy = '[value="' + templateDataPath + '/jcr:content/guideContainer/forms-components-examples/components/form/telephoneinput' + '"] [data-action="POLICY"]',
         authoringPagePath = '/content/forms/af/core-components-it/blank',
