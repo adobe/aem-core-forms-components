@@ -94,7 +94,7 @@ describe('Rule editor navigate-in-panel rule authoring',function(){
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click({multiple: true});
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click({multiple: true, force: true});
 
         // select HIDE action from dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.NAVIGATE_IN_PANEL).should("exist");
