@@ -176,9 +176,6 @@
         <Image
             jcr:primaryType="nt:unstructured"
             target="/mnt/override/apps/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image"/>
-        <hcaptcha
-            jcr:primaryType="nt:unstructured"
-            target="/mnt/override/apps/core/fd/components/form/hcaptcha/v1/hcaptcha/cq:styleConfig/items/field/items/captcha"/>
         <recaptcha
                 jcr:primaryType="nt:unstructured"
                 target="/mnt/override/apps/core/fd/components/form/recaptcha/v1/recaptcha/cq:styleConfig/items/field/items/captcha"/>
