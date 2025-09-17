@@ -46,7 +46,7 @@ It should be added to a relevant site client library using the `embed` property.
 
 When the Submit button is activated and the form begins submission, the form container gets a loading state so users receive visual feedback:
 
-- The form element `form.cmp-adaptiveform-container` toggles the CSS class `cmp-adaptiveform-container--loading` for the duration of the network request.
+- The form element `form.cmp-adaptiveform-container` toggles the CSS class `cmp-adaptiveform-container--submitting` for the duration of the network request.
 - A loader element inside the form (with class `cmp-adaptiveform-container__loader`) becomes visible while submitting.
 - The loading class is removed and the loader hides when validation fails, the submission succeeds, or an error occurs.
 
