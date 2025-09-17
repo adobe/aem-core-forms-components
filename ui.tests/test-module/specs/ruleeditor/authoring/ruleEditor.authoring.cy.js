@@ -54,7 +54,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click({multiple: true});
 
         // select HIDE action from dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.HIDE).should("exist");
@@ -211,7 +211,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click({multiple: true});
 
         // select SAVE FORM action from dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SAVE_FORM).should("exist");
@@ -260,7 +260,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click({multiple: true});
 
         // select FUNCTION_CALL action from dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
