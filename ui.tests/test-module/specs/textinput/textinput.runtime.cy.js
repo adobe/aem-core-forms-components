@@ -193,7 +193,7 @@ describe("Form Runtime with Text Input", () => {
         const [textbox6, textBox6FieldView] = Object.entries(formContainer._fields)[5];
         const [textbox7, textBox7FieldView] = Object.entries(formContainer._fields)[6];
         const [textbox8, textBox8FieldView] = Object.entries(formContainer._fields)[7];
-        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[12]
+        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[13]
 
         // 1. Required
         cy.get(`#${textbox6}`).find("input").focus().blur().then(x => {
@@ -347,6 +347,53 @@ describe("Form Runtime with Text Input For Different locale", () => {
         cy.expectNoConsoleErrors();
     })
 })
+
+describe("Text Input with Display Format", () => {
+
+    const pagePath = "content/forms/af/core-components-it/samples/textinput/basic.html"
+    let formContainer = null
+
+    beforeEach(() => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+        })
+    });
+
+    it("should format phone number input using displayValueExpression", () => {
+        // Find the text input with display format (textinput_displayformat)
+        const [textInputDisplayFormat, fieldView] = Object.entries(formContainer._fields).find(([id, field]) => 
+            field._model && field._model.name === 'textinput_displayformat'
+        );
+
+        // Test phone number formatting
+        const phoneInput = "1234567890";
+        const expectedFormatted = "(123) 456-7890";
+
+        cy.get(`#${textInputDisplayFormat}`).find("input").clear().type(phoneInput).blur().then(() => {
+            // Check that the display value is formatted
+            cy.get(`#${textInputDisplayFormat}`).find("input").should('have.value', expectedFormatted);
+        });
+
+        // Test partial phone number
+        const partialPhoneInput = "1234567";
+        const expectedPartialFormatted = "(123) 4567";
+
+        cy.get(`#${textInputDisplayFormat}`).find("input").clear().type(partialPhoneInput).blur().then(() => {
+            cy.get(`#${textInputDisplayFormat}`).find("input").should('have.value', expectedPartialFormatted);
+        });
+
+        // Test with non-digit characters (should be cleaned and formatted)
+        const phoneWithDashes = "123-456-7890";
+        const expectedCleanedFormatted = "(123) 456-7890";
+
+        cy.get(`#${textInputDisplayFormat}`).find("input").clear().type(phoneWithDashes).blur().then(() => {
+            cy.get(`#${textInputDisplayFormat}`).find("input").should('have.value', expectedCleanedFormatted);
+        });
+
+        cy.expectNoConsoleErrors();
+    });
+
+});
 
 describe("setFocus on text field via rules", () => {
 
