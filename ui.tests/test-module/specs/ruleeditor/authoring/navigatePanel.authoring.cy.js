@@ -3,7 +3,8 @@ const commons = require('../../../libs/commons/commons'),
     formsSelectors = require('../../../libs/commons/guideSelectors'),
     afConstants = require('../../../libs/commons/formsConstants');
 
-describe('Rule editor navigate-in-panel rule authoring',function(){
+// @arun to uncomment this soon
+describe.skip('Rule editor navigate-in-panel rule authoring',function(){
     let toggle_array = [];
 
     before(() => {

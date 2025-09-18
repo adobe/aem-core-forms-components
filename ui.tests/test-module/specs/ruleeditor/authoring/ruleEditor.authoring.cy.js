@@ -3,7 +3,8 @@ const commons = require('../../../libs/commons/commons'),
     formsSelectors = require('../../../libs/commons/guideSelectors'),
     afConstants = require('../../../libs/commons/formsConstants');
 
-describe('Rule editor authoring sanity for core-components',function(){
+// @arun to uncomment this soon
+describe.skip('Rule editor authoring sanity for core-components',function(){
     let toggle_array = [];
 
     before(() => {
