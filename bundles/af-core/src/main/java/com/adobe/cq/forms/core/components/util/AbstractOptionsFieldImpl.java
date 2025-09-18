@@ -139,18 +139,26 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     }
 
     @Override
-    public String[] getAriaLabels() {
+    public String[] getOptionScreenReaderLabels() {
         String[] enumNames = getEnumNames();
-        Label label = getLabel();
-        String labelValue = label != null ? label.getValue() : null;
-        if (enumNames != null) {
-            String[] ariaLabels = new String[enumNames.length];
-            for (int i = 0; i < enumNames.length; i++) {
-                ariaLabels[i] = labelValue + ": " + enumNames[i];
-                ariaLabels[i] = ariaLabels[i].replaceAll("<[^>]*>", "");
-            }
-            return ariaLabels;
+        if (enumNames == null) {
+            return null;
         }
-        return null;
+
+        Label label = getLabel();
+        String labelValue = (label != null && label.getValue() != null) ? label.getValue() : "";
+        boolean hasRichTextLabel = label != null && label.isRichText() != null && label.isRichText();
+
+        // Strip HTML from label once if needed
+        String cleanLabel = hasRichTextLabel ? labelValue.replaceAll("<[^>]*>", "") : labelValue;
+
+        String[] ariaLabels = new String[enumNames.length];
+        for (int i = 0; i < enumNames.length; i++) {
+            // Strip HTML from enum name for screen readers
+            String cleanEnumName = enumNames[i].replaceAll("<[^>]*>", "");
+            ariaLabels[i] = cleanLabel + ": " + cleanEnumName;
+        }
+
+        return ariaLabels;
     }
 }

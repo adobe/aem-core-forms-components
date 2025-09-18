@@ -67,5 +67,5 @@ public interface OptionsConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 5.12.3
      */
     @JsonIgnore
-    String[] getAriaLabels();
+    String[] getOptionScreenReaderLabels();
 }
