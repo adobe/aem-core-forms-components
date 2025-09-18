@@ -336,8 +336,8 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
 
         // select FUNCTION_CALL action from dropdown
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
 
         cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").should("be.visible");
         cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").click();
@@ -525,8 +525,8 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
                 cy.getRuleEditorIframe().find("[title='Submit - Click'] .title-cell").should("be.visible").click();
                 // select FUNCTION_CALL action from dropdown
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
 
                 cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").should("be.visible");
                 cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").click();
