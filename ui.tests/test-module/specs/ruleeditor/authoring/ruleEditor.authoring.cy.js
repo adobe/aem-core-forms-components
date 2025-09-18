@@ -466,7 +466,7 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.deleteComponentByPath(datePickerEditPath);
         })
 
-        it.only('should add rule on texbox equality operator to hide a text box', function () {
+        it('should add rule on texbox equality operator to hide a text box', function () {
             cy.openAuthoring(formPath);
             cy.selectLayer("Edit");
             cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
