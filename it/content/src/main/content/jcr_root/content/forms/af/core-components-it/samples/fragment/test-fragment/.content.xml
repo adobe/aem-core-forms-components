@@ -3,9 +3,10 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2024-09-10T15:11:58.094+05:30"
+        cq:lastModified="{Date}2025-09-08T12:10:59.224+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        fd:translationIds="\{&quot;jcr:title&quot;:&quot;jcr:title##1547&quot;}"
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="AF Fragment (v2)"
@@ -23,6 +24,7 @@
             themeRef="/libs/fd/af/themes/canvas"
             title="AF Fragment (v2)">
             <textinput
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##textinput##jcr:title##8695&quot;}"
                 jcr:lastModified="{Date}2023-06-02T12:27:19.294+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
@@ -31,6 +33,7 @@
                 fieldType="text-input"
                 name="fragmenttextinput"/>
             <textinput1
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##textinput1##jcr:title##4788&quot;}"
                 jcr:created="{Date}2024-05-08T20:17:24.203+05:30"
                 jcr:lastModified="{Date}2024-05-08T20:17:24.203+05:30"
                 jcr:primaryType="nt:unstructured"
@@ -55,6 +58,7 @@
                     change="[if(contains($event.payload.changes[].propertyName\, 'value')\, dispatchEvent($form.panelcontainer1725960550534.text1725960554387\, 'custom:setProperty'\, {value : 'Thanks'})\, {})]"/>
             </textinput1>
             <panelcontainer
+                fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##panelcontainer##jcr:title##9703&quot;}"
                 jcr:created="{Date}2024-09-10T14:59:10.484+05:30"
                 jcr:createdBy="admin"
                 jcr:lastModified="{Date}2024-09-10T14:59:10.484+05:30"
@@ -65,6 +69,7 @@
                 fieldType="panel"
                 name="panelcontainer1725960550534">
                 <text
+                    fd:translationIds="\{&quot;jcr:title&quot;:&quot;guideContainer##panelcontainer##text##jcr:title##6510&quot;}"
                     jcr:created="{Date}2024-09-10T14:59:14.338+05:30"
                     jcr:createdBy="admin"
                     jcr:lastModified="{Date}2024-09-10T14:59:14.338+05:30"

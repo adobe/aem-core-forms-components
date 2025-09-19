@@ -125,6 +125,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Nullable
     protected Style currentStyle;
 
+    @Nullable
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VIEWTYPE)
+    protected String viewType;
+
     /**
      * Returns dorBindRef of the form field
      *
@@ -266,6 +270,14 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonProperty("visible")
     public Boolean getVisibleIfPresent() {
         return visible;
+    }
+
+    @Override
+    public @NotNull String getExportedType() {
+        if (viewType != null) {
+            return viewType;
+        }
+        return resource.getResourceType();
     }
 
     // API kept for backward compatibility, this is not to be used anymore
