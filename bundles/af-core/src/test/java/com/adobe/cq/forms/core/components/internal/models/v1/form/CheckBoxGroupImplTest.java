@@ -57,6 +57,7 @@ public class CheckBoxGroupImplTest {
     private static final String PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER = CONTENT_ROOT + "/checkboxgroup-insertion-order";
     private static final String PATH_CHECKBOX_GROUP_FOR_BOOLEAN = CONTENT_ROOT + "/checkboxgroup-boolean";
     private static final String PATH_CHECKBOX_GROUP_NO_FIELDTYPE = CONTENT_ROOT + "/checkboxgroup-without-fieldtype";
+    private static final String PATH_CHECKBOX_GROUP_OPTION_SCREEN_READER_LABEL = CONTENT_ROOT + "/checkboxgroup-option-screenreader-label";
     private static final String PATH_CHECKBOX_GROUP_WITH_NULL_VALUES = CONTENT_ROOT + "/checkboxgroup-with-null-values";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
@@ -399,6 +400,14 @@ public class CheckBoxGroupImplTest {
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), checkboxGroup.getEnumNames());
+    }
+
+    @Test
+    void testGetOptionScreenReaderLabels() {
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_OPTION_SCREEN_READER_LABEL);
+        String[] screenReaderLabels = checkboxGroup.getOptionScreenReaderLabels();
+        assertEquals("Gender: Male", screenReaderLabels[0]);
+        assertEquals("Gender: Female", screenReaderLabels[1]);
     }
 
     @Test
