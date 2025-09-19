@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ProviderType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -58,4 +59,13 @@ public interface OptionsConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     String[] getEnumNames();
+
+    /**
+     * Returns screen reader friendly aria labels for the options.
+     *
+     * @return the list of aria labels for the options
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.3
+     */
+    @JsonIgnore
+    String[] getOptionScreenReaderLabels();
 }

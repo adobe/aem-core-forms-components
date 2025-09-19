@@ -49,6 +49,7 @@ public class SwitchImplTest {
     private static final String PATH_SWITCH_ENABLEUNCHECKED_BOOLEAN = CONTENT_ROOT + "/switch-boolean";
     private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF_BOOLEAN = CONTENT_ROOT + "/switch-enableUncheckedValueFalse-boolean";
     private static final String PATH_SWITCH_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/switch-without-fieldtype";
+    private static final String PATH_SWITCH_OPTION_SCREEN_READER_LABEL = CONTENT_ROOT + "/switch-option-screenreader-label";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -344,6 +345,14 @@ public class SwitchImplTest {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();
         return request.adaptTo(Switch.class);
+    }
+
+    @Test
+    void testGetOptionScreenReaderLabels() {
+        Switch switchObject = getSwitchUnderTest(PATH_SWITCH_OPTION_SCREEN_READER_LABEL);
+        String[] screenReaderLabels = switchObject.getOptionScreenReaderLabels();
+        assertEquals("SWITCH: OFF", screenReaderLabels[0]);
+        assertEquals("SWITCH: ON", screenReaderLabels[1]);
     }
 
     @Test

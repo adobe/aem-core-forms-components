@@ -175,15 +175,14 @@ describe("Dynamic Options: Enum and EnumNames for CheckboxGroup, radiobutton and
         cy.get(`#${newRadioId}`).find(selectors.radiobuttonWidget).should('not.have.attr', 'aria-disabled');
     })
 
-    //TOFIX: Rich text in aria-label
     it("should handle rich text in aria-labels correctly", () => {
         const richCheckboxId = componentIds['richCheckbox'];
         const richCheckbox2Id = componentIds['richCheckbox2'];
         const richDropDownId = componentIds['richdropdown'];
 
         // Check that aria-labels contain escaped HTML
-        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='a']`).should('have.attr', 'aria-label').and('contain', 'richCheckbox <b>one</b>:  <b>a</b>');
-        cy.get(`#${richCheckbox2Id}`).find(`${selectors.checkboxgroupWidget}[value='0']`).should('have.attr', 'aria-label').and('contain', '<p>richCheckbox <b>two</b></p>:  <b>Item</b> 1');
+        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='a']`).should('have.attr', 'aria-label').and('contain', 'richCheckbox one:  a');
+        cy.get(`#${richCheckbox2Id}`).find(`${selectors.checkboxgroupWidget}[value='0']`).should('have.attr', 'aria-label').and('contain', 'richCheckbox two:  Item 1');
     })
 
     it("should maintain proper data attributes for all components", () => {
@@ -277,20 +276,19 @@ describe("Dynamic Options: Enum and EnumNames for CheckboxGroup, radiobutton and
         cy.get(`#${extraRadioId}`).find(`${selectors.radiobuttonWidget}[value='b']`).should('have.attr', 'aria-label', 'extraRadio One:  Beta');
     })
 
-     //TOFIX: Rich text in aria-label
     it("should have proper aria-labels for rich text components", () => {
         const richCheckboxId = componentIds['richCheckbox'];
         const richCheckbox2Id = componentIds['richCheckbox2'];
 
         // Test richCheckbox aria-labels with rich text
-        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='a']`).should('have.attr', 'aria-label', 'richCheckbox <b>one</b>:  <b>a</b>');
-        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='b']`).should('have.attr', 'aria-label', 'richCheckbox <b>one</b>:  b');
-        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='c']`).should('have.attr', 'aria-label', 'richCheckbox <b>one</b>:  c');
-        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='d']`).should('have.attr', 'aria-label', 'richCheckbox <b>one</b>:  <b>d</b>');
+        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='a']`).should('have.attr', 'aria-label', 'richCheckbox one:  a');
+        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='b']`).should('have.attr', 'aria-label', 'richCheckbox one:  b');
+        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='c']`).should('have.attr', 'aria-label', 'richCheckbox one:  c');
+        cy.get(`#${richCheckboxId}`).find(`${selectors.checkboxgroupWidget}[value='d']`).should('have.attr', 'aria-label', 'richCheckbox one:  d');
 
         // Test richCheckbox2 aria-labels with rich text
-        cy.get(`#${richCheckbox2Id}`).find(`${selectors.checkboxgroupWidget}[value='0']`).should('have.attr', 'aria-label', '<p>richCheckbox <b>two</b></p>:  <b>Item</b> 1');
-        cy.get(`#${richCheckbox2Id}`).find(`${selectors.checkboxgroupWidget}[value='1']`).should('have.attr', 'aria-label', '<p>richCheckbox <b>two</b></p>:   <b>Item</b> 2');
+        cy.get(`#${richCheckbox2Id}`).find(`${selectors.checkboxgroupWidget}[value='0']`).should('have.attr', 'aria-label', 'richCheckbox two:  Item 1');
+        cy.get(`#${richCheckbox2Id}`).find(`${selectors.checkboxgroupWidget}[value='1']`).should('have.attr', 'aria-label', 'richCheckbox two:   Item 2');
     })
 
 

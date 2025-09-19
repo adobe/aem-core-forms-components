@@ -119,8 +119,9 @@ class FormOptionFieldBase extends FormFieldBase {
                 let valueToSet = index < newEnumNames.length ? newEnumNames[index] : input.value;
                 let purifiedValue = window.DOMPurify ?  window.DOMPurify.sanitize(valueToSet) : valueToSet;
                 span.innerHTML = purifiedValue;
-                //TOFIX: Rich text in aria-label
-                input.setAttribute("aria-label", `${this._model.label.value}:  ${purifiedValue}`);
+                let richScreenReaderText = `${this._model.label.value}:  ${purifiedValue}`;
+                let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
+                input.setAttribute("aria-label", plainScreenReaderText);
             });
         } else {
             [...this.getOptions()].forEach((option, index) => {
@@ -131,8 +132,9 @@ class FormOptionFieldBase extends FormFieldBase {
                     span.innerHTML = purifiedValue;
                 }
                 if(input) {
-                    //TOFIX: Rich text in aria-label
-                    input.setAttribute("aria-label", `${this._model.label.value}:  ${purifiedValue}`);
+                    let richScreenReaderText = `${this._model.label.value}:  ${purifiedValue}`;
+                    let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
+                    input.setAttribute("aria-label", plainScreenReaderText);
                 }
             });
         }
