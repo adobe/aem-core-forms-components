@@ -406,9 +406,24 @@ public class CheckBoxGroupImplTest {
         assertEquals("<b>Gender</b>: Male", screenReaderLabels[0]);
         assertEquals("<b>Gender</b>: Female", screenReaderLabels[1]);
 
-        CheckBoxGroup checkboxGroupMock = Mockito.mock(CheckBoxGroup.class);
-        Mockito.when(checkboxGroupMock.getEnumNames()).thenReturn(null);
-        assertNull(checkboxGroupMock.getOptionScreenReaderLabels());
+        CheckBoxGroup spyCheckboxGroup1 = Mockito.spy(checkboxGroup);
+        Mockito.when(spyCheckboxGroup1.getEnumNames()).thenReturn(null);
+        assertNull(spyCheckboxGroup1.getOptionScreenReaderLabels());
+
+        CheckBoxGroup spyCheckboxGroup2 = Mockito.spy(checkboxGroup);
+        Mockito.when(spyCheckboxGroup2.getLabel()).thenReturn(null);
+        screenReaderLabels = spyCheckboxGroup2.getOptionScreenReaderLabels();
+        assertEquals(": Male", screenReaderLabels[0]);
+        assertEquals(": Female", screenReaderLabels[1]);
+
+        Label label = Mockito.mock(Label.class);
+        Mockito.when(label.getValue()).thenReturn(null);
+        Mockito.when(label.isRichText()).thenReturn(null);
+        CheckBoxGroup spyCheckboxGroup3 = Mockito.spy(checkboxGroup);
+        Mockito.when(spyCheckboxGroup3.getLabel()).thenReturn(label);
+        screenReaderLabels = spyCheckboxGroup3.getOptionScreenReaderLabels();
+        assertEquals(": Male", screenReaderLabels[0]);
+        assertEquals(": Female", screenReaderLabels[1]);
     }
 
     @Test
