@@ -39,10 +39,7 @@ import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -406,8 +403,12 @@ public class CheckBoxGroupImplTest {
     void testGetOptionScreenReaderLabels() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_OPTION_SCREEN_READER_LABEL);
         String[] screenReaderLabels = checkboxGroup.getOptionScreenReaderLabels();
-        assertEquals("Gender: Male", screenReaderLabels[0]);
-        assertEquals("Gender: Female", screenReaderLabels[1]);
+        assertEquals("<b>Gender</b>: Male", screenReaderLabels[0]);
+        assertEquals("<b>Gender</b>: Female", screenReaderLabels[1]);
+
+        CheckBoxGroup checkboxGroupMock = Mockito.mock(CheckBoxGroup.class);
+        Mockito.when(checkboxGroupMock.getEnumNames()).thenReturn(null);
+        assertNull(checkboxGroupMock.getOptionScreenReaderLabels());
     }
 
     @Test
