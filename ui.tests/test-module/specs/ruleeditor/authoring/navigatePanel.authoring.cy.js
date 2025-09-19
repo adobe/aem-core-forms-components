@@ -92,9 +92,17 @@ describe('Rule editor navigate-in-panel rule authoring',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
 
+        // delete else block if present
+        cy.getRuleEditorIframe().then($iframe => {
+            const $button = $iframe.find(".else-section-button > .delete-else-button");
+            if ($button.length) {
+              cy.wrap($button).click();
+            }
+        });
+
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click({multiple: true, force: true});
 
         // select HIDE action from dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.NAVIGATE_IN_PANEL).should("exist");
