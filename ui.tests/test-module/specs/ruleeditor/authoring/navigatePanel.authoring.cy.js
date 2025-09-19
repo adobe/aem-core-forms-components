@@ -3,8 +3,7 @@ const commons = require('../../../libs/commons/commons'),
     formsSelectors = require('../../../libs/commons/guideSelectors'),
     afConstants = require('../../../libs/commons/formsConstants');
 
-// @arun to uncomment this soon
-describe.skip('Rule editor navigate-in-panel rule authoring',function(){
+describe('Rule editor navigate-in-panel rule authoring',function(){
     let toggle_array = [];
 
     before(() => {
@@ -92,6 +91,14 @@ describe.skip('Rule editor navigate-in-panel rule authoring',function(){
         // IS CLICKED option not existing in 'OPERATIONS' dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
+
+        // delete else block if present
+        cy.getRuleEditorIframe().then($iframe => {
+            const $button = $iframe.find(".else-section-button > .delete-else-button");
+            if ($button.length) {
+              cy.wrap($button).click();
+            }
+        });
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");

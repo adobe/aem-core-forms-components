@@ -201,7 +201,8 @@ var selectors = {
             IS_CLICKED : "coral-selectlist [value='is clicked']",
             IS_SUBMITTED_SUCCESSFULLY : "coral-selectlist [value='is submitted successfully']",
             SUBMISSION_FAILS : "coral-selectlist [value='submission fails']",
-            NAVIGATE_TO : "coral-selectlist [value='NAVIGATE_TO']"
+            NAVIGATE_TO : "coral-selectlist [value='NAVIGATE_TO']",
+            NAVIGATE_IN_PANEL : "coral-selectlist [value='NAVIGATE_IN_PANEL']"
         }
     }
 };

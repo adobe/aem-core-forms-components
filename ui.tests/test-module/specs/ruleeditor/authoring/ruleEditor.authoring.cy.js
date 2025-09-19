@@ -3,8 +3,7 @@ const commons = require('../../../libs/commons/commons'),
     formsSelectors = require('../../../libs/commons/guideSelectors'),
     afConstants = require('../../../libs/commons/formsConstants');
 
-// @arun to uncomment this soon
-describe.skip('Rule editor authoring sanity for core-components',function(){
+describe('Rule editor authoring sanity for core-components',function(){
     let toggle_array = [];
 
     before(() => {
@@ -52,6 +51,14 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
         // IS CLICKED option not existing in 'OPERATIONS' dropdown
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
+
+        // delete else block if present
+        cy.getRuleEditorIframe().then($iframe => {
+            const $button = $iframe.find(".else-section-button > .delete-else-button");
+            if ($button.length) {
+              cy.wrap($button).click();
+            }
+        });
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
@@ -104,7 +111,14 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.EQUALS_TO).click();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STRING_LITERAL).type('abc');
-        cy.getRuleEditorIframe().find(".delete-else-button").click();
+
+        // delete else block if present
+        cy.getRuleEditorIframe().then($iframe => {
+            const $button = $iframe.find(".else-section-button > .delete-else-button");
+            if ($button.length) {
+              cy.wrap($button).click();
+            }
+        });
 
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
@@ -210,6 +224,14 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_CLICKED).click();
 
+        // delete else block if present
+        cy.getRuleEditorIframe().then($iframe => {
+            const $button = $iframe.find(".else-section-button > .delete-else-button");
+            if ($button.length) {
+              cy.wrap($button).click();
+            }
+        });
+
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click({multiple: true, force: true});
@@ -259,13 +281,21 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_SUBMITTED_SUCCESSFULLY).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.IS_SUBMITTED_SUCCESSFULLY).click();
 
+        // delete else block if present
+        cy.getRuleEditorIframe().then($iframe => {
+            const $button = $iframe.find(".else-section-button > .delete-else-button");
+            if ($button.length) {
+              cy.wrap($button).click();
+            }
+        });
+
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click({multiple: true, force: true});
 
         // select FUNCTION_CALL action from dropdown
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
 
         cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").should("be.visible");
         cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").click();
@@ -293,13 +323,21 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SUBMISSION_FAILS).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.SUBMISSION_FAILS).click();
 
+        // delete else block if present
+        cy.getRuleEditorIframe().then($iframe => {
+            const $button = $iframe.find(".else-section-button > .delete-else-button");
+            if ($button.length) {
+              cy.wrap($button).click();
+            }
+        });
+
         // check and click on dropdown to view the actions available
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " .choice-view-default").click();
 
         // select FUNCTION_CALL action from dropdown
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
 
         cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").should("be.visible");
         cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").click();
@@ -345,7 +383,7 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
             submitFormButtonEditPathSelector = "[data-path='" + submitFormButtonEditPath + "']";
 
         it('should open rule-editor from spa', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-14068")) {
+            if (toggle_array.includes("FT_FORMS-14068")) {
                 cy.openAuthoring(formPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
@@ -412,23 +450,21 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
             cy.deleteComponentByPath(buttonEditPath);
         })
 
-        if (cy.af.isLatestAddon()) {
-            it('should add validation rule on date fields', function () {
-                cy.openAuthoring(formPath);
-                cy.selectLayer("Edit");
-                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+        it('should add validation rule on date fields', function () {
+            cy.openAuthoring(formPath);
+            cy.selectLayer("Edit");
+            cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
 
-                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
-                    "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
+            cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                "Adaptive Form Date Picker", afConstants.components.forms.resourceType.datepicker);
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector);
 
-                createRuleToValidateDate();
-                cy.get(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector).should("exist");
+            createRuleToValidateDate();
+            cy.get(sitesSelectors.overlays.overlay.component + datePickerEditPathSelector).should("exist");
 
-                cy.selectLayer("Edit");
-                cy.deleteComponentByPath(datePickerEditPath);
-            })
-        }
+            cy.selectLayer("Edit");
+            cy.deleteComponentByPath(datePickerEditPath);
+        })
 
         it('should add rule on texbox equality operator to hide a text box', function () {
             cy.openAuthoring(formPath);
@@ -453,7 +489,7 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
         })
 
         it('should add submission handler rules on form', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-13209")) {
+            if (toggle_array.includes("FT_FORMS-13209")) {
                 cy.openAuthoring(submitFormPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']").should("exist");
@@ -471,7 +507,7 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
         })
 
         it('should add custom formData submit rule on submit button', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11541")) {
+            if (toggle_array.includes("FT_FORMS-11541")) {
                 cy.openAuthoring(submitFormPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + submitFormContainerPath + "/*']").should("exist");
@@ -489,8 +525,8 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
                 cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
                 cy.getRuleEditorIframe().find("[title='Submit - Click'] .title-cell").should("be.visible").click();
                 // select FUNCTION_CALL action from dropdown
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
-                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.BLOCK_STATEMENT + " " + formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
 
                 cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").should("be.visible");
                 cy.getRuleEditorIframe().find(".terminal-view.FUNCTION_NAME.VARIABLE").click();
@@ -515,7 +551,7 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
         })
 
         it('should add save form rule on button', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-11581")) {
+            if (toggle_array.includes("FT_FORMS-11581")) {
                 cy.openAuthoring(saveFormPath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + saveFormContainerPath + "/*']").should("exist");
@@ -541,7 +577,7 @@ describe.skip('Rule editor authoring sanity for core-components',function(){
             buttonEditPathSelector = "[data-path='" + buttonEditPath + "']";
 
         it('should open rule-editor from spa', function () {
-            if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-14068")) {
+            if (toggle_array.includes("FT_FORMS-14068")) {
                 cy.openAuthoring(pagePath);
                 cy.selectLayer("Edit");
                 cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
