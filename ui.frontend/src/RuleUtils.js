@@ -116,6 +116,14 @@ class RuleUtils {
             if (!items) return;
             
             Object.values(items).forEach(item => {
+
+                if (item.validationExpression) {
+                    extractFunctionNamesFromRuleExpression(item.validationExpression);
+                }
+                if (item.displayValueExpression) {
+                    extractFunctionNamesFromRuleExpression(item.displayValueExpression);
+                }
+                
                 if (item.events) {
                     Object.values(item.events).forEach(eventArray => {
                         eventArray.forEach(eventString => {

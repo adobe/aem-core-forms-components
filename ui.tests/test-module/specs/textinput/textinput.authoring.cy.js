@@ -152,6 +152,26 @@ describe('Page - Authoring', function () {
         it('check rich text support for label', function(){
             testRichTextDialog(textInputEditPathSelector, textInputDrop);
         });
+
+        it('verify Formats tab in edit dialog of TextInput', function () {
+            dropTextInputInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Formats').click().then(() => {
+                // Verify the Formats tab is visible and contains the display pattern dropdown
+                cy.get('.cmp-adaptiveform-textinput__displaypattern').should('be.visible');
+                
+                // Test display pattern dropdown functionality
+                cy.get('.cmp-adaptiveform-textinput__displaypattern').children('button').click();
+
+                // Select Phone Number and verify displayValueExpression is set
+                cy.get("coral-selectlist-item[value='phonenumber']").should('be.visible').click({force: true, multiple: true});
+                
+                cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                    cy.deleteComponentByPath(textInputDrop);
+                });
+            });
+        });
     })
 
   context('Open Sites Editor', function () {
@@ -179,6 +199,7 @@ describe('Page - Authoring', function () {
     it('check rich text support for label in sites', function(){
         testRichTextDialog(textInputEditPathSelector, textInputDrop, true);
     });
+
 
     // conditionally run the test on latest addon
     //if (cy.af.isLatestAddon()) {

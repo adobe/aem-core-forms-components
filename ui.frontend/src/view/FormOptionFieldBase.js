@@ -117,13 +117,22 @@ class FormOptionFieldBase extends FormFieldBase {
                 let span = option.querySelector('span');
                 let input = option.querySelector('input');
                 let valueToSet = index < newEnumNames.length ? newEnumNames[index] : input.value;
-                span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(valueToSet) : valueToSet;
+                let purifiedValue = window.DOMPurify ?  window.DOMPurify.sanitize(valueToSet) : valueToSet;
+                span.innerHTML = purifiedValue;
+                //TOFIX: Rich text in aria-label
+                input.setAttribute("aria-label", `${this._model.label.value}:  ${purifiedValue}`);
             });
         } else {
             [...this.getOptions()].forEach((option, index) => {
                 let span = option.querySelector('span');
+                let input = option.querySelector('input');
+                let purifiedValue = window.DOMPurify ?  window.DOMPurify.sanitize(newEnumNames[index]) : newEnumNames[index];
                 if(span) {
-                    span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(newEnumNames[index]) : newEnumNames[index];
+                    span.innerHTML = purifiedValue;
+                }
+                if(input) {
+                    //TOFIX: Rich text in aria-label
+                    input.setAttribute("aria-label", `${this._model.label.value}:  ${purifiedValue}`);
                 }
             });
         }

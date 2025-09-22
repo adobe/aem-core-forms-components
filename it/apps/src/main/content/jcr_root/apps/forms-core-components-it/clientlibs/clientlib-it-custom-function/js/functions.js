@@ -137,6 +137,22 @@ function formatEmailInput(field)
     return transformedEmail;
 }
 
+/**
+ * Validates email input
+ * @name validateEmailInput Validates email input
+ * @param {object} field field whose value to be validated
+ * @return {string}
+ */
+function validateEmailInput(field)
+{
+    var email = field.$value;
+    if (!email) {
+        return "false";
+    }
+    // Simple email regex pattern
+    var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return pattern.test(email) ? "true" : "false";
+}
 
 /**
  * Formats telephone input

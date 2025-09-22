@@ -32,7 +32,7 @@ const classicFormReleasedAddonVersion = '6.0.1360';
 
 try {
     ci.stage("Integration Tests");
-    let wcmVersion = "2.25.4";
+    let wcmVersion = "2.30.0";
     ci.dir(qpPath, () => {
         // Connect to QP
         ci.sh('./qp.sh -v bind --server-hostname localhost --server-port 55555');
