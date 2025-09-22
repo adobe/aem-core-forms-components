@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
+import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.day.cq.i18n.I18n;
@@ -177,6 +178,16 @@ public interface FormComponent extends Component {
     @Nullable
     default String getLangIfPresent() {
         return null;
+    }
+
+    /**
+     * @see ComponentExporter#getExportedType()
+     * @since com.adobe.cq.wcm.core.components.models.form 14.2.0
+     */
+    @NotNull
+    @Override
+    default String getExportedType() {
+        return "";
     }
 
 }
