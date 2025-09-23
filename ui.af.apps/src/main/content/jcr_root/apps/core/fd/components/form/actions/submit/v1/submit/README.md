@@ -49,11 +49,6 @@ When the Submit button is activated and the form begins submission, the form con
 - The form element `form.cmp-adaptiveform-container` toggles the CSS class `cmp-adaptiveform-container--submitting` for the duration of the network request.
 - The loading class is removed and the loader hides when validation fails, the submission succeeds, or an error occurs.
 
-```
-During submit (loader visible to avoid multiple submits)
-
-form.cmp-adaptiveform-container.cmp-adaptiveform-container--loading .cmp-adaptiveform-container__loader { display: block; }
-```
 
 ## BEM Description
 ```
