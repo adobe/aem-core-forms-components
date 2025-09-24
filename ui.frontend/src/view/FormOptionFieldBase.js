@@ -16,9 +16,14 @@
 
 import FormFieldBase from "./FormFieldBase.js";
 
+
+/**
+ * @module FormView
+ */
+
 /**
  * Class containing common view code for dropdown, checkboxgroup and radiobutton
- * @extends module:FormView~FormOptionFieldBase
+ * @extends module:FormView~FormFieldBase
  */
 class FormOptionFieldBase extends FormFieldBase {
     constructor(params) {
