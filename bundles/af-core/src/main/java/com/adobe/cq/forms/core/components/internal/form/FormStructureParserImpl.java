@@ -90,7 +90,8 @@ public class FormStructureParserImpl implements FormStructureParser {
                 themeContentPath = request.getParameter(ThemeConstants.THEME_OVERRIDE); // embed component use-case
             }
             if (StringUtils.isBlank(themeContentPath)) {
-                themeContentPath = getPropertyFromFormContainer(resource, ThemeConstants.THEME_REF); // normal including theme in form
+                FormContainer formContainer = getFormContainer(resource);
+                themeClientLibRef = formContainer != null ? formContainer.getThemeClientLibRef() : null;
                 // runtime
             }
         }
