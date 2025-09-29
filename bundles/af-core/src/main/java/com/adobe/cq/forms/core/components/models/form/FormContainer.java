@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -306,6 +307,17 @@ public interface FormContainer extends Container {
      */
     default String getLang() {
         return Base.DEFAULT_LANGUAGE;
+    }
+
+    /**
+     * Returns the publish instance URL for the form.
+     *
+     * @return the publish instance URL as a String, or null if not available
+     * @throws MalformedURLException if the URL is malformed
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.4
+     */
+    default String getPublishInstance() throws MalformedURLException {
+        return null;
     }
 
     /**

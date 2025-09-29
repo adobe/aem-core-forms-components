@@ -101,6 +101,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private HttpClientBuilderFactory clientBuilderFactory;
 
+    // @OSGiService
+    // private Externalizer externalizer;
+
     private static final String DRAFT_PREFILL_SERVICE = "service://FP/draft/";
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -509,6 +512,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                     ((Map<String, Object>) submitProps.get(SS_SPREADSHEET)).put(entry.getKey(), entry.getValue());
                 }
             }
+            submitProps.put("aemDomainPublish", System.getenv("AEM_DOMAIN_PUBLISH"));
         }
         return submitProps;
     }
