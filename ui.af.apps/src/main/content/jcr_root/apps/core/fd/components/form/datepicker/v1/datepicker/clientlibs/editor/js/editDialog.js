@@ -23,6 +23,9 @@
         DATEPICKER_EDITFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__editformat",
         DATEPICKER_LANG = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__lang",
         DATEPICKER_LANGDISPLAYVALUE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__langdisplayvalue",
+        DATEPICKER_DEFAULTDATE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__defaultdate",
+        DATEPICKER_MINDATE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__mindate",
+        DATEPICKER_MAXDATE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__maxdate",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -47,5 +50,24 @@
         Utils.handlePatternFormat(dialog,DATEPICKER_LANGDISPLAYVALUE,DATEPICKER_LANG);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleEditPatternDropDown,handleEditFormat,handleLang);
+    function handleDatePlaceholders(dialog){
+        var defaultDateInput = dialog.find(DATEPICKER_DEFAULTDATE + " input")[0],
+            minDateInput = dialog.find(DATEPICKER_MINDATE + " coral-datepicker")[0],
+            maxDateInput = dialog.find(DATEPICKER_MAXDATE + " coral-datepicker")[0],
+            defaultDateTooltip = dialog.find(DATEPICKER_DEFAULTDATE + " coral-tooltip")[0],
+            minDateTooltip = dialog.find(DATEPICKER_MINDATE + " coral-tooltip")[0],
+            maxDateTooltip = dialog.find(DATEPICKER_MAXDATE + " coral-tooltip")[0],
+            emptyText = Granite.I18n.get('YYYY-MM-DD', null, 'Input Default Date format'),
+            fieldDescription = Granite.I18n.get('Please enter the date in the required format "yyyy-mm-dd".', null, 'Input Default Date format');
+
+        defaultDateInput.placeholder = emptyText;
+        defaultDateInput.setAttribute('aria-label', emptyText);
+        minDateInput.placeholder = emptyText;
+        maxDateInput.placeholder = emptyText;
+        defaultDateTooltip.innerHTML = fieldDescription;
+        minDateTooltip.innerHTML = fieldDescription;
+        maxDateTooltip.innerHTML = fieldDescription;
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleEditPatternDropDown,handleEditFormat,handleLang,handleDatePlaceholders);
 })(jQuery);
