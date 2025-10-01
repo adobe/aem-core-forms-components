@@ -68,7 +68,6 @@
                 dorDownloadButton.show();
             }
         });
-
             // Initialize visibility based on current selection
             var selectedRadio = dorTypeSelector.querySelector('input:checked');
             if (selectedRadio) {
@@ -81,9 +80,9 @@
 
             // Initialize download button visibility
             if (selectedValue === DOR_NONE) {
-                Utils.hideComponent(dorDownloadButton, 'div');
+                dorDownloadButton.hide();
             } else {
-                Utils.showComponent(dorDownloadButton, 'div');
+                dorDownloadButton.show();
             }
         }
     }
