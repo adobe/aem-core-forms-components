@@ -101,7 +101,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private HttpClientBuilderFactory clientBuilderFactory;
 
-
     private static final String DRAFT_PREFILL_SERVICE = "service://FP/draft/";
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
