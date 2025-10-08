@@ -16,56 +16,61 @@
 
 import FormFieldBase from "./FormFieldBase.js";
 
-    /**
-     * Class representing components based on FileInput.
-     * @extends module:FormView~FormFileInput
-     */
-    class FormFileInput extends FormFieldBase {
 
-        constructor(params) {
-            super(params);
-        }
+/**
+ * @module FormView
+ */
 
-        setModel(model) {
-            super.setModel(model);
-            if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.widgetFields);
-            }
-        }
+/**
+ * Class representing components based on FileInput.
+ * @extends module:FormView~FormFieldBase
+ */
+class FormFileInput extends FormFieldBase {
 
-        updateValue(value) {
-            if (this.widgetObject == null) {
-                this.widgetObject = new FileInputWidget(this.widgetFields);
-            }
-            this.widgetObject.setValue(value);
-            super.updateEmptyStatus();
-        }
+    constructor(params) {
+        super(params);
+    }
 
-        syncWidget() {
-            let widgetElement = this.getWidget ? this.getWidget() : null;
-            if (widgetElement) {
-                widgetElement.id = this.getId() + "__widget";
-                this.getAttachButtonLabel().setAttribute('for', this.getId() + "__widget");
-            }
-        }
-
-        /*
-          We are overriding the syncLabel method of the FormFieldBase class because for all components, 
-          we pass the widgetId in 'for' attribute. However, for the file input component, 
-          we already have a widget, so we should not pass the widgetId twice
-        */
-        syncLabel() {
-          let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
-          if (labelElement) {
-              labelElement.setAttribute('for', this.getId());
-          }
-        }
-
-        syncMarkupWithModel() {
-            super.syncMarkupWithModel();
-            this.syncWidget();
-            this.syncLabel();
+    setModel(model) {
+        super.setModel(model);
+        if (this.widgetObject == null) {
+            this.widgetObject = new FileInputWidget(this.widgetFields);
         }
     }
+
+    updateValue(value) {
+        if (this.widgetObject == null) {
+            this.widgetObject = new FileInputWidget(this.widgetFields);
+        }
+        this.widgetObject.setValue(value);
+        super.updateEmptyStatus();
+    }
+
+    syncWidget() {
+        let widgetElement = this.getWidget ? this.getWidget() : null;
+        if (widgetElement) {
+            widgetElement.id = this.getId() + "__widget";
+            this.getAttachButtonLabel().setAttribute('for', this.getId() + "__widget");
+        }
+    }
+
+    /*
+        We are overriding the syncLabel method of the FormFieldBase class because for all components, 
+        we pass the widgetId in 'for' attribute. However, for the file input component, 
+        we already have a widget, so we should not pass the widgetId twice
+    */
+    syncLabel() {
+        let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+        if (labelElement) {
+            labelElement.setAttribute('for', this.getId());
+        }
+    }
+
+    syncMarkupWithModel() {
+        super.syncMarkupWithModel();
+        this.syncWidget();
+        this.syncLabel();
+    }
+}
     
 export default FormFileInput;
