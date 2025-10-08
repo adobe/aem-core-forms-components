@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Adaptive Forms (Core Components) Class: FormFieldBase</title>
+	<title>Adaptive Forms (Core Components) Class: FormOptionFieldBase</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -86,7 +86,7 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: FormFieldBase</h1>
+	<h1 class="page-title">Class: FormOptionFieldBase</h1>
 <section>
 
 <header>
@@ -94,10 +94,10 @@
         <h2>
             <span class="ancestors"><a href="module-FormView.html">FormView</a>~</span>
         
-        FormFieldBase
+        FormOptionFieldBase
         </h2>
         
-            <div class="class-description"><p>Base class for form fields.</p></div>
+            <div class="class-description"><p>Class containing common view code for dropdown, checkboxgroup and radiobutton</p></div>
         
     
 </header>
@@ -109,73 +109,19 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="FormFieldBase"><span class="type-signature"></span>new FormFieldBase(params)</h4>
+    <h4 class="name" id="FormOptionFieldBase"><span class="type-signature"></span>new FormOptionFieldBase()</h4>
     
     
 </dt>
 <dd>
 
     
-    <div class="description">
-        <p>Constructor for FormFieldBase.</p>
-    </div>
-    
 
     
 
     
 
     
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>params</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The parameters for initializing the form field.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
     
 
     
@@ -243,7 +189,7 @@
 
 
     <ul>
-        <li><a href="module-FormView-FormField.html">module:FormView~FormField</a></li>
+        <li><a href="module-FormView-FormFieldBase.html">module:FormView~FormFieldBase</a></li>
     </ul>
 
 
@@ -297,7 +243,21 @@
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#ELEMENT_FOCUS_CHANGED">module:FormView~FormFieldBase#ELEMENT_FOCUS_CHANGED</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#ELEMENT_FOCUS_CHANGED">module:FormView~FormFieldBase#ELEMENT_FOCUS_CHANGED</a>
+    </li></ul></dd>
     
 
     
@@ -368,7 +328,21 @@
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#ELEMENT_HELP_SHOWN">module:FormView~FormFieldBase#ELEMENT_HELP_SHOWN</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#ELEMENT_HELP_SHOWN">module:FormView~FormFieldBase#ELEMENT_HELP_SHOWN</a>
+    </li></ul></dd>
     
 
     
@@ -439,7 +413,21 @@
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#ELEMENT_ERROR_SHOWN">module:FormView~FormFieldBase#ELEMENT_ERROR_SHOWN</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#ELEMENT_ERROR_SHOWN">module:FormView~FormFieldBase#ELEMENT_ERROR_SHOWN</a>
+    </li></ul></dd>
     
 
     
@@ -510,7 +498,21 @@
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#ELEMENT_VALUE_CHANGED">module:FormView~FormFieldBase#ELEMENT_VALUE_CHANGED</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#ELEMENT_VALUE_CHANGED">module:FormView~FormFieldBase#ELEMENT_VALUE_CHANGED</a>
+    </li></ul></dd>
     
 
     
@@ -554,6 +556,704 @@
             
 <hr>
 <dt>
+    <h4 class="name" id="updateEnum"><span class="type-signature"></span>updateEnum(enums)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Placeholder method for updating the saved value in the option field.
+This method is intended to be overridden by the child class.
+The overriding method should contain the logic for updating the 'enum' value.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>enums</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>An array of primitive values to be saved in the option field.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="updateEnumNames"><span class="type-signature"></span>updateEnumNames(enumNames)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Placeholder method for updating the display value in the option field.
+This method is intended to be overridden by the child class.
+The overriding method should contain the logic for updating the 'enumNames' value.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>enumNames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>An array of display values for the option field.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="applyState"><span class="type-signature"></span>applyState(state)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Applies the full state of the field to the HTML.
+Generally done just after the model is bound to the field.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The state object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#applyState">module:FormView~FormFieldBase#applyState</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="updateEnumForRadioButtonAndCheckbox"><span class="type-signature"></span>updateEnumForRadioButtonAndCheckbox(newEnums, createItemCallback)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Common method to update the enums of checkbox and radiobutton</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newEnums</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>updated enum values</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>createItemCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">CallableFunction</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>function to create options</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="updateEnumNamesForRadioButtonAndCheckbox"><span class="type-signature"></span>updateEnumNamesForRadioButtonAndCheckbox(newEnumsNames, createItemCallback)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Common method to update the enums Names of checkbox and radiobutton</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newEnumsNames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>updated enum Names values</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>createItemCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">CallableFunction</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>function to create options</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="getWidget"><span class="type-signature"></span>getWidget()</h4>
     
     
@@ -583,7 +1283,21 @@ Implementations should return the widget element that is used to capture the val
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#getWidget">module:FormView~FormFieldBase#getWidget</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#getWidget">module:FormView~FormFieldBase#getWidget</a>
+    </li></ul></dd>
     
 
     
@@ -716,7 +1430,21 @@ Implementations should return the description element that is used to capture th
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#getDescription">module:FormView~FormFieldBase#getDescription</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#getDescription">module:FormView~FormFieldBase#getDescription</a>
+    </li></ul></dd>
     
 
     
@@ -849,7 +1577,21 @@ Implementations should return the label element that is used to capture the labe
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#getLabel">module:FormView~FormFieldBase#getLabel</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#getLabel">module:FormView~FormFieldBase#getLabel</a>
+    </li></ul></dd>
     
 
     
@@ -982,7 +1724,21 @@ Implementations should return the error element that is used to capture the erro
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#getErrorDiv">module:FormView~FormFieldBase#getErrorDiv</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#getErrorDiv">module:FormView~FormFieldBase#getErrorDiv</a>
+    </li></ul></dd>
     
 
     
@@ -1115,7 +1871,21 @@ Implementations should return the tooltip element that is used to capture the to
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#getTooltipDiv">module:FormView~FormFieldBase#getTooltipDiv</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#getTooltipDiv">module:FormView~FormFieldBase#getTooltipDiv</a>
+    </li></ul></dd>
     
 
     
@@ -1248,7 +2018,21 @@ Implementations should return the question mark element</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#getQuestionMarkDiv">module:FormView~FormFieldBase#getQuestionMarkDiv</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#getQuestionMarkDiv">module:FormView~FormFieldBase#getQuestionMarkDiv</a>
+    </li></ul></dd>
     
 
     
@@ -1380,7 +2164,21 @@ Implementations should return the question mark element</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#getClass">module:FormView~FormFieldBase#getClass</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#getClass">module:FormView~FormFieldBase#getClass</a>
+    </li></ul></dd>
     
 
     
@@ -1534,11 +2332,20 @@ Implementations should return the question mark element</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#setModel">module:FormView~FormFieldBase#setModel</a>
+			</li>
+		</ul>
+	</dd>
+	
 
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#setModel">module:FormView~FormField#setModel</a>
+        <a href="module-FormView-FormFieldBase.html#setModel">module:FormView~FormFieldBase#setModel</a>
     </li></ul></dd>
     
 
@@ -1617,11 +2424,20 @@ Implementations should return the question mark element</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#syncMarkupWithModel">module:FormView~FormFieldBase#syncMarkupWithModel</a>
+			</li>
+		</ul>
+	</dd>
+	
 
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#syncMarkupWithModel">module:FormView~FormField#syncMarkupWithModel</a>
+        <a href="module-FormView-FormFieldBase.html#syncMarkupWithModel">module:FormView~FormFieldBase#syncMarkupWithModel</a>
     </li></ul></dd>
     
 
@@ -1750,136 +2566,21 @@ Implementations should return the question mark element</p>
 	
 
 	
-
-    
-
-    
-
-    
-
-    
-
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#setFocus">module:FormView~FormFieldBase#setFocus</a>
+			</li>
+		</ul>
+	</dd>
 	
 
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="applyState"><span class="type-signature"></span>applyState(state)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Applies the full state of the field to the HTML.
-Generally done just after the model is bound to the field.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>state</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The state object.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#setFocus">module:FormView~FormFieldBase#setFocus</a>
+    </li></ul></dd>
     
 
     
@@ -2007,11 +2708,20 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#initializeHelpContent">module:FormView~FormFieldBase#initializeHelpContent</a>
+			</li>
+		</ul>
+	</dd>
+	
 
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#initializeHelpContent">module:FormView~FormField#initializeHelpContent</a>
+        <a href="module-FormView-FormFieldBase.html#initializeHelpContent">module:FormView~FormFieldBase#initializeHelpContent</a>
     </li></ul></dd>
     
 
@@ -2164,7 +2874,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateVisible">module:FormView~FormFieldBase#updateVisible</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateVisible">module:FormView~FormFieldBase#updateVisible</a>
+    </li></ul></dd>
     
 
     
@@ -2316,7 +3040,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateEnabled">module:FormView~FormFieldBase#updateEnabled</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateEnabled">module:FormView~FormFieldBase#updateEnabled</a>
+    </li></ul></dd>
     
 
     
@@ -2468,7 +3206,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateReadOnly">module:FormView~FormFieldBase#updateReadOnly</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateReadOnly">module:FormView~FormFieldBase#updateReadOnly</a>
+    </li></ul></dd>
     
 
     
@@ -2620,7 +3372,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateRequired">module:FormView~FormFieldBase#updateRequired</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateRequired">module:FormView~FormFieldBase#updateRequired</a>
+    </li></ul></dd>
     
 
     
@@ -2772,7 +3538,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateValid">module:FormView~FormFieldBase#updateValid</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateValid">module:FormView~FormFieldBase#updateValid</a>
+    </li></ul></dd>
     
 
     
@@ -2933,7 +3713,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateValidity">module:FormView~FormFieldBase#updateValidity</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateValidity">module:FormView~FormFieldBase#updateValidity</a>
+    </li></ul></dd>
     
 
     
@@ -3085,7 +3879,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateErrorMessage">module:FormView~FormFieldBase#updateErrorMessage</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateErrorMessage">module:FormView~FormFieldBase#updateErrorMessage</a>
+    </li></ul></dd>
     
 
     
@@ -3246,7 +4054,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateValidationMessage">module:FormView~FormFieldBase#updateValidationMessage</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateValidationMessage">module:FormView~FormFieldBase#updateValidationMessage</a>
+    </li></ul></dd>
     
 
     
@@ -3374,7 +4196,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateValue">module:FormView~FormFieldBase#updateValue</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateValue">module:FormView~FormFieldBase#updateValue</a>
+    </li></ul></dd>
     
 
     
@@ -3452,7 +4288,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateEmptyStatus">module:FormView~FormFieldBase#updateEmptyStatus</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateEmptyStatus">module:FormView~FormFieldBase#updateEmptyStatus</a>
+    </li></ul></dd>
     
 
     
@@ -3580,7 +4430,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateLabel">module:FormView~FormFieldBase#updateLabel</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateLabel">module:FormView~FormFieldBase#updateLabel</a>
+    </li></ul></dd>
     
 
     
@@ -3708,7 +4572,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateActiveChild">module:FormView~FormFieldBase#updateActiveChild</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateActiveChild">module:FormView~FormFieldBase#updateActiveChild</a>
+    </li></ul></dd>
     
 
     
@@ -3836,7 +4714,21 @@ Generally done just after the model is bound to the field.</p>
 	
 
 	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="module-FormView-FormFieldBase.html#updateDescription">module:FormView~FormFieldBase#updateDescription</a>
+			</li>
+		</ul>
+	</dd>
+	
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="module-FormView-FormFieldBase.html#updateDescription">module:FormView~FormFieldBase#updateDescription</a>
+    </li></ul></dd>
     
 
     
@@ -3977,7 +4869,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#setId">module:FormView~FormField#setId</a>
+        <a href="module-FormView-FormFieldBase.html#setId">module:FormView~FormFieldBase#setId</a>
     </li></ul></dd>
     
 
@@ -4119,7 +5011,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#setParent">module:FormView~FormField#setParent</a>
+        <a href="module-FormView-FormFieldBase.html#setParent">module:FormView~FormFieldBase#setParent</a>
     </li></ul></dd>
     
 
@@ -4261,7 +5153,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#setInstanceManager">module:FormView~FormField#setInstanceManager</a>
+        <a href="module-FormView-FormFieldBase.html#setInstanceManager">module:FormView~FormFieldBase#setInstanceManager</a>
     </li></ul></dd>
     
 
@@ -4353,7 +5245,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#setActive">module:FormView~FormField#setActive</a>
+        <a href="module-FormView-FormFieldBase.html#setActive">module:FormView~FormFieldBase#setActive</a>
     </li></ul></dd>
     
 
@@ -4445,7 +5337,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#setInactive">module:FormView~FormField#setInactive</a>
+        <a href="module-FormView-FormFieldBase.html#setInactive">module:FormView~FormFieldBase#setInactive</a>
     </li></ul></dd>
     
 
@@ -4537,7 +5429,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#isActive">module:FormView~FormField#isActive</a>
+        <a href="module-FormView-FormFieldBase.html#isActive">module:FormView~FormFieldBase#isActive</a>
     </li></ul></dd>
     
 
@@ -4653,7 +5545,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#getFormContainerPath">module:FormView~FormField#getFormContainerPath</a>
+        <a href="module-FormView-FormFieldBase.html#getFormContainerPath">module:FormView~FormFieldBase#getFormContainerPath</a>
     </li></ul></dd>
     
 
@@ -4769,7 +5661,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#getId">module:FormView~FormField#getId</a>
+        <a href="module-FormView-FormFieldBase.html#getId">module:FormView~FormFieldBase#getId</a>
     </li></ul></dd>
     
 
@@ -4983,7 +5875,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#toggle">module:FormView~FormField#toggle</a>
+        <a href="module-FormView-FormFieldBase.html#toggle">module:FormView~FormFieldBase#toggle</a>
     </li></ul></dd>
     
 
@@ -5197,7 +6089,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#toggleAttribute">module:FormView~FormField#toggleAttribute</a>
+        <a href="module-FormView-FormFieldBase.html#toggleAttribute">module:FormView~FormFieldBase#toggleAttribute</a>
     </li></ul></dd>
     
 
@@ -5289,7 +6181,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#getLayoutProperties">module:FormView~FormField#getLayoutProperties</a>
+        <a href="module-FormView-FormFieldBase.html#getLayoutProperties">module:FormView~FormFieldBase#getLayoutProperties</a>
     </li></ul></dd>
     
 
@@ -5405,7 +6297,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#getModel">module:FormView~FormField#getModel</a>
+        <a href="module-FormView-FormFieldBase.html#getModel">module:FormView~FormFieldBase#getModel</a>
     </li></ul></dd>
     
 
@@ -5521,7 +6413,7 @@ Generally done just after the model is bound to the field.</p>
     
     <dt class="tag-overrides">Overrides:</dt>
     <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#getInstanceManager">module:FormView~FormField#getInstanceManager</a>
+        <a href="module-FormView-FormFieldBase.html#getInstanceManager">module:FormView~FormFieldBase#getInstanceManager</a>
     </li></ul></dd>
     
 
@@ -5588,126 +6480,6 @@ Generally done just after the model is bound to the field.</p>
 
 
         
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="subscribe"><span class="type-signature"></span>subscribe()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>Subscribes to model changes and updates the corresponding properties in the view.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
-	<dd class="inherited-from">
-		<ul class="dummy">
-			<li>
-				<a href="module-FormView-FormFieldBase.html#subscribe">module:FormView~FormFieldBase#subscribe</a>
-			</li>
-		</ul>
-	</dd>
-	
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="module-FormView-FormField.html#subscribe">module:FormView~FormField#subscribe</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Throws:</h5>
-    
-            
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        <p>Throws an error if the field does not subscribe to the model.</p>
-        </div>
-    </dt>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">string</span>
-
-
-
-            </dd>
-        </dl>
-    </dt>
-</dl>
-
-
-        
-
-    
 
     
 </dd>
