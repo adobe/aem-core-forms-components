@@ -80,29 +80,28 @@
     var dataTypeSelect = dialog.find(DATA_TYPE + " coral-select");
     var preselectedDataType = dataTypeSelect[0].selectedItem ? dataTypeSelect[0].selectedItem.value : '';
     var checkedValueSelector = 'input[name="./checkedValue"]';
-    var checkedValueInput = document.querySelector(checkedValueSelector);
 
-    // For boolean, set checked value to true and make it read only 
-    if (preselectedDataType === 'boolean' && checkedValueInput) {
-      checkedValueInput.value = 'true';
-      checkedValueInput.setAttribute('readonly', 'readonly');
-    } else if (checkedValueInput) { // for other data types like string and number, make it editable 
-      checkedValueInput.removeAttribute('readonly');
+    function applyCheckedValueBehavior(dataType) { // function which applies checked value behavior based for boolean data type
+      var checkedValueInput = document.querySelector(checkedValueSelector);
+      if (!checkedValueInput) {
+        return;
+      }
+      if (dataType === 'boolean') {
+        checkedValueInput.value = 'true';
+        checkedValueInput.setAttribute('readonly', 'readonly');
+      } else {
+        checkedValueInput.removeAttribute('readonly');
+      }
     }
+
+    // Apply initial behavior based on preselected type
+    applyCheckedValueBehavior(preselectedDataType);
 
     dataTypeSelect.on('change', function() {
       var selectedDataType = dataTypeSelect[0].selectedItem ? dataTypeSelect[0].selectedItem.value : '';
-      
       dialog.find(ENUMS).show(); // Keep enums visible for all data types (including boolean)
 
-      // Toggle checked value input behavior based on data type
-      var checkedValueInput = document.querySelector(checkedValueSelector);
-      if (selectedDataType === 'boolean' && checkedValueInput) {
-        checkedValueInput.value = 'true';
-        checkedValueInput.setAttribute('readonly', 'readonly'); // make the checked value input read only for the boolean data type
-      } else if (checkedValueInput) {
-        checkedValueInput.removeAttribute('readonly');
-      }
+      applyCheckedValueBehavior(selectedDataType); // Toggle checked value input behavior based on data type
     });
 
     var registerValidator = function(selector, validate) {
