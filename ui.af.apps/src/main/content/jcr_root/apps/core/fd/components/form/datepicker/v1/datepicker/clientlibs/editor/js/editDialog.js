@@ -57,8 +57,8 @@
             defaultDateTooltip = dialog.find(DATEPICKER_DEFAULTDATE + " coral-tooltip")[0],
             minDateTooltip = dialog.find(DATEPICKER_MINDATE + " coral-tooltip")[0],
             maxDateTooltip = dialog.find(DATEPICKER_MAXDATE + " coral-tooltip")[0],
-            emptyText = Granite.I18n.get('YYYY-MM-DD', null, 'Input Default Date format'),
-            fieldDescription = Granite.I18n.get('Please enter the date in the required format "yyyy-mm-dd".', null, 'Input Default Date format');
+            emptyText = Granite.I18n.get('YYYY-MM-DD', null, 'placeholder text to retain format across locale'),
+            fieldDescription = Granite.I18n.get('Please enter the date in the required format "yyyy-mm-dd".', null, 'placeholder text to retain format across locale');
 
         defaultDateInput.placeholder = emptyText;
         defaultDateInput.setAttribute('aria-label', emptyText);
