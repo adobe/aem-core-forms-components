@@ -361,4 +361,133 @@ describe("Form Runtime layout of Date Picker ", () => {
         });
     });
 
+    describe("Reflow at 320px width (WCAG 1.4.10)", () => {
+        
+        it("should display all date picker controls at 320px viewport width", () => {
+            cy.viewport(320, 568);
+            
+            const [datePicker, datePickerFieldView] = Object.entries(formContainer._fields)[0];
+
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+                .should("be.visible")
+                .click();
+            
+            cy.get('.datetimepicker.datePickerTarget')
+                .should("be.visible")
+                .and("have.css", "display", "flex");
+            
+            cy.get(".dp-leftnav")
+                .should("be.visible")
+                .and("be.visible");
+            
+            cy.get(".dp-rightnav")
+                .should("be.visible")
+                .and("be.visible");
+            
+            cy.get(".dp-caption")
+                .should("be.visible");
+        });
+
+        it("should display all days in the first column (Sunday) at 320px", () => {
+            cy.viewport(320, 568);
+            
+            const [datePicker, datePickerFieldView] = Object.entries(formContainer._fields)[0];
+            const date = '2026-02-01';
+            
+            cy.get(`#${datePicker}`).find("input").clear().type(date);
+            
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+                .should("be.visible")
+                .click();
+            
+            cy.get('.datetimepicker.datePickerTarget').within(() => {
+                cy.get('ul.header li').first().should("be.visible").and("contain", "Sun");
+                
+                cy.get("#li-day-2").should("be.visible");
+                cy.get("#li-day-9").should("be.visible");
+                cy.get("#li-day-16").should("be.visible");
+                cy.get("#li-day-23").should("be.visible"); 
+            });
+        });
+
+        it("should allow navigation with previous/next buttons at 320px", () => {
+            cy.viewport(320, 568);
+            
+            const [datePicker, datePickerFieldView] = Object.entries(formContainer._fields)[0];
+            const date = '2025-03-01';
+            
+            cy.get(`#${datePicker}`).find("input").clear().type(date);
+            
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+                .should("be.visible")
+                .click();
+            
+            cy.get(".dp-caption").should("contain", "March");
+            cy.get(".dp-leftnav").should("be.visible").click();
+            cy.get(".dp-caption").should("contain", "February");
+            cy.get(".dp-rightnav").should("be.visible").click();
+            cy.get(".dp-caption").should("contain", "March");
+        });
+
+        it("should not cause horizontal overflow at 320px", () => {
+            cy.viewport(320, 568);
+            
+            const [datePicker, datePickerFieldView] = Object.entries(formContainer._fields)[0];
+            
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+                .should("be.visible")
+                .click();
+            
+            cy.get('.datetimepicker.datePickerTarget').then(($picker) => {
+                const pickerWidth = $picker.outerWidth();
+                expect(pickerWidth).to.be.lessThan(320);
+            });
+            
+            cy.document().then((doc) => {
+                expect(doc.documentElement.scrollWidth).to.equal(doc.documentElement.clientWidth);
+            });
+        });
+
+        it("should maintain date column alignment at 320px", () => {
+            cy.viewport(320, 568);
+            
+            const [datePicker, datePickerFieldView] = Object.entries(formContainer._fields)[0];
+            const date = '2025-03-01'; 
+            
+            cy.get(`#${datePicker}`).find("input").clear().type(date);
+
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+                .should("be.visible")
+                .click();
+            
+            cy.get('.datetimepicker.datePickerTarget .view.dp-monthview ul:not(.header)').then(($rows) => {
+                const firstCellWidth = $rows.eq(0).find('li').eq(0).outerWidth();
+                
+                $rows.each((rowIndex, row) => {
+                    cy.wrap(row).find('li').each((cellIndex, cell) => {
+                        const cellWidth = Cypress.$(cell).outerWidth();
+                        expect(Math.abs(cellWidth - firstCellWidth)).to.be.lessThan(2);
+                    });
+                });
+            });
+        });
+
+        it("should allow date selection at 320px viewport", () => {
+            cy.viewport(320, 568);
+            
+            const [datePicker, datePickerFieldView] = Object.entries(formContainer._fields)[0];
+            const date = '2025-03-01';
+            
+            cy.get(`#${datePicker}`).find("input").clear().type(date);
+            
+            cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+                .should("be.visible")
+                .click();
+            
+            cy.get("#li-day-10").should("be.visible").click();
+            
+            cy.get(`#${datePicker}`).find("input").blur().should("have.value", "Sunday, 2 March, 2025");
+        });
+    });
+
 })

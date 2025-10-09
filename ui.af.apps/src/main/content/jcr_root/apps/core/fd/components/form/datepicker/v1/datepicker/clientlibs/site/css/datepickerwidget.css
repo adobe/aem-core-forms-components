@@ -24,6 +24,8 @@
     outline: solid #CCCCCC 2px;
     flex-direction: column;
     width: 433px;
+    max-width: calc(100vw - 20px);
+    box-sizing: border-box;
 }
 
 .datetimepicker .dp-clear {
@@ -112,7 +114,8 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     color: #666666;
-    min-width:40px;
+    min-width: 40px;
+    flex: 0 0 calc(100% / 7);
 }
 
 .datetimepicker .view ul.header li {
@@ -165,4 +168,39 @@
 
 .datefieldwidget.widgetreadonly .cmp-adaptiveform-datepicker__calendar-icon {
     display: none;
+}
+
+/* Responsive styles for WCAG 1.4.10 Reflow compliance at 320px */
+@media (max-width: 400px) {
+    .datetimepicker {
+        width: calc(100vw - 20px);
+        left: 10px !important;
+        right: 10px !important;
+    }
+
+    .datetimepicker .view ul {
+        padding: 2px;
+    }
+
+    .datetimepicker .view ul li {
+        min-width: 30px;
+        padding: 3px 1px;
+        font-size: 0.75rem;
+        flex: 0 0 calc(100% / 7);
+    }
+
+    .datetimepicker .dp-header .dp-caption {
+        flex: 1;
+        font-size: 0.875rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .datetimepicker .dp-header .dp-leftnav,
+    .datetimepicker .dp-header .dp-rightnav {
+        min-width: 35px;
+        width: 35px;
+        flex-shrink: 0;
+    }
 }
