@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -118,7 +119,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         if (itemModels == null) {
             itemModels = getChildrenModels(request, ComponentExporter.class);
         }
-        return itemModels;
+        return new LinkedHashMap<>(itemModels);
     }
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
@@ -195,7 +196,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         if (filteredChildComponents == null) {
             filteredChildComponents = getFilteredChildrenResources(fragmentContainer);
         }
-        return filteredChildComponents;
+        return new ArrayList<>(filteredChildComponents);
     }
 
     @JsonIgnore
