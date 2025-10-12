@@ -218,6 +218,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         }
       });
       this.prevNavWidthBtn = this.#dp.getElementsByClassName("dp-leftnav")[0];
+      this.prevNavWidthBtn.setAttribute("role", "button");
       this.prevNavWidthBtn.addEventListener("click",
           function (evnt) {
             if (self.view && self.#curInstance) {
@@ -225,6 +226,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
           });
       this.nextNavWidthBtn = this.#dp.getElementsByClassName("dp-rightnav")[0];
+      this.nextNavWidthBtn.setAttribute("role", "button");
       this.nextNavWidthBtn.addEventListener("click",
           function (evnt) {
             if (self.view && self.#curInstance) {
@@ -232,6 +234,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
           });
       this.caption = this.#dp.getElementsByClassName("dp-caption")[0];
+      this.caption.setAttribute("role", "button");
       this.caption.addEventListener("click",
           function (evnt) {
             if (self.view && self.#curInstance) {
@@ -660,6 +663,40 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.view = nextView;
         this.caption.classList.toggle("disabled",
             !this.#viewAction[this.view].caption);
+        let ariaLabel = "";
+        if (this.view === "Month") {
+          ariaLabel = this.#options.locale.months[this.currentMonth] + " " + this.currentYear;
+          this.prevNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.previousMonth || "Previous month"
+          );
+          this.nextNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.nextMonth || "Next month"
+          );
+        } else if (this.view === "Year") {
+          ariaLabel = this.currentYear;
+          this.prevNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.previousYear || "Previous year"
+          );
+          this.nextNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.nextYear || "Next year"
+          );
+        } else if (this.view === "Yearset") {
+          const startYear = this.currentYear - this.#options.yearsPerView / 2;
+          const endYear = startYear + this.#options.yearsPerView - 1;
+          ariaLabel = startYear + "-" + endYear;
+          this.prevNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.previousSetOfYears || "Previous set of years"
+          );
+          this.nextNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.nextSetOfYears || "Next set of years"
+          );
+        }
         this['$' + this.view.toLowerCase()].style.display = "block";
         this["show" + this.view]();
       }
@@ -1155,6 +1192,31 @@ if (typeof window.DatePickerWidget === 'undefined') {
         var zero = FormView.LanguageUtils.getTranslatedString(locale, "0");
         if (zero) {
             defaultOptions.locale.zero = zero;
+        }
+        // Fetch navigation labels for aria-label attributes
+        var previousMonth = FormView.LanguageUtils.getTranslatedString(locale, "previousMonth");
+        if (previousMonth) {
+            defaultOptions.locale.previousMonth = previousMonth;
+        }
+        var nextMonth = FormView.LanguageUtils.getTranslatedString(locale, "nextMonth");
+        if (nextMonth) {
+            defaultOptions.locale.nextMonth = nextMonth;
+        }
+        var previousYear = FormView.LanguageUtils.getTranslatedString(locale, "previousYear");
+        if (previousYear) {
+            defaultOptions.locale.previousYear = previousYear;
+        }
+        var nextYear = FormView.LanguageUtils.getTranslatedString(locale, "nextYear");
+        if (nextYear) {
+            defaultOptions.locale.nextYear = nextYear;
+        }
+        var previousSetOfYears = FormView.LanguageUtils.getTranslatedString(locale, "previousSetOfYears");
+        if (previousSetOfYears) {
+            defaultOptions.locale.previousSetOfYears = previousSetOfYears;
+        }
+        var nextSetOfYears = FormView.LanguageUtils.getTranslatedString(locale, "nextSetOfYears");
+        if (nextSetOfYears) {
+            defaultOptions.locale.nextSetOfYears = nextSetOfYears;
         }
     }
 
