@@ -1,0 +1,57 @@
+<div>
+  <!--TODO Replace the package name of the Model -->
+  <div class="cmp-formsembed__item" data-sly-use.model="com.adobe.cq.forms.core.components.it.models.embed.FormsEmbed">
+    <div class="cmp-formsembed-widget" data-forms-url=${model.formsUrl}>
+
+      <div class="afsection">
+        <div data-sly-test="${wcmmode.edit}">
+          Your Form Will Appear Here
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-sly-test="${!wcmmode.edit}">
+    <script>
+      var updateElementContent = function (targetElement, newHtml) {
+        targetElement.innerHTML = newHtml;
+        Array.from(targetElement.querySelectorAll("script")).forEach(oldScriptElement => {
+          const newScriptElement = document.createElement("script");
+          Array.from(oldScriptElement.attributes).forEach(attribute => {
+            newScriptElement.setAttribute(attribute.name, attribute.value);
+          });
+          const scriptText = document.createTextNode(oldScriptElement.innerHTML);
+          newScriptElement.appendChild(scriptText);
+          oldScriptElement.parentNode.replaceChild(newScriptElement, oldScriptElement);
+        });
+      }
+      var formsUrl = document.querySelector('.cmp-formsembed-widget').getAttribute('data-forms-url');
+      var options = {path:formsUrl, CSS_Selector:".afsection"};
+      if (options.path) {
+        fetch(options.path, {
+          method: 'GET',
+          // You can include additional headers or data here if needed
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text();
+        })
+        .then(data => {
+          var element = document.querySelector(options.CSS_Selector);
+          if (element) {
+            updateElementContent(element, data);
+          }
+        })
+        .catch(error => {
+          // Error handling
+          console.error('Error fetching data:', error);
+        });
+      } else {
+        if (typeof console !== "undefined") {
+          console.log("Path of Adaptive Form not specified to loadAdaptiveForm");
+        }
+      }
+    </script>
+  </div>
+</div>
