@@ -361,7 +361,6 @@ describe("Form Runtime layout of Date Picker ", () => {
         });
     });
 
-    // WCAG 1.4.10 Reflow tests - FORMS-18632
     it("should display navigation controls at 320px viewport", () => {
         cy.viewport(320, 568);
         const [datePicker] = Object.entries(formContainer._fields)[0];
