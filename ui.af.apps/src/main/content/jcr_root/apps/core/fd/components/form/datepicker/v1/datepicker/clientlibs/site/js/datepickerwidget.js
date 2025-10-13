@@ -846,6 +846,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
       if (!$row) {
         let rowEl = document.createElement("ul");
         rowEl.removeAttribute("aria-label");
+        rowEl.setAttribute("role", "none");
         rowEl.classList.toggle("header", isHeader);
         $row = $view.appendChild(rowEl);
       }
