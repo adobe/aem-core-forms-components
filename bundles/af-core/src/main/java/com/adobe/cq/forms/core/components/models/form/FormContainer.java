@@ -385,8 +385,6 @@ public interface FormContainer extends Container {
         return null;
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Returns the auto save configuration
      *
@@ -398,5 +396,4 @@ public interface FormContainer extends Container {
         return null;
     }
 
->>>>>>> origin/dev
 }

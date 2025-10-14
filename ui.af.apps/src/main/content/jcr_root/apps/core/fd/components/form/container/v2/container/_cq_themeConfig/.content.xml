@@ -99,10 +99,19 @@
                             target="/mnt/override/apps/core/fd/components/form/switch/v1/switch/cq:styleConfig/items/field/items/widgetAndText"/>
                         <fileUploadButton
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/fileinput/v3/fileinput/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/apps/core/fd/components/form/fileinput/v4/fileinput/cq:styleConfig/items/field/items/widgetAndText"/>
                         <tncWidgetAndText
                             jcr:primaryType="nt:unstructured"
                             target="/mnt/override/apps/core/fd/components/form/termsandconditions/v1/termsandconditions/cq:styleConfig/items/field/items/widgetAndText"/>
+                        <datetimeWidgetAndText
+                            jcr:primaryType="nt:unstructured"
+                            target="/mnt/override/apps/core/fd/components/form/datetime/v1/datetime/cq:styleConfig/items/field/items/widgetAndText"/>
+                        <scribbleWidgetAndText
+                            jcr:primaryType="nt:unstructured"
+                            target="/mnt/override/apps/core/fd/components/form/scribble/v1/scribble/cq:styleConfig/items/field/items/widgetAndText"/>
+                        <reviewWidgetAndText
+                            jcr:primaryType="nt:unstructured"
+                            target="/mnt/override/apps/core/fd/components/form/review/v1/review/cq:styleConfig/items/field/items/widgetAndText"/>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
@@ -166,13 +175,13 @@
         </panel>
 <!--        <mobileMenu-->
 <!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileMenu"/>-->
+<!--            target="/mnt/override/apps/fd/af/components/guideContainer/cq:styleConfig/items/mobileMenu"/>-->
 <!--        <mobileTitleBar-->
 <!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileTitleBar"/>-->
+<!--            target="/mnt/override/apps/fd/af/components/guideContainer/cq:styleConfig/items/mobileTitleBar"/>-->
 <!--        <mobileScrollIndicator-->
 <!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileScrollIndicator"/>-->
+<!--            target="/mnt/override/apps/fd/af/components/guideContainer/cq:styleConfig/items/mobileScrollIndicator"/>-->
         <Image
             jcr:primaryType="nt:unstructured"
             target="/mnt/override/apps/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image"/>

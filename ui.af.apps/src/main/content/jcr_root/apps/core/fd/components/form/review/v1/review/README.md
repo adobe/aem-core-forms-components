@@ -43,17 +43,16 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-review
-    ELEMENT cmp-adaptiveform-review__container
-        ELEMENT cmp-adaptiveform-review__panel
-            MODIFIER cmp-adaptiveform-review__panel--repeatable
-                ELEMENT cmp-adaptiveform-review__label-container
-                    ELEMENT cmp-adaptiveform-review__label
-                    ELEMENT cmp-adaptiveform-review__edit-button
-                ELEMENT cmp-adaptiveform-review__value
-        ELEMENT cmp-adaptiveform-review__field
+    ELEMENT cmp-adaptiveform-review__container (dynamically populated)
+        ELEMENT cmp-adaptiveform-review__field (dynamically generated for each field)
             ELEMENT cmp-adaptiveform-review__label
             ELEMENT cmp-adaptiveform-review__value
             ELEMENT cmp-adaptiveform-review__edit-button
-        ELEMENT cmp-adaptiveform-review__text
+        ELEMENT cmp-adaptiveform-review__panel (dynamically generated for each panel)
+            ELEMENT cmp-adaptiveform-review__label-container
+                ELEMENT cmp-adaptiveform-review__label
+                ELEMENT cmp-adaptiveform-review__edit-button
+            ELEMENT cmp-adaptiveform-review__content
+        ELEMENT cmp-adaptiveform-review__text (dynamically generated for plain text)
             ELEMENT cmp-adaptiveform-review__label
 ```

@@ -58,9 +58,14 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-scribble
     ELEMENT cmp-adaptiveform-scribble__label-container
+        ELEMENT cmp-adaptiveform-scribble__label
+        ELEMENT cmp-adaptiveform-scribble__questionmark
     ELEMENT cmp-adaptiveform-scribble__canvas-signed-container
         ELEMENT cmp-adaptiveform-scribble__canvas-signed-image
-    ELEMENT cmp-adaptiveform-scribble__container
+    ELEMENT cmp-adaptiveform-scribble__shortdescription
+    ELEMENT cmp-adaptiveform-scribble__longdescription
+    ELEMENT cmp-adaptiveform-scribble__errormessage
+    ELEMENT cmp-adaptiveform-scribble__container (signature dialog)
         ELEMENT cmp-adaptiveform-scribble__header
         ELEMENT cmp-adaptiveform-scribble__content
             ELEMENT cmp-adaptiveform-scribble__canvases
@@ -70,30 +75,33 @@ BLOCK cmp-adaptiveform-scribble
                 ELEMENT cmp-adaptiveform-scribble__geocanvas
             ELEMENT cmp-adaptiveform-scribble__controlpanel
                 ELEMENT cmp-adaptiveform-scribble__controls
-                    ELEMENT cmp-adaptiveform-scribble__control-brush
+                    ELEMENT cmp-adaptiveform-scribble__control-brush 
                         MODIFIER cmp-adaptiveform-scribble__button
                     ELEMENT cmp-adaptiveform-scribble__brushlist
-                    ELEMENT cmp-adaptiveform-scribble__control-clear
-                        MODIFIER cmp-adaptiveform-scribble__button
-                    ELEMENT cmp-adaptiveform-scribble__control-geo
-                        MODIFIER cmp-adaptiveform-scribble__button
-                    ELEMENT cmp-adaptiveform-scribble__control-text
-                        MODIFIER cmp-adaptiveform-scribble__button
+                    ELEMENT cmp-adaptiveform-scribble__control-clear (with MODIFIER cmp-adaptiveform-scribble__button)
+                    ELEMENT cmp-adaptiveform-scribble__control-geo (with MODIFIER cmp-adaptiveform-scribble__button)
+                    ELEMENT cmp-adaptiveform-scribble__control-text (with MODIFIER cmp-adaptiveform-scribble__button)
                     ELEMENT cmp-adaptiveform-scribble__control-message
                 ELEMENT cmp-adaptiveform-scribble__controlpanel-controls
                     ELEMENT cmp-adaptiveform-scribble__close-button
                     ELEMENT cmp-adaptiveform-scribble__save-button
-        ELEMENT cmp-adaptiveform-scribble__clearsign-container
-            ELEMENT cmp-adaptiveform-scribble__clearsign-title
-            ELEMENT cmp-adaptiveform-scribble__clearsign-content
-                ELEMENT cmp-adaptiveform-scribble__clearsign-message
-                ELEMENT cmp-adaptiveform-scribble__clearsign-panel
-                    ELEMENT cmp-adaptiveform-scribble__button--secondary
-                    ELEMENT cmp-adaptiveform-scribble__button--primary
+    ELEMENT cmp-adaptiveform-scribble__clearsign-container (clear signature confirmation)
+        ELEMENT cmp-adaptiveform-scribble__clearsign-title
+        ELEMENT cmp-adaptiveform-scribble__clearsign-content
+            ELEMENT cmp-adaptiveform-scribble__clearsign-message
+            ELEMENT cmp-adaptiveform-scribble__clearsign-panel
+                ELEMENT cmp-adaptiveform-scribble__button--secondary
+                ELEMENT cmp-adaptiveform-scribble__button--primary
 ```
 
 ### Note
-By placing the class names `cmp-adaptiveform-scribble__label` and `cmp-adaptiveform-scribble__questionmark` within the `cmp-adaptiveform-scribble__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+The component structure includes:
+- **Label Container**: Groups the label and help icon (question mark) for consistent styling
+- **Canvas Signed Container**: Displays the saved signature image when a signature exists
+- **Container**: The signature capture dialog that appears when users click to sign
+- **Clear Sign Container**: Confirmation dialog that appears when clearing an existing signature
+
+The style config provides styling hooks for the main structural elements: label container (with label and question mark), canvas containers (signed image and drawing canvas), header, control panel, and standard form elements (short/long descriptions and error messages).
 
 ## JavaScript Data Attribute Bindings
 

@@ -354,13 +354,8 @@ class Utils {
                     _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 }
                 console.debug("fetched model json", _formJson);
-<<<<<<< HEAD
-                await this.registerCustomFunctionsV2( _formJson);
-                await this.registerCustomFunctionsByUrl(customFunctionUrl);
-=======
                 await RuleUtils.registerCustomFunctionsV2( _formJson);
                 await RuleUtils.registerCustomFunctionsByUrl(customFunctionUrl);
->>>>>>> origin/dev
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};

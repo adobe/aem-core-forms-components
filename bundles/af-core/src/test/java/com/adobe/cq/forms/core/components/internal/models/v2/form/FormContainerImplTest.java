@@ -656,8 +656,6 @@ public class FormContainerImplTest {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getCustomFunctionUrl());
     }
-<<<<<<< HEAD
-=======
 
     @Test
     void testGetCustomFunctionUrlWithResourceResolverMapping() throws Exception {
@@ -933,5 +931,4 @@ public class FormContainerImplTest {
         formContainer.setLang(null);
         assertEquals(formContainer.getLang(), "en");
     }
->>>>>>> origin/dev
 }

@@ -52,10 +52,11 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-datetime
-    ELEMENT cmp-adaptiveform-datetime__label
     ELEMENT cmp-adaptiveform-datetime__label-container
-    ELEMENT cmp-adaptiveform-datetime__widget
-    ELEMENT cmp-adaptiveform-datetime__questionmark
+        ELEMENT cmp-adaptiveform-datetime__label
+        ELEMENT cmp-adaptiveform-datetime__questionmark
+    ELEMENT cmp-adaptiveform-datetime__input-wrapper
+        ELEMENT cmp-adaptiveform-datetime__widget
     ELEMENT cmp-adaptiveform-datetime__shortdescription
     ELEMENT cmp-adaptiveform-datetime__longdescription
     ELEMENT cmp-adaptiveform-datetime__errormessage
@@ -63,6 +64,8 @@ BLOCK cmp-adaptiveform-datetime
 
 ### Note
 By placing the class names `cmp-adaptiveform-datetime__label` and `cmp-adaptiveform-datetime__questionmark` within the `cmp-adaptiveform-datetime__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+
+Similarly, the `cmp-adaptiveform-datetime__widget` (the datetime input) is contained within `cmp-adaptiveform-datetime__input-wrapper` for flexible layout and styling options.
 
 ## Replace feature:
 We support replace feature that allows replacing Date Time component to any of the below components:

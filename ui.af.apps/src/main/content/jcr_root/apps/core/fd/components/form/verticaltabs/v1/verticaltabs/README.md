@@ -51,8 +51,6 @@ BLOCK cmp-verticaltabs
         MOD cmp-verticaltabs__tab--active
         MOD cmp-verticaltabs__tab--stepped
     ELEMENT cmp-verticaltabs__title
-    ELEMENT cmp-verticaltabs__icon
-    ELEMENT cmp-verticaltabs__label
     ELEMENT cmp-verticaltabs__shortdescription
     ELEMENT cmp-verticaltabs__longdescription
     ELEMENT cmp-verticaltabs__questionmark

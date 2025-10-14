@@ -86,11 +86,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
     private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
     private static final String FD_DATA_URL = "fd:dataUrl";
-<<<<<<< HEAD
-
-    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
-=======
     private static final String FD_VIEW_PRINT_PATH = "fd:view/print";
     private static final String EXCLUDE_FROM_DOR_IF_HIDDEN = "excludeFromDoRIfHidden";
 
@@ -107,7 +102,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private HttpClientBuilderFactory clientBuilderFactory;
 
     private static final String DRAFT_PREFILL_SERVICE = "service://FP/draft/";
->>>>>>> origin/dev
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -407,12 +401,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
-<<<<<<< HEAD
-        properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
-        properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
-        properties.put(FD_DATA_URL, getDataUrl());
-
-=======
         if (this.autoSaveConfig != null && this.autoSaveConfig.isEnableAutoSave()) {
             properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
         }
@@ -422,7 +410,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (submitProperties != null && !submitProperties.isEmpty()) {
             properties.put(ReservedProperties.FD_SUBMIT_PROPERTIES, submitProperties);
         }
->>>>>>> origin/dev
         return properties;
     }
 
@@ -481,9 +468,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getCustomFunctionUrl() {
-<<<<<<< HEAD
-        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId();
-=======
         return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/"
             + getId());
     }
@@ -527,7 +511,6 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             }
         }
         return submitProps;
->>>>>>> origin/dev
     }
 
 }

@@ -69,21 +69,28 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-fileinput
-    ELEMENT cmp-adaptiveform-fileinput__label
     ELEMENT cmp-adaptiveform-fileinput__label-container
-    ELEMENT cmp-adaptiveform-fileinput__widget
-    ELEMENT cmp-adaptiveform-fileinput__questionmark
+        ELEMENT cmp-adaptiveform-fileinput__label
+        ELEMENT cmp-adaptiveform-fileinput__questionmark
+    ELEMENT cmp-adaptiveform-fileinput__container
+        ELEMENT cmp-adaptiveform-fileinput__dragarea
+            ELEMENT cmp-adaptiveform-fileinput__icon
+            ELEMENT cmp-adaptiveform-fileinput__dragtext
+            ELEMENT cmp-adaptiveform-fileinput__widgetlabel
+            ELEMENT cmp-adaptiveform-fileinput__widget
+        ELEMENT cmp-adaptiveform-fileinput__filelist
+            ELEMENT cmp-adaptiveform-fileinput__fileitem (dynamically generated)
+                ELEMENT cmp-adaptiveform-fileinput__filename (dynamically generated)
+                ELEMENT cmp-adaptiveform-fileinput__filedelete (dynamically generated)
     ELEMENT cmp-adaptiveform-fileinput__shortdescription
     ELEMENT cmp-adaptiveform-fileinput__longdescription
-    ELEMENT cmp-adaptiveform-fileinput__filelist
-    ELEMENT cmp-adaptiveform-fileinput__fileitem
-    ELEMENT cmp-adaptiveform-fileinput__filename
-    ELEMENT cmp-adaptiveform-fileinput__filedelete
-    ELEMENT cmp-adaptiveform-fileinput__widgetlabel
+    ELEMENT cmp-adaptiveform-fileinput__errormessage
 ```
 
 ### Note
 By placing the class names `cmp-adaptiveform-fileinput__label` and `cmp-adaptiveform-fileinput__questionmark` within the `cmp-adaptiveform-fileinput__label-container` class, you create a logical grouping of the label and question mark elements. This approach simplifies the process of maintaining a consistent styling for both elements.
+
+Similarly, the `cmp-adaptiveform-fileinput__dragarea` contains all the upload-related elements (icon, drag text, button, and hidden file input), providing a cohesive structure for the file upload interface.
 
 ## JavaScript Data Attribute Bindings
 

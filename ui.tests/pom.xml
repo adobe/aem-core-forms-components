@@ -24,12 +24,8 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
-<<<<<<< HEAD
-        <version>3.0.73-SNAPSHOT</version>
-=======
-        <version>3.0.1000-SNAPSHOT</version>
->>>>>>> origin/dev
-        <relativePath>../parent/pom.xml</relativePath>
+         <version>3.0.1000-SNAPSHOT</version>
+         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>core-forms-components-ui-tests</artifactId>
