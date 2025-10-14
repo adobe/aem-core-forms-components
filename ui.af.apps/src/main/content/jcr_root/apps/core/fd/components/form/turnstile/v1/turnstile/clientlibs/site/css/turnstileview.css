@@ -1,0 +1,19 @@
+/**
+## BEM Description
+BLOCK cmp-adaptiveform-turnstile
+    ELEMENT cmp-adaptiveform-turnstile__label
+    ELEMENT cmp-adaptiveform-turnstile__widget
+    ELEMENT cmp-adaptiveform-turnstile__errormessage
+*/
+
+.cmp-adaptiveform-turnstile {
+
+}
+
+.cmp-adaptiveform-turnstile__widget {
+
+}
+
+.cmp-adaptiveform-turnstile__label {
+
+}

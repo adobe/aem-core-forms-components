@@ -114,13 +114,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MAX_ITEMS)
     protected Integer maxItems;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LANG)
-    protected String lang;
-
-    @Nullable
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VIEWTYPE)
-    protected String viewType;
-
     /** End **/
 
     @SlingObject
@@ -159,11 +152,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         return tooltipVisible;
     }
 
-    @Override
-    public String getLang() {
-        return lang;
-    }
-
     @JsonIgnore
     public @NotNull Map<String, Object> getCustomLayoutProperties() {
         Map<String, Object> customLayoutProperties = super.getCustomLayoutProperties();
@@ -189,7 +177,7 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         } else if (AssistPriority.DESCRIPTION.equals(assistPriority)) {
             screenReaderText = getDescription();
         } else if (AssistPriority.CUSTOM.equals(assistPriority)) {
-            screenReaderText = "'" + customAssistPriorityMsg + "'"; // json formula string literal
+            screenReaderText = customAssistPriorityMsg;
         }
         return screenReaderText;
     }
@@ -449,14 +437,6 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
             return translate(ReservedProperties.PN_VALIDATION_EXPRESSION_MESSAGE, properties.get(
                 ReservedProperties.PN_VALIDATION_EXPRESSION_MESSAGE, String.class));
         }
-    }
-
-    @Override
-    public @NotNull String getExportedType() {
-        if (viewType != null) {
-            return viewType;
-        }
-        return resource.getResourceType();
     }
 
     @Override

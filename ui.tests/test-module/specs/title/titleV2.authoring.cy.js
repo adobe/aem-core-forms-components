@@ -38,29 +38,31 @@ describe('Page - Authoring', function () {
     const testTitleEditDialog = function (titleEditPathSelector, titleDrop, isSites) {
         if (isSites) {
             dropTitleInSites();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector)
+                .should('exist');
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get("[name='./fd:htmlelementType']")
-            .should("exist");
-            cy.get('.cq-dialog-cancel').click();
+                .should("exist");
+            cy.get('.cq-dialog-cancel').should('be.visible').click();
             cy.deleteComponentByPath(titleDrop);    
         } else {
             dropTitleInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector)
+                .should('exist');
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get("[name='./fd:htmlelementType']")
-            cy.get('[name="./fd:htmlelementType"]').eq(0).click()
-            .should("exist");
-            cy.get('.cq-dialog-cancel').click();
+                .should("exist");
+            cy.get('[name="./fd:htmlelementType"]').eq(0).should('exist').click();
+            cy.get('.cq-dialog-cancel').should('be.visible').click();
             cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title"]')
+                .should('exist')
                 .invoke('attr', 'data-path')
                 .then(dataPath => {
                     const id = dataPath.replace('/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title', '');
                     const _titleDrop = titleDrop + id;
                     cy.deleteComponentByPath(dataPath);
-                })
+                });
         }
-
     }
 
     context('Open Forms Editor', function () {
@@ -76,8 +78,8 @@ describe('Page - Authoring', function () {
 
         it('check edit dialog availability of Title', function () {   
             cy.cleanTitleTest(titleEditPath).then(() => {
-                testTitleEditDialog(titleEditPathSelector, titleDrop, false);   
-            })
+                return testTitleEditDialog(titleEditPathSelector, titleDrop, false);
+            });
         });
         
     });
@@ -100,7 +102,9 @@ describe('Page - Authoring', function () {
         });
 
         it('check edit dialog availability of Title', function () {
-            testTitleEditDialog(titleEditPathSelector, titleDrop, true);
+            cy.cleanTitleTest(titleEditPath).then(() => {
+                testTitleEditDialog(titleEditPathSelector, titleDrop, true);
+            });
         });
 
     });
@@ -121,20 +125,27 @@ describe('Page - Authoring', function () {
     
         it('Selecting default pattern from the policy and it should be selected by default', function () {
           cy.get(titlePolicy).click({force: true});
-          cy.get(bemDesignDialog).contains('Title').click();
-          cy.get('[name="./type"]').eq(0).click({ force: true }).then(() => {
-            cy.get('coral-selectlist-item').contains(defaultValue).click({ force: true });
-            cy.get('[name="./type"]').eq(0).should('contain', defaultValue);
-            cy.get('[placeholder="New policy"]').eq(1).type("Default policy");
-            cy.get('[title="Done"]').click();
-          }).then(() => {
-            cy.openSiteAuthoring(pagePath); 
-            dropTitleInContainer(); 
-            cy.contains('button', 'Preview').should("exist").click({force : true});
-            cy.get('h2').should('exist');
-            cy.contains('button', 'Edit').should("exist").click({force : true});
-            cy.deleteComponentByTitle('Adaptive Form Title');  
-          })
+          cy.get(bemDesignDialog).contains('Title').click({force: true});
+          cy.get('[name="./type"]').eq(0).click({ force: true });
+          
+          // Handle coral-selectlist-item visibility issue
+          cy.get('coral-selectlist-item').contains(defaultValue).click({ force: true });
+          
+          // Verify the selection was made
+          cy.get('[name="./type"]').eq(0).should('contain', defaultValue);
+          cy.get('[placeholder="New policy"]').eq(1).type("Default policy", { force: true });
+          cy.get('[title="Done"]').click({ force: true });
+          
+          cy.cleanTitleTest(titleEditPath).then(() => {
+              cy.openSiteAuthoring(pagePath);
+              dropTitleInContainer();
+              // Switching from edit layer to preview layer is flaky, so using previewForm method
+              cy.previewForm(pagePath + ".html");
+              cy.get("h2").should('exist');
+              cy.openPage("");
+              cy.openSiteAuthoring(pagePath);
+              cy.deleteComponentByTitle('Adaptive Form Title');
+          });
         });  
      });
 

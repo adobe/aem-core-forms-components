@@ -39,14 +39,7 @@ export const customFunctions = {
      * @param {string} url - The URL to externalize.
      * @returns {string} - The externalized URL.
      */
-    externalize: (url) => {
-        // Check if Granite.HTTP.externalize is available, otherwise return the original URL
-        if (window?.Granite?.HTTP && typeof window.Granite.HTTP.externalize === "function") {
-            return window.Granite.HTTP.externalize(url);
-        } else {
-            return url;
-        }
-    },
+    externalize: cf.externalize,
 
     /**
      * Validates if the given URL is correct.
@@ -98,5 +91,41 @@ export const customFunctions = {
      * @param {object} globals - An object containing read-only form instance, read-only target field instance and methods for form modifications.
      * @returns {string} - The captcha token.
      */
-    fetchCaptchaToken: cf.fetchCaptchaToken
+    fetchCaptchaToken: cf.fetchCaptchaToken,
+
+    /**
+     * Converts a date to the number of days since the Unix epoch (1970-01-01).
+     *
+     * If the input date is a number, it is assumed to represent the number of days since the epoch,
+     * including both integer and decimal parts. In this case, only the integer part is returned as the number of days.
+     *
+     * @param {string|Date|number} date - The date to convert.
+     * Can be:
+     * - An ISO string (yyyy-mm-dd)
+     * - A Date object
+     * - A number representing the days since the epoch, where the integer part is the number of days and the decimal part is the fraction of the day
+     *
+     * @returns {number} - The number of days since the Unix epoch
+     */
+    dateToDaysSinceEpoch: cf.dateToDaysSinceEpoch,
+
+    /**
+     * Downloads the Document of Record (DoR) for the form.
+     *
+     * @param {string=} fileName - The name of the file to be downloaded. Defaults to "Downloaded_DoR.pdf" if 
+     *  not specified.
+     * @param {scope} globals - An object containing read-only form instance, read-only target field instance, 
+     *  and methods for form modifications.
+     * @returns {void}
+     */
+    downloadDoR: cf.downloadDoR,
+
+    /**
+    * Export form data as a JSON string
+    * @param {boolean} [stringify] - Convert the form data to a JSON string, defaults to true
+    * @param {string} [key] - The key to get the value for (supports dot notation and array brackets e.g. 'address.city' or 'items[0].name'), defaults to all form data
+    * @param {scope} globals - Global scope object containing form context
+    * @returns {string|object} The complete form data as a JSON string
+    */
+    exportFormData: cf.exportFormData
 };

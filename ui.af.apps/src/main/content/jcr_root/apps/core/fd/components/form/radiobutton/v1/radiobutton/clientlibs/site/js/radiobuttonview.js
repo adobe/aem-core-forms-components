@@ -77,19 +77,22 @@
             return this.element.querySelectorAll(RadioButton.selectors.option);
         }
 
+        #addWidgetListeners(optionWidget) {
+            optionWidget.addEventListener('change', (e) => {
+                this.setModelValue(e.target.value);
+            });
+            optionWidget.addEventListener('focus', (e) => {
+                this.setActive();
+            });
+            optionWidget.addEventListener('blur', (e) => {
+                this.setInactive();
+            });
+        }
+
         setModel(model) {
             super.setModel(model);
-            let widgets = this.widget;
-            widgets.forEach(widget => {
-                widget.addEventListener('change', (e) => {
-                    this.setModelValue(e.target.value);
-                });
-                widget.addEventListener('focus', (e) => {
-                    this.setActive();
-                });
-                widget.addEventListener('blur', (e) => {
-                    this.setInactive();
-                });
+            this.widget.forEach(optionWidget => {
+                this.#addWidgetListeners(optionWidget);
             });
         }
 
@@ -120,10 +123,13 @@
         }
 
         updateValidity(validity) {
-            const valid = validity.valid ? validity.valid : false;
-            let widgets = this.widget;
-            this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, valid);
-            widgets.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !valid));
+            if(validity.valid === undefined) {
+                this.element.removeAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID);
+                this.widget.forEach(widget => widget.removeAttribute(FormView.Constants.ARIA_INVALID));
+            } else {
+                this.element.setAttribute(FormView.Constants.DATA_ATTRIBUTE_VALID, validity.valid);
+                this.widget.forEach(widget => widget.setAttribute(FormView.Constants.ARIA_INVALID, !validity.valid));
+            }
         }
 
         updateValue(modelValue) {
@@ -140,25 +146,40 @@
         }
 
         #createRadioOption(value, itemLabel) {
+            let richScreenReaderText = `${this._model.label.value}:  ${itemLabel}`;
+            let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
+
             const optionTemplate = `
             <div class="${RadioButton.selectors.option.slice(1)}">
                 <label class="${RadioButton.selectors.optionLabel.slice(1)}">
-                    <input type="checkbox" class="${RadioButton.selectors.widget.slice(1)}" value="${value}">
+                    <input type="radio" name="${this._model.name}" class="${RadioButton.selectors.widget.slice(1)}" value="${value}" aria-label="${plainScreenReaderText}" tabindex="0">
                     <span>${itemLabel}</span>
                 </label>
             </div>`;
 
             const container = document.createElement('div'); // Create a container element to hold the template
             container.innerHTML = optionTemplate;
+            let addedOptionWidget = container.querySelector(RadioButton.selectors.widget);
+            if(this._model.readOnly === true || this._model.enabled === false) {
+                addedOptionWidget.setAttribute("disabled", true);
+                if(this._model.readOnly === true) {
+                    addedOptionWidget.setAttribute("aria-readonly", true);
+                }
+            }
+            this.#addWidgetListeners(addedOptionWidget);
             return container.firstElementChild; // Return the first child, which is the created option
         }
 
         updateEnum(newEnums) {
             super.updateEnumForRadioButtonAndCheckbox(newEnums, this.#createRadioOption);
+            // refresh the widget references, to dynamically added options
+            this.widget = this.getWidget();
         }
 
         updateEnumNames(newEnumNames) {
-            super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createRadioOption)
+            super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createRadioOption);
+            // refresh the widget references, to dynamically added options
+            this.widget = this.getWidget();
         }
 
         updateRequired(required, state) {
@@ -174,8 +195,9 @@
         }
 
         #syncWidgetName() {
+            const name = this.getModel()?.name;
             this.widget.forEach(widget => {
-                widget.setAttribute("name", this.id + "_name");
+                widget.setAttribute("name", `${this.id}_${name}`);
             });
         }
     }

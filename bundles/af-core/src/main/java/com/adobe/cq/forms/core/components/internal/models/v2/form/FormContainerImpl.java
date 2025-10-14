@@ -15,15 +15,21 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -59,6 +65,7 @@ import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -79,9 +86,28 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
     private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
     private static final String FD_DATA_URL = "fd:dataUrl";
+<<<<<<< HEAD
 
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
+=======
+    private static final String FD_VIEW_PRINT_PATH = "fd:view/print";
+    private static final String EXCLUDE_FROM_DOR_IF_HIDDEN = "excludeFromDoRIfHidden";
+
+    /** Constant representing email submit action type */
+    private static final String SS_EMAIL = "email";
+
+    /** Constant representing spreadsheet submit action type */
+    private static final String SS_SPREADSHEET = "spreadsheet";
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private HttpClientBuilderFactory clientBuilderFactory;
+
+    private static final String DRAFT_PREFILL_SERVICE = "service://FP/draft/";
+>>>>>>> origin/dev
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -125,12 +151,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private String data;
 
+    @Nullable
+    private Boolean excludeFromDoRIfHidden;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
 
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
+
+    @Inject
+    private ResourceResolver resourceResolver;
 
     @Override
     public String getFieldType() {
@@ -154,6 +186,17 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
             if (formClientLibManager != null && clientLibRef != null) {
                 formClientLibManager.addClientLibRef(clientLibRef);
+            }
+        }
+    }
+
+    @PostConstruct
+    private void initExcludeFromDoRIfHidden() {
+        Resource viewPrintResource = resource.getChild(FD_VIEW_PRINT_PATH);
+        if (viewPrintResource != null) {
+            ValueMap vm = viewPrintResource.getValueMap();
+            if (vm.containsKey(EXCLUDE_FROM_DOR_IF_HIDDEN)) {
+                excludeFromDoRIfHidden = vm.get(EXCLUDE_FROM_DOR_IF_HIDDEN, Boolean.class);
             }
         }
     }
@@ -275,19 +318,31 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getAction() {
-        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
+        List<String> supportedSubmitActions = ComponentUtils.getSupportedSubmitActions(clientBuilderFactory);
+        String resourceType = resource.getValueMap().get("sling:resourceType", String.class);
+        if (supportedSubmitActions.contains(resource.getValueMap().get(ReservedProperties.PN_SUBMIT_ACTION_NAME))) {
+            if (resourceType != null && resourceType.contains("/franklin")) {
+                return "";
+            } else {
+                return "https://forms.adobe.com" + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" +
+                    ComponentUtils.getEncodedPath(resource.getPath() + ".model.json");
+            }
+        }
+        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId());
     }
 
     @Override
     @JsonIgnore
     public String getDataUrl() {
-        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId();
+        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId());
     }
 
     @Override
+    @JsonProperty("lang")
     public String getLang() {
-        // todo: uncomment once forms sdk is released
-        if (request != null) {
+        if (lang != null) {
+            return lang;
+        } else if (request != null) {
             return GuideUtils.getAcceptLang(request);
         } else {
             return FormContainer.super.getLang();
@@ -342,12 +397,32 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF)))) {
             formDataEnabled = true;
         }
+
+        // set draftId in properties in case of forms portal prefill
+        if (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF))) {
+            final String dataRef = request.getParameter(GuideConstants.AF_DATA_REF);
+            if (dataRef.startsWith(DRAFT_PREFILL_SERVICE)) {
+                properties.put(ReservedProperties.FD_DRAFT_ID, StringUtils.substringAfter(dataRef, DRAFT_PREFILL_SERVICE));
+            }
+        }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
+<<<<<<< HEAD
         properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
         properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
         properties.put(FD_DATA_URL, getDataUrl());
 
+=======
+        if (this.autoSaveConfig != null && this.autoSaveConfig.isEnableAutoSave()) {
+            properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
+        }
+        properties.put(FD_CUSTOM_FUNCTIONS_URL, getCustomFunctionUrl());
+        properties.put(FD_DATA_URL, getDataUrl());
+        Map<String, Object> submitProperties = getSubmitProperties();
+        if (submitProperties != null && !submitProperties.isEmpty()) {
+            properties.put(ReservedProperties.FD_SUBMIT_PROPERTIES, submitProperties);
+        }
+>>>>>>> origin/dev
         return properties;
     }
 
@@ -363,6 +438,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         }
         if (dorTemplateType != null) {
             customDorProperties.put(DOR_TEMPLATE_TYPE, dorTemplateType);
+        }
+        if (excludeFromDoRIfHidden != null) {
+            customDorProperties.put(ReservedProperties.FD_EXCLUDE_FROM_DOR_IF_HIDDEN, excludeFromDoRIfHidden);
         }
         return customDorProperties;
     }
@@ -403,7 +481,53 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getCustomFunctionUrl() {
+<<<<<<< HEAD
         return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId();
+=======
+        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/"
+            + getId());
+    }
+
+    @JsonIgnore
+    @Override
+    public AutoSaveConfiguration getAutoSaveConfig() {
+        return autoSaveConfig;
+    }
+
+    private Map<String, Object> getSubmitProperties() {
+
+        Map<String, Object> submitProps = null;
+
+        if (request == null || ComponentUtils.shouldIncludeSubmitProperties(request)) {
+            submitProps = new LinkedHashMap<>();
+            List<String> submitActionProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_ACTION_TYPE,
+                ReservedProperties.PN_SUBMIT_ACTION_NAME);
+
+            List<String> submitEmailProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_EMAIL_TO,
+                ReservedProperties.PN_SUBMIT_EMAIL_FROM,
+                ReservedProperties.PN_SUBMIT_EMAIL_SUBJECT,
+                ReservedProperties.PN_SUBMIT_EMAIL_CC,
+                ReservedProperties.PN_SUBMIT_EMAIL_BCC);
+
+            List<String> submitSpreadsheetProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_SPREADSHEETURL);
+            ValueMap resourceMap = resource.getValueMap();
+            for (Map.Entry<String, Object> entry : resourceMap.entrySet()) {
+                if (submitActionProperties.contains(entry.getKey())) {
+                    submitProps.put(entry.getKey(), entry.getValue());
+                } else if (submitEmailProperties.contains(entry.getKey())) {
+                    submitProps.computeIfAbsent(SS_EMAIL, k -> new LinkedHashMap<String, Object>());
+                    ((Map<String, Object>) submitProps.get(SS_EMAIL)).put(entry.getKey(), entry.getValue());
+                } else if (submitSpreadsheetProperties.contains(entry.getKey())) {
+                    submitProps.computeIfAbsent(SS_SPREADSHEET, k -> new LinkedHashMap<String, Object>());
+                    ((Map<String, Object>) submitProps.get(SS_SPREADSHEET)).put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+        return submitProps;
+>>>>>>> origin/dev
     }
 
 }

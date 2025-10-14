@@ -145,4 +145,94 @@ describe("Form with TabsOnTop Container", () => {
         })
     });
 
+    it("After clicking on every tab, if tab-1 is repeated, the repeated instance should not have stepped class", () => {
+       getTabs().should('have.length', 4);
+       getTabPanels().should('have.length', 4);
+       getTabAtIndex(0).should('have.class', 'cmp-tabs__tab--active');
+       getTabPanelAtIndex(0).should('have.class', 'cmp-tabs__tabpanel--active');
+       getTabAtIndex(1).click();
+       getTabAtIndex(1).should('have.class', 'cmp-tabs__tab--active');
+       getTabPanelAtIndex(1).should('have.class', 'cmp-tabs__tabpanel--active');
+       getTabAtIndex(0).should('have.class', 'cmp-tabs__tab--stepped');
+       getTabPanelAtIndex(0).should('have.class', 'cmp-tabs__tabpanel--stepped');
+       getTabAtIndex(2).click();
+       getTabAtIndex(2).should('have.class', 'cmp-tabs__tab--active');
+       getTabPanelAtIndex(2).should('have.class', 'cmp-tabs__tabpanel--active');
+       getTabAtIndex(1).should('have.class', 'cmp-tabs__tab--stepped');
+       getTabPanelAtIndex(1).should('have.class', 'cmp-tabs__tabpanel--stepped');
+       getTabAtIndex(0).should('have.class', 'cmp-tabs__tab--stepped');
+       getTabPanelAtIndex(0).should('have.class', 'cmp-tabs__tabpanel--stepped');
+       getTabAtIndex(3).click();
+       getTabAtIndex(3).should('have.class', 'cmp-tabs__tab--active');
+       getTabPanelAtIndex(3).should('have.class', 'cmp-tabs__tabpanel--active');
+       getTabAtIndex(2).should('have.class', 'cmp-tabs__tab--stepped');
+       getTabPanelAtIndex(2).should('have.class', 'cmp-tabs__tabpanel--stepped');
+       getTabAtIndex(1).should('have.class', 'cmp-tabs__tab--stepped');
+       getTabPanelAtIndex(1).should('have.class', 'cmp-tabs__tabpanel--stepped');
+       getTabAtIndex(0).should('have.class', 'cmp-tabs__tab--stepped');
+       getTabPanelAtIndex(0).should('have.class', 'cmp-tabs__tabpanel--stepped');
+       cy.get("button").contains("+R1").click().then(() => {
+        getTabs().should('have.length', 5);
+        getTabPanels().should('have.length', 5);
+        getTabAtIndex(1).should('have.class', 'cmp-tabs__tab--active');
+        getTabAtIndex(1).should('not.have.class', 'cmp-tabs__tab--stepped');
+        getTabPanelAtIndex(1).should('have.class', 'cmp-tabs__tabpanel--active');
+        getTabPanelAtIndex(1).should('not.have.class', 'cmp-tabs__tabpanel--stepped');
+    })
+  })
+
+   it("Focus should be on field when it is repeated", () => {
+     getTabs().should('have.length', 4);
+     getTabPanels().should('have.length', 4);
+     cy.get("button").contains("+R1").click().then(() => {
+      getTabs().should('have.length', 5);
+      getTabPanels().should('have.length', 5);
+      getTabAtIndex(1).should('have.class', 'cmp-tabs__tab--active');
+      getTabPanelAtIndex(1).should('have.class', 'cmp-tabs__tabpanel--active');
+      getTabPanelAtIndex(1).find('input').should('be.focused');  
+   })
+     cy.get("button").contains("+R2").click().then(() => {
+      getTabs().should('have.length', 6);
+      getTabPanels().should('have.length', 6);
+      getTabAtIndex(4).should('have.class', 'cmp-tabs__tab--active');
+      getTabPanelAtIndex(4).should('have.class', 'cmp-tabs__tabpanel--active');
+      getTabPanelAtIndex(4).find('input').should('be.focused');  
+   })
+    cy.get("button").contains("+R3").click().then(() => {
+     getTabs().should('have.length', 7);
+     getTabPanels().should('have.length', 7);
+     getTabAtIndex(6).should('have.class', 'cmp-tabs__tab--active');
+     getTabPanelAtIndex(6).should('have.class', 'cmp-tabs__tabpanel--active');
+     getTabPanelAtIndex(6).find('select.cmp-adaptiveform-dropdown__widget').should('be.focused');  
+   })
+   cy.get("button").contains("-R3").click().then(() => {
+    getTabs().should('have.length', 6);
+    getTabPanels().should('have.length', 6);
+    getTabAtIndex(5).should('have.class', 'cmp-tabs__tab--active');
+    getTabPanelAtIndex(5).should('have.class', 'cmp-tabs__tabpanel--active');
+    getTabPanelAtIndex(5).find('select.cmp-adaptiveform-dropdown__widget').should('be.focused');  
+  })
+  cy.get("button").contains("-R2").click().then(() => {
+    getTabs().should('have.length', 5);
+    getTabPanels().should('have.length', 5);
+    getTabAtIndex(3).should('have.class', 'cmp-tabs__tab--active');
+    getTabPanelAtIndex(3).should('have.class', 'cmp-tabs__tabpanel--active');
+    getTabPanelAtIndex(3).find('input').should('be.focused');  
+  })
+  cy.get("button").contains("-R1").click().then(() => {
+    getTabs().should('have.length', 4);
+    getTabPanels().should('have.length', 4);
+    getTabAtIndex(0).should('have.class', 'cmp-tabs__tab--active');
+    getTabPanelAtIndex(0).should('have.class', 'cmp-tabs__tabpanel--active');
+    getTabPanelAtIndex(0).find('input').should('be.focused');  
+  })
+  cy.get("button").contains("-R1").click().then(() => {
+    getTabs().should('have.length', 3);
+    getTabPanels().should('have.length', 3);
+    getTabAtIndex(0).should('have.class', 'cmp-tabs__tab--active');
+    getTabPanelAtIndex(0).should('have.class', 'cmp-tabs__tabpanel--active');
+    getTabPanelAtIndex(0).find('input').should('be.focused');  
+  })
+ })
+
 })

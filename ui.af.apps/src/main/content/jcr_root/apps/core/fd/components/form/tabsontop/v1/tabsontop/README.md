@@ -50,6 +50,7 @@ BLOCK cmp-tabs
     ELEMENT cmp-tabs__tablist
     ELEMENT cmp-tabs__tab
         MOD cmp-tabs__tab--active
+        MOD cmp-tabs__tab--stepped
     ELEMENT cmp-tabs__title
     ELEMENT cmp-tabs__icon
     ELEMENT cmp-tabs__shortdescription

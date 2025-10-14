@@ -17,7 +17,9 @@
 import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
-import {FunctionRuntime} from '@aemforms/af-core'
+import {FunctionRuntime} from '@aemforms/af-core';
+import {loadXfa} from "./handleXfa";
+import RuleUtils from "./RuleUtils.js";
 
 /**
  * @module FormView
@@ -269,6 +271,7 @@ class Utils {
     }
 
     /**
+<<<<<<< HEAD
      * @deprecated Use `registerCustomFunctionsV2` instead.
      * Registers custom functions from clientlibs.
      * @param {string} formId - The form ID.
@@ -312,6 +315,8 @@ class Utils {
     }
 
     /**
+=======
+>>>>>>> origin/dev
      * Sets up the Form Container.
      * @param {Function} createFormContainer - The function to create a form container.
      * @param {string} formContainerSelector - The CSS selector to identify the form container.
@@ -332,10 +337,30 @@ class Utils {
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
             } else {
-                const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
+                let _formJson, callback;
+                const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
+                // Get the schema type from the data attribute with null safety
+                const schemaType = elements[i].getAttribute('data-cmp-schema-type');
+                // Check if this is an XDP form based on the schema type
+                // According to GuideSchemaType enum, XDP has value of FORM_TEMPLATES, not 'XFA'
+                if (loader && schemaType && (schemaType === 'XDP' || schemaType === 'FORM_TEMPLATES')) {
+                    const id = loader.getAttribute('data-cmp-adaptiveform-container-loader');
+                    const response = await fetch(`/adobe/forms/af/${id}`)
+                    _formJson = (await response.json()).afModelDefinition;
+                    _formJson.id = id;
+                    //window.formJson = _formJson
+                    callback = loadXfa(_formJson.formdom, _formJson.xfaRenderContext);
+                } else {
+                    _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
+                }
                 console.debug("fetched model json", _formJson);
+<<<<<<< HEAD
                 await this.registerCustomFunctionsV2( _formJson);
                 await this.registerCustomFunctionsByUrl(customFunctionUrl);
+=======
+                await RuleUtils.registerCustomFunctionsV2( _formJson);
+                await RuleUtils.registerCustomFunctionsByUrl(customFunctionUrl);
+>>>>>>> origin/dev
                 const urlSearchParams = new URLSearchParams(window.location.search);
                 const params = Object.fromEntries(urlSearchParams.entries());
                 let _prefillData = {};
@@ -344,6 +369,14 @@ class Utils {
                     _prefillData = await HTTPAPILayer.getJson(_formJson.properties['fd:dataUrl'] + "?" + Object.keys(params).map(p => p+"="+params[p]).join("&"))
                     _prefillData = _prefillData || {};
                     _prefillData = Utils.stripIfWrapped(_prefillData);
+                    if(window.formBridge){
+                        window.formBridge.restoreFormState({
+                            formState : {xfaDom: _prefillData.data.xfaDom, xfaRenderContext: _prefillData.data.xfaRenderContext},
+                            context : this,
+                            error : function() {},
+                            success : function () {}
+                        });
+                    }
                 }
                 const formContainer = await createFormContainer({
                     _formJson,
@@ -351,6 +384,9 @@ class Utils {
                     _path,
                     _element: elements[i]
                 });
+                if (typeof callback === 'function') {
+                    callback(formContainer.getModel());
+                }
                 Utils.initializeAllFields(formContainer);
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
@@ -358,29 +394,7 @@ class Utils {
         }
     }
 
-    static async registerCustomFunctionsByUrl(url) {
-        try {
-            if (url != null && url.trim().length > 0) {
-                // webpack ignore is added because webpack was converting this to a static import upon bundling resulting in error.
-                //This Url should whitelist the AEM author/publish domain in the Cross Origin Resource Sharing (CORS) configuration.
-                const customFunctionModule = await import(/*webpackIgnore: true*/ url);
-                const keys = Object.keys(customFunctionModule);
-                const functions = [];
-                for (const name of keys) {
-                    const funcDef = customFunctionModule[name];
-                    if (typeof funcDef === 'function') {
-                        functions[name] = funcDef;
-                    }
-                }
-                FunctionRuntime.registerFunctions(functions);
-            }
-        } catch (e) {
-            if(window.console){
-                console.error("error in loading custom functions from url "+url+" with message "+e.message);
-            }
-        }
-    }
-
+    
     /**
      * For backward compatibility with older data formats of prefill services like FDM.
      * @param {object} prefillJson - The prefill JSON object.

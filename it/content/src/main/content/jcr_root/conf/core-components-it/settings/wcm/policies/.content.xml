@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
     jcr:mixinTypes="[rep:AccessControllable]"
     jcr:primaryType="cq:Page">
     <rep:policy/>
@@ -465,7 +465,7 @@
                     sling:resourceType="wcm/core/components/policy/policy"
                     ampMode="pairedAmp"
                     appResourcesClientlib="cmp-examples.site"
-                    clientlibs="[forms-it.base,forms-it.custom-locale]"
+                    clientlibs="[forms-it.base,forms-it.custom-locale,svg-selector]"
                     clientlibsAsync="true">
                     <jcr:content jcr:primaryType="nt:unstructured"/>
                 </default>
@@ -531,6 +531,20 @@
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </default>
                 </datepicker>
+                <textinput jcr:primaryType="nt:unstructured">
+                    <default
+                            jcr:lastModified="{Date}2022-07-12T11:41:57.902+05:30"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="textinput-default-policy"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            allowedFormat1="Phone Number=phonenumber"
+                            allowedFormat2="Social Security Number=socialsecuritynumber"
+                            allowedFormat3="Email Alphanumeric=email-alphanumeric"
+                            allowedFormat4="Zip Code=zipcode">
+                        <jcr:content
+                                jcr:primaryType="nt:unstructured"/>
+                    </default>
+                </textinput>
                 <panelcontainer jcr:primaryType="nt:unstructured">
                     <default
                         jcr:lastModified="{Date}2023-03-07T11:41:57.902+05:30"
@@ -543,6 +557,27 @@
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </default>
                 </panelcontainer>
+                <checkbox jcr:primaryType="nt:unstructured">
+                    <policy_1732774059492
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="svg-selector"
+                        sling:resourceType="wcm/core/components/policy/policy">
+                        <jcr:content jcr:primaryType="nt:unstructured"/>
+                        <fd:customPropertyGroups jcr:primaryType="nt:unstructured">
+                            <item0
+                                fd:customPropertyGroupId="1732774062798"
+                                fd:customPropertyGroupName="svg-selector"
+                                jcr:primaryType="nt:unstructured">
+                                <fd:customProperties jcr:primaryType="nt:unstructured">
+                                    <item0
+                                        fd:customKey="svg-linked-checkbox"
+                                        fd:customValue="true"
+                                        jcr:primaryType="nt:unstructured"/>
+                                </fd:customProperties>
+                            </item0>
+                        </fd:customPropertyGroups>
+                    </policy_1732774059492>
+                </checkbox>
             </form>
         </components>
     </forms-components-examples>

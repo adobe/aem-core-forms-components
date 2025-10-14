@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Svg Selector"
+    fieldType="panel"
+    layout="responsiveGrid">
+    <imageSelectionPanel
+        jcr:created="{Date}2024-11-20T17:18:27.996+05:30"
+        jcr:lastModified="{Date}2024-11-20T17:19:15.452+05:30"
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Image Selection"
+        sling:resourceType="forms-components-examples/components/form/panelcontainer"
+        enabled="{Boolean}true"
+        fieldType="panel"
+        hideTitle="false"
+        layout="responsiveGrid"
+        name="imageSelectionPanel"
+        readOnly="{Boolean}false"
+        repeatable="false"
+        visible="{Boolean}true"
+        wrapData="{Boolean}false">
+        <svg
+            jcr:created="{Date}2024-11-20T16:26:16.262+05:30"
+            jcr:lastModified="{Date}2024-11-20T16:26:16.262+05:30"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-core-components-it/components/svg"/>
+        <cq:responsive jcr:primaryType="nt:unstructured">
+            <default
+                jcr:primaryType="nt:unstructured"
+                offset="0"
+                width="6"/>
+        </cq:responsive>
+    </imageSelectionPanel>
+    <accessibleSelectionPanel
+        jcr:created="{Date}2024-11-20T17:18:27.996+05:30"
+        jcr:lastModified="{Date}2024-11-20T17:19:15.452+05:30"
+        jcr:lastModifiedBy="admin"
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Accessible Selection"
+        sling:resourceType="forms-components-examples/components/form/panelcontainer"
+        enabled="{Boolean}true"
+        fieldType="panel"
+        hideTitle="false"
+        layout="responsiveGrid"
+        name="accessibleSelectionPanel"
+        readOnly="{Boolean}false"
+        repeatable="false"
+        visible="{Boolean}true"
+        wrapData="{Boolean}false">
+        <checkbox
+            fd:customPropertySelect="[1732774062798]"
+            jcr:created="{Date}2024-11-20T16:28:12.812+05:30"
+            jcr:lastModified="{Date}2024-11-20T16:28:12.812+05:30"
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Check Box"
+            sling:resourceType="forms-components-examples/components/form/checkbox"
+            checkedValue="on"
+            fieldType="checkbox"
+            name="checkbox1732100292872"
+            uncheckedValue="off"/>
+        <cq:responsive jcr:primaryType="nt:unstructured">
+            <default
+                jcr:primaryType="nt:unstructured"
+                offset="0"
+                width="6"/>
+        </cq:responsive>
+    </accessibleSelectionPanel>
+</jcr:root>

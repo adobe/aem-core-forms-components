@@ -23,6 +23,7 @@ Adaptive Form Submit Button component written in HTL.
 * Custom description/tooltip for help
 * Out of the box Submit rule in the button to submit the form
 * Allows replacing this component with other component (as mentioned below).
+* Shows a loader on the form container during submission
 
 ### Use Object
 The submit button component uses the `com.adobe.cq.forms.core.components.models.form.Button` Sling Model for its Use-object.
@@ -40,6 +41,14 @@ The button has a default property of `buttonType` set to `submit` which is used 
 ## Client Libraries
 The component provides a `core.forms.components.button.v1.runtime` client library category that contains the Javascript runtime for the component. 
 It should be added to a relevant site client library using the `embed` property.
+
+### Loader behavior on submit
+
+When the Submit button is activated and the form begins submission, the form container gets a loading state so users receive visual feedback:
+
+- The form element `form.cmp-adaptiveform-container` toggles the CSS class `cmp-adaptiveform-container--submitting` for the duration of the network request.
+- The loading class is removed and the loader hides when validation fails, the submission succeeds, or an error occurs.
+
 
 ## BEM Description
 ```
@@ -85,6 +94,3 @@ We support replace feature that allows replacing Reset Button component to any o
 * **Version**: v1
 * **Compatibility**: Cloud
 * **Status**: production-ready
-
-
-

@@ -21,6 +21,7 @@ jobs:
 
       - name: Validate branch names
         id: validate
+<<<<<<< HEAD
         run: |
           echo "Validating branch names..."
           if ! [[ "${{ github.event.pull_request.head.ref }}" =~ ^[a-zA-Z0-9._/-]+$ ]]; then
@@ -37,6 +38,23 @@ jobs:
       - name: Sync with Base Branch
         if: ${{ github.event.pull_request.base.ref != 'master' }}
         run: |
+=======
+        run: |
+          echo "Validating branch names..."
+          if ! [[ "${{ github.event.pull_request.head.ref }}" =~ ^[a-zA-Z0-9._/-]+$ ]]; then
+            echo "Invalid characters in head ref"
+            exit 1
+          fi
+          if ! [[ "${{ github.event.pull_request.base.ref }}" =~ ^[a-zA-Z0-9._/-]+$ ]]; then
+            echo "Invalid characters in base ref"
+            exit 1
+          fi
+          echo "::set-output name=head_ref::${{ github.event.pull_request.head.ref }}"
+          echo "::set-output name=base_ref::${{ github.event.pull_request.base.ref }}"
+
+      - name: Sync with Base Branch
+        run: |
+>>>>>>> origin/dev
           git fetch origin ${{ steps.validate.outputs.head_ref }}
           git fetch origin ${{ steps.validate.outputs.base_ref }}
           git checkout ${{ steps.validate.outputs.base_ref }}

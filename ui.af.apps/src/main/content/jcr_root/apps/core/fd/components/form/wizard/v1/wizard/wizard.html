@@ -31,7 +31,7 @@
         class="cmp-adaptiveform-wizard"
         data-placeholder-text="${'Please drag Wizard components here' @ i18n, locale=request.locale}"
         data-sly-test.widgetId="${'{0}-{1}' @ format=[wizard.id, 'widget']}">
-        <div class="cmp-adaptiveform-wizard__label-container">
+        <div class="cmp-adaptiveform-wizard__label-container" role="heading">
           <div data-sly-call="${label.label @componentId=widgetId, labelValue=wizard.label.value, labelVisible=wizard.label.visible, labelRichText=wizard.label.richText, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
           <div data-sly-call="${questionMark.questionMark @componentId=wizard.id, longDescription=wizard.description, bemBlock='cmp-adaptiveform-wizard'}" data-sly-unwrap></div>
         </div>
@@ -77,6 +77,6 @@
         <sly data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}">
         </sly>
     <sly data-sly-use.clientlib="core/wcm/components/commons/v1/templates/clientlib.html">
-        <sly data-sly-test="${wcmmode.edit}" data-sly-call="${clientlib.js @ categories='core.forms.components.wizard.v1.contentframe'}"/>
+        <sly data-sly-test="${wcmmode.edit}" data-sly-call="${clientlib.all @ categories='core.forms.components.wizard.v1.contentframe'}"/>
     </sly>
 </div>

@@ -13,7 +13,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-
 <sly data-sly-use.renderer="${'radiobutton.js'}"
      data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
      data-sly-use.label="${renderer.labelPath}"
@@ -29,6 +28,7 @@
      data-cmp-enabled="${radioButton.enabled ? 'true' : 'false'}"
      data-cmp-required="${radioButton.required ? 'true': 'false'}"
      data-cmp-readonly="${radioButton.readOnly ? 'true' : 'false'}"
+     data-name="${radioButton.name}"
      id="${radiobutton.id}"
      data-cmp-data-layer="${radioButton.data.json}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
@@ -48,7 +48,8 @@
                         value="${item.toString}"
                         disabled="${!radioButton.enabled || radioButton.readOnly}"
                         checked="${radioButton.enums[itemList.index] == radioButton.default[0]}"
-                        />
+                        aria-readonly="${radioButton.readOnly ? 'true' : ''}"
+                        aria-label="${radioButton.optionScreenReaderLabels[itemList.index]}" tabindex="0"/>
                   <span>${radioButton.enumNames[itemList.index] @ context = 'html'}</span>
               </label>
           </div>

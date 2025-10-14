@@ -29,17 +29,26 @@ jobs:
 
           # Loop through each changed file
           for file in $changed_files; do
-            # Fetch the base and head versions of the file
-            base_file=$(git show ${{ github.base_ref }}:$file)
-            head_file=$(git show ${{ github.head_ref }}:$file)
+            # Check if the file exists in both branches
+            if git cat-file -e origin/${{ github.base_ref }}:$file 2>/dev/null && git cat-file -e origin/${{ github.head_ref }}:$file 2>/dev/null; then
+              # Fetch the base and head versions of the file
+              base_file=$(git show origin/${{ github.base_ref }}:$file)
+              head_file=$(git show origin/${{ github.head_ref }}:$file)
 
+<<<<<<< HEAD
             # Compare the JSON keys
             base_keys=$(echo "$base_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
             head_keys=$(echo "$head_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
+=======
+              # Compare the JSON keys
+              base_keys=$(echo "$base_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
+              head_keys=$(echo "$head_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
+>>>>>>> origin/dev
 
-            # Check for removed keys
-            removed_keys=$(comm -23 <(echo "$base_keys" | sort) <(echo "$head_keys" | sort))
+              # Check for removed keys
+              removed_keys=$(comm -23 <(echo "$base_keys" | sort) <(echo "$head_keys" | sort))
 
+<<<<<<< HEAD
             if [ -n "$removed_keys" ]; then
               echo "Backward incompatibility change detected in $file. The following keys were removed:"
               echo "$removed_keys"
@@ -53,9 +62,27 @@ jobs:
 
               if [ "$base_value" != "$head_value" ]; then
                 echo "Backward incompatibility change detected in $file. The value of key '$key' was changed from '$base_value' to '$head_value'."
+=======
+              if [ -n "$removed_keys" ]; then
+                echo "Backward incompatibility change detected in $file. The following keys were removed:"
+                echo "$removed_keys"
+>>>>>>> origin/dev
                 exit 1
               fi
-            done
+
+            # Check for changed values
+            for key in $base_keys; do
+              base_value=$(echo "$base_file" | jq -r --arg key "$key" '.[$key]')
+              head_value=$(echo "$head_file" | jq -r --arg key "$key" '.[$key]')
+
+                if [ "$base_value" != "$head_value" ]; then
+                  echo "Backward incompatibility change detected in $file. The value of key '$key' was changed from '$base_value' to '$head_value'."
+                  exit 1
+                fi
+              done
+            else
+              echo "Skipping file $file as it exists in one branch but not the other."
+            fi
           done
 
           echo "All exporter JSON files have only additions. No backward incompatibility changes detected."

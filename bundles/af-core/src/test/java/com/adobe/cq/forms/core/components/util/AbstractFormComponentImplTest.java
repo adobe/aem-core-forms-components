@@ -17,6 +17,7 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
@@ -29,6 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
@@ -48,6 +50,10 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_NO_VALIDATION_STATUS = CONTENT_ROOT + "/datepicker2";
     private static final String PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS = CONTENT_ROOT + "/datepicker3";
     private static final String PATH_COMPONENT_WITH_NO_RULE = CONTENT_ROOT + "/numberinput";
+    private static final String PATH_COMPONENT_WITH_DISABLED_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponent";
+    private static final String PATH_COMPONENT_WITH_INVALID_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentinvalid";
+    private static final String PATH_COMPONENT_WITH_NO_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentnone";
+    private static final String PATH_COMPONENT_WITH_RULES = CONTENT_ROOT + "/textinputWithPrintRule";
     private static final String AF_PATH = "/content/forms/af/testAf";
     private static final String PAGE_PATH = "/content/testPage";
 
@@ -102,6 +108,34 @@ public class AbstractFormComponentImplTest {
     }
 
     @Test
+    public void testDisabledXFAScripts() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_DISABLED_XFA_SCRIPTS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        List<String> disabledScripts = (List<String>) properties.get("fd:disabledXfaScripts");
+        assertNotNull(disabledScripts);
+        assertEquals(2, disabledScripts.size());
+        assertTrue(disabledScripts.contains("click"));
+        assertTrue(disabledScripts.contains("change"));
+    }
+
+    @Test
+    public void testInvalidXFAScripts() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_INVALID_XFA_SCRIPTS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Object disabledScripts = properties.get("fd:disabledXfaScripts");
+        // Even with invalid JSON, we should get an empty list, not null
+        assertNull(disabledScripts);
+    }
+
+    @Test
+    public void testNoXFAScripts() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_NO_XFA_SCRIPTS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Object disabledScripts = properties.get("fd:disabledXfaScripts");
+        assertNull(disabledScripts);
+    }
+
+    @Test
     public void testEmbedWithIframe() {
         Resource resource = Mockito.mock(Resource.class);
         Page afPage = Mockito.mock(Page.class);
@@ -147,11 +181,38 @@ public class AbstractFormComponentImplTest {
         }
     }
 
-    @Test
     private AbstractFormComponentImpl prepareTestClass(String path) {
         Resource resource = context.resourceResolver().getResource(path);
         AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
         Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
         return abstractFormComponentImpl;
+    }
+
+    @Test
+    public void testGetDorContainer() {
+        Resource resource = Mockito.mock(Resource.class);
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+
+        Resource dorContainerResource = Mockito.mock(Resource.class);
+        Mockito.doReturn(dorContainerResource).when(resource).getChild("fd:dorContainer");
+
+        DorContainer dorContainerMock = Mockito.mock(DorContainer.class);
+        Mockito.doReturn(dorContainerMock).when(dorContainerResource).adaptTo(DorContainer.class);
+
+        assertThrows(java.lang.IllegalArgumentException.class, () -> abstractFormComponentImpl.getDorContainer());
+
+    }
+
+    @Test
+    public void testPrintChannelRule() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Object rulesProperties = properties.get("fd:rules");
+        assertNotNull(rulesProperties);
+        Object formReadyRule = ((Map<String, Object>) rulesProperties).get("fd:formReady");
+        assertNotNull(formReadyRule);
     }
 }

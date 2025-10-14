@@ -137,6 +137,22 @@ function formatEmailInput(field)
     return transformedEmail;
 }
 
+/**
+ * Validates email input
+ * @name validateEmailInput Validates email input
+ * @param {object} field field whose value to be validated
+ * @return {string}
+ */
+function validateEmailInput(field)
+{
+    var email = field.$value;
+    if (!email) {
+        return "false";
+    }
+    // Simple email regex pattern
+    var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return pattern.test(email) ? "true" : "false";
+}
 
 /**
  * Formats telephone input
@@ -173,6 +189,16 @@ function testImportData(globals)
 function testTextImportData(globals)
 {
     globals.functions.importData({'a' : {'b' : 'prefilled'}});
+}
+
+/**
+ * Tests static image import data
+ * @name testImageImportData
+ * @param {scope} globals
+ */
+function testImageImportData(globals)
+{
+    globals.functions.importData({'a' : {'b' : '/content/dam/reference-fragments/visa%402x.png'}})
 }
 
 /**
@@ -240,10 +266,12 @@ function clearValueCustomFunction(field, globals) {
  * @param {scope} globals
  */
 function customMessageUsingInvalidApi(field, globals) {
-    const minLength = 15;
+    const minLength = field.$minLength;
     const comments = field.$value.trim();
+    // api to get the error message for a particular constraint
+    const ootbErrrorMessage = field.getErrorMessage("minLength");
     if (comments.length < minLength) {
-        globals.functions.setProperty(field, {valid: false, errorMessage : "Comments must be at least 15 characters long."});
+        globals.functions.setProperty(field, {valid: false, errorMessage : `Comments must be at least ${minLength} characters long.`});
     } else {
         globals.functions.setProperty(field, {valid : true});
     }

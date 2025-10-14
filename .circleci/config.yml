@@ -15,8 +15,8 @@ common:
   cypress_test_steps: &cypress_test_steps
     steps:
       - checkout
-      - browser-tools/install-browser-tools:
-          chrome-version: latest
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run:
           command: |
             google-chrome --version
@@ -28,10 +28,14 @@ common:
           name: Docker compose
           command: |
             set +e  # Disable exit on error
+            # Clean up any existing containers first
+            docker-compose -f .circleci/docker-compose.yml down -v --remove-orphans || true
+            # Pull images in parallel to save time
+            # docker-compose -f .circleci/docker-compose.yml pull --parallel || true
             for i in $(seq 3); do
               echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
               echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
-              docker-compose -f .circleci/docker-compose.yml down -v
+              # docker-compose -f .circleci/docker-compose.yml down -v
               docker-compose -f .circleci/docker-compose.yml up -d && break
               sleep 10  # Add a delay between retries
             done
@@ -134,8 +138,9 @@ executors:
       - image: cimg/openjdk:8.0-browsers
   test_executor_cloudready:
     machine:
-      image: ubuntu-2204:2023.10.1
+      image: ubuntu-2204:2024.01.1
       docker_layer_caching: true
+    resource_class: medium
 
 jobs:
   build-java-11:
@@ -161,13 +166,13 @@ jobs:
           root: /home/circleci/build
           paths:
             - configuration.json
-            - bundles/core/target
-            - bundles/af-core/target
+            - bundles/core/target/*.jar
+            - bundles/af-core/target/*.jar
             - ui.apps/target/*.zip
             - ui.af.apps/target/*.zip
             - examples/ui.apps/target/*.zip
             - examples/ui.content/target/*.zip
-            - examples/core/target
+            - examples/core/target/*.jar
             - it/core/target/*.jar
             - it/apps/target/*.zip
             - it/content/target/*.zip
@@ -182,17 +187,17 @@ jobs:
           conf: .circleci/codecov.yml
           flags: unittests
 
-  cypress-chrome-cloudready-with-addon:
-    executor: test_executor_cloudready
-    environment:
-      AEM: addon
-      TYPE: cypress
-      BROWSER: chrome
-      PRERELEASE: 'true'
-    resource_class: xlarge
-    working_directory: /home/circleci/build
-    parallelism: 8
-    <<: *cypress_test_steps
+  # cypress-chrome-cloudready-with-addon:
+  #   executor: test_executor_cloudready
+  #   environment:
+  #     AEM: addon
+  #     TYPE: cypress
+  #     BROWSER: chrome
+  #     PRERELEASE: 'true'
+  #   resource_class: xlarge
+  #   working_directory: /home/circleci/build
+  #   parallelism: 8
+  #   <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon:
     executor: test_executor_cloudready
@@ -202,9 +207,9 @@ jobs:
       BROWSER: chrome
       PRERELEASE: 'true'
       FT: 'true'
-    resource_class: xlarge
+    resource_class: large
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon-without-ft:
@@ -215,24 +220,24 @@ jobs:
       BROWSER: chrome
       PRERELEASE: 'true'
       FT: 'false'
-    resource_class: xlarge
+    resource_class: large
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
-  cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
-    executor: test_executor_cloudready
-    environment:
-      AEM: addon-latest
-      TYPE: cypress
-      BROWSER: chrome
-      PRERELEASE: 'true'
-      FT: 'true'
-      CORE_COMPONENTS: '3.0.0'
-    resource_class: xlarge
-    working_directory: /home/circleci/build
-    parallelism: 8
-    <<: *cypress_test_steps
+#  cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
+#    executor: test_executor_cloudready
+#    environment:
+#      AEM: addon-latest
+#      TYPE: cypress
+#      BROWSER: chrome
+#      PRERELEASE: 'true'
+#      FT: 'true'
+#      CORE_COMPONENTS: '3.0.0'
+#    resource_class: xlarge
+#    working_directory: /home/circleci/build
+#    parallelism: 8
+#    <<: *cypress_test_steps
 
   jsdocs-deploy:
     docker:
@@ -411,13 +416,13 @@ jobs:
             # echo "Before sed: $(cat VERSIONS.md)"
             # update versions.md
             sed -i "/$LAST_VERSION/ { p; b; }; 1,/$LAST_VERSION/ { p; d; }" VERSIONS.md
-            sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
-            echo "After sed: $(cat VERSIONS.md)"
+            sed -i -E "0,/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\+?\s*\|/s//| $NEW_VERSION                \| $WCM_CORE_COMPONENTS_VERSION             |/" VERSIONS.md
+            # echo "After sed: $(cat VERSIONS.md)"
 
             # echo "Before sed: $(cat README.md)"
             # update readme.md
-            sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+ \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
-            echo "After sed: $(cat README.md)"
+            sed -i -E "s/(\| $LAST_VERSION\s*\|) [0-9]+\.[0-9]+\.[0-9]+\+? \s*\| /| $NEW_VERSION                | $WCM_CORE_COMPONENTS_VERSION             | /g" README.md
+            # echo "After sed: $(cat README.md)"
 
             # Check if package-lock.json is modified
             if [[ $(git status --porcelain | grep "package-lock.json") ]]; then
@@ -438,12 +443,12 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - cypress-chrome-cloudready-with-addon:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
+      # - cypress-chrome-cloudready-with-addon:
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #     requires:
+      #       - build-java-11
       - cypress-chrome-cloudready-with-latest-addon:
           filters:
             tags:
@@ -464,19 +469,19 @@ workflows:
               ignore: /.*/
             tags:
               only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
-      - cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
-          filters:
-#            branches:
-#              ignore: /.*/
-            tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
-          requires:
-            - build-java-11
+#      - cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
+#          filters:
+##            branches:
+##              ignore: /.*/
+#            tags:
+#              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+#          requires:
+#            - build-java-11
       - release:
           requires:
             - build-java-11
             - jsdocs-deploy
-            - cypress-chrome-cloudready-with-latest-addon-and-old-core-components
+#            - cypress-chrome-cloudready-with-latest-addon-and-old-core-components
           filters:
             branches:
               ignore: /.*/

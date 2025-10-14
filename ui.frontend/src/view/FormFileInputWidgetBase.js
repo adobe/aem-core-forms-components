@@ -41,7 +41,32 @@ class FormFileInputWidgetBase {
         "dll": "application/x-msdownload",
         "exe": "application/x-msdownload",
         "msi": "application/x-msdownload",
-        "msg": "application/vnd.ms-outlook"
+        "msg": "application/vnd.ms-outlook",
+        "dwg": "image/vnd.dwg",
+        "jxr": "image/vnd.ms-photo",
+        "psd": "image/vnd.adobe.photoshop",
+        "ico": "image/vnd.microsoft.icon",
+        "cab": "application/vnd.ms-cab-compressed",
+        "deb": "application/vnd.debian.binary-package",
+        "sqlite": "application/vnd.sqlite3",
+        "inf2": "image/vnd.cns.inf2",
+        "djv": "image/vnd.djvu",
+        "djvu": "image/vnd.djvu",
+        "dxf": "image/vnd.dxf",
+        "fbs": "image/vnd.fastbidsheet",
+        "fpx": "image/vnd.fpx",
+        "fst": "image/vnd.fst",
+        "mmr": "image/vnd.fujixerox.edmics-mmr",
+        "rlc": "image/vnd.fujixerox.edmics-rlc",
+        "pgb": "image/vnd.globalgraphics.pgb",
+        "mix": "image/vnd.mix",
+        "mdi": "image/vnd.ms-modi",
+        "npx": "image/vnd.net-fpx",
+        "radiance": "image/vnd.radiance",
+        "sealed.png": "image/vnd.sealed.png",
+        "softseal.gif": "image/vnd.sealedmedia.softseal.gif",
+        "softseal.jpg": "image/vnd.sealedmedia.softseal.jpg",
+        "svf": "image/vnd.svf"
     }
     initialFileValueFileNameMap;
 
@@ -456,7 +481,6 @@ class FormFileInputWidgetBase {
 
                         // if the file is not invalid, show it and push it to internal array
                         if (!isCurrentInvalidFileSize && !isCurrentInvalidFileName && !isCurrentInvalidMimeType) {
-                            this.showFileList(currFileName);
                             if(this.isMultiSelect()) {
                                 this.values.push(currFileName);
                                 this.fileArr.push(file);

@@ -74,7 +74,10 @@ public final class FormConstants {
     /** The resource type for check box group v1 */
     public static final String RT_FD_FORM_CHECKBOX_GROUP_V1 = RT_FD_FORM_PREFIX + "checkboxgroup/v1/checkboxgroup";
 
-    /** The resource type for reCaptcha v1 */
+    /** The resource type for turnstile v1 */
+    public static final String RT_FD_FORM_TURNSTILE_V1 = RT_FD_FORM_PREFIX + "turnstile/v1/turnstile";
+
+    /** The resource type for hCaptcha v1 */
     public static final String RT_FD_FORM_HCAPTCHA_V1 = RT_FD_FORM_PREFIX + "hcaptcha/v1/hcaptcha";
 
     /** The resource type for reCaptcha v1 */
@@ -133,4 +136,23 @@ public final class FormConstants {
     public static final String REQ_ATTR_REFERENCED_PATH = "referencedPage";
 
     public static final String PROP_FRAGMENT_PATH = "fragmentPath";
+
+    /** The resource type for review v1 */
+    public static final String RT_FD_FORM_REVIEW_V1 = RT_FD_FORM_PREFIX + "review/v1/review";
+
+    /* The resource type for the pre-selected the linked panel */
+    public final static String RT_FD_FORM_REVIEW_DATASOURCE_V1 = RT_FD_FORM_PREFIX + "review/v1/datasource";
+
+    /** Request header/attribute name for form definition jsonview type */
+    public static final String X_ADOBE_FORM_DEFINITION = "x-adobe-form-definition";
+
+    /** Form definition type indicating submission view */
+    public static final String FORM_DEFINITION_SUBMISSION = "submission";
+
+    /** The channel for print */
+    public static final String CHANNEL_PRINT = "print";
+
+    /** The resource type for date time input field v1 */
+    public static final String RT_FD_FORM_DATETIME_V1 = RT_FD_FORM_PREFIX + "datetime/v1/datetime";
+
 }

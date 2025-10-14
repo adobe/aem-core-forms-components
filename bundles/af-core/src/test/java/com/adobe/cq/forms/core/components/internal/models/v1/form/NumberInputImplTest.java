@@ -59,6 +59,9 @@ public class NumberInputImplTest {
     private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
     private static final String PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/numberinput-displayvalueExpression";
     private static final String PATH_NUMBER_INPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/numberinput-without-fieldtype";
+    private static final String PATH_NUMBER_INPUT_WITH_DISPLAY_FORMAT = CONTENT_ROOT + "/numberinput-with-display-format";
+    private static final String PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT = CONTENT_ROOT + "/numberinput-with-custom-display-format";
+    private static final String PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS = CONTENT_ROOT + "/numberinput-with-both-display-formats";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -129,7 +132,7 @@ public class NumberInputImplTest {
     @Test
     void testGetScreenReaderText() {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CUSTOMIZED, NumberInput.class, context);
-        assertEquals("'Custom screen reader text'", numberInput.getScreenReaderText());
+        assertEquals("Custom screen reader text", numberInput.getScreenReaderText());
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, numberInputMock.getScreenReaderText());
@@ -205,6 +208,19 @@ public class NumberInputImplTest {
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getDisplayFormat()).thenCallRealMethod();
         assertEquals(null, numberInputMock.getDisplayFormat());
+    }
+
+    @Test
+    void testGetDisplayFormatWithCustomDisplayFormat() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT, NumberInput.class, context);
+        assertEquals("customCurrency", numberInput.getDisplayFormat());
+    }
+
+    @Test
+    void testGetDisplayFormatWithBothFormats() {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS, NumberInput.class, context);
+        // customDisplayFormat should take priority over displayFormat
+        assertEquals("customCurrency", numberInput.getDisplayFormat());
     }
 
     @Test
@@ -428,4 +444,17 @@ public class NumberInputImplTest {
         NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITHOUT_FIELDTYPE, NumberInput.class, context);
         assertEquals(FieldType.NUMBER_INPUT.getValue(), numberInput.getFieldType());
     }
+
+    @Test
+    void testJSONExportWithCustomDisplayFormat() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT, NumberInput.class, context);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT));
+    }
+
+    @Test
+    void testJSONExportWithBothDisplayFormats() throws Exception {
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS, NumberInput.class, context);
+        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS));
+    }
+
 }

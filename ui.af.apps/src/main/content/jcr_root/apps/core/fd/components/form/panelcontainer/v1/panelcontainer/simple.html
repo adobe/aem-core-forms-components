@@ -21,12 +21,15 @@
          data-cmp-is="adaptiveFormPanel"
          data-cmp-data-layer="${panel.data.json}"
          data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+         data-cmp-visible="${panel.visible ? 'true' : 'false'}"
+         data-cmp-enabled="${panel.enabled ? 'true' : 'false'}"
+         data-cmp-readonly="${panel.readOnly ? 'true' : 'false'}"
          class="cmp-container${wcmmode.edit ? ' {0}': '' @ format=[allowed.cssClass]}"
          title="${panel.tooltipVisible ? '' : panel.tooltipText}"
          role="${container.roleAttribute}"
          style="${container.backgroundStyle @ context='styleString'}">
         <div class="cmp-container__label-container">
-          <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, labelRichText=panel.label.richText, bemBlock='cmp-container'}" data-sly-unwrap></div>
+          <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, labelRichText=panel.label.richText, bemBlock='cmp-container', isHeading=true}" data-sly-unwrap></div>
           <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container'}" data-sly-unwrap></div>
         </div>
         <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-container'}" data-sly-unwrap></div>

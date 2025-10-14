@@ -20,7 +20,11 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
+<<<<<<< HEAD
         <version>3.0.73-SNAPSHOT</version>
+=======
+        <version>3.0.1000-SNAPSHOT</version>
+>>>>>>> origin/dev
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -653,6 +657,10 @@
             <groupId>com.adobe.cq</groupId>
             <artifactId>core.wcm.components.core</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.aem</groupId>
+            <artifactId>core-forms-print-components-print-dor-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.sling</groupId>

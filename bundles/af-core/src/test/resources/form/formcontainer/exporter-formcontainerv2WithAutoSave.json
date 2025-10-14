@@ -1,0 +1,62 @@
+{
+  "id": "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+  "fieldType": "form",
+  "lang": "en",
+  "properties": {
+    "thankyouPage": "/a/b/c",
+    "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2WithAutoSave",
+    "fd:schemaType": "BASIC",
+    "fd:isHamburgerMenuEnabled": false,
+    "fd:roleAttribute": null,
+    "fd:formDataEnabled": true,
+    "fd:autoSave": {
+      "fd:enableAutoSave": true,
+      "fd:autoSaveStrategyType": "time",
+      "fd:autoSaveInterval": 2
+    },
+    "fd:customFunctionsUrl": "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+    "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="
+  },
+  "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":itemsOrder": [
+    "textinput"
+  ],
+  "adaptiveform": "0.15.2",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  ":type": "core/fd/components/form/container/v2/container",
+  ":items": {
+    "textinput": {
+      "id": "textinput-2ddda8d6f9",
+      "fieldType": "text-input",
+      "name": "abc",
+      "visible": false,
+      "description": "dummy",
+      "type": "string",
+      "label": {
+        "value": "def",
+        "visible": true
+      },
+      "properties": {
+        "customProp": "customPropValue",
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2WithAutoSave/textinput"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+  }
+}

@@ -90,10 +90,13 @@ describe("Form with Panel Container", () => {
         tab2().should('have.class', 'cmp-tabs__tab--active');
         tab2().should('have.attr', 'aria-selected', 'true');
         tab1().should('have.attr', 'aria-selected', 'false');
+        tab1().should('have.class', 'cmp-tabs__tab--stepped');
         tab1().click();
         tab1().should('have.class', 'cmp-tabs__tab--active');
+        tab1().should('have.class', 'cmp-tabs__tab--stepped');
         tab1().should('have.attr', 'aria-selected', 'true');
         tab2().should('have.attr', 'aria-selected', 'false');
+        tab2().should('have.class', 'cmp-tabs__tab--stepped');
     });
 
     it("switch tab in runtime using keyboard", () => {
@@ -163,6 +166,22 @@ describe("Form with Tabsontop Layout Container with focus", () => {
         });
 
     });
+
+    it("focus should be on the first component when navigated to the next tab", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        tab2().click().then(() => {
+            tab2().should('have.class', 'cmp-tabs__tab--active');
+            tab2().should('have.attr', 'aria-selected', 'true');
+            cy.get('input[name="textinputft2"]').should('be.focused');
+            tab1().should('have.attr', 'aria-selected', 'false');
+        });
+        tab1().click().then(() => {
+            tab1().should('have.class', 'cmp-tabs__tab--active');
+            tab1().should('have.attr', 'aria-selected', 'true');
+            cy.get('input[name="textinputft1"]').should('be.focused');
+            tab2().should('have.attr', 'aria-selected', 'false');
+        });
+    })
 
 
 });

@@ -173,6 +173,20 @@ describe("Form with File Input V-3 - Basic Tests", () => {
         getFormObjTest(['empty.pdf', 'empty.pdf', 'empty.pdf', 'empty.pdf', 'empty.pdf'])
     });
 
+    it("check delete functionality of duplicate files", () => {
+        let sampleFileNames = ['sample2.txt', 'sample.txt', 'sample2.txt'];
+        const fileInput = "input[name='fileinput1']";
+        
+        // Attach files
+        cy.attachFile(fileInput, [sampleFileNames[0]]);
+        cy.attachFile(fileInput, [sampleFileNames[1]]);
+        cy.attachFile(fileInput, [sampleFileNames[2]]);
+
+        deleteSelectedFiles(fileInput, sampleFileNames);
+
+        cy.get('.cmp-adaptiveform-fileinput__fileitem').should('have.length', 0);
+    });
+
     it("should toggle description and tooltip", () => {
         cy.toggleDescriptionTooltip(bemBlock, 'fileinput_tooltip_scenario_test');
     })
@@ -248,4 +262,16 @@ describe('Click on button tag (V-3)', () => {
             expect(alertText).to.equal(model.getState().constraintMessages.maxFileSize);
         });
      });
+<<<<<<< HEAD
+=======
+
+     it('file when uploaded again should give actual size', () => {
+        let sampleFileNames = ['sample.svg'];
+        const fileInput = "input[name='fileinput2']";
+        cy.attachFile(fileInput, [sampleFileNames[0]]);
+        cy.get('.cmp-adaptiveform-fileinput__filesize').should('contain.text', '508 bytes');
+        cy.attachFile(fileInput, [sampleFileNames[0]]);
+        cy.get('.cmp-adaptiveform-fileinput__filesize').should('contain.text', '508 bytes'); 
+     })
+>>>>>>> origin/dev
 })

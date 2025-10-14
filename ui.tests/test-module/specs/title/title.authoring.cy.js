@@ -38,22 +38,36 @@ describe('Page - Authoring', function () {
     const testTitleEditDialog = function (titleEditPathSelector, titleDrop, isSites) {
         if (isSites) {
             dropTitleInSites();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
+            cy.wait(500);
+            cy.get(sitesSelectors.overlays.overlay.component + titleEditPathSelector)
+                .should('be.visible')
+                .first()
+                .as('titleElement');
+            
+            cy.get('@titleElement').should('exist').should('be.visible');
+            cy.get('@titleElement').click({force: true});
             cy.invokeEditableAction("[data-action='CONFIGURE']");
-            cy.get('.cq-dialog-cancel').click();
+            cy.get('.cq-dialog-cancel').should('be.visible').click();
             cy.deleteComponentByPath(titleDrop);
         } else {
             dropTitleInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + titleEditPathSelector);
+            cy.wait(500);
+            cy.get(sitesSelectors.overlays.overlay.component + titleEditPathSelector)
+                .should('be.visible')
+                .first()
+                .as('titleElement');
+            
+            cy.get('@titleElement').should('exist').should('be.visible');
+            cy.get('@titleElement').click({force: true});
             cy.invokeEditableAction("[data-action='CONFIGURE']");
-            cy.get('.cq-dialog-cancel').click();
+            cy.get('.cq-dialog-cancel').should('be.visible').click();
             cy.get('[data-path^="/content/forms/af/core-components-it/blank/jcr:content/guideContainer/title_"]')
+                .should('exist')
                 .invoke('attr', 'data-path')
                 .then(dataPath => {
                     cy.deleteComponentByPath(dataPath);
-                })
+                });
         }
-
     }
 
 
@@ -82,9 +96,9 @@ describe('Page - Authoring', function () {
         });
 
         it('check edit dialog availability of Title', function () {
-            cy.cleanTitleTest(titleEditPath + "_").then(() => {
+            cy.cleanTitleTest(titleEditPath).then(() => {
                 testTitleEditDialog(titleEditPathSelector, titleDrop, false);
-            })
+            });
         });
     });
 
@@ -106,7 +120,11 @@ describe('Page - Authoring', function () {
         });
 
         it('check edit dialog availability of Title', function () {
-            testTitleEditDialog(titleEditPathSelector, titleDrop, true);
+            cy.wrap(null).then(() => {
+                cy.cleanTitleTest(titleEditPath).then(() => {
+                    testTitleEditDialog(titleEditPathSelector, titleDrop, true);
+                });
+            });
         });
 
     });

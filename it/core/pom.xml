@@ -18,7 +18,11 @@
     <parent>
         <groupId>com.adobe.aem</groupId>
         <artifactId>core-forms-components-parent</artifactId>
+<<<<<<< HEAD
         <version>3.0.73-SNAPSHOT</version>
+=======
+        <version>3.0.1000-SNAPSHOT</version>
+>>>>>>> origin/dev
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
@@ -85,6 +89,8 @@
                         <_metatypeannotations>*</_metatypeannotations>
                         <Import-Package>
                             javax.annotation;version=0.0.0,
+                            com.adobe.cq.forms.core.components.models.form;version="[1.0.0,10.0.0)",
+                            io.jsonwebtoken;resolution:=optional;version="[0.0.0,1.0.0)",
                             *
                         </Import-Package>
                     </instructions>
@@ -155,6 +161,24 @@ Import-Package: javax.annotation;version=0.0.0,*
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>aem-forms-sdk-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.aem</groupId>
+            <artifactId>core-forms-components-af-core</artifactId>
+            <version>3.0.70</version>
+        </dependency>
+        <!-- Json web token dependencies for oauth2 flow -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

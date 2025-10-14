@@ -76,7 +76,18 @@ describe('Page/Form Authoring', function () {
         cy.get("coral-numberinput[name='./fd:autoSaveInterval']").should("exist");
     }
 
-
+    const checkValidatorFunctioning = function(formContainerEditPathSelector) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get('.cmp-adaptiveform-container__editdialog').contains('Submission').click({force:true});   
+        cy.get(".cmp-adaptiveform-container__submitaction").children('button[is="coral-button"][aria-haspopup="listbox"]').first().click({force: true});
+        cy.get('coral-selectlist-item[value="fd/af/components/guidesubmittype/restendpoint"]').should('be.visible').click();
+        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().clear({force: true}).type("invalid-url", {force: true});
+        cy.get('.coral-Form-errorlabel').should('contain.text', "Please enter the absolute path of the REST endpoint.");
+        cy.get("[name='./restEndpointPostUrl']").clear({force: true}).type("http://localhost:4502/some/endpoint", {force: true}); 
+        cy.get('.coral-Form-errorlabel').should('not.exist');
+        cy.get('.cq-dialog-submit').click();
+    };
 
     const checkAndSaveSubmitAction = function(formContainerEditPathSelector) {
         // click configure action on adaptive form container component
@@ -107,11 +118,11 @@ describe('Page/Form Authoring', function () {
             cy.get("[name='./restEndpointConfigPath']").should("exist").should("be.visible");
             cy.get("coral-radio[name='./restEndPointSource'][value='posturl']").first().click();
             cy.get("[name='./restEndpointPostUrl']").should("exist").should("be.visible");
+            cy.get("[name='./restEndpointPostUrl']").should("exist").clear().type("http://localhost:4502/some/endpoint");
             cy.get("[name='./restEndpointConfigPath']").should("exist").should("not.be.visible");
         }
-        cy.get("[name='./restEndpointPostUrl']").should("exist").type("http://localhost:4502/some/endpoint");
-
         //save the configuration
+        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").clear().type("http://localhost:4502/some/endpoint");
         cy.get('.cq-dialog-submit').click();
     };
 
@@ -243,6 +254,9 @@ describe('Page/Form Authoring', function () {
                 }
             });
 
+            it('check validator functioning for REST endpoint URL', function() {
+                checkValidatorFunctioning(formContainerEditPathSelector);
+            });
         });
 
         // commenting once we support adaptive form container in sites editor, uncomment this test
@@ -296,6 +310,10 @@ describe('Page/Form Authoring', function () {
                     checkEditDialog(formContainerEditPathSelector);
                     cy.get(sitesSelectors.confirmDialog.actions.first).click();
                 })
+
+                it('check validator functioning for REST endpoint URL', function() {
+                    checkValidatorFunctioning(formContainerEditPathSelector);
+                });
         });
 
         context("Render Forms in Disabled mode", function () {
@@ -365,6 +383,37 @@ describe('Page/Form Authoring', function () {
                     // Trigger enter on numberinput widget
                     cy.get('.cmp-adaptiveform-numberinput__widget').eq(0).type('{enter}');
                     cy.get('.cmp-adaptiveform-numberinput__widget').eq(0).should('be.visible');
+                });
+            });
+
+            it('should not prevent default behavior on links with enter key press', function () {
+                cy.get('.cmp-adaptiveform-container').then((formContainer) => {
+                    // Create a test link dynamically within the form container
+                    const testLink = document.createElement('a');
+                    testLink.href = '#test-link';
+                    testLink.textContent = 'Test Link';
+                    testLink.id = 'test-accessibility-link';
+                    testLink.setAttribute('tabindex', '0');
+                    formContainer[0].appendChild(testLink);
+
+                    // Test that Enter keydown event on link is NOT prevented by FormContainer
+                    cy.get('#test-accessibility-link').focus().then(($link) => {
+                        const linkElement = $link[0];
+                        
+                        // Create and dispatch a keydown event
+                        const enterKeyEvent = new KeyboardEvent('keydown', {
+                            key: 'Enter',
+                            code: 'Enter',
+                            bubbles: true,
+                            cancelable: true
+                        });
+                        
+                        // Dispatch the event and check if preventDefault was called
+                        const result = linkElement.dispatchEvent(enterKeyEvent);
+                        
+                        // If result is true, preventDefault was NOT called (which is what we want for links)
+                        expect(result).to.be.true;
+                    });
                 });
             });
         });

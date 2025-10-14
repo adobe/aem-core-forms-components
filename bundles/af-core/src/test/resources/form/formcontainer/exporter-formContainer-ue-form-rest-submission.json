@@ -1,0 +1,57 @@
+{
+    "id": "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+    "fieldType": "form",
+    "lang": "en",
+    "title": "uesprintdemo",
+    "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+    "properties": {
+        "themeRef": "",
+        "fd:path": "/content/forms/af/demo/jcr:content/formContainer-ue-form-rest-submission",
+        "fd:schemaType": "BASIC",
+        "fd:isHamburgerMenuEnabled": false,
+        "fd:roleAttribute": null,
+        "fd:formDataEnabled": false,
+        "fd:customFunctionsUrl": "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+        "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="
+    },
+    "events": {
+        "custom:setProperty": [
+            "$event.payload"
+        ]
+    },
+    ":itemsOrder": [
+        "textinput"
+    ],
+    ":items": {
+        "textinput": {
+            "id": "textinput-5c60b85622",
+            "fieldType": "text-input",
+            "name": "abc",
+            "visible": false,
+            "description": "dummy",
+            "type": "string",
+            "label": {
+                "value": "def",
+                "visible": true
+            },
+            "properties": {
+                "fd:dor": {
+                    "dorExclusion": false
+                },
+                "fd:path": "/content/forms/af/demo/jcr:content/formContainer-ue-form-rest-submission/textinput"
+            },
+            "events": {
+                "custom:setProperty": [
+                    "$event.payload"
+                ]
+            },
+            ":type": "core/fd/components/form/textinput/v1/textinput"
+        }
+    },
+    "metadata": {
+        "version": "1.0.0",
+        "grammar": "json-formula-1.0.0"
+    },
+    "adaptiveform": "0.15.2",
+    ":type": "fd/franklin/components/form/v1/form"
+}

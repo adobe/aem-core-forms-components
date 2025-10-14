@@ -8,9 +8,6 @@
       "dorType": "generate",
       "dorTemplateRef": "xyz"
     },
-    "fd:autoSave": {
-      "fd:enableAutoSave":false
-    },
     "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2",
     "fd:isHamburgerMenuEnabled": false,
     "fd:schemaType": "BASIC",
@@ -28,7 +25,7 @@
   ":itemsOrder": [
     "textinput"
   ],
-  "adaptiveform": "0.14.2",
+  "adaptiveform": "0.15.2",
   "metadata": {
     "version": "1.0.0",
     "grammar": "json-formula-1.0.0"

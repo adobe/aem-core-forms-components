@@ -249,7 +249,7 @@ class FormFieldBase extends FormField {
         this.#syncLabel()
         this.#syncWidget()
         this.#syncShortDesc()
-        this. #syncLongDesc()
+        this.#syncLongDesc()
         this.#syncAriaDescribedBy()
         this.#syncError()
         this.#syncAriaLabel()
@@ -261,7 +261,7 @@ class FormFieldBase extends FormField {
      */
     setFocus(id) {
         const fieldType = this.parentView?.getModel()?.fieldType;
-        if (fieldType !== 'form' && this.parentView.setFocus) {
+        if (fieldType !== 'form' && this.parentView?.setFocus) {
             this.parentView.setFocus(this.getId());
         }
         if(!this.isActive()) {
@@ -382,7 +382,7 @@ class FormFieldBase extends FormField {
      * @private
      */
     #getPanelName() {
-        return this.parentView.getModel().name;
+        return this.parentView?.getModel()?.name;
     }
 
     setWidgetValueToDisplayValue() {
@@ -636,17 +636,18 @@ class FormFieldBase extends FormField {
                }
                  
                 // Find the existing <p> element
-                let pElement = descriptionElement.querySelector('p');
+                let pElements = descriptionElement.querySelectorAll('p');
 
-                if (!pElement)  {
+                if (!pElements)  {
                     // If no <p> tag exists, create one and set it as the content
-                    pElement = document.createElement('p');
+                    pElements = document.createElement('p');
                     descriptionElement.innerHTML = ''; // Clear existing content
                     descriptionElement.appendChild(pElement);
                 }
 
                 // Update the <p> element's content with sanitized content
-                pElement.innerHTML = sanitizedDescriptionText;
+                   pElements.length === 1 ? (pElements[0].innerHTML = sanitizedDescriptionText) : null;
+               
             } else {    
                 // If no description was set during authoring
                 this.#addDescriptionInRuntime(sanitizedDescriptionText);

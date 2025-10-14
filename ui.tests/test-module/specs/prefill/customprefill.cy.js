@@ -27,7 +27,8 @@ describe('Custom Prefill Test', function () {
     const nameTextBox = "input[name='name']",
           dobDropdown = "input[name='dob']",
           jobDropdown = "select[name='job']";
-    let genderRadioButton = "input[name='radiobutton-c8c660bac8_name']";
+    let genderRadioButton = "input[name='radiobutton-c8c660bac8_gender']";
+    let fileAttachment = "input[name='fileinput1749031651340']";
     let formContainer = null;
 
     beforeEach(() => {
@@ -61,11 +62,13 @@ describe('Custom Prefill Test', function () {
             }
             cy.get(genderRadioButton).should("have.value", "0");
             cy.get(jobDropdown).should("have.value", "1");
+            cy.get('.cmp-adaptiveform-fileinput__fileitem') .should('exist');
         }
 
     }
 
     it('', function() {
+        let sampleFileNames = ['sample.txt'];
         if (cy.af.isOldCoreComponent()) {
             genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
         }
@@ -74,10 +77,11 @@ describe('Custom Prefill Test', function () {
         cy.get(dobDropdown).type("1999-10-10");
         cy.get(genderRadioButton).first().check();
         cy.get(jobDropdown).select('Working');
+        cy.attachFile(fileAttachment,[sampleFileNames[0]]);
 
         // submitting the form and fetching the prefillID
         let prefillId;
-        cy.get("button").click();
+        cy.get("button").eq(2).click();
 
         cy.wait('@afSubmission').then(({response}) => {
             expect(response.statusCode).to.equal(200);
@@ -91,6 +95,7 @@ describe('Custom Prefill Test', function () {
     });
 
     it('prefill using service in dataRef', function() {
+        let sampleFileNames = ['sample2.txt'];
         if (cy.af.isOldCoreComponent()) {
             genderRadioButton = "input[name='gender']"; // was added due to enhancement in repeatibility of radio buttons in core components
         }
@@ -99,10 +104,11 @@ describe('Custom Prefill Test', function () {
         cy.get(dobDropdown).type("1999-10-10");
         cy.get(genderRadioButton).first().check();
         cy.get(jobDropdown).select('Working');
+        cy.attachFile(fileAttachment,[sampleFileNames[0]]);
 
         // submitting the form and fetching the prefillID
         let prefillId;
-        cy.get("button").click();
+        cy.get("button").eq(2).click();
 
         cy.wait('@afSubmission').then(({response}) => {
             prefillId = response.body.metadata.prefillId;

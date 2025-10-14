@@ -39,7 +39,11 @@ try {
 
     //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
     //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
+<<<<<<< HEAD
     let wcmVersion = "2.27.0";
+=======
+    let wcmVersion = "2.30.0";
+>>>>>>> origin/dev
     ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
         // Connect to QP
@@ -71,7 +75,7 @@ try {
 
     if (FT === 'true') {
         // add feature toggle impl bundle to check FT on cloud ready or release/650 instance
-        extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.1.2.jar`;
+        extras += ` --install-file ${buildPath}/it/core/src/main/resources/com.adobe.granite.toggle.impl.dev-1.2.0.jar`;
     }
 
     // Set an environment variable indicating test was executed

@@ -95,7 +95,7 @@ public class StaticImageImplTest {
     @Test
     void testGetDataRef() {
         StaticImage staticImage = Utils.getComponentUnderTest(PATH_IMAGE_CUSTOMIZED, StaticImage.class, context);
-        assertEquals(null, staticImage.getDataRef());
+        assertEquals("a.b", staticImage.getDataRef());
         StaticImage staticImageMock = Mockito.mock(StaticImage.class);
         Mockito.when(staticImageMock.getDataRef()).thenCallRealMethod();
         assertEquals(null, staticImageMock.getDataRef());

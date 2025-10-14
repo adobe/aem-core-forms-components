@@ -82,6 +82,214 @@
         "visible" : false,
         "customProp": "customPropValue"
       }
+    },
+    "formcontainer-submissionView": {
+      "jcr:primaryType": "nt:unstructured",
+      "thankYouOption": "page",
+      "subject": "Test Subject",
+      "thankYouMessage": "<p>Thank you for submitting the form.</p>\r\n",
+      "jcr:lastModifiedBy": "admin",
+      "mailto": [
+        "test@example.com"
+      ],
+      "fd:version": "2.1",
+      "schemaType": "none",
+      "specVersion": "0.14.2",
+      "useExternalEmailTemplate": "true",
+      "from": "sender@example.com",
+      "title": "afv2",
+      "jcr:lastModified": "Wed Mar 05 2025 11:19:02 GMT+0530",
+      "themeRef": "/libs/fd/af/themes/canvas",
+      "sling:resourceType": "forms-components-examples/components/form/container",
+      "fieldType": "form",
+      "spreadsheetUrl": "http://localhost/testurl",
+      "textIsRich": "true",
+      "actionName": "spreadsheet",
+      "textinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet"
+    },
+    "formContainer-ue-form-spreadsheet-submission": {
+      "jcr:primaryType": "nt:unstructured",
+      "thankYouOption": "page",
+      "jcr:lastModifiedBy": "ddewanji@adobe.com",
+      "fd:version": "2.1",
+      "title": "uesprintdemo",
+      "jcr:lastModified": "Sat Mar 08 2025 06:56:53 GMT+0000",
+      "themeRef": "",
+      "sling:resourceType": "fd/franklin/components/form/v1/form",
+      "fieldType": "form",
+      "spreadsheetUrl": "https://adobe.sharepoint.com/:x:/r/sites/AFB/Shared%20Documents/afb/website/testcases/submitconfigfinal.xlsx?d=w1b0e4e171eea4f23b299603feaecf23b&csf=1&web=1&e=4fjqT1",
+      "actionName": "spreadsheet",
+      "textinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet"
+    },
+    "formContainer-ue-form-rest-submission": {
+      "jcr:primaryType": "nt:unstructured",
+      "thankYouOption": "page",
+      "jcr:lastModifiedBy": "ddewanji@adobe.com",
+      "fd:version": "2.1",
+      "title": "uesprintdemo",
+      "jcr:lastModified": "Sat Mar 08 2025 06:56:53 GMT+0000",
+      "themeRef": "",
+      "sling:resourceType": "fd/franklin/components/form/v1/form",
+      "fieldType": "form",
+      "actionName": "rest",
+      "textinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/rest"
+    },
+    "formContainer-cc-form-spreadsheet-submission": {
+      "jcr:primaryType": "nt:unstructured",
+      "thankYouOption": "page",
+      "jcr:lastModifiedBy": "ddewanji@adobe.com",
+      "fd:version": "2.1",
+      "title": "uesprintdemo",
+      "jcr:lastModified": "Sat Mar 08 2025 06:56:53 GMT+0000",
+      "themeRef": "",
+      "sling:resourceType": "fd/components/form/v1/form",
+      "fieldType": "form",
+      "spreadsheetUrl": "https://adobe.sharepoint.com/:x:/r/sites/AFB/Shared%20Documents/afb/website/testcases/submitconfigfinal.xlsx?d=w1b0e4e171eea4f23b299603feaecf23b&csf=1&web=1&e=4fjqT1",
+      "actionName": "spreadsheet",
+      "textinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/franklin/spreadsheet"
+    },
+    "formContainer-cc-form-rest-submission": {
+      "jcr:primaryType": "nt:unstructured",
+      "thankYouOption": "page",
+      "jcr:lastModifiedBy": "ddewanji@adobe.com",
+      "fd:version": "2.1",
+      "title": "uesprintdemo",
+      "jcr:lastModified": "Sat Mar 08 2025 06:56:53 GMT+0000",
+      "themeRef": "",
+      "sling:resourceType": "fd/components/form/v1/form",
+      "fieldType": "form",
+      "actionName": "rest",
+      "textinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "name": "abc",
+        "jcr:title": "def",
+        "hideTitle": false,
+        "description": "dummy",
+        "fieldType": "text-input",
+        "visible": false
+      },
+      "actionType": "fd/af/components/guidesubmittype/rest"
+    },
+    "formcontainerv2-with-fragment": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/print/container/v1/container",
+      "thankYouMessage": "Thank you for submitting.",
+      "fd:roleAttribute": "test-role-attribute",
+      "thankYouOption": "message",
+      "redirect": "/content/wknd",
+      "prefillService": "FDM",
+      "fieldType" : "form",
+      "dorType": "generate",
+      "dorTemplateRef": "xyz",
+      "clientLibRef": "abc",
+      "customProp": "customPropValue",
+      "fd:channel": "print",
+      "specVersion": "0.15.2",
+      "textinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "Text Input",
+        "name": "fragmenttextinput",
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+        "fieldType": "text-input",
+        "fd:dorContainer": {
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType"    : "core/fd/components/print/fielddorcontainer/v1/fielddorcontainer",
+          "type": "textfield",
+          "name": "TextField1",
+          "width": "1.5in",
+          "height": "0.5in",
+          "left": "0.5in",
+          "top": "0.5in"
+        }
+      },
+      "fragment": {
+        "jcr:primaryType": "nt:unstructured",
+        "wrapData": true,
+        "jcr:title": "Fragment",
+        "minOccur": "0",
+        "jcr:lastModifiedBy": "admin",
+        "name": "fragment-123",
+        "maxOccur": "4",
+        "jcr:lastModified": "Fri Jun 02 2023 12:34:24 GMT+0530",
+        "repeatable": true,
+        "sling:resourceType": "core/fd/components/form/fragment/v1/fragment",
+        "fieldType": "panel",
+        "fragmentPath": "/content/forms/af/demo/jcr:content/printfragment",
+        "customProp": "customPropValue"
+      }
+    },
+    "printfragment": {
+      "jcr:primaryType": "nt:unstructured",
+      "jcr:title": "AF Fragment (v2)",
+      "jcr:content": {
+        "jcr:primaryType": "cq:PageContent",
+        "jcr:title": "AF Fragment (v2)"
+      },
+      "print": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:title": "AF Fragment (v2)",
+        "jcr:content": {
+          "jcr:primaryType": "cq:PageContent",
+          "jcr:title": "AF Fragment (v2)",
+          "guideContainer": {
+            "jcr:primaryType": "nt:unstructured",
+            "thankYouOption": "page",
+            "fd:version": "2.1",
+            "title": "AF Fragment (v2)",
+            "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
+            "fieldType": "form",
+            "dorType": "none",
+            "textinput": {
+              "jcr:primaryType": "nt:unstructured",
+              "jcr:title": "Text Input",
+              "name": "fragmenttextinput",
+              "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+              "fieldType": "text-input"
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -6,7 +6,11 @@ services:
     entrypoint: tail -f /dev/null  # Keeps the container running
 
   circleci-aem-cloudready:
+<<<<<<< HEAD
     image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:c3484b0d7a-openjdk11
+=======
+    image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-cloudready:22450-openjdk11
+>>>>>>> origin/dev
     depends_on:
       - circleci-qp
     # Add any additional configurations or environment variables if needed

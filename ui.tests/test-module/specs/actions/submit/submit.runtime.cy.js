@@ -198,4 +198,26 @@ describe("Form with Submit Button", () => {
             cy.get(`.cmp-adaptiveform-button__widget`).should('have.attr', 'type', 'submit');
         });
     }
+<<<<<<< HEAD
 })
+=======
+
+    it("Loader shows on submit and hides on success with thank you", () => {
+        cy.previewForm(customSubmitPagePath);
+
+        let requestStarted = false;
+        cy.intercept('POST', '**/adobe/forms/af/submit/*', (req) => {
+            requestStarted = true;
+            return Cypress.Promise.delay(3000).then(() =>  req.continue())
+        }).as('afSubmission');
+
+        cy.get(`.cmp-adaptiveform-button__widget`).click();
+
+        cy.get('form.cmp-adaptiveform-container').should('have.class', 'cmp-adaptiveform-container--submitting')
+
+        cy.wait('@afSubmission').then(() => {
+            cy.contains("Thank you for submitting the form.");
+        });
+    });
+})
+>>>>>>> origin/dev

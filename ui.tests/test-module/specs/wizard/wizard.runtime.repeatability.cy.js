@@ -151,6 +151,43 @@ describe("Form with Wizard Container", () => {
             getWizardPanels().should('have.length', 6);
         })
     });
+
+    it("After clicking on every tab, if tab-1 is repeated, the repeated instance should not have stepped class", () => {
+        getTabs().should('have.length', 4);
+        getWizardPanels().should('have.length', 4);
+        getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true});
+        getTabAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        getWizardPanelAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--stepped');
+        getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--stepped');
+        cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true});
+        getTabAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        getWizardPanelAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        getTabAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__tab--stepped');
+        getWizardPanelAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--stepped');
+        getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--stepped');
+        getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--stepped');
+        cy.get(".cmp-adaptiveform-wizard__nav--next").click({force: true});
+        getTabAtIndex(3).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        getWizardPanelAtIndex(3).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+        getTabAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__tab--stepped');
+        getWizardPanelAtIndex(2).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--stepped');
+        getTabAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__tab--stepped');
+        getWizardPanelAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--stepped');
+        getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--stepped');
+        getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--stepped');
+        cy.get("button").contains("+R1").click().then(() => {
+            getTabs().should('have.length', 5);
+            getWizardPanels().should('have.length', 5);
+            getTabAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+            getWizardPanelAtIndex(1).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+            getTabAtIndex(1).should('not.have.class', 'cmp-adaptiveform-wizard__tab--stepped');
+            getWizardPanelAtIndex(1).should('not.have.class', 'cmp-adaptiveform-wizard__wizardpanel--stepped');
+        })
+        cy.expectNoConsoleErrors();
+    })
 })
 
 describe('visibility of navigation buttons', function () {
@@ -241,8 +278,8 @@ describe('visibility of navigation buttons', function () {
                 // check if repeatable instance is removed honouring rule
                 // first tab gets active and previous nav button is invisible
                 // and next nav button is visible
-                getWizardPanelAtIndex(0).should('have.class', wizardPanelActive);
-                cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'false');
+                getWizardPanelAtIndex(1).should('have.class', wizardPanelActive);
+                cy.get(previousNavButton).should('have.attr', 'data-cmp-visible', 'true');
                 cy.get(nextNavButton).should('have.attr', 'data-cmp-visible', 'true');
             });
         });
