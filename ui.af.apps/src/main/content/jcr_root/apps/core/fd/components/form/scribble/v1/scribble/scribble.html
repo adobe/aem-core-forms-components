@@ -42,7 +42,7 @@
     </div>
 
     <button type="button" class="cmp-adaptiveform-scribble__canvas-signed-container" title="${'signatureCanvas' @ i18n}">
-      <img class="cmp-adaptiveform-scribble__canvas-signed-image" src="${scribble.value}"/>
+      <img class="cmp-adaptiveform-scribble__canvas-signed-image" src="${scribble.value}" alt="Signed image"/>
     </button>
 
     <div data-sly-call="${shortDescription.shortDescription @componentId=scribble.id, shortDescriptionVisible=scribble.tooltipVisible, shortDescription=scribble.tooltip, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap>
