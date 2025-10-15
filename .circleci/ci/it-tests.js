@@ -39,11 +39,7 @@ try {
 
     //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
     //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
-<<<<<<< HEAD
-    let wcmVersion = "2.27.0";
-=======
     let wcmVersion = "2.30.0";
->>>>>>> origin/dev
     ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
         // Connect to QP

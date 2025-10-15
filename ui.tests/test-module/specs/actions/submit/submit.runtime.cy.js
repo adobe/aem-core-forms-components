@@ -198,9 +198,6 @@ describe("Form with Submit Button", () => {
             cy.get(`.cmp-adaptiveform-button__widget`).should('have.attr', 'type', 'submit');
         });
     }
-<<<<<<< HEAD
-})
-=======
 
     it("Loader shows on submit and hides on success with thank you", () => {
         cy.previewForm(customSubmitPagePath);
@@ -220,4 +217,3 @@ describe("Form with Submit Button", () => {
         });
     });
 })
->>>>>>> origin/dev

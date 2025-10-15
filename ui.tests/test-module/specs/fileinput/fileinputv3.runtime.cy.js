@@ -262,8 +262,6 @@ describe('Click on button tag (V-3)', () => {
             expect(alertText).to.equal(model.getState().constraintMessages.maxFileSize);
         });
      });
-<<<<<<< HEAD
-=======
 
      it('file when uploaded again should give actual size', () => {
         let sampleFileNames = ['sample.svg'];
@@ -273,5 +271,4 @@ describe('Click on button tag (V-3)', () => {
         cy.attachFile(fileInput, [sampleFileNames[0]]);
         cy.get('.cmp-adaptiveform-fileinput__filesize').should('contain.text', '508 bytes'); 
      })
->>>>>>> origin/dev
 })

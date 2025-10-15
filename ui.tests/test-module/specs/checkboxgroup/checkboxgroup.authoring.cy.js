@@ -235,11 +235,7 @@ describe('Page - Authoring', function () {
         cy.getRuleEditorIframe().find('.exp-Cancel-Button').click();
         cy.getRuleEditorIframe().find('.exp-Close-Button').click();
         cy.deleteComponentByPath(checkBoxGroupDrop);
-<<<<<<< HEAD
-      });
-=======
     });
->>>>>>> origin/dev
   });
 /*
   context('Open Sites Editor', function () {

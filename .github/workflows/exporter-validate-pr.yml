@@ -35,38 +35,16 @@ jobs:
               base_file=$(git show origin/${{ github.base_ref }}:$file)
               head_file=$(git show origin/${{ github.head_ref }}:$file)
 
-<<<<<<< HEAD
-            # Compare the JSON keys
-            base_keys=$(echo "$base_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
-            head_keys=$(echo "$head_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
-=======
               # Compare the JSON keys
               base_keys=$(echo "$base_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
               head_keys=$(echo "$head_file" | jq -r 'paths | map(tostring) | join(".")' | sed 's/\./\\./g')
->>>>>>> origin/dev
 
               # Check for removed keys
               removed_keys=$(comm -23 <(echo "$base_keys" | sort) <(echo "$head_keys" | sort))
 
-<<<<<<< HEAD
-            if [ -n "$removed_keys" ]; then
-              echo "Backward incompatibility change detected in $file. The following keys were removed:"
-              echo "$removed_keys"
-              exit 1
-            fi
-
-            # Check for changed values
-            for key in $base_keys; do
-              base_value=$(echo "$base_file" | jq -r --arg key "$key" '.[$key]')
-              head_value=$(echo "$head_file" | jq -r --arg key "$key" '.[$key]')
-
-              if [ "$base_value" != "$head_value" ]; then
-                echo "Backward incompatibility change detected in $file. The value of key '$key' was changed from '$base_value' to '$head_value'."
-=======
               if [ -n "$removed_keys" ]; then
                 echo "Backward incompatibility change detected in $file. The following keys were removed:"
                 echo "$removed_keys"
->>>>>>> origin/dev
                 exit 1
               fi
 
