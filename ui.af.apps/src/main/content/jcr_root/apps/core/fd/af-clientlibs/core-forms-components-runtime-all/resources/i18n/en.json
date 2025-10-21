@@ -22,6 +22,7 @@
   "accept"                      :   "The specified file type not supported.",
   "defaultError"                :   "There is an error in the field",
   "clearText"                   :   "Clear",
+  "openCalendarText"            :   "Open calendar",
   "calendarSymbols" : {
     "monthNames" : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     "abbrmonthNames" : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],

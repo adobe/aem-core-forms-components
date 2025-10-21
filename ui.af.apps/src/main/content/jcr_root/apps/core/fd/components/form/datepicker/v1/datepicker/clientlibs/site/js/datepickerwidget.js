@@ -66,6 +66,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
         zero: "0",
         clearText: "Clear",
+        openCalendarText: "Open calendar",
         name: "en_US"
       },
       format: "YYYY-MM-DD",
@@ -311,6 +312,8 @@ if (typeof window.DatePickerWidget === 'undefined') {
 
         let calendarIcon = document.createElement("div");
         calendarIcon.classList.add("cmp-adaptiveform-datepicker__calendar-icon");
+        calendarIcon.setAttribute("role", "button");
+        calendarIcon.setAttribute("aria-label", this.#options.locale.openCalendarText);
 
         widget.parentNode.insertBefore(calendarIcon, widget.nextSibling);
 
@@ -1151,6 +1154,10 @@ if (typeof window.DatePickerWidget === 'undefined') {
         var clearText = FormView.LanguageUtils.getTranslatedString(locale, "clearText");
         if (clearText) {
             defaultOptions.locale.clearText = clearText;
+        }
+        var openCalendarText = FormView.LanguageUtils.getTranslatedString(locale, "openCalendarText");
+        if (openCalendarText) {
+            defaultOptions.locale.openCalendarText = openCalendarText;
         }
         var zero = FormView.LanguageUtils.getTranslatedString(locale, "0");
         if (zero) {
