@@ -22,11 +22,13 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
@@ -63,6 +65,7 @@ import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -151,6 +154,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
+
+    @Inject
+    private ResourceResolver resourceResolver;
 
     @Override
     public String getFieldType() {
@@ -316,19 +322,21 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                     ComponentUtils.getEncodedPath(resource.getPath() + ".model.json");
             }
         }
-        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
+        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId());
     }
 
     @Override
     @JsonIgnore
     public String getDataUrl() {
-        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId();
+        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId());
     }
 
     @Override
+    @JsonProperty("lang")
     public String getLang() {
-        // todo: uncomment once forms sdk is released
-        if (request != null) {
+        if (lang != null) {
+            return lang;
+        } else if (request != null) {
             return GuideUtils.getAcceptLang(request);
         } else {
             return FormContainer.super.getLang();
@@ -460,7 +468,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getCustomFunctionUrl() {
-        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId();
+        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/"
+            + getId());
     }
 
     @JsonIgnore

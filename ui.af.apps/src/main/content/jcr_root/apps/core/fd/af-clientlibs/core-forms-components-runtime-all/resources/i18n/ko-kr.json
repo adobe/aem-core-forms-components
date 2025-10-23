@@ -4,7 +4,7 @@
   "FileNameInvalid": "파일 이름이 (.)으로 시작하거나, \\ / : * ? \" < > | ; % $를 포함하거나, nul, prn, con, lpt 또는 com과 같이 예약된 키워드인 파일은 첨부하지 마십시오.",
   "FileMimeTypeInvalid": "파일 ${0}은(는) 지원되지 않는 파일 유형입니다.",
   "InternalFormSubmissionError": "양식을 제출하는 중 내부 오류가 발생했습니다.",
-  "FileSizeZero": "업로드한 파일 ${0}이(가) 비어 있습니다. 콘텐츠가 포함된 파일을 업로드하고 있는지 확인하세요.",
+  "FileSizeZero": "업로드된 파일 ${0}이(가) 비어 있습니다. 콘텐츠가 포함된 파일을 업로드하여 주십시오.",
   "type": "유효한 값을 입력해 주십시오.",
   "required": "이 필드를 작성해 주십시오.",
   "minimum": "값은 ${0}보다 크거나 같아야 합니다.",
@@ -86,6 +86,12 @@
     "more": "기타",
     "less": "미만"
   },
-  "saveDraftSuccessMessage"     :   "초안이 성공적으로 저장되었습니다.",
-  "saveDraftErrorMessage"       :   "초안을 저장하지 못하는 동안 오류가 발생했습니다. 다시 시도해 주세요."
+  "saveDraftSuccessMessage": "초안이 정상적으로 저장되었습니다.",
+  "saveDraftErrorMessage": "초안을 저장하는 도중 오류가 발생했습니다. 다시 시도해 주십시오.",
+  "signature": "서명",
+  "SignatureCanvas": "서명 캔버스",
+  "clearSign": "서명 지우기",
+  "brushSize": "브러시 크기: ",
+  "geoLocationError": "지리적 위치 가져오기 중 오류 발생",
+  "geoLocationFetch": "지리적 위치 가져오는 중..."
 }

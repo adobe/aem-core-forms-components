@@ -102,6 +102,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean visible;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LANG)
+    @Nullable
+    protected String langJcr;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_UNBOUND_FORM_ELEMENT)
     @Nullable
     protected Boolean unboundFormElement;
@@ -120,6 +124,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected Style currentStyle;
+
+    @Nullable
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VIEWTYPE)
+    protected String viewType;
 
     /**
      * Returns dorBindRef of the form field
@@ -169,6 +177,21 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public void setI18n(@Nonnull I18n i18n) {
         this.i18n = i18n;
+    }
+
+    public void setLang(@Nullable String lang) {
+        this.lang = lang;
+    }
+
+    @Override
+    @Nullable
+    public String getLang() {
+        return langJcr != null ? langJcr : lang;
+    }
+
+    @JsonProperty("lang")
+    public String getLangIfPresent() {
+        return langJcr;
     }
 
     public BaseConstraint.Type getType() {
@@ -247,6 +270,14 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonProperty("visible")
     public Boolean getVisibleIfPresent() {
         return visible;
+    }
+
+    @Override
+    public @NotNull String getExportedType() {
+        if (viewType != null) {
+            return viewType;
+        }
+        return resource.getResourceType();
     }
 
     // API kept for backward compatibility, this is not to be used anymore
@@ -342,11 +373,35 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private Map<String, Object> getRulesProperties() {
         Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
         Map<String, Object> customRulesProperties = new LinkedHashMap<>();
-        String status = getRulesStatus(ruleNode);
-        if (!STATUS_NONE.equals(status)) {
-            customRulesProperties.put(RULES_STATUS_PROP_NAME, getRulesStatus(ruleNode));
+        if (ruleNode == null) {
+            logger.debug("No rules node found for resource: {}", resource.getPath());
+            return customRulesProperties;
+        }
+        addValidationStatus(ruleNode, customRulesProperties);
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
+            populateAdditionalRulesProperties(ruleNode, customRulesProperties);
         }
         return customRulesProperties;
+    }
+
+    private void addValidationStatus(Resource ruleNode, Map<String, Object> customRulesProperties) {
+        String status = getRulesStatus(ruleNode);
+        if (!STATUS_NONE.equals(status)) {
+            customRulesProperties.put(RULES_STATUS_PROP_NAME, status);
+        }
+    }
+
+    private void populateAdditionalRulesProperties(@NotNull Resource ruleNode, Map<String, Object> customRulesProperties) {
+        String[] RULES = { "fd:formReady", "fd:layoutReady", "fd:docReady", "fd:calc", "fd:init", "fd:validate", "fd:indexChange" };
+        ValueMap props = ruleNode.adaptTo(ValueMap.class);
+        if (props != null) {
+            Arrays.stream(RULES).forEach(rule -> addRuleProperty(props, customRulesProperties, rule));
+        }
+    }
+
+    private void addRuleProperty(@NotNull ValueMap props, Map<String, Object> customRulesProperties, String rule) {
+        Optional<String[]> propertyValue = Optional.ofNullable(props.get(rule, String[].class));
+        propertyValue.ifPresent(value -> customRulesProperties.put(rule, value));
     }
 
     /***

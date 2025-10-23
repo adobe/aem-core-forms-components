@@ -213,6 +213,25 @@
                     textIsRich="[true,true,true]"
                     unboundFormElement="{Boolean}false"
                     visible="{Boolean}true"/>
+            <textinput_displayformat
+                    jcr:created="{Date}2025-01-15T10:00:00.000+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2025-01-15T10:00:00.000+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input with Display Format"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    displayValueExpression="formatInput($field.$value, 'phonenumber')"
+                    displayFormat="phonenumber"
+                    displayPatternType="phonenumber"
+                    enabled="{Boolean}true"
+                    fieldType="text-input"
+                    hideTitle="false"
+                    name="textinput_displayformat"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
             <submit
                     jcr:lastModified="{Date}2023-06-22T17:28:46.456+05:30"
                     jcr:lastModifiedBy="admin"

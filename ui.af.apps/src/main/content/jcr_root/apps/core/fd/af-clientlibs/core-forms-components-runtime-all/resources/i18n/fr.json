@@ -1,10 +1,10 @@
 {
   "FileCloseAccessText": "Appuyer sur Entrée pour supprimer le fichier ",
-  "FileSizeGreater": "${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.",
+  "FileSizeGreater": "${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.",
   "FileNameInvalid": "Ne joignez pas de fichiers dont le nom commence par (.), contient \\ / : * ?  \" < > | ; % $, ou est un mot-clé réservé comme nul, prn, con, lpt ou com.",
   "FileMimeTypeInvalid": "Le ou les fichiers ${0} sont des types de fichiers non pris en charge",
   "InternalFormSubmissionError": "Une erreur interne s'est produite lors de l'envoi du formulaire.",
-  "FileSizeZero": "Les fichiers téléchargés ${0} sont vides. Assurez-vous de télécharger des fichiers avec du contenu.",
+  "FileSizeZero": "Le ou les fichiers chargés ${0} sont vides. Assurez-vous de charger un ou plusieurs fichiers avec du contenu.",
   "type": "Saisissez une valeur valide.",
   "required": "Remplissez ce champ.",
   "minimum": "La valeur doit être supérieure ou égale à ${0}.",
@@ -86,6 +86,12 @@
     "more": "plus",
     "less": "moins"
   },
-  "saveDraftSuccessMessage"     :   "Le brouillon est enregistré avec succès.",
-  "saveDraftErrorMessage"       :   "Une erreur s'est produite nous empêchant d'enregistrer votre brouillon. Veuillez réessayer."
+  "saveDraftSuccessMessage": "Le brouillon a été enregistré.",
+  "saveDraftErrorMessage": "Une erreur nous a empêchés d’enregistrer votre brouillon. Réessayez.",
+  "signature": "Signature",
+  "SignatureCanvas": "Zone de travail de signature",
+  "clearSign": "Effacer la signature",
+  "brushSize": "Épaisseur du pinceau : ",
+  "geoLocationError": "Erreur lors de la récupération de la géolocalisation",
+  "geoLocationFetch": "Récupération de la géolocalisation..."
 }

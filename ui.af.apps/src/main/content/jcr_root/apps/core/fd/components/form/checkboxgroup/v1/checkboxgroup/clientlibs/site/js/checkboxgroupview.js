@@ -40,7 +40,8 @@
             errorDiv: `.${CheckBoxGroup.bemBlock}__errormessage`,
             tooltipDiv: `.${CheckBoxGroup.bemBlock}__shortdescription`,
             item:  `.${CheckBoxGroup.bemBlock}-item`,
-            optionLabel: `${CheckBoxGroup.bemBlock}__option-label`
+            optionLabel: `${CheckBoxGroup.bemBlock}__option-label`,
+            optionLink: `${CheckBoxGroup.bemBlock}__links`
         };
 
         constructor(params) {
@@ -81,25 +82,36 @@
             return this.element.querySelectorAll(CheckBoxGroup.selectors.item);
         }
 
-        setModel(model) {
-            super.setModel(model);
-            let widgets = this.widget;
-            widgets.forEach(widget => {
-                let self = widget;
-                this.#updateModelValue(self);
-                widget.addEventListener('change', (e) => {
-                    this.#updateModelValue(self);
-                });
-                widget.addEventListener('focus', (e) => {
-                    this.setActive();
-                });
-                widget.addEventListener('blur', (e) => {
-                    this.setInactive();
-                });
-            })
+        #addWidgetListeners(optionWidget) {
+            optionWidget.addEventListener('change', (e) => {
+                this.#updateModelValue(optionWidget);
+            });
+            optionWidget.addEventListener('focus', (e) => {
+                this.setActive();
+            });
+            optionWidget.addEventListener('blur', (e) => {
+                this.setInactive();
+            });
         }
 
-        #updateModelValue(widget) {
+        setModel(model) {
+            super.setModel(model);
+            this.widget.forEach(optionWidget => {
+                this.#addWidgetListeners(optionWidget);
+            });
+            let optionLinks = this.element.querySelectorAll(`.${CheckBoxGroup.selectors.optionLink}`);
+            const actionKeys = ['Enter', ' ', 'Spacebar', 'Space'];
+            optionLinks.forEach(optionLink => {
+                optionLink.addEventListener('keydown', (e)=>{
+                    if(actionKeys.includes(e.key)) {
+                        optionLink.click();
+                    }
+                });
+            });
+            this.#updateModelValue();
+        }
+
+        #updateModelValue() {
             let value = [];
             this.widget.forEach(widget => {
                 if (widget.checked) {
@@ -137,24 +149,39 @@
         }
 
         #createCheckBoxItem(value, itemLabel) {
+            // This doesn't cater for optionLink __links as toggelablelink component is hidden
+            let richScreenReaderText = `${this._model.label.value}:  ${itemLabel}`;
+            let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
             const optionTemplate = `
             <div class="${CheckBoxGroup.selectors.item.slice(1)}">
-                <label class="${CheckBoxGroup.selectors.optionLabel.slice(1)}">
-                    <input type="checkbox" class="${CheckBoxGroup.selectors.widget.slice(1)}" value="${value}">
+                <label class="${CheckBoxGroup.selectors.optionLabel}">
+                    <input type="checkbox" class="${CheckBoxGroup.selectors.widget.slice(1)}" name="${this._model.name}" value="${value}" aria-label="${plainScreenReaderText}" tabindex="0">
                     <span>${itemLabel}</span>
                 </label>
             </div>`;
 
             const container = document.createElement('div'); // Create a container element to hold the template
             container.innerHTML = optionTemplate;
+            let addedOptionWidget = container.querySelector(CheckBoxGroup.selectors.widget);
+            if(this._model.readOnly === true || this._model.enabled === false) {
+                addedOptionWidget.setAttribute("disabled", true);
+                if(this._model.readOnly === true) {
+                    addedOptionWidget.setAttribute("aria-readonly", true);
+                }
+            }
+            this.#addWidgetListeners(addedOptionWidget);
             return container.firstElementChild; // Return the first child, which is the created option
         }
         updateEnum(newEnums) {
             super.updateEnumForRadioButtonAndCheckbox(newEnums, this.#createCheckBoxItem);
+            // refresh the widget references, to dynamically added options
+            this.widget = this.getWidget();
         }
 
         updateEnumNames(newEnumNames) {
             super.updateEnumNamesForRadioButtonAndCheckbox(newEnumNames, this.#createCheckBoxItem);
+            // refresh the widget references, to dynamically added options
+            this.widget = this.getWidget();
         }
 
         updateEnabled(enabled, state) {

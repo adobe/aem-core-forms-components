@@ -350,5 +350,23 @@
       "<p>Item 2</p>"
     ],
     "fieldType": "radio-group"
+  },
+  "radiobutton-option-screenreader-label": {
+    "id": "radiobutton-1076f3bd737",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/radiobutton/v1/radiobutton",
+    "name": "radiobutton",
+    "isTitleRichText": "true",
+    "jcr:title": "<b>Gender</b>",
+    "orientation": "vertical",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "enumNames": [
+      "<p><i>Male</i></p>",
+      "<p><i>Female</i></p>"
+    ],
+    "fieldType": "radio-group"
   }
 }

@@ -4,7 +4,7 @@
   "FileNameInvalid": "Hängen Sie keine Dateien an, deren Dateiname mit (.) beginnt, \\ / : * ? \" < > | ; % oder $ enthält oder ein reserviertes Schlüsselwort wie nul, prn, con, lpt oder com ist.",
   "FileMimeTypeInvalid": "Datei(en) ${0} ist/sind nicht unterstützte(r) Dateityp(en)",
   "InternalFormSubmissionError": "Beim Übermitteln des Formulars ist ein interner Fehler aufgetreten.",
-  "FileSizeZero": "Die hochgeladenen Dateien ${0} sind leer. Stellen Sie sicher, dass Sie Dateien mit Inhalt hochladen.",
+  "FileSizeZero": "Die hochgeladenen Dateien „${0}“ sind leer. Stellen Sie sicher, dass Sie Dateien mit Inhalt hochladen.",
   "type": "Bitte geben Sie einen gültigen Wert ein.",
   "required": "Bitte füllen Sie dieses Feld aus.",
   "minimum": "Der Wert muss größer als oder gleich ${0} sein.",
@@ -86,6 +86,12 @@
     "more": "mehr",
     "less": "weniger"
   },
-  "saveDraftSuccessMessage"     :   "Der Entwurf wurde erfolgreich gespeichert.",
-  "saveDraftErrorMessage"       :   "Es ist ein Fehler aufgetreten, der uns daran gehindert hat, Ihren Entwurf zu speichern. Bitte versuchen Sie es erneut."
+  "saveDraftSuccessMessage": "Der Entwurf wurde erfolgreich gespeichert.",
+  "saveDraftErrorMessage": "Aufgrund eines Fehlers konnte der Entwurf nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+  "signature": "Signatur",
+  "SignatureCanvas": "Signaturarbeitsfläche",
+  "clearSign": "Unterschrift löschen",
+  "brushSize": "Pinselgröße: ",
+  "geoLocationError": "Fehler beim Aufrufen des geografischen Standorts",
+  "geoLocationFetch": "Geografischer Standort wird abgerufen …"
 }
