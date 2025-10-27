@@ -144,9 +144,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
         '<div class="dp-caption"></div>' +
         '<div class="dp-rightnav"></div>' +
         '</div>' +
-        '<div class="view dp-monthview"></div>' +
-        '<div class="view dp-yearview"></div>' +
-        '<div class="view dp-yearsetview"></div>';
+        '<div class="view dp-monthview" role="grid" aria-labelledby="dp-caption"></div>' +
+        '<div class="view dp-yearview" role="grid" aria-labelledby="dp-caption"></div>' +
+        '<div class="view dp-yearsetview" role="grid" aria-labelledby="dp-caption"></div>';
 
     constructor(view, widget, model) {
       this.#model = model;
@@ -232,6 +232,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
           });
       this.caption = this.#dp.getElementsByClassName("dp-caption")[0];
+      this.caption.id = "dp-caption";
       this.caption.addEventListener("click",
           function (evnt) {
             if (self.view && self.#curInstance) {
@@ -847,12 +848,14 @@ if (typeof window.DatePickerWidget === 'undefined') {
         let rowEl = document.createElement("ul");
         rowEl.removeAttribute("aria-label");
         rowEl.classList.toggle("header", isHeader);
+        rowEl.setAttribute("role", "row");
         $row = $view.appendChild(rowEl);
       }
       items = $row.getElementsByTagName("li").length;
       while (items++ < rowArray.length) {
         let listItemEl = document.createElement("li");
         listItemEl.id = "li-" + elementAt(rowNum, items).gridId;
+        listItemEl.setAttribute("role", isHeader ? "columnheader" : "gridcell");
         $tmp = $row.appendChild(listItemEl);
         if (!isHeader) {
           let cb = function (evnt) {
