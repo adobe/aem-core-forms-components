@@ -14,6 +14,7 @@
         "thankyouPage": "/a/b/c",
         "thankyouMessage": "message",
         "clientLibRef" : "abc",
+        "themeRef": "/content/dam/formsanddocuments-themes/test-theme",
         "datepicker": {
           "jcr:primaryType": "nt:unstructured",
           "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker",
@@ -85,6 +86,28 @@
           "jcr:primaryType": "nt:unstructured",
           "sling:resourceType": "myTest/components/text",
           "text": "test"
+        }
+      }
+    }
+  },
+  "dam": {
+    "jcr:primaryType": "nt:unstructured",
+    "formsanddocuments-themes": {
+      "jcr:primaryType": "nt:unstructured",
+      "test-theme": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:content": {
+          "jcr:primaryType": "dam:AssetContent",
+          "metadata": {
+            "jcr:primaryType": "nt:unstructured",
+            "clientlibCategory": "fdtheme.test-theme"
+          }
+        }
+      },
+      "invalid-theme": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:content": {
+          "jcr:primaryType": "dam:AssetContent"
         }
       }
     }
