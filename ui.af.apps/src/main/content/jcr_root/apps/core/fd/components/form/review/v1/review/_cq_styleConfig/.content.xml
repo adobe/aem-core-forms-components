@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Review">
+    <items jcr:primaryType="nt:unstructured">
+        <field
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Base"
+            id="af2_review"
+            longTitle="Base"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <widgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Review"
+                    id="af2_reviewwidgetandtext"
+                    cssSelector=".cmp-adaptiveform-review"
+                    longTitle="Review Widget"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                    <items jcr:primaryType="nt:unstructured">
+                        <reviewContainer
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Container"
+                                id="af2_reviewcontainer"
+                                cssSelector=".cmp-adaptiveform-review__container"
+                                longTitle="Review Container"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </reviewContainer>
+                        <reviewField
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Field"
+                                id="af2_reviewfield"
+                                cssSelector=".cmp-adaptiveform-review__field"
+                                longTitle="Review Field"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <reviewLabel
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Label"
+                                        id="af2_reviewlabel"
+                                        cssSelector=".cmp-adaptiveform-review__label"
+                                        longTitle="Review Label"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-review__label:hover"/>
+                                    </states>
+                                </reviewLabel>
+                                <reviewValue
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Value"
+                                        id="af2_reviewvalue"
+                                        cssSelector=".cmp-adaptiveform-review__value"
+                                        longTitle="Review Value"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-review__value:hover"/>
+                                    </states>
+                                </reviewValue>
+                                <reviewEditButton
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Edit Button"
+                                        id="af2_revieweditbutton"
+                                        cssSelector=".cmp-adaptiveform-review__edit-button"
+                                        longTitle="Review Edit Button"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-review__edit-button:focus"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-review__edit-button:hover"/>
+                                        <active
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Active"
+                                                cssSelector=".cmp-adaptiveform-review__edit-button:active"/>
+                                        <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-review__edit-button:disabled"/>
+                                    </states>
+                                </reviewEditButton>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-review__field:hover"/>
+                            </states>
+                        </reviewField>
+                        <reviewPanel
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Panel"
+                                id="af2_reviewpanel"
+                                cssSelector=".cmp-adaptiveform-review__panel"
+                                longTitle="Review Panel"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <reviewPanelLabelContainer
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Label Container"
+                                        id="af2_reviewpanellabelcontainer"
+                                        cssSelector=".cmp-adaptiveform-review__label-container"
+                                        longTitle="Review Panel Label Container"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <reviewPanelLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Label"
+                                                id="af2_reviewpanellabel"
+                                                cssSelector=".cmp-adaptiveform-review__label"
+                                                longTitle="Review Panel Label"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Hover"
+                                                        cssSelector=".cmp-adaptiveform-review__panel .cmp-adaptiveform-review__label:hover"/>
+                                            </states>
+                                        </reviewPanelLabel>
+                                        <reviewPanelEditButton
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Edit Button"
+                                                id="af2_reviewpaneleditbutton"
+                                                cssSelector=".cmp-adaptiveform-review__edit-button"
+                                                longTitle="Review Panel Edit Button"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <focus
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Focus"
+                                                        cssSelector=".cmp-adaptiveform-review__panel .cmp-adaptiveform-review__edit-button:focus"/>
+                                                <hover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Hover"
+                                                        cssSelector=".cmp-adaptiveform-review__panel .cmp-adaptiveform-review__edit-button:hover"/>
+                                                <active
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Active"
+                                                        cssSelector=".cmp-adaptiveform-review__panel .cmp-adaptiveform-review__edit-button:active"/>
+                                                <disabled
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Disabled"
+                                                        cssSelector=".cmp-adaptiveform-review__panel .cmp-adaptiveform-review__edit-button:disabled"/>
+                                            </states>
+                                        </reviewPanelEditButton>
+                                    </items>
+                                </reviewPanelLabelContainer>
+                                <reviewPanelContent
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Content"
+                                        id="af2_reviewpanelcontent"
+                                        cssSelector=".cmp-adaptiveform-review__content"
+                                        longTitle="Review Panel Content"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </reviewPanelContent>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-review__panel:hover"/>
+                            </states>
+                        </reviewPanel>
+                        <reviewText
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Text"
+                                id="af2_reviewtext"
+                                cssSelector=".cmp-adaptiveform-review__text"
+                                longTitle="Review Text"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <reviewTextLabel
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Label"
+                                        id="af2_reviewtextlabel"
+                                        cssSelector=".cmp-adaptiveform-review__label"
+                                        longTitle="Review Text Label"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-review__text .cmp-adaptiveform-review__label:hover"/>
+                                    </states>
+                                </reviewTextLabel>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-review__text:hover"/>
+                            </states>
+                        </reviewText>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-review:focus"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-review[data-cmp-enabled='false']"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-review:hover"/>
+                    </states>
+                </widgetAndText>
+            </items>
+        </field>
+    </items>
+</jcr:root>

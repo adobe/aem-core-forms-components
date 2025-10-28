@@ -52,7 +52,6 @@ BLOCK cmp-tabs
         MOD cmp-tabs__tab--active
         MOD cmp-tabs__tab--stepped
     ELEMENT cmp-tabs__title
-    ELEMENT cmp-tabs__icon
     ELEMENT cmp-tabs__shortdescription
     ELEMENT cmp-tabs__longdescription
     ELEMENT cmp-tabs__questionmark
