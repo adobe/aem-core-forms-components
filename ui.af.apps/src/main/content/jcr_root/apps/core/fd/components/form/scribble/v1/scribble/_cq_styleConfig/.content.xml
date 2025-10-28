@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Scribble">
+    <items jcr:primaryType="nt:unstructured">
+        <field
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Base"
+            id="af2_scribble"
+            longTitle="Base"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <widgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Scribble"
+                    id="af2_scribblewidgetandtext"
+                    cssSelector=".cmp-adaptiveform-scribble"
+                    longTitle="Scribble Widget"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                    <items jcr:primaryType="nt:unstructured">
+                        <scribbleLabelContainer
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Label Container"
+                                id="af2_scribblelabelcontainer"
+                                cssSelector=".cmp-adaptiveform-scribble__label-container"
+                                longTitle="Scribble Label Container"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <scribbleLabel
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Label"
+                                        id="af2_scribblelabel"
+                                        cssSelector=".cmp-adaptiveform-scribble__label"
+                                        longTitle="Scribble Label"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-scribble__label:hover"/>
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-scribble__label:focus"/>
+                                    </states>
+                                </scribbleLabel>
+                                <scribbleHelpIcon
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Help Icon"
+                                        id="af2_scribblehelpicon"
+                                        cssSelector=".cmp-adaptiveform-scribble__questionmark"
+                                        longTitle="Scribble Help Icon"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-scribble__questionmark:focus"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-scribble__questionmark:hover"/>
+                                        <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-scribble__questionmark:disabled"/>
+                                    </states>
+                                </scribbleHelpIcon>
+                            </items>
+                        </scribbleLabelContainer>
+                        <scribbleCanvasContainer
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Canvas Signed Container"
+                                id="af2_scribblecanvascontainer"
+                                cssSelector=".cmp-adaptiveform-scribble__canvas-signed-container"
+                                longTitle="Scribble Canvas Signed Container"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <scribbleCanvasImage
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Canvas Signed Image"
+                                        id="af2_scribblecanvasimage"
+                                        cssSelector=".cmp-adaptiveform-scribble__canvas-signed-image"
+                                        longTitle="Scribble Canvas Signed Image"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </scribbleCanvasImage>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__canvas-signed-container:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__canvas-signed-container:focus"/>
+                            </states>
+                        </scribbleCanvasContainer>
+                        <scribbleContainer
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Container"
+                                id="af2_scribblecontainer"
+                                cssSelector=".cmp-adaptiveform-scribble__container"
+                                longTitle="Scribble Container"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <scribbleHeader
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Header"
+                                        id="af2_scribbleheader"
+                                        cssSelector=".cmp-adaptiveform-scribble__header"
+                                        longTitle="Scribble Header"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </scribbleHeader>
+                                <scribbleCanvas
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Canvas"
+                                        id="af2_scribblecanvas"
+                                        cssSelector=".cmp-adaptiveform-scribble__canvas"
+                                        longTitle="Scribble Canvas"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </scribbleCanvas>
+                                <scribbleControlpanel
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Control Panel"
+                                        id="af2_scribblecontrolpanel"
+                                        cssSelector=".cmp-adaptiveform-scribble__controlpanel"
+                                        longTitle="Scribble Control Panel"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </scribbleControlpanel>
+                            </items>
+                        </scribbleContainer>
+                        <scribbleDescriptionShort
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Short Description"
+                                id="af2_scribbledescriptionshort"
+                                cssSelector=".cmp-adaptiveform-scribble__shortdescription"
+                                longTitle="Scribble Short Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleDescriptionShort>
+                        <scribbleDescriptionLong
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description"
+                                id="af2_scribbledescriptionlong"
+                                cssSelector=".cmp-adaptiveform-scribble__longdescription"
+                                longTitle="Scribble Long Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__longdescription:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__longdescription:hover"/>
+                            </states>
+                        </scribbleDescriptionLong>
+                        <scribbleErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Scribble Error Message"
+                                id="af2_scribbleerrormessage"
+                                cssSelector=".cmp-adaptiveform-scribble__errormessage"
+                                longTitle="Scribble Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleErrorMessage>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-scribble:focus"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-scribble[data-cmp-enabled='false']"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-scribble:hover"/>
+                        <mandatory
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".cmp-adaptiveform-scribble[data-cmp-required='true']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-scribble[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-scribble[data-cmp-valid='true']"/>
+                    </states>
+                </widgetAndText>
+            </items>
+        </field>
+    </items>
+</jcr:root>
