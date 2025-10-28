@@ -3,5 +3,5 @@
   jcr:primaryType="cq:Component"
   jcr:title="Adaptive Form Radio Button"
   jcr:description="Add two or more radio buttons for users to select one of the available options."
-  sling:resourceSuperType="core/fd/components/form/radiobutton/v1/radiobutton"
+  sling:resourceSuperType="core/fd/components/form/radiobutton/v2/radiobutton"
   componentGroup="Core Components Examples - Adaptive Form"/>
