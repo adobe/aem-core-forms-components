@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "Corp Jira": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--name",
+        "corp-jira-rjilo",
+        "--env-file",
+        "/Users/armaang/.adobe-registry/mcp-servers/src/corp-jira/.env",
+        "corp-jira"
+      ]
+    },
+    "Corp GitHub": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--name",
+        "corp-github-unupd",
+        "--env-file",
+        "/Users/armaang/.adobe-registry/mcp-servers/src/corp-github/.env",
+        "corp-github"
+      ]
+    }
+  }
+}
