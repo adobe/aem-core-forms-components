@@ -115,9 +115,6 @@
       if(value){
         value.setAttribute('aria-labelledby', id);
       }
-      if(editButton && editButton.getAttribute(Review.DATA_ATTRIBUTE_VISIBLE) === 'true'){
-        editButton.setAttribute('aria-describedby', id);
-      }
     }
 
     static isRepeatable(item) {
@@ -308,7 +305,11 @@
       const editButton = cloneNode.querySelector(Review.selectors.editButton);
       if (editButton) {
         editButton.setAttribute(Review.selectors.fieldId, item.id);
-        editButton.setAttribute('aria-label', item?.label?.value);
+        const currentAriaLabel = editButton.getAttribute('aria-label');
+        const currentItemLabel = item?.label?.value;
+        if (currentItemLabel && !currentAriaLabel.includes(currentItemLabel)) {
+          editButton.setAttribute('aria-label', currentAriaLabel + " " + currentItemLabel);
+        }
         if (item.enabled === false) {
           editButton.setAttribute('disabled', true);
         }
