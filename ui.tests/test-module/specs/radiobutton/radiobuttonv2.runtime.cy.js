@@ -15,7 +15,7 @@
  ******************************************************************************/
 describe("Form with Radio Button Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/radiobutton/radiobuttonv1/basic.html";
+    const pagePath = "content/forms/af/core-components-it/samples/radiobutton/radiobuttonv2/basic.html";
     let formContainer = null;
     const bemBlock = 'cmp-adaptiveform-radiobutton';
     /**
@@ -265,11 +265,20 @@ describe("Form with Radio Button Input", () => {
             cy.get(`#${radioButton1}`).invoke('attr', 'data-cmp-valid').should('not.exist');
         })
     })
+
+    it("radio button group MUST be wrapped in a <fieldset> and have a legend as first child", () => {
+        const [radioButton1] = Object.entries(formContainer._fields)[0];
+        cy.get(`#${radioButton1}`).then($el => {
+            expect($el.prop('tagName')).to.eq('FIELDSET');
+        });
+        cy.get(`#${radioButton1}`).find('legend').should('exist');
+        cy.get(`#${radioButton1}`).find('.cmp-adaptiveform-radiobutton__widget').should('have.attr', 'role', 'radiogroup');
+    })
 })
 
 describe("setFocus on radiobutton via rules", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/radiobutton/radiobuttonv1/focustest.html"
+    const pagePath = "content/forms/af/core-components-it/samples/radiobutton/radiobuttonv2/focustest.html"
     let formContainer = null
 
     beforeEach(() => {
@@ -290,7 +299,7 @@ describe("setFocus on radiobutton via rules", () => {
 
 describe(" radiobutton repeatability ", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/radiobutton/radiobuttonv1/radiorepeatability.html"
+    const pagePath = "content/forms/af/core-components-it/samples/radiobutton/radiobuttonv2/radiorepeatability.html"
     let formContainer = null
 
     beforeEach(() => {
@@ -359,5 +368,7 @@ describe(" radiobutton repeatability ", () => {
                 });
             });
         });
+
+
     })
 })

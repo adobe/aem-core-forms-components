@@ -9,7 +9,7 @@
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="radioRepeatability"
-        sling:configRef="/conf/forms/core-components-it/samples/radiobutton/radiorepeatability/"
+        sling:configRef="/conf/forms/core-components-it/samples/radiobutton/radiobuttonv2/radiorepeatability/"
         sling:resourceType="forms-components-examples/components/page">
         <guideContainer
             fd:version="2.1"
