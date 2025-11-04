@@ -46,7 +46,7 @@
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Radio Button"
-                sling:resourceType="forms-components-examples/components/form/radiobutton"
+                sling:resourceType="core/fd/components/form/radiobutton/v1/radiobutton"
                 enum="[0,1]"
                 enumNames="[Item 1,Item 2]"
                 fieldType="radio-group"
