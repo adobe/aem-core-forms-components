@@ -513,6 +513,20 @@ describe("Form Runtime with Date Picker", () => {
             })
         });
     });
+
+    it("calendar icon should have role='button' for accessibility", () => {
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        cy.get(`#${datePicker1}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+            .should("have.attr", "role", "button");
+    });
+
+    it("calendar icon should have aria-label for screen readers", () => {
+        const [datePicker1, datePicker1FieldView] = Object.entries(formContainer._fields)[0];
+        cy.get(`#${datePicker1}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+            .should("have.attr", "aria-label")
+            .and("not.be.empty");
+    });
+
     it("Test dd/MM/yyyy format - verify July is highlighted for 03/07/2025", () => {
         // Test the datepicker component configured with dd/MM/yyyy format
 
