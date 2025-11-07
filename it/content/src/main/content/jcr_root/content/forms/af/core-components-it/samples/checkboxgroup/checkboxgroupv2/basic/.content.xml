@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:deviceGroups="[mobile/groups/responsive]"
+            cq:lastModified="{Date}2025-11-07T11:33:58.406+05:30"
+            cq:lastModifiedBy="admin"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+            jcr:language="en"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Adaptive Form V2 (IT)"
+            sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+                fd:version="2.1"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="forms-components-examples/components/form/container"
+                fieldType="form">
+            <checkboxgroup1
+                    jcr:lastModified="{Date}2025-11-07T12:23:13.884+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Check Box Group 1"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    autocomplete="off"
+                    enabled="{Boolean}false"
+                    enum="[0,1,2,3]"
+                    enumNames="[Item 1, Item 2, Item 3, Item 4]"
+                    fieldType="checkbox-group"
+                    name="checkboxgroup1662722663424"
+                    orientation="vertical"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="string[]"
+                    visible="{Boolean}true"/>
+            <checkboxgroup2
+                    jcr:lastModified="{Date}2025-11-07T23:45:20.572+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Check Box Group 2"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    assistPriority="label"
+                    autocomplete="off"
+                    enabled="{Boolean}true"
+                    enum="[0,1,2,3]"
+                    enumNames="[Item 1, Item 2, Item 3, Item 4]"
+                    fieldType="checkbox-group"
+                    mandatoryMessage="This is a custom required checkboxgroup"
+                    name="checkboxgroup1662722663425"
+                    orientation="horizontal"
+                    required="true"
+                    type="string[]"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BINARY_EVENT_CONDITION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1662722663425&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|CHECK BOX|STRING[]&quot;\,&quot;name&quot;:&quot;checkboxgroup1662722663425&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;0&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1662722663425&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|CHECK BOX|STRING[]&quot;\,&quot;name&quot;:&quot;checkboxgroup1662722663425&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;3&quot;}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HIDE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup31671860692147&quot;\,&quot;displayName&quot;:&quot;Check Box Group 4&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group 4/&quot;\,&quot;name&quot;:&quot;checkboxgroup31671860692147&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SHOW_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup_16425955381671860957891&quot;\,&quot;displayName&quot;:&quot;Check Box Group 3&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group 3/&quot;\,&quot;name&quot;:&quot;checkboxgroup_16425955381671860957891&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if((contains($field\, '0') &amp;&amp; contains($field\, '3'))\, dispatchEvent(checkboxgroup31671860692147\, 'custom:setProperty'\, {visible : false()})\, {})&quot;\,&quot;if((contains($field\, '0') &amp;&amp; contains($field\, '3'))\, dispatchEvent(checkboxgroup_16425955381671860957891\, 'custom:setProperty'\, {visible : true()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;},{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;BINARY_EVENT_CONDITION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1662722663425&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;name&quot;:&quot;checkboxgroup1662722663425&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;AND&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1662722663425&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;name&quot;:&quot;checkboxgroup1662722663425&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2&quot;}}]}\,&quot;nested&quot;:false}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1662722663424&quot;\,&quot;displayName&quot;:&quot;Check Box Group&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group/&quot;\,&quot;name&quot;:&quot;checkboxgroup1662722663424&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup31671860692147&quot;\,&quot;displayName&quot;:&quot;Check Box Group 4&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group 4/&quot;\,&quot;name&quot;:&quot;checkboxgroup31671860692147&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(checkboxgroup1662722663424\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(checkboxgroup31671860692147\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if((contains($field\, '0') &amp;&amp; contains($field\, '3'))\, dispatchEvent(checkboxgroup31671860692147\, 'custom:setProperty'\, {visible : false()})\, {}),if((contains($field\, '0') &amp;&amp; contains($field\, '3'))\, dispatchEvent(checkboxgroup_16425955381671860957891\, 'custom:setProperty'\, {visible : true()})\, {}),if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(checkboxgroup1662722663424\, 'custom:setProperty'\, {enabled : true()})\, {}),if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(checkboxgroup31671860692147\, 'custom:setProperty'\, {enabled : false()})\, {})]"/>
+            </checkboxgroup2>
+            <checkboxgroup3
+                    jcr:lastModified="{Date}2025-11-07T11:19:33.329+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Check Box Group 3"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[Item 1, Item 2]"
+                    fieldType="checkbox-group"
+                    name="checkboxgroup_16425955381671860957891"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="number[]"
+                    visible="{Boolean}false">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup_16425955381671860957891&quot;\,&quot;type&quot;:&quot;NUMBER[]&quot;\,&quot;name&quot;:&quot;checkboxgroup_16425955381671860957891&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;CLEAR_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1662722663425&quot;\,&quot;displayName&quot;:&quot;Check Box Group 2&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group 2/&quot;\,&quot;name&quot;:&quot;checkboxgroup1662722663425&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_VALUE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;VALUE_FIELD&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup_10272300251673590771006&quot;\,&quot;displayName&quot;:&quot;Check Box Group 5&quot;\,&quot;type&quot;:&quot;NUMBER[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group 5/&quot;\,&quot;name&quot;:&quot;checkboxgroup_10272300251673590771006&quot;\,&quot;parent&quot;:&quot;$form&quot;}}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;mid&quot;\,&quot;displayName&quot;:&quot;Substring Of&quot;\,&quot;type&quot;:&quot;NUMBER[]&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;STRING|ARRAY&quot;\,&quot;name&quot;:&quot;subject&quot;\,&quot;description&quot;:&quot;subject&quot;}\,{&quot;type&quot;:&quot;NUMBER&quot;\,&quot;name&quot;:&quot;startPos&quot;\,&quot;description&quot;:&quot;startPos&quot;}\,{&quot;type&quot;:&quot;NUMBER&quot;\,&quot;name&quot;:&quot;length&quot;\,&quot;description&quot;:&quot;length&quot;}]\,&quot;impl&quot;:&quot;$0($1\,$2\,$3)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;0&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;0&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:&quot;1&quot;}}]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if(contains($field\, 1)\, dispatchEvent(checkboxgroup1662722663425\, 'custom:setProperty'\, {value : `null`})\, {})&quot;\,&quot;if(contains($field\, 1)\, dispatchEvent(checkboxgroup_10272300251673590771006\, 'custom:setProperty'\, {value : mid('0'\,0\,1)})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if(contains($field\, 1)\, dispatchEvent(checkboxgroup1662722663425\, 'custom:setProperty'\, {value : `null`})\, {}),if(contains($field\, 1)\, dispatchEvent(checkboxgroup_10272300251673590771006\, 'custom:setProperty'\, {value : mid('0'\,0\,1)})\, {})]"/>
+            </checkboxgroup3>
+            <checkboxgroup4
+                    jcr:lastModified="{Date}2025-11-07T11:19:11.733+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Check Box Group 4"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    autocomplete="off"
+                    description="This is long description"
+                    enabled="{Boolean}true"
+                    enum="[0,1,2,3]"
+                    enumNames="[Item 1, Item 2, Item 3, Item 4]"
+                    fieldType="checkbox-group"
+                    id="tooltip_scenario_test"
+                    mandatoryMessage="This is a custom required checkboxgroup"
+                    name="checkboxgroup31671860692147"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    required="true"
+                    textIsRich="[true,true]"
+                    tooltip="This is short description"
+                    tooltipVisible="true"
+                    type="string[]"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:valueCommit="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup31671860692147&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;name&quot;:&quot;checkboxgroup31671860692147&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;HAS_SELECTED&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;2&quot;}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;ENABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1662722663424&quot;\,&quot;displayName&quot;:&quot;Check Box Group&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group/&quot;\,&quot;name&quot;:&quot;checkboxgroup1662722663424&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;DISABLE_STATEMENT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup1662722663425&quot;\,&quot;displayName&quot;:&quot;Check Box Group 2&quot;\,&quot;type&quot;:&quot;FIELD&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group 2/&quot;\,&quot;name&quot;:&quot;checkboxgroup1662722663425&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;if(contains($field\, '2')\, dispatchEvent(checkboxgroup1662722663424\, 'custom:setProperty'\, {enabled : true()})\, {})&quot;\,&quot;if(contains($field\, '2')\, dispatchEvent(checkboxgroup1662722663425\, 'custom:setProperty'\, {enabled : false()})\, {})&quot;]\,&quot;eventName&quot;:&quot;Value Commit&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        change="[if(contains($field\, '2')\, dispatchEvent(checkboxgroup1662722663424\, 'custom:setProperty'\, {enabled : true()})\, {}),if(contains($field\, '2')\, dispatchEvent(checkboxgroup1662722663425\, 'custom:setProperty'\, {enabled : false()})\, {})]"/>
+            </checkboxgroup4>
+            <checkboxgroup5
+                    jcr:lastModified="{Date}2025-11-07T11:49:37.118+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Check Box Group 5"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[Item 1, Item 2]"
+                    fieldType="checkbox-group"
+                    name="checkboxgroup_10272300251673590771006"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="number[]"
+                    validationExpression="$field == checkboxgroup_16425955381671860957891"
+                    visible="{Boolean}true">
+                <fd:rules
+                        fd:validate="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;VALIDATE_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;AFCOMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup_10272300251673590771006&quot;\,&quot;type&quot;:&quot;AFCOMPONENT&quot;\,&quot;name&quot;:&quot;checkboxgroup_10272300251673590771006&quot;}}\,{&quot;nodeName&quot;:&quot;Using&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;Expression&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPARISON_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup_10272300251673590771006&quot;\,&quot;displayName&quot;:&quot;Check Box Group 5&quot;\,&quot;type&quot;:&quot;NUMBER[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group 5/&quot;\,&quot;name&quot;:&quot;checkboxgroup_10272300251673590771006&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}\,{&quot;nodeName&quot;:&quot;OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EQUALS_TO&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.checkboxgroup_16425955381671860957891&quot;\,&quot;displayName&quot;:&quot;Check Box Group 3&quot;\,&quot;type&quot;:&quot;NUMBER[]&quot;\,&quot;displayPath&quot;:&quot;FORM/Check Box Group 3/&quot;\,&quot;name&quot;:&quot;checkboxgroup_16425955381671860957891&quot;\,&quot;parent&quot;:&quot;$form&quot;}}}]}\,&quot;nested&quot;:false}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:&quot;$field == checkboxgroup_16425955381671860957891&quot;\,&quot;eventName&quot;:&quot;Validate&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                        jcr:primaryType="nt:unstructured"
+                        validationStatus="valid"/>
+                <fd:events jcr:primaryType="nt:unstructured"/>
+            </checkboxgroup5>
+            <checkboxgroup
+                    jcr:lastModified="{Date}2025-11-07T11:33:58.397+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Check Box Group 6"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    enabled="{Boolean}true"
+                    enum="[0,1,0]"
+                    enumNames="[Item 1, Item 2,Item 3]"
+                    fieldType="checkbox-group"
+                    hideTitle="false"
+                    name="checkboxgroup1683093797337"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true]"
+                    type="number[]"
+                    visible="{Boolean}true"/>
+            <checkboxgroup7
+                    jcr:created="{Date}2025-11-07T11:32:51.920+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2025-11-07T11:33:40.225+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="&lt;p>&lt;b>Select Animal&lt;/b>&lt;/p>"
+                    sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                    areOptionsRichText="true"
+                    enabled="{Boolean}true"
+                    enum="[0,1]"
+                    enumNames="[&lt;p>&lt;i>Dog&lt;/i>&lt;/p>,&lt;p> &lt;u>Cat&lt;/u>&lt;/p>]"
+                    fieldType="checkbox-group"
+                    hideTitle="false"
+                    isTitleRichText="true"
+                    name="checkboxgroup_19427271491696572172217"
+                    orientation="horizontal"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true,true,true,true]"
+                    type="number[]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
+            <resetbutton
+                    jcr:created="{Date}2025-11-07T18:03:13.181+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2025-11-07T18:03:13.181+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Reset"
+                    sling:resourceType="forms-components-examples/components/form/actions/reset"
+                    buttonType="reset"
+                    dorExclusion="true"
+                    fieldType="button"
+                    name="reset1731587593205">
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="[dispatchEvent('reset')]"/>
+            </resetbutton>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>
