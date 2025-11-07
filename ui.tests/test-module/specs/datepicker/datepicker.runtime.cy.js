@@ -410,6 +410,20 @@ describe("Form Runtime with Date Picker", () => {
         cy.get(".datetimepicker").should("not.be.visible");
     });
 
+    it("calendar icon should have role=button", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+            .should("have.attr", "role", "button");
+    });
+
+    it("calendar icon should have a non-empty aria-label", () => {
+        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
+            .invoke("attr", "aria-label")
+            .should("be.a", "string")
+            .and("not.be.empty");
+    });
+
     it("should handle keyboard accessibility with custom display formats", () => {
         const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[6];
 
@@ -512,19 +526,6 @@ describe("Form Runtime with Date Picker", () => {
                 cy.wait(100)
             })
         });
-    });
-
-    it("calendar icon should have role='button' for accessibility", () => {
-        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[0];
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
-            .should("have.attr", "role", "button");
-    });
-
-    it("calendar icon should have aria-label for screen readers", () => {
-        const [datePicker7, datePicker7FieldView] = Object.entries(formContainer._fields)[0];
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon")
-            .should("have.attr", "aria-label")
-            .and("not.be.empty");
     });
 
     it("Test dd/MM/yyyy format - verify July is highlighted for 03/07/2025", () => {
