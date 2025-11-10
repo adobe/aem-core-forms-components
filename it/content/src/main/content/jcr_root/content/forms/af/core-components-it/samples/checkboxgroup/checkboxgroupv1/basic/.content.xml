@@ -3,7 +3,7 @@
           jcr:primaryType="cq:Page">
     <jcr:content
             cq:deviceGroups="[mobile/groups/responsive]"
-            cq:lastModified="{Date}2023-05-03T11:33:58.406+05:30"
+            cq:lastModified="{Date}2025-11-09T11:33:58.406+05:30"
             cq:lastModifiedBy="admin"
             cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
             jcr:language="en"
@@ -16,7 +16,7 @@
                 sling:resourceType="forms-components-examples/components/form/container"
                 fieldType="form">
             <checkboxgroup1
-                    jcr:lastModified="{Date}2023-01-23T12:23:13.884+05:30"
+                    jcr:lastModified="{Date}2025-11-09T12:23:13.884+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Check Box Group 1"
@@ -33,7 +33,7 @@
                     type="string[]"
                     visible="{Boolean}true"/>
             <checkboxgroup2
-                    jcr:lastModified="{Date}2022-09-10T23:45:20.572+05:30"
+                    jcr:lastModified="{Date}2025-11-09T23:45:20.572+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Check Box Group 2"
@@ -59,7 +59,7 @@
                         change="[if((contains($field\, '0') &amp;&amp; contains($field\, '3'))\, dispatchEvent(checkboxgroup31671860692147\, 'custom:setProperty'\, {visible : false()})\, {}),if((contains($field\, '0') &amp;&amp; contains($field\, '3'))\, dispatchEvent(checkboxgroup_16425955381671860957891\, 'custom:setProperty'\, {visible : true()})\, {}),if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(checkboxgroup1662722663424\, 'custom:setProperty'\, {enabled : true()})\, {}),if((contains($field\, '1') &amp;&amp; contains($field\, '2'))\, dispatchEvent(checkboxgroup31671860692147\, 'custom:setProperty'\, {enabled : false()})\, {})]"/>
             </checkboxgroup2>
             <checkboxgroup3
-                    jcr:lastModified="{Date}2022-12-24T11:19:33.329+05:30"
+                    jcr:lastModified="{Date}2025-11-09T11:19:33.329+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Check Box Group 3"
@@ -83,7 +83,7 @@
                         change="[if(contains($field\, 1)\, dispatchEvent(checkboxgroup1662722663425\, 'custom:setProperty'\, {value : `null`})\, {}),if(contains($field\, 1)\, dispatchEvent(checkboxgroup_10272300251673590771006\, 'custom:setProperty'\, {value : mid('0'\,0\,1)})\, {})]"/>
             </checkboxgroup3>
             <checkboxgroup4
-                    jcr:lastModified="{Date}2022-12-24T11:19:11.733+05:30"
+                    jcr:lastModified="{Date}2025-11-09T11:19:11.733+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Check Box Group 4"
@@ -114,7 +114,7 @@
                         change="[if(contains($field\, '2')\, dispatchEvent(checkboxgroup1662722663424\, 'custom:setProperty'\, {enabled : true()})\, {}),if(contains($field\, '2')\, dispatchEvent(checkboxgroup1662722663425\, 'custom:setProperty'\, {enabled : false()})\, {})]"/>
             </checkboxgroup4>
             <checkboxgroup5
-                    jcr:lastModified="{Date}2023-01-13T11:49:37.118+05:30"
+                    jcr:lastModified="{Date}2025-11-09T11:49:37.118+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Check Box Group 5"
@@ -137,7 +137,7 @@
                 <fd:events jcr:primaryType="nt:unstructured"/>
             </checkboxgroup5>
             <checkboxgroup
-                    jcr:lastModified="{Date}2023-05-03T11:33:58.397+05:30"
+                    jcr:lastModified="{Date}2025-11-09T11:33:58.397+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Check Box Group 6"
@@ -154,9 +154,9 @@
                     type="number[]"
                     visible="{Boolean}true"/>
             <checkboxgroup7
-                    jcr:created="{Date}2023-10-06T11:32:51.920+05:30"
+                    jcr:created="{Date}2025-11-09T11:32:51.920+05:30"
                     jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2023-10-06T11:33:40.225+05:30"
+                    jcr:lastModified="{Date}2025-11-09T11:33:40.225+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="&lt;p>&lt;b>Select Animal&lt;/b>&lt;/p>"
@@ -176,9 +176,9 @@
                     unboundFormElement="{Boolean}false"
                     visible="{Boolean}true"/>
             <resetbutton
-                    jcr:created="{Date}2024-11-14T18:03:13.181+05:30"
+                    jcr:created="{Date}2025-11-09T18:03:13.181+05:30"
                     jcr:createdBy="admin"
-                    jcr:lastModified="{Date}2024-11-14T18:03:13.181+05:30"
+                    jcr:lastModified="{Date}2025-11-09T18:03:13.181+05:30"
                     jcr:lastModifiedBy="admin"
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Reset"
