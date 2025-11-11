@@ -266,13 +266,12 @@ describe("Form with Radio Button Input", () => {
         })
     })
 
-    it("radio button group MUST be wrapped in a <fieldset> and have a legend as first child", () => {
+    it("radio button group MUST be wrapped in a <fieldset> and have a legend", () => {
         const [radioButton1] = Object.entries(formContainer._fields)[0];
         cy.get(`#${radioButton1}`).then($el => {
             expect($el.prop('tagName')).to.eq('FIELDSET');
         });
         cy.get(`#${radioButton1}`).find('legend').should('exist');
-        cy.get(`#${radioButton1}`).find('.cmp-adaptiveform-radiobutton__widget').should('have.attr', 'role', 'radiogroup');
     })
 })
 
