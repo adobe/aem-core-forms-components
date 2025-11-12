@@ -20,27 +20,27 @@ describe('Test UpdateEnum, UpdateEnumName for Checkbox', () => {
     const pagePath = "/content/forms/af/core-components-it/samples/customfunctions/populate-checkboxv2.html";
     let formContainer = null;
 
-    let addEnumNameBtn1= '#button-5bc5fab8c0-widget',
-        addEnumBtn1 = '#button-6951fcf2b2-widget',
-        addBothBtn1 = '#button-487d71c3ba-widget',
+    let addEnumNameBtn1= '#button-63e4112562-widget',
+        addEnumBtn1 = '#button-d3f0135b2a-widget',
+        addBothBtn1 = '#button-b8030d3ba9-widget',
 
-        addEnumNameBtn2 = '#button-ad5baa0047-widget',
-        addEnumBtn2 = '#button-fe525e925a-widget',
-        addBothBtn2 = '#button-07229a0cd4-widget',
+        addEnumNameBtn2 = '#button-a267804deb-widget',
+        addEnumBtn2 = '#button-dfeea3ad14-widget',
+        addBothBtn2 = '#button-8fefc34d70-widget',
 
-        addEnumNameBtn3 = '#button-5ed411b277-widget',
-        addEnumBtn3 = '#button-91a8b94636-widget',
-        addBothBtn3  = '#button-a73ae3d48a-widget',
+        addEnumNameBtn3 = '#button-47854ea2ca-widget',
+        addEnumBtn3 = '#button-db8c627349-widget',
+        addBothBtn3  = '#button-83abf9e912-widget',
 
-        addEnumNameBtn4 = '#button-ab004c2b14-widget',
-        addEnumBtn4 = '#button-db372ecc80-widget',
-        addBothBtn4  = '#button-c099ce340a-widget',
-        clearBtn = '#button-6f9298f657-widget';
+        addEnumNameBtn4 = '#button-a19425d446-widget',
+        addEnumBtn4 = '#button-c23e50636b-widget',
+        addBothBtn4  = '#button-59054d2649-widget',
+        clearBtn = '#button-f7826f3a39-widget';
 
-    let checkbox1 = '#checkboxgroup-c156999de2-widget',
-        checkbox2 = '#checkboxgroup-50b0f345aa-widget',
-        checkbox3 = '#checkboxgroup-e821624a2f-widget',
-        checkbox4 = '#checkboxgroup-da4906da81-widget';
+    let checkbox1 = '#checkboxgroup-72fdea5dfd-widget',
+        checkbox2 = '#checkboxgroup-5f607707dc-widget',
+        checkbox3 = '#checkboxgroup-36e44551e0-widget',
+        checkbox4 = '#checkboxgroup-146eaab9bf-widget';
 
     let enums = ["one", "two", "three"],
         enumNames = ["India", "US", "Singapore"];
