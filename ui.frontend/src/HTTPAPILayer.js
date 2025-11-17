@@ -129,6 +129,7 @@ class HTTPAPILayer {
         return new Promise(resolve => {
             let xhr = new XMLHttpRequest();
             xhr.open('GET', urlWithContextPath, true);
+            xhr.withCredentials = true;
             xhr.responseType = 'json';
             xhr.onload = function () {
                 let status = xhr.status;
