@@ -129,7 +129,11 @@ class HTTPAPILayer {
         return new Promise(resolve => {
             let xhr = new XMLHttpRequest();
             xhr.open('GET', urlWithContextPath, true);
-            xhr.withCredentials = true;
+            // Enable credentials for cross-origin requests to support CDN deployments
+            const requestUrl = new URL(urlWithContextPath, window.location.href);
+            if (requestUrl.origin !== window.location.origin) {
+                xhr.withCredentials = true;
+            }
             xhr.responseType = 'json';
             xhr.onload = function () {
                 let status = xhr.status;
