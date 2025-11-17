@@ -2,20 +2,23 @@
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:dam="http://www.day.com/dam/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
           jcr:primaryType="dam:Asset">
     <jcr:content
-            jcr:lastModified="{Date}2023-05-03T11:33:58.405+05:30"
+            cq:conf="\0"
             jcr:primaryType="dam:AssetContent"
             sling:resourceType="fd/fm/af/render"
             guide="1"
             type="guide">
         <metadata
                 fd:version="2.1"
+                jcr:language="en"
                 jcr:primaryType="nt:unstructured"
+                xmp:CreatorTool="AEM Forms"
                 allowedRenderFormat="HTML"
                 author="admin"
                 availableInMobileApp="{Boolean}false"
+                dorTemplateChanged="Boolean"
                 dorType="none"
                 formmodel="none"
-                hasCustomThumbnail="{Boolean}false"
-                title="Adaptive Form V2 (IT)"/>
+                themeRef="/libs/fd/af/themes/canvas"
+                title="basic"/>
     </jcr:content>
 </jcr:root>
