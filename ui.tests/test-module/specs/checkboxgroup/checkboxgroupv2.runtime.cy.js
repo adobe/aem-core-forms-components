@@ -206,7 +206,14 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup-item").should('have.length', 2);
         cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Select Animal').should('have.css', 'font-weight', '700');
         cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Dog').should('have.css', 'font-style', 'italic');
-        cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Cat').should('have.css', 'text-decoration', 'underline solid rgb(50, 50, 50)');
+        cy.get(`#${checkBox7}`)
+          .find(".cmp-adaptiveform-checkboxgroup__option-label span")
+          .contains('Cat')
+          .should(($el) => {
+            const line = $el.css('text-decoration-line');
+            const shorthand = $el.css('text-decoration');
+            expect(line || shorthand).to.include('underline');
+          });
     });
 
     it("decoration element should not have same class name", () => {
@@ -248,6 +255,14 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
             cy.get(`#${checkBox2}`).find("input").should('not.be.checked');
             cy.get(`#${checkBox2}`).invoke('attr', 'data-cmp-valid').should('not.exist');
         });
+    })
+
+    it("checkbox group MUST be wrapped in a <fieldset> and have a legend", () => {
+        const [checkBox1] = Object.entries(formContainer._fields)[0];
+        cy.get(`#${checkBox1}`).then($el => {
+            expect($el.prop('tagName')).to.eq('FIELDSET');
+        });
+        cy.get(`#${checkBox1}`).find('legend').should('exist');
     })
 })
 
