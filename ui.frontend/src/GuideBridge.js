@@ -451,6 +451,79 @@ class GuideBridge {
     getConfigsForKey(key) {
         return this.#userConfig[key] || [];
     }
+
+    /**
+     * Unloads the adaptive form, cleaning up internal state and optionally removing DOM elements.
+     * @summary Unloads an adaptive form, removing form container view, handlers, and configurations.
+     * @param {string} [containerSelector] - Optional CSS selector of the container to remove DOM elements from.
+     * @param {string} [formContainerPath] - Optional path of the form container to unload. If not provided, uses the current formContainerPath.
+     * @method
+     * @memberof GuideBridge
+     * @instance
+     * @example
+     * // Unload form and clean up DOM
+     * guideBridge.unloadAdaptiveForm('#myFormContainer', '/content/forms/af/myform');
+     * 
+     * // Unload current form without DOM cleanup
+     * guideBridge.unloadAdaptiveForm();
+     * 
+     */
+    unloadAdaptiveForm(containerSelector, formContainerPath) {
+        // Determine which form container to unload
+        const pathToUnload = formContainerPath || this.#formContainerPath;
+        
+        if (!pathToUnload) {
+            console.warn("No form container path specified or available to unload.");
+            return;
+        }
+
+        // Clean up widget elements appended to document.body
+        // These widgets are created by captcha components and datepicker that append to body
+        const widgetSelectors = [
+            '.cmp-adaptiveform-recaptcha__widget',
+            '.cmp-adaptiveform-turnstile__widget',
+            '.cmp-adaptiveform-hcaptcha__widget',
+            '.datePickerTarget'
+        ];
+        
+        widgetSelectors.forEach(selector => {
+            const widgets = document.querySelectorAll(selector);
+            widgets.forEach(widget => widget.remove());
+        });
+
+        // Remove DOM content if containerSelector is provided
+        if (containerSelector) {
+            const container = document.querySelector(containerSelector);
+            if (container) {
+                if (typeof container.replaceChildren === 'function') {
+                    container.replaceChildren();
+                } else {
+                    // Fallback for older browsers
+                    container.innerHTML = '';
+                }
+            }
+        }
+
+        // Remove the form container from the map
+        delete this.#formContainerViewMap[pathToUnload];
+
+        // Clear connect handlers for this form container path
+        this.#guideBridgeConnectHandlers = this.#guideBridgeConnectHandlers.filter(
+            handler => handler.formContainerPath !== pathToUnload
+        );
+
+        // Clear user configs for this form container path
+        Object.keys(this.#userConfig).forEach(key => {
+            this.#userConfig[key] = this.#userConfig[key].filter(
+                config => config.formContainerPath !== pathToUnload
+            );
+        });
+
+        // Reset formContainerPath if it matches the one being unloaded
+        if (this.#formContainerPath === pathToUnload) {
+            this.#formContainerPath = "";
+        }
+    }
 };
 
 export default GuideBridge;
