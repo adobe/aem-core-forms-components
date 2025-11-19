@@ -477,20 +477,6 @@ class GuideBridge {
             return;
         }
 
-        // Clean up widget elements appended to document.body
-        // These widgets are created by captcha components and datepicker that append to body
-        const widgetSelectors = [
-            '.cmp-adaptiveform-recaptcha__widget',
-            '.cmp-adaptiveform-turnstile__widget',
-            '.cmp-adaptiveform-hcaptcha__widget',
-            '.datePickerTarget'
-        ];
-        
-        widgetSelectors.forEach(selector => {
-            const widgets = document.querySelectorAll(selector);
-            widgets.forEach(widget => widget.remove());
-        });
-
         // Remove DOM content if containerSelector is provided
         if (containerSelector) {
             const container = document.querySelector(containerSelector);
