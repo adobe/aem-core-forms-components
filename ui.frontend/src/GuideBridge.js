@@ -489,21 +489,8 @@ class GuideBridge {
                 }
             }
         }
-
         // Remove the form container from the map
         delete this.#formContainerViewMap[pathToUnload];
-
-        // Clear connect handlers for this form container path
-        this.#guideBridgeConnectHandlers = this.#guideBridgeConnectHandlers.filter(
-            handler => handler.formContainerPath !== pathToUnload
-        );
-
-        // Clear user configs for this form container path
-        Object.keys(this.#userConfig).forEach(key => {
-            this.#userConfig[key] = this.#userConfig[key].filter(
-                config => config.formContainerPath !== pathToUnload
-            );
-        });
 
         // Reset formContainerPath if it matches the one being unloaded
         if (this.#formContainerPath === pathToUnload) {
