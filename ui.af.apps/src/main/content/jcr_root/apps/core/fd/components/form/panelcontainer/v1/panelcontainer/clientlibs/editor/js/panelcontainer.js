@@ -65,6 +65,69 @@
                 target.alignMy = Coral.Overlay.align.LEFT_TOP;
             });
         }
+
+        // Handle useFieldset checkbox to control hideTitle behavior
+        handleUseFieldsetBehavior(containerEditor);
+    }
+
+    /**
+     * Handles the interaction between useFieldset checkbox and hideTitle checkbox
+     * When useFieldset is enabled, hideTitle should be disabled and unchecked,
+     * and title should become mandatory for accessibility compliance
+     *
+     * @param {HTMLElement} containerEditor The dialog wrapper
+     */
+    function handleUseFieldsetBehavior(containerEditor) {
+        var useFieldsetCheckbox = containerEditor.querySelector('.cmp-adaptiveform-panel__useFieldset coral-checkbox');
+        var hideTitleCheckbox = containerEditor.querySelector('coral-checkbox[name="./hideTitle"]');
+        var titleField = containerEditor.querySelector('input[name="./jcr:title"]');
+
+        if (useFieldsetCheckbox && hideTitleCheckbox) {
+            // Function to update hideTitle state based on useFieldset
+            var updateHideTitleState = function() {
+                var isFieldsetEnabled = useFieldsetCheckbox.checked;
+                
+                if (isFieldsetEnabled) {
+                    // Disable and uncheck hideTitle when fieldset is enabled
+                    hideTitleCheckbox.disabled = true;
+                    hideTitleCheckbox.checked = false;
+                    
+                    // Make title required for accessibility
+                    if (titleField) {
+                        titleField.required = true;
+                        // Add visual indicator
+                        var titleFieldWrapper = titleField.closest('.coral-Form-field');
+                        if (titleFieldWrapper) {
+                            var labelElement = titleFieldWrapper.querySelector('label');
+                            if (labelElement && !labelElement.classList.contains('required')) {
+                                labelElement.classList.add('required');
+                            }
+                        }
+                    }
+                } else {
+                    // Re-enable hideTitle when fieldset is disabled
+                    hideTitleCheckbox.disabled = false;
+                    
+                    // Remove title requirement
+                    if (titleField) {
+                        titleField.required = false;
+                        var titleFieldWrapper = titleField.closest('.coral-Form-field');
+                        if (titleFieldWrapper) {
+                            var labelElement = titleFieldWrapper.querySelector('label');
+                            if (labelElement) {
+                                labelElement.classList.remove('required');
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Initialize state on dialog load
+            updateHideTitleState();
+
+            // Listen for changes to useFieldset checkbox
+            useFieldsetCheckbox.on('change', updateHideTitleState);
+        }
     }
 
     /**
