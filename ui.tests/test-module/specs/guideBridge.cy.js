@@ -101,6 +101,12 @@ describe('GuideBridge ', () => {
                 expect($window.guideBridge.isConnected()).to.be.true;
                 expect($window.guideBridge.getFormModel()).to.not.be.null;
                 
+                // Capture Utils state before unload
+                let contextPathBeforeUnload = '';
+                if ($window.FormView && $window.FormView.Utils) {
+                    contextPathBeforeUnload = $window.FormView.Utils.getContextPath();
+                }
+                
                 // Verify MutationObservers exist before unload
                 const mutationObserversBeforeUnload = formContainer._mutationObservers;
                 expect(mutationObserversBeforeUnload).to.be.an('array');
@@ -146,6 +152,14 @@ describe('GuideBridge ', () => {
                 if (hasObservers) {
                     expect(formContainer._mutationObservers).to.be.an('array');
                     expect(formContainer._mutationObservers.length).to.equal(0);
+                }
+                
+                // Verify Utils static state is cleared (since this is the last/only form)
+                if ($window.FormView && $window.FormView.Utils) {
+                    // contextPath should be cleared
+                    const contextPathAfterUnload = $window.FormView.Utils.getContextPath();
+                    expect(contextPathAfterUnload).to.equal('', 
+                        `Expected contextPath to be cleared. Was: "${contextPathBeforeUnload}", Now: "${contextPathAfterUnload}"`);
                 }
                 
                 // Verify form model is no longer available for the unloaded path

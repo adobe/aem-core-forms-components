@@ -263,6 +263,17 @@ class Utils {
     }
 
     /**
+     * Clears all static state in Utils.
+     * Should be called when the last form is unloaded to ensure clean state.
+     * @private
+     */
+    static _clearState() {
+        Utils.#contextPath = "";
+        Utils.#fieldCreatorSets = {};
+        Utils.#fieldCreatorOrder = [];
+    }
+
+    /**
      * Registers handler on elements on hook.
      * @param {Element} parentElement - The parent element.
      * @param {string} hook - The hook.

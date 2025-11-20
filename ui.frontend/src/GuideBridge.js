@@ -18,6 +18,7 @@ import {Constants} from "./constants.js";
 import Response from "./Response.js";
 import AfFormData from "./FormData.js";
 import {readAttachments} from "@aemforms/af-core";
+import Utils from "./utils.js";
 
 /**
  * The GuideBridge class represents the bridge between an adaptive form and JavaScript APIs.
@@ -493,22 +494,19 @@ class GuideBridge {
             }
         }
 
-        // Clear DatePicker cache
-        // afCache stores datepicker instances keyed by element IDs
-        // Only clear when this is the last/only form to avoid performance overhead
-        if (window.afCache && typeof window.afCache.store === 'object') {
-            if (Object.keys(this.#formContainerViewMap).length <= 1) {
-                window.afCache.store = {};
-            }
-        }
-
-        // Clean up widget elements appended to document.body
-        // NOTE: These widgets (captcha, datepicker) don't have form-specific identifiers,
-        // so we can only safely remove them if this is the only/last form on the page.
-        // For multi-form scenarios, widgets will remain in DOM but will be garbage collected
+        // Clean up global state when this is the last/only form
+        // NOTE: Global widgets, caches, and utilities don't have form-specific identifiers,
+        // so we can only safely clear them if this is the only/last form on the page.
+        // For multi-form scenarios, these will remain but will be garbage collected
         // when no longer referenced by any form.
         const isLastForm = Object.keys(this.#formContainerViewMap).length === 1;
         if (isLastForm) {
+            // Clear DatePicker cache
+            if (window.afCache && typeof window.afCache.store === 'object') {
+                window.afCache.store = {};
+            }
+
+            // Clean up global widgets
             const widgetSelectors = [
                 '.cmp-adaptiveform-recaptcha__widget',
                 '.cmp-adaptiveform-turnstile__widget',
@@ -520,6 +518,17 @@ class GuideBridge {
                 const widgets = document.querySelectorAll(selector);
                 widgets.forEach(widget => widget.remove());
             });
+
+            // Clear Utils static state (contextPath, fieldCreatorSets, fieldCreatorOrder)
+            Utils._clearState();
+
+            // Clear XFA-specific state if XFA forms are loaded
+            if (window.xfalib && window.xfalib.ut) {
+                window.xfalib.ut = null;
+            }
+            if (window.formBridge && typeof window.formBridge.destroyForm === 'function') {
+                window.formBridge.destroyForm();
+            }
         }
 
         // Remove the entire form container element from DOM
