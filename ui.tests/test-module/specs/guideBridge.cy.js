@@ -149,9 +149,13 @@ describe('GuideBridge ', () => {
                 }
                 
                 // Verify MutationObservers are disconnected and cleared
+                // Note: The _disconnectMutationObservers method is called during unload
+                // which disconnects and clears the observers array
                 if (hasObservers) {
+                    // After unload, observers should be disconnected and array should be empty
                     expect(formContainer._mutationObservers).to.be.an('array');
-                    expect(formContainer._mutationObservers.length).to.equal(0);
+                    expect(formContainer._mutationObservers.length).to.equal(0, 
+                        `Expected mutation observers to be cleared after unload. Found ${formContainer._mutationObservers.length} observers.`);
                 }
                 
                 // Verify Utils static state is cleared (since this is the last/only form)

@@ -489,7 +489,7 @@ class GuideBridge {
             container = formContainerView.getFormElement();
             
             // Disconnect all mutation observers for this form
-            if (formContainerView._disconnectMutationObservers) {
+            if (typeof formContainerView._disconnectMutationObservers === 'function') {
                 formContainerView._disconnectMutationObservers();
             }
         }
