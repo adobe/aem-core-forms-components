@@ -44,7 +44,7 @@ describe('GuideBridge ', () => {
         expect(nonObjectCalledArgs).to.deep.include.members([...expectedOtherArgs]);
     });
 
-    it.skip('should trigger elementValueChanged and elementFocusChanged', () => {
+    it('should trigger elementValueChanged and elementFocusChanged', () => {
         cy.window().then($window => {
             if($window.guideBridge && $window.guideBridge.isConnected()) {
                 // Create a spy on the event
@@ -79,7 +79,7 @@ describe('GuideBridge ', () => {
         cy.expectNoConsoleErrors();
     })
 
-    it.skip('should test the resolveNode API for a specific field', () => {
+    it('should test the resolveNode API for a specific field', () => {
         cy.window().then($window => {
             if($window.guideBridge && $window.guideBridge.isConnected()) {
                 const targetName = "textinput_18577078541690896990322";
