@@ -18,6 +18,7 @@ import {Constants} from "./constants.js";
 import Response from "./Response.js";
 import AfFormData from "./FormData.js";
 import {readAttachments} from "@aemforms/af-core";
+import Utils from "./utils.js";
 
 /**
  * The GuideBridge class represents the bridge between an adaptive form and JavaScript APIs.
@@ -450,6 +451,103 @@ class GuideBridge {
      */
     getConfigsForKey(key) {
         return this.#userConfig[key] || [];
+    }
+
+    /**
+     * Unloads the adaptive form, cleaning up internal state and removing DOM elements.
+     * @summary Unloads an adaptive form, removing form container view, handlers, and configurations.
+     * @param {string} [formContainerPath] - Optional path of the form container to unload. 
+     *        If not provided, unloads the currently connected form.
+     * @method
+     * @memberof GuideBridge
+     * @instance
+     * @example
+     * // Simplest - unload current connected form
+     * guideBridge.unloadAdaptiveForm();
+     * 
+     * // Unload specific form by path (for multiple forms on page)
+     * guideBridge.unloadAdaptiveForm('/content/forms/af/myform');
+     * 
+     * // Get path from form container and unload
+     * const formPath = formContainer.getPath();
+     * guideBridge.unloadAdaptiveForm(formPath);
+     * 
+     */
+    unloadAdaptiveForm(formContainerPath) {
+        // Use provided path or fall back to current formContainerPath
+        const pathToUnload = formContainerPath || this.#formContainerPath;
+        
+        if (!pathToUnload) {
+            console.warn("No form container path specified or available to unload.");
+            return;
+        }
+        
+        // Get the container element from the view and disconnect mutation observers
+        let container = null;
+        if (this.#formContainerViewMap[pathToUnload]) {
+            const formContainerView = this.#formContainerViewMap[pathToUnload];
+            container = formContainerView.getFormElement();
+            
+            // Disconnect all mutation observers for this form
+            if (typeof formContainerView._disconnectMutationObservers === 'function') {
+                formContainerView._disconnectMutationObservers();
+            }
+        }
+
+        // Clear XFA-specific state if XFA forms are loaded
+        if (window.formBridge && typeof window.formBridge.destroyForm === 'function') {
+            window.formBridge.destroyForm();
+        }
+
+        // Clean up global state when this is the last/only form
+        // NOTE: Global widgets, caches, and utilities don't have form-specific identifiers,
+        // so we can only safely clear them if this is the only/last form on the page.
+        // For multi-form scenarios, these will remain but will be garbage collected
+        // when no longer referenced by any form.
+        const isLastForm = Object.keys(this.#formContainerViewMap).length === 1;
+        if (isLastForm) {
+            // Clear DatePicker cache
+            if (window.afCache && typeof window.afCache.store === 'object') {
+                window.afCache.store = {};
+            }
+
+            // Clean up global widgets
+            const widgetSelectors = [
+                '.cmp-adaptiveform-recaptcha__widget',
+                '.cmp-adaptiveform-turnstile__widget',
+                '.cmp-adaptiveform-hcaptcha__widget',
+                '.datetimepicker.datePickerTarget'  // DatePicker popup
+            ];
+            
+            widgetSelectors.forEach(selector => {
+                const widgets = document.querySelectorAll(selector);
+                widgets.forEach(widget => widget.remove());
+            });
+
+            // Clear Utils static state (contextPath, fieldCreatorSets, fieldCreatorOrder)
+            Utils._clearState();
+
+            // Clear XFA utility (global XFA logger/utility)
+            if (window.xfalib && window.xfalib.ut) {
+                window.xfalib.ut = null;
+            }
+        }
+
+        // Remove the entire form container element from DOM
+        if (container) {
+            container.remove();
+        }
+
+        // Remove the form container from the map
+        delete this.#formContainerViewMap[pathToUnload];
+
+        // Reset formContainerPath if it matches the one being unloaded
+        if (this.#formContainerPath === pathToUnload) {
+            this.#formContainerPath = "";
+        }
+
+        // Note: FunctionRuntime.customFunctions is intentionally NOT cleared
+        // as it's a global registry shared across all forms, matching classic behavior
     }
 };
 
