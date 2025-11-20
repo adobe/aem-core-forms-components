@@ -90,4 +90,107 @@ describe('GuideBridge ', () => {
         });
         cy.expectNoConsoleErrors();
     })
+
+    it('should unload the adaptive form and clean up state', () => {
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                const formContainerPath = formContainer.getPath();
+                const containerSelector = `[data-cmp-adaptiveformcontainer-path="${formContainerPath}"]`;
+                
+                // Verify form is loaded and connected
+                expect($window.guideBridge.isConnected()).to.be.true;
+                expect($window.guideBridge.getFormModel()).to.not.be.null;
+                
+                // Create some mock widget elements in body to test cleanup
+                const mockRecaptchaWidget = $window.document.createElement('div');
+                mockRecaptchaWidget.className = 'cmp-adaptiveform-recaptcha__widget';
+                $window.document.body.appendChild(mockRecaptchaWidget);
+                
+                const mockDatePickerWidget = $window.document.createElement('div');
+                mockDatePickerWidget.className = 'datePickerTarget';
+                $window.document.body.appendChild(mockDatePickerWidget);
+                
+                // Set up some cache to test cleanup
+                if ($window.afCache) {
+                    $window.afCache.store = { testKey: 'testValue' };
+                }
+                
+                // Verify DOM elements exist before unload
+                cy.get(containerSelector).should('exist');
+                cy.wrap($window.document.querySelector('.cmp-adaptiveform-recaptcha__widget')).should('not.be.null');
+                cy.wrap($window.document.querySelector('.datePickerTarget')).should('not.be.null');
+                
+                // Call unloadAdaptiveForm
+                $window.guideBridge.unloadAdaptiveForm(containerSelector, formContainerPath);
+                
+                // Verify DOM is cleaned up
+                cy.get(containerSelector).children().should('have.length', 0);
+                
+                // Verify widget elements are removed from body
+                cy.wrap($window.document.querySelector('.cmp-adaptiveform-recaptcha__widget')).should('be.null');
+                cy.wrap($window.document.querySelector('.datePickerTarget')).should('be.null');
+                
+                // Verify cache is cleared
+                if ($window.afCache) {
+                    expect($window.afCache.store).to.deep.equal({});
+                }
+                
+                // Verify form model is no longer available for the unloaded path
+                expect($window.guideBridge.getFormModel()).to.be.null;
+            }
+        });
+        cy.expectNoConsoleErrors();
+    })
+
+    it('should handle multiple calls to unloadAdaptiveForm safely', () => {
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                const formContainerPath = formContainer.getPath();
+                const containerSelector = `[data-cmp-adaptiveformcontainer-path="${formContainerPath}"]`;
+                
+                // First call
+                $window.guideBridge.unloadAdaptiveForm(containerSelector, formContainerPath);
+                
+                // Second call should not throw errors
+                expect(() => {
+                    $window.guideBridge.unloadAdaptiveForm(containerSelector, formContainerPath);
+                }).to.not.throw();
+                
+                // Verify no console errors
+                cy.expectNoConsoleErrors();
+            }
+        });
+    })
+
+    it('should handle unloadAdaptiveForm with only containerSelector', () => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+            cy.window().then($window => {
+                if($window.guideBridge && $window.guideBridge.isConnected()) {
+                    const formContainerPath = formContainer.getPath();
+                    const containerSelector = `[data-cmp-adaptiveformcontainer-path="${formContainerPath}"]`;
+                    
+                    // Call with only containerSelector (formContainerPath should be inferred)
+                    $window.guideBridge.unloadAdaptiveForm(containerSelector);
+                    
+                    // Verify DOM is cleaned up
+                    cy.get(containerSelector).children().should('have.length', 0);
+                }
+            });
+            cy.expectNoConsoleErrors();
+        });
+    })
+
+    it('should warn when unloadAdaptiveForm is called without a valid form path', () => {
+        cy.window().then($window => {
+            // Create a spy on console.warn
+            const warnSpy = cy.spy($window.console, 'warn');
+            
+            // Call unloadAdaptiveForm without any form loaded
+            $window.guideBridge.unloadAdaptiveForm(null, null);
+            
+            // Verify warning was logged
+            cy.wrap(warnSpy).should('have.been.calledWith', 'No form container path specified or available to unload.');
+        });
+    })
 })

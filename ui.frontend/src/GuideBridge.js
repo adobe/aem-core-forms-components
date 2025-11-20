@@ -477,6 +477,20 @@ class GuideBridge {
             return;
         }
 
+        // Clean up widget elements appended to document.body
+        // These widgets are created by captcha components and datepicker that append to body
+        const widgetSelectors = [
+            '.cmp-adaptiveform-recaptcha__widget',
+            '.cmp-adaptiveform-turnstile__widget',
+            '.cmp-adaptiveform-hcaptcha__widget',
+            '.datePickerTarget'
+        ];
+        
+        widgetSelectors.forEach(selector => {
+            const widgets = document.querySelectorAll(selector);
+            widgets.forEach(widget => widget.remove());
+        });
+
         // Remove DOM content if containerSelector is provided
         if (containerSelector) {
             const container = document.querySelector(containerSelector);
@@ -489,6 +503,13 @@ class GuideBridge {
                 }
             }
         }
+
+        // Clear DatePicker cache
+        // afCache stores datepicker instances keyed by element IDs
+        if (window.afCache && typeof window.afCache.store === 'object') {
+            window.afCache.store = {};
+        }
+
         // Remove the form container from the map
         delete this.#formContainerViewMap[pathToUnload];
 
@@ -496,6 +517,9 @@ class GuideBridge {
         if (this.#formContainerPath === pathToUnload) {
             this.#formContainerPath = "";
         }
+
+        // Note: FunctionRuntime.customFunctions is intentionally NOT cleared
+        // as it's a global registry shared across all forms, matching classic behavior
     }
 };
 
