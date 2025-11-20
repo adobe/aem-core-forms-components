@@ -453,39 +453,39 @@ class GuideBridge {
     }
 
     /**
-     * Unloads the adaptive form, cleaning up internal state and optionally removing DOM elements.
+     * Unloads the adaptive form, cleaning up internal state and removing DOM elements.
      * @summary Unloads an adaptive form, removing form container view, handlers, and configurations.
-     * @param {string} [containerSelector] - Optional CSS selector of the container to remove DOM elements from.
-     *        If not provided, the form container will be automatically found and cleaned.
-     *        IMPORTANT: Use a unique selector (e.g., form ID) if multiple forms are on the same page.
-     * @param {string} [formContainerPath] - Optional path of the form container to unload. If not provided, uses the current formContainerPath.
+     * @param {string} [formContainerPath] - Optional path of the form container to unload. 
+     *        If not provided, unloads the currently connected form.
      * @method
      * @memberof GuideBridge
      * @instance
      * @example
-     * // Recommended: Use the unique form ID to target a specific form
-     * const formElement = document.querySelector('[data-cmp-is="adaptiveFormContainer"]');
-     * guideBridge.unloadAdaptiveForm(`#${formElement.id}`);
-     * 
-     * // For a single form page, use the generic selector
-     * guideBridge.unloadAdaptiveForm('[data-cmp-is="adaptiveFormContainer"]');
-     * 
-     * // Unload with explicit path (useful for multiple forms)
-     * guideBridge.unloadAdaptiveForm('#L2NvbnRlbnQvZm9ybXMvYWYvbXlmb3Jt', '/content/forms/af/myform');
-     * 
-     * // Unload current connected form (auto-handled)
+     * // Simplest - unload current connected form
      * guideBridge.unloadAdaptiveForm();
      * 
-     * @note For pages with multiple forms, always use a unique selector (form ID) to target the correct form.
-     * The form ID can be obtained from the form element: formElement.id
+     * // Unload specific form by path (for multiple forms on page)
+     * guideBridge.unloadAdaptiveForm('/content/forms/af/myform');
+     * 
+     * // Get path from form container and unload
+     * const formPath = formContainer.getPath();
+     * guideBridge.unloadAdaptiveForm(formPath);
+     * 
      */
-    unloadAdaptiveForm(containerSelector, formContainerPath) {
-        // Determine which form container to unload
+    unloadAdaptiveForm(formContainerPath) {
+        // Use provided path or fall back to current formContainerPath
         const pathToUnload = formContainerPath || this.#formContainerPath;
         
         if (!pathToUnload) {
             console.warn("No form container path specified or available to unload.");
             return;
+        }
+        
+        // Get the container element from the view
+        let container = null;
+        if (this.#formContainerViewMap[pathToUnload]) {
+            const formContainerView = this.#formContainerViewMap[pathToUnload];
+            container = formContainerView.getFormElement();
         }
 
         // Clean up widget elements appended to document.body
@@ -501,16 +501,6 @@ class GuideBridge {
             const widgets = document.querySelectorAll(selector);
             widgets.forEach(widget => widget.remove());
         });
-
-        // Auto-deduce container selector if not provided
-        let container = null;
-        if (containerSelector) {
-            container = document.querySelector(containerSelector);
-        } else if (this.#formContainerViewMap[pathToUnload]) {
-            // Get the form element from the view
-            const formContainerView = this.#formContainerViewMap[pathToUnload];
-            container = formContainerView.getFormElement();
-        }
 
         // Remove DOM content if container is found
         if (container) {
