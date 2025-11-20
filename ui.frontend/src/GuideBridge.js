@@ -494,6 +494,11 @@ class GuideBridge {
             }
         }
 
+        // Clear XFA-specific state if XFA forms are loaded
+        if (window.formBridge && typeof window.formBridge.destroyForm === 'function') {
+            window.formBridge.destroyForm();
+        }
+
         // Clean up global state when this is the last/only form
         // NOTE: Global widgets, caches, and utilities don't have form-specific identifiers,
         // so we can only safely clear them if this is the only/last form on the page.
@@ -522,12 +527,9 @@ class GuideBridge {
             // Clear Utils static state (contextPath, fieldCreatorSets, fieldCreatorOrder)
             Utils._clearState();
 
-            // Clear XFA-specific state if XFA forms are loaded
+            // Clear XFA utility (global XFA logger/utility)
             if (window.xfalib && window.xfalib.ut) {
                 window.xfalib.ut = null;
-            }
-            if (window.formBridge && typeof window.formBridge.destroyForm === 'function') {
-                window.formBridge.destroyForm();
             }
         }
 
