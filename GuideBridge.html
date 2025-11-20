@@ -2484,6 +2484,163 @@ guideBridge.registerConfig(guideBridge.ConfigKeys.LOCALE_CONFIG, () =&gt; consol
     
 </dd>
 
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="unloadAdaptiveForm"><span class="type-signature"></span>unloadAdaptiveForm( [formContainerPath])</h4>
+    
+    
+    <p class="summary"><p>Unloads an adaptive form, removing form container view, handlers, and configurations.</p></p>
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Unloads the adaptive form, cleaning up internal state and removing DOM elements.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>formContainerPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Optional path of the form container to unload.
+If not provided, unloads the currently connected form.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// Simplest - unload current connected form
+guideBridge.unloadAdaptiveForm();
+
+// Unload specific form by path (for multiple forms on page)
+guideBridge.unloadAdaptiveForm(&#x27;/content/forms/af/myform&#x27;);
+
+// Get path from form container and unload
+const formPath = formContainer.getPath();
+guideBridge.unloadAdaptiveForm(formPath);</pre>
+
+
+    
+</dd>
+
         </dl>
     
 
@@ -4889,6 +5046,163 @@ guideBridge.registerConfig(guideBridge.ConfigKeys.LOCALE_CONFIG, () =&gt; consol
 
 
         
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="unloadAdaptiveForm"><span class="type-signature"></span>unloadAdaptiveForm( [formContainerPath])</h4>
+    
+    
+    <p class="summary"><p>Unloads an adaptive form, removing form container view, handlers, and configurations.</p></p>
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Unloads the adaptive form, cleaning up internal state and removing DOM elements.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>formContainerPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Optional path of the form container to unload.
+If not provided, unloads the currently connected form.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// Simplest - unload current connected form
+guideBridge.unloadAdaptiveForm();
+
+// Unload specific form by path (for multiple forms on page)
+guideBridge.unloadAdaptiveForm(&#x27;/content/forms/af/myform&#x27;);
+
+// Get path from form container and unload
+const formPath = formContainer.getPath();
+guideBridge.unloadAdaptiveForm(formPath);</pre>
+
 
     
 </dd>
