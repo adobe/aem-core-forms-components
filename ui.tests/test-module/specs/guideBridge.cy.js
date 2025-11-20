@@ -101,13 +101,18 @@ describe('GuideBridge ', () => {
                 expect($window.guideBridge.isConnected()).to.be.true;
                 expect($window.guideBridge.getFormModel()).to.not.be.null;
                 
+                // Verify MutationObservers exist before unload
+                const mutationObserversBeforeUnload = formContainer._mutationObservers;
+                expect(mutationObserversBeforeUnload).to.be.an('array');
+                const hasObservers = mutationObserversBeforeUnload.length > 0;
+                
                 // Create some mock widget elements in body to test cleanup
                 const mockRecaptchaWidget = $window.document.createElement('div');
                 mockRecaptchaWidget.className = 'cmp-adaptiveform-recaptcha__widget';
                 $window.document.body.appendChild(mockRecaptchaWidget);
                 
                 const mockDatePickerWidget = $window.document.createElement('div');
-                mockDatePickerWidget.className = 'datePickerTarget';
+                mockDatePickerWidget.className = 'datetimepicker datePickerTarget';
                 $window.document.body.appendChild(mockDatePickerWidget);
                 
                 // Set up some cache to test cleanup
@@ -120,7 +125,7 @@ describe('GuideBridge ', () => {
                 expect(formContainerEl).to.not.be.null;
                 expect(formContainerEl.children.length).to.be.greaterThan(0);
                 expect($window.document.querySelector('.cmp-adaptiveform-recaptcha__widget')).to.not.be.null;
-                expect($window.document.querySelector('.datePickerTarget')).to.not.be.null;
+                expect($window.document.querySelector('.datetimepicker.datePickerTarget')).to.not.be.null;
                 
                 // Call unloadAdaptiveForm with just the path
                 $window.guideBridge.unloadAdaptiveForm(formContainerPath);
@@ -130,11 +135,17 @@ describe('GuideBridge ', () => {
                 
                 // Verify widget elements are removed from body
                 expect($window.document.querySelector('.cmp-adaptiveform-recaptcha__widget')).to.be.null;
-                expect($window.document.querySelector('.datePickerTarget')).to.be.null;
+                expect($window.document.querySelector('.datetimepicker.datePickerTarget')).to.be.null;
                 
                 // Verify cache is cleared
                 if ($window.afCache) {
                     expect($window.afCache.store).to.deep.equal({});
+                }
+                
+                // Verify MutationObservers are disconnected and cleared
+                if (hasObservers) {
+                    expect(formContainer._mutationObservers).to.be.an('array');
+                    expect(formContainer._mutationObservers.length).to.equal(0);
                 }
                 
                 // Verify form model is no longer available for the unloaded path

@@ -481,26 +481,46 @@ class GuideBridge {
             return;
         }
         
-        // Get the container element from the view
+        // Get the container element from the view and disconnect mutation observers
         let container = null;
         if (this.#formContainerViewMap[pathToUnload]) {
             const formContainerView = this.#formContainerViewMap[pathToUnload];
             container = formContainerView.getFormElement();
+            
+            // Disconnect all mutation observers for this form
+            if (formContainerView._disconnectMutationObservers) {
+                formContainerView._disconnectMutationObservers();
+            }
+        }
+
+        // Clear DatePicker cache
+        // afCache stores datepicker instances keyed by element IDs
+        // Only clear when this is the last/only form to avoid performance overhead
+        if (window.afCache && typeof window.afCache.store === 'object') {
+            if (Object.keys(this.#formContainerViewMap).length <= 1) {
+                window.afCache.store = {};
+            }
         }
 
         // Clean up widget elements appended to document.body
-        // These widgets are created by captcha components and datepicker that append to body
-        const widgetSelectors = [
-            '.cmp-adaptiveform-recaptcha__widget',
-            '.cmp-adaptiveform-turnstile__widget',
-            '.cmp-adaptiveform-hcaptcha__widget',
-            '.datePickerTarget'
-        ];
-        
-        widgetSelectors.forEach(selector => {
-            const widgets = document.querySelectorAll(selector);
-            widgets.forEach(widget => widget.remove());
-        });
+        // NOTE: These widgets (captcha, datepicker) don't have form-specific identifiers,
+        // so we can only safely remove them if this is the only/last form on the page.
+        // For multi-form scenarios, widgets will remain in DOM but will be garbage collected
+        // when no longer referenced by any form.
+        const isLastForm = Object.keys(this.#formContainerViewMap).length === 1;
+        if (isLastForm) {
+            const widgetSelectors = [
+                '.cmp-adaptiveform-recaptcha__widget',
+                '.cmp-adaptiveform-turnstile__widget',
+                '.cmp-adaptiveform-hcaptcha__widget',
+                '.datetimepicker.datePickerTarget'  // DatePicker popup
+            ];
+            
+            widgetSelectors.forEach(selector => {
+                const widgets = document.querySelectorAll(selector);
+                widgets.forEach(widget => widget.remove());
+            });
+        }
 
         // Remove DOM content if container is found
         if (container) {
@@ -510,12 +530,6 @@ class GuideBridge {
                 // Fallback for older browsers
                 container.innerHTML = '';
             }
-        }
-
-        // Clear DatePicker cache
-        // afCache stores datepicker instances keyed by element IDs
-        if (window.afCache && typeof window.afCache.store === 'object') {
-            window.afCache.store = {};
         }
 
         // Remove the form container from the map

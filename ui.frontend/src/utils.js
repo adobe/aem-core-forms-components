@@ -112,6 +112,11 @@ class Utils {
             childList: true,
             characterData: true
         });
+
+        // Store observer in form container for cleanup
+        if (formContainer._addMutationObserver) {
+            formContainer._addMutationObserver(observer);
+        }
     }
 
     /**
