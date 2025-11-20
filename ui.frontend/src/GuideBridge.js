@@ -456,15 +456,19 @@ class GuideBridge {
      * Unloads the adaptive form, cleaning up internal state and optionally removing DOM elements.
      * @summary Unloads an adaptive form, removing form container view, handlers, and configurations.
      * @param {string} [containerSelector] - Optional CSS selector of the container to remove DOM elements from.
+     *        If not provided, the form container will be automatically found and cleaned.
      * @param {string} [formContainerPath] - Optional path of the form container to unload. If not provided, uses the current formContainerPath.
      * @method
      * @memberof GuideBridge
      * @instance
      * @example
-     * // Unload form and clean up DOM
+     * // Unload form with explicit selector and path
      * guideBridge.unloadAdaptiveForm('#myFormContainer', '/content/forms/af/myform');
      * 
-     * // Unload current form without DOM cleanup
+     * // Unload form with just selector (path is auto-deduced from current form)
+     * guideBridge.unloadAdaptiveForm('[data-cmp-is="adaptiveFormContainer"]');
+     * 
+     * // Unload current form (both selector and DOM are auto-handled)
      * guideBridge.unloadAdaptiveForm();
      * 
      */
@@ -491,16 +495,23 @@ class GuideBridge {
             widgets.forEach(widget => widget.remove());
         });
 
-        // Remove DOM content if containerSelector is provided
+        // Auto-deduce container selector if not provided
+        let container = null;
         if (containerSelector) {
-            const container = document.querySelector(containerSelector);
-            if (container) {
-                if (typeof container.replaceChildren === 'function') {
-                    container.replaceChildren();
-                } else {
-                    // Fallback for older browsers
-                    container.innerHTML = '';
-                }
+            container = document.querySelector(containerSelector);
+        } else if (this.#formContainerViewMap[pathToUnload]) {
+            // Get the form element from the view
+            const formContainerView = this.#formContainerViewMap[pathToUnload];
+            container = formContainerView.getFormElement();
+        }
+
+        // Remove DOM content if container is found
+        if (container) {
+            if (typeof container.replaceChildren === 'function') {
+                container.replaceChildren();
+            } else {
+                // Fallback for older browsers
+                container.innerHTML = '';
             }
         }
 
