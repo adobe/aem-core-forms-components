@@ -522,14 +522,9 @@ class GuideBridge {
             });
         }
 
-        // Remove DOM content if container is found
+        // Remove the entire form container element from DOM
         if (container) {
-            if (typeof container.replaceChildren === 'function') {
-                container.replaceChildren();
-            } else {
-                // Fallback for older browsers
-                container.innerHTML = '';
-            }
+            container.remove();
         }
 
         // Remove the form container from the map

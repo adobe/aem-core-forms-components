@@ -130,8 +130,8 @@ describe('GuideBridge ', () => {
                 // Call unloadAdaptiveForm with just the path
                 $window.guideBridge.unloadAdaptiveForm(formContainerPath);
                 
-                // Verify DOM is cleaned up
-                expect(formContainerEl.children.length).to.equal(0);
+                // Verify container is completely removed from DOM
+                expect($window.document.querySelector(containerSelector)).to.be.null;
                 
                 // Verify widget elements are removed from body
                 expect($window.document.querySelector('.cmp-adaptiveform-recaptcha__widget')).to.be.null;
@@ -185,8 +185,8 @@ describe('GuideBridge ', () => {
                     // Call without any parameters - should auto-find and clean current form
                     $window.guideBridge.unloadAdaptiveForm();
                     
-                    // Verify DOM is cleaned up
-                    expect(formContainerEl.children.length).to.equal(0);
+                    // Verify container is completely removed from DOM
+                    expect($window.document.querySelector(containerSelector)).to.be.null;
                     
                     // Verify form is disconnected
                     expect($window.guideBridge.isConnected()).to.be.false;
