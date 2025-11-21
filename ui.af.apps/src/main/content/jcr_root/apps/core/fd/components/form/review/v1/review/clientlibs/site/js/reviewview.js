@@ -305,11 +305,8 @@
       const editButton = cloneNode.querySelector(Review.selectors.editButton);
       if (editButton) {
         editButton.setAttribute(Review.selectors.fieldId, item.id);
-        const currentAriaLabel = editButton.getAttribute('aria-label');
         const currentItemLabel = item?.label?.value;
-        if (currentItemLabel && !currentAriaLabel.includes(currentItemLabel)) {
-          editButton.setAttribute('aria-label', currentAriaLabel + " " + currentItemLabel);
-        }
+        editButton.setAttribute('aria-label', Granite.I18n.get('Edit') + (currentItemLabel ?  " " + currentItemLabel : ""));
         if (item.enabled === false) {
           editButton.setAttribute('disabled', true);
         }
