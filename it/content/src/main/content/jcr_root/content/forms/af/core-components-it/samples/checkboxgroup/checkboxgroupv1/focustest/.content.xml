@@ -3,13 +3,13 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2023-10-19T13:14:31.885+05:30"
+        cq:lastModified="{Date}2025-11-09T13:14:31.885+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="focustest"
-        sling:configRef="/conf/forms/core-components-it/samples/checkboxgroup/focustest/"
+        sling:configRef="/conf/forms/core-components-it/samples/checkboxgroup/checkboxgroupv1/focustest/"
         sling:resourceType="forms-components-examples/components/page">
         <guideContainer
             fd:version="2.1"
@@ -21,9 +21,9 @@
             themeRef="/libs/fd/af/themes/canvas"
             title="focustest">
             <button
-                jcr:created="{Date}2023-10-19T13:13:52.618+05:30"
+                jcr:created="{Date}2025-11-09T13:13:52.618+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2023-10-19T13:13:52.618+05:30"
+                jcr:lastModified="{Date}2025-11-09T13:13:52.618+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Button"
@@ -40,13 +40,13 @@
                     click="[setFocus(checkboxgroup1697701437345)]"/>
             </button>
             <checkboxgroup
-                jcr:created="{Date}2023-10-19T13:13:56.745+05:30"
+                jcr:created="{Date}2025-11-09T13:13:56.745+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2023-10-19T13:13:56.745+05:30"
+                jcr:lastModified="{Date}2025-11-09T13:13:56.745+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Check Box Group"
-                sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                sling:resourceType="core/fd/components/form/checkboxgroup/v1/checkboxgroup"
                 enum="[0,1]"
                 enumNames="[Item 1, Item 2]"
                 fieldType="checkbox-group"
