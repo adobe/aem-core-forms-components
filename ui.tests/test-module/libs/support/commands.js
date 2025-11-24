@@ -655,6 +655,9 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     //initially long description should have data-cmp-visible="false" to avoid flickering on page load
     cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
+    // check if questiionmark is collapsed
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).invoke('attr', 'aria-expanded')
+    .should('eq', 'false');
     // click on ? mark
     cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).click();
     // long description should be shown
@@ -665,6 +668,9 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     // short description should be hidden.
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
+    // check if questiionmark is expanded
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).invoke('attr', 'aria-expanded')
+    .should('eq', 'true');
 });
 
 Cypress.Commands.add("openSidePanelTab", (tab) => {
