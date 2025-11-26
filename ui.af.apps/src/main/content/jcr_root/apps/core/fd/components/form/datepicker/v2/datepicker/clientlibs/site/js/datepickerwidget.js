@@ -566,7 +566,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.#focusedOnLi = false;
         DatePickerWidget.#visible = true;
         this.#position();
-        
+
         // Add document touch listener for mobile to close datepicker when tapping outside
         if (this.#touchSupported && !this.#documentTouchListener) {
           this.#documentTouchListener = (evt) => {
@@ -576,7 +576,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
           };
           document.addEventListener("touchstart", this.#documentTouchListener, false);
         }
-        
+
         if (this.#options.showCalendarIcon) {
           this.#curInstance.$field.setAttribute('readonly', true);    // when the datepicker is active, deactivate the field
         }
