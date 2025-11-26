@@ -13,11 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<<<<<<< HEAD
 Adaptive Form Date Picker (v2)
-=======
-Adaptive Form Date Picker (v1)
->>>>>>> 454c70bfe824a707337c753f5f475133d983e2f7
 ====
 Adaptive Form Date Picker field component written in HTL.
 
