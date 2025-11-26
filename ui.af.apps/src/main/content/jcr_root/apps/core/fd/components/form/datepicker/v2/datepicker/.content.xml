@@ -3,6 +3,10 @@
           cq:icon="date"
           jcr:description="Add a field with a calendar widget to select a date."
           jcr:primaryType="cq:Component"
+<<<<<<< HEAD
           jcr:title="Adaptive Form Date Picker (v2)"
+=======
+          jcr:title="Adaptive Form Date Picker (v1)"
+>>>>>>> 454c70bfe824a707337c753f5f475133d983e2f7
           sling:resourceSuperType="core/fd/components/form/base/v1/base"
           componentGroup=".core-adaptiveform"/>

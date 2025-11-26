@@ -13,7 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+<<<<<<< HEAD
 Adaptive Form Date Picker (v2)
+=======
+Adaptive Form Date Picker (v1)
+>>>>>>> 454c70bfe824a707337c753f5f475133d983e2f7
 ====
 Adaptive Form Date Picker field component written in HTL.
 
@@ -44,7 +48,11 @@ The following properties are written to JCR for this Form Date component and are
 13. `./displayFormat` - define the template for display pattern (Reference can be found [here](https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns)).
 
 ## Client Libraries
+<<<<<<< HEAD
 The component provides a `core.forms.components.datePicker.v2.runtime` client library category that contains the Javascript runtime for the component. 
+=======
+The component provides a `core.forms.components.datePicker.v1.runtime` client library category that contains the Javascript runtime for the component. 
+>>>>>>> 454c70bfe824a707337c753f5f475133d983e2f7
 It should be added to a relevant site client library using the `embed` property.
 
 ## BEM Description
@@ -92,7 +100,11 @@ We support replace feature that allows replacing Reset Button component to any o
  
 ## Information
 * **Vendor**: Adobe
+<<<<<<< HEAD
 * **Version**: v2
+=======
+* **Version**: v1
+>>>>>>> 454c70bfe824a707337c753f5f475133d983e2f7
 * **Compatibility**: Cloud
 * **Status**: production-ready
 

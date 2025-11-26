@@ -566,7 +566,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.#focusedOnLi = false;
         DatePickerWidget.#visible = true;
         this.#position();
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 454c70bfe824a707337c753f5f475133d983e2f7
         // Add document touch listener for mobile to close datepicker when tapping outside
         if (this.#touchSupported && !this.#documentTouchListener) {
           this.#documentTouchListener = (evt) => {
@@ -576,7 +580,11 @@ if (typeof window.DatePickerWidget === 'undefined') {
           };
           document.addEventListener("touchstart", this.#documentTouchListener, false);
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 454c70bfe824a707337c753f5f475133d983e2f7
         if (this.#options.showCalendarIcon) {
           this.#curInstance.$field.setAttribute('readonly', true);    // when the datepicker is active, deactivate the field
         }
