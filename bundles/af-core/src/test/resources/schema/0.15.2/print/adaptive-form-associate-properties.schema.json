@@ -1,0 +1,28 @@
+{
+    "$id": "classpath:/schema/0.15.2/print/adaptive-form-associate-properties.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+        "enabled": {
+            "title": "Enabled",
+            "description": "If the associate is enabled for the channel.",
+            "type": "boolean",
+            "default": false,
+            "optional": true
+        },
+        "readOnly": {
+            "title": "ReadOnly",
+            "description": "If the associate can edit the components contents. There can be a case where field gets it's value from the prefill service and associate is restricted to edit the field contents. In that case readOnly is kept True.",
+            "type": "boolean",
+            "default": true
+        },
+        "ordered": {
+            "title": "Ordered",
+            "description": "If associate can arrange order of elements of a flowed container.",
+            "type": "boolean",
+            "optional": true,
+            "default": false
+        }
+    }
+}
