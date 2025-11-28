@@ -617,8 +617,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                     AssociateProperties associateProperties = associatePropertiesResource.adaptTo(AssociateProperties.class);
                     ObjectMapper objectMapper = new ObjectMapper();
                     if (associateProperties != null) {
-                        return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {
-                        });
+                        return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {});
                     }
                 } catch (Exception e) {
                     logger.warn("Unable to adapt associate properties", e);
