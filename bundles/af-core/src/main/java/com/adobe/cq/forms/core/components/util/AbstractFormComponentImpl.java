@@ -613,10 +613,15 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (FormConstants.CHANNEL_PRINT.equals(this.channel) && resource != null) {
             Resource associatePropertiesResource = resource.getChild(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER);
             if (associatePropertiesResource != null) {
-                AssociateProperties associateProperties = associatePropertiesResource.adaptTo(AssociateProperties.class);
-                ObjectMapper objectMapper = new ObjectMapper();
-                if (associateProperties != null) {
-                    return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {});
+                try {
+                    AssociateProperties associateProperties = associatePropertiesResource.adaptTo(AssociateProperties.class);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    if (associateProperties != null) {
+                        return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {
+                        });
+                    }
+                } catch (Exception e) {
+                    logger.warn("Unable to adapt associate properties", e);
                 }
             }
         }
