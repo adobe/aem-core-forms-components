@@ -1912,6 +1912,9 @@
             },
             "fd:signerInfo": {
               "$ref": "./adaptive-form-sign-properties.schema.json"
+            },
+            "fd:associate": {
+              "$ref": "./print/adaptive-form-associate-properties.schema.json"
             }
           },
           "additionalProperties": true
