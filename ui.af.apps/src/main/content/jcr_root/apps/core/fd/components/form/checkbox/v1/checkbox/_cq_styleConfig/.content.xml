@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Checkbox">
+    <items jcr:primaryType="nt:unstructured">
+        <field
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Base"
+            id="af2_checkboxfield"
+            longTitle="Base"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <widgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Checkbox"
+                    id="af2_checkboxfieldwidgetandtext"
+                    cssSelector=".cmp-adaptiveform-checkbox"
+                    longTitle="Checkbox Widget And Text"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <checkBoxItem
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Checkbox Item"
+                            id="af2_checkboxitem"
+                            cssSelector=".cmp-adaptiveform-checkbox__widget-container"
+                            longTitle="Checkbox Item"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <checkBoxLabel
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Label"
+                                    id="af2_checkboxlabel"
+                                    cssSelector=".cmp-adaptiveform-checkbox__label"
+                                    longTitle="Checkbox Label"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector=".cmp-adaptiveform-checkbox__label:disabled"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-checkbox__label:hover"/>
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-checkbox__label:focus"/>
+                                    </states>
+                                </checkBoxLabel>
+                                <checkBoxWidgetAndText
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Checkbox"
+                                    id="af2_checkboxwidgetandtext"
+                                    cssSelector=".cmp-adaptiveform-checkbox__widget"
+                                    longTitle="Checkbox Widget"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-checkbox__widget:focus"/>
+                                        <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector=".cmp-adaptiveform-checkbox__widget:disabled"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-checkbox__widget:hover"/>
+                                        <checked
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Selected"
+                                            cssSelector=".cmp-adaptiveform-checkbox__widget:checked"/>
+                                    </states>
+                                </checkBoxWidgetAndText>
+                                <checkBoxDescriptionShort
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Short Description"
+                                        id="af2_checkboxdescriptionshort"
+                                        cssSelector=".cmp-adaptiveform-checkbox__shortdescription"
+                                        longTitle="Checkbox Short Description"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </checkBoxDescriptionShort>
+                                <checkBoxDescriptionLong
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Long Description"
+                                        id="af2_checkboxdescriptionlong"
+                                        cssSelector=".cmp-adaptiveform-checkbox__longdescription"
+                                        longTitle="Checkbox Long Description"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-checkbox__longdescription:focus"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-checkbox__longdescription:hover"/>
+                                    </states>
+                                </checkBoxDescriptionLong>
+                                <checkBoxHelpContainer
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Help Container"
+                                        id="af2_checkboxhelpcontainer"
+                                        cssSelector=".cmp-adaptiveform-checkbox__help-container"
+                                        longTitle="Checkbox Help Container"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-checkbox__help-container:focus"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-checkbox__help-container:hover"/>
+                                        <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector=".cmp-adaptiveform-checkbox__help-container:disabled"/>
+                                    </states>
+                                </checkBoxHelpContainer>
+                                <checkBoxHelpIcon
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Help Icon"
+                                        id="af2_checkboxhelpicon"
+                                        cssSelector=".cmp-adaptiveform-checkbox__questionmark"
+                                        longTitle="Checkbox Help Icon"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-checkbox__questionmark:focus"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-checkbox__questionmark:hover"/>
+                                        <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector=".cmp-adaptiveform-checkbox__questionmark:disabled"/>
+                                    </states>
+                                </checkBoxHelpIcon>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Focus"
+                                    cssSelector=".cmp-adaptiveform-checkbox__widget-container:focus"/>
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-checkbox__widget-container:hover"/>
+                                <disabled
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Disabled"
+                                    cssSelector=".cmp-adaptiveform-checkbox__widget-container input[type='checkbox']:disabled"/>
+                            </states>
+                        </checkBoxItem>
+                        <checkBoxErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Checkbox Error Message"
+                                id="af2_checkboxerrormessage"
+                                cssSelector=".cmp-adaptiveform-checkbox__errormessage"
+                                longTitle="Checkbox Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </checkBoxErrorMessage>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-checkbox:hover"/>
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-checkbox:focus"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-checkbox[data-cmp-enabled='false']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-checkbox[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-checkbox[data-cmp-valid='true']"/>
+                    </states>
+                </widgetAndText>
+            </items>
+        </field>
+    </items>
+</jcr:root>
