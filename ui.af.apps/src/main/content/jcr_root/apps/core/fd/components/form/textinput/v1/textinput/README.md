@@ -44,6 +44,8 @@ The following properties are written to JCR for this Form Text component and are
 10. `./minLength` - defines the minimum length of input allowed for the field.
 11. `./maxLengthMessage` - defines the maximum length error message for the field.
 12. `./minLengthMessage` - defines the minimum length error message for the field.
+13. `./displayPatternType` - defines the display pattern type for formatting the input value (e.g., 'phonenumber', 'socialsecuritynumber', 'email-alphanumeric', 'zipcode')
+14. `./displayValueExpression` - defines the expression used to format the display value (e.g., 'formatInput($field.$value, 'phonenumber')')
 
 
 ### Behavior of `maxLength` and `maxLengthMessage`
@@ -52,6 +54,14 @@ The `maxLength` property in HTML5 compliant fields, such as those used in the Ad
 
 To accommodate such use-cases, while still adhering to HTML5 compliance within the core component, the `maxLengthMessage` property is provided. This property allows developers to define a custom error message that is displayed when the input exceeds the `maxLength`, offering a way to guide users even when custom logic permits them to enter more characters than the standard limit.
 
+### Display Format Feature
+
+The Text Input component supports automatic formatting of input values using predefined display patterns:
+
+- **Phone Number**: `(123) 456-7890`
+- **Social Security Number**: `123-45-6789`
+- **Email Alphanumeric**: `alphanumeric@example.com`
+- **Zip Code**: `12345`
 
 ## Client Libraries
 The component provides a `core.forms.components.textinput.v1.runtime` client library category that contains the Javascript runtime for the component. 

@@ -54,6 +54,7 @@ public class DropDownImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DROPDOWN_1 = CONTENT_ROOT + "/dropdown-1";
     private static final String PATH_MULTISELECT_DROPDOWN = CONTENT_ROOT + "/multiselect-dropdown";
+    private static final String PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY = CONTENT_ROOT + "/multiselect-dropdown-2";
     private static final String PATH_DROPDOWN2 = CONTENT_ROOT + "/dropdown2";
 
     private static final String PATH_DROPDOWN = CONTENT_ROOT + "/dropdown";
@@ -135,7 +136,7 @@ public class DropDownImplTest {
     @Test
     void testGetScreenReaderText() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
-        assertEquals("'Custom screen reader text'", dropdown.getScreenReaderText());
+        assertEquals("Custom screen reader text", dropdown.getScreenReaderText());
         DropDown dropdownMock = Mockito.mock(DropDown.class);
         Mockito.when(dropdownMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, dropdownMock.getScreenReaderText());
@@ -355,6 +356,12 @@ public class DropDownImplTest {
     }
 
     @Test
+    void testGetMultiSelectDefault_WithDiffProperty() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY, DropDown.class, context);
+        assertArrayEquals(new Long[] { 0L, 1L }, dropdown.getDefault());
+    }
+
+    @Test
     void testGetMultiSelectDefault_InvalidType() throws IllegalAccessException {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN2, DropDown.class, context);
         FieldUtils.writeField(dropdown, "type", Type.NUMBER, true);
@@ -471,5 +478,57 @@ public class DropDownImplTest {
     void testNoFieldType() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_WITHOUT_FIELDTYPE, DropDown.class, context);
         Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_DROPDOWN_WITHOUT_FIELDTYPE));
+    }
+
+    @Test
+    void testGetTypeWithNullBaseType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "type", null, true);
+        assertNull(dropdown.getType());
+    }
+
+    @Test
+    void testGetTypeWithStringType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "type", Type.STRING, true);
+        assertEquals(Type.STRING, dropdown.getType());
+
+        // Test multi-select with string type
+        FieldUtils.writeField(dropdown, "multiSelect", true, true);
+        assertEquals(Type.STRING_ARRAY, dropdown.getType());
+    }
+
+    @Test
+    void testGetTypeWithNumberType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "type", Type.NUMBER, true);
+        assertEquals(Type.NUMBER, dropdown.getType());
+
+        // Test multi-select with number type
+        FieldUtils.writeField(dropdown, "multiSelect", true, true);
+        assertEquals(Type.NUMBER_ARRAY, dropdown.getType());
+    }
+
+    @Test
+    void testGetTypeWithBooleanType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "type", Type.BOOLEAN, true);
+        assertEquals(Type.BOOLEAN, dropdown.getType());
+
+        // Test multi-select with boolean type
+        FieldUtils.writeField(dropdown, "multiSelect", true, true);
+        assertEquals(Type.BOOLEAN_ARRAY, dropdown.getType());
+    }
+
+    @Test
+    void testGetTypeWithExistingArrayType() throws IllegalAccessException {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_1, DropDown.class, context);
+        FieldUtils.writeField(dropdown, "multiSelect", true, true);
+        FieldUtils.writeField(dropdown, "type", Type.STRING_ARRAY, true);
+        assertEquals(Type.STRING_ARRAY, dropdown.getType());
+
+        // Test single-select with array type (should remove array suffix)
+        FieldUtils.writeField(dropdown, "multiSelect", false, true);
+        assertEquals(Type.STRING, dropdown.getType());
     }
 }

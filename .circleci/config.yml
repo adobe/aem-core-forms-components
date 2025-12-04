@@ -28,10 +28,14 @@ common:
           name: Docker compose
           command: |
             set +e  # Disable exit on error
+            # Clean up any existing containers first
+            docker-compose -f .circleci/docker-compose.yml down -v --remove-orphans || true
+            # Pull images in parallel to save time
+            # docker-compose -f .circleci/docker-compose.yml pull --parallel || true
             for i in $(seq 3); do
               echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker2-granite-release-local.dr-uw2.adobeitc.com
               echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin docker-adobe-cif-release.dr-uw2.adobeitc.com
-              docker-compose -f .circleci/docker-compose.yml down -v
+              # docker-compose -f .circleci/docker-compose.yml down -v
               docker-compose -f .circleci/docker-compose.yml up -d && break
               sleep 10  # Add a delay between retries
             done
@@ -132,10 +136,14 @@ executors:
   forms_executor_java8:
     docker:
       - image: cimg/openjdk:8.0-browsers
+  forms_executor_java21:
+    docker:
+      - image: cimg/openjdk:21.0-browsers
   test_executor_cloudready:
     machine:
       image: ubuntu-2204:2024.01.1
       docker_layer_caching: true
+    resource_class: medium
 
 jobs:
   build-java-11:
@@ -161,13 +169,13 @@ jobs:
           root: /home/circleci/build
           paths:
             - configuration.json
-            - bundles/core/target
-            - bundles/af-core/target
+            - bundles/core/target/*.jar
+            - bundles/af-core/target/*.jar
             - ui.apps/target/*.zip
             - ui.af.apps/target/*.zip
             - examples/ui.apps/target/*.zip
             - examples/ui.content/target/*.zip
-            - examples/core/target
+            - examples/core/target/*.jar
             - it/core/target/*.jar
             - it/apps/target/*.zip
             - it/content/target/*.zip
@@ -182,17 +190,41 @@ jobs:
           conf: .circleci/codecov.yml
           flags: unittests
 
-  cypress-chrome-cloudready-with-addon:
-    executor: test_executor_cloudready
-    environment:
-      AEM: addon
-      TYPE: cypress
-      BROWSER: chrome
-      PRERELEASE: 'true'
-    resource_class: xlarge
+  build-java-21:
+    executor: forms_executor_java21
     working_directory: /home/circleci/build
-    parallelism: 8
-    <<: *cypress_test_steps
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - maven-repo-java21-v1-{{ checksum "pom.xml" }}
+            - maven-repo-java21-v1-
+      - run:
+          name: Update permissions
+          command: sudo chown -R circleci /usr/local/lib/node_modules
+      - run:
+          name: Build with Java 21
+          command: node .circleci/ci/build.js
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-java21-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+      - store_test_results:
+          path: bundles/core/target/surefire-reports
+      - store_artifacts:
+          path: bundles/core/target/surefire-reports
+
+  # cypress-chrome-cloudready-with-addon:
+  #   executor: test_executor_cloudready
+  #   environment:
+  #     AEM: addon
+  #     TYPE: cypress
+  #     BROWSER: chrome
+  #     PRERELEASE: 'true'
+  #   resource_class: xlarge
+  #   working_directory: /home/circleci/build
+  #   parallelism: 8
+  #   <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon:
     executor: test_executor_cloudready
@@ -202,9 +234,9 @@ jobs:
       BROWSER: chrome
       PRERELEASE: 'true'
       FT: 'true'
-    resource_class: xlarge
+    resource_class: large
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
   cypress-chrome-cloudready-with-latest-addon-without-ft:
@@ -215,9 +247,9 @@ jobs:
       BROWSER: chrome
       PRERELEASE: 'true'
       FT: 'false'
-    resource_class: xlarge
+    resource_class: large
     working_directory: /home/circleci/build
-    parallelism: 8
+    parallelism: 4
     <<: *cypress_test_steps
 
 #  cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
@@ -393,12 +425,16 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - cypress-chrome-cloudready-with-addon:
+      - build-java-21:
           filters:
             tags:
               only: /.*/
-          requires:
-            - build-java-11
+      # - cypress-chrome-cloudready-with-addon:
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #     requires:
+      #       - build-java-11
       - cypress-chrome-cloudready-with-latest-addon:
           filters:
             tags:

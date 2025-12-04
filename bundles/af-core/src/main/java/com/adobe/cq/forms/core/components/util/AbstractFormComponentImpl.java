@@ -17,7 +17,17 @@ package com.adobe.cq.forms.core.components.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -44,11 +54,14 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.print.associate.AssociateProperties;
+import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
@@ -58,6 +71,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -88,6 +102,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     protected Boolean visible;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LANG)
+    @Nullable
+    protected String langJcr;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_UNBOUND_FORM_ELEMENT)
     @Nullable
     protected Boolean unboundFormElement;
@@ -106,6 +124,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected Style currentStyle;
+
+    @Nullable
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VIEWTYPE)
+    protected String viewType;
 
     /**
      * Returns dorBindRef of the form field
@@ -155,6 +177,21 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public void setI18n(@Nonnull I18n i18n) {
         this.i18n = i18n;
+    }
+
+    public void setLang(@Nullable String lang) {
+        this.lang = lang;
+    }
+
+    @Override
+    @Nullable
+    public String getLang() {
+        return langJcr != null ? langJcr : lang;
+    }
+
+    @JsonProperty("lang")
+    public String getLangIfPresent() {
+        return langJcr;
     }
 
     public BaseConstraint.Type getType() {
@@ -235,6 +272,14 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return visible;
     }
 
+    @Override
+    public @NotNull String getExportedType() {
+        if (viewType != null) {
+            return viewType;
+        }
+        return resource.getResourceType();
+    }
+
     // API kept for backward compatibility, this is not to be used anymore
     @JsonIgnore
     protected boolean getEditMode() {
@@ -257,7 +302,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return customLayoutProperties;
     }
 
+    public static final String CUSTOM_ASSOCIATE_PROPERTY_WRAPPER = "fd:associate";
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    public static final String CUSTOM_DOR_CONTAINER_WRAPPER = "dorContainer";
     // used for DOR and SPA editor to work
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
@@ -295,6 +342,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (!disabledScripts.isEmpty()) {
             properties.put("fd:disabledXfaScripts", disabledScripts);
         }
+        Map<String, Object> associateProperties = getAssociateProperties();
+        if (!associateProperties.isEmpty()) {
+            properties.put(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER, associateProperties);
+        }
         return properties;
     }
 
@@ -327,11 +378,35 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private Map<String, Object> getRulesProperties() {
         Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
         Map<String, Object> customRulesProperties = new LinkedHashMap<>();
-        String status = getRulesStatus(ruleNode);
-        if (!STATUS_NONE.equals(status)) {
-            customRulesProperties.put(RULES_STATUS_PROP_NAME, getRulesStatus(ruleNode));
+        if (ruleNode == null) {
+            logger.debug("No rules node found for resource: {}", resource.getPath());
+            return customRulesProperties;
+        }
+        addValidationStatus(ruleNode, customRulesProperties);
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel)) {
+            populateAdditionalRulesProperties(ruleNode, customRulesProperties);
         }
         return customRulesProperties;
+    }
+
+    private void addValidationStatus(Resource ruleNode, Map<String, Object> customRulesProperties) {
+        String status = getRulesStatus(ruleNode);
+        if (!STATUS_NONE.equals(status)) {
+            customRulesProperties.put(RULES_STATUS_PROP_NAME, status);
+        }
+    }
+
+    private void populateAdditionalRulesProperties(@NotNull Resource ruleNode, Map<String, Object> customRulesProperties) {
+        String[] RULES = { "fd:formReady", "fd:layoutReady", "fd:docReady", "fd:calc", "fd:init", "fd:validate", "fd:indexChange" };
+        ValueMap props = ruleNode.adaptTo(ValueMap.class);
+        if (props != null) {
+            Arrays.stream(RULES).forEach(rule -> addRuleProperty(props, customRulesProperties, rule));
+        }
+    }
+
+    private void addRuleProperty(@NotNull ValueMap props, Map<String, Object> customRulesProperties, String rule) {
+        Optional<String[]> propertyValue = Optional.ofNullable(props.get(rule, String[].class));
+        propertyValue.ifPresent(value -> customRulesProperties.put(rule, value));
     }
 
     /***
@@ -506,7 +581,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
     private Map<String, Object> getCustomProperties() {
-        Map<String, Object> customProperties = new HashMap<>();
+        Map<String, Object> customProperties = new LinkedHashMap<>();
         Map<String, String> templateBasedCustomProperties;
         List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
         Set<String> reservedProperties = ReservedProperties.getReservedProperties();
@@ -533,6 +608,24 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return customProperties;
     }
 
+    private Map<String, Object> getAssociateProperties() {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel) && resource != null) {
+            Resource associatePropertiesResource = resource.getChild(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER);
+            if (associatePropertiesResource != null) {
+                try {
+                    AssociateProperties associateProperties = associatePropertiesResource.adaptTo(AssociateProperties.class);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    if (associateProperties != null) {
+                        return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {});
+                    }
+                } catch (Exception e) {
+                    logger.warn("Unable to adapt associate properties", e);
+                }
+            }
+        }
+        return Collections.emptyMap();
+    }
+
     @Override
     @JsonIgnore
     public Map<String, Object> getDorProperties() {
@@ -543,6 +636,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         if (dorBindRef != null) {
             customDorProperties.put("dorBindRef", dorBindRef);
+        }
+        Map<String, Object> dorContainer = getDorContainer();
+        if (dorContainer != null) {
+            customDorProperties.put(CUSTOM_DOR_CONTAINER_WRAPPER, dorContainer);
         }
         return customDorProperties;
     }
@@ -567,4 +664,26 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         return new ArrayList<>(disabledScripts);
     }
+
+    /**
+     * Returns the dor container properties.
+     *
+     * @return Map of dor container properties if `fd:dorContainer` node is present otherwise returns null
+     */
+    @JsonIgnore
+    @Override
+    public Map<String, Object> getDorContainer() {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel) && resource != null) {
+            Resource dorContainerResource = resource.getChild("fd:dorContainer");
+            if (dorContainerResource != null) {
+                DorContainer dorContainer = dorContainerResource.adaptTo(DorContainer.class);
+                ObjectMapper objectMapper = new ObjectMapper();
+                if (dorContainer != null) {
+                    return objectMapper.convertValue(dorContainer, new TypeReference<Map<String, Object>>() {});
+                }
+            }
+        }
+        return null;
+    }
+
 }

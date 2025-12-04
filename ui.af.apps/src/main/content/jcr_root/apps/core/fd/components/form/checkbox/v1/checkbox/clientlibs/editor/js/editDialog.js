@@ -79,17 +79,29 @@
   function handleDataTypeSelectionAndValidation(dialog) {
     var dataTypeSelect = dialog.find(DATA_TYPE + " coral-select");
     var preselectedDataType = dataTypeSelect[0].selectedItem ? dataTypeSelect[0].selectedItem.value : '';
-    if (preselectedDataType == 'boolean') {
-      dialog.find(ENUMS).hide();
+    var checkedValueSelector = 'input[name="./checkedValue"]';
+
+    function applyCheckedValueBehavior(dataType) { // function which applies checked value behavior based for boolean data type
+      var checkedValueInput = document.querySelector(checkedValueSelector);
+      if (!checkedValueInput) {
+        return;
+      }
+      if (dataType === 'boolean') {
+        checkedValueInput.value = 'true';
+        checkedValueInput.setAttribute('readonly', 'readonly');
+      } else {
+        checkedValueInput.removeAttribute('readonly');
+      }
     }
+
+    // Apply initial behavior based on preselected type
+    applyCheckedValueBehavior(preselectedDataType);
 
     dataTypeSelect.on('change', function() {
       var selectedDataType = dataTypeSelect[0].selectedItem ? dataTypeSelect[0].selectedItem.value : '';
-      if (selectedDataType == 'boolean') {
-        dialog.find(ENUMS).hide();
-      } else {
-        dialog.find(ENUMS).show();
-      }
+      dialog.find(ENUMS).show(); // Keep enums visible for all data types (including boolean)
+
+      applyCheckedValueBehavior(selectedDataType); // Toggle checked value input behavior based on data type
     });
 
     var registerValidator = function(selector, validate) {

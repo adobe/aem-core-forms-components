@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,12 +25,14 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.models.form.Button;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class ButtonImplTest {
@@ -147,5 +152,14 @@ public class ButtonImplTest {
     void testNoFieldType() {
         Button button = Utils.getComponentUnderTest(PATH_BUTTON_NO_FIELDTYPE, Button.class, context);
         assertEquals(FieldType.BUTTON.getValue(), button.getFieldType());
+    }
+
+    @Test
+    void testDorContainer() {
+        Button mockButton = Mockito.mock(ButtonImpl.class);
+        Mockito.when(mockButton.getDorContainer()).thenReturn(new HashMap<>());
+        Mockito.when(mockButton.getDorProperties()).thenCallRealMethod();
+        Map<String, Object> dorProperties = mockButton.getDorProperties();
+        assertTrue(dorProperties.containsKey(ButtonImpl.CUSTOM_DOR_CONTAINER_WRAPPER));
     }
 }

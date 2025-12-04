@@ -14,7 +14,7 @@
   "readOnly": false,
   "maximum": 2000000,
   "minimum": 10000,
-  "screenReaderText": "'Custom screen reader text'",
+  "screenReaderText": "Custom screen reader text",
   "label": {
     "visible": false,
     "value": "def"

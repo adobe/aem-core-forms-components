@@ -1,0 +1,49 @@
+{
+  "id": "datetime-b3cd19b469",
+  "dataRef": "a.b",
+  "fieldType": "datetime-input",
+  "name": "abc",
+  "visible": false,
+  "description": "dummy",
+  "tooltip": "test-short-description",
+  "type": "string",
+  "required": false,
+  "enabled": false,
+  "lang": "it-IT",
+  "constraintMessages": {
+    "type": "incorrect type",
+    "minimum": "minimum message",
+    "maximum": "maximum message"
+  },
+  "readOnly": true,
+  "default": "2025-05-11T11:21",
+  "format": "date-time",
+  "label": {
+    "value": "def",
+    "visible": true
+  },
+  "screenReaderText": "'Custom screen reader text'",
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/datetime-customized"
+  },
+  "rules": {
+    "visible": "true()",
+    "label": "{value : 'some label'}",
+    "value": "false()",
+    "enabled": "true()"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "minimum": "2025-05-07T11:21",
+  "maximum": "2025-05-21T11:21",
+  ":type": "core/fd/components/form/datetime/v1/datetime"
+}

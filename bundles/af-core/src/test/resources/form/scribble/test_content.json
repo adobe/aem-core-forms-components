@@ -1,0 +1,18 @@
+{
+  "scribble": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Scribble",
+    "name": "scribble1710484027357",
+    "fieldType": "file-input",
+    "value": "",
+    "type": "string",
+    "fd:dialogLabel": "Scribble",
+    "properties": {
+      "fd:dor": {
+        "dorExclusion": false
+      },
+      "fd:path": "/content/scribble"
+    },
+    "sling:resourceType": "core/fd/components/form/scribble/v1/scribble"
+  }
+} 

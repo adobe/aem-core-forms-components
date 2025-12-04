@@ -177,17 +177,21 @@
                     let patternComponentParentDiv=patternComponent.closest("div");
                     patternComponentParentDiv.setAttribute("hidden", true);
                 }else {
-                    let displayFormatParentDiv=formatComponent.closest("div");
-                    switch (displayPatternSelectedValue) {
-                        case ""     :
-                        case "#####################.###############" :
-                            displayFormatParentDiv.setAttribute("hidden", true);
-                            break;
-                        default           :
-                            displayFormatParentDiv.removeAttribute("hidden");
+                    // Only handle format component if it exists and is not hidden
+                    if (formatComponent && !formatComponent.closest("div").hasAttribute("hidden")) {
+                        let displayFormatParentDiv=formatComponent.closest("div");
+                        switch (displayPatternSelectedValue) {
+                            case ""     :
+                            case "#####################.###############" :
+                                displayFormatParentDiv.setAttribute("hidden", true);
+                                break;
+                            default           :
+                                displayFormatParentDiv.removeAttribute("hidden");
+                        }
                     }
                 }
-                if(displayPatternSelectedValue!="custom") {
+                // Only update format component value if it exists and is not hidden
+                if (formatComponent && !formatComponent.closest("div").hasAttribute("hidden") && displayPatternSelectedValue!="custom") {
                     formatComponent.value = patternComponent.value;
                 }
             }

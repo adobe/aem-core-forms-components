@@ -494,7 +494,6 @@ class FormFileInputWidgetBase {
 
                         // if the file is not invalid, show it and push it to internal array
                         if (!isCurrentInvalidFileSize && !isCurrentInvalidFileName && !isCurrentInvalidMimeType) {
-                            this.showFileList(currFileName);
                             if(this.isMultiSelect()) {
                                 this.values.push(currFileName);
                                 this.fileArr.push(file);

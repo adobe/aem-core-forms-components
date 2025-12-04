@@ -22,11 +22,13 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
@@ -63,6 +65,7 @@ import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -83,6 +86,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     public static final String FD_ROLE_ATTRIBUTE = "fd:roleAttribute";
     private static final String FD_CUSTOM_FUNCTIONS_URL = "fd:customFunctionsUrl";
     private static final String FD_DATA_URL = "fd:dataUrl";
+    private static final String FD_VIEW_PRINT_PATH = "fd:view/print";
+    private static final String EXCLUDE_FROM_DOR_IF_HIDDEN = "excludeFromDoRIfHidden";
 
     /** Constant representing email submit action type */
     private static final String SS_EMAIL = "email";
@@ -140,12 +145,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private String data;
 
+    @Nullable
+    private Boolean excludeFromDoRIfHidden;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SPEC_VERSION)
     @Default(values = DEFAULT_FORMS_SPEC_VERSION)
     private String specVersion;
 
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
+
+    @Inject
+    private ResourceResolver resourceResolver;
 
     @Override
     public String getFieldType() {
@@ -169,6 +180,17 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             FormClientLibManager formClientLibManager = request.adaptTo(FormClientLibManager.class);
             if (formClientLibManager != null && clientLibRef != null) {
                 formClientLibManager.addClientLibRef(clientLibRef);
+            }
+        }
+    }
+
+    @PostConstruct
+    private void initExcludeFromDoRIfHidden() {
+        Resource viewPrintResource = resource.getChild(FD_VIEW_PRINT_PATH);
+        if (viewPrintResource != null) {
+            ValueMap vm = viewPrintResource.getValueMap();
+            if (vm.containsKey(EXCLUDE_FROM_DOR_IF_HIDDEN)) {
+                excludeFromDoRIfHidden = vm.get(EXCLUDE_FROM_DOR_IF_HIDDEN, Boolean.class);
             }
         }
     }
@@ -300,19 +322,21 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                     ComponentUtils.getEncodedPath(resource.getPath() + ".model.json");
             }
         }
-        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId();
+        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId());
     }
 
     @Override
     @JsonIgnore
     public String getDataUrl() {
-        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId();
+        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId());
     }
 
     @Override
+    @JsonProperty("lang")
     public String getLang() {
-        // todo: uncomment once forms sdk is released
-        if (request != null) {
+        if (lang != null) {
+            return lang;
+        } else if (request != null) {
             return GuideUtils.getAcceptLang(request);
         } else {
             return FormContainer.super.getLang();
@@ -402,6 +426,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (dorTemplateType != null) {
             customDorProperties.put(DOR_TEMPLATE_TYPE, dorTemplateType);
         }
+        if (excludeFromDoRIfHidden != null) {
+            customDorProperties.put(ReservedProperties.FD_EXCLUDE_FROM_DOR_IF_HIDDEN, excludeFromDoRIfHidden);
+        }
         return customDorProperties;
     }
 
@@ -441,7 +468,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getCustomFunctionUrl() {
-        return getContextPath() + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId();
+        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/"
+            + getId());
     }
 
     @JsonIgnore

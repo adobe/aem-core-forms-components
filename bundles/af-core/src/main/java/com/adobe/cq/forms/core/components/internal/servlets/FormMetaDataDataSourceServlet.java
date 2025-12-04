@@ -30,7 +30,6 @@ import java.util.stream.StreamSupport;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.JcrConstants;
@@ -143,7 +142,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
             FormMetaDataType type = FormMetaDataType.fromString(getParameter(config, TYPE, request, null));
             String dataModel = getParameter(config, DATA_MODEL, request, "");
             actionTypeDataSource = new SimpleDataSource(getDataSourceResources(
-                request, request.getResourceResolver(), type, dataModel).iterator());
+                request, request.getResourceResolver(), type, dataModel, config).iterator());
         }
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
@@ -171,8 +170,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         return type.equals(FormMetaDataType.LANG) && entry.getKey().startsWith(FormMetaDataType.LANG.getValue());
     }
 
-    private List<Resource> getDataSourceResources(HttpServletRequest request, ResourceResolver resourceResolver, FormMetaDataType type,
-        String dataModel) {
+    private List<Resource> getDataSourceResources(SlingHttpServletRequest request, ResourceResolver resourceResolver, FormMetaDataType type,
+        String dataModel, Config config) {
         List<Resource> resources = new ArrayList<>();
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
@@ -200,7 +199,15 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                             }
                         }
                     }
-                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Custom", "custom"));
+                    // Only add "Custom" option for non-text-input components
+                    String fieldType = "";
+                    if (config != null) {
+                        String retrievedFieldType = getParameter(config, FIELD_TYPE, request, "");
+                        fieldType = retrievedFieldType != null ? retrievedFieldType : "";
+                    }
+                    if (fieldType.isEmpty() || !"text-input".equals(fieldType)) {
+                        resources.add(getResourceForDropdownDisplay(resourceResolver, "Custom", "custom"));
+                    }
                     break;
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model

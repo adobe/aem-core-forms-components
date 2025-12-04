@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2025-07-03T10:58:02.810+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        fd:ignoreTranslationInvalidation="{Boolean}true"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="ss"
+        sling:configRef="/conf/forms/ss/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:autoSaveStrategyType="time"
+            fd:version="2.1"
+            jcr:lastModified="{Date}2025-06-24T11:21:36.548+05:30"
+            jcr:lastModifiedBy="admin"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            dorType="none"
+            fieldType="form"
+            schemaType="none"
+            specVersion="0.15.0"
+            textIsRich="true"
+            thankYouMessage="&lt;p>Thank you for submitting the form.&lt;/p>&#xd;&#xa;"
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="ss">
+            <textinput
+                jcr:created="{Date}2025-06-19T11:42:45.294+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-07-02T10:30:36.890+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Text Input"
+                sling:resourceType="forms-components-examples/components/form/textinput"
+                description="&lt;p>dlijweoidj&lt;/p>&#xd;&#xa;&lt;p>adejwoed&lt;/p>&#xd;&#xa;"
+                enabled="{Boolean}true"
+                fieldType="text-input"
+                hideTitle="false"
+                maxLength="50"
+                minLength="40"
+                multiLine="true"
+                name="textinput1750313565337"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true,true]"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <scribble
+                fd:dialogLabel="Please sign here"
+                fd:viewType="signature"
+                jcr:created="{Date}2025-06-19T11:42:48.986+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-06-19T11:42:48.986+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Scribble"
+                sling:resourceType="forms-components-examples/components/form/scribble"
+                fieldType="file-input"
+                format="data-url"
+                name="scribble1750313569015"
+                placeholder="Type Your Signature Here"
+                type="string"/>
+            <numberinput
+                jcr:created="{Date}2025-06-19T11:43:04.970+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-06-19T11:43:04.970+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Number Input"
+                sling:resourceType="forms-components-examples/components/form/numberinput"
+                fieldType="number-input"
+                name="numberinput1750313585024"/>
+            <scribble_753819671
+                fd:dialogLabel="Please sign here"
+                fd:viewType="signature"
+                jcr:created="{Date}2025-06-19T11:43:11.454+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-06-19T11:43:11.454+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Scribble"
+                sling:resourceType="forms-components-examples/components/form/scribble"
+                fieldType="file-input"
+                format="data-url"
+                name="scribble_7538196711750313591487"
+                placeholder="Type Your Signature Here"
+                type="string"/>
+            <submit
+                jcr:created="{Date}2025-06-24T10:42:02.531+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-06-24T10:42:02.531+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Submit"
+                sling:resourceType="forms-components-examples/components/form/actions/submit"
+                buttonType="submit"
+                dorExclusion="true"
+                fieldType="button"
+                name="submit1750741922589">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1667450213112&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1667450213112&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SUBMIT_FORM&quot;\,&quot;items&quot;:[]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;submitForm()&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[submitForm()]"/>
+            </submit>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>

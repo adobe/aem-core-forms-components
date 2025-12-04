@@ -112,9 +112,38 @@ describe("Form with Accordion Container", () => {
                 cy.get(`#${firstChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
                 cy.get(`#${firstChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
                 cy.get(`#${firstChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+
+                cy.get(`#${firstChildComponentButtonId}`).click().then(() => {
+                    cy.get(`#${firstChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
+                    cy.get(`#${firstChildComponentButtonId}`).should('have.attr', 'aria-controls', firstChildComponentPanelId);
+                    cy.get(`#${firstChildComponentItemId}`).should('have.attr', 'data-cmp-expanded');
+                    cy.get(`#${firstChildComponentPanelId}`).should('have.class', 'cmp-accordion__panel--expanded');
+                    cy.get(`#${firstChildComponentPanelId}`).should('have.attr', 'aria-labelledby', firstChildComponentButtonId);
+
+                    cy.get(`#${secondChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+                    cy.get(`#${secondChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+                    cy.get(`#${secondChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+
+                    cy.get(`#${firstChildComponentButtonId}`).click().then(() => {
+                        cy.get(`#${firstChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+                        cy.get(`#${firstChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+                        cy.get(`#${secondChildComponentItemId}`).should('not.have.attr', 'data-cmp-expanded');
+                        cy.get(`#${secondChildComponentButtonId}`).should('not.have.class', 'cmp-accordion__button--expanded');
+                        cy.get(`#${secondChildComponentPanelId}`).should('not.have.class', 'cmp-accordion__panel--expanded');
+
+                        cy.get(`#${firstChildComponentButtonId}`).click().then(() => {
+                            cy.get(`#${firstChildComponentButtonId}`).should('have.class', 'cmp-accordion__button--expanded');
+                            cy.get(`#${firstChildComponentButtonId}`).should('have.attr', 'aria-controls', firstChildComponentPanelId);
+                            cy.get(`#${firstChildComponentItemId}`).should('have.attr', 'data-cmp-expanded');
+                            cy.get(`#${firstChildComponentPanelId}`).should('have.class', 'cmp-accordion__panel--expanded');
+                            cy.get(`#${firstChildComponentPanelId}`).should('have.attr', 'aria-labelledby', firstChildComponentButtonId);
+                        });
+                    });
+
+                });
             });
-        })
-    })
+        });
+    });
 
     it("should collapse/expand view properly with keyboard", () => {
 

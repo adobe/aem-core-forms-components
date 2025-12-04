@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.apache.sling.testing.resourceresolver.MockValueMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +32,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
@@ -52,6 +55,7 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_DISABLED_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponent";
     private static final String PATH_COMPONENT_WITH_INVALID_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentinvalid";
     private static final String PATH_COMPONENT_WITH_NO_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentnone";
+    private static final String PATH_COMPONENT_WITH_RULES = CONTENT_ROOT + "/textinputWithPrintRule";
     private static final String AF_PATH = "/content/forms/af/testAf";
     private static final String PAGE_PATH = "/content/testPage";
 
@@ -184,5 +188,50 @@ public class AbstractFormComponentImplTest {
         AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
         Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
         return abstractFormComponentImpl;
+    }
+
+    @Test
+    public void testGetDorContainer() {
+        Resource resource = Mockito.mock(Resource.class);
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+
+        Resource dorContainerResource = Mockito.mock(Resource.class);
+        Mockito.doReturn(dorContainerResource).when(resource).getChild("fd:dorContainer");
+
+        DorContainer dorContainerMock = Mockito.mock(DorContainer.class);
+        Mockito.doReturn(dorContainerMock).when(dorContainerResource).adaptTo(DorContainer.class);
+
+        assertThrows(java.lang.IllegalArgumentException.class, () -> abstractFormComponentImpl.getDorContainer());
+
+    }
+
+    @Test
+    public void testPrintChannelRule() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Object rulesProperties = properties.get("fd:rules");
+        assertNotNull(rulesProperties);
+        Object formReadyRule = ((Map<String, Object>) rulesProperties).get("fd:formReady");
+        assertNotNull(formReadyRule);
+    }
+
+    @Test
+    public void testAssociateProperties() {
+        Resource resource = Mockito.mock(Resource.class);
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+
+        ValueMap valueMap = new MockValueMap(resource);
+        Mockito.doReturn(valueMap).when(resource).getValueMap();
+        Mockito.doReturn(null).when(resource).getChild("fd:dorContainer");
+        Mockito.doReturn(null).when(resource).getChild("fd:rules");
+        Resource associateResource = Mockito.mock(Resource.class);
+        Mockito.doReturn(associateResource).when(resource).getChild("fd:associate");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:associate"));
     }
 }

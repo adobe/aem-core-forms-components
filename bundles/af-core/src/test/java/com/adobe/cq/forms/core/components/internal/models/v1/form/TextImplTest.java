@@ -40,6 +40,7 @@ public class TextImplTest {
     private static final String PATH_TEXT = CONTENT_ROOT + "/text";
     private static final String PATH_TEXT_DATALAYER = CONTENT_ROOT + "/text-datalayer";
     private static final String PATH_TEXT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/text-without-fieldtype";
+    private static final String PATH_TEXT_VIEW_TYPE = CONTENT_ROOT + "/text-with-viewtype";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -121,6 +122,12 @@ public class TextImplTest {
     void testJSONExport() throws Exception {
         Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
         Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT));
+    }
+
+    @Test
+    void testJSONExportForViewType() throws Exception {
+        Text text = Utils.getComponentUnderTest(PATH_TEXT_VIEW_TYPE, Text.class, context);
+        Utils.testJSONExport(text, Utils.getTestExporterJSONPath(BASE, PATH_TEXT_VIEW_TYPE));
     }
 
     @Test
