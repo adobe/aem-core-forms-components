@@ -28,18 +28,17 @@
         
         function updateMimeTypeState() {
             let hasExtensions = extensionsField.find('coral-multifield-item').length > 0;
+            let deleteIcons = mimeTypeField.find('coral-icon[icon="delete"]');
             
-            // Disable the entire multifield and its contents
-            mimeTypeField.css({
-                'pointer-events': hasExtensions ? 'none' : 'auto',
-                'opacity': hasExtensions ? '0.5' : '1'
-            });
-            mimeTypeField.prop('disabled', hasExtensions);
-
-            // Disable delete icons and their SVGs
-            mimeTypeField.find('coral-icon[icon="delete"], ._coral-Icon--svg').css({
-                'pointer-events': hasExtensions ? 'none' : 'auto'
-            });
+            mimeTypeField
+                .prop('disabled', hasExtensions)
+                .toggleClass('disabled', hasExtensions)
+                .toggleClass('enabled', !hasExtensions);
+            
+            // Toggle delete icon classes
+            deleteIcons
+                .toggleClass('cmp-adaptiveform-fileinput__mimeTypeFieldDeleteIconsDisabled', hasExtensions)
+                .toggleClass('cmp-adaptiveform-fileinput__mimeTypeFieldDeleteIcons', !hasExtensions);
 
             // Handle MIME type items if extensions exist
             if (hasExtensions) {
@@ -74,14 +73,11 @@
         // Check initial state without triggering events
         let hasExtensions = extensionsField.find('coral-multifield-item').length > 0;
         if (hasExtensions) {
-            mimeTypeField.css({
-                'pointer-events': 'none',
-                'opacity': '0.5'
-            });
-            mimeTypeField.prop('disabled', true);
-            mimeTypeField.find('coral-icon[icon="delete"], ._coral-Icon--svg').css({
-                'pointer-events': 'none'
-            });
+            mimeTypeField
+                .addClass('disabled')
+                .prop('disabled', true);
+            mimeTypeField.find('coral-icon[icon="delete"]')
+                .addClass('cmp-adaptiveform-fileinput__mimeTypeFieldDeleteIconsDisabled');
         }
     }
 

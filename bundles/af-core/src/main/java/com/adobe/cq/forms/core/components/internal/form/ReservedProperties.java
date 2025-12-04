@@ -128,7 +128,6 @@ public final class ReservedProperties {
     public static final String PN_UNCHECKED_VALUE = "uncheckedValue";
     public static final String PN_MAX_FILE_SIZE = "maxFileSize";
     public static final String PN_FILE_ACCEPT = "accept";
-    public static final String PN_FILE_ACCEPT_EXTENSIONS = "acceptExtensions";
     public static final String PN_BUTTON_TEXT = "buttonText";
     public static final String PN_WRAP_DATA = "wrapData";
     public static final String PN_FRAGMENT_PATH = "fragmentPath";
@@ -171,6 +170,7 @@ public final class ReservedProperties {
     public static final String FD_EXCLUDE_FROM_DOR_IF_HIDDEN = "fd:excludeFromDoRIfHidden";
     public static final String FD_DIALOG_LABEL = "fd:dialogLabel";
     public static final String FD_XFA_SCRIPTS = "fd:xfaScripts";
+    public static final String FD_FILE_ACCEPT_EXTENSIONS = "fd:acceptExtensions";
 
     public static final String FD_DRAFT_ID = "fd:draftId";
 

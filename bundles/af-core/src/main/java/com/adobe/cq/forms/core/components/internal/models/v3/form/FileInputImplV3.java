@@ -52,7 +52,7 @@ public class FileInputImplV3 extends FileInputImplV2 {
     @Default(values = FileInput.DEFAULT_DRAGDROP_TEXT)
     protected String dragDropTextV3;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FILE_ACCEPT_EXTENSIONS)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_FILE_ACCEPT_EXTENSIONS)
     protected String[] acceptExtensions;
 
     @Override
