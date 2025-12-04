@@ -127,7 +127,7 @@ public class CheckBoxImplTest {
     @Test
     void testGetScreenReaderText() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
-        assertEquals("'Custom screen reader text'", checkbox.getScreenReaderText());
+        assertEquals("Custom screen reader text", checkbox.getScreenReaderText());
         CheckBox checkboxMock = Mockito.mock(CheckBox.class);
         Mockito.when(checkboxMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, checkboxMock.getScreenReaderText());

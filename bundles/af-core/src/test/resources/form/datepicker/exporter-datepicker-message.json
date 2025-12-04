@@ -17,7 +17,7 @@
   "label": {
     "value": "def"
   },
-  "screenReaderText": "'Custom screen reader text'",
+  "screenReaderText": "Custom screen reader text",
   "events": {
     "custom:setProperty": [
       "$event.payload"

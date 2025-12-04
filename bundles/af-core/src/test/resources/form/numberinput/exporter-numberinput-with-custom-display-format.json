@@ -1,0 +1,22 @@
+{
+  "id": "numberinput-7e9f700655",
+  "fieldType": "number-input",
+  "name": "abc",
+  "type": "number",
+  "displayFormat": "customCurrency",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false
+    },
+    "fd:path": "/content/numberinput-with-custom-display-format"
+  },
+  ":type": "core/fd/components/form/numberinput/v1/numberinput"
+} 

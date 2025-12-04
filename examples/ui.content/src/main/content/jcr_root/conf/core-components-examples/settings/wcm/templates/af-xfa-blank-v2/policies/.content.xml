@@ -28,6 +28,11 @@
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="wcm/core/components/policies/mapping">
                         </numberinput>
+                        <textinput
+                                cq:policy="forms-components-examples/components/form/textinput/default"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="wcm/core/components/policies/mapping">
+                        </textinput>
                         <datepicker
                                 cq:policy="forms-components-examples/components/form/datepicker/default"
                                 jcr:primaryType="nt:unstructured"

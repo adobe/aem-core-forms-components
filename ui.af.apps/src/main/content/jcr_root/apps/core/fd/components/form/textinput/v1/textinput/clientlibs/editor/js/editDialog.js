@@ -25,6 +25,8 @@
         TEXTINPUT_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__richtextvalue",
         TEXTINPUT_VALIDATIONPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__validationpattern",
         TEXTINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__validationformat",
+        TEXTINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displaypattern",
+        TEXTINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displayformat",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     function handleValidationPatternDropDown(dialog) {
@@ -35,6 +37,45 @@
         Utils.handlePatternFormat(dialog,TEXTINPUT_VALIDATIONPATTERN,TEXTINPUT_VALIDATIONFORMAT);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown,handleValidationFormat);
+    function handleDisplayPatternDropDown(dialog) {
+        Utils.handlePatternDropDown(dialog,TEXTINPUT_DISPLAYPATTERN,TEXTINPUT_DISPLAYFORMAT);
+    }
+
+    function handleDisplayFormat(dialog){
+        // nothing to do for text input
+    }
+
+    function handleDisplayValueExpression(dialog) {
+        let patternComponent = dialog.find(TEXTINPUT_DISPLAYPATTERN)[0];
+        
+        function updateDisplayValueExpression() {
+            let selectedPattern = patternComponent.selectedItem ? patternComponent.selectedItem.value : '';
+            
+            // Use the selected pattern value directly as it's already the correct format type
+            let formatType = selectedPattern || '';
+            
+            // Set the displayValueExpression property
+            let displayValueExpressionField = dialog.find('input[name="./displayValueExpression"]')[0];
+            if (displayValueExpressionField) {
+                if (formatType) {
+                    displayValueExpressionField.value = 'formatInput($field.$value, \'' + formatType + '\')';
+                } else {
+                    displayValueExpressionField.value = '';
+                }
+            }
+            
+            // Also update the displayFormat field to keep it in sync
+            let displayFormatField = dialog.find('input[name="./displayFormat"]')[0];
+            if (displayFormatField) {
+                displayFormatField.value = formatType;
+            }
+        }
+        
+        // Initialize and add event listeners
+        updateDisplayValueExpression();
+        patternComponent.addEventListener("change", updateDisplayValueExpression);
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown,handleValidationFormat,handleDisplayPatternDropDown,handleDisplayFormat,handleDisplayValueExpression);
 
 })(jQuery);

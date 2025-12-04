@@ -35,25 +35,54 @@ class FormContainer {
         this._fields = {};
         this._deferredParents = {};
         this._element = params._element;
+        this._mutationObservers = []; // Store mutation observers for cleanup
 
         // Prevent default behaviour on form container.
         this.#preventDefaultSubmit();
     }
 
     /**
-     * Prevents the default behavior of the Enter key on components within the formContainer
+     * Prevents the default behavior of the Enter key on text input components within the formContainer
      * from triggering a form submission and redirecting to the Thank-You Page.
+     * Preserves accessibility by allowing Enter key to work normally on interactive elements.
      */
     #preventDefaultSubmit(){
         if(this._element) {
             this._element.addEventListener('keydown', (event) => {
+                if (event.key !== 'Enter') {
+                    return;
+                }
+
                 const target = event.target;
-                const isSubmitOrReset = target.tagName === 'INPUT' && (target.type === 'submit' || target.type === 'reset');
-                if (event.key === 'Enter' && target.tagName !== 'SELECT' && target.tagName !== 'BUTTON' && !isSubmitOrReset) {
+                
+                // Only prevent default on text-like inputs that would cause unwanted form submission
+                // Allow Enter to work normally on buttons, links, elements with roles, and other interactive elements
+                const shouldPreventSubmission = target.tagName === 'INPUT' && 
+                    ['text', 'password', 'email', 'url', 'search', 'tel', 'number'].includes(target.type);
+                    
+                if (shouldPreventSubmission) {
                     event.preventDefault();
                 }
             });
         }
+    }
+
+    /**
+     * Adds a mutation observer to the container for cleanup.
+     * @param {MutationObserver} observer - The mutation observer to track.
+     * @private
+     */
+    _addMutationObserver(observer) {
+        this._mutationObservers.push(observer);
+    }
+
+    /**
+     * Disconnects all mutation observers.
+     * @private
+     */
+    _disconnectMutationObservers() {
+        this._mutationObservers.forEach(observer => observer.disconnect());
+        this._mutationObservers = [];
     }
 
     /**

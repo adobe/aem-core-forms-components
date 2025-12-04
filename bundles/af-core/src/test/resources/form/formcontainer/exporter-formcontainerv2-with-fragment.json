@@ -1,0 +1,113 @@
+{
+  ":items": {
+    "fragment": {
+      ":items": {
+        "textinput": {
+          ":type": "core/fd/components/form/textinput/v1/textinput",
+          "events": {
+            "custom:setProperty": [
+              "$event.payload"
+            ]
+          },
+          "fieldType": "text-input",
+          "id": "textinput-a286959469",
+          "label": {
+            "value": "Text Input"
+          },
+          "name": "fragmenttextinput",
+          "properties": {
+            "fd:dor": {
+              "dorExclusion": false
+            },
+            "fd:path": "/content/forms/af/demo/jcr:content/printfragment/print/jcr:content/guideContainer/textinput"
+          },
+          "type": "string"
+        }
+      },
+      ":itemsOrder": [
+        "textinput"
+      ],
+      ":type": "core/fd/components/form/fragment/v1/fragment",
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "fieldType": "panel",
+      "id": "fragment-cf97dd9759",
+      "label": {
+        "value": "Fragment"
+      },
+      "maxOccur": 4,
+      "minOccur": 0,
+      "name": "fragment-123",
+      "properties": {
+        "customProp": "customPropValue",
+        "fd:dor": {
+          "dorExcludeDescription": false,
+          "dorExcludeTitle": false,
+          "dorExclusion": false
+        },
+        "fd:fragment": true,
+        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2-with-fragment/fragment",
+        "fd:viewType": "fragment"
+      },
+      "repeatable": true,
+      "type": "object"
+    },
+    "textinput": {
+      ":type": "core/fd/components/form/textinput/v1/textinput",
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "fieldType": "text-input",
+      "id": "textinput-98750b73f9",
+      "label": {
+        "value": "Text Input"
+      },
+      "name": "fragmenttextinput",
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2-with-fragment/textinput"
+      },
+      "type": "string"
+    }
+  },
+  ":itemsOrder": [
+    "textinput",
+    "fragment"
+  ],
+  ":type": "core/fd/components/print/container/v1/container",
+  "action": "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+  "adaptiveform": "0.15.2",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "fieldType": "form",
+  "id": "L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+  "lang": "en",
+  "metadata": {
+    "grammar": "json-formula-1.0.0",
+    "version": "1.0.0"
+  },
+  "properties": {
+    "customProp": "customPropValue",
+    "fd:customFunctionsUrl": "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+    "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
+    "fd:dor": {
+      "dorTemplateRef": "xyz",
+      "dorType": "generate"
+    },
+    "fd:formDataEnabled": true,
+    "fd:isHamburgerMenuEnabled": false,
+    "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2-with-fragment",
+    "fd:roleAttribute": "test-role-attribute",
+    "fd:schemaType": "BASIC"
+  }
+}

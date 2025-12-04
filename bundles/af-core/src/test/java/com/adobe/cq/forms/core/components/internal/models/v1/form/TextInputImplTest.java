@@ -32,6 +32,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
+import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.style.ComponentStyleInfo;
@@ -64,6 +65,11 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
     private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
     private static final String PATH_TEXTINPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/textinput-without-fieldtype";
+    private static final String PATH_TEXTINPUT_EMPTYVALUE_NULL = CONTENT_ROOT + "/textinput-emptyvalue-null";
+    private static final String PATH_TEXTINPUT_EMPTYVALUE_UNDEFINED = CONTENT_ROOT + "/textinput-emptyvalue-undefined";
+    private static final String PATH_TEXTINPUT_EMPTYVALUE_EMPTY_STRING = CONTENT_ROOT + "/textinput-emptyvalue-empty-string";
+    private static final String PATH_TEXTINPUT_EMPTYVALUE_INVALID = CONTENT_ROOT + "/textinput-emptyvalue-invalid";
+    private static final String PATH_TEXTINPUT_EMPTYVALUE_NOT_SET = CONTENT_ROOT + "/textinput-emptyvalue-not-set";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -158,7 +164,7 @@ public class TextInputImplTest {
     @Test
     void testGetScreenReaderText() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
-        assertEquals("'Custom screen reader text'", textInput.getScreenReaderText());
+        assertEquals("Custom screen reader text", textInput.getScreenReaderText());
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.getScreenReaderText()).thenCallRealMethod();
         assertEquals(null, textInputMock.getScreenReaderText());
@@ -516,5 +522,58 @@ public class TextInputImplTest {
     void testNoFieldType() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_WITHOUT_FIELDTYPE, TextInput.class, context);
         assertEquals(FieldType.TEXT_INPUT.getValue(), textInput.getFieldType());
+    }
+
+    @Test
+    void testEmptyValueNull() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_EMPTYVALUE_NULL, TextInput.class, context);
+        assertEquals("null", textInput.getEmptyValue());
+    }
+
+    @Test
+    void testEmptyValueUndefined() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_EMPTYVALUE_UNDEFINED, TextInput.class, context);
+        assertEquals("undefined", textInput.getEmptyValue());
+    }
+
+    @Test
+    void testEmptyValueEmptyString() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_EMPTYVALUE_EMPTY_STRING, TextInput.class, context);
+        assertEquals("", textInput.getEmptyValue());
+    }
+
+    @Test
+    void testEmptyValueInvalidDefaultsToEmptyString() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_EMPTYVALUE_INVALID, TextInput.class, context);
+        assertEquals("", textInput.getEmptyValue()); // Should default to empty string for invalid values
+    }
+
+    @Test
+    void testEmptyValueNotSet() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_EMPTYVALUE_NOT_SET, TextInput.class, context);
+        assertEquals(null, textInput.getEmptyValue()); // Should return null when property is not set
+    }
+
+    @Test
+    void testEmptyValueEnumFromString() {
+        // Test the enum's fromString method directly
+        assertEquals(AbstractFieldImpl.EmptyValue.NULL,
+            AbstractFieldImpl.EmptyValue.fromString("null"));
+        assertEquals(AbstractFieldImpl.EmptyValue.UNDEFINED,
+            AbstractFieldImpl.EmptyValue.fromString("undefined"));
+        assertEquals(AbstractFieldImpl.EmptyValue.EMPTY_STRING,
+            AbstractFieldImpl.EmptyValue.fromString(""));
+        assertEquals(AbstractFieldImpl.EmptyValue.EMPTY_STRING,
+            AbstractFieldImpl.EmptyValue.fromString("invalid-value"));
+        assertEquals(null,
+            AbstractFieldImpl.EmptyValue.fromString(null));
+    }
+
+    @Test
+    void testEmptyValueEnumGetValue() {
+        // Test the enum's getValue method
+        assertEquals("null", AbstractFieldImpl.EmptyValue.NULL.getValue());
+        assertEquals("undefined", AbstractFieldImpl.EmptyValue.UNDEFINED.getValue());
+        assertEquals("", AbstractFieldImpl.EmptyValue.EMPTY_STRING.getValue());
     }
 }

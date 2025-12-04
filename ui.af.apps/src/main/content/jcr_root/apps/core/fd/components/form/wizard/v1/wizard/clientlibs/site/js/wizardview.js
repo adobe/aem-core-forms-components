@@ -127,14 +127,20 @@
              */
             #bindEvents() {
                 const _self = this;
-                this.getNextButtonDiv().addEventListener("click", function (event) {
-                    _self.#navigateToNextTab();
-                })
-                this.getPreviousButtonDiv().addEventListener("click", function (event) {
-                    _self.#navigateToPreviousTab();
-                })
+                const actionKeys = ['Enter', ' ', 'Spacebar', 'Space'];
 
-
+                ["click", "keydown"].forEach(function(event){
+                    _self.getNextButtonDiv().addEventListener(event, function(event){
+                        if (event.type ==='click' || (event.type === 'keydown' && actionKeys.includes(event.key))) {
+                            _self.#navigateToNextTab();
+                        }
+                    });
+                    _self.getPreviousButtonDiv().addEventListener(event, function(event){
+                        if (event.type ==='click' || (event.type === 'keydown' && actionKeys.includes(event.key))) {
+                            _self.#navigateToPreviousTab();
+                        }
+                    });
+                })
             }
 
             /**

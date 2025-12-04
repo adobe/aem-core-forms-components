@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
-import com.adobe.cq.export.json.ComponentExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -34,6 +33,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @ProviderType
 public interface Base extends FormComponent {
     public final String DATE_FORMATTER = "yyyy-MM-dd";
+
+    public final String DATE_TIME_FORMATTER = "yyyy-MM-dd'T'HH:mm:ss";
 
     /**
      * Constant representing the default language used, typically "en-US".
@@ -113,16 +114,6 @@ public interface Base extends FormComponent {
     }
 
     /**
-     * @see ComponentExporter#getExportedType()
-     * @since com.adobe.cq.wcm.core.components.models.form 14.2.0
-     */
-    @NotNull
-    @Override
-    default String getExportedType() {
-        return "";
-    }
-
-    /**
      * Returns the tool tip of the field
      *
      * @return the tool tip of the field
@@ -142,17 +133,5 @@ public interface Base extends FormComponent {
     @JsonIgnore
     default boolean isTooltipVisible() {
         return false;
-    }
-
-    /**
-     * Returns the language to use for formatting the field.
-     *
-     * @return returns the language to use for formatting the field.
-     * @since com.adobe.cq.forms.core.components.models.form 5.3.1
-     */
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Nullable
-    default String getLang() {
-        return DEFAULT_LANGUAGE;
     }
 }

@@ -36,6 +36,50 @@
             tooltipDiv: `.${Button.bemBlock}__shortdescription`
         };
 
+        constructor(params) {
+            super(params);
+            const formModel = this.formContainer?.getModel?.();
+            if (!formModel) { return; }
+            
+            formModel.subscribe((action) => { // hide loader if validation fails (no submit performed)
+                const errors = action?.payload;
+                if (Array.isArray(errors) && errors.length > 0) {
+                    this._hideLoader();
+                }
+            }, 'validationComplete');
+
+            formModel.subscribe(() => { // hide loader on submit success
+                this._hideLoader();
+            }, 'submitSuccess');
+            
+            formModel.subscribe(() => { // hide loader on submit error
+                this._hideLoader();
+            }, 'submitError');
+        }
+
+        _container = null;
+
+        _getContainer() {
+            if (this._container) return this._container;
+            const container = this.formContainer?.getFormElement?.();
+            if (container) this._container = container;
+            return this._container;
+        }
+
+        _showLoader() {
+            const container = this._getContainer();
+            if (container) {
+                container.classList.add('cmp-adaptiveform-container--submitting');
+            }
+        }
+
+        _hideLoader() {
+            const container = this._getContainer();
+            if (container) {
+                container.classList.remove('cmp-adaptiveform-container--submitting');
+            }
+        }
+
         getQuestionMarkDiv() {
             return this.element.querySelector(Button.selectors.qm);
         }
@@ -69,6 +113,9 @@
             this.getWidget().addEventListener("click", (event) => {
                 if (this.widget.type === 'submit' || this.widget.type === 'reset') {
                     event.preventDefault();
+                }
+                if (this.widget.type === 'submit') {
+                    this._showLoader();
                 }
                 this._model.dispatch(new FormView.Actions.Click());
             });

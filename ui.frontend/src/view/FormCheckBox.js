@@ -16,9 +16,14 @@
 
 import FormFieldBase from "./FormFieldBase.js";
 
+
+/**
+ * @module FormView
+ */
+
 /**
  * Class representing components based on CheckBox.
- * @extends module:FormView~FormCheckBox
+ * @extends module:FormView~FormFieldBase
  */
 class FormCheckBox extends FormFieldBase {
 

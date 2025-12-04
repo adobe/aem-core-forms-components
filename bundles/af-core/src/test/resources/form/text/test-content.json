@@ -41,5 +41,11 @@
     "jcr:primaryType": "nt:unstructured",
     "sling:resourceType": "core/fd/components/form/text/v1/text",
     "name" : "abc"
+  },
+  "text-with-viewtype" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/text/v1/text",
+    "name" : "abc",
+    "fd:viewType" : "text123"
   }
 }

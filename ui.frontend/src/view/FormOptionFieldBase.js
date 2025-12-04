@@ -16,9 +16,14 @@
 
 import FormFieldBase from "./FormFieldBase.js";
 
+
+/**
+ * @module FormView
+ */
+
 /**
  * Class containing common view code for dropdown, checkboxgroup and radiobutton
- * @extends module:FormView~FormOptionFieldBase
+ * @extends module:FormView~FormFieldBase
  */
 class FormOptionFieldBase extends FormFieldBase {
     constructor(params) {
@@ -117,13 +122,24 @@ class FormOptionFieldBase extends FormFieldBase {
                 let span = option.querySelector('span');
                 let input = option.querySelector('input');
                 let valueToSet = index < newEnumNames.length ? newEnumNames[index] : input.value;
-                span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(valueToSet) : valueToSet;
+                let purifiedValue = window.DOMPurify ?  window.DOMPurify.sanitize(valueToSet) : valueToSet;
+                span.innerHTML = purifiedValue;
+                let richScreenReaderText = `${this._model.label.value}:  ${purifiedValue}`;
+                let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
+                input.setAttribute("aria-label", plainScreenReaderText);
             });
         } else {
             [...this.getOptions()].forEach((option, index) => {
                 let span = option.querySelector('span');
+                let input = option.querySelector('input');
+                let purifiedValue = window.DOMPurify ?  window.DOMPurify.sanitize(newEnumNames[index]) : newEnumNames[index];
                 if(span) {
-                    span.innerHTML = window.DOMPurify ?  window.DOMPurify.sanitize(newEnumNames[index]) : newEnumNames[index];
+                    span.innerHTML = purifiedValue;
+                }
+                if(input) {
+                    let richScreenReaderText = `${this._model.label.value}:  ${purifiedValue}`;
+                    let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
+                    input.setAttribute("aria-label", plainScreenReaderText);
                 }
             });
         }

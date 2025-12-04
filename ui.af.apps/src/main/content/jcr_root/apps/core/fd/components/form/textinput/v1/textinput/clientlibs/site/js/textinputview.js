@@ -81,6 +81,20 @@
                 this.setWidgetValueToModelValue();
                 this.triggerEnter();
             });
+            if (model.fieldType === "multiline-input") {
+                this.widget.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        // Prevent default action of Enter key to avoid form submission
+                        event.preventDefault();
+                        // Add a newline character to the widget value
+                        let cursorPosition = this.widget.selectionStart;
+                        let textBefore = this.widget.value.substring(0, cursorPosition);
+                        let textAfter = this.widget.value.substring(this.widget.selectionEnd);
+                        this.widget.value = textBefore + '\n' + textAfter;
+                        this.widget.selectionStart = this.widget.selectionEnd = cursorPosition + 1;
+                    }
+                });
+            }
         }
     }
 

@@ -1,0 +1,23 @@
+{
+    "id": "scribble-ca4ee66cea",
+    "fieldType": "file-input",
+    "name": "scribble1710484027357",
+    "type": "string",
+    "properties": {
+        "fd:dor": {
+            "dorExclusion": false
+        },
+        "fd:path": "/content/scribble",
+        "fd:viewType": "signature",
+        "fd:dialogLabel": "Scribble"
+    },
+    "label": {
+        "value": "Scribble"
+    },
+    "events": {
+        "custom:setProperty": [
+            "$event.payload"
+        ]
+    },
+    ":type": "core/fd/components/form/scribble/v1/scribble"
+}

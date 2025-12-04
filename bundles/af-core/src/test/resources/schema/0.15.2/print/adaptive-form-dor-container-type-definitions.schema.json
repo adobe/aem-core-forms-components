@@ -1,0 +1,284 @@
+{
+  "$id": "classpath:/schema/0.15.2/print/adaptive-form-dor-container-type-definitions.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Specifies the border properties for the object.",
+  "$defs": {
+    "Message": {
+      "title": "Text Value",
+      "description": "Specifies the text value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Text Content",
+          "description": "Specifies the content for the text.",
+          "type": "string"
+        }
+      }
+    },
+    "Picture": {
+      "title": "Picture Clause",
+      "description": "Specifies the picture for the user interface.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Picture Clause Content",
+          "description": "Specifies the content for the picture.",
+          "type": "string"
+        }
+      }
+    },
+    "Edge": {
+      "type": "object",
+      "properties": {
+        "presence": {
+          "title": "Edge Presence",
+          "description": "Specifies the presence attribute for the edge.",
+          "type": "string"
+        },
+        "stroke": {
+          "title": "Edge Stroke",
+          "description": "Specifies the stroke attribute for the edge.",
+          "type": "string"
+        },
+        "thickness": {
+          "title": "Edge Thickness",
+          "description": "Specifies the thickness attribute for the edge.",
+          "type": "string"
+        },
+        "color": {
+          "title": "Edge Color",
+          "description": "Specifies the color attribute for the edge.",
+          "$ref": "#/$defs/Color"
+        }
+      }
+    },
+    "Corner": {
+      "title": "Corner",
+      "description": "Specifies the corner.",
+      "type": "object",
+      "properties": {
+        "presence": {
+          "title": "Corner Presence",
+          "description": "Specifies the presence attribute for the corner.",
+          "type": "string"
+        },
+        "stroke": {
+          "title": "Corner Stroke",
+          "description": "Specifies the stroke attribute for the corner.",
+          "type": "string"
+        },
+        "thickness": {
+          "title": "Corner Thickness",
+          "description": "Specifies the thickness attribute for the corner.",
+          "type": "string"
+        },
+        "radius": {
+          "title": "Corner Radius",
+          "description": "Specifies the radius attribute for the corner.",
+          "type": "string"
+        },
+        "inverted": {
+          "title": "Corner Inverted",
+          "description": "Specifies the inverted attribute for the corner.",
+          "type": "string"
+        },
+        "join": {
+          "title": "Corner Join",
+          "description": "Specifies the join attribute for the corner.",
+          "type": "string"
+        },
+        "color": {
+          "title": "Corner Color",
+          "description": "Specifies the color attribute for the edge.",
+          "$ref": "#/$defs/Color"
+        }
+      }
+    },
+    "Color": {
+      "title": "Color",
+      "description": "Specifies the color attribute.",
+      "type": "object",
+      "properties": {
+        "value": {
+          "title": "Color Value",
+          "description": "Specifies the color value.",
+          "type": "string"
+        }
+      }
+    },
+    "TextValue": {
+      "title": "Text Value",
+      "description": "Specifies the text value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Text Content",
+          "description": "Specifies the content for the text.",
+          "type": "string"
+        },
+        "maxChars": {
+          "title": "Text Max Chars",
+          "description": "Specifies the maximum characters for the text.",
+          "type": "string"
+        }
+      }
+    },
+    "IntegerValue": {
+      "title": "Integer Value",
+      "description": "Specifies the integer value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Integer Content",
+          "description": "Specifies the content for the integer.",
+          "type": "string"
+        }
+      }
+    },
+    "FloatValue": {
+      "title": "Float Value",
+      "description": "Specifies the float value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Float Content",
+          "description": "Specifies the content for the float.",
+          "type": "string"
+        }
+      }
+    },
+    "RichTextValue": {
+      "title": "Rich Text Value",
+      "description": "Specifies the rich text value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Rich Text Content",
+          "description": "Specifies the content for the rich text.",
+          "type": "string"
+        },
+        "contentType": {
+          "title": "Rich Text Content Type",
+          "description": "Specifies the content type for the rich text.",
+          "type": "string"
+        }
+      }
+    },
+    "LineValue": {
+      "title": "Line Value",
+      "description": "Specifies the line value for the object.",
+      "type": "object",
+      "properties": {
+        "slope": {
+          "title": "Line Slope",
+          "description": "Specifies the slope for the line.",
+          "type": "string"
+        },
+        "edge": {
+          "title": "Line Edge",
+          "description": "Specifies the edge for the line.",
+          "$ref": "#/$defs/Edge"
+        }
+      }
+    },
+    "RectangleValue": {
+      "title": "Rectangle Value",
+      "description": "Specifies the rectangle value for the object.",
+      "type": "object",
+      "properties": {
+        "edges": {
+          "$ref": "./adaptive-form-dor-container-edges.schema.json"
+        },
+        "corners": {
+          "$ref": "./adaptive-form-dor-container-corners.schema.json"
+        },
+        "fill": {
+          "$ref": "./adaptive-form-dor-container-fill.schema.json"
+        }
+      }
+    },
+    "ImageValue": {
+      "title": "Image Value",
+      "description": "Specifies the image value for the object.",
+      "type": "object",
+      "properties": {
+        "href": {
+          "title": "Image Href",
+          "description": "Specifies the href for the image.",
+          "type": "string"
+        },
+        "content": {
+          "title": "Image Content",
+          "description": "Specifies the content for the image.",
+          "type": "string"
+        },
+        "contentType": {
+          "title": "Image Content Type",
+          "description": "Specifies the content type for the image.",
+          "type": "string"
+        }
+      }
+    },
+    "DateValue": {
+      "title": "Date Value",
+      "description": "Specifies the date value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Date Content",
+          "description": "Specifies the content for the date.",
+          "type": "string"
+        }
+      }
+    },
+    "DateTimeValue": {
+      "title": "Date Time Value",
+      "description": "Specifies the date time value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Date Time Content",
+          "description": "Specifies the content for the date time.",
+          "type": "string"
+        }
+      }
+    },
+    "BooleanValue": {
+      "title": "Boolean Value",
+      "description": "Specifies the boolean value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Boolean Content",
+          "description": "Specifies the content for the boolean.",
+          "type": "string"
+        }
+      }
+    },
+    "DecimalValue": {
+      "title": "Decimal Value",
+      "description": "Specifies the decimal value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Decimal Content",
+          "description": "Specifies the content for the decimal.",
+          "type": "string"
+        }
+      }
+    },
+    "TimeValue": {
+      "title": "Time Value",
+      "description": "Specifies the time value for the object.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "title": "Time Content",
+          "description": "Specifies the content for the time.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

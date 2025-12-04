@@ -20,7 +20,7 @@
     "<p>Item 2</p>"
   ],
   "default": "0",
-  "screenReaderText": "'custom text'",
+  "screenReaderText": "custom text",
   "label": {
     "value": "Radio Button"
   },
