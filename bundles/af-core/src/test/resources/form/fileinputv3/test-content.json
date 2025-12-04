@@ -32,7 +32,7 @@
     "tooltip": "test-short-description",
     "maxFileSize" : "4",
     "accept" : ["audio/*", "video/*", "image/*"],
-    "acceptExtensions": [
+    "fd:acceptExtensions": [
       "jpg",
       "png"
     ]
