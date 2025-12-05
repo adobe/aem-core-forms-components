@@ -66,7 +66,7 @@ class HTTPAPILayer {
             lang = `${params['afAcceptLang']}`
         } else {
             // check for selector in the URL
-            const parts = window.location.pathname.split('.');
+            const parts = window.location.pathname.split('.html');
             if (parts?.length >= 3) {
                 lang = `${parts[parts.length - 2]}`;
             }
