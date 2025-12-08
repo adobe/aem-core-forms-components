@@ -58,6 +58,7 @@
                                             <title jcr:primaryType="nt:unstructured"
                                                    granite:class="cmp-adaptiveform-base__title"
                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                   localized="{Boolean}true"
                                                    fieldLabel="Title"
                                                    name="./jcr:title"/>
                                             <richTextTitle jcr:primaryType="nt:unstructured"
