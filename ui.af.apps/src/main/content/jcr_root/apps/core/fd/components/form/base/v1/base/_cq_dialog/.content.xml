@@ -192,6 +192,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     granite:class="cmp-adaptiveform-base__placeholder"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    localized="{Boolean}true"
                                                     fieldLabel="Placeholder text"
                                                     name="./placeholder"/>
                                             <enums jcr:primaryType="nt:unstructured"
