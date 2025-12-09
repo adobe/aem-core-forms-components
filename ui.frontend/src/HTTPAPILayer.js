@@ -66,9 +66,15 @@ class HTTPAPILayer {
             lang = `${params['afAcceptLang']}`
         } else {
             // check for selector in the URL
-            const parts = window.location.pathname.split('.');
-            if (parts?.length >= 3) {
-                lang = `${parts[parts.length - 2]}`;
+            const selectorMatch = (window.location.pathname || "").match(/\/([^/]+)\.html(?=\/|$)/); // capture page name prior to .html
+            if (selectorMatch && selectorMatch.length > 1) {
+                const parts = selectorMatch[1].split('.');
+                if (parts.length >= 2) {
+                    const possibleLocale = parts[parts.length - 1];
+                    if (Constants.LOCALE_SELECTOR_PATTERN.test(possibleLocale)) {
+                        lang = possibleLocale;
+                    }
+                }
             }
         }
         // If 'afAcceptLang' is not set and URL selector is not present, use sites page language
