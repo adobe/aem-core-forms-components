@@ -67,12 +67,11 @@ class HTTPAPILayer {
         } else {
             // check for selector in the URL
             const selectorMatch = (window.location.pathname || "").match(/\/([^/]+)\.html(?=\/|$)/); // capture page name prior to .html
-            const localePattern = /^[a-z]{2}(?:[-_][a-z0-9]{2,8})?$/i; // matches ISO-like locales: en, en-US, pt_BR
             if (selectorMatch && selectorMatch.length > 1) {
                 const parts = selectorMatch[1].split('.');
                 if (parts.length >= 2) {
                     const possibleLocale = parts[parts.length - 1];
-                    if (localePattern.test(possibleLocale)) {
+                    if (Constants.LOCALE_SELECTOR_PATTERN.test(possibleLocale)) {
                         lang = possibleLocale;
                     }
                 }
