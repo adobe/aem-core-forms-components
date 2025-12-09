@@ -111,6 +111,11 @@ class Utils {
             childList: true,
             characterData: true
         });
+
+        // Store observer in form container for cleanup
+        if (formContainer._addMutationObserver) {
+            formContainer._addMutationObserver(observer);
+        }
     }
 
     /**
@@ -254,6 +259,17 @@ class Utils {
      */
     static getContextPath() {
         return Utils.#contextPath;
+    }
+
+    /**
+     * Clears all static state in Utils.
+     * Should be called when the last form is unloaded to ensure clean state.
+     * @private
+     */
+    static _clearState() {
+        Utils.#contextPath = "";
+        Utils.#fieldCreatorSets = {};
+        Utils.#fieldCreatorOrder = [];
     }
 
     /**

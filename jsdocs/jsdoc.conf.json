@@ -4,7 +4,7 @@
     },
     "source": {
         "includePattern": ".+\\.js(doc)?$",
-        "excludePattern": "(^|\\/|\\\\)_",
+        "excludePattern": "(^|\\/|\\\\)_|FormFileInputWidgetBase\\.js$|FormFileInputWidget\\.js$",
         "include": ["./../ui.frontend/src",
             "./resources/copyright/README.md"
         ]

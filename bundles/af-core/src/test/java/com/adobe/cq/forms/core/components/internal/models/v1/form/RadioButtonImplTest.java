@@ -54,6 +54,7 @@ public class RadioButtonImplTest {
     private static final String PATH_RADIOBUTTON_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/radiobutton-duplicate-enum";
     private static final String PATH_RADIOBUTTON_FOR_INSERTION_ORDER = CONTENT_ROOT + "/radiobutton-insertion-order";
     private static final String PATH_RADIOBUTTON_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/radiobutton-without-fieldtype";
+    private static final String PATH_RADIOBUTTON_OPTION_SCREEN_READER_LABEL = CONTENT_ROOT + "/radiobutton-option-screenreader-label";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -393,6 +394,14 @@ public class RadioButtonImplTest {
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), radioButton.getEnumNames());
+    }
+
+    @Test
+    void testGetOptionScreenReaderLabels() {
+        RadioButton radioButton = getRadioButtonUnderTest(PATH_RADIOBUTTON_OPTION_SCREEN_READER_LABEL);
+        String[] screenReaderLabels = radioButton.getOptionScreenReaderLabels();
+        assertEquals("Gender: Male", screenReaderLabels[0]);
+        assertEquals("Gender: Female", screenReaderLabels[1]);
     }
 
     @Test

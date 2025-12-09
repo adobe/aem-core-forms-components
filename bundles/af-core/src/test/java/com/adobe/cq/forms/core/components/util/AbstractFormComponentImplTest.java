@@ -20,7 +20,9 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.apache.sling.testing.resourceresolver.MockValueMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -153,5 +155,22 @@ public class AbstractFormComponentImplTest {
         AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
         Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
         return abstractFormComponentImpl;
+    }
+
+    @Test
+    public void testAssociateProperties() {
+        Resource resource = Mockito.mock(Resource.class);
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+
+        ValueMap valueMap = new MockValueMap(resource);
+        Mockito.doReturn(valueMap).when(resource).getValueMap();
+        Mockito.doReturn(null).when(resource).getChild("fd:dorContainer");
+        Mockito.doReturn(null).when(resource).getChild("fd:rules");
+        Resource associateResource = Mockito.mock(Resource.class);
+        Mockito.doReturn(associateResource).when(resource).getChild("fd:associate");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:associate"));
     }
 }

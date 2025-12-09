@@ -361,4 +361,22 @@ describe("Form Runtime layout of Date Picker ", () => {
         });
     });
 
+    it("should display navigation controls at 320px viewport", () => {
+        cy.viewport(320, 568);
+        const [datePicker] = Object.entries(formContainer._fields)[0];
+        
+        cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click();
+        cy.get(".dp-leftnav").should("be.visible");
+        cy.get(".dp-rightnav").should("be.visible");
+    });
+
+    it("should display first column dates at 320px", () => {
+        cy.viewport(320, 568);
+        const [datePicker] = Object.entries(formContainer._fields)[0];
+        
+        cy.get(`#${datePicker}`).find("input").clear().type('2026-02-01');
+        cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click();
+        cy.get("#li-day-2").should("be.visible");
+    });
+
 })

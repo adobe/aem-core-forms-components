@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Field;
+import com.adobe.cq.forms.core.components.models.form.Label;
 import com.adobe.cq.forms.core.components.models.form.OptionsConstraint;
 
 /**
@@ -136,5 +137,29 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             logger.error("Error while type casting default value to value type. Exception: ", exception);
         }
         return typedDefaultValue;
+    }
+
+    @Override
+    public String[] getOptionScreenReaderLabels() {
+        String[] enumNames = getEnumNames();
+        if (enumNames == null) {
+            return null;
+        }
+
+        Label label = getLabel();
+        String labelValue = (label != null && label.getValue() != null) ? label.getValue() : "";
+        boolean hasRichTextLabel = label != null && label.isRichText() != null && label.isRichText();
+
+        // Strip HTML from label once if needed
+        String cleanLabel = hasRichTextLabel ? labelValue.replaceAll("<[^>]*>", "") : labelValue;
+
+        String[] ariaLabels = new String[enumNames.length];
+        for (int i = 0; i < enumNames.length; i++) {
+            // Strip HTML from enum name for screen readers
+            String cleanEnumName = enumNames[i].replaceAll("<[^>]*>", "");
+            ariaLabels[i] = cleanLabel + ": " + cleanEnumName;
+        }
+
+        return ariaLabels;
     }
 }
