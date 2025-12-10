@@ -35,6 +35,7 @@ class FormContainer {
         this._fields = {};
         this._deferredParents = {};
         this._element = params._element;
+        this._mutationObservers = []; // Store mutation observers for cleanup
 
         // Prevent default behaviour on form container.
         this.#preventDefaultSubmit();
@@ -64,6 +65,24 @@ class FormContainer {
                 }
             });
         }
+    }
+
+    /**
+     * Adds a mutation observer to the container for cleanup.
+     * @param {MutationObserver} observer - The mutation observer to track.
+     * @private
+     */
+    _addMutationObserver(observer) {
+        this._mutationObservers.push(observer);
+    }
+
+    /**
+     * Disconnects all mutation observers.
+     * @private
+     */
+    _disconnectMutationObservers() {
+        this._mutationObservers.forEach(observer => observer.disconnect());
+        this._mutationObservers = [];
     }
 
     /**

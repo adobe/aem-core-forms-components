@@ -91,7 +91,7 @@
         <core.wcm.components.version>2.24.6</core.wcm.components.version>
         <core.wcm.components.library.version>2.24.6</core.wcm.components.library.version>
 
-        <core.print.api.version>1.0.12</core.print.api.version>
+        <core.print.api.version>1.0.26</core.print.api.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatter.version>2.16.0</formatter.version>
@@ -423,7 +423,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M3</version>
+                    <version>3.2.5</version>
                     <configuration>
                         <argLine>-Xmx1024m</argLine>
                         <useSystemClassLoader>false</useSystemClassLoader>
@@ -698,7 +698,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.0.4</version>
+                    <version>4.8.3.0</version>
                     <configuration>
                         <effort>Max</effort>
                         <xmlOutput>true</xmlOutput>
@@ -1204,7 +1204,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.3.2</version>
+                <version>5.10.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -1217,14 +1217,20 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>2.24.5</version>
+                <version>4.11.0</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-junit-jupiter</artifactId>
-                <version>2.24.5</version>
+                <version>4.11.0</version>
                 <scope>test</scope>
+            </dependency>
+            <!-- Force Byte Buddy new version so Mockito works on JDK 21 -->
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>1.14.17</version>
             </dependency>
             <dependency>
                 <groupId>org.powermock</groupId>
