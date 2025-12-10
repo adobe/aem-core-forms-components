@@ -341,6 +341,7 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/form/turnstile/v1/turnstile/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/fileinput/v4/fileinput/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/datetime/v1/datetime/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/datepicker/v2/datepicker/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                     </target>
                                 </configuration>
                                 <goals>
