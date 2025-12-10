@@ -228,9 +228,6 @@
           "properties": {
             "fd:dor": {
               "$ref": "./adaptive-form-dor-properties.schema.json"
-            },
-            "fd:associate": {
-              "$ref": "./print/adaptive-form-associate-properties.schema.json"
             }
           },
           "additionalProperties": true
