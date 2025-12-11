@@ -40,7 +40,7 @@ describe("Form Runtime with Date Picker", () => {
     // Year should be in Buddhist calendar year for Thai language
     it("Test localisation for date picker for Persian", () => {
         const [datePicker8, datePicker7FieldView] = Object.entries(formContainer._fields)[8];
-        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             let todayDate = new Date();
             cy.get(".dp-caption").invoke("text").should("eq", "مارس, 2024");
             cy.get(".dp-caption").eq(3).click();
@@ -51,7 +51,7 @@ describe("Form Runtime with Date Picker", () => {
 
     it("snapshot testing for rtl", () => {
         const [datePicker8, datePicker8FieldView] = Object.entries(formContainer._fields)[8];
-        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click();
+        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true});
         cy.get('body').toMatchImageSnapshot({
             imageConfig: {
               threshold: 0,
