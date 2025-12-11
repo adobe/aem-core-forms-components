@@ -186,8 +186,6 @@ if (typeof window.DatePickerWidget === 'undefined') {
       if (!this.#dp) {
         this.#dp = document.createElement("div");
         this.#dp.classList.add("datetimepicker", "datePickerTarget");
-        calendarIcon.setAttribute("role", "button");
-        calendarIcon.setAttribute("aria-label", this.#options.locale.openCalendarText);
         this.#dp.innerHTML = html;
         //Always inserting it in body
         document.body.appendChild(this.#dp);
@@ -324,6 +322,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
         if (this.#keyboardAccessibility) {
           calendarIcon.setAttribute("tabindex", 0);
         }
+        // Accessibility attributes for calendar icon button
+        calendarIcon.setAttribute("role", "button");
+        calendarIcon.setAttribute("aria-label", this.#options?.locale?.openCalendarText || "Open calendar");
         calendarIcon.addEventListener(this.#getEvent(), function (evnt) {
           self._iconClicked = true;
           widget.click();
@@ -885,7 +886,6 @@ if (typeof window.DatePickerWidget === 'undefined') {
       if (!$row) {
         let rowEl = document.createElement("ul");
         rowEl.removeAttribute("aria-label");
-        rowEl.setAttribute("role", "none");
         rowEl.classList.toggle("header", isHeader);
         rowEl.setAttribute("role", "row");
         $row = $view.appendChild(rowEl);
