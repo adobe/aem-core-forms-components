@@ -90,4 +90,161 @@ describe('GuideBridge ', () => {
         });
         cy.expectNoConsoleErrors();
     })
+
+    it('should unload the adaptive form and clean up state', () => {
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                const formContainerPath = formContainer.getPath();
+                const containerSelector = '[data-cmp-is="adaptiveFormContainer"]';
+                
+                // Verify form is loaded and connected
+                expect($window.guideBridge.isConnected()).to.be.true;
+                expect($window.guideBridge.getFormModel()).to.not.be.null;
+                
+                // Capture Utils state before unload
+                let contextPathBeforeUnload = '';
+                if ($window.FormView && $window.FormView.Utils) {
+                    contextPathBeforeUnload = $window.FormView.Utils.getContextPath();
+                }
+                
+                // Verify MutationObservers exist before unload
+                const mutationObserversBeforeUnload = formContainer._mutationObservers;
+                expect(mutationObserversBeforeUnload).to.be.an('array');
+                const hasObservers = mutationObserversBeforeUnload.length > 0;
+                
+                // Create some mock widget elements in body to test cleanup
+                const mockRecaptchaWidget = $window.document.createElement('div');
+                mockRecaptchaWidget.className = 'cmp-adaptiveform-recaptcha__widget';
+                $window.document.body.appendChild(mockRecaptchaWidget);
+                
+                const mockDatePickerWidget = $window.document.createElement('div');
+                mockDatePickerWidget.className = 'datetimepicker datePickerTarget';
+                $window.document.body.appendChild(mockDatePickerWidget);
+                
+                // Set up some cache to test cleanup
+                if ($window.afCache) {
+                    $window.afCache.store = { testKey: 'testValue' };
+                }
+                
+                // Verify DOM elements exist before unload
+                const formContainerEl = $window.document.querySelector(containerSelector);
+                expect(formContainerEl).to.not.be.null;
+                expect(formContainerEl.children.length).to.be.greaterThan(0);
+                expect($window.document.querySelector('.cmp-adaptiveform-recaptcha__widget')).to.not.be.null;
+                expect($window.document.querySelector('.datetimepicker.datePickerTarget')).to.not.be.null;
+                
+                // Call unloadAdaptiveForm with just the path
+                $window.guideBridge.unloadAdaptiveForm(formContainerPath);
+                
+                // Verify container is completely removed from DOM
+                expect($window.document.querySelector(containerSelector)).to.be.null;
+                
+                // Verify widget elements are removed from body
+                expect($window.document.querySelector('.cmp-adaptiveform-recaptcha__widget')).to.be.null;
+                expect($window.document.querySelector('.datetimepicker.datePickerTarget')).to.be.null;
+                
+                // Verify cache is cleared
+                if ($window.afCache) {
+                    expect($window.afCache.store).to.deep.equal({});
+                }
+                
+                // Verify MutationObservers are disconnected and cleared
+                // Note: The _disconnectMutationObservers method is called during unload
+                // which disconnects and clears the observers array
+                if (hasObservers) {
+                    // After unload, observers should be disconnected and array should be empty
+                    expect(formContainer._mutationObservers).to.be.an('array');
+                    expect(formContainer._mutationObservers.length).to.equal(0, 
+                        `Expected mutation observers to be cleared after unload. Found ${formContainer._mutationObservers.length} observers.`);
+                }
+                
+                // Verify Utils static state is cleared (since this is the last/only form)
+                if ($window.FormView && $window.FormView.Utils) {
+                    // contextPath should be cleared
+                    const contextPathAfterUnload = $window.FormView.Utils.getContextPath();
+                    expect(contextPathAfterUnload).to.equal('', 
+                        `Expected contextPath to be cleared. Was: "${contextPathBeforeUnload}", Now: "${contextPathAfterUnload}"`);
+                }
+                
+                // Verify form model is no longer available for the unloaded path
+                expect($window.guideBridge.getFormModel()).to.be.null;
+            }
+        });
+        cy.expectNoConsoleErrors();
+    })
+
+    it('should handle multiple calls to unloadAdaptiveForm safely', () => {
+        cy.window().then($window => {
+            if($window.guideBridge && $window.guideBridge.isConnected()) {
+                const formContainerPath = formContainer.getPath();
+                
+                // First call
+                $window.guideBridge.unloadAdaptiveForm(formContainerPath);
+                
+                // Second call should not throw errors
+                expect(() => {
+                    $window.guideBridge.unloadAdaptiveForm(formContainerPath);
+                }).to.not.throw();
+                
+                // Verify no console errors
+                cy.expectNoConsoleErrors();
+            }
+        });
+    })
+
+    it('should auto-deduce form when path not provided', () => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+            cy.window().then($window => {
+                if($window.guideBridge && $window.guideBridge.isConnected()) {
+                    const containerSelector = '[data-cmp-is="adaptiveFormContainer"]';
+                    const formContainerEl = $window.document.querySelector(containerSelector);
+                    
+                    // Call without any parameters - should auto-find and clean current form
+                    $window.guideBridge.unloadAdaptiveForm();
+                    
+                    // Verify container is completely removed from DOM
+                    expect($window.document.querySelector(containerSelector)).to.be.null;
+                    
+                    // Verify form is disconnected
+                    expect($window.guideBridge.isConnected()).to.be.false;
+                }
+            });
+            cy.expectNoConsoleErrors();
+        });
+    })
+
+    it('should warn when unloadAdaptiveForm is called without a valid form path', () => {
+        cy.previewForm(pagePath).then(p => {
+            formContainer = p;
+            cy.window().then($window => {
+                if($window.guideBridge && $window.guideBridge.isConnected()) {
+                    const formContainerPath = formContainer.getPath();
+                    
+                    // First unload the form to clear the internal formContainerPath
+                    $window.guideBridge.unloadAdaptiveForm(formContainerPath);
+                    
+                    // Now guideBridge has no formContainerPath set
+                    expect($window.guideBridge.isConnected()).to.be.false;
+                    
+                    // Spy on console.warn to capture the warning
+                    let warningMessage = null;
+                    const originalWarn = $window.console.warn;
+                    $window.console.warn = function(msg) {
+                        warningMessage = msg;
+                        originalWarn.apply($window.console, arguments);
+                    };
+                    
+                    // Call unloadAdaptiveForm again without any form path available
+                    $window.guideBridge.unloadAdaptiveForm();
+                    
+                    // Restore original warn
+                    $window.console.warn = originalWarn;
+                    
+                    // Verify warning was logged
+                    expect(warningMessage).to.equal('No form container path specified or available to unload.');
+                }
+            });
+        });
+    })
 })
