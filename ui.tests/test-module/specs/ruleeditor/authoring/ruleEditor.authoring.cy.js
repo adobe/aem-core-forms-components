@@ -184,7 +184,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         });
 
         // check if rule is created
-        cy.getRuleEditorIframe().find("[title^='datepicker'][title$=' - Validate'] .title-cell").should("exist");
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.DATE_PICKER_RULE).should("exist");
 
         // check and close rule editor
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
@@ -426,7 +426,7 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.wait(1000);
                 // click on  create option from rule editor header
                 // commenting the below check as 'af-rule-editor-initialized' event does not seem to be triggered in 650
-                cy.getRuleEditorIframe().find("[title^='submit'][title$=' - Click'] .title-cell").should("be.visible").click();
+                cy.getRuleEditorIframe().find("[title='Submit - Click'] .title-cell").should("be.visible").click();
                 // select FUNCTION_CALL action from dropdown
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).should("exist");
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.FUNCTION_CALL).click({force: true});
@@ -441,7 +441,7 @@ describe('Rule editor authoring sanity for core-components',function(){
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
 
                 // check if rule is created
-                cy.getRuleEditorIframe().find("[title^='submit'][title$=' - Click'] .title-cell").should("exist");
+                cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.CUSTOM_SUBMIT_FORM_RULE).should("exist");
 
                 // check and close rule editor
                 cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).should("exist");
