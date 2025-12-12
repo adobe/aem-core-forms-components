@@ -207,4 +207,64 @@ describe("Form Runtime with CheckBox Input", () => {
           cy.get(`#${id}`).should('have.class', 'cmp-adaptiveform-checkbox--filled');
       });
     });
+
+    // test for the checkbox having the rule editor enabled for the boolean data type
+    it("checkbox 7 triggers 8; both go from empty to filled", () => {
+        // Rule on checkbox 7: When checkbox 7 is checked (true), set the value of checkbox 8 to true (checked)
+        const [id7] = Object.entries(formContainer._fields)[7]; 
+        const [id8] = Object.entries(formContainer._fields)[8];
+
+        // Initially both should be empty and not filled
+        cy.get(`#${id7}`).should('have.class', 'cmp-adaptiveform-checkbox--empty');
+            // .and('not.have.class', 'cmp-adaptiveform-checkbox--filled');
+        cy.get(`#${id8}`).should('have.class', 'cmp-adaptiveform-checkbox--empty');
+            // .and('not.have.class', 'cmp-adaptiveform-checkbox--filled');
+
+        // Click checkbox 7
+        cy.get(`#${id7}`).find('input').click();
+
+        // After click, both should be filled
+        cy.get(`#${id7}`).should('have.class', 'cmp-adaptiveform-checkbox--filled');
+        cy.get(`#${id8}`).should('have.class', 'cmp-adaptiveform-checkbox--filled');
+    });
+
+    // test for the checkbox having the rule editor enabled for the string data type
+    it("checkbox 9 triggers 10; both go from empty to filled", () => {
+        // Rule on checkbox 9: When checkbox 9 is checked (string : "on"), set the value of checkbox 10 to (string : "on") checked
+        const [id9] = Object.entries(formContainer._fields)[9];
+        const [id10] = Object.entries(formContainer._fields)[10];
+
+        // Initially both should be empty and not filled
+        cy.get(`#${id9}`).should('have.class', 'cmp-adaptiveform-checkbox--empty')
+            .and('not.have.class', 'cmp-adaptiveform-checkbox--filled');
+        cy.get(`#${id10}`).should('have.class', 'cmp-adaptiveform-checkbox--empty')
+            .and('not.have.class', 'cmp-adaptiveform-checkbox--filled');
+        
+        // Click checkbox 9
+        cy.get(`#${id9}`).find('input').click();
+
+        // After click, both should be filled
+        cy.get(`#${id9}`).should('have.class', 'cmp-adaptiveform-checkbox--filled');
+        cy.get(`#${id10}`).should('have.class', 'cmp-adaptiveform-checkbox--filled');
+    });
+
+    // test for the checkbox having the rule editor enabled for the number data type
+    it("checkbox 11 triggers 12; both go from empty to filled", () => {
+        // Rule on checkbox 11: When checkbox 11 is checked (number : 1), set the value of checkbox 12 to (number : 1) checked        
+        const [id11] = Object.entries(formContainer._fields)[11];
+        const [id12] = Object.entries(formContainer._fields)[12];
+
+        // Initially both should be empty and not filled
+        cy.get(`#${id11}`).should('have.class', 'cmp-adaptiveform-checkbox--empty')
+            .and('not.have.class', 'cmp-adaptiveform-checkbox--filled');
+        cy.get(`#${id12}`).should('have.class', 'cmp-adaptiveform-checkbox--empty')
+            .and('not.have.class', 'cmp-adaptiveform-checkbox--filled');
+
+        // Click checkbox 11
+        cy.get(`#${id11}`).find('input').click();
+
+        // After click, both should be filled
+        cy.get(`#${id11}`).should('have.class', 'cmp-adaptiveform-checkbox--filled');
+        cy.get(`#${id12}`).should('have.class', 'cmp-adaptiveform-checkbox--filled');
+    });
 })

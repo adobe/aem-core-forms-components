@@ -152,11 +152,12 @@
 
         #createCheckBoxItem(value, itemLabel) {
             // This doesn't cater for optionLink __links as toggelablelink component is hidden
-            //TOFIX: Rich text in aria-label
+            let richScreenReaderText = `${this._model.label.value}:  ${itemLabel}`;
+            let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
             const optionTemplate = `
             <div class="${CheckBoxGroup.selectors.item.slice(1)}">
                 <label class="${CheckBoxGroup.selectors.optionLabel}">
-                    <input type="checkbox" class="${CheckBoxGroup.selectors.widget.slice(1)}" name="${this._model.name}" value="${value}" aria-label="${this._model.label.value}:  ${itemLabel}" tabindex="0">
+                    <input type="checkbox" class="${CheckBoxGroup.selectors.widget.slice(1)}" name="${this._model.name}" value="${value}" aria-label="${plainScreenReaderText}" tabindex="0">
                     <span>${itemLabel}</span>
                 </label>
             </div>`;

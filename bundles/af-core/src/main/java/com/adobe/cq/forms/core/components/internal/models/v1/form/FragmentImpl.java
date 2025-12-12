@@ -103,7 +103,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         if (itemModels == null) {
             itemModels = getChildrenModels(request, ComponentExporter.class);
         }
-        return itemModels;
+        return new LinkedHashMap<>(itemModels);
     }
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
@@ -180,7 +180,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         if (filteredChildComponents == null) {
             filteredChildComponents = getFilteredChildrenResources(fragmentContainer);
         }
-        return filteredChildComponents;
+        return new ArrayList<>(filteredChildComponents);
     }
 
     @JsonIgnore

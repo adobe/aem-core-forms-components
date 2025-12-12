@@ -39,10 +39,7 @@ import com.adobe.cq.wcm.style.ComponentStyleInfo;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
@@ -57,6 +54,7 @@ public class CheckBoxGroupImplTest {
     private static final String PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER = CONTENT_ROOT + "/checkboxgroup-insertion-order";
     private static final String PATH_CHECKBOX_GROUP_FOR_BOOLEAN = CONTENT_ROOT + "/checkboxgroup-boolean";
     private static final String PATH_CHECKBOX_GROUP_NO_FIELDTYPE = CONTENT_ROOT + "/checkboxgroup-without-fieldtype";
+    private static final String PATH_CHECKBOX_GROUP_OPTION_SCREEN_READER_LABEL = CONTENT_ROOT + "/checkboxgroup-option-screenreader-label";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -386,6 +384,33 @@ public class CheckBoxGroupImplTest {
         Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), checkboxGroup.getEnumNames());
+    }
+
+    @Test
+    void testGetOptionScreenReaderLabels() {
+        CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_OPTION_SCREEN_READER_LABEL);
+        String[] screenReaderLabels = checkboxGroup.getOptionScreenReaderLabels();
+        assertEquals("<b>Gender</b>: Male", screenReaderLabels[0]);
+        assertEquals("<b>Gender</b>: Female", screenReaderLabels[1]);
+
+        CheckBoxGroup spyCheckboxGroup1 = Mockito.spy(checkboxGroup);
+        Mockito.when(spyCheckboxGroup1.getEnumNames()).thenReturn(null);
+        assertNull(spyCheckboxGroup1.getOptionScreenReaderLabels());
+
+        CheckBoxGroup spyCheckboxGroup2 = Mockito.spy(checkboxGroup);
+        Mockito.when(spyCheckboxGroup2.getLabel()).thenReturn(null);
+        screenReaderLabels = spyCheckboxGroup2.getOptionScreenReaderLabels();
+        assertEquals(": Male", screenReaderLabels[0]);
+        assertEquals(": Female", screenReaderLabels[1]);
+
+        Label label = Mockito.mock(Label.class);
+        Mockito.when(label.getValue()).thenReturn(null);
+        Mockito.when(label.isRichText()).thenReturn(null);
+        CheckBoxGroup spyCheckboxGroup3 = Mockito.spy(checkboxGroup);
+        Mockito.when(spyCheckboxGroup3.getLabel()).thenReturn(label);
+        screenReaderLabels = spyCheckboxGroup3.getOptionScreenReaderLabels();
+        assertEquals(": Male", screenReaderLabels[0]);
+        assertEquals(": Female", screenReaderLabels[1]);
     }
 
     @Test

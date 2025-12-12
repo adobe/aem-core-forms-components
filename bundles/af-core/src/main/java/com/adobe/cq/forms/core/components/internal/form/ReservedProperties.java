@@ -203,6 +203,6 @@ public final class ReservedProperties {
     }
 
     public static Set<String> getReservedProperties() {
-        return reservedProperties;
+        return new HashSet<>(reservedProperties);
     }
 }

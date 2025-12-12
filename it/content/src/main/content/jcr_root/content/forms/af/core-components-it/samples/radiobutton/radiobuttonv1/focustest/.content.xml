@@ -9,7 +9,7 @@
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
         jcr:title="focustest"
-        sling:configRef="/conf/forms/core-components-it/samples/radiobutton/focustest/"
+        sling:configRef="/conf/forms/core-components-it/samples/radiobutton/radiobuttonv1/focustest/"
         sling:resourceType="forms-components-examples/components/page">
         <guideContainer
             fd:version="2.1"
@@ -46,7 +46,7 @@
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Radio Button"
-                sling:resourceType="forms-components-examples/components/form/radiobutton"
+                sling:resourceType="core/fd/components/form/radiobutton/v1/radiobutton"
                 enum="[0,1]"
                 enumNames="[Item 1,Item 2]"
                 fieldType="radio-group"

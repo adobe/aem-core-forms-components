@@ -269,5 +269,24 @@
     ],
     "jcr:lastModified": "Tue Jul 30 2024 15:16:00 GMT+0530",
     "sling:resourceType": "forms-components-examples/components/form/checkboxgroup"
+  },
+  "checkboxgroup-option-screenreader-label": {
+    "id": "checkboxgroup-1076f3bd737",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+    "name": "checkboxgroup",
+    "fieldType": "checkbox-group",
+    "jcr:title": "<b>Gender</b>",
+    "orientation": "vertical",
+    "type": "number[]",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "enforceEnum": true,
+    "enumNames": [
+      "<p><i>Male</i></p>",
+      "<p><i>Female</i></p>"
+    ]
   }
 }

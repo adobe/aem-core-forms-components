@@ -148,11 +148,13 @@
         }
 
         #createRadioOption(value, itemLabel) {
-            //TOFIX: Rich text in aria-label
+            let richScreenReaderText = `${this._model.label.value}:  ${itemLabel}`;
+            let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
+
             const optionTemplate = `
             <div class="${RadioButton.selectors.option.slice(1)}">
                 <label class="${RadioButton.selectors.optionLabel.slice(1)}">
-                    <input type="radio" name="${this._model.name}" class="${RadioButton.selectors.widget.slice(1)}" value="${value}" aria-label="${this._model.label.value}:  ${itemLabel}" tabindex="0">
+                    <input type="radio" name="${this._model.name}" class="${RadioButton.selectors.widget.slice(1)}" value="${value}" aria-label="${plainScreenReaderText}" tabindex="0">
                     <span>${itemLabel}</span>
                 </label>
             </div>`;

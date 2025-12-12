@@ -47,23 +47,24 @@ describe('Fragment Localization Tests', () => {
     });
   }
 
-
-  it('should localize fragment content using getFormLocale API', () => {
-    return cy.window().then($window => {
-      if($window.guideBridge && $window.guideBridge.isConnected()) {
-      // use cursor based API if latest AddOn
-      return getFormId(formPath)
-      .then(formId => {
-        return fetch(`/adobe/forms/af/${formId}/de`)
-        .then(response => {
-          return response.text().then(body => {
-            expect(body).to.contain("Responsive Text Input de")
-          })
+    if (cy.af.isLatestAddon()) {
+        it('should localize fragment content using getFormLocale API', () => {
+            return cy.window().then($window => {
+                if($window.guideBridge && $window.guideBridge.isConnected()) {
+                    // use cursor based API if latest AddOn
+                    return getFormId(formPath)
+                        .then(formId => {
+                            return fetch(`/adobe/forms/af/${formId}/de`)
+                                .then(response => {
+                                    return response.text().then(body => {
+                                        expect(body).to.contain("Responsive Text Input de")
+                                    })
+                                })
+                        })
+                }
+            });
         })
-      })
-      }
-    });
-  })
+    }
 
   it("should display localized text when fragment is rendered in form", () => {
     const firstTextComponent = formContainer._model.items[0].items[0].items[0].id;

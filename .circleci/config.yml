@@ -121,6 +121,9 @@ executors:
   forms_executor_java8:
     docker:
       - image: cimg/openjdk:8.0-browsers
+  forms_executor_java21:
+    docker:
+      - image: cimg/openjdk:21.0-browsers
   test_executor_cloudready:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
@@ -137,7 +140,7 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.24-load4-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.24.0-openjdk11
         <<: *docker_auth
 
 jobs:
@@ -184,6 +187,30 @@ jobs:
       - codecov/upload:
           conf: .circleci/codecov.yml
           flags: unittests
+
+  build-java-21:
+    executor: forms_executor_java21
+    working_directory: /home/circleci/build
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - maven-repo-java21-v1-{{ checksum "pom.xml" }}
+            - maven-repo-java21-v1-
+      - run:
+          name: Update permissions
+          command: sudo chown -R circleci /usr/local/lib/node_modules
+      - run:
+          name: Build with Java 21
+          command: node .circleci/ci/build.js
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-repo-java21-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+      - store_test_results:
+          path: bundles/core/target/surefire-reports
+      - store_artifacts:
+          path: bundles/core/target/surefire-reports
 
   build-java-8:
     executor: forms_executor_java8
@@ -413,6 +440,10 @@ workflows:
   build-and-release:
     jobs:
       - build-java-11:
+          filters:
+            tags:
+              only: /.*/
+      - build-java-21:
           filters:
             tags:
               only: /.*/
