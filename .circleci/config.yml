@@ -279,24 +279,6 @@ workflows:
           filters:
             tags:
               only: /.*/
-      # - cypress-chrome-cloudready-with-addon:
-      #     filters:
-      #       tags:
-      #         only: /.*/
-      #     requires:
-      #       - build-java-11
-      - cypress-chrome-cloudready-with-latest-addon:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
-      - cypress-chrome-cloudready-with-latest-addon-without-ft:
-          filters:
-            tags:
-              only: /.*/
-          requires:
-            - build-java-11
       - jsdocs-deploy:
           requires:
             - build-java-11
@@ -304,22 +286,13 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
-#      - cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
-#          filters:
-##            branches:
-##              ignore: /.*/
-#            tags:
-#              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
-#          requires:
-#            - build-java-11
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+-\w+$/
       - release:
           requires:
             - build-java-11
             - jsdocs-deploy
-#            - cypress-chrome-cloudready-with-latest-addon-and-old-core-components
           filters:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+-\w+$/
