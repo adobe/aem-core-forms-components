@@ -15,7 +15,7 @@
  ******************************************************************************/
 import Utils from "./utils.js";
 import LanguageUtils from "./LanguageUtils.js";
-import {createFormInstance, FileObject, extractFileInfo, readAttachments, Click, Change, Submit, Save, Blur, AddItem, RemoveItem, CustomEvent, UIChange, FormRendered} from "@aemforms/af-core";
+import {createFormInstance, FileObject, extractFileInfo, readAttachments, Click, Change, Submit, Save, Blur, AddItem, RemoveItem, CustomEvent, UIChange} from "@aemforms/af-core";
 import {FormField, FormContainer, FormFieldBase, FormPanel, FormTabs, FormFileInput, FormOptionFieldBase, FormCheckBox, FormFileInputWidgetBase, FormFileInputWidget} from "./view/index.js";
 import {Constants} from "./constants.js";
 import GuideBridge from "./GuideBridge.js";
@@ -47,10 +47,9 @@ window.guideBridge = new GuideBridge();
  * @property {string} AddItem - The action for adding an item.
  * @property {string} RemoveItem - The action for removing an item.
  * @property {string} Save - The action for save event.
- * @property {string} FormRendered - The action for form rendered event.
  */
 const Actions = {
-    Click, Change, Submit, Blur, AddItem, RemoveItem, UIChange, Save, CustomEvent, FormRendered
+    Click, Change, Submit, Blur, AddItem, RemoveItem, UIChange, Save, CustomEvent
 }
 
 /**
