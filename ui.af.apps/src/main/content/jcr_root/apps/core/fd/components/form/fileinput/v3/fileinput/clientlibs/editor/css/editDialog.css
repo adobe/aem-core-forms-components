@@ -1,0 +1,28 @@
+.cmp-adaptiveform-fileinput__mimeTypeField {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.cmp-adaptiveform-fileinput__mimeTypeFieldDisabled {
+    pointer-events: none;
+    opacity: 0.5;
+    display: none;
+}
+
+.cmp-adaptiveform-fileinput__mimeTypeFieldDeleteIcons {
+    pointer-events: auto;
+}
+
+.cmp-adaptiveform-fileinput__mimeTypeFieldDeleteIconsDisabled {
+    pointer-events: none;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.enabled {
+    pointer-events: auto;
+    opacity: 1;
+}
