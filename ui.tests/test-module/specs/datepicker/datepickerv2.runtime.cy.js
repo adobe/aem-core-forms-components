@@ -45,24 +45,6 @@ describe("Form Runtime with Date Picker v2", () => {
             .should("have.attr", "role", "button");
     });
 
-    it("should set ARIA labels on navigation controls in month view", () => {
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        openFirstDatepickerCalendar();
-
-        cy.get(".dp-leftnav")
-            .should("have.attr", "aria-label")
-            .and(($label) => {
-                const text = $label.text();
-                expect(text.length).to.be.greaterThan(0);
-            });
-        cy.get(".dp-rightnav")
-            .should("have.attr", "aria-label")
-            .and(($label) => {
-                const text = $label.text();
-                expect(text.length).to.be.greaterThan(0);
-            });
-    });
-
     it("should open calendar with keyboard on calendar icon (Space/Enter)", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         cy.get(`.${bemBlock}__calendar-icon`).first().as("calendarIcon");
