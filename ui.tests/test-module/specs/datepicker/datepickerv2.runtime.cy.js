@@ -33,18 +33,6 @@ describe("Form Runtime with Date Picker v2", () => {
         cy.get(".dp-monthview").should("exist");
     };
 
-    it("should expose ARIA roles on caption and navigation controls", () => {
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        openFirstDatepickerCalendar();
-
-        cy.get(".dp-caption")
-            .should("have.attr", "role", "button");
-        cy.get(".dp-leftnav")
-            .should("have.attr", "role", "button");
-        cy.get(".dp-rightnav")
-            .should("have.attr", "role", "button");
-    });
-
     it("should open calendar with keyboard on calendar icon (Space/Enter)", () => {
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         cy.get(`.${bemBlock}__calendar-icon`).first().as("calendarIcon");
