@@ -14,19 +14,18 @@
  * limitations under the License.
  ******************************************************************************/
 use(function () {
-    var SimpleDateFormat = Packages.java.text.SimpleDateFormat;
-    var DATE_FORMAT = "yyyy-MM-dd";
+    var DefaultValueSerializer = Packages.com.adobe.cq.forms.core.components.util.DefaultValueSerializer;
     date = this.date;
 
     /**
      * Formats a Java Date object to yyyy-MM-dd string format for HTML5 date input.
+     * Uses DefaultValueSerializer.formatDate() to ensure consistent date formatting.
      * @param {java.util.Date} date - The Java Date object to format
      * @return {string} Formatted date string or null if date is null
      */
     var formatDate = function() {
         if (date != null) {
-            var formatter = new SimpleDateFormat(DATE_FORMAT);
-            return formatter.format(date);
+            return DefaultValueSerializer.formatDate(date);
         }
         return null;
     };
