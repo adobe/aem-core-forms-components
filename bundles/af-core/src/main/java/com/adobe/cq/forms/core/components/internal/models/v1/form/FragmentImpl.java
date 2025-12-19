@@ -123,6 +123,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+        if (fragmentContainer == null) {
+            return new LinkedHashMap<>();
+        }
         List<Resource> filteredChildrenResources = getFilteredChildrenResources(fragmentContainer);
         SlingHttpServletRequest wrappedSlingHttpServletRequest = null;
         if (request != null) {
@@ -170,7 +173,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     private @Nonnull I18n getFragmentContainerI18n(@Nonnull String localeLang) {
         // Get the locale from the lang setter
         ResourceBundle resourceBundle = null;
-        if (localeLang != null) {
+        if (localeLang != null && fragmentContainer != null) {
             Locale desiredLocale = new Locale(localeLang);
             // Get the resource resolver from the fragment container
             ResourceResolver resourceResolver = fragmentContainer.getResourceResolver();
