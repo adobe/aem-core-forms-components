@@ -223,6 +223,24 @@
                     textIsRich="[true,true,true]"
                     unboundFormElement="{Boolean}false"
                     visible="{Boolean}true"/>
+            <datepicker_850803674
+                    jcr:created="{Date}2025-12-16T22:16:06.468+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2025-12-16T22:16:20.471+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Input"
+                    sling:resourceType="forms-components-examples/components/form/datepicker"
+                    enabled="{Boolean}true"
+                    fieldType="date-input"
+                    hideTitle="false"
+                    maximumDate="{Date}2025-12-16T00:00:00.000Z"
+                    minimumDate="{Date}2025-12-02T00:00:00.000Z"
+                    name="datepicker_8508036741765903566499"
+                    readOnly="{Boolean}false"
+                    textIsRich="[true,true,true]"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
