@@ -25,7 +25,7 @@
                    value="${checkboxgroup.enums[itemList.index].toString}"
                    checked="${checkboxgroup.enums[itemList.index] in checkboxgroup.default }"
                    disabled="${!checkboxgroup.enabled || checkboxgroup.readOnly}"
-                   aria-readonly="${checkboxgroup.readOnly ? 'true' : ''}"/>
+                   aria-readonly="${checkboxgroup.readOnly ? 'true' : ''}" tabindex="0"/>
             <span>${checkboxgroup.enumNames[itemList.index] @ context = 'html'}</span>
           </label>
         </div>
