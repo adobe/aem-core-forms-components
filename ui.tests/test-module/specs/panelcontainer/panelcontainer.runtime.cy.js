@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-describe.only( "Form Runtime with Panel Container - Basic Tests", () => {
+describe( "Form Runtime with Panel Container - Basic Tests", () => {
 
     const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/basic.html";
     const bemBlock = 'cmp-container';
