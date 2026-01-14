@@ -148,6 +148,8 @@ try {
             // we run only some test suites for older core components
             testSuites = "specs/prefill/customprefill.cy.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.cy.js,specs/actions/submit/submit.runtime.cy.js,specs/actions/render/render_with_openapi.cy.js";
         }
+        // add a sleep for 5 mins since 23482 version aem has become slow
+        ci.sh(`sleep 5m`);
         // start running the tests
         ci.dir('ui.tests', () => {
             let command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
