@@ -121,7 +121,7 @@ try {
     }
     */
     // add a sleep for 8 mins since 23482 version aem has become slow
-    ci.sh(`sleep 3m`);
+    ci.sh(`sleep 2m`);
     // Run UI tests
     if (TYPE === 'cypress') {
         if (AEM && AEM.includes("addon")) {
@@ -150,7 +150,7 @@ try {
             testSuites = "specs/prefill/customprefill.cy.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.cy.js,specs/actions/submit/submit.runtime.cy.js,specs/actions/render/render_with_openapi.cy.js";
         }
         // add a sleep for 8 mins since 23482 version aem has become slow
-        ci.sh(`sleep 5m`);
+        ci.sh(`sleep 10m`);
         // start running the tests
         ci.dir('ui.tests', () => {
             let command = `mvn verify -U -B -Pcypress-ci -DENV_CI=true -DFORMS_FAR=${AEM} -DspecFiles="${testSuites}"`;
