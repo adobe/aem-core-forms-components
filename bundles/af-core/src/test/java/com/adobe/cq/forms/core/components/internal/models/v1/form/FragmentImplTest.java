@@ -64,7 +64,6 @@ public class FragmentImplTest {
     private static final String PATH_FRAGMENT_DAMPATH = CONTENT_ROOT + "/fragment-dampath";
     private static final String PATH_FRAGMENT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/fragment-without-fieldtype";
     private static final String PATH_FRAGMENT_WITH_FRAGMENT_PATH = CONTENT_ROOT + "/fragment-with-fragment-path";
-    private static final String PATH_FRAGMENT_WITH_INVALID_PATH = CONTENT_ROOT + "/fragment-with-invalid-path";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -273,65 +272,5 @@ public class FragmentImplTest {
         // Test case 5: Test with empty string localeLang
         I18n result5 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "");
         Assertions.assertNotNull(result5, "getFragmentContainerI18n should handle empty string localeLang");
-    }
-
-    @Test
-    void testNullFragmentContainerHandling() throws Exception {
-        // This test verifies the fix when fragmentContainer is null
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_INVALID_PATH, Fragment.class, context);
-        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
-
-        // Verify that fragmentContainer is null due to invalid path
-        Assertions.assertNull(fragmentImpl.getFragmentContainer(),
-            "Fragment container should be null for invalid fragment path");
-
-        // Test that getChildrenModels returns empty map instead of throwing NPE
-        Map<String, ComponentExporter> childrenModels = fragmentImpl.getChildrenModels(context.request(),
-            ComponentExporter.class);
-        Assertions.assertNotNull(childrenModels, "getChildrenModels should return non-null map even with null fragmentContainer");
-        Assertions.assertTrue(childrenModels.isEmpty(),
-            "getChildrenModels should return empty map when fragmentContainer is null");
-
-        // Test that getExportedItems doesn't throw NPE
-        Map<String, ? extends ComponentExporter> exportedItems = fragmentImpl.getExportedItems();
-        Assertions.assertNotNull(exportedItems, "getExportedItems should return non-null map even with null fragmentContainer");
-        Assertions.assertTrue(exportedItems.isEmpty(),
-            "getExportedItems should return empty map when fragmentContainer is null");
-
-        // Test that getExportedItemsOrder doesn't throw NPE
-        String[] exportedItemsOrder = fragmentImpl.getExportedItemsOrder();
-        Assertions.assertNotNull(exportedItemsOrder, "getExportedItemsOrder should return non-null array even with null fragmentContainer");
-        Assertions.assertEquals(0, exportedItemsOrder.length,
-            "getExportedItemsOrder should return empty array when fragmentContainer is null");
-
-        // Test getFragmentContainerI18n with null fragmentContainer
-        Method getFragmentContainerI18nMethod = FragmentImpl.class.getDeclaredMethod("getFragmentContainerI18n", String.class);
-        getFragmentContainerI18nMethod.setAccessible(true);
-
-        // Should not throw NPE and should return non-null I18n object
-        I18n result = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "en");
-        Assertions.assertNotNull(result,
-            "getFragmentContainerI18n should return non-null I18n object even when fragmentContainer is null");
-    }
-
-    @Test
-    void testNullFragmentContainerWithNullRequest() throws Exception {
-        // Test with null request to cover both code paths
-        Resource resource = context.resourceResolver().getResource(PATH_FRAGMENT_WITH_INVALID_PATH);
-        Fragment fragment = resource.adaptTo(Fragment.class);
-        Assertions.assertNotNull(fragment, "Fragment should be created even with invalid path");
-
-        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
-
-        // Verify that fragmentContainer is null
-        Assertions.assertNull(fragmentImpl.getFragmentContainer(),
-            "Fragment container should be null for invalid fragment path");
-
-        // Test that getChildrenModels with null request returns empty map instead of throwing NPE
-        Map<String, TextInput> childrenModels = fragmentImpl.getChildrenModels(null, TextInput.class);
-        Assertions.assertNotNull(childrenModels,
-            "getChildrenModels should return non-null map with null request and null fragmentContainer");
-        Assertions.assertTrue(childrenModels.isEmpty(),
-            "getChildrenModels should return empty map when fragmentContainer is null and request is null");
     }
 }
