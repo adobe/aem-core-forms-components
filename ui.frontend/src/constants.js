@@ -374,12 +374,6 @@ export const Constants = {
      * @memberof module:FormView~Constants
      * @namespace FIELD_TYPE
      */
-    FIELD_TYPE: FIELD_TYPE,
-
-    /**
-     * Pattern to detect ISO-like locale selectors (e.g., en, en-US, pt_BR).
-     * @type {RegExp}
-     */
-    LOCALE_SELECTOR_PATTERN: /^[a-z]{2}(?:[-_][a-z0-9]{2,8})?$/i
+    FIELD_TYPE: FIELD_TYPE
 };
 
