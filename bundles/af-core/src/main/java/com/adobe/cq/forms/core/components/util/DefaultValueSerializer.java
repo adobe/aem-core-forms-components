@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
  */
 public class DefaultValueSerializer extends StdSerializer<Object[]> {
 
-    private static final SimpleDateFormat formatter = new SimpleDateFormat(Base.DATE_FORMATTER);
+    private SimpleDateFormat formatter = new SimpleDateFormat(Base.DATE_FORMATTER);
 
     public DefaultValueSerializer() {
         this(null);
@@ -39,10 +39,6 @@ public class DefaultValueSerializer extends StdSerializer<Object[]> {
 
     public DefaultValueSerializer(Class<Object[]> t) {
         super(t);
-    }
-
-    public static synchronized String formatDate(Date date) {
-        return formatter.format(date);
     }
 
     private void serialize(Object value, JsonGenerator gen) throws IOException {
@@ -57,9 +53,9 @@ public class DefaultValueSerializer extends StdSerializer<Object[]> {
         } else if (value instanceof String) {
             gen.writeString((String) value);
         } else if (value instanceof Date) {
-            gen.writeString(formatDate((Date) value));
+            gen.writeString(formatter.format(value));
         } else if (value instanceof Calendar) {
-            gen.writeString(formatDate(((Calendar) value).getTime()));
+            gen.writeString(formatter.format(((Calendar) value).getTime()));
         }
     }
 
