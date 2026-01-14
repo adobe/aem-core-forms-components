@@ -96,6 +96,7 @@ try {
             ${extras} \
             ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */) : ''} \
             ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-core']) : ''} \
             ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-core']) : ''} \
             ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-apps']) : ''} \
             ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-content']) : ''} \
