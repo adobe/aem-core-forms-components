@@ -131,36 +131,53 @@ try {
             const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
             ci.sh(disableApiRegion);
             
-            // Uninstall old af-core bundles to prevent adaptTo() conflicts
-            // Sort by bundle ID (higher ID = more recently installed) to ensure we keep the latest build
-            const oldBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.id | tonumber) | reverse | .[1:] | .[] | "\\(.id)|\\(.version)"\'', true);
-            if (oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') {
-                console.log('Uninstalling old af-core bundle versions to avoid conflicts');
-                oldBundlesInfo.trim().split('\n').forEach(bundleInfo => {
-                    if (bundleInfo && bundleInfo !== 'null' && bundleInfo.trim() !== '') {
-                        const [bundleId, version] = bundleInfo.split('|');
-                        console.log(`  Uninstalling bundle ${bundleId} (version ${version})`);
-                        ci.sh(`curl -s -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
-                    }
-                });
+            // Only remove duplicate bundles when testing SNAPSHOT builds (not specific CORE_COMPONENTS versions)
+            if (!CORE_COMPONENTS) {
+                // Uninstall old af-core bundles to prevent adaptTo() conflicts
+                // First, log all af-core bundles to debug which one we're keeping
+                const allBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.id | tonumber) | reverse | .[] | "ID: \\(.id) | Version: \\(.version) | State: \\(.state)"\'', true);
+                console.log('Found af-core bundles:');
+                console.log(allBundles);
                 
-                // Wait for all bundles to stabilize after uninstalling old versions
-                console.log('Waiting for bundles to stabilize...');
-                let attempts = 0;
-                const maxAttempts = 30;
-                while (attempts < maxAttempts) {
-                    const inactiveBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'[.data[] | select(.state != "Active" and .state != "Fragment")] | length\'', true);
-                    const count = parseInt(inactiveBundles.trim());
-                    if (count === 0) {
-                        console.log('All bundles are active');
-                        break;
-                    }
-                    console.log(`  ${count} bundles not active yet, waiting... (attempt ${attempts + 1}/${maxAttempts})`);
-                    ci.sh('sleep 1');
-                    attempts++;
+                // Keep the SNAPSHOT version (from build) and uninstall all others
+                const oldBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core" and (.version | contains("SNAPSHOT") | not))) | .[] | "\\(.id)|\\(.version)"\'', true);
+                if (oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') {
+                    console.log('Uninstalling old af-core bundle versions to avoid conflicts');
+                    oldBundlesInfo.trim().split('\n').forEach(bundleInfo => {
+                        if (bundleInfo && bundleInfo !== 'null' && bundleInfo.trim() !== '') {
+                            const [bundleId, version] = bundleInfo.split('|');
+                            console.log(`  Uninstalling bundle ${bundleId} (version ${version})`);
+                            ci.sh(`curl -s -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
+                        }
+                    });
                 }
-                if (attempts >= maxAttempts) {
-                    console.log('Warning: Some bundles still not active after waiting, proceeding anyway');
+                
+                // Similarly, uninstall old core bundle versions
+                const allCoreBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-core")) | sort_by(.id | tonumber) | reverse | .[] | "ID: \\(.id) | Version: \\(.version) | State: \\(.state)"\'', true);
+                console.log('Found core bundles:');
+                console.log(allCoreBundles);
+                
+                const oldCoreBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-core" and (.version | contains("SNAPSHOT") | not))) | .[] | "\\(.id)|\\(.version)"\'', true);
+                if (oldCoreBundlesInfo && oldCoreBundlesInfo.trim() !== '' && oldCoreBundlesInfo !== 'null') {
+                    console.log('Uninstalling old core bundle versions to avoid conflicts');
+                    oldCoreBundlesInfo.trim().split('\n').forEach(bundleInfo => {
+                        if (bundleInfo && bundleInfo !== 'null' && bundleInfo.trim() !== '') {
+                            const [bundleId, version] = bundleInfo.split('|');
+                            console.log(`  Uninstalling bundle ${bundleId} (version ${version})`);
+                            ci.sh(`curl -s -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
+                        }
+                    });
+                }
+                
+                // Restart AEM to ensure clean state after uninstalling old bundles
+                if ((oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') || 
+                    (oldCoreBundlesInfo && oldCoreBundlesInfo.trim() !== '' && oldCoreBundlesInfo !== 'null')) {
+                    console.log('Restarting AEM to ensure clean bundle state...');
+                    ci.dir(qpPath, () => {
+                        ci.sh('./qp.sh -v stop --id author');
+                        ci.sh('./qp.sh -v start --id author');
+                    });
+                    console.log('AEM restarted successfully');
                 }
             }
             
