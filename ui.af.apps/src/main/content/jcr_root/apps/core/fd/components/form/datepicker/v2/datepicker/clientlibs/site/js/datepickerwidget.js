@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2023 Adobe
+ * Copyright 2025 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,6 +66,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
         zero: "0",
         clearText: "Clear",
+        openCalendarText: "Open calendar",
         name: "en_US"
       },
       format: "YYYY-MM-DD",
@@ -218,6 +219,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
         }
       });
       this.prevNavWidthBtn = this.#dp.getElementsByClassName("dp-leftnav")[0];
+      this.prevNavWidthBtn.setAttribute("role", "button");
       this.prevNavWidthBtn.addEventListener("click",
           function (evnt) {
             if (self.view && self.#curInstance) {
@@ -225,6 +227,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
           });
       this.nextNavWidthBtn = this.#dp.getElementsByClassName("dp-rightnav")[0];
+      this.nextNavWidthBtn.setAttribute("role", "button");
       this.nextNavWidthBtn.addEventListener("click",
           function (evnt) {
             if (self.view && self.#curInstance) {
@@ -232,6 +235,7 @@ if (typeof window.DatePickerWidget === 'undefined') {
             }
           });
       this.caption = this.#dp.getElementsByClassName("dp-caption")[0];
+      this.caption.setAttribute("role", "button");
       this.caption.id = "dp-caption";
       this.caption.addEventListener("click",
           function (evnt) {
@@ -318,6 +322,9 @@ if (typeof window.DatePickerWidget === 'undefined') {
         if (this.#keyboardAccessibility) {
           calendarIcon.setAttribute("tabindex", 0);
         }
+        // Accessibility attributes for calendar icon button
+        calendarIcon.setAttribute("role", "button");
+        calendarIcon.setAttribute("aria-label", this.#options?.locale?.openCalendarText || "Open calendar");
         calendarIcon.addEventListener(this.#getEvent(), function (evnt) {
           self._iconClicked = true;
           widget.click();
@@ -560,7 +567,6 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.#focusedOnLi = false;
         DatePickerWidget.#visible = true;
         this.#position();
-        
         // Add document touch listener for mobile to close datepicker when tapping outside
         if (this.#touchSupported && !this.#documentTouchListener) {
           this.#documentTouchListener = (evt) => {
@@ -570,7 +576,6 @@ if (typeof window.DatePickerWidget === 'undefined') {
           };
           document.addEventListener("touchstart", this.#documentTouchListener, false);
         }
-        
         if (this.#options.showCalendarIcon) {
           this.#curInstance.$field.setAttribute('readonly', true);    // when the datepicker is active, deactivate the field
         }
@@ -661,6 +666,40 @@ if (typeof window.DatePickerWidget === 'undefined') {
         this.view = nextView;
         this.caption.classList.toggle("disabled",
             !this.#viewAction[this.view].caption);
+        let ariaLabel = "";
+        if (this.view === "Month") {
+          ariaLabel = this.#options.locale.months[this.currentMonth] + " " + this.currentYear;
+          this.prevNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.previousMonth || "Previous month"
+          );
+          this.nextNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.nextMonth || "Next month"
+          );
+        } else if (this.view === "Year") {
+          ariaLabel = this.currentYear;
+          this.prevNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.previousYear || "Previous year"
+          );
+          this.nextNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.nextYear || "Next year"
+          );
+        } else if (this.view === "Yearset") {
+          const startYear = this.currentYear - this.#options.yearsPerView / 2;
+          const endYear = startYear + this.#options.yearsPerView - 1;
+          ariaLabel = startYear + "-" + endYear;
+          this.prevNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.previousSetOfYears || "Previous set of years"
+          );
+          this.nextNavWidthBtn.setAttribute(
+            "aria-label",
+            this.#options.locale.nextSetOfYears || "Next set of years"
+          );
+        }
         this['$' + this.view.toLowerCase()].style.display = "block";
         this["show" + this.view]();
       }
@@ -1155,9 +1194,37 @@ if (typeof window.DatePickerWidget === 'undefined') {
         if (clearText) {
             defaultOptions.locale.clearText = clearText;
         }
+        var openCalendarText = FormView.LanguageUtils.getTranslatedString(locale, "openCalendarText");
+        if (openCalendarText) {
+            defaultOptions.locale.openCalendarText = openCalendarText;
+        }
         var zero = FormView.LanguageUtils.getTranslatedString(locale, "0");
         if (zero) {
             defaultOptions.locale.zero = zero;
+        }
+        var previousMonth = FormView.LanguageUtils.getTranslatedString(locale, "previousMonth");
+        if (previousMonth) {
+            defaultOptions.locale.previousMonth = previousMonth;
+        }
+        var nextMonth = FormView.LanguageUtils.getTranslatedString(locale, "nextMonth");
+        if (nextMonth) {
+            defaultOptions.locale.nextMonth = nextMonth;
+        }
+        var previousYear = FormView.LanguageUtils.getTranslatedString(locale, "previousYear");
+        if (previousYear) {
+            defaultOptions.locale.previousYear = previousYear;
+        }
+        var nextYear = FormView.LanguageUtils.getTranslatedString(locale, "nextYear");
+        if (nextYear) {
+            defaultOptions.locale.nextYear = nextYear;
+        }
+        var previousSetOfYears = FormView.LanguageUtils.getTranslatedString(locale, "previousSetOfYears");
+        if (previousSetOfYears) {
+            defaultOptions.locale.previousSetOfYears = previousSetOfYears;
+        }
+        var nextSetOfYears = FormView.LanguageUtils.getTranslatedString(locale, "nextSetOfYears");
+        if (nextSetOfYears) {
+            defaultOptions.locale.nextSetOfYears = nextSetOfYears;
         }
     }
 
