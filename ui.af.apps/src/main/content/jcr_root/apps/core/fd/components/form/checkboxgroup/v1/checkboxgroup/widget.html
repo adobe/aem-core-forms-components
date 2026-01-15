@@ -14,7 +14,7 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <template data-sly-template.widget="${ @ checkboxgroup }">
-  <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}" id="${widgetId}">
+  <div class="cmp-adaptiveform-checkboxgroup__widget ${checkboxgroup.orientation}" id="${widgetId}" role="group">
     <div data-sly-list="${checkboxgroup.enums}" data-sly-unwrap>
       <div class="cmp-adaptiveform-checkboxgroup-item ${checkboxgroup.name}">
         <label class="cmp-adaptiveform-checkboxgroup__option-label"
