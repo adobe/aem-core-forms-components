@@ -132,7 +132,8 @@ try {
             ci.sh(disableApiRegion);
             
             // Stop old af-core bundles to prevent adaptTo() conflicts without triggering re-wiring
-            const oldBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.version) | reverse | .[1:] | .[] | "\\(.id)|\\(.version)"\'', true);
+            // Sort by bundle ID (higher ID = more recently installed) to ensure we keep the latest build
+            const oldBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.id | tonumber) | reverse | .[1:] | .[] | "\\(.id)|\\(.version)"\'', true);
             if (oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') {
                 console.log('Stopping old af-core bundle versions to avoid conflicts');
                 oldBundlesInfo.trim().split('\n').forEach(bundleInfo => {
