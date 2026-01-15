@@ -130,6 +130,19 @@ try {
             // upload webvitals and disable api region
             const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
             ci.sh(disableApiRegion);
+            
+            // Remove duplicate/old versions of af-core bundle to ensure only the latest is active
+            const afCoreBundleIds = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.version) | reverse | .[1:] | .[].id\'', true);
+            if (afCoreBundleIds && afCoreBundleIds.trim() !== '' && afCoreBundleIds !== 'null') {
+                const bundleIdsArray = afCoreBundleIds.trim().split('\n');
+                bundleIdsArray.forEach(bundleId => {
+                    if (bundleId && bundleId !== 'null' && bundleId.trim() !== '') {
+                        console.log(`Uninstalling old af-core bundle: ${bundleId}`);
+                        ci.sh(`curl -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
+                    }
+                });
+            }
+            
             // const installWebVitalBundle = `curl -u admin:admin \
             //                                 -F bundlefile=@'${buildPath}/it/core/src/main/resources/com.adobe.granite.webvitals-1.2.2.jar' \
             //                                 -F name='com.adobe.granite.webvitals' \
