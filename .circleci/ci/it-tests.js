@@ -139,6 +139,9 @@ try {
                 console.log('Found af-core bundles:');
                 console.log(allBundles);
                 
+                // Get SNAPSHOT bundle ID for later restart
+                const afCoreSnapshotId = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core" and (.version | contains("SNAPSHOT")))) | .[0].id\'', true);
+                
                 // Keep the SNAPSHOT version (from build) and uninstall all others
                 const oldBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core" and (.version | contains("SNAPSHOT") | not))) | .[] | "\\(.id)|\\(.version)"\'', true);
                 if (oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') {
@@ -157,6 +160,9 @@ try {
                 console.log('Found core bundles:');
                 console.log(allCoreBundles);
                 
+                // Get SNAPSHOT bundle ID for later restart
+                const coreSnapshotId = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-core" and (.version | contains("SNAPSHOT")))) | .[0].id\'', true);
+                
                 const oldCoreBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-core" and (.version | contains("SNAPSHOT") | not))) | .[] | "\\(.id)|\\(.version)"\'', true);
                 if (oldCoreBundlesInfo && oldCoreBundlesInfo.trim() !== '' && oldCoreBundlesInfo !== 'null') {
                     console.log('Uninstalling old core bundle versions to avoid conflicts');
@@ -169,11 +175,35 @@ try {
                     });
                 }
                 
-                // Wait for OSGi to stabilize after uninstalling old bundles
+                // Restart SNAPSHOT bundles to ensure clean wiring after uninstalling old bundles
                 if ((oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') || 
                     (oldCoreBundlesInfo && oldCoreBundlesInfo.trim() !== '' && oldCoreBundlesInfo !== 'null')) {
-                    console.log('Waiting 60 seconds for OSGi to process bundle uninstalls...');
-                    ci.sh('sleep 60');
+                    
+                    // Stop SNAPSHOT bundles (using IDs fetched earlier)
+                    if (afCoreSnapshotId && afCoreSnapshotId.trim() !== '' && afCoreSnapshotId !== 'null') {
+                        console.log(`Stopping af-core SNAPSHOT bundle (ID: ${afCoreSnapshotId.trim()})...`);
+                        ci.sh(`curl -s -u admin:admin -F action=stop http://localhost:4502/system/console/bundles/${afCoreSnapshotId.trim()}`);
+                    }
+                    if (coreSnapshotId && coreSnapshotId.trim() !== '' && coreSnapshotId !== 'null') {
+                        console.log(`Stopping core SNAPSHOT bundle (ID: ${coreSnapshotId.trim()})...`);
+                        ci.sh(`curl -s -u admin:admin -F action=stop http://localhost:4502/system/console/bundles/${coreSnapshotId.trim()}`);
+                    }
+                    
+                    console.log('Waiting 10 seconds for bundles to stop...');
+                    ci.sh('sleep 10');
+                    
+                    // Start SNAPSHOT bundles
+                    if (afCoreSnapshotId && afCoreSnapshotId.trim() !== '' && afCoreSnapshotId !== 'null') {
+                        console.log(`Starting af-core SNAPSHOT bundle (ID: ${afCoreSnapshotId.trim()})...`);
+                        ci.sh(`curl -s -u admin:admin -F action=start http://localhost:4502/system/console/bundles/${afCoreSnapshotId.trim()}`);
+                    }
+                    if (coreSnapshotId && coreSnapshotId.trim() !== '' && coreSnapshotId !== 'null') {
+                        console.log(`Starting core SNAPSHOT bundle (ID: ${coreSnapshotId.trim()})...`);
+                        ci.sh(`curl -s -u admin:admin -F action=start http://localhost:4502/system/console/bundles/${coreSnapshotId.trim()}`);
+                    }
+                    
+                    console.log('Waiting 30 seconds for OSGi to re-wire bundles...');
+                    ci.sh('sleep 10');
                     
                     console.log('Checking bundle stability...');
                     let attempts = 0;
