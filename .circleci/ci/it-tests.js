@@ -131,16 +131,36 @@ try {
             const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
             ci.sh(disableApiRegion);
             
-            // Remove duplicate/old versions of af-core bundle to ensure only the latest is active
-            const afCoreBundleIds = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.version) | reverse | .[1:] | .[].id\'', true);
-            if (afCoreBundleIds && afCoreBundleIds.trim() !== '' && afCoreBundleIds !== 'null') {
-                const bundleIdsArray = afCoreBundleIds.trim().split('\n');
-                bundleIdsArray.forEach(bundleId => {
-                    if (bundleId && bundleId !== 'null' && bundleId.trim() !== '') {
-                        console.log(`Uninstalling old af-core bundle: ${bundleId}`);
-                        ci.sh(`curl -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
+            // Stop old af-core bundles to prevent adaptTo() conflicts without triggering re-wiring
+            const oldBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.version) | reverse | .[1:] | .[] | "\\(.id)|\\(.version)"\'', true);
+            if (oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') {
+                console.log('Stopping old af-core bundle versions to avoid conflicts');
+                oldBundlesInfo.trim().split('\n').forEach(bundleInfo => {
+                    if (bundleInfo && bundleInfo !== 'null' && bundleInfo.trim() !== '') {
+                        const [bundleId, version] = bundleInfo.split('|');
+                        console.log(`  Stopping bundle ${bundleId} (version ${version})`);
+                        ci.sh(`curl -s -u admin:admin -F action=stop http://localhost:4502/system/console/bundles/${bundleId}`);
                     }
                 });
+                
+                // Wait for all bundles to stabilize after stopping old versions
+                console.log('Waiting for bundles to stabilize...');
+                let attempts = 0;
+                const maxAttempts = 30;
+                while (attempts < maxAttempts) {
+                    const inactiveBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'[.data[] | select(.state != "Active" and .state != "Fragment")] | length\'', true);
+                    const count = parseInt(inactiveBundles.trim());
+                    if (count === 0) {
+                        console.log('All bundles are active');
+                        break;
+                    }
+                    console.log(`  ${count} bundles not active yet, waiting... (attempt ${attempts + 1}/${maxAttempts})`);
+                    ci.sh('sleep 1');
+                    attempts++;
+                }
+                if (attempts >= maxAttempts) {
+                    console.log('Warning: Some bundles still not active after waiting, proceeding anyway');
+                }
             }
             
             // const installWebVitalBundle = `curl -u admin:admin \
