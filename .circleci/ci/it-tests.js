@@ -131,20 +131,20 @@ try {
             const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
             ci.sh(disableApiRegion);
             
-            // Stop old af-core bundles to prevent adaptTo() conflicts without triggering re-wiring
+            // Uninstall old af-core bundles to prevent adaptTo() conflicts
             // Sort by bundle ID (higher ID = more recently installed) to ensure we keep the latest build
             const oldBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.id | tonumber) | reverse | .[1:] | .[] | "\\(.id)|\\(.version)"\'', true);
             if (oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') {
-                console.log('Stopping old af-core bundle versions to avoid conflicts');
+                console.log('Uninstalling old af-core bundle versions to avoid conflicts');
                 oldBundlesInfo.trim().split('\n').forEach(bundleInfo => {
                     if (bundleInfo && bundleInfo !== 'null' && bundleInfo.trim() !== '') {
                         const [bundleId, version] = bundleInfo.split('|');
-                        console.log(`  Stopping bundle ${bundleId} (version ${version})`);
-                        ci.sh(`curl -s -u admin:admin -F action=stop http://localhost:4502/system/console/bundles/${bundleId}`);
+                        console.log(`  Uninstalling bundle ${bundleId} (version ${version})`);
+                        ci.sh(`curl -s -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
                     }
                 });
                 
-                // Wait for all bundles to stabilize after stopping old versions
+                // Wait for all bundles to stabilize after uninstalling old versions
                 console.log('Waiting for bundles to stabilize...');
                 let attempts = 0;
                 const maxAttempts = 30;
