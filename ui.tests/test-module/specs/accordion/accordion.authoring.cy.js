@@ -102,16 +102,14 @@ describe('Page - Authoring', function () {
 
         it('open edit dialog of Accordion', {retries: 3}, function () {
             cy.cleanTest(accordionEditPath).then(function() {
-                dropAccordionInContainer();
                 testAccordionBehaviour(accordionPathSelector, accordionEditPath);
             });
         });
 
-        it('switch accordion tabs', function () {
+        it('switch accordion tabs', {retries: 3}, function () {
             cy.cleanTest(accordionEditPath).then(function(){
                 dropAccordionInContainer();
-                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']")
-                    .should('not.have.attr', 'data-cmp-expanded')
+                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").should('not.have.attr', 'data-cmp-expanded')
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']");
                 cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
@@ -124,9 +122,7 @@ describe('Page - Authoring', function () {
                 cy.get('body').click(0, 0);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']");
                 cy.get("tr[data-name='item_2']").click();
-                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_1']")
-                    .should('not.have.attr', 'data-cmp-expanded')
-
+                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_1']").should('not.have.attr', 'data-cmp-expanded')
                 cy.deleteComponentByPath(accordionEditPath);
             });
         });
