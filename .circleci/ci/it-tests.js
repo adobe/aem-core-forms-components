@@ -52,20 +52,7 @@ try {
     } else if (AEM === 'addon') {
         // Download the forms Add-On
         ci.sh(`curl -s "${process.env.FORMS_ADDON_URL}" -o forms-addon.far`);
-        
-        // For SNAPSHOT builds, remove af-core and core from FAR to prevent duplicates
-        // These will be provided by the build via qp.sh (lines 99-100)
-        if (!CORE_COMPONENTS) {
-            console.log('Removing af-core and core bundles from FAR (will be replaced by SNAPSHOT build)...');
-            ci.sh(`unzip -q forms-addon.far -d forms-addon-extracted`);
-            ci.sh(`find forms-addon-extracted -name '*core-forms-components-af-core*.jar' ! -name '*SNAPSHOT*' -delete`);
-            ci.sh(`find forms-addon-extracted -name '*core-forms-components-core*.jar' ! -name '*SNAPSHOT*' -delete`);
-            ci.sh(`cd forms-addon-extracted && zip -q -r ../forms-addon-modified.far .`);
-            extras = '--install-file forms-addon-modified.far';
-        } else {
-            extras = '--install-file forms-addon.far';
-        }
-        
+        extras = '--install-file forms-addon.far';
         extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
         if (PRERELEASE === 'true') {
             // enable pre-release settings
@@ -74,20 +61,7 @@ try {
     } else if (AEM === 'addon-latest') {
         // Download latest add-on release from artifactory
         ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemfd -DartifactId=aem-forms-cloud-ready-pkg -Dversion=LATEST -Dclassifier=feature-archive -Dtype=far -DoutputDirectory=${buildPath} -DoutputFileName=forms-latest-addon.far`);
-        
-        // For SNAPSHOT builds, remove af-core and core from FAR to prevent duplicates
-        // These will be provided by the build via qp.sh (lines 99-100)
-        if (!CORE_COMPONENTS) {
-            console.log('Removing af-core and core bundles from FAR (will be replaced by SNAPSHOT build)...');
-            ci.sh(`cd ${buildPath} && unzip -q forms-latest-addon.far -d forms-addon-extracted`);
-            ci.sh(`find ${buildPath}/forms-addon-extracted -name '*core-forms-components-af-core*.jar' ! -name '*SNAPSHOT*' -delete`);
-            ci.sh(`find ${buildPath}/forms-addon-extracted -name '*core-forms-components-core*.jar' ! -name '*SNAPSHOT*' -delete`);
-            ci.sh(`cd ${buildPath}/forms-addon-extracted && zip -q -r ../forms-latest-addon-modified.far .`);
-            extras += ` --install-file ${buildPath}/forms-latest-addon-modified.far`;
-        } else {
-            extras += ` --install-file ${buildPath}/forms-latest-addon.far`;
-        }
-        
+        extras += ` --install-file ${buildPath}/forms-latest-addon.far`;
         if (PRERELEASE === 'true') {
             // enable pre-release settings
             preleaseOpts = "--cmd-options \\\"-r prerelease\\\"";
@@ -157,8 +131,73 @@ try {
             const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
             ci.sh(disableApiRegion);
             
-            // Bundles were already excluded from FAR during extraction (lines 56-87)
-            // No post-startup cleanup needed - only SNAPSHOT versions are installed
+            // Only remove duplicate bundles when testing SNAPSHOT builds (not specific CORE_COMPONENTS versions)
+            if (!CORE_COMPONENTS) {
+                // Uninstall old af-core bundles to prevent adaptTo() conflicts
+                // First, log all af-core bundles to debug which one we're keeping
+                const allBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.id | tonumber) | reverse | .[] | "ID: \\(.id) | Version: \\(.version) | State: \\(.state)"\'', true);
+                console.log('Found af-core bundles:');
+                console.log(allBundles);
+                
+                // Keep the SNAPSHOT version (from build) and uninstall all others
+                const oldBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core" and (.version | contains("SNAPSHOT") | not))) | .[] | "\\(.id)|\\(.version)"\'', true);
+                if (oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') {
+                    console.log('Uninstalling old af-core bundle versions to avoid conflicts');
+                    oldBundlesInfo.trim().split('\n').forEach(bundleInfo => {
+                        if (bundleInfo && bundleInfo !== 'null' && bundleInfo.trim() !== '') {
+                            const [bundleId, version] = bundleInfo.split('|');
+                            console.log(`  Uninstalling bundle ${bundleId} (version ${version})`);
+                            ci.sh(`curl -s -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
+                        }
+                    });
+                }
+                
+                // Similarly, uninstall old core bundle versions
+                const allCoreBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-core")) | sort_by(.id | tonumber) | reverse | .[] | "ID: \\(.id) | Version: \\(.version) | State: \\(.state)"\'', true);
+                console.log('Found core bundles:');
+                console.log(allCoreBundles);
+                
+                const oldCoreBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-core" and (.version | contains("SNAPSHOT") | not))) | .[] | "\\(.id)|\\(.version)"\'', true);
+                if (oldCoreBundlesInfo && oldCoreBundlesInfo.trim() !== '' && oldCoreBundlesInfo !== 'null') {
+                    console.log('Uninstalling old core bundle versions to avoid conflicts');
+                    oldCoreBundlesInfo.trim().split('\n').forEach(bundleInfo => {
+                        if (bundleInfo && bundleInfo !== 'null' && bundleInfo.trim() !== '') {
+                            const [bundleId, version] = bundleInfo.split('|');
+                            console.log(`  Uninstalling bundle ${bundleId} (version ${version})`);
+                            ci.sh(`curl -s -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
+                        }
+                    });
+                }
+                
+                // Wait for OSGi to stabilize after uninstalling old bundles
+                if ((oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') || 
+                    (oldCoreBundlesInfo && oldCoreBundlesInfo.trim() !== '' && oldCoreBundlesInfo !== 'null')) {
+                    console.log('Waiting 60 seconds for OSGi to process bundle uninstalls...');
+                    ci.sh('sleep 60');
+                    
+                    console.log('Checking bundle stability...');
+                    let attempts = 0;
+                    const maxAttempts = 30; // 450 seconds additional wait if needed
+                    while (attempts < maxAttempts) {
+                        const inactiveBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'[.data[] | select(.state != "Active" and .state != "Fragment")] | length\'', true);
+                        const count = parseInt(inactiveBundles.trim());
+                        if (count === 0) {
+                            console.log('All bundles are active');
+                            break;
+                        }
+                        console.log(`  ${count} bundles not active yet, waiting... (attempt ${attempts + 1}/${maxAttempts})`);
+                        ci.sh('sleep 15');
+                        attempts++;
+                    }
+                    
+                    if (attempts >= maxAttempts) {
+                        console.log('Warning: Some bundles still not active, checking critical bundles...');
+                        const criticalBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select((.symbolicName | contains("core-forms-components")) and (.version | contains("SNAPSHOT")))) | .[] | "\\(.symbolicName): \\(.state)"\'', true);
+                        console.log('Critical SNAPSHOT bundle states:');
+                        console.log(criticalBundles);
+                    }
+                }
+            }
             
             // const installWebVitalBundle = `curl -u admin:admin \
             //                                 -F bundlefile=@'${buildPath}/it/core/src/main/resources/com.adobe.granite.webvitals-1.2.2.jar' \
