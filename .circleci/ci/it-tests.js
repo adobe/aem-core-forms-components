@@ -169,15 +169,33 @@ try {
                     });
                 }
                 
-                // Restart AEM to ensure clean state after uninstalling old bundles
+                // Wait for OSGi to stabilize after uninstalling old bundles
                 if ((oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') || 
                     (oldCoreBundlesInfo && oldCoreBundlesInfo.trim() !== '' && oldCoreBundlesInfo !== 'null')) {
-                    console.log('Restarting AEM to ensure clean bundle state...');
-                    ci.dir(qpPath, () => {
-                        ci.sh('./qp.sh -v stop --id author');
-                        ci.sh('./qp.sh -v start --id author');
-                    });
-                    console.log('AEM restarted successfully');
+                    console.log('Waiting 60 seconds for OSGi to process bundle uninstalls...');
+                    ci.sh('sleep 60');
+                    
+                    console.log('Checking bundle stability...');
+                    let attempts = 0;
+                    const maxAttempts = 30; // 450 seconds additional wait if needed
+                    while (attempts < maxAttempts) {
+                        const inactiveBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'[.data[] | select(.state != "Active" and .state != "Fragment")] | length\'', true);
+                        const count = parseInt(inactiveBundles.trim());
+                        if (count === 0) {
+                            console.log('All bundles are active');
+                            break;
+                        }
+                        console.log(`  ${count} bundles not active yet, waiting... (attempt ${attempts + 1}/${maxAttempts})`);
+                        ci.sh('sleep 15');
+                        attempts++;
+                    }
+                    
+                    if (attempts >= maxAttempts) {
+                        console.log('Warning: Some bundles still not active, checking critical bundles...');
+                        const criticalBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select((.symbolicName | contains("core-forms-components")) and (.version | contains("SNAPSHOT")))) | .[] | "\\(.symbolicName): \\(.state)"\'', true);
+                        console.log('Critical SNAPSHOT bundle states:');
+                        console.log(criticalBundles);
+                    }
                 }
             }
             
