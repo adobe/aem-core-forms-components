@@ -211,8 +211,8 @@ describe('Page - Authoring', function () {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
                     cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
-                    cy.get(".sidepanel-tree-item-button.sidepanel-tree-item-button-isVisible").first().click();
-                    cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/wizard/panelcontainer']").click({force: true});
+                    cy.get(`div[data-path='${wizardLayoutDrop}']`).click({force: true});
+                    cy.get(`div[data-path='${panelcontainerPath}']`).click({force: true});
                     cy.get('#EditableToolbar').should('be.visible');
                     cy.deleteComponentByPath(wizardLayoutDrop);
                 });
