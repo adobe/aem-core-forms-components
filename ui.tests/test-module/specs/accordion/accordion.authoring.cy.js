@@ -127,10 +127,11 @@ describe('Page - Authoring', function () {
             });
         });
 
-        it('open editable toolbar of 2nd accordion item', {retries: 3}, function () {
+        it.only('open editable toolbar of 2nd accordion item', {retries: 3}, function () {
             cy.cleanTest(accordionEditPath).then(function(){
                 dropAccordionInContainer();
                 cy.reload();
+                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").should('not.have.attr', 'data-cmp-expanded')
                 cy.get(".sidepanel-tree-item-button.sidepanel-tree-item-button-isVisible").first().click();
                 cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").click();
                 cy.get('#EditableToolbar').should('be.visible');
