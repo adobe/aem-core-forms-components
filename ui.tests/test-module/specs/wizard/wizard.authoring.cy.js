@@ -295,10 +295,9 @@ describe('Page - Authoring', function () {
                 addComponentInWizardOfSites("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
                 cy.wait(2000).then(() => {
                     cy.get("#sidepanel-toggle-button").click();
-                    cy.get("#coral-id-599").click();
-                    cy.get("div[data-path='/content/core-components-examples/library/adaptive-form/wizard/jcr:content/root/responsivegrid/demo/component/guideContainer/wizard']").click({force: true});
-                    cy.get("._coral-TreeView-itemLink.is-selected > svg").click({force: true});
-                    cy.get(".editor-ContentTree-itemTitle").last().click({force: true}).click({force: true}).click({force: true});
+                    cy.get('coral-tab[icon="layers"][aria-label="Content Tree"]').click();
+                    cy.get(`div[data-path='${wizardEditPath}']`).click({force: true});
+                    cy.get(`div[data-path='${panelcontainerPath}']`).click({force: true});
                     cy.get('#EditableToolbar').should('be.visible');
                     cy.get('body').click(0, 0);
                     cy.deleteComponentByPath(wizardEditPath);
