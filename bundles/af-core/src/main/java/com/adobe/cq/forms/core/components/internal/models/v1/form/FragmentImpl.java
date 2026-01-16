@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -118,10 +119,13 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         if (itemModels == null) {
             itemModels = getChildrenModels(request, ComponentExporter.class);
         }
-        return itemModels;
+        return new LinkedHashMap<>(itemModels);
     }
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+        if (fragmentContainer == null) {
+            return new LinkedHashMap<>();
+        }
         List<Resource> filteredChildrenResources = getFilteredChildrenResources(fragmentContainer);
         SlingHttpServletRequest wrappedSlingHttpServletRequest = null;
         if (request != null) {
@@ -169,7 +173,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     private @Nonnull I18n getFragmentContainerI18n(@Nonnull String localeLang) {
         // Get the locale from the lang setter
         ResourceBundle resourceBundle = null;
-        if (localeLang != null) {
+        if (localeLang != null && fragmentContainer != null) {
             Locale desiredLocale = new Locale(localeLang);
             // Get the resource resolver from the fragment container
             ResourceResolver resourceResolver = fragmentContainer.getResourceResolver();
@@ -195,7 +199,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         if (filteredChildComponents == null) {
             filteredChildComponents = getFilteredChildrenResources(fragmentContainer);
         }
-        return filteredChildComponents;
+        return new ArrayList<>(filteredChildComponents);
     }
 
     @JsonIgnore
