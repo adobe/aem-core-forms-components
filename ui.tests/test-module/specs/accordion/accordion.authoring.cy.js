@@ -127,7 +127,7 @@ describe('Page - Authoring', function () {
             });
         });
 
-        it.only('open editable toolbar of 2nd accordion item', {retries: 3}, function () {
+        it('open editable toolbar of 2nd accordion item', {retries: 3}, function () {
             cy.cleanTest(accordionEditPath).then(function(){
                 dropAccordionInContainer();
                 cy.reload();
