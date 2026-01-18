@@ -51,6 +51,13 @@ const commons = require('../commons/commons'),
     guideConstants = require('../commons/formsConstants');
 var toggles = [];
 
+// Ignore benign ResizeObserver errors
+Cypress.on('uncaught:exception', (err, runnable) => {
+    if (err.message.includes('ResizeObserver loop')) {
+        return false;
+    }
+});
+
 // Cypress command to login to aem page
 Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
     const username = Cypress.env('crx.username') ? Cypress.env('crx.username') : "admin";
