@@ -217,7 +217,9 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                     break;
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
-                    resources = this.getResourceListFromComponentDescription(metaDataList, resourceResolver);
+                    // Add an explicit empty option so authors can clear an already selected prefill service.
+                    resources.add(getResourceForDropdownDisplay(resourceResolver, "None", ""));
+                    resources.addAll(this.getResourceListFromComponentDescription(metaDataList, resourceResolver));
                     break;
             }
         }
