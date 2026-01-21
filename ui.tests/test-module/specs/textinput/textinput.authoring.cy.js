@@ -183,34 +183,30 @@ describe('Page - Authoring', function () {
             cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
 
             cy.get('.cmp-adaptiveform-textinput__editdialog').then(($dialog) => {
-                const $patternDropdown = $dialog.find('.cmp-adaptiveform-textinput__validationpattern');
-                // The dropdown can exist in the DOM but not visible when its surrounding container is hidden.
-                const $patternDropdownWrapper = $patternDropdown[0].closest("div").hasAttribute("hidden");
-                const patternDropdownAvailable = $patternDropdown.length > 0 && $patternDropdownWrapper.length === 0;
-                // If the validation pattern dropdown is not visible, ensure the validation format field preserves the authored value.
-                if (!patternDropdownAvailable) {
-                    cy.get("[name='./pattern']")
-                        .scrollIntoView()
-                        .should('exist')
-                        .then(($pattern) => {
-                            cy.wrap($pattern).clear({ force: true }).type(validationFormatValue, { force: true });
-                        });
-                    cy.get('.cq-dialog-submit').should('be.visible').click();
-                    cy.reload();
+                const patternDropdown = '.cmp-adaptiveform-textinput__validationpattern';
+                const patternFormat = '.cmp-adaptiveform-textinput__validationformat';
+                // The dropdown exists in the DOM - hide it to make only format visible.
+                $dialog.find(patternDropdown)[0].closest("div").setAttribute("hidden");
+                $dialog.find(patternFormat)[0].closest("div").removeAttribute("hidden");
 
-                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
-                    cy.invokeEditableAction("[data-action='CONFIGURE']");
-                    cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
-                    cy.get("[name='./pattern']")
-                        .scrollIntoView()
-                        .should('exist')
-                        .should('have.value', validationFormatValue);
-                    cy.get('.cq-dialog-cancel').should('be.visible').click();
-                } else {
-                    // Dropdown exists; scroll it into view
-                    cy.wrap($patternDropdown).scrollIntoView().should('be.visible');
-                    cy.get('.cq-dialog-cancel').should('be.visible').click();
-                }
+                // If the validation pattern dropdown is not visible, ensure the validation format field preserves the authored value.
+                cy.get(patternFormat)
+                    .scrollIntoView()
+                    .should('exist')
+                    .then(($pattern) => {
+                        cy.wrap($pattern).clear({ force: true }).type(validationFormatValue, { force: true });
+                    });
+                cy.get('.cq-dialog-submit').should('be.visible').click();
+                cy.reload();
+
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+                cy.invokeEditableAction("[data-action='CONFIGURE']");
+                cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
+                cy.get(patternFormat)
+                    .scrollIntoView()
+                    .should('exist')
+                    .should('have.value', validationFormatValue);
+                cy.get('.cq-dialog-cancel').should('be.visible').click();
                 cy.deleteComponentByPath(textInputDrop);
             });
         });
