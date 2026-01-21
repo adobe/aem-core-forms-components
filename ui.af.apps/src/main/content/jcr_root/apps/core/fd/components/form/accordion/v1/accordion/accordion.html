@@ -63,11 +63,13 @@
               <button
                 class="cmp-accordion__add-button"
                 data-cmp-hook-add-instance="${accordion.exportedItems[item].id}"
+                aria-label="${'Add Panel for {0}' @ i18n, format=[accordion.exportedItems[item].label.value]}"
                 title="Add Panel"
                 type="button"></button>
               <button
                 class="cmp-accordion__remove-button"
                 data-cmp-hook-remove-instance="${accordion.exportedItems[item].id}"
+                aria-label="${'Remove Panel for {0}' @ i18n, format=[accordion.exportedItems[item].label.value]}"
                 title="Remove Panel"
                 type="button"></button>
             </div>
