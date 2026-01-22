@@ -356,6 +356,7 @@ class FormFieldBase extends FormField {
     #registerEventListeners() {
         this.#addOnFocusEventListener();
         this.#addOnHelpIconClickEventListener();
+        this.#addOnTabKeyEventListener();
     }
 
     /**
@@ -388,6 +389,33 @@ class FormFieldBase extends FormField {
                 widget.onfocus = () => {
                     this.#triggerEventOnGuideBridge(this.ELEMENT_FOCUS_CHANGED)
                 };
+            }
+        }
+    }
+
+    /**
+     * Adds an event listener for the Tab key to trigger validation before focus moves.
+     * This ensures that buttons enabled by validation become accessible in the tab order.
+     * Fixes accessibility issue where Tab skips over buttons that become enabled after blur.
+     * @private
+     */
+    #addOnTabKeyEventListener() {
+        const widget = this.getWidget();
+        if (widget) {
+            const handleTabKey = (e) => {
+                if (e.key === 'Tab') {
+                    const value = e.target.value;
+                    if (value !== undefined && typeof this.setModelValue === 'function') {
+                        this.setModelValue(value);
+                    }
+                }
+            };
+            if (widget.length && widget.length > 1) {
+                for (let opt of widget) {
+                    opt.addEventListener('keydown', handleTabKey);
+                }
+            } else {
+                widget.addEventListener('keydown', handleTabKey);
             }
         }
     }
