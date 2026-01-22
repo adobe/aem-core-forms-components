@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -61,6 +60,7 @@ import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.print.associate.AssociateProperties;
 import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
@@ -302,6 +302,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return customLayoutProperties;
     }
 
+    public static final String CUSTOM_ASSOCIATE_PROPERTY_WRAPPER = "fd:associate";
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
     public static final String CUSTOM_DOR_CONTAINER_WRAPPER = "dorContainer";
     // used for DOR and SPA editor to work
@@ -340,6 +341,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         List<String> disabledScripts = getDisabledXFAScripts();
         if (!disabledScripts.isEmpty()) {
             properties.put("fd:disabledXfaScripts", disabledScripts);
+        }
+        Map<String, Object> associateProperties = getAssociateProperties();
+        if (!associateProperties.isEmpty()) {
+            properties.put(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER, associateProperties);
         }
         return properties;
     }
@@ -576,7 +581,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
     private Map<String, Object> getCustomProperties() {
-        Map<String, Object> customProperties = new HashMap<>();
+        Map<String, Object> customProperties = new LinkedHashMap<>();
         Map<String, String> templateBasedCustomProperties;
         List<String> excludedPrefixes = Arrays.asList("fd:", "jcr:", "sling:");
         Set<String> reservedProperties = ReservedProperties.getReservedProperties();
@@ -601,6 +606,24 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             templateBasedCustomProperties.forEach(customProperties::putIfAbsent);
         }
         return customProperties;
+    }
+
+    private Map<String, Object> getAssociateProperties() {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel) && resource != null) {
+            Resource associatePropertiesResource = resource.getChild(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER);
+            if (associatePropertiesResource != null) {
+                try {
+                    AssociateProperties associateProperties = associatePropertiesResource.adaptTo(AssociateProperties.class);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    if (associateProperties != null) {
+                        return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {});
+                    }
+                } catch (Exception e) {
+                    logger.warn("Unable to adapt associate properties", e);
+                }
+            }
+        }
+        return Collections.emptyMap();
     }
 
     @Override

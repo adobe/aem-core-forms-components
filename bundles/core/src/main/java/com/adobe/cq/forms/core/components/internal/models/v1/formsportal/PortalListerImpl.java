@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.formsportal;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -192,7 +193,7 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
         }
 
         public void setOperations(List<Operation> operations) {
-            this.operations = operations;
+            this.operations = operations != null ? new ArrayList<>(operations) : null;
         }
 
         public void setId(String id) {
@@ -205,7 +206,7 @@ public class PortalListerImpl extends AbstractComponentImpl implements PortalLis
 
         @Override
         public List<Operation> getOperations() {
-            return operations;
+            return operations != null ? new ArrayList<>(operations) : null;
         }
 
         @Override
