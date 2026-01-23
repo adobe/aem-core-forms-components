@@ -32,6 +32,6 @@ public interface DropDown extends Field, OptionsConstraint, ContainerConstraint 
      * 
      * @return {@code true} if multiple selection is enabled, {@code false} otherwise
      */
-    @JsonIgnore
+    // @JsonIgnore
     Boolean isMultiSelect();
 }
