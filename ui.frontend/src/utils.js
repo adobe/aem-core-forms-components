@@ -17,7 +17,7 @@
 import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
-import {FunctionRuntime} from '@aemforms/af-core';
+import {FunctionRuntime, CustomEvent} from '@aemforms/af-core';
 import {loadXfa} from "./handleXfa";
 import RuleUtils from "./RuleUtils.js";
 
@@ -355,6 +355,14 @@ class Utils {
                 Utils.initializeAllFields(formContainer);
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
+                // Dispatch custom:formViewInitialized event after form is fully rendered
+                if (formContainer && formContainer._model) {
+                    try {
+                        formContainer._model.dispatch(new CustomEvent('formViewInitialized', {}, true));
+                    } catch (error) {
+                        console.warn('Failed to dispatch custom:formViewInitialized event:', error);
+                    }
+                }
             }
         }
     }
