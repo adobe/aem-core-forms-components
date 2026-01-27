@@ -115,6 +115,9 @@
       if(value){
         value.setAttribute('aria-labelledby', id);
       }
+      if(editButton && editButton.getAttribute(Review.DATA_ATTRIBUTE_VISIBLE) === 'true'){
+        editButton.setAttribute('aria-describedby', id);
+      }
     }
 
     static isRepeatable(item) {
@@ -305,8 +308,7 @@
       const editButton = cloneNode.querySelector(Review.selectors.editButton);
       if (editButton) {
         editButton.setAttribute(Review.selectors.fieldId, item.id);
-        const currentItemLabel = item?.label?.value;
-        editButton.setAttribute('aria-label', Granite.I18n.get('Edit') + (currentItemLabel ?  " " + currentItemLabel : ""));
+        editButton.setAttribute('aria-label', item?.label?.value);
         if (item.enabled === false) {
           editButton.setAttribute('disabled', true);
         }
