@@ -156,7 +156,7 @@ class FormFieldBase extends FormField {
       let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
       widgetElement = widgetElements || widgetElement;
       if (widgetElement) {
-          widgetElement.setAttribute('id', this.getWidgetId());
+        widgetElement.setAttribute('id', this.getWidgetId());
       }
     }
 
@@ -198,49 +198,89 @@ class FormFieldBase extends FormField {
 
     #syncAriaDescribedBy() {
         let ariaDescribedby = '';
+        let bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+        let widgetLabel = this.element.querySelector(`.${bemClass}__widgetlabel`);
         let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
         let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
         widgetElement = widgetElements || widgetElement;
-        
+
         function appendDescription(descriptionType, id) {
             if (ariaDescribedby) {
-               ariaDescribedby += ` ${id}__${descriptionType}`;
+                ariaDescribedby += ` ${id}__${descriptionType}`;
              } else {
-                 ariaDescribedby = `${id}__${descriptionType}`;
+                ariaDescribedby = `${id}__${descriptionType}`;
              }
-         }
-            
+        }
+
         if (widgetElement) {
-
-           if (this.getDescription()) {
-            const descriptionDiv = this.getDescription();
-            if (!(descriptionDiv.innerHTML.trim() === '' || descriptionDiv.children.length === 0)) {
-                appendDescription('longdescription', this.getId());
+            if (this.getDescription()) {
+                const descriptionDiv = this.getDescription();
+                if (!(descriptionDiv.innerHTML.trim() === '' || descriptionDiv.children.length === 0)) {
+                    appendDescription('longdescription', this.getId());
+                }
             }
-          }
-          
-           if (this.getTooltipDiv()) {
-            appendDescription('shortdescription', this.getId());
-          }
 
-           if (this.getErrorDiv() && this.getErrorDiv().innerHTML) {
-            appendDescription('errormessage', this.getId());
-          }
+            if (this.getTooltipDiv()) {
+                appendDescription('shortdescription', this.getId());
+            }
 
-            widgetElement.setAttribute('aria-describedby', ariaDescribedby);
+            if (this.getErrorDiv() && this.getErrorDiv().innerHTML) {
+                appendDescription('errormessage', this.getId());
+            }
+
+            // FileInput starts with a hidden Widget Element
+            // So the Error will be pinned to the next most useful element, its widget label
+            if (widgetElement.style.display !== "none") {
+                widgetElement.setAttribute('aria-describedby', ariaDescribedby);
+            } else if (widgetLabel){
+                widgetLabel.setAttribute('aria-describedby', ariaDescribedby);
+            }
         }
     }
 
     #syncAriaLabel() {
+        const bemClass = Array.from(this.element.classList).filter(bemClass => !bemClass.includes('--'))[0];
+        const regionContainer = this.element.querySelector(`.${bemClass}__widget-container`);
         let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
         let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
         widgetElement = widgetElements || widgetElement;
         const model = this.getModel?.();
-    
-        if (widgetElement && model?.screenReaderText) {
+
+        if (model?.screenReaderText){
             // Use DOMPurify to sanitize and strip HTML tags
             const screenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(model.screenReaderText, { ALLOWED_TAGS: [] }) : model.screenReaderText;
-            widgetElement.setAttribute('aria-label', screenReaderText);
+
+            // Some elements have the Widget hidden by default and other are Panels
+            // So this container mimics having a single, showing widget to attach the Accessibility label to.
+            if(regionContainer && regionContainer.hasAttribute('role') && (regionContainer.getAttribute('role') === 'region')) {
+                regionContainer.setAttribute('aria-label', screenReaderText);
+            }
+            if (widgetElement) {
+                widgetElement.setAttribute('aria-label', screenReaderText);
+            }
+        } else {
+            // Aria label gets set to the element label if no screenreader text defined
+            // Useful for File Attachment and T&C not being read by NVDA
+            let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+            if (labelElement) {
+                if(regionContainer && regionContainer.hasAttribute('role') && (regionContainer.getAttribute('role') === 'region')) {
+                    regionContainer.setAttribute('aria-label', this.getLabel().innerHTML);
+                }
+            }
+        }
+    }
+
+    #syncLabelledBy() {
+        let labelElement = typeof this.getLabel === 'function' ? this.getLabel() : null;
+        let widgetElement = typeof this.getWidget === 'function' ? this.getWidget() : null;
+        let widgetElements = typeof this.getWidgets === 'function' ? this.getWidgets() : null;
+        widgetElement = widgetElements || widgetElement;
+
+        if (widgetElement && widgetElement.hasAttribute('role') && (widgetElement.getAttribute('role') === 'group' || widgetElement.getAttribute('role') === 'radiogroup')) {
+            if (labelElement) {
+                labelElement.setAttribute('id', `${this.getId()}__label`);
+                widgetElement.setAttribute('aria-labelledby', `${this.getId()}__label`);
+            }
         }
     }
 
@@ -256,6 +296,7 @@ class FormFieldBase extends FormField {
         this.#syncAriaDescribedBy()
         this.#syncError()
         this.#syncAriaLabel()
+        this.#syncLabelledBy()
     }
 
     /**
@@ -710,11 +751,13 @@ class FormFieldBase extends FormField {
                     if (tooltipAlwaysVisible) {
                         self.#showHideTooltipDiv(false);
                     }
+                    questionMarkDiv.setAttribute('aria-expanded', true);
                 } else {
                     self.#showHideLongDescriptionDiv(false);
                     if (tooltipAlwaysVisible) {
                         self.#showHideTooltipDiv(true);
                     }
+                    questionMarkDiv.setAttribute('aria-expanded', false);
                 }
             });
         }
