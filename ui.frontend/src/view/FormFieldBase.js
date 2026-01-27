@@ -751,13 +751,11 @@ class FormFieldBase extends FormField {
                     if (tooltipAlwaysVisible) {
                         self.#showHideTooltipDiv(false);
                     }
-                    questionMarkDiv.setAttribute('aria-expanded', true);
                 } else {
                     self.#showHideLongDescriptionDiv(false);
                     if (tooltipAlwaysVisible) {
                         self.#showHideTooltipDiv(true);
                     }
-                    questionMarkDiv.setAttribute('aria-expanded', false);
                 }
             });
         }
