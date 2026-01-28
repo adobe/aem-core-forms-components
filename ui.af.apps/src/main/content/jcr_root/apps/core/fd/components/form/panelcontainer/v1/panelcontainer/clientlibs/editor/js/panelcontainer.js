@@ -78,18 +78,18 @@
      *
      * @param {HTMLElement} containerEditor The dialog wrapper
      */
-    function handleUseFieldsetBehavior(containerEditor) {
-        var useFieldsetCheckbox = containerEditor.querySelector('[data-cmp-adaptiveform-panel-usefieldset]');
-        var hideTitleCheckbox = containerEditor.querySelector('coral-checkbox[name="./hideTitle"]');
-        var titleField = containerEditor.querySelector('input[name="./jcr:title"]');
+    const handleUseFieldsetBehavior = (containerEditor) => {
+        const useFieldsetCheckbox = containerEditor.querySelector('[data-cmp-adaptiveform-panel-usefieldset]');
+        const hideTitleCheckbox = containerEditor.querySelector('coral-checkbox[name="./hideTitle"]');
+        const titleField = containerEditor.querySelector('input[name="./jcr:title"]');
 
         if (!useFieldsetCheckbox) {
             return;
         }
 
         // Function to update hideTitle state based on useFieldset
-        var updateHideTitleState = function() {
-            var isFieldsetEnabled = useFieldsetCheckbox.checked;
+        const updateHideTitleState = () => {
+            const isFieldsetEnabled = useFieldsetCheckbox.checked;
             
             if (isFieldsetEnabled) {
                 // Disable and uncheck hideTitle when fieldset is enabled
@@ -100,13 +100,13 @@
 
                 // Add visual indicator that title is recommended (but not strictly required since we fall back to name in the HTL template)
                 if (titleField) {
-                    var titleFieldWrapper = titleField.closest('.coral-Form-fieldwrapper');
+                    const titleFieldWrapper = titleField.closest('.coral-Form-fieldwrapper');
                     if (titleFieldWrapper) {
-                        var labelElement = titleFieldWrapper.querySelector('label.coral-Form-fieldlabel');
+                        const labelElement = titleFieldWrapper.querySelector('label.coral-Form-fieldlabel');
                         if (labelElement && !labelElement.dataset.originalText) {
                             // Store original text and append asterisk (indicating that title is recommended)
                             labelElement.dataset.originalText = labelElement.textContent;
-                            labelElement.textContent = labelElement.textContent + ' *';
+                            labelElement.textContent = `${labelElement.textContent} *`;
                         }
                     }
                 }
@@ -118,9 +118,9 @@
 
                 // Remove title recommendation indicator (restore original text)
                 if (titleField) {
-                    var titleFieldWrapper = titleField.closest('.coral-Form-fieldwrapper');
+                    const titleFieldWrapper = titleField.closest('.coral-Form-fieldwrapper');
                     if (titleFieldWrapper) {
-                        var labelElement = titleFieldWrapper.querySelector('label.coral-Form-fieldlabel');
+                        const labelElement = titleFieldWrapper.querySelector('label.coral-Form-fieldlabel');
                         if (labelElement && labelElement.dataset.originalText) {
                             labelElement.textContent = labelElement.dataset.originalText;
                             delete labelElement.dataset.originalText;
@@ -131,11 +131,11 @@
         };
 
         // Initialize state on dialog load
-        Coral.commons.ready(useFieldsetCheckbox, function() { 
+        Coral.commons.ready(useFieldsetCheckbox, () => { 
             updateHideTitleState();
             useFieldsetCheckbox.addEventListener('change', updateHideTitleState);
         });
-    }
+    };
 
     /**
      * Binds policy dialog handling
