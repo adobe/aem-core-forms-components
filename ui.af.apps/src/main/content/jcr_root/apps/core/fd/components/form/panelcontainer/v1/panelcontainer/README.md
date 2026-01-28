@@ -55,7 +55,7 @@ The following properties are written to JCR for this Panel Container component a
 6. `./enabled` - defines initial state of panel if its enabled or not
 7. `./tooltip` - defines tooltip on panel title
 8. `./description` - defines a help message that can be rendered in the field as a hint for the user
-9. `./useFieldset` - if set to `true`, the panel will be rendered as a `<fieldset>` element with the label as a `<legend>` for improved semantics and accessibility. When enabled, the title becomes mandatory and the "Hide Title" option is disabled. If title is not provided, the component will fallback to the panel name.
+9. `./fd:useFieldset` - if set to `true`, the panel will be rendered as a `<fieldset>` element with the label as a `<legend>` for improved semantics and accessibility. When enabled, the title becomes mandatory and the "Hide Title" option is disabled. If title is not provided, the component will fallback to the panel name.
 
 #### Style Properties
 1. `./backgroundImageReference` - defines the Panel Container background image.

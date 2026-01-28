@@ -16,7 +16,7 @@
 <template data-sly-template.simple="${ @ container, panel, label, shortDescription, longDescription, questionMark}">
     <sly data-sly-test="${wcmmode.edit}" data-sly-use.allowed="com.day.cq.wcm.foundation.AllowedComponentList"></sly>
     <sly data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
-         data-sly-set.useFieldset="${properties.useFieldset}"
+         data-sly-set.useFieldset="${properties['fd:useFieldset']}"
          data-sly-set.legendText="${panel.label.value ? panel.label.value : (panel.name ? panel.name : panel.id)}"></sly>
 
     <!-- Fieldset variant -->

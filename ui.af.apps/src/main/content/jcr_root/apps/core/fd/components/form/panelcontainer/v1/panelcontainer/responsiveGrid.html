@@ -14,7 +14,7 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <template data-sly-template.responsiveGrid="${ @ container, panel, label, shortDescription, longDescription, questionMark}">
-    <sly data-sly-set.useFieldset="${properties.useFieldset}"
+    <sly data-sly-set.useFieldset="${properties['fd:useFieldset']}"
          data-sly-set.legendText="${panel.label.value ? panel.label.value : (panel.name ? panel.name : panel.id)}"></sly>
 
     <fieldset data-sly-test="${useFieldset}"
