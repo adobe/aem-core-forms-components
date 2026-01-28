@@ -87,7 +87,7 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     fieldLabel="Use Fieldset/Legend"
                                                     fieldDescription="Render panel as a fieldset with legend for better semantics and accessibility. When enabled, title becomes mandatory."
-                                                    name="./useFieldset"
+                                                    name="./fd:useFieldset"
                                                     text="Enable Fieldset/Legend"
                                                     uncheckedValue="false"
                                                     value="true">
@@ -98,7 +98,7 @@
                                             <useFieldset-typehint
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                    name="./useFieldset@TypeHint"
+                                                    name="./fd:useFieldset@TypeHint"
                                                     value="Boolean"/>
                                             <layout
                                                     jcr:primaryType="nt:unstructured"

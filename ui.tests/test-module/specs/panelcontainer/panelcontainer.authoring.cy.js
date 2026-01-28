@@ -55,7 +55,7 @@ describe('Page - Authoring', function () {
             .should("exist");
         cy.get("[name='./jcr:title']")
             .should("exist");
-        cy.get("[name='./useFieldset']")
+        cy.get("[name='./fd:useFieldset']")
             .should("exist");
 
         if (!isSites) {
@@ -180,7 +180,7 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction("[data-action='CONFIGURE']");
 
             // Verify useFieldset checkbox exists
-            cy.get("[name='./useFieldset']")
+            cy.get("[name='./fd:useFieldset']")
                 .first()
                 .should("exist")
                 .should("be.visible");
@@ -189,7 +189,7 @@ describe('Page - Authoring', function () {
             cy.get("[name='./jcr:title']").should("exist");
 
             // Check if useFieldset checkbox is checked and verify title becomes required
-            cy.get("[name='./useFieldset']").first().then(($checkbox) => {
+            cy.get("[name='./fd:useFieldset']").first().then(($checkbox) => {
                 const isChecked = $checkbox.prop('checked');
                 // Find the label for jcr:title field by navigating from the input to its parent wrapper
                 cy.get("[name='./jcr:title']").parent().find('label').then(($label) => {
@@ -201,8 +201,8 @@ describe('Page - Authoring', function () {
             });
 
             // Toggle the checkbox and verify the label changes accordingly
-            cy.get("[name='./useFieldset']").first().click();
-            cy.get("[name='./useFieldset']").first().then(($checkbox) => {
+            cy.get("[name='./fd:useFieldset']").first().click();
+            cy.get("[name='./fd:useFieldset']").first().then(($checkbox) => {
                 const isChecked = $checkbox.prop('checked');
                 cy.get("[name='./jcr:title']").parent().find('label').then(($label) => {
                     if (isChecked) {

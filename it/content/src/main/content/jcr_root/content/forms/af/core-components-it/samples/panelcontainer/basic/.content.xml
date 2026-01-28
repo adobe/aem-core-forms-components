@@ -245,7 +245,7 @@
                     enabled="{Boolean}true"
                     fieldType="panel"
                     name="panelcontainerFieldset"
-                    useFieldset="{Boolean}true"
+                    fd:useFieldset="{Boolean}true"
                     visible="{Boolean}true">
                 <textinputFieldset
                         jcr:primaryType="nt:unstructured"
