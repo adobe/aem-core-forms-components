@@ -36,4 +36,15 @@ public interface Panel extends Container, ContainerConstraint {
     default Boolean isReadOnly() {
         return null;
     }
+
+    /**
+     * Checks if the panel should use fieldset HTML element instead of div.
+     *
+     * @return {@code true} if the panel should render as fieldset, {@code false} or null otherwise
+     * @since com.adobe.cq.forms.core.components.models.form 5.1.0
+     */
+    @Nullable
+    default Boolean useFieldset() {
+        return null;
+    }
 }
