@@ -49,8 +49,8 @@
             handleUseFieldsetBehavior(dialogContent);
         }
 
-        // Handle repeatability for panels, tabs, accordion and wizard
         if (dialog[0]) {
+            // repeatability, For handling the case when tabs,accordion and wizard inherit panel edit-dialog
             handleRepeat(dialog[0]);
         }
     }
