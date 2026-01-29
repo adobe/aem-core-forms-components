@@ -17,7 +17,7 @@
 (function($) {
     "use strict";
 
-    var selectors = {
+    const selectors = {
             dialogContent: ".cmp-adaptiveform-panelcontainer__editdialog",
             edit: {
                 backgroundColorSwatchesOnly: "[data-cmp-container-v1-dialog-edit-hook='backgroundColorSwatchesOnly']"
@@ -27,12 +27,16 @@
                 backgroundColorSwatchesOnly: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorSwatchesOnly']",
                 backgroundColorAllowedSwatches: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorAllowedSwatches']"
             }
-        };
+        },
+        Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
-    $(document).on("dialog-loaded", function(e) {
-        var $dialog = e.dialog;
-        var $dialogContent = $dialog.find(selectors.dialogContent);
-        var dialogContent = $dialogContent.length > 0 ? $dialogContent[0] : undefined;
+    /**
+     * Main handler that delegates to edit/policy dialog handlers and always handles common behaviors
+     * @param {jQuery} dialog The jQuery dialog object
+     */
+    function handlePanelDialog(dialog) {
+        const $dialogContent = dialog.find(selectors.dialogContent);
+        const dialogContent = $dialogContent.length > 0 ? $dialogContent[0] : undefined;
 
         if (dialogContent) {
             if (dialogContent.querySelector("[data-cmp-container-v1-dialog-edit-hook]")) {
@@ -45,11 +49,11 @@
             handleUseFieldsetBehavior(dialogContent);
         }
 
-        if($dialog[0]) {
-            // repeatability, For handling the case when tabs,accordion and wizard inherit panel edit-dialog
-            handleRepeat($dialog[0]);
+        // Handle repeatability for panels, tabs, accordion and wizard
+        if (dialog[0]) {
+            handleRepeat(dialog[0]);
         }
-    });
+    }
 
     /**
      * Binds edit dialog handling
@@ -131,10 +135,8 @@
         };
 
         // Initialize state on dialog load
-        Coral.commons.ready(useFieldsetCheckbox, () => { 
-            updateHideTitleState();
-            useFieldsetCheckbox.addEventListener('change', updateHideTitleState);
-        });
+        updateHideTitleState();
+        useFieldsetCheckbox.addEventListener('change', updateHideTitleState);
     };
 
     /**
@@ -223,5 +225,8 @@
             });
         }
     }
+
+    // Initialize dialog handlers using the common utility
+    Utils.initializeEditDialog(selectors.dialogContent)(handlePanelDialog);
 
 })(jQuery);
