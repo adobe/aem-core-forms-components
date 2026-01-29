@@ -1,0 +1,49 @@
+{
+  "id": "panel-848a57fc7b",
+  "fieldType": "panel",
+  "name": "fieldsetPanel",
+  "properties": {
+    "fd:dor": {
+      "dorExclusion": false,
+      "dorExcludeTitle": false,
+      "dorExcludeDescription": false
+    },
+    "fd:path": "/content/panel-with-fieldset",
+    "fd:useFieldset": true
+  },
+  "label": {
+    "value": "Panel with Fieldset"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":itemsOrder": [
+    "textinput"
+  ],
+  ":type": "core/fd/components/form/panel/v1/panel",
+  ":items": {
+    "textinput": {
+      "id": "textinput-2c19ef8518",
+      "fieldType": "text-input",
+      "name": "field1",
+      "type": "string",
+      "label": {
+        "value": "Field 1"
+      },
+      "properties": {
+        "fd:dor": {
+          "dorExclusion": false
+        },
+        "fd:path": "/content/panel-with-fieldset/textinput"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+  }
+}
