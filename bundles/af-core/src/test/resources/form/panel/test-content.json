@@ -99,5 +99,20 @@
       "description" : "dummy",
       "visible" : false
     }
+  },
+  "panel-with-fieldset": {
+    "name" : "fieldsetPanel",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType" : "core/fd/components/form/panel/v1/panel",
+    "jcr:title": "Panel with Fieldset",
+    "fieldType" : "panel",
+    "fd:useFieldset": true,
+    "textinput" : {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+      "name" : "field1",
+      "jcr:title" : "Field 1",
+      "fieldType" : "text-input"
+    }
   }
 }

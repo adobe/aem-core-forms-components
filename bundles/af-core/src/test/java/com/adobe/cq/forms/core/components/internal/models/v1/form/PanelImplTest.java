@@ -52,6 +52,7 @@ public class PanelImplTest {
     private static final String PATH_RULES_PANEL = CONTENT_ROOT + "/rules-panel";
     private static final String PATH_BOUND_PANEL = CONTENT_ROOT + "/bound-panel";
     private static final String PATH_PANEL_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/panel-without-fieldtype";
+    private static final String PATH_PANEL_WITH_FIELDSET = CONTENT_ROOT + "/panel-with-fieldset";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -147,5 +148,24 @@ public class PanelImplTest {
         Mockito.when(mockPanel.getDorProperties()).thenCallRealMethod();
         Map<String, Object> dorProperties = mockPanel.getDorProperties();
         assertTrue(dorProperties.containsKey(PanelImpl.CUSTOM_DOR_CONTAINER_WRAPPER));
+    }
+
+    @Test
+    void testUseFieldsetMethod() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_WITH_FIELDSET, Panel.class, context);
+        assertEquals(true, panel.useFieldset());
+    }
+
+    @Test
+    void testUseFieldsetInProperties() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_WITH_FIELDSET, Panel.class, context);
+        Map<String, Object> properties = panel.getProperties();
+        assertEquals(true, properties.get("fd:useFieldset"));
+    }
+
+    @Test
+    void testPanelWithFieldsetJSONExport() throws Exception {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL_WITH_FIELDSET, Panel.class, context);
+        Utils.testJSONExport(panel, Utils.getTestExporterJSONPath(BASE, PATH_PANEL_WITH_FIELDSET));
     }
 }
