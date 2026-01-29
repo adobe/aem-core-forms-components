@@ -56,6 +56,7 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     private static String OVERFLOW_TEXT = "overflowText";
     private static String DOR_NUM_COLS = "dorNumCols";
     private static String DOR_LAYOUT_TYPE = "dorLayoutType";
+    private static final String FD_USE_FIELDSET = "fd:useFieldset";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUDE_TITLE)
     @Nullable
@@ -93,6 +94,10 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @Nullable
     protected Boolean readOnly;
 
+    @ValueMapValue(name = FD_USE_FIELDSET, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    protected Boolean useFieldset;
+
     @JsonIgnore
     @Override
     public Boolean isRequired() {
@@ -118,6 +123,21 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @Nullable
     public Boolean isReadOnly() {
         return readOnly;
+    }
+
+    @Override
+    @Nullable
+    public Boolean useFieldset() {
+        return useFieldset;
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        if (useFieldset != null) {
+            properties.put(FD_USE_FIELDSET, useFieldset);
+        }
+        return properties;
     }
 
     @Override
