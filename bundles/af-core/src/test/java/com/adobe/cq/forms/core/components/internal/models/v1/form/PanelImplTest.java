@@ -39,8 +39,7 @@ import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
@@ -148,6 +147,13 @@ public class PanelImplTest {
         Mockito.when(mockPanel.getDorProperties()).thenCallRealMethod();
         Map<String, Object> dorProperties = mockPanel.getDorProperties();
         assertTrue(dorProperties.containsKey(PanelImpl.CUSTOM_DOR_CONTAINER_WRAPPER));
+    }
+
+    @Test
+    void testUseFieldsetDefaultMethod() {
+        Panel panelMock = Mockito.mock(Panel.class);
+        Mockito.when(panelMock.useFieldset()).thenCallRealMethod();
+        assertNull(panelMock.useFieldset());
     }
 
     @Test
