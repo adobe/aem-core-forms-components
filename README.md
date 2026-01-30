@@ -76,7 +76,7 @@ The latest version of the AEM Forms Core Components, require the below minimum s
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
 |-----------------------|---------------------| ---------------------------- | ----- | ------ | 
-| 3.0.136               | 2.24.6             | Continual                    | 11 | 3.3.9+ |
+| 3.0.140               | 2.24.6             | Continual                    | 11 | 3.3.9+ |
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
