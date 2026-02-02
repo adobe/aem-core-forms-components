@@ -15,7 +15,40 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <template data-sly-template.simple="${ @ container, panel, label, shortDescription, longDescription, questionMark}">
     <sly data-sly-test="${wcmmode.edit}" data-sly-use.allowed="com.day.cq.wcm.foundation.AllowedComponentList"></sly>
-    <div data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
+    <sly data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
+         data-sly-set.useFieldset="${properties['fd:useFieldset']}"
+         data-sly-set.legendText="${panel.label.value ? panel.label.value : (panel.name ? panel.name : panel.id)}"></sly>
+
+    <!-- Fieldset variant -->
+    <fieldset data-sly-test="${useFieldset}"
+              data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+              id="${panel.id}"
+              data-cmp-is="adaptiveFormPanel"
+              data-cmp-data-layer="${panel.data.json}"
+              data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+              data-cmp-visible="${panel.visible ? 'true' : 'false'}"
+              data-cmp-enabled="${panel.enabled ? 'true' : 'false'}"
+              data-cmp-readonly="${panel.readOnly ? 'true' : 'false'}"
+              class="cmp-container${wcmmode.edit ? ' {0}': '' @ format=[allowed.cssClass]}"
+              title="${panel.tooltipVisible ? '' : panel.tooltipText}"
+              style="${container.backgroundStyle @ context='styleString'}">
+        <legend class="cmp-container__label-container">
+          <div data-sly-call="${label.label @componentId=panel.id, labelValue=legendText, labelVisible=true, labelRichText=panel.label.richText, bemBlock='cmp-container'}" data-sly-unwrap></div>
+          <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container'}" data-sly-unwrap></div>
+        </legend>
+        <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-container'}" data-sly-unwrap></div>
+        <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container'}" data-sly-unwrap></div>
+        <sly data-sly-test.isAllowedApplicable="${allowed.isApplicable}"
+             data-sly-use.allowedTemplate="allowedcomponents.html"
+             data-sly-call="${allowedTemplate.allowedcomponents @ title=allowed.title, components=allowed.components}"></sly>
+        <sly data-sly-test="${!isAllowedApplicable}"
+             data-sly-repeat="${container.items}" data-sly-resource="${item.path @ decoration=true}"></sly>
+        <sly data-sly-test="${!isAllowedApplicable && !wcmmode.disabled}"
+             data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section'}" />
+    </fieldset>
+
+    <!-- Legacy div variant -->
+    <div data-sly-test="${!useFieldset}"
          data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
          id="${panel.id}"
          data-cmp-is="adaptiveFormPanel"
