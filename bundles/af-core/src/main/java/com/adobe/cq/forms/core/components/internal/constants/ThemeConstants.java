@@ -18,7 +18,7 @@ package com.adobe.cq.forms.core.components.internal.constants;
 
 public class ThemeConstants {
 
-    public static final String RELATIVE_PATH_METADATA = "/metadata";
+    public static final String RELATIVE_PATH_METADATA = "/jcr:content/metadata";
     public static final String THEME_OVERRIDE = "themeOverride";
     public static final String THEME_REF = "themeRef";
     public static final String PROPERTY_CLIENTLIB_CATEGORY = "clientlibCategory";

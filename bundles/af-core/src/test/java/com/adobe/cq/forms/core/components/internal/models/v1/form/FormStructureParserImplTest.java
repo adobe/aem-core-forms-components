@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.Assertions;
@@ -182,6 +183,10 @@ public class FormStructureParserImplTest {
 
     @Test
     void testGetThemeClientLibRefFromFormContainer() {
+        Resource formContainer = context.resourceResolver().getResource(FORM_CONTAINER_PATH);
+        ModifiableValueMap formContainerProps = formContainer.adaptTo(ModifiableValueMap.class);
+        formContainerProps.put(FormContainer.PN_CLIENT_LIB_REF, "/content/dam/formsanddocuments-themes/test-theme");
+
         String path = CONTENT_ROOT + "/myTestPage";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         String themeClientLibRef = formStructureParser.getThemeClientLibRefFromFormContainer();
