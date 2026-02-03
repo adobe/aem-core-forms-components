@@ -20,12 +20,26 @@
  */
 
 if (typeof window.CustomFileInputWidget === 'undefined') {
+    /**
+     * Custom file widget that validates selected files, uploads them to the presign endpoint,
+     * and persists the resulting URL(s) in the form model data for export.
+     */
     window.CustomFileInputWidget = class extends FormView.FormFileInputWidget {
 
+        /**
+         * Constructor for CustomFileInputWidget
+         * @param {Object} params - The parameters for initializing the widget
+         */
         constructor(params) {
             super(params);
         }
 
+        /**
+         * Attaches event handlers to the widget and drag area
+         * @param {HTMLElement} widget - The file input element
+         * @param {HTMLElement} dragArea - The drag and drop area element
+         * @param {Object} model - The form model
+         */
         attachEventHandlers(widget, dragArea, model) {
             super.attachEventHandlers(widget, dragArea, model)
             const customBtn = dragArea?.querySelector(".cmp-adaptiveform-fileinput__widgetlabel")
@@ -41,6 +55,14 @@ if (typeof window.CustomFileInputWidget === 'undefined') {
             });
         }
 
+        /**
+         * Creates a file list item DOM element
+         * @param {string} fileName - The name of the file
+         * @param {number} fileSize - The size of the file in bytes
+         * @param {string} comment - Optional comment for the file
+         * @param {string} fileUrl - The URL of the uploaded file
+         * @returns {HTMLElement} The file item DOM element
+         */
         fileItem(fileName, fileSize, comment, fileUrl) {
             let self = this;
             let id = `${Date.now() + '_' + Math.floor(Math.random() * 10000)}_file_size`

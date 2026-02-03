@@ -3,4 +3,4 @@
     jcr:primaryType="cq:ClientLibraryFolder"
     allowProxy="{Boolean}true"
     categories="[core.forms.components.it.customfileupload.v1.runtime]"
-    dependencies="[core.forms.components.fileinput.v4.runtime]"/>
+    dependencies="[core.forms.components.runtime.base]"/>
