@@ -28,7 +28,7 @@
      data-cmp-is="adaptiveFormButton"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
   <div class="cmp-adaptiveform-button__help-container">
-    <div data-sly-call="${questionMark.questionMark @componentId=button.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button'}" data-sly-unwrap></div>
+    <div data-sly-call="${questionMark.questionMark @componentId=button.id, longDescription=button.description, bemBlock='cmp-adaptiveform-button', componentTitle=button.label.value}" data-sly-unwrap></div>
   </div>
   <!-- Button is disabled to prevent the button from being clicked before JS is initialized, else it would default to HTML form submit behavior -->
   <button

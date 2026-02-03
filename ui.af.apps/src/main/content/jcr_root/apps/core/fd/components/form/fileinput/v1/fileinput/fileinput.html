@@ -32,7 +32,7 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div class="cmp-adaptiveform-fileinput__label-container">
       <div data-sly-call="${label.label @componentId=file.id, labelValue=file.label.value, labelVisible=file.label.visible, labelRichText=file.label.richText, bemBlock='cmp-adaptiveform-fileinput', isHeading=true}" data-sly-unwrap></div>
-      <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput', componentTitle=file.label.value}" data-sly-unwrap></div>
     </div>
     </br>
     <div class="cmp-adaptiveform-fileinput__widget-container" role="region">

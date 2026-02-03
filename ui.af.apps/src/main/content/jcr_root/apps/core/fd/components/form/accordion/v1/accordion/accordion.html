@@ -32,8 +32,7 @@
     <div class="cmp-accordion__label-container" role="heading">
       <div data-sly-call="${label.label @componentId=accordion.id, labelValue=accordion.label.value, labelVisible=accordion.label.visible, labelRichText=accordion.label.richText, bemBlock='cmp-accordion'}"
           data-sly-unwrap></div>
-      <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion'}"
-          data-sly-unwrap></div>
+          <div data-sly-call="${questionMark.questionMark @componentId=accordion.id, longDescription=accordion.description, bemBlock='cmp-accordion', componentTitle=accordion.label.value}" data-sly-unwrap></div>
     </div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=accordion.id, shortDescriptionVisible=accordion.tooltipVisible, shortDescription=accordion.tooltip, bemBlock='cmp-accordion'}"
          data-sly-unwrap></div>
