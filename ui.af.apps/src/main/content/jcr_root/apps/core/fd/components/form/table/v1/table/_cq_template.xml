@@ -14,39 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
     jcr:primaryType="nt:unstructured"
-    jcr:title="Table">
-    <header
-        jcr:primaryType="nt:unstructured"
-        sling:resourceType="core/fd/components/form/tableheader/v1/tableheader"
-        jcr:title="Header">
-        <column1
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="core/fd/components/form/text/v1/text"
-            jcr:title="Column 1"
-            name="column1"
-            value="Column 1"/>
-        <column2
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="core/fd/components/form/text/v1/text"
-            jcr:title="Column 2"
-            name="column2"
-            value="Column 2"/>
-    </header>
-    <row1
-        jcr:primaryType="nt:unstructured"
-        sling:resourceType="core/fd/components/form/tablerow/v1/tablerow"
-        jcr:title="Row 1">
-        <cell1
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="core/fd/components/form/textinput/v1/textinput"
-            jcr:title="Cell 1"
-            name="cell1"/>
-        <cell2
-            jcr:primaryType="nt:unstructured"
-            sling:resourceType="core/fd/components/form/textinput/v1/textinput"
-            jcr:title="Cell 2"
-            name="cell2"/>
-    </row1>
-</jcr:root>
+    jcr:title="Table"
+    fieldType="table"/>

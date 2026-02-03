@@ -13,12 +13,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-
-<div class="cmp-adaptiveform-table"
+<div data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
+     class="cmp-adaptiveform-table"
      data-cmp-is="adaptiveFormTable"
      id="${resource.name}"
      data-cmp-visible="${properties.visible != false}"
-     data-cmp-enabled="${properties.enabled != false}">
+     data-cmp-enabled="${properties.enabled != false}"
+     data-text>
     
     <sly data-sly-test="${properties.title}">
         <div class="cmp-adaptiveform-table__title">${properties.title @ context='html'}</div>
@@ -28,25 +29,28 @@
         <div class="cmp-adaptiveform-table__description">${properties.description @ context='html'}</div>
     </sly>
     
-    <table class="cmp-adaptiveform-table__widget ${properties.cssClass}"
-           role="grid"
-           aria-label="${properties.title}"
-           data-cmp-sorting="${properties.enableSorting}">
-        
-        <sly data-sly-list.child="${resource.listChildren}">
-            <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
-                <thead>
-                    <sly data-sly-resource="${child}"></sly>
-                </thead>
-            </sly>
-        </sly>
-        
-        <tbody>
+    <sly data-sly-test.hasChildren="${resource.listChildren}">
+        <table class="cmp-adaptiveform-table__widget ${properties.cssClass}"
+               role="grid"
+               aria-label="${properties.title}"
+               data-cmp-sorting="${properties.enableSorting}">
+            
             <sly data-sly-list.child="${resource.listChildren}">
-                <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
-                    <sly data-sly-resource="${child}"></sly>
+                <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
+                    <thead>
+                        <sly data-sly-resource="${child}"></sly>
+                    </thead>
                 </sly>
             </sly>
-        </tbody>
-    </table>
+            
+            <tbody>
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
+                        <sly data-sly-resource="${child}"></sly>
+                    </sly>
+                </sly>
+            </tbody>
+        </table>
+    </sly>
 </div>
+<sly data-sly-call="${templates.placeholder @ isEmpty = !hasChildren, classAppend='cmp-adaptiveform-table'}"></sly>
