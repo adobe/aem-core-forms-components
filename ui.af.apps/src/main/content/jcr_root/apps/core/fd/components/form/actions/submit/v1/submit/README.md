@@ -55,7 +55,6 @@ When the Submit button is activated and the form begins submission, the form con
 BLOCK cmp-adaptiveform-button
     ELEMENT cmp-adaptiveform-button__widget
     ELEMENT cmp-adaptiveform-button__text
-    ELEMENT cmp-adaptiveform-button__help-container
     ELEMENT cmp-adaptiveform-button__icon
     ELEMENT cmp-adaptiveform-button__questionmark
     ELEMENT cmp-adaptiveform-button__shortdescription

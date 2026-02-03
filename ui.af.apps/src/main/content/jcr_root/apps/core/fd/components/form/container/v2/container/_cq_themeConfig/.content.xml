@@ -164,15 +164,6 @@
                     target="/mnt/override/apps/core/fd/components/form/wizard/v2/wizard/cq:styleConfig/items/wizardPanel"/>
             </items>
         </panel>
-<!--        <mobileMenu-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileMenu"/>-->
-<!--        <mobileTitleBar-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileTitleBar"/>-->
-<!--        <mobileScrollIndicator-->
-<!--            jcr:primaryType="nt:unstructured"-->
-<!--            target="/mnt/override/libs/fd/af/components/guideContainer/cq:styleConfig/items/mobileScrollIndicator"/>-->
         <Image
             jcr:primaryType="nt:unstructured"
             target="/mnt/override/apps/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image"/>
