@@ -1,0 +1,52 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<div class="cmp-adaptiveform-table"
+     data-cmp-is="adaptiveFormTable"
+     id="${resource.name}"
+     data-cmp-visible="${properties.visible != false}"
+     data-cmp-enabled="${properties.enabled != false}">
+    
+    <sly data-sly-test="${properties.title}">
+        <div class="cmp-adaptiveform-table__title">${properties.title @ context='html'}</div>
+    </sly>
+    
+    <sly data-sly-test="${properties.description}">
+        <div class="cmp-adaptiveform-table__description">${properties.description @ context='html'}</div>
+    </sly>
+    
+    <table class="cmp-adaptiveform-table__widget ${properties.cssClass}"
+           role="grid"
+           aria-label="${properties.title}"
+           data-cmp-sorting="${properties.enableSorting}">
+        
+        <sly data-sly-list.child="${resource.listChildren}">
+            <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
+                <thead>
+                    <sly data-sly-resource="${child}"></sly>
+                </thead>
+            </sly>
+        </sly>
+        
+        <tbody>
+            <sly data-sly-list.child="${resource.listChildren}">
+                <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
+                    <sly data-sly-resource="${child}"></sly>
+                </sly>
+            </sly>
+        </tbody>
+    </table>
+</div>

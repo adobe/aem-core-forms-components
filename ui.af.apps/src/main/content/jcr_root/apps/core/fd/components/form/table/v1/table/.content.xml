@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     cq:icon="table"
-    jcr:description="Display data in a table format."
+    cq:isContainer="{Boolean}true"
+    jcr:description="Capture data in rows and columns in a table format."
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Table (v1)"
     sling:resourceSuperType="core/fd/components/form/base/v1/base"
