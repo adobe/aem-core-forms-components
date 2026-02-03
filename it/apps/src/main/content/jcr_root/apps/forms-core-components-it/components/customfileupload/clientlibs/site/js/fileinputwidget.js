@@ -141,7 +141,7 @@ if (typeof window.CustomFileInputWidget === 'undefined') {
                         if ((size > parseFloat(this.options.maxFileSize))) {
                             isInvalidSize = isCurrentInvalidFileSize = true;
                             inValidSizefileNames = currFileName + "," + inValidSizefileNames;
-                        } else if (!FileInputWidget.isValid(currFileName)) {
+                        } else if (!CustomFileInputWidget.isValid(currFileName)) {
                             // check if file names are valid (ie) there are no control characters in file names
                             isInvalidFileName = isCurrentInvalidFileName = true;
                             inValidNamefileNames = currFileName + "," + inValidNamefileNames;
