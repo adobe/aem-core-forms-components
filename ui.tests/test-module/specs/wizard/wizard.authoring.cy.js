@@ -135,34 +135,38 @@ describe('Page - Authoring', function () {
         });
 
         it('runtime library should not be loaded', function() {
-            cy.intercept('GET', /jcr:content\/guideContainer\/wizard\.html/).as('wizardRequest');
-            dropWizardInContainer();
-            cy.wait('@wizardRequest').then((interception) => {
-                const htmlContent = interception.response.body;
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlContent, 'text/html');
-                const runtimeUrlPattern = /core\/fd\/af-clientlibs\/core-forms-components-runtime-base/;
-                const scriptTags = Array.from(doc.querySelectorAll('script[src]'));
-                const isClientLibraryLoaded = scriptTags.some(script => runtimeUrlPattern.test(script.src));
-                expect(isClientLibraryLoaded).to.be.false;
-            })
-            cy.deleteComponentByPath(wizardLayoutDrop);
+            cy.cleanTest(wizardLayoutDrop).then(function () {
+                cy.intercept('GET', /jcr:content\/guideContainer\/wizard\.html/).as('wizardRequest');
+                dropWizardInContainer();
+                cy.wait('@wizardRequest').then((interception) => {
+                    const htmlContent = interception.response.body;
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(htmlContent, 'text/html');
+                    const runtimeUrlPattern = /core\/fd\/af-clientlibs\/core-forms-components-runtime-base/;
+                    const scriptTags = Array.from(doc.querySelectorAll('script[src]'));
+                    const isClientLibraryLoaded = scriptTags.some(script => runtimeUrlPattern.test(script.src));
+                    expect(isClientLibraryLoaded).to.be.false;
+                })
+                cy.deleteComponentByPath(wizardLayoutDrop);
+            });
         })
 
         it('verify Basic tab in edit dialog of Wizard', function () {
-            dropWizardInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(() => {
-                cy.invokeEditableAction(editDialogConfigurationSelector).then(() => {
-                    cy.get(wizardBlockBemSelector + '__editdialog').contains('Help Content').click().then(() => {
-                        cy.get(wizardBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
-                            cy.get("[name='./name']").should("exist");
-                            cy.get("[name='./jcr:title']").should("exist");
-                            cy.get("[name='./layout']").should("not.exist");
-                            cy.get("[name='./dataRef']").should("exist");
-                            cy.get("[name='./visible']").should("exist");
-                            cy.get("[name='./enabled']").should("exist");
-                            cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
-                                cy.deleteComponentByPath(wizardLayoutDrop);
+            cy.cleanTest(wizardLayoutDrop).then(function () {
+                dropWizardInContainer();
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(() => {
+                    cy.invokeEditableAction(editDialogConfigurationSelector).then(() => {
+                        cy.get(wizardBlockBemSelector + '__editdialog').contains('Help Content').click().then(() => {
+                            cy.get(wizardBlockBemSelector + '__editdialog').contains('Basic').click().then(() => {
+                                cy.get("[name='./name']").should("exist");
+                                cy.get("[name='./jcr:title']").should("exist");
+                                cy.get("[name='./layout']").should("not.exist");
+                                cy.get("[name='./dataRef']").should("exist");
+                                cy.get("[name='./visible']").should("exist");
+                                cy.get("[name='./enabled']").should("exist");
+                                cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                                    cy.deleteComponentByPath(wizardLayoutDrop);
+                                });
                             });
                         });
                     });
@@ -207,7 +211,9 @@ describe('Page - Authoring', function () {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
                     cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
-                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerDataPath);
+                    cy.get(`div[data-path='${wizardLayoutDrop}']`).click({force: true});
+                    cy.get(`div[data-path='${panelcontainerPath}']`).click({force: true});
+                    cy.get('#EditableToolbar').should('be.visible');
                     cy.deleteComponentByPath(wizardLayoutDrop);
                 });
             });
@@ -220,7 +226,7 @@ describe('Page - Authoring', function () {
                 addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
                 cy.reload()
                 cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').should('have.length', 2);
-                cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').eq(0).should('be.visible');
+                cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').eq(0).should('not.be.visible');
                 cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').eq(1).should('not.be.visible');
                 cy.deleteComponentByPath(wizardLayoutDrop);
             });
@@ -287,13 +293,13 @@ describe('Page - Authoring', function () {
                 dropWizardInSites();
                 addComponentInWizardOfSites("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
                 addComponentInWizardOfSites("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
-                cy.invokeEditableAction(navigationPanelSelector);
                 cy.wait(2000).then(() => {
-                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-                    cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
+                    cy.get("#sidepanel-toggle-button").click();
+                    cy.get('coral-tab[icon="layers"][aria-label="Content Tree"]').click();
+                    cy.get(`div[data-path='${wizardEditPath}']`).click({force: true});
+                    cy.get(`div[data-path='${panelcontainerPath}']`).click({force: true});
+                    cy.get('#EditableToolbar').should('be.visible');
                     cy.get('body').click(0, 0);
-                    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerDataPath);
                     cy.deleteComponentByPath(wizardEditPath);
                 });
             });

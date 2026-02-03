@@ -199,15 +199,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                             }
                         }
                     }
-                    // Only add "Custom" option for non-text-input components
-                    String fieldType = "";
-                    if (config != null) {
-                        String retrievedFieldType = getParameter(config, FIELD_TYPE, request, "");
-                        fieldType = retrievedFieldType != null ? retrievedFieldType : "";
-                    }
-                    if (fieldType.isEmpty() || !"text-input".equals(fieldType)) {
-                        resources.add(getResourceForDropdownDisplay(resourceResolver, "Custom", "custom"));
-                    }
+                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Custom", "custom"));
                     break;
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model

@@ -35,20 +35,22 @@
       <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput', componentTitle=file.label.value}" data-sly-unwrap></div>
     </div>
     </br>
-    <label data-sly-test="${file.buttonText}" for="${file.id}_widget" tabindex="0" role="button" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
-    <input class="cmp-adaptiveform-fileinput__widget"
-           data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"
-           style="${file.buttonText ? 'display:none' : '' @ context='styleString'}"
-           title="${file.tooltipVisible ? '' : file.tooltipText}"
-           name="${file.name}"
-           disabled="${!file.enabled}"
-           required="${file.required}"
-           accept="${file.accept}"
-           id="${file.id}_widget"
-           type="file"
-           aria-describedby="${file.id}__errormessage ${file.id}__longdescription ${file.id}__shortdescription"
-           data-cmp-data-layer="${file.data.json}"
-    />
+    <div class="cmp-adaptiveform-fileinput__widget-container" role="region">
+      <label data-sly-test="${file.buttonText}" for="${file.id}_widget" tabindex="0" role="button" class="cmp-adaptiveform-fileinput__widgetlabel">${file.buttonText}</label>
+      <input class="cmp-adaptiveform-fileinput__widget"
+            data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"
+            style="${file.buttonText ? 'display:none' : '' @ context='styleString'}"
+            title="${file.tooltipVisible ? '' : file.tooltipText}"
+            name="${file.name}"
+            disabled="${!file.enabled}"
+            required="${file.required}"
+            accept="${file.accept}"
+            id="${file.id}_widget"
+            type="file"
+            aria-describedby="${file.id}__errormessage ${file.id}__longdescription ${file.id}__shortdescription"
+            data-cmp-data-layer="${file.data.json}"
+      />
+    </div>
     <ul class="cmp-adaptiveform-fileinput__filelist"></ul>
     <div data-sly-call="${shortDescription.shortDescription @componentId=file.id, shortDescriptionVisible=file.tooltipVisible, shortDescription=file.tooltip, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap>
     </div>

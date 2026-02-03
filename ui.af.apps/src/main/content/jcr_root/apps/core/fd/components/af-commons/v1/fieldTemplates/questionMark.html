@@ -1,6 +1,6 @@
 <template data-sly-template.questionMark="${@ componentId, longDescription, bemBlock, componentTitle}">
   <sly data-sly-set.namedTitle="${componentTitle} ${'help text' @ i18n, locale=request.locale}" />
   <sly data-sly-set.fullTitle="${componentTitle ? namedTitle : 'Help text' @ i18n, locale=request.locale}" />
-  <button class="${bemBlock}__questionmark" data-sly-test="${longDescription}" title="${fullTitle}">
+  <button class="${bemBlock}__questionmark" data-sly-test="${longDescription}" aria-expanded="false" title="${fullTitle}">
   </button>
 </template>

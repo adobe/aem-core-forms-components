@@ -35,27 +35,29 @@
         <div data-sly-call="${label.label @componentId=tnc.id, labelValue=tnc.label.value, labelVisible=tnc.label.visible, labelRichText=tnc.label.richText, bemBlock='cmp-adaptiveform-termsandcondition', isHeading=true}" data-sly-unwrap></div>
         <div data-sly-call="${questionMark.questionMark @componentId=tnc.id, longDescription=tnc.description, bemBlock='cmp-adaptiveform-termsandcondition', componentTitle=tnc.label.value}" data-sly-unwrap></div>
     </div>
-    <div class="cmp-adaptiveform-termsandcondition__content-container ${!wcmmode.edit && tnc.showAsPopup ? 'cmp-adaptiveform-termsandcondition__content-container--modal' : ''}"
-         data-cmp-visible="${tnc.showAsPopup ? 'false' : 'true'}">
-        <div class="cmp-adaptiveform-termsandcondition__body">
-            <div class="cmp-adaptiveform-termsandcondition__header" data-sly-test="${tnc.showAsPopup && !wcmmode.edit}">
-                <button type="button" class="cmp-adaptiveform-termsandcondition__close-button" >
-                    X
-                </button>
-                <h3>
-                    ${"Please review the terms and conditions" @ i18n, context='html'}
-                </h3>
-            </div>
-            <div class="cmp-adaptiveform-termsandcondition__content">
-                <div data-sly-test="${!tnc.showLink}" class="cmp-adaptiveform-termsandcondition__text">
-                    <div  data-sly-resource="${'text'}"></div>
-                    <div class="cmp-adaptiveform-termsandcondition__text-intersect"></div>
+    <div class="cmp-adaptiveform-termsandcondition__widget-container" role="region">
+        <div class="cmp-adaptiveform-termsandcondition__content-container ${!wcmmode.edit && tnc.showAsPopup ? 'cmp-adaptiveform-termsandcondition__content-container--modal' : ''}"
+            data-cmp-visible="${tnc.showAsPopup ? 'false' : 'true'}">
+            <div class="cmp-adaptiveform-termsandcondition__body">
+                <div class="cmp-adaptiveform-termsandcondition__header" data-sly-test="${tnc.showAsPopup && !wcmmode.edit}">
+                    <button type="button" class="cmp-adaptiveform-termsandcondition__close-button" aria-label="${'Close terms and conditions document' @ i18n, locale=request.locale}">
+                        X
+                    </button>
+                    <h3>
+                        ${"Please review the terms and conditions" @ i18n, context='html'}
+                    </h3>
                 </div>
-                <div class="cmp-adaptiveform-termsandcondition__link" data-sly-test="${tnc.showLink}" data-sly-resource="${'link'}"></div>
+                <div class="cmp-adaptiveform-termsandcondition__content">
+                    <div data-sly-test="${!tnc.showLink}" class="cmp-adaptiveform-termsandcondition__text">
+                        <div  data-sly-resource="${'text'}"></div>
+                        <div class="cmp-adaptiveform-termsandcondition__text-intersect"></div>
+                    </div>
+                    <div class="cmp-adaptiveform-termsandcondition__link" data-sly-test="${tnc.showLink}" data-sly-resource="${'link'}"></div>
+                </div>
             </div>
         </div>
+        <div class="cmp-adaptiveform-termsandcondition__approvalcheckbox"  data-sly-test="${tnc.showApprovalOption}"  data-sly-resource="${'approvalcheckbox'}"></div>
     </div>
-    <div class="cmp-adaptiveform-termsandcondition__approvalcheckbox"  data-sly-test="${tnc.showApprovalOption}"  data-sly-resource="${'approvalcheckbox'}"></div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=tnc.id, shortDescriptionVisible=tnc.tooltipVisible, shortDescription=tnc.tooltip, bemBlock='cmp-adaptiveform-termsandcondition'}" data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @componentId=tnc.id, longDescription=tnc.description, bemBlock='cmp-adaptiveform-termsandcondition'}" data-sly-unwrap></div>
 </div>

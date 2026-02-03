@@ -69,7 +69,10 @@ describe("Form with Review component with repeatablity", () => {
       cy.get(`.${bemBlock}__container .${bemBlock}__panel`).eq(0).within(() => {
         cy.get(`.${bemBlock}__label-container`).should('exist');
         cy.get(`.${bemBlock}__label`).contains('Personal Information');
-        cy.get(`.${bemBlock}__edit-button`).should('have.attr', 'data-cmp-visible', 'true');
+        cy.get(`.${bemBlock}__edit-button`)
+          .should('have.attr', 'data-cmp-visible', 'true')
+          .should('have.attr', 'aria-label')
+          .and('contain', 'Personal Information');
 
         cy.get(`.${bemBlock}__content`).should('exist').within(() => {
           cy.get(`.${bemBlock}__field`).eq(0).within(() => {
@@ -122,7 +125,10 @@ describe("Form with Review component with repeatablity", () => {
         cy.get(`.${bemBlock}__content`).should('exist').within(() => {
           cy.get(`.${bemBlock}__label-container`).should('exist');
           cy.get(`.${bemBlock}__label`).contains('Address');
-          cy.get(`.${bemBlock}__edit-button`).should('have.attr', 'data-cmp-visible', 'true');
+          cy.get(`.${bemBlock}__edit-button`)
+            .should('have.attr', 'data-cmp-visible', 'true')
+            .should('have.attr', 'aria-label')
+            .and('contain', 'Address');
 
           cy.get(`.${bemBlock}__content`).should('exist').within(() => {
             cy.get(`.${bemBlock}__field`).eq(0).within(() => {

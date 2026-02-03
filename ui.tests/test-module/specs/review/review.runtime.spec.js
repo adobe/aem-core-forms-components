@@ -66,13 +66,19 @@ describe("Form with Review component", () => {
           cy.get(`.${bemBlock}__field`).eq(0).within(() => {
             cy.get(`.${bemBlock}__label`).contains('First name');
             cy.get(`.${bemBlock}__value`).contains('john');
-            cy.get(`.${bemBlock}__edit-button`).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(`.${bemBlock}__edit-button`)
+              .should('have.attr', 'data-cmp-visible', 'true')
+              .should('have.attr', 'aria-label')
+              .and('contain', 'First name');
           });
 
           cy.get(`.${bemBlock}__field`).eq(1).within(() => {
             cy.get(`.${bemBlock}__label`).contains('Last name');
             cy.get(`.${bemBlock}__value`).contains('deo');
-            cy.get(`.${bemBlock}__edit-button`).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(`.${bemBlock}__edit-button`)
+              .should('have.attr', 'data-cmp-visible', 'true')
+              .should('have.attr', 'aria-label')
+              .and('contain', 'Last name');
           });
 
           cy.get(`.${bemBlock}__field`).eq(2).within(() => {
@@ -85,31 +91,46 @@ describe("Form with Review component", () => {
           cy.get(`.${bemBlock}__field`).eq(3).within(() => {
             cy.get(`.${bemBlock}__label`).contains('Email Address');
             cy.get(`.${bemBlock}__value`).contains('abc@gmail.com');
-            cy.get(`.${bemBlock}__edit-button`).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(`.${bemBlock}__edit-button`)
+              .should('have.attr', 'data-cmp-visible', 'true')
+              .should('have.attr', 'aria-label')
+              .and('contain', 'Email Address');
           });
 
           cy.get(`.${bemBlock}__field`).eq(4).within(() => {
             cy.get(`.${bemBlock}__label`).contains('Mobile Number');
             cy.get(`.${bemBlock}__value`).contains('+91987654321');
-            cy.get(`.${bemBlock}__edit-button`).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(`.${bemBlock}__edit-button`)
+              .should('have.attr', 'data-cmp-visible', 'true')
+              .should('have.attr', 'aria-label')
+              .and('contain', 'Mobile Number');
           });
 
           cy.get(`.${bemBlock}__field`).eq(5).within(() => {
             cy.get(`.${bemBlock}__label`).contains('DOB');
             cy.get(`.${bemBlock}__value`).contains('2020-10-10');
-            cy.get(`.${bemBlock}__edit-button`).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(`.${bemBlock}__edit-button`)
+              .should('have.attr', 'data-cmp-visible', 'true')
+              .should('have.attr', 'aria-label')
+              .and('contain', 'DOB');
           });
 
           cy.get(`.${bemBlock}__field`).eq(6).within(() => {
             cy.get(`.${bemBlock}__label`).contains('Gender');
             cy.get(`.${bemBlock}__value`).contains('Male');
-            cy.get(`.${bemBlock}__edit-button`).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(`.${bemBlock}__edit-button`)
+              .should('have.attr', 'data-cmp-visible', 'true')
+              .should('have.attr', 'aria-label')
+              .and('contain', 'Gender');
           });
 
           cy.get(`.${bemBlock}__field`).eq(7).within(() => {
             cy.get(`.${bemBlock}__label`).contains('Interest');
             cy.get(`.${bemBlock}__value`).contains('Music , Football');
-            cy.get(`.${bemBlock}__edit-button`).should('have.attr', 'data-cmp-visible', 'true');
+            cy.get(`.${bemBlock}__edit-button`)
+              .should('have.attr', 'data-cmp-visible', 'true')
+              .should('have.attr', 'aria-label')
+              .and('contain', 'Interest');
           });
         });
       });

@@ -35,7 +35,7 @@
       <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput', componentTitle=file.label.value}" data-sly-unwrap></div>
     </div>
     </br>
-    <div class="cmp-adaptiveform-fileinput__container">
+    <div class="cmp-adaptiveform-fileinput__container cmp-adaptiveform-fileinput__widget-container" role="region">
       <div class="cmp-adaptiveform-fileinput__dragarea">
            <div class="cmp-adaptiveform-fileinput__icon"></div>
            <div class="cmp-adaptiveform-fileinput__dragtext">${file.dragDropText @context='html'}</div>

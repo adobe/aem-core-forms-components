@@ -80,24 +80,28 @@ describe('Page - Authoring', function () {
         });
 
         it('insert Accordion in form container', {retries: 3}, function () {
-            dropAccordionInContainer();
-            cy.deleteComponentByPath(accordionEditPath);
+            cy.cleanTest(accordionEditPath).then(function () {
+                dropAccordionInContainer();
+                cy.deleteComponentByPath(accordionEditPath);
+            });
         });
 
         it('runtime time library should not be loaded', function() {
-            cy.intercept('GET', /jcr:content\/guideContainer\/accordion\.html/).as('accordionRequest');
-            dropAccordionInContainer()
-            cy.wait('@accordionRequest').then((interception) => {
-                const htmlContent = interception.response.body;
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlContent, 'text/html');
-                const runtimeUrlPattern = /core\/fd\/af-clientlibs\/core-forms-components-runtime-base/;
-                const scriptTags = Array.from(doc.querySelectorAll('script[src]'));
-                console.log("tags ", scriptTags);
-                const isClientLibraryLoaded = scriptTags.some(script => runtimeUrlPattern.test(script.src));
-                expect(isClientLibraryLoaded).to.be.false;
-            })
-            cy.deleteComponentByPath(accordionEditPath);
+            cy.cleanTest(accordionEditPath).then(function () {
+                cy.intercept('GET', /jcr:content\/guideContainer\/accordion\.html/).as('accordionRequest');
+                dropAccordionInContainer()
+                cy.wait('@accordionRequest').then((interception) => {
+                    const htmlContent = interception.response.body;
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(htmlContent, 'text/html');
+                    const runtimeUrlPattern = /core\/fd\/af-clientlibs\/core-forms-components-runtime-base/;
+                    const scriptTags = Array.from(doc.querySelectorAll('script[src]'));
+                    console.log("tags ", scriptTags);
+                    const isClientLibraryLoaded = scriptTags.some(script => runtimeUrlPattern.test(script.src));
+                    expect(isClientLibraryLoaded).to.be.false;
+                })
+                cy.deleteComponentByPath(accordionEditPath);
+            });
         })
 
         it('open edit dialog of Accordion', {retries: 3}, function () {
@@ -109,9 +113,7 @@ describe('Page - Authoring', function () {
         it('switch accordion tabs', {retries: 3}, function () {
             cy.cleanTest(accordionEditPath).then(function(){
                 dropAccordionInContainer();
-
-                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").should('have.css', 'height', '0px')
-
+                cy.get(`div[data-path='${accordionEditPath}/item_2']`).should('not.have.attr', 'data-cmp-expanded')
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']");
                 cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
@@ -124,8 +126,7 @@ describe('Page - Authoring', function () {
                 cy.get('body').click(0, 0);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']");
                 cy.get("tr[data-name='item_2']").click();
-                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_1']").should('have.css', 'height', '0px')
-
+                cy.get(`div[data-path='${accordionEditPath}/item_1']`).should('not.have.attr', 'data-cmp-expanded')
                 cy.deleteComponentByPath(accordionEditPath);
             });
         });
@@ -134,7 +135,7 @@ describe('Page - Authoring', function () {
             cy.cleanTest(accordionEditPath).then(function(){
                 dropAccordionInContainer();
                 cy.reload();
-                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']").should('have.css', 'height', '0px')
+                cy.get(`div[data-path='${accordionEditPath}/item_2']`).should('not.have.attr', 'data-cmp-expanded'); 
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']");
                 cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
@@ -143,9 +144,11 @@ describe('Page - Authoring', function () {
                 cy.get("table.cmp-panelselector__table tr").eq(1)
                     .should("contain.text", "Adaptive Form Panel: Item 2");
                 cy.get("tr[data-name='item_2']").click();
-                cy.get("div[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_1']").should('have.css', 'height', '0px');
+                cy.get(`div[data-path='${accordionEditPath}/item_1']`).should('not.have.attr', 'data-cmp-expanded');
                 cy.get('body').click(0, 0);
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + "[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/accordion/item_2']");
+                cy.get(`div[data-path='${accordionEditPath}']`).click({force: true});
+                cy.get(`div[data-path='${accordionEditPath}/item_2']`).click({force: true});
+                cy.get('#EditableToolbar').should('be.visible');
                 cy.deleteComponentByPath(accordionEditPath);
             });
         });
