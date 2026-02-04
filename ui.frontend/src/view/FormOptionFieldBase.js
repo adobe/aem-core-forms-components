@@ -126,7 +126,9 @@ class FormOptionFieldBase extends FormFieldBase {
                 span.innerHTML = purifiedValue;
                 let richScreenReaderText = `${this._model.label.value}:  ${purifiedValue}`;
                 let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
-                input.setAttribute("aria-label", plainScreenReaderText);
+                if (input.hasAttribute("aria-label")) {
+                    input.setAttribute("aria-label", plainScreenReaderText);
+                }
             });
         } else {
             [...this.getOptions()].forEach((option, index) => {
@@ -136,7 +138,7 @@ class FormOptionFieldBase extends FormFieldBase {
                 if(span) {
                     span.innerHTML = purifiedValue;
                 }
-                if(input) {
+                if (input && input.hasAttribute("aria-label")) {
                     let richScreenReaderText = `${this._model.label.value}:  ${purifiedValue}`;
                     let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
                     input.setAttribute("aria-label", plainScreenReaderText);

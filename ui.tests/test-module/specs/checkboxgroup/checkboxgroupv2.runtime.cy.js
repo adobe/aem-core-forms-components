@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2022 Adobe
+ * Copyright 2026 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  ******************************************************************************/
 describe("Form Runtime with CheckBoxGroup Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv1/basic.html"
+    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv2/basic.html"
     const bemBlock = 'cmp-adaptiveform-checkboxgroup'
     const IS = "adaptiveFormCheckBoxGroup"
     const selectors = {
@@ -249,11 +249,19 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
             cy.get(`#${checkBox2}`).invoke('attr', 'data-cmp-valid').should('not.exist');
         });
     })
+
+    it("checkbox group MUST be wrapped in a <fieldset> and have a legend", () => {
+        const [checkBox1] = Object.entries(formContainer._fields)[0];
+        cy.get(`#${checkBox1}`).then($el => {
+            expect($el.prop('tagName')).to.eq('FIELDSET');
+        });
+        cy.get(`#${checkBox1}`).find('legend').should('exist');
+    })
 })
 
 describe("setFocus on checkboxgroup via rules", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv1/focustest.html"
+    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv2/focustest.html"
     let formContainer = null
 
     beforeEach(() => {
