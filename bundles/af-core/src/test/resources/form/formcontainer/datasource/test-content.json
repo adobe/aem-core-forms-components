@@ -8,6 +8,13 @@
             "guideDataModel": "basic"
         }
     },
+    "prefilltypedatasource": {
+        "jcr:primaryType"   : "nt:unstructured",
+        "datasource" : {
+            "sling:resourceType": "core/fd/components/form/container/v1/datasource",
+            "type": "prefillServiceProvider"
+        }
+    },
     "form"                    : {
         "jcr:primaryType": "nt:unstructured",
         "action"         : {
