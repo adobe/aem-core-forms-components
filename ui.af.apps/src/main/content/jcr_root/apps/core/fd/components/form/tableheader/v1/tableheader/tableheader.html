@@ -17,12 +17,15 @@
 <tr class="cmp-adaptiveform-tableheader ${properties.cssClass}"
     role="row"
     id="${resource.name}">
-    <sly data-sly-list.cell="${resource.listChildren}">
-        <th class="cmp-adaptiveform-tablehead"
-            scope="col"
-            role="columnheader"
-            data-cmp-hook-tablehead="header">
-            <sly data-sly-resource="${cell}"></sly>
-        </th>
+    <!--/* Get the items child node which contains the header cells */-->
+    <sly data-sly-test.itemsResource="${resource.getChild('items')}">
+        <sly data-sly-list.cell="${itemsResource.listChildren}">
+            <th class="cmp-adaptiveform-tablehead"
+                scope="col"
+                role="columnheader"
+                data-cmp-hook-tablehead="header">
+                <sly data-sly-resource="${cell}"></sly>
+            </th>
+        </sly>
     </sly>
 </tr>

@@ -14,7 +14,64 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title="Table"
-    fieldType="table"/>
+    fieldType="table">
+    <!-- Items container for rows - matches cq:editConfig drop target -->
+    <items jcr:primaryType="nt:unstructured">
+        <!-- Header Row -->
+        <header
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="core/fd/components/form/tableheader/v1/tableheader"
+            fieldType="panel"
+            jcr:title="Header Row">
+            <items jcr:primaryType="nt:unstructured">
+                <column1
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                    fieldType="text-input"
+                    jcr:title="Column 1"/>
+                <column2
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                    fieldType="text-input"
+                    jcr:title="Column 2"/>
+            </items>
+        </header>
+        <!-- Data Row 1 -->
+        <row1
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="core/fd/components/form/tablerow/v1/tablerow"
+            fieldType="panel"
+            jcr:title="Row 1">
+            <items jcr:primaryType="nt:unstructured">
+                <cell1
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                    fieldType="text-input"/>
+                <cell2
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                    fieldType="text-input"/>
+            </items>
+        </row1>
+        <!-- Data Row 2 -->
+        <row2
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="core/fd/components/form/tablerow/v1/tablerow"
+            fieldType="panel"
+            jcr:title="Row 2">
+            <items jcr:primaryType="nt:unstructured">
+                <cell1
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                    fieldType="text-input"/>
+                <cell2
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                    fieldType="text-input"/>
+            </items>
+        </row2>
+    </items>
+</jcr:root>

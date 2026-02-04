@@ -17,10 +17,13 @@
 <tr class="cmp-adaptiveform-tablerow ${properties.cssClass}"
     role="row"
     id="${resource.name}">
-    <sly data-sly-list.cell="${resource.listChildren}">
-        <td class="cmp-adaptiveform-tablecell"
-            data-cmp-hook-tablecell="cell">
-            <sly data-sly-resource="${cell}"></sly>
-        </td>
+    <!--/* Get the items child node which contains the cells */-->
+    <sly data-sly-test.itemsResource="${resource.getChild('items')}">
+        <sly data-sly-list.cell="${itemsResource.listChildren}">
+            <td class="cmp-adaptiveform-tablecell"
+                data-cmp-hook-tablecell="cell">
+                <sly data-sly-resource="${cell}"></sly>
+            </td>
+        </sly>
     </sly>
 </tr>
