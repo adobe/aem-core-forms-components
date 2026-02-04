@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    cq:icon="attach"
+    jcr:primaryType="cq:Component"
+    jcr:title="Core Components IT - Custom File Uploader"
+    jcr:description="IT - Add a button to upload one or more files directly to a server."
+    sling:resourceSuperType="core/fd/components/form/fileinput/v4/fileinput"
+    componentGroup="Core Components Examples - Adaptive Form"/>
