@@ -13,54 +13,40 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<div data-sly-use.table="com.adobe.cq.forms.core.components.models.form.Panel"
-     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
-     data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
-     class="cmp-adaptiveform-table"
-     data-cmp-is="adaptiveFormTable"
-     id="${table.id}"
-     data-cmp-data-layer="${table.data.json}"
-     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-     data-cmp-visible="${table.visible ? 'true' : 'false'}"
-     data-cmp-enabled="${table.enabled ? 'true' : 'false'}"
-     data-cmp-readonly="${table.readOnly ? 'true' : 'false'}"
-     title="${table.tooltipVisible ? '' : table.tooltipText}">
-    
-    <sly data-sly-test="${table.label.visible}">
-        <div class="cmp-adaptiveform-table__title">${table.label.value @ context='html'}</div>
-    </sly>
-    
-    <sly data-sly-test="${table.description}">
-        <div class="cmp-adaptiveform-table__description">${table.description @ context='html'}</div>
-    </sly>
-    
-    <!--/* Get the items child node which contains the rows - matches cq:editConfig drop target */-->
-    <sly data-sly-test.itemsResource="${resource.getChild('items')}">
-        <sly data-sly-test.hasChildren="${itemsResource.listChildren}">
-            <table class="cmp-adaptiveform-table__widget"
-                   role="grid"
-                   aria-label="${table.label.value}"
-                   data-cmp-sorting="${properties.enableSorting}">
-                
-                <!--/* Render header rows */-->
-                <sly data-sly-list.child="${itemsResource.listChildren}">
-                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
-                        <thead>
-                            <sly data-sly-resource="${child}"></sly>
-                        </thead>
-                    </sly>
-                </sly>
-                
-                <!--/* Render data rows */-->
-                <tbody>
-                    <sly data-sly-list.child="${itemsResource.listChildren}">
-                        <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
-                            <sly data-sly-resource="${child}"></sly>
-                        </sly>
-                    </sly>
-                </tbody>
-            </table>
-        </sly>
-    </sly>
+
+  <div class="cmp-adaptiveform-table"
+  data-cmp-is="adaptiveFormTable"
+  id="${resource.name}"
+  data-cmp-visible="${properties.visible != false}"
+  data-cmp-enabled="${properties.enabled != false}">
+ 
+ <sly data-sly-test="${properties.title}">
+     <div class="cmp-adaptiveform-table__title">${properties.title @ context='html'}</div>
+ </sly>
+ 
+ <sly data-sly-test="${properties.description}">
+     <div class="cmp-adaptiveform-table__description">${properties.description @ context='html'}</div>
+ </sly>
+ 
+ <table class="cmp-adaptiveform-table__widget ${properties.cssClass}"
+        role="grid"
+        aria-label="${properties.title}"
+        data-cmp-sorting="${properties.enableSorting}">
+     
+     <sly data-sly-list.child="${resource.listChildren}">
+         <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
+             <thead>
+                 <sly data-sly-resource="${child}"></sly>
+             </thead>
+         </sly>
+     </sly>
+     
+     <tbody>
+         <sly data-sly-list.child="${resource.listChildren}">
+             <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
+                 <sly data-sly-resource="${child}"></sly>
+             </sly>
+         </sly>
+     </tbody>
+ </table>
 </div>
-<sly data-sly-call="${templates.placeholder @ isEmpty = !hasChildren, classAppend='cmp-adaptiveform-table'}"></sly>
