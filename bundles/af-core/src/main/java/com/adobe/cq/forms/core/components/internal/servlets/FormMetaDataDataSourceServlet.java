@@ -53,6 +53,7 @@ import com.adobe.granite.ui.components.Value;
 import com.adobe.granite.ui.components.ds.DataSource;
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
 import com.adobe.granite.ui.components.ds.ValueMapResource;
+import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.foundation.forms.FormsManager;
 
@@ -218,7 +219,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
                     // Add an explicit empty option so authors can clear an already selected prefill service.
-                    resources.add(getResourceForDropdownDisplay(resourceResolver, "None", ""));
+                    I18n i18n = new I18n(request.getResourceBundle(request.getLocale()));
+                    resources.add(getResourceForDropdownDisplay(resourceResolver, i18n.get("None"), ""));
                     resources.addAll(this.getResourceListFromComponentDescription(metaDataList, resourceResolver));
                     break;
             }
