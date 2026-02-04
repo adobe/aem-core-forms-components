@@ -106,10 +106,6 @@ describe("Form Runtime with Custom File Upload", () => {
             cy.wrap(fileInput).should("have.value", "");
             cy.attachFile(fileInput, [sampleFileName]).then(() => {
                 cy.get(selectors.fileName).contains(sampleFileName);
-                cy.wrap(fileInput).should(($element) => {
-                    const actualValue = $element.val();
-                    expect(actualValue.includes("")).to.be.true;
-                });
             });
             cy.get("@consoleLog").should("be.calledWith", "file uploaded successfully");
             assertExportDataForInput(fileInput, sampleFileName);

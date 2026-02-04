@@ -78,7 +78,7 @@ if (typeof window.CustomFileInputWidget === 'undefined') {
 
             fileNameDom.setAttribute('tabindex', '0');
             fileNameDom.setAttribute('class', "cmp-adaptiveform-fileinput__filename");
-            fileNameDom.setAttribute('aria-describedBY', id);
+            fileNameDom.setAttribute('aria-describedby', id);
             fileNameDom.textContent = fileName;
             fileNameDom.addEventListener('keypress', function(e) {
                 if (e.keyCode === 13 || e.charCode === 32) {
@@ -196,9 +196,11 @@ if (typeof window.CustomFileInputWidget === 'undefined') {
                 // set the new model value.
                 this.model.value = this.fileArr;
 
+                const filenames = this.fileList.querySelectorAll('.cmp-adaptiveform-fileinput__filename');
+                const filesizes = this.fileList.querySelectorAll('.cmp-adaptiveform-fileinput__filesize');
                 Array.from(uris).forEach(function (uri, fileIndex) {
-                    this.fileList.querySelectorAll('.cmp-adaptiveform-fileinput__filename')[fileIndex].dataset.key = uri;
-                    this.fileList.querySelectorAll('.cmp-adaptiveform-fileinput__filesize')[fileIndex].hidden = true;
+                    filenames[fileIndex].dataset.key = uri;
+                    filesizes[fileIndex].hidden = true;
                 }, this);
 
                 if (isInvalidSize) {
