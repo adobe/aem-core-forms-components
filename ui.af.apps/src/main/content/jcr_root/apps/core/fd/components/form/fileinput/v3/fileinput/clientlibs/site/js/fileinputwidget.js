@@ -55,7 +55,7 @@ if (typeof window.FileInputWidget === 'undefined') {
 
             fileNameDom.setAttribute('tabindex', '0');
             fileNameDom.setAttribute('class', "cmp-adaptiveform-fileinput__filename");
-            fileNameDom.setAttribute('aria-describedBY', id);
+            fileNameDom.setAttribute('aria-describedby', id);
             fileNameDom.textContent = fileName;
             fileNameDom.addEventListener('keypress', function(e) {
                 if (e.keyCode === 13 || e.charCode === 32) {
