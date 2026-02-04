@@ -13,25 +13,27 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.table="com.adobe.cq.forms.core.components.models.form.Panel"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
 
 <div class="cmp-adaptiveform-table"
      data-cmp-is="adaptiveFormTable"
-     id="${resource.name}"
-     data-cmp-visible="${properties.visible != false}"
-     data-cmp-enabled="${properties.enabled != false}">
+     id="${table.id}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-cmp-visible="${table.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${table.enabled ? 'true' : 'false'}">
     
-    <sly data-sly-test="${properties.title}">
-        <div class="cmp-adaptiveform-table__title">${properties.title @ context='html'}</div>
+    <sly data-sly-test="${table.label.visible}">
+        <div class="cmp-adaptiveform-table__title">${table.label.value @ context='html'}</div>
     </sly>
     
-    <sly data-sly-test="${properties.description}">
-        <div class="cmp-adaptiveform-table__description">${properties.description @ context='html'}</div>
+    <sly data-sly-test="${table.description}">
+        <div class="cmp-adaptiveform-table__description">${table.description @ context='html'}</div>
     </sly>
     
-    <table class="cmp-adaptiveform-table__widget ${properties.cssClass}"
+    <table class="cmp-adaptiveform-table__widget"
            role="grid"
-           aria-label="${properties.title}"
-           data-cmp-sorting="${properties.enableSorting}">
+           aria-label="${table.label.value}">
         
         <sly data-sly-list.child="${resource.listChildren}">
             <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">

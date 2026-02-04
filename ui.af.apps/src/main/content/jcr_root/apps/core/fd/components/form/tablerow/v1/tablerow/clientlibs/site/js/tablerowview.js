@@ -16,14 +16,13 @@
 (function () {
     "use strict";
 
-    class Table extends FormView.FormPanel {
+    class TableRow extends FormView.FormPanel {
 
         static NS = FormView.Constants.NS;
-        static IS = "adaptiveFormTable";
-        static bemBlock = 'cmp-adaptiveform-table';
+        static IS = "adaptiveFormTableRow";
+        static bemBlock = 'cmp-adaptiveform-tablerow';
         static selectors = {
-            self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widget: `.${Table.bemBlock}__widget`
+            self: "[data-" + this.NS + '-is="' + this.IS + '"]'
         };
 
         constructor(params) {
@@ -32,7 +31,7 @@
         }
 
         getClass() {
-            return Table.IS;
+            return TableRow.IS;
         }
 
         getWidget() {
@@ -40,11 +39,11 @@
         }
 
         getDescription() {
-            return this.element.querySelector(`.${Table.bemBlock}__description`);
+            return null;
         }
 
         getLabel() {
-            return this.element.querySelector(`.${Table.bemBlock}__title`);
+            return null;
         }
 
         getErrorDiv() {
@@ -70,6 +69,6 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new Table({element, formContainer})
-    }, Table.selectors.self);
+        return new TableRow({element, formContainer})
+    }, TableRow.selectors.self);
 })();
