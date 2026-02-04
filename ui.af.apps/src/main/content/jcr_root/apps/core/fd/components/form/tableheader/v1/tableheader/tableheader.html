@@ -13,10 +13,16 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.header="com.adobe.cq.forms.core.components.models.form.Panel"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
 
-<tr class="cmp-adaptiveform-tableheader ${properties.cssClass}"
+<tr class="cmp-adaptiveform-tableheader cmp-container ${properties.cssClass}"
     role="row"
-    id="${resource.name}">
+    id="${header.id}"
+    data-cmp-is="adaptiveFormTableHeader"
+    data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+    data-cmp-visible="${header.visible ? 'true' : 'false'}"
+    data-cmp-enabled="${header.enabled ? 'true' : 'false'}">
     <sly data-sly-list.cell="${resource.listChildren}">
         <th class="cmp-adaptiveform-tablehead"
             scope="col"

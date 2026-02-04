@@ -16,11 +16,11 @@
 (function () {
     "use strict";
 
-    class TableRow extends FormView.FormPanel {
+    class TableHeader extends FormView.FormPanel {
 
         static NS = FormView.Constants.NS;
-        static IS = "adaptiveFormTableRow";
-        static bemBlock = 'cmp-adaptiveform-tablerow';
+        static IS = "adaptiveFormTableHeader";
+        static bemBlock = 'cmp-adaptiveform-tableheader';
         static selectors = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]'
         };
@@ -31,7 +31,7 @@
         }
 
         getClass() {
-            return TableRow.IS;
+            return TableHeader.IS;
         }
 
         getWidget() {
@@ -68,16 +68,16 @@
         }
 
         /**
-         * Override updateLabel to handle the table row's specific HTML structure.
-         * Table rows don't have labels in the traditional sense.
+         * Override updateLabel to handle the table header's specific HTML structure.
+         * Table headers don't have labels in the traditional sense.
          * @param {Object} label - The label state object.
          */
         updateLabel(label) {
-            // Table rows don't have visible labels, so this is a no-op
+            // Table headers don't have visible labels, so this is a no-op
         }
 
         /**
-         * Override applyState for table row's specific structure.
+         * Override applyState for table header's specific structure.
          * @param {Object} state - The state to be applied.
          */
         applyState(state) {
@@ -89,6 +89,6 @@
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
-        return new TableRow({element, formContainer})
-    }, TableRow.selectors.self);
+        return new TableHeader({element, formContainer})
+    }, TableHeader.selectors.self);
 })();

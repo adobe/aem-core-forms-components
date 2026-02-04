@@ -16,19 +16,19 @@
 <sly data-sly-use.table="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
 
-<div class="cmp-adaptiveform-table"
-     data-cmp-is="adaptiveFormTable"
+<div class="cmp-adaptiveform-table cmp-container"
      id="${table.id}"
+     data-cmp-is="adaptiveFormTable"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-cmp-visible="${table.visible ? 'true' : 'false'}"
      data-cmp-enabled="${table.enabled ? 'true' : 'false'}">
     
     <sly data-sly-test="${table.label.visible}">
-        <div class="cmp-adaptiveform-table__title">${table.label.value @ context='html'}</div>
+        <div class="cmp-adaptiveform-table__title cmp-container__label">${table.label.value @ context='html'}</div>
     </sly>
     
     <sly data-sly-test="${table.description}">
-        <div class="cmp-adaptiveform-table__description">${table.description @ context='html'}</div>
+        <div class="cmp-adaptiveform-table__description cmp-container__longdescription">${table.description @ context='html'}</div>
     </sly>
     
     <table class="cmp-adaptiveform-table__widget"

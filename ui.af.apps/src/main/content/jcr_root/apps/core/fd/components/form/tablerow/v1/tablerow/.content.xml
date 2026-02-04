@@ -19,5 +19,5 @@
     jcr:description="Table Row component to hold table cells"
     jcr:primaryType="cq:Component"
     jcr:title="Table Row"
-    sling:resourceSuperType="core/fd/components/form/base/v1/base"
+    sling:resourceSuperType="core/fd/components/form/panelcontainer/v1/panelcontainer"
     componentGroup=".hidden"/>

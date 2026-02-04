@@ -67,6 +67,39 @@
         getWidgetId() {
             return this.getId();
         }
+
+        /**
+         * Override updateLabel to handle the table's specific HTML structure.
+         * The table uses __title instead of __label-container > __label.
+         * @param {Object} label - The label state object.
+         */
+        updateLabel(label) {
+            const labelElement = this.getLabel();
+            if (labelElement) {
+                if (label.hasOwnProperty("value")) {
+                    labelElement.innerHTML = label.value;
+                }
+                if (label.hasOwnProperty("visible")) {
+                    if (label.visible === false) {
+                        labelElement.setAttribute("aria-hidden", "true");
+                    } else {
+                        labelElement.removeAttribute("aria-hidden");
+                    }
+                    labelElement.setAttribute("data-cmp-visible", label.visible);
+                }
+            }
+        }
+
+        /**
+         * Override applyState to use the table's specific updateLabel.
+         * @param {Object} state - The state to be applied.
+         */
+        applyState(state) {
+            this.updateVisible(state.visible);
+            this.updateEnabled(state.enabled);
+            this.initializeHelpContent(state);
+            this.updateLabel(state.label);
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {

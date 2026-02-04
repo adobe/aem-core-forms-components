@@ -5,5 +5,5 @@
     jcr:description="Capture data in rows and columns in a table format."
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Table (v1)"
-    sling:resourceSuperType="core/fd/components/form/base/v1/base"
+    sling:resourceSuperType="core/fd/components/form/panelcontainer/v1/panelcontainer"
     componentGroup=".core-adaptiveform"/>
