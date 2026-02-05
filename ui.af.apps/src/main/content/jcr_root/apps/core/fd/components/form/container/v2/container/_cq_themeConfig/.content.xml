@@ -21,7 +21,7 @@
             <items jcr:primaryType="nt:unstructured">
                 <formTitle
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/title/v2/title/cq:styleConfig/items/formTitle"/>
+                    target="/mnt/override/libs/core/fd/components/form/title/v2/title/cq:styleConfig/items/formTitle"/>
             </items>
         </form>
         <base
@@ -52,7 +52,7 @@
             <items jcr:primaryType="nt:unstructured">
                 <fieldLabel
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/base/v1/base/cq:styleConfig/items/field/items/fieldLabel"/>
+                    target="/mnt/override/libs/core/fd/components/form/base/v1/base/cq:styleConfig/items/field/items/fieldLabel"/>
                 <widgetAndText
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Widget"
@@ -63,46 +63,46 @@
                     <items jcr:primaryType="nt:unstructured">
                         <textWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/text/v1/text/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/text/v1/text/cq:styleConfig/items/field/items/widgetAndText"/>
                         <textBoxWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/textinput/v1/textinput/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/textinput/v1/textinput/cq:styleConfig/items/field/items/widgetAndText"/>
                         <textAreaWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/textinput/v1/textinput/cq:styleConfig/items/field/items/textAreaWidgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/textinput/v1/textinput/cq:styleConfig/items/field/items/textAreaWidgetAndText"/>
                         <numericBoxWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/numberinput/v1/numberinput/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/numberinput/v1/numberinput/cq:styleConfig/items/field/items/widgetAndText"/>
                         <emailWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/emailinput/v1/emailinput/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/emailinput/v1/emailinput/cq:styleConfig/items/field/items/widgetAndText"/>
                         <telephoneWidgetAndText
                                 jcr:primaryType="nt:unstructured"
-                                target="/mnt/override/apps/core/fd/components/form/telephoneinput/v1/telephoneinput/cq:styleConfig/items/field/items/widgetAndText"/>
+                                target="/mnt/override/libs/core/fd/components/form/telephoneinput/v1/telephoneinput/cq:styleConfig/items/field/items/widgetAndText"/>
                         <dropDownListWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/dropdown/v1/dropdown/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/dropdown/v1/dropdown/cq:styleConfig/items/field/items/widgetAndText"/>
                         <datePickerWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/datepicker/v1/datepicker/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/datepicker/v1/datepicker/cq:styleConfig/items/field/items/widgetAndText"/>
                         <checkBoxWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/checkbox/v1/checkbox/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/checkbox/v1/checkbox/cq:styleConfig/items/field/items/widgetAndText"/>
                         <checkBoxGroupWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/checkboxgroup/v1/checkboxgroup/cq:styleConfig/items/field/items/widgetAndText"/>
                         <radioButtonGroupWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/radiobutton/v1/radiobutton/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/radiobutton/v1/radiobutton/cq:styleConfig/items/field/items/widgetAndText"/>
                         <switchWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/switch/v1/switch/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/switch/v1/switch/cq:styleConfig/items/field/items/widgetAndText"/>
                         <fileUploadButton
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/fileinput/v3/fileinput/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/fileinput/v3/fileinput/cq:styleConfig/items/field/items/widgetAndText"/>
                         <tncWidgetAndText
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/apps/core/fd/components/form/termsandconditions/v1/termsandconditions/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/termsandconditions/v1/termsandconditions/cq:styleConfig/items/field/items/widgetAndText"/>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
@@ -125,7 +125,7 @@
                 </widgetAndText>
                 <errorMessage
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/base/v1/base/cq:styleConfig/items/field/items/errorMessage"/>
+                    target="/mnt/override/libs/core/fd/components/form/base/v1/base/cq:styleConfig/items/field/items/errorMessage"/>
             </items>
         </base>
         <button
@@ -134,13 +134,13 @@
             <items jcr:primaryType="nt:unstructured">
                 <allButton
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/button/v2/button/cq:styleConfig/items/button"/>
+                    target="/mnt/override/libs/core/fd/components/form/button/v2/button/cq:styleConfig/items/button"/>
                 <submit
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/actions/submit/v2/submit/cq:styleConfig/items/button"/>
+                    target="/mnt/override/libs/core/fd/components/form/actions/submit/v2/submit/cq:styleConfig/items/button"/>
                 <reset
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/actions/reset/v2/reset/cq:styleConfig/items/button"/>
+                    target="/mnt/override/libs/core/fd/components/form/actions/reset/v2/reset/cq:styleConfig/items/button"/>
             </items>
         </button>
         <panel
@@ -149,29 +149,29 @@
             <items jcr:primaryType="nt:unstructured">
                 <responsivePanel
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/panelcontainer/v1/panelcontainer/cq:styleConfig/items/responsivePanel"/>
+                    target="/mnt/override/libs/core/fd/components/form/panelcontainer/v1/panelcontainer/cq:styleConfig/items/responsivePanel"/>
                 <accordionPanel
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/accordion/v1/accordion/cq:styleConfig/items/accordionPanel"/>
+                    target="/mnt/override/libs/core/fd/components/form/accordion/v1/accordion/cq:styleConfig/items/accordionPanel"/>
                 <tabsOnLeftPanel
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/verticaltabs/v1/verticaltabs/cq:styleConfig/items/tabsOnLeftPanel"/>
+                    target="/mnt/override/libs/core/fd/components/form/verticaltabs/v1/verticaltabs/cq:styleConfig/items/tabsOnLeftPanel"/>
                 <tabsOnTopPanel
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/tabsontop/v1/tabsontop/cq:styleConfig/items/tabsOnTopPanel"/>
+                    target="/mnt/override/libs/core/fd/components/form/tabsontop/v1/tabsontop/cq:styleConfig/items/tabsOnTopPanel"/>
                 <wizardPanel
                     jcr:primaryType="nt:unstructured"
-                    target="/mnt/override/apps/core/fd/components/form/wizard/v2/wizard/cq:styleConfig/items/wizardPanel"/>
+                    target="/mnt/override/libs/core/fd/components/form/wizard/v2/wizard/cq:styleConfig/items/wizardPanel"/>
             </items>
         </panel>
         <Image
             jcr:primaryType="nt:unstructured"
-            target="/mnt/override/apps/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image"/>
+            target="/mnt/override/libs/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image"/>
         <hcaptcha
             jcr:primaryType="nt:unstructured"
-            target="/mnt/override/apps/core/fd/components/form/hcaptcha/v1/hcaptcha/cq:styleConfig/items/field/items/captcha"/>
+            target="/mnt/override/libs/core/fd/components/form/hcaptcha/v1/hcaptcha/cq:styleConfig/items/field/items/captcha"/>
         <recaptcha
                 jcr:primaryType="nt:unstructured"
-                target="/mnt/override/apps/core/fd/components/form/recaptcha/v1/recaptcha/cq:styleConfig/items/field/items/captcha"/>
+                target="/mnt/override/libs/core/fd/components/form/recaptcha/v1/recaptcha/cq:styleConfig/items/field/items/captcha"/>
     </items>
 </jcr:root>
