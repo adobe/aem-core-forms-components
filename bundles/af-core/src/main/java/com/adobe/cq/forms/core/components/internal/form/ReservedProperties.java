@@ -170,6 +170,7 @@ public final class ReservedProperties {
     public static final String FD_EXCLUDE_FROM_DOR_IF_HIDDEN = "fd:excludeFromDoRIfHidden";
     public static final String FD_DIALOG_LABEL = "fd:dialogLabel";
     public static final String FD_XFA_SCRIPTS = "fd:xfaScripts";
+    public static final String FD_FILE_ACCEPT_EXTENSIONS = "fd:acceptExtensions";
 
     public static final String FD_DRAFT_ID = "fd:draftId";
 

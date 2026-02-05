@@ -249,7 +249,6 @@ describe("Form with File Input V-2 - Basic Tests", () => {
         const fileInput5 =  "input[name='fileinput5']";
         cy.get(fileInput5).should("have.attr", "disabled", "disabled"); 
     });
-
 })
 
 describe("V-2 drag and drop functionality", () => {

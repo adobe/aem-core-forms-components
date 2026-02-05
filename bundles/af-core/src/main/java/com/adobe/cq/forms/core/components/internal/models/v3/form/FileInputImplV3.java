@@ -18,7 +18,11 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v3.form;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -48,6 +52,9 @@ public class FileInputImplV3 extends FileInputImplV2 {
     @Default(values = FileInput.DEFAULT_DRAGDROP_TEXT)
     protected String dragDropTextV3;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_FILE_ACCEPT_EXTENSIONS)
+    protected String[] acceptExtensions;
+
     @Override
     public String getDragDropText() {
         return dragDropTextV3;
@@ -59,5 +66,18 @@ public class FileInputImplV3 extends FileInputImplV2 {
         customProperties.remove(ReservedProperties.PN_DRAG_DROP_TEXT);
         customProperties.put(ReservedProperties.PN_DRAG_DROP_TEXT_V3, getDragDropText());
         return customProperties;
+    }
+
+    @Override
+    public List<String> getAcceptExtensions() {
+        // adding . in front of the accept extensions
+        if (acceptExtensions != null) {
+            for (int i = 0; i < acceptExtensions.length; i++) {
+                acceptExtensions[i] = "." + acceptExtensions[i];
+            }
+        }
+        return Optional.ofNullable(acceptExtensions)
+            .map(Arrays::asList)
+            .orElse(Collections.emptyList());
     }
 }

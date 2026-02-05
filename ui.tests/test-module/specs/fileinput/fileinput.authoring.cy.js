@@ -22,6 +22,7 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  * Testing FileInput with Sites Editor
  */
 describe('Page - Authoring', function () {
+  let toggle_array = [];
   // we can use these values to log in
 
   const dropFileInputInContainer = function() {
@@ -60,7 +61,7 @@ describe('Page - Authoring', function () {
         "File"
     );
     cy.contains("Validation").should("exist");
-
+    
     // Checking some dynamic behaviours
     cy.get("[name='./multiSelection'][type=\"checkbox\"]").should("exist").check();
     cy.get(".cmp-adaptiveform-fileinput__minimumFiles").invoke('css', 'display').should('equal','block');
@@ -68,6 +69,19 @@ describe('Page - Authoring', function () {
    // cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal','none');
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(fileInputDrop);
+  }
+
+  const testFileInputValidationBehaviour = function(fileInputEditPathSelector, fileInputDrop, isSites) {
+    if (isSites) {
+      dropFileInputInSites();
+    } else {
+      dropFileInputInContainer();
+    }
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fileInputEditPathSelector);
+    cy.invokeEditableAction("[data-action='CONFIGURE']");
+    cy.contains("Validation").should("exist");
+    cy.get('._coral-Tabs-itemLabel').contains('Validation').click();
+    cy.contains("Allowed file extensions").should("exist");
   }
 
   context('Open Forms Editor', function() {
@@ -78,6 +92,11 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      cy.fetchFeatureToggles().then((response) => {
+        if (response.status === 200) {
+            toggle_array = response.body.enabled;
+        }
+      });
     });
 
     it('insert FileInput in form container', function () {
@@ -88,10 +107,34 @@ describe('Page - Authoring', function () {
     it ('open edit dialog of FileInput', function(){
       testFileInputBehaviour(fileInputEditPathSelector, fileInputDrop);
     })
+
+    it('verify mime type is disabled when extensions are present', function() {
+      if(toggle_array.includes("FT_FORMS-18927")) {
+        // Setup component
+        dropFileInputInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fileInputEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        
+        // Add an extension
+        cy.get('.cmp-adaptiveform-fileinput__extensions coral-multifield-add').click();
+        cy.get('.cmp-adaptiveform-fileinput__extensions input').first().type('.pdf');
+        
+        // Verify MIME type is disabled and has single */* value
+        cy.get('.cmp-adaptiveform-fileinput__mimeType coral-multifield')
+            .should('have.css', 'pointer-events', 'none')
+            .find('coral-multifield-item')
+            .should('have.length', 1)
+            .find('input')
+            .should('have.value', '*/*');
+        
+        cy.get('.cq-dialog-cancel').click();
+        cy.deleteComponentByPath(fileInputDrop);
+      }
+    });
   })
 
   context('Open Sites Editor', function () {
-    const   pagePath = "/content/core-components-examples/library/adaptive-form/fileinput",
+    const pagePath = "/content/core-components-examples/library/adaptive-form/fileinput",
         fileInputEditPath = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + "/guideContainer/fileinput",
         fileInputEditPathSelector = "[data-path='" + fileInputEditPath + "']",
         fileInputDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/guideContainer/' + afConstants.components.forms.resourceType.formfileinput.split("/").pop();
@@ -99,6 +142,11 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      cy.fetchFeatureToggles().then((response) => {
+        if (response.status === 200) {
+            toggle_array = response.body.enabled;
+        }
+    });
     });
 
     it('insert aem forms FileInput', function () {
@@ -108,6 +156,12 @@ describe('Page - Authoring', function () {
 
     it('open edit dialog of aem forms FileInput', function() {
       testFileInputBehaviour(fileInputEditPathSelector, fileInputDrop, true);
+    });
+
+    it('open edit dialog of aem forms FileInput and check validation', () => {
+      if(toggle_array.includes("FT_FORMS-18927")) {
+          testFileInputValidationBehaviour(fileInputEditPathSelector, fileInputDrop, true);
+      }
     });
 
   });

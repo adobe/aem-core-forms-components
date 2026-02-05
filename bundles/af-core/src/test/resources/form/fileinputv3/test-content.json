@@ -31,7 +31,11 @@
     "custom" : "Custom screen reader text",
     "tooltip": "test-short-description",
     "maxFileSize" : "4",
-    "accept" : ["audio/*", "video/*", "image/*"]
+    "accept" : ["audio/*", "video/*", "image/*"],
+    "fd:acceptExtensions": [
+      "jpg",
+      "png"
+    ]
   },
   "multiselect-fileinput" : {
     "jcr:primaryType": "nt:unstructured",
