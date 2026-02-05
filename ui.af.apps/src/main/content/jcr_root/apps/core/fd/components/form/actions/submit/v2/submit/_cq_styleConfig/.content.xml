@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Button">
+    <items jcr:primaryType="nt:unstructured">
+        <button
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Submit"
+            id="af2_submitbutton"
+            cssSelector=".submit .cmp-adaptiveform-button__widget"
+            longTitle="Submit Button"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+            secondarySelectors="af2_guideContainer:af2_button">
+            <items jcr:primaryType="nt:unstructured">
+                <buttonText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Submit Button Text"
+                    id="af2_submitbuttontext"
+                    cssSelector=".submit .cmp-adaptiveform-button__text"
+                    longTitle="Submit Button Text"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af2_guideContainer:af2_buttontext">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".submit .cmp-adaptiveform-button__text:focus"/>
+                        <active
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Down"
+                                cssSelector=".submit .cmp-adaptiveform-button__text:active"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".submit .cmp-adaptiveform-button__text:disabled"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".submit .cmp-adaptiveform-button__text:hover"/>
+                    </states>
+                </buttonText>
+                <buttonDescriptionShort
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Short Description"
+                        id="af2_submitbuttondescriptionshort"
+                        cssSelector=".submit .cmp-adaptiveform-button__shortdescription"
+                        longTitle="Submit Button Short Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                </buttonDescriptionShort>
+                <buttonDescriptionLong
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Long Description"
+                        id="af2_submitbuttondescriptionlong"
+                        cssSelector=".submit .cmp-adaptiveform-button__longdescription"
+                        longTitle="Submit Button Long Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".submit .cmp-adaptiveform-button__longdescription:focus"/>
+                        <mandatory
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".submit .cmp-adaptiveform-button__longdescription:required"/>
+                    </states>
+                </buttonDescriptionLong>
+                <buttonHelpContainer
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Help Container"
+                        id="af2_submitbuttonhelpcontainer"
+                        cssSelector=".submit .cmp-adaptiveform-button__help-container"
+                        longTitle="Submit Button Help Container"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".submit .cmp-adaptiveform-button__help-container:focus"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".submit .cmp-adaptiveform-button__help-container:hover"/>
+                    </states>
+                </buttonHelpContainer>
+                <buttonHelpIcon
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Help Icon"
+                        id="af2_submitbuttonhelpicon"
+                        cssSelector=".submit .cmp-adaptiveform-button__questionmark"
+                        longTitle="Submit Button Help Icon"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                        secondarySelectors="af2_guideContainer:af2_helpicon">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".submit .cmp-adaptiveform-button__questionmark:focus"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".submit .cmp-adaptiveform-button__questionmark:hover"/>
+                    </states>
+                </buttonHelpIcon>
+            </items>
+            <states jcr:primaryType="nt:unstructured">
+                <focus
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Focus"
+                        cssSelector=".submit .cmp-adaptiveform-button__widget:focus"/>
+                <active
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Down"
+                        cssSelector=".submit .cmp-adaptiveform-button__widget:active"/>
+                <disabled
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Disabled"
+                        cssSelector=".submit .cmp-adaptiveform-button__widget:disabled"/>
+                <hover
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Hover"
+                        cssSelector=".submit .cmp-adaptiveform-button__widget:hover"/>
+                <error
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Error"
+                        cssSelector=".submit .cmp-adaptiveform-button[data-cmp-valid='false']"/>
+                <success
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Success"
+                        cssSelector=".submit .cmp-adaptiveform-button[data-cmp-valid='true']"/>
+            </states>
+        </button>
+    </items>
+</jcr:root>

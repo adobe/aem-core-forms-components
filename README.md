@@ -33,6 +33,14 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 -   [Form Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container)
 -   [Text Input](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
 
+## Theme Editor
+
+When adding, creating, or modifying a component, update the style configuration so the new styles are available in authoring:
+
+- Add or update the component's `_cq_styleConfig/.content.xml`. 
+- Update the `_cq_themeConfig/.content.xml` to point to the correct version when a component is added or created.
+- Keep the component README in sync if it documents style classes or variants.
+
 ## System Requirements
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
