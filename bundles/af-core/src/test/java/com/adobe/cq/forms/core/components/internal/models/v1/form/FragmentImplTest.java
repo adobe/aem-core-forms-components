@@ -66,6 +66,7 @@ public class FragmentImplTest {
     private static final String PATH_FRAGMENT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/fragment-without-fieldtype";
     private static final String PATH_FRAGMENT_WITH_FRAGMENT_PATH = CONTENT_ROOT + "/fragment-with-fragment-path";
     private static final String PATH_FRAGMENT_WITH_INVALID_PATH = CONTENT_ROOT + "/fragment-with-invalid-path";
+    private static final String PATH_FRAGMENT_WITH_PLACEHOLDER_RULES = CONTENT_ROOT + "/fragment-with-placeholder-rules";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -167,6 +168,39 @@ public class FragmentImplTest {
             rules.containsKey("visible"));
         assertEquals("fragmentVisibleRule", rules.get("visible"));
         assertTrue("Rules and events should both be present at same level", events.containsKey("change"));
+    }
+
+    @Test
+    void testPlaceholderAndFragmentContainerRulesEventsMerged() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_PLACEHOLDER_RULES, Fragment.class, context);
+        Map<String, String> rules = fragment.getRules();
+        Map<String, String[]> events = fragment.getEvents();
+        Map<String, Object> properties = fragment.getProperties();
+
+        assertNotNull(rules);
+        assertNotNull(events);
+        assertNotNull(properties);
+
+        assertTrue("Merged rules should include placeholder rule (required)", rules.containsKey("required"));
+        assertEquals("placeholderRequired", rules.get("required"));
+        assertTrue("Merged rules should include visible; panel has priority over fragment container", rules.containsKey("visible"));
+        assertEquals("panelVisibleRule", rules.get("visible"));
+
+        assertTrue("Merged events should include placeholder event (click)", events.containsKey("click"));
+        Assertions.assertArrayEquals(new String[] { "placeholderClick" }, events.get("click"));
+        assertTrue("Merged events should include fragment container event (change)", events.containsKey("change"));
+        Assertions.assertArrayEquals(new String[] { "fragmentChangeHandler" }, events.get("change"));
+        assertTrue("Merged events should include default custom:setProperty", events.containsKey("custom:setProperty"));
+        assertTrue("Merged events should include initialize with panel handler first, then fragment appended", events.containsKey(
+            "initialize"));
+        Assertions.assertArrayEquals(new String[] { "panelInit", "fragInit" }, events.get("initialize"));
+
+        assertTrue("Merged properties should include fd:rules; panel has priority over fragment container", properties.containsKey(
+            "fd:rules"));
+        @SuppressWarnings("unchecked")
+        Map<String, Object> fdRules = (Map<String, Object>) properties.get("fd:rules");
+        assertNotNull(fdRules);
+        assertEquals("invalid", fdRules.get("validationStatus"));
     }
 
     @Test

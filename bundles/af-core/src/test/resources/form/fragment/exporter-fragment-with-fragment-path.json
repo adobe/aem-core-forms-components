@@ -23,7 +23,8 @@
   },
   "events": {
     "custom:setProperty": ["$event.payload"],
-    "change": ["fragmentChangeHandler"]
+    "change": ["fragmentChangeHandler"],
+    "initialize": ["fragInit"]
   },
   "rules": {
     "visible": "fragmentVisibleRule"

@@ -70,6 +70,29 @@
     "fieldType": "panel",
     "fragmentPath": "/content/nonexistent/fragment"
   },
+  "fragment-with-placeholder-rules": {
+    "jcr:primaryType": "nt:unstructured",
+    "wrapData": true,
+    "jcr:title": "Fragment with Placeholder Rules",
+    "minOccur": "0",
+    "name": "fragment-with-panel-rules",
+    "maxOccur": "4",
+    "repeatable": true,
+    "sling:resourceType": "core/fd/components/form/fragment/v1/fragment",
+    "fieldType": "panel",
+    "fragmentPath": "/content/affragment",
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured",
+      "validationStatus": "invalid",
+      "required": "placeholderRequired",
+      "visible": "panelVisibleRule"
+    },
+    "fd:events": {
+      "jcr:primaryType": "nt:unstructured",
+      "click": "placeholderClick",
+      "initialize": "panelInit"
+    }
+  },
   "affragment": {
     "jcr:primaryType": "nt:unstructured",
     "jcr:title": "AF Fragment (v2)",
@@ -91,7 +114,8 @@
         },
         "fd:events": {
           "jcr:primaryType": "nt:unstructured",
-          "change": "fragmentChangeHandler"
+          "change": "fragmentChangeHandler",
+          "initialize": "fragInit"
         },
         "textinput": {
           "jcr:primaryType": "nt:unstructured",
