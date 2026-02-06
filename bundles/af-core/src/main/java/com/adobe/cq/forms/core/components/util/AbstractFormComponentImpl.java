@@ -352,6 +352,18 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @NotNull
     public Map<String, String> getRules() {
+        return getRulesForResource(resource);
+    }
+
+    /**
+     * Returns rules (visible, required, etc.) for the given resource. Used when exporting
+     * fragment components so that rules configured on the referenced fragment are
+     * included in the stitched output as root-level "rules" (parallel to "events").
+     *
+     * @param resource the resource that may have an fd:rules child
+     * @return map of rule name to expression, never null
+     */
+    protected final Map<String, String> getRulesForResource(Resource resource) {
         String[] VALID_RULES = new String[] { "description", "enabled", "enum", "enumNames",
             "exclusiveMaximum", "exclusiveMinimum", "label", "maximum", "minimum",
             "readOnly", "required", "value", "visible" };
@@ -361,23 +373,40 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
         Predicate<Map.Entry<String, Object>> isRuleValid = isEntryNonEmpty.and(isRuleNameValid);
 
+        if (resource == null) {
+            return Collections.emptyMap();
+        }
         Resource ruleNode = resource.getChild("fd:rules");
         if (ruleNode != null) {
             ValueMap ruleNodeProps = ruleNode.getValueMap();
-            Map<String, String> rules = ruleNodeProps.entrySet()
+            return ruleNodeProps.entrySet()
                 .stream()
                 .filter(isRuleValid)
                 .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (String) entry.getValue()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            return rules;
         }
         return Collections.emptyMap();
     }
 
     @JsonIgnore
     private Map<String, Object> getRulesProperties() {
-        Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
+        return getRulesPropertiesForResource(resource);
+    }
+
+    /**
+     * Returns rules properties (fd:rules) for the given resource. Used when exporting
+     * fragment components so that rules configured on the referenced fragment are
+     * included in the stitched output.
+     *
+     * @param resource the resource that may have an fd:rules child
+     * @return map of rules properties, never null
+     */
+    protected final Map<String, Object> getRulesPropertiesForResource(Resource resource) {
         Map<String, Object> customRulesProperties = new LinkedHashMap<>();
+        if (resource == null) {
+            return customRulesProperties;
+        }
+        Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
         if (ruleNode == null) {
             logger.debug("No rules node found for resource: {}", resource.getPath());
             return customRulesProperties;
@@ -473,17 +502,32 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @NotNull
     public Map<String, String[]> getEvents() {
-        Resource eventNode = resource.getChild("fd:events");
+        Map<String, String[]> userEvents = new LinkedHashMap<>();
+        userEvents.put("custom:setProperty", new String[] { "$event.payload" });
+        userEvents.putAll(getEventsForResource(resource));
+        return userEvents;
+    }
+
+    /**
+     * Returns events (fd:events) for the given resource. Used when exporting
+     * fragment components so that events configured on the referenced fragment are
+     * included in the stitched output.
+     *
+     * @param resource the resource that may have an fd:events child
+     * @return map of event name to handler expressions, never null
+     */
+    protected final Map<String, String[]> getEventsForResource(Resource resource) {
         Set<Map.Entry<String, Object>> eventSet = new HashSet<>();
-        eventSet.add(new AbstractMap.SimpleEntry<>("custom_setProperty", "$event.payload"));
-        if (eventNode != null) {
-            ValueMap eventNodeProps = eventNode.getValueMap();
-            eventSet.addAll(eventNodeProps.entrySet());
+        if (resource != null) {
+            Resource eventNode = resource.getChild("fd:events");
+            if (eventNode != null) {
+                ValueMap eventNodeProps = eventNode.getValueMap();
+                eventSet.addAll(eventNodeProps.entrySet());
+            }
         }
-        Map<String, String[]> userEvents = eventSet.stream()
+        return eventSet.stream()
             .flatMap(this::sanitizeEvent)
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return userEvents;
     }
 
     /**

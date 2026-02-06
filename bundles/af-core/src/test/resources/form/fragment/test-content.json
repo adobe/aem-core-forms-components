@@ -84,6 +84,15 @@
         "sling:resourceType": "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
         "fieldType": "form",
         "dorType": "none",
+        "fd:rules": {
+          "jcr:primaryType": "nt:unstructured",
+          "validationStatus": "valid",
+          "visible": "fragmentVisibleRule"
+        },
+        "fd:events": {
+          "jcr:primaryType": "nt:unstructured",
+          "change": "fragmentChangeHandler"
+        },
         "textinput": {
           "jcr:primaryType": "nt:unstructured",
           "jcr:title": "Text Input",

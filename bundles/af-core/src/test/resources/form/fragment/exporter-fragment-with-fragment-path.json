@@ -16,19 +16,22 @@
     },
     "fd:path": "/content/fragment-with-fragment-path",
     "fd:fragment": true,
-    "fd:viewType": "fragment"
+    "fd:viewType": "fragment",
+    "fd:rules": {
+      "validationStatus": "valid"
+    }
+  },
+  "events": {
+    "custom:setProperty": ["$event.payload"],
+    "change": ["fragmentChangeHandler"]
+  },
+  "rules": {
+    "visible": "fragmentVisibleRule"
   },
   "label": {
     "value": "Fragment"
   },
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  ":itemsOrder": [
-    "textinput"
-  ],
+  ":itemsOrder": ["textinput"],
   ":items": {
     "textinput": {
       "id": "textinput-233cc688ba",
@@ -45,9 +48,7 @@
         "fd:path": "/content/affragment/jcr:content/guideContainer/textinput"
       },
       "events": {
-        "custom:setProperty": [
-          "$event.payload"
-        ]
+        "custom:setProperty": ["$event.payload"]
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }

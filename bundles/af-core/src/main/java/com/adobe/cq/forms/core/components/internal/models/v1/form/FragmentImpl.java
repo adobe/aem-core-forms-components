@@ -53,6 +53,7 @@ import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
+import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.day.cq.i18n.I18n;
@@ -238,7 +239,32 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         Map<String, Object> properties = super.getProperties();
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
         properties.put(ReservedProperties.PN_VIEWTYPE, "fragment");
+        if (fragmentContainer != null) {
+            Map<String, Object> fragmentRules = getRulesPropertiesForResource(fragmentContainer);
+            if (!fragmentRules.isEmpty()) {
+                properties.put(AbstractFormComponentImpl.CUSTOM_RULE_PROPERTY_WRAPPER, fragmentRules);
+            }
+        }
         return properties;
+    }
+
+    @Override
+    public Map<String, String[]> getEvents() {
+        if (fragmentContainer != null) {
+            Map<String, String[]> userEvents = new LinkedHashMap<>();
+            userEvents.put("custom:setProperty", new String[] { "$event.payload" });
+            userEvents.putAll(getEventsForResource(fragmentContainer));
+            return userEvents;
+        }
+        return super.getEvents();
+    }
+
+    @Override
+    public Map<String, String> getRules() {
+        if (fragmentContainer != null) {
+            return getRulesForResource(fragmentContainer);
+        }
+        return super.getRules();
     }
 
     private String getClientLibForFragment() {
