@@ -54,6 +54,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class FragmentImplTest {
@@ -129,6 +130,43 @@ public class FragmentImplTest {
         Resource fragmentContainer = fragment.getFragmentContainer();
         assertNotNull(fragmentContainer);
         assertEquals("/content/affragment/jcr:content/guideContainer", fragmentContainer.getPath());
+    }
+
+    @Test
+    void testFragmentContainerRulesIncludedInProperties() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, Object> properties = fragment.getProperties();
+        assertNotNull(properties);
+        assertTrue("Stitched fragment should include fd:rules from referenced fragment container",
+            properties.containsKey("fd:rules"));
+        @SuppressWarnings("unchecked")
+        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
+        assertNotNull(rulesProperties);
+        assertEquals("valid", rulesProperties.get("validationStatus"));
+    }
+
+    @Test
+    void testFragmentContainerEventsIncludedInGetEvents() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, String[]> events = fragment.getEvents();
+        assertNotNull(events);
+        assertTrue("Stitched fragment should include events from referenced fragment container",
+            events.containsKey("change"));
+        Assertions.assertArrayEquals(new String[] { "fragmentChangeHandler" }, events.get("change"));
+        assertTrue("Stitched fragment should include default custom:setProperty", events.containsKey("custom:setProperty"));
+    }
+
+    @Test
+    void testFragmentContainerRulesParallelToEvents() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, String> rules = fragment.getRules();
+        Map<String, String[]> events = fragment.getEvents();
+        assertNotNull(rules);
+        assertNotNull(events);
+        assertTrue("Stitched fragment should include root-level rules from referenced fragment container (parallel to events)",
+            rules.containsKey("visible"));
+        assertEquals("fragmentVisibleRule", rules.get("visible"));
+        assertTrue("Rules and events should both be present at same level", events.containsKey("change"));
     }
 
     @Test
