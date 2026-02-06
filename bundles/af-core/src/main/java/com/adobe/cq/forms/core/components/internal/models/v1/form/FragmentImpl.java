@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -53,6 +54,7 @@ import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
+import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.day.cq.i18n.I18n;
@@ -238,7 +240,49 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         Map<String, Object> properties = super.getProperties();
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
         properties.put(ReservedProperties.PN_VIEWTYPE, "fragment");
+        if (fragmentContainer != null) {
+            Map<String, Object> mergedRules = new LinkedHashMap<>(getRulesPropertiesForResource(fragmentContainer));
+            Object placeholderRules = properties.get(AbstractFormComponentImpl.CUSTOM_RULE_PROPERTY_WRAPPER);
+            if (placeholderRules instanceof Map) {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> placeholderRulesMap = (Map<String, Object>) placeholderRules;
+                mergedRules.putAll(placeholderRulesMap);
+            }
+            if (!mergedRules.isEmpty()) {
+                properties.put(AbstractFormComponentImpl.CUSTOM_RULE_PROPERTY_WRAPPER, mergedRules);
+            }
+        }
         return properties;
+    }
+
+    @Override
+    public Map<String, String[]> getEvents() {
+        if (fragmentContainer != null) {
+            Map<String, String[]> userEvents = new LinkedHashMap<>(super.getEvents());
+            Map<String, String[]> fragmentEvents = getEventsForResource(fragmentContainer);
+            for (Map.Entry<String, String[]> entry : fragmentEvents.entrySet()) {
+                String[] existing = userEvents.get(entry.getKey());
+                if (existing != null) {
+                    String[] combined = Arrays.copyOf(existing, existing.length + entry.getValue().length);
+                    System.arraycopy(entry.getValue(), 0, combined, existing.length, entry.getValue().length);
+                    userEvents.put(entry.getKey(), combined);
+                } else {
+                    userEvents.put(entry.getKey(), entry.getValue());
+                }
+            }
+            return userEvents;
+        }
+        return super.getEvents();
+    }
+
+    @Override
+    public Map<String, String> getRules() {
+        if (fragmentContainer != null) {
+            Map<String, String> merged = new LinkedHashMap<>(getRulesForResource(fragmentContainer));
+            merged.putAll(super.getRules());
+            return merged;
+        }
+        return super.getRules();
     }
 
     private String getClientLibForFragment() {
