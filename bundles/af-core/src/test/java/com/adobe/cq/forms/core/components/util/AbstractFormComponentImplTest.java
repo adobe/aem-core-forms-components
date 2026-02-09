@@ -70,18 +70,14 @@ public class AbstractFormComponentImplTest {
     public void testInvalidRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_INVALID_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
-        assertNotNull(rulesProperties);
-        assertEquals("invalid", rulesProperties.get("validationStatus"));
+        assertNull(properties.get("fd:rules"), "fd:rules is whitelisted and should not appear in properties");
     }
 
     @Test
     public void testValidRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_VALID_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
-        assertNotNull(rulesProperties);
-        assertEquals("valid", rulesProperties.get("validationStatus"));
+        assertNull(properties.get("fd:rules"), "fd:rules is whitelisted and should not appear in properties");
     }
 
     @Test
@@ -104,9 +100,7 @@ public class AbstractFormComponentImplTest {
     public void testInvalidValidationStatusRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
-        assertNotNull(rulesProperties);
-        assertEquals("invalid", rulesProperties.get("validationStatus"));
+        assertNull(properties.get("fd:rules"), "fd:rules is whitelisted and should not appear in properties");
     }
 
     @Test
@@ -212,10 +206,7 @@ public class AbstractFormComponentImplTest {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Object rulesProperties = properties.get("fd:rules");
-        assertNotNull(rulesProperties);
-        Object formReadyRule = ((Map<String, Object>) rulesProperties).get("fd:formReady");
-        assertNotNull(formReadyRule);
+        assertNull(properties.get("fd:rules"), "fd:rules is whitelisted and should not appear in properties");
     }
 
     @Test
@@ -228,7 +219,6 @@ public class AbstractFormComponentImplTest {
         ValueMap valueMap = new MockValueMap(resource);
         Mockito.doReturn(valueMap).when(resource).getValueMap();
         Mockito.doReturn(null).when(resource).getChild("fd:dorContainer");
-        Mockito.doReturn(null).when(resource).getChild("fd:rules");
         Resource associateResource = Mockito.mock(Resource.class);
         Mockito.doReturn(associateResource).when(resource).getChild("fd:associate");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();

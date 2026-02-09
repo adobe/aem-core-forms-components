@@ -134,16 +134,12 @@ public class FragmentImplTest {
     }
 
     @Test
-    void testFragmentContainerRulesIncludedInProperties() {
+    void testFragmentContainerRulesNotInProperties() {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
         Map<String, Object> properties = fragment.getProperties();
         assertNotNull(properties);
-        assertTrue("Stitched fragment should include fd:rules from referenced fragment container",
-            properties.containsKey("fd:rules"));
-        @SuppressWarnings("unchecked")
-        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
-        assertNotNull(rulesProperties);
-        assertEquals("valid", rulesProperties.get("validationStatus"));
+        assertTrue("fd:rules is whitelisted and should not appear in properties (rules are at root level)",
+            !properties.containsKey("fd:rules"));
     }
 
     @Test
@@ -195,12 +191,7 @@ public class FragmentImplTest {
             "initialize"));
         Assertions.assertArrayEquals(new String[] { "panelInit", "fragInit" }, events.get("initialize"));
 
-        assertTrue("Merged properties should include fd:rules; panel has priority over fragment container", properties.containsKey(
-            "fd:rules"));
-        @SuppressWarnings("unchecked")
-        Map<String, Object> fdRules = (Map<String, Object>) properties.get("fd:rules");
-        assertNotNull(fdRules);
-        assertEquals("invalid", fdRules.get("validationStatus"));
+        assertTrue("fd:rules is whitelisted and should not appear in properties", !properties.containsKey("fd:rules"));
     }
 
     @Test

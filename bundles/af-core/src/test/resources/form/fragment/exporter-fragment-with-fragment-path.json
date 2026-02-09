@@ -16,10 +16,7 @@
     },
     "fd:path": "/content/fragment-with-fragment-path",
     "fd:fragment": true,
-    "fd:viewType": "fragment",
-    "fd:rules": {
-      "validationStatus": "valid"
-    }
+    "fd:viewType": "fragment"
   },
   "events": {
     "custom:setProperty": ["$event.payload"],

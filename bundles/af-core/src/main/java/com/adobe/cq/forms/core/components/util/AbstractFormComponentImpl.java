@@ -334,10 +334,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
         properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
-        Map<String, Object> rulesProperties = getRulesProperties();
-        if (rulesProperties.size() > 0) {
-            properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
-        }
         List<String> disabledScripts = getDisabledXFAScripts();
         if (!disabledScripts.isEmpty()) {
             properties.put("fd:disabledXfaScripts", disabledScripts);
