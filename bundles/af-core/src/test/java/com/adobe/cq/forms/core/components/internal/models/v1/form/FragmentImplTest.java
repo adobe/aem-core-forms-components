@@ -179,17 +179,17 @@ public class FragmentImplTest {
 
         assertTrue("Merged rules should include placeholder rule (required)", rules.containsKey("required"));
         assertEquals("placeholderRequired", rules.get("required"));
-        assertTrue("Merged rules should include visible; panel has priority over fragment container", rules.containsKey("visible"));
-        assertEquals("panelVisibleRule", rules.get("visible"));
+        assertTrue("Merged rules should include visible; fragment container overrides panel when embedded", rules.containsKey("visible"));
+        assertEquals("fragmentVisibleRule", rules.get("visible"));
 
         assertTrue("Merged events should include placeholder event (click)", events.containsKey("click"));
         Assertions.assertArrayEquals(new String[] { "placeholderClick" }, events.get("click"));
         assertTrue("Merged events should include fragment container event (change)", events.containsKey("change"));
         Assertions.assertArrayEquals(new String[] { "fragmentChangeHandler" }, events.get("change"));
         assertTrue("Merged events should include default custom:setProperty", events.containsKey("custom:setProperty"));
-        assertTrue("Merged events should include initialize with panel handler first, then fragment appended", events.containsKey(
+        assertTrue("Merged events should include initialize with fragment handler first, then panel appended", events.containsKey(
             "initialize"));
-        Assertions.assertArrayEquals(new String[] { "panelInit", "fragInit" }, events.get("initialize"));
+        Assertions.assertArrayEquals(new String[] { "fragInit", "panelInit" }, events.get("initialize"));
 
         assertTrue("fd:rules is whitelisted and should not appear in properties", !properties.containsKey("fd:rules"));
     }
