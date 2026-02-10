@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Base">
+    <items jcr:primaryType="nt:unstructured">
+        <field jcr:primaryType="nt:unstructured">
+            <items jcr:primaryType="nt:unstructured">
+                <captcha
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="reCaptcha"
+                        id="af2_recaptchacontainer"
+                        cssSelector=".cmp-adaptiveform-recaptcha"
+                        longTitle="reCaptcha Widget and Text"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <captchaLabel
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="reCaptcha Label"
+                                id="af2_recaptchawidgetlabel"
+                                cssSelector=".cmp-adaptiveform-recaptcha__label"
+                                longTitle="reCaptcha Label"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-recaptcha__label:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-recaptcha__label:hover"/>
+                            </states>
+                        </captchaLabel>
+                        <captchaWidget
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="reCaptcha Widget"
+                                id="af2_recaptchawidget"
+                                cssSelector=".cmp-adaptiveform-recaptcha__widget"
+                                longTitle="reCaptcha Widget"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-recaptcha__widget:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-recaptcha__widget:hover"/>
+                            </states>
+                        </captchaWidget>
+                        <captchaErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="reCaptcha Error Message"
+                                id="af2_recaptchaerrormessage"
+                                cssSelector=".cmp-adaptiveform-recaptcha__errormessage"
+                                longTitle="reCaptcha Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </captchaErrorMessage>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-recaptcha:focus"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-recaptcha:hover"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-recaptcha[data-cmp-enabled='false']"/>
+                        <mandatory
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".cmp-adaptiveform-recaptcha[data-cmp-required='true']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-recaptcha[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-recaptcha[data-cmp-valid='true']"/>
+                    </states>
+                </captcha>
+            </items>
+        </field>
+    </items>
+</jcr:root>

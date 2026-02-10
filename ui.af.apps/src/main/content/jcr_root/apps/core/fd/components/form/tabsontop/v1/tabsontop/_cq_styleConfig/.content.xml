@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="panel">
+    <items jcr:primaryType="nt:unstructured">
+        <tabsOnTopPanel
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Tabs on Top"
+            id="af2_tabsontop"
+            cssSelector=".cmp-tabs"
+            longTitle="Tabs on Top Panel Container"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <tabsOnTopLabelContainer
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Label Container"
+                        id="af2_tabsontoplabelcontainer"
+                        cssSelector=".cmp-tabs__label-container"
+                        longTitle="Tabs on Top Label Container"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <tabsOnTopLabel
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Label"
+                                id="af2_tabsOnToplabel"
+                                cssSelector=".cmp-tabs__label"
+                                longTitle="Tabs On Top Label"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-tabs__label:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-tabs__label:focus"/>
+                            </states>
+                        </tabsOnTopLabel>
+                        <tabsOnTopHelpIcon
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Help Icon"
+                                id="af2_tabsOnTophelpicon"
+                                cssSelector=".cmp-tabs__questionmark"
+                                longTitle="Tabs On Top Help Icon"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                secondarySelectors="af2_guideContainer:af2_helpicon">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-tabs__questionmark:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-tabs__questionmark:hover"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-tabs__questionmark:disabled"/>
+                            </states>
+                        </tabsOnTopHelpIcon>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-tabs__label-container:disabled"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-tabs__label-container:hover"/>
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-tabs__label-container:focus"/>
+                    </states>
+                </tabsOnTopLabelContainer>
+                <tabsOnTopDescriptionShort
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Short Description"
+                        id="af2_tabsOnTopdescriptionshort"
+                        cssSelector=".cmp-tabs__shortdescription"
+                        longTitle="Tabs On Top Short Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                </tabsOnTopDescriptionShort>
+                <tabsOnTopDescriptionLong
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Long Description"
+                        id="af2_tabsOnTopdescriptionlong"
+                        cssSelector=".cmp-tabs__longdescription"
+                        longTitle="Tabs On Top Long Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-tabs__longdescription:focus"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-tabs__longdescription:hover"/>
+                    </states>
+                </tabsOnTopDescriptionLong>
+                <tabsOnTopTabList
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Tabs List"
+                        id="af2_tabsOnToptablist"
+                        cssSelector=".cmp-tabs__tablist"
+                        longTitle="Tabs On Top Tab List"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <tabsOnTopTab
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Tab"
+                                id="af2_tabsOnToptab"
+                                cssSelector=".cmp-tabs__tab"
+                                longTitle="Tabs On Top Tab"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <active
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Active"
+                                        cssSelector=".cmp-tabs__tab--active"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-tabs__tab:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-tabs__tab:focus"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-tabs__tab:disabled"/>
+                            </states>
+                        </tabsOnTopTab>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-tabs__tablist:hover"/>
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-tabs__tablist:focus"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-tabs__tablist:disabled"/>
+                    </states>
+                </tabsOnTopTabList>
+            </items>
+        </tabsOnTopPanel>
+    </items>
+</jcr:root>
