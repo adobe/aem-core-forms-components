@@ -785,6 +785,7 @@ const mimeTypes = {
     'bat': 'application/x-msdos-program',
     'msg': 'application/vnd.ms-outlook',
     'svg': 'image/svg+xml',
+    'ifc': 'model/ifc',
     // Add more mappings as needed
 };
 

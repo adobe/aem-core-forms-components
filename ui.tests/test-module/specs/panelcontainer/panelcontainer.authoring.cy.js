@@ -55,6 +55,9 @@ describe('Page - Authoring', function () {
             .should("exist");
         cy.get("[name='./jcr:title']")
             .should("exist");
+        cy.get("[name='./fd:useFieldset']")
+            .should("exist");
+
         if (!isSites) {
             cy.get("[name='./layout']")
                 .should("not.exist");
@@ -167,6 +170,51 @@ describe('Page - Authoring', function () {
             // check rich text selector and see if RTE is visible.
             cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
             cy.get("div[name='richTextTitle']").should('be.visible');
+            cy.get('.cq-dialog-cancel').click();
+            cy.deleteComponentByPath(panelEditPath);
+        });
+
+        it('check fieldset option exists and behavior', function(){
+            dropPanelInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelContainerPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+
+            // Verify useFieldset checkbox exists
+            cy.get("[name='./fd:useFieldset']")
+                .first()
+                .should("exist")
+                .should("be.visible");
+
+            // Get the title field label and verify initial state
+            cy.get("[name='./jcr:title']").should("exist");
+
+            // Check if useFieldset checkbox is checked and verify title becomes required
+            cy.get("[name='./fd:useFieldset']").first().then(($checkbox) => {
+                const isChecked = $checkbox.prop('checked');
+                // Find the label for jcr:title field by navigating from the input to its parent wrapper
+                cy.get("[name='./jcr:title']").parent().find('label').then(($label) => {
+                    if (isChecked) {
+                        // When fieldset is checked, title should be required
+                        expect($label.text()).to.include('*');
+                    }
+                });
+            });
+
+            // Toggle the checkbox and verify the label changes accordingly
+            cy.get("[name='./fd:useFieldset']").first().click();
+            cy.get("[name='./fd:useFieldset']").first().then(($checkbox) => {
+                const isChecked = $checkbox.prop('checked');
+                cy.get("[name='./jcr:title']").parent().find('label').then(($label) => {
+                    if (isChecked) {
+                        // When fieldset is checked, title should be required
+                        expect($label.text()).to.include('*');
+                    } else {
+                        // When fieldset is unchecked, title should not be required
+                        expect($label.text()).to.not.include('*');
+                    }
+                });
+            });
+
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(panelEditPath);
         });

@@ -14,7 +14,32 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <template data-sly-template.responsiveGrid="${ @ container, panel, label, shortDescription, longDescription, questionMark}">
-    <div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+    <sly data-sly-set.useFieldset="${properties['fd:useFieldset']}"
+         data-sly-set.legendText="${panel.label.value ? panel.label.value : (panel.name ? panel.name : panel.id)}"></sly>
+
+    <fieldset data-sly-test="${useFieldset}"
+              data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+              id="${panel.id}"
+              class="cmp-container"
+              data-cmp-is="adaptiveFormPanel"
+              data-cmp-data-layer="${panel.data.json}"
+              data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+              data-cmp-visible="${panel.visible ? 'true' : 'false'}"
+              data-cmp-enabled="${panel.enabled ? 'true' : 'false'}"
+              data-cmp-readonly="${panel.readOnly ? 'true' : 'false'}"
+              title="${panel.tooltipVisible ? '' : panel.tooltipText}"
+              style="${container.backgroundStyle @ context='styleString'}">
+        <legend class="cmp-container__label-container">
+            <div data-sly-call="${label.label @componentId=panel.id, labelValue=legendText, labelVisible=true, labelRichText=panel.label.richText, bemBlock='cmp-container'}" data-sly-unwrap></div>
+            <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container'}" data-sly-unwrap></div>
+        </legend>
+        <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-container'}" data-sly-unwrap></div>
+        <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container'}" data-sly-unwrap></div>
+        <sly data-sly-resource="${resource @ resourceType='wcm/foundation/components/responsivegrid'}"></sly>
+    </fieldset>
+
+    <div data-sly-test="${!useFieldset}"
+         data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
          id="${panel.id}"
          class="cmp-container"
          data-cmp-is="adaptiveFormPanel"
