@@ -70,6 +70,14 @@ https://opensource.adobe.com/aem-core-forms-components/
 
 To create XFA-based core component forms, you need to use the XFA Page component. This component serves as the foundation for rendering XFA forms.
 
+## Theme Editor
+
+When adding, creating, or modifying a component, update the style configuration so the new styles are available in authoring:
+
+- Add or update the component's `_cq_styleConfig/.content.xml`. 
+- Update the `_cq_themeConfig/.content.xml` to point to the correct version when a component is added or created.
+- Keep the component README in sync if it documents style classes or variants.
+
 ## System Requirements
 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:

@@ -15,7 +15,7 @@
  ******************************************************************************/
 describe("Form Runtime with CheckBoxGroup Input", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/basic.html"
+    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv1/basic.html"
     const bemBlock = 'cmp-adaptiveform-checkboxgroup'
     const IS = "adaptiveFormCheckBoxGroup"
     const selectors = {
@@ -253,7 +253,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
 
 describe("setFocus on checkboxgroup via rules", () => {
 
-    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/focustest.html"
+    const pagePath = "content/forms/af/core-components-it/samples/checkboxgroup/checkboxgroupv1/focustest.html"
     let formContainer = null
 
     beforeEach(() => {
