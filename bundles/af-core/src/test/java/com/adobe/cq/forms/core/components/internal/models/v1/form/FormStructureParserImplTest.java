@@ -182,19 +182,11 @@ public class FormStructureParserImplTest {
     }
 
     @Test
-    void testGetThemeClientLibRefFromFormContainer() {
+    void testGetThemeEditorThemeRef() {
         Resource formContainer = context.resourceResolver().getResource(FORM_CONTAINER_PATH);
         ModifiableValueMap formContainerProps = formContainer.adaptTo(ModifiableValueMap.class);
         formContainerProps.put(FormContainer.PN_CLIENT_LIB_REF, "/content/dam/formsanddocuments-themes/test-theme");
 
-        String path = CONTENT_ROOT + "/myTestPage";
-        FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
-        String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
-        assertEquals("fdtheme.test-theme", themeClientLibRef);
-    }
-
-    @Test
-    void testGetThemeClientLibRefWithRequestAttribute() {
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
@@ -205,7 +197,18 @@ public class FormStructureParserImplTest {
     }
 
     @Test
-    void testGetThemeClientLibRefWithRequestParameter() {
+    void testGetThemeEditorThemeRefWithRequestAttribute() {
+        String path = CONTENT_ROOT + "/myTestPage";
+        context.currentResource(path);
+        MockSlingHttpServletRequest request = context.request();
+        request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme");
+        FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
+        String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
+        assertEquals("fdtheme.test-theme", themeClientLibRef);
+    }
+
+    @Test
+    void testGetThemeEditorThemeRefWithRequestParameter() {
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
@@ -217,7 +220,7 @@ public class FormStructureParserImplTest {
     }
 
     @Test
-    void testGetThemeClientLibRefWithInvalidThemePath() {
+    void testGetThemeEditorThemeRefWithInvalidThemePath() {
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
@@ -228,7 +231,7 @@ public class FormStructureParserImplTest {
     }
 
     @Test
-    void testGetThemeClientLibRefWithNonExistentTheme() {
+    void testGetThemeEditorThemeRefWithNonExistentTheme() {
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
@@ -239,7 +242,7 @@ public class FormStructureParserImplTest {
     }
 
     @Test
-    void testGetThemeClientLibRefWithoutTheme() {
+    void testGetThemeEditorThemeRefWithoutTheme() {
         String path = FORM_CONTAINER_PATH + "/container1";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
         String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
