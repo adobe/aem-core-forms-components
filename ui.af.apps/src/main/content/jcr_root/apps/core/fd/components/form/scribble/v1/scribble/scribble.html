@@ -41,7 +41,7 @@
       <div data-sly-call="${questionMark.questionMark @componentId=scribble.id, longDescription=scribble.description, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
     </div>
 
-    <button type="button" class="cmp-adaptiveform-scribble__canvas-signed-container" title="${'signatureCanvas' @ i18n}">
+    <button type="button" class="cmp-adaptiveform-scribble__canvas-signed-container" title="${'signatureCanvas' @ i18n, locale=request.locale}">
       <img class="cmp-adaptiveform-scribble__canvas-signed-image" src="${scribble.value}"/>
     </button>
 
@@ -51,41 +51,41 @@
     <div data-sly-call="${longDescription.longDescription @componentId= scribble.id, longDescription=scribble.description, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
 
     <div data-sly-call="${errorMessage.errorMessage @componentId=scribble.id, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
-      <div class="cmp-adaptiveform-scribble__container" tabindex="0" role="dialog" aria-label="${'pleaseSignText' @ i18n}">
-      <div class="cmp-adaptiveform-scribble__header" aria-live="polite" role="heading">${scribble.dialogLabel}</div>
+      <div class="cmp-adaptiveform-scribble__container" tabindex="0" role="dialog" aria-label="${'pleaseSignText' @ i18n, locale=request.locale}">
+      <div class="cmp-adaptiveform-scribble__header" aria-live="polite" role="heading">${scribble.dialogLabel @ i18n, locale=request.locale}</div>
         <div class="cmp-adaptiveform-scribble__content">
           <div class="cmp-adaptiveform-scribble__canvases">
             <div class="cmp-adaptiveform-scribble__signcanvases" style="display:inline-block; vertical-align:top;">
-              <canvas class="cmp-adaptiveform-scribble__canvas" aria-label="${'signature canvas' @ i18n}"></canvas>
-              <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="${scribble.placeHolder}" aria-label="${'signature text' @ i18n}" tabindex="-1">
+              <canvas class="cmp-adaptiveform-scribble__canvas" aria-label="${'signature canvas' @ i18n, locale=request.locale}"></canvas>
+              <input type="text" class="cmp-adaptiveform-scribble__keyboard-sign-box" name="signatureText" placeholder="${scribble.placeHolder @ i18n, locale=request.locale}" aria-label="${'signature text' @ i18n, locale=request.locale}" tabindex="-1">
             </div>
-            <canvas class="cmp-adaptiveform-scribble__geocanvas" width="0" height="0" aria-label="${'geolocation' @ i18n}" ></canvas>
+            <canvas class="cmp-adaptiveform-scribble__geocanvas" width="0" height="0" aria-label="${'geolocation' @ i18n, locale=request.locale}" ></canvas>
           </div>
           <div class="cmp-adaptiveform-scribble__controlpanel">
             <div class="cmp-adaptiveform-scribble__controls">
-              <button type="button" class="cmp-adaptiveform-scribble__control-brush cmp-adaptiveform-scribble__button" data-cmp-scribble-button="brushes" tabindex="0" aria-label="${'brushes' @ i18n}"></button>
-              <div class="cmp-adaptiveform-scribble__brushlist" aria-label="${'brush size selection' @ i18n}" style="display: none;"></div>
-              <button type="button" class="cmp-adaptiveform-scribble__control-clear cmp-adaptiveform-scribble__button" data-cmp-scribble-button="clearSign" tabindex="0" aria-label="${'clearSign' @ i18n}" ></button>
-              <button type="button" class="cmp-adaptiveform-scribble__control-geo cmp-adaptiveform-scribble__button" data-cmp-scribble-button="geolocation" tabindex="0" aria-label="${'geolocation' @ i18n}" ></button>
-              <button type="button" class="cmp-adaptiveform-scribble__control-text cmp-adaptiveform-scribble__button" data-cmp-scribble-button="textSign" tabindex="0" aria-label="${'textSign' @ i18n}"></button>
+              <button type="button" class="cmp-adaptiveform-scribble__control-brush cmp-adaptiveform-scribble__button" data-cmp-scribble-button="brushes" tabindex="0" aria-label="${'brushes' @ i18n, locale=request.locale}"></button>
+              <div class="cmp-adaptiveform-scribble__brushlist" aria-label="${'brush size selection' @ i18n, locale=request.locale}" style="display: none;"></div>
+              <button type="button" class="cmp-adaptiveform-scribble__control-clear cmp-adaptiveform-scribble__button" data-cmp-scribble-button="clearSign" tabindex="0" aria-label="${'clearSign' @ i18n, locale=request.locale}" ></button>
+              <button type="button" class="cmp-adaptiveform-scribble__control-geo cmp-adaptiveform-scribble__button" data-cmp-scribble-button="geolocation" tabindex="0" aria-label="${'geolocation' @ i18n, locale=request.locale}" ></button>
+              <button type="button" class="cmp-adaptiveform-scribble__control-text cmp-adaptiveform-scribble__button" data-cmp-scribble-button="textSign" tabindex="0" aria-label="${'textSign' @ i18n, locale=request.locale}"></button>
               <div class="cmp-adaptiveform-scribble__control-message"></div>
             </div>
             <div class="cmp-adaptiveform-scribble__controlpanel-controls">
-              <button class="cmp-adaptiveform-scribble__close-button" data-cmp-scribble-button="close" tabindex="0" type="button" aria-label="${'Close' @ i18n}">${"Close" @ i18n}</button>
-              <button class="cmp-adaptiveform-scribble__save-button" data-cmp-scribble-button="save" tabindex="0" type="button" aria-label="${'Save' @ i18n}">${"Save" @ i18n}</button>
+              <button class="cmp-adaptiveform-scribble__close-button" data-cmp-scribble-button="close" tabindex="0" type="button" aria-label="${'Close' @ i18n, locale=request.locale}">${"Close" @ i18n, locale=request.locale}</button>
+              <button class="cmp-adaptiveform-scribble__save-button" data-cmp-scribble-button="save" tabindex="0" type="button" aria-label="${'Save' @ i18n, locale=request.locale}">${"Save" @ i18n, locale=request.locale}</button>
             </div>
           </div>
         </div>
       </div>
       <div class="cmp-adaptiveform-scribble__clearsign-container">
-        <h2 class="cmp-adaptiveform-scribble__clearsign-title">${"Erase Current Signature?" @ i18n}</h2>
+        <h2 class="cmp-adaptiveform-scribble__clearsign-title">${"Erase Current Signature?" @ i18n, locale=request.locale}</h2>
         <div class="cmp-adaptiveform-scribble__clearsign-content" class="msgBoxTypenull">
           <div class="cmp-adaptiveform-scribble__clearsign-message">
-            ${"This will permanently remove the signature you've drawn. Do you wish to proceed and begin again?" @ i18n}
+            ${"This will permanently remove the signature you've drawn. Do you wish to proceed and begin again?" @ i18n, locale=request.locale}
           </div>
           <div class="cmp-adaptiveform-scribble__clearsign-panel">
-            <button type="button" id="msgBox_No" class="cmp-adaptiveform-scribble__button--secondary">${"Cancel" @ i18n}</button>
-            <button type="button" id="msgBox_Yes" class="cmp-adaptiveform-scribble__button--primary">${"Clear" @ i18n}</button>
+            <button type="button" id="msgBox_No" class="cmp-adaptiveform-scribble__button--secondary">${"Cancel" @ i18n, locale=request.locale}</button>
+            <button type="button" id="msgBox_Yes" class="cmp-adaptiveform-scribble__button--primary">${"Clear" @ i18n, locale=request.locale}</button>
           </div>
         </div>
       </div>
