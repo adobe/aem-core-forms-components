@@ -3,15 +3,15 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[/etc/mobile/groups/responsive]"
-        cq:lastModified="{Date}2025-09-15T12:32:32.257+05:30"
+        cq:lastModified="{Date}2025-01-09T12:00:00.000+05:30"
         cq:lastModifiedBy="admin"
         cq:template="/conf/a/settings/wcm/templates/aa"
         fd:ignoreTranslationInvalidation="{Boolean}true"
         jcr:language="en"
         jcr:primaryType="cq:PageContent"
-        jcr:title="dynamicOptions"
-        sling:configRef="/conf/forms/core-components-it/samples/dynamicenumenumnames/dynamicoptions"
-        sling:resourceType="forms-core-components-it/components/page-dynamicoptionsv1">
+        jcr:title="dynamicOptionsv2"
+        sling:configRef="/conf/forms/core-components-it/samples/dynamicenumenumnames/dynamicoptionsv2"
+        sling:resourceType="core/fd/components/page/v2/page">
         <container1
             jcr:primaryType="nt:unstructured"
             sling:resourceType="core/wcm/components/container/v1/container"
@@ -24,15 +24,15 @@
             fieldType="form"
             thankYouOption="page"
             themeRef="/libs/fd/af/themes/canvas"
-            title="a3">
+            title="dynamicOptionsv2">
             <checkboxgroup
-                jcr:created="{Date}2025-09-12T12:27:41.460+05:30"
+                jcr:created="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-12T17:49:13.284+05:30"
+                jcr:lastModified="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="changeOptions one"
-                sling:resourceType="core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+                sling:resourceType="core/fd/components/form/checkboxgroup/v2/checkboxgroup"
                 enabled="{Boolean}true"
                 enum="[0,1]"
                 enumNames="[Item 1, Item 2]"
@@ -54,13 +54,13 @@
                     initialize="[{enum : split('a\,b\,c\,d'\,'\,')\, enumNames : split('a\,b\,c\,d'\,'\,')}]"/>
             </checkboxgroup>
             <checkboxgroup_813721690
-                jcr:created="{Date}2025-09-12T12:27:50.189+05:30"
+                jcr:created="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-12T17:49:20.092+05:30"
+                jcr:lastModified="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="addOptions one"
-                sling:resourceType="core/fd/components/form/checkboxgroup/v1/checkboxgroup"
+                sling:resourceType="core/fd/components/form/checkboxgroup/v2/checkboxgroup"
                 enabled="{Boolean}true"
                 fieldType="checkbox-group"
                 hideTitle="false"
@@ -80,9 +80,9 @@
                     initialize="[{enum : split('a\,b\,c\,d'\,'\,')\, enumNames : split('a\,b\,c\,d'\,'\,')}]"/>
             </checkboxgroup_813721690>
             <dropdown
-                jcr:created="{Date}2025-09-12T17:04:19.917+05:30"
+                jcr:created="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-12T17:49:04.641+05:30"
+                jcr:lastModified="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="dynamicDropDown one"
@@ -106,13 +106,13 @@
                     initialize="[{enum : split('a\,b\,c\,d'\,'\,')\, enumNames : split('a\,b\,c\,d'\,'\,')}]"/>
             </dropdown>
             <radiobutton
-                jcr:created="{Date}2025-09-12T17:05:36.421+05:30"
+                jcr:created="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-12T17:49:27.339+05:30"
+                jcr:lastModified="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="dynamicRadio one"
-                sling:resourceType="core/fd/components/form/radiobutton/v1/radiobutton"
+                sling:resourceType="core/fd/components/form/radiobutton/v2/radiobutton"
                 enabled="{Boolean}true"
                 enum="[0,1]"
                 enumNames="[Item 1,Item 2]"
@@ -134,13 +134,13 @@
                     initialize="[{enum : split('a\,b\,c\,d'\,'\,')\, enumNames : split('a\,b\,c\,d'\,'\,')}]"/>
             </radiobutton>
             <radiobutton_842887331
-                jcr:created="{Date}2025-09-12T17:36:15.600+05:30"
+                jcr:created="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-12T17:49:34.559+05:30"
+                jcr:lastModified="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="newradio one"
-                sling:resourceType="core/fd/components/form/radiobutton/v1/radiobutton"
+                sling:resourceType="core/fd/components/form/radiobutton/v2/radiobutton"
                 enabled="{Boolean}false"
                 fieldType="radio-group"
                 hideTitle="false"
@@ -160,9 +160,9 @@
                     initialize="[{enum : split('a\,b\,c\,d'\,'\,')\, enumNames : split('a\,b\,c\,d'\,'\,')}]"/>
             </radiobutton_842887331>
             <dropdown_1051629916
-                jcr:created="{Date}2025-09-12T17:37:36.379+05:30"
+                jcr:created="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-12T17:49:40.800+05:30"
+                jcr:lastModified="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="newdropdown one"
@@ -186,89 +186,14 @@
                     jcr:primaryType="nt:unstructured"
                     initialize="[{enum : split('a\,b\,c\,d'\,'\,')\, enumNames : split('a\,b\,c\,d'\,'\,')}]"/>
             </dropdown_1051629916>
-            <checkboxgroup_1076136375
-                jcr:created="{Date}2025-09-12T17:51:59.300+05:30"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-12T17:52:52.495+05:30"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                jcr:title="richCheckbox &lt;b>one&lt;/b>"
-                sling:resourceType="core/fd/components/form/checkboxgroup/v1/checkboxgroup"
-                areOptionsRichText="true"
-                enabled="{Boolean}true"
-                enum="[0,1]"
-                enumNames="[&lt;b>Item&lt;/b> 1, &lt;b>Item&lt;/b> 2]"
-                fieldType="checkbox-group"
-                hideTitle="false"
-                isTitleRichText="true"
-                name="richCheckbox"
-                orientation="horizontal"
-                readOnly="{Boolean}false"
-                textIsRich="[true,true,true,true,true]"
-                type="string[]"
-                unboundFormElement="{Boolean}false"
-                visible="{Boolean}true">
-                <fd:rules
-                    fd:init="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.richCheckbox&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|CHECK BOX|STRING[]&quot;\,&quot;name&quot;:&quot;richCheckbox&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is initialized&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;NUMERIC_LITERAL&quot;\,&quot;value&quot;:null}}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.richCheckbox&quot;\,&quot;displayName&quot;:&quot;richCheckbox &lt;b>one&lt;/b>&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|CHECK BOX&quot;\,&quot;displayPath&quot;:&quot;FORM/richCheckbox &lt;b>one&lt;/b>/&quot;\,&quot;name&quot;:&quot;richCheckbox&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;split&quot;\,&quot;displayName&quot;:&quot;Split a string into array&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;string&quot;\,&quot;description&quot;:&quot;string to split&quot;\,&quot;isMandatory&quot;:true}\,{&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;separator&quot;\,&quot;description&quot;:&quot;separator where the split should occur&quot;\,&quot;isMandatory&quot;:true}]\,&quot;impl&quot;:&quot;$0($1\,$2)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;a\,b\,c\,d&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;\,&quot;}}]}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enumNames&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.richCheckbox&quot;\,&quot;displayName&quot;:&quot;richCheckbox &lt;b>one&lt;/b>&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|CHECK BOX&quot;\,&quot;displayPath&quot;:&quot;FORM/richCheckbox &lt;b>one&lt;/b>/&quot;\,&quot;name&quot;:&quot;richCheckbox&quot;\,&quot;parent&quot;:&quot;$form&quot;\,&quot;metadata&quot;:{&quot;isAncestorRepeatable&quot;:false}}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;parentNodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;split&quot;\,&quot;displayName&quot;:&quot;Split a string into array&quot;\,&quot;type&quot;:&quot;STRING[]&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[{&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;string&quot;\,&quot;description&quot;:&quot;string to split&quot;\,&quot;isMandatory&quot;:true}\,{&quot;type&quot;:&quot;STRING&quot;\,&quot;name&quot;:&quot;separator&quot;\,&quot;description&quot;:&quot;separator where the split should occur&quot;\,&quot;isMandatory&quot;:true}]\,&quot;impl&quot;:&quot;$0($1\,$2)&quot;}\,&quot;params&quot;:[{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;&lt;b>a&lt;/b>\,b\,c\,&lt;b>d&lt;/b>&quot;}}\,{&quot;nodeName&quot;:&quot;EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;STRING_LITERAL&quot;\,&quot;value&quot;:&quot;\,&quot;}}]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;{enum : split('a\,b\,c\,d'\,'\,')\, enumNames : split('&lt;b>a&lt;/b>\,b\,c\,&lt;b>d&lt;/b>'\,'\,')}&quot;]\,&quot;eventName&quot;:&quot;Initialize&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;\,&quot;communicationComposerRuleType&quot;:&quot;server&quot;\,&quot;communicationComposerRuleLanguageType&quot;:&quot;javascript&quot;}]"
-                    jcr:primaryType="nt:unstructured"
-                    validationStatus="valid"/>
-                <fd:events
-                    jcr:primaryType="nt:unstructured"
-                    initialize="[{enum : split('a\,b\,c\,d'\,'\,')\, enumNames : split('&lt;b>a&lt;/b>\,b\,c\,&lt;b>d&lt;/b>'\,'\,')}]"/>
-            </checkboxgroup_1076136375>
-            <checkboxgroup_107613
-                jcr:created="{Date}2025-09-12T17:51:59.300+05:30"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-12T17:54:29.273+05:30"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                jcr:title="&lt;p>richCheckbox &lt;b>two&lt;/b>&lt;/p>"
-                sling:resourceType="core/fd/components/form/checkboxgroup/v1/checkboxgroup"
-                areOptionsRichText="true"
-                enabled="{Boolean}true"
-                enum="[0,1]"
-                enumNames="[&lt;b>Item&lt;/b> 1, &lt;b>Item&lt;/b> 2]"
-                fieldType="checkbox-group"
-                hideTitle="false"
-                isTitleRichText="true"
-                name="richCheckbox2"
-                orientation="horizontal"
-                readOnly="{Boolean}false"
-                textIsRich="[true,true,true,true,true]"
-                type="string[]"
-                unboundFormElement="{Boolean}false"
-                visible="{Boolean}true">
-                <fd:rules jcr:primaryType="nt:unstructured"/>
-                <fd:events jcr:primaryType="nt:unstructured"/>
-            </checkboxgroup_107613>
-            <dropdown_567902017
-                jcr:created="{Date}2025-09-12T18:00:36.825+05:30"
-                jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-12T18:01:23.088+05:30"
-                jcr:lastModifiedBy="admin"
-                jcr:primaryType="nt:unstructured"
-                jcr:title="&lt;p>Rich &lt;b>dropdown&lt;/b>&lt;/p>"
-                sling:resourceType="core/fd/components/form/dropdown/v1/dropdown"
-                enabled="{Boolean}true"
-                enum="[a,b]"
-                enumNames="[a,b]"
-                fieldType="drop-down"
-                hideTitle="false"
-                isTitleRichText="true"
-                name="richdropdown"
-                readOnly="{Boolean}false"
-                textIsRich="[true,true,true]"
-                typeIndex="0"
-                unboundFormElement="{Boolean}false"
-                visible="{Boolean}true"/>
             <radiobutton_1601157190
-                jcr:created="{Date}2025-09-15T11:50:36.436+05:30"
+                jcr:created="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:createdBy="admin"
-                jcr:lastModified="{Date}2025-09-15T11:51:03.635+05:30"
+                jcr:lastModified="{Date}2025-01-09T12:00:00.000+05:30"
                 jcr:lastModifiedBy="admin"
                 jcr:primaryType="nt:unstructured"
                 jcr:title="extraRadio One"
-                sling:resourceType="core/fd/components/form/radiobutton/v1/radiobutton"
+                sling:resourceType="core/fd/components/form/radiobutton/v2/radiobutton"
                 enabled="{Boolean}true"
                 enum="[0,1,2]"
                 enumNames="[Item 1,Item 2,Item 3]"
