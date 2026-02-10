@@ -33,7 +33,7 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div class="cmp-adaptiveform-termsandcondition__label-container">
         <div data-sly-call="${label.label @componentId=tnc.id, labelValue=tnc.label.value, labelVisible=tnc.label.visible, labelRichText=tnc.label.richText, bemBlock='cmp-adaptiveform-termsandcondition', isHeading=true}" data-sly-unwrap></div>
-        <div data-sly-call="${questionMark.questionMark @componentId=tnc.id, longDescription=tnc.description, bemBlock='cmp-adaptiveform-termsandcondition'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=tnc.id, longDescription=tnc.description, bemBlock='cmp-adaptiveform-termsandcondition', componentTitle=tnc.label.value}" data-sly-unwrap></div>
     </div>
     <div class="cmp-adaptiveform-termsandcondition__widget-container" role="region">
         <div class="cmp-adaptiveform-termsandcondition__content-container ${!wcmmode.edit && tnc.showAsPopup ? 'cmp-adaptiveform-termsandcondition__content-container--modal' : ''}"

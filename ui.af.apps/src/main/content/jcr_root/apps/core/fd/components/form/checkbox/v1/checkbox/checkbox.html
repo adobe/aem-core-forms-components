@@ -33,7 +33,7 @@
      data-sly-test.widgetId="${'{0}-{1}' @ format=[checkbox.id, 'widget']}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
      <div class="cmp-adaptiveform-checkbox__help-container">
-      <div data-sly-call="${questionMark.questionMark @componentId=checkbox.id, longDescription=checkbox.description, bemBlock='cmp-adaptiveform-checkbox'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=checkbox.id, longDescription=checkbox.description, bemBlock='cmp-adaptiveform-checkbox', componentTitle=checkbox.label.value}" data-sly-unwrap></div>
     </div>
 
     <div class="cmp-adaptiveform-checkbox__widget-container">

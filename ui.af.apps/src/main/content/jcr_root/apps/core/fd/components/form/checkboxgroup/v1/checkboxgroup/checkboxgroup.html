@@ -36,7 +36,7 @@
      data-sly-test.widgetId="${'{0}-{1}' @ format=[checkboxgroup.id, 'widget']}">
     <div class="cmp-adaptiveform-checkboxgroup__label-container">
         <div data-sly-call="${label.label @componentId=widgetId, labelValue=checkboxgroup.label.value, labelVisible=checkboxgroup.label.visible, labelRichText=checkboxgroup.label.richText, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
-        <div data-sly-call="${questionMark.questionMark @componentId=checkboxgroup.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=checkboxgroup.id, longDescription=checkboxgroup.description, bemBlock='cmp-adaptiveform-checkboxgroup', componentTitle=checkboxgroup.label.value}" data-sly-unwrap></div>
     </div>
     <sly data-sly-call="${widget.widget @ checkboxgroup = checkboxgroup}"></sly>
     <div data-sly-call="${shortDescription.shortDescription @componentId=checkboxgroup.id, shortDescriptionVisible=checkboxgroup.tooltipVisible, shortDescription=checkboxgroup.tooltip, bemBlock='cmp-adaptiveform-checkboxgroup'}" data-sly-unwrap>
