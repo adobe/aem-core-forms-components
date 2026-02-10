@@ -189,7 +189,7 @@ public class FormStructureParserImplTest {
 
         String path = CONTENT_ROOT + "/myTestPage";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
-        String themeClientLibRef = formStructureParser.getThemeClientLibRefFromFormContainer();
+        String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);
     }
 
@@ -200,7 +200,7 @@ public class FormStructureParserImplTest {
         MockSlingHttpServletRequest request = context.request();
         request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme");
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
-        String themeClientLibRef = formStructureParser.getThemeClientLibRefFromFormContainer();
+        String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);
     }
 
@@ -212,7 +212,7 @@ public class FormStructureParserImplTest {
         request.setParameterMap(Collections.singletonMap(ThemeConstants.THEME_OVERRIDE,
             "/content/dam/formsanddocuments-themes/test-theme"));
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
-        String themeClientLibRef = formStructureParser.getThemeClientLibRefFromFormContainer();
+        String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);
     }
 
@@ -223,7 +223,7 @@ public class FormStructureParserImplTest {
         MockSlingHttpServletRequest request = context.request();
         request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/invalid-theme");
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
-        String themeClientLibRef = formStructureParser.getThemeClientLibRefFromFormContainer();
+        String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertNull(themeClientLibRef);
     }
 
@@ -234,7 +234,7 @@ public class FormStructureParserImplTest {
         MockSlingHttpServletRequest request = context.request();
         request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/non-existent");
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
-        String themeClientLibRef = formStructureParser.getThemeClientLibRefFromFormContainer();
+        String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertNull(themeClientLibRef);
     }
 
@@ -242,7 +242,7 @@ public class FormStructureParserImplTest {
     void testGetThemeClientLibRefWithoutTheme() {
         String path = FORM_CONTAINER_PATH + "/container1";
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
-        String themeClientLibRef = formStructureParser.getThemeClientLibRefFromFormContainer();
+        String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertNull(themeClientLibRef);
     }
 

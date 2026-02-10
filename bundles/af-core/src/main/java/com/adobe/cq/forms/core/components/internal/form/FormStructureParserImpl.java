@@ -64,7 +64,7 @@ public class FormStructureParserImpl implements FormStructureParser {
     }
 
     @Override
-    public String getThemeClientLibRefFromFormContainer() {
+    public String getThemeEditorThemeRef() {
         String themeContentPath = null;
         String themeClientLibRef = null;
         if (request != null) {
@@ -73,10 +73,6 @@ public class FormStructureParserImpl implements FormStructureParser {
         if (StringUtils.isBlank(themeContentPath)) {
             if (request != null) {
                 themeContentPath = request.getParameter(ThemeConstants.THEME_OVERRIDE); // embed component use-case
-            }
-            if (StringUtils.isBlank(themeContentPath)) {
-                themeContentPath = getPropertyFromFormContainer(resource, ThemeConstants.THEME_REF); // normal including theme in form
-                                                                                                     // runtime
             }
         }
         // get client library from theme content path
