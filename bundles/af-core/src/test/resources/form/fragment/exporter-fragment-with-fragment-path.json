@@ -18,17 +18,18 @@
     "fd:fragment": true,
     "fd:viewType": "fragment"
   },
+  "events": {
+    "custom:setProperty": ["$event.payload"],
+    "change": ["fragmentChangeHandler"],
+    "initialize": ["fragInit"]
+  },
+  "rules": {
+    "visible": "fragmentVisibleRule"
+  },
   "label": {
     "value": "Fragment"
   },
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  ":itemsOrder": [
-    "textinput"
-  ],
+  ":itemsOrder": ["textinput"],
   ":items": {
     "textinput": {
       "id": "textinput-233cc688ba",
@@ -45,9 +46,7 @@
         "fd:path": "/content/affragment/jcr:content/guideContainer/textinput"
       },
       "events": {
-        "custom:setProperty": [
-          "$event.payload"
-        ]
+        "custom:setProperty": ["$event.payload"]
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
