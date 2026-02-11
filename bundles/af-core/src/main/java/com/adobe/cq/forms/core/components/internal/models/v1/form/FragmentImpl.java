@@ -245,9 +245,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @Override
     public Map<String, String[]> getEvents() {
         if (fragmentContainer != null) {
-            Map<String, String[]> userEvents = new LinkedHashMap<>(getEventsForResource(fragmentContainer));
-            Map<String, String[]> panelEvents = super.getEvents();
-            for (Map.Entry<String, String[]> entry : panelEvents.entrySet()) {
+            Map<String, String[]> userEvents = new LinkedHashMap<>(super.getEvents());
+            Map<String, String[]> fragmentEvents = getEventsForResource(fragmentContainer);
+            for (Map.Entry<String, String[]> entry : fragmentEvents.entrySet()) {
                 String[] existing = userEvents.get(entry.getKey());
                 if (existing != null) {
                     String[] combined = Arrays.copyOf(existing, existing.length + entry.getValue().length);
@@ -265,8 +265,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @Override
     public Map<String, String> getRules() {
         if (fragmentContainer != null) {
-            Map<String, String> merged = new LinkedHashMap<>(super.getRules());
-            merged.putAll(getRulesForResource(fragmentContainer));
+            Map<String, String> merged = new LinkedHashMap<>(getRulesForResource(fragmentContainer));
+            merged.putAll(super.getRules());
             return merged;
         }
         return super.getRules();
