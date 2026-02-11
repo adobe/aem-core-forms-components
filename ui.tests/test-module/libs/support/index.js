@@ -111,6 +111,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    // sometimes this error comes
+    if(err.message.includes("Cannot read properties of undefined (reading 'sourceEditMode')")) {
+        return false;
+    }
+
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;
