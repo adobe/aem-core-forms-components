@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -239,6 +240,36 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
         properties.put(ReservedProperties.PN_VIEWTYPE, "fragment");
         return properties;
+    }
+
+    @Override
+    public Map<String, String[]> getEvents() {
+        if (fragmentContainer != null) {
+            Map<String, String[]> userEvents = new LinkedHashMap<>(getEventsForResource(fragmentContainer));
+            Map<String, String[]> panelEvents = super.getEvents();
+            for (Map.Entry<String, String[]> entry : panelEvents.entrySet()) {
+                String[] existing = userEvents.get(entry.getKey());
+                if (existing != null) {
+                    String[] combined = Arrays.copyOf(existing, existing.length + entry.getValue().length);
+                    System.arraycopy(entry.getValue(), 0, combined, existing.length, entry.getValue().length);
+                    userEvents.put(entry.getKey(), combined);
+                } else {
+                    userEvents.put(entry.getKey(), entry.getValue());
+                }
+            }
+            return userEvents;
+        }
+        return super.getEvents();
+    }
+
+    @Override
+    public Map<String, String> getRules() {
+        if (fragmentContainer != null) {
+            Map<String, String> merged = new LinkedHashMap<>(super.getRules());
+            merged.putAll(getRulesForResource(fragmentContainer));
+            return merged;
+        }
+        return super.getRules();
     }
 
     private String getClientLibForFragment() {
