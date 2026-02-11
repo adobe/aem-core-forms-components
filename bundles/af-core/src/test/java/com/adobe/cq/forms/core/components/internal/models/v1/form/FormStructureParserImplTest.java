@@ -185,12 +185,12 @@ public class FormStructureParserImplTest {
     void testGetThemeEditorThemeRef() {
         Resource formContainer = context.resourceResolver().getResource(FORM_CONTAINER_PATH);
         ModifiableValueMap formContainerProps = formContainer.adaptTo(ModifiableValueMap.class);
-        formContainerProps.put(FormContainer.PN_CLIENT_LIB_REF, "/content/dam/formsanddocuments-themes/test-theme");
+        formContainerProps.put(FormContainer.PN_CLIENT_LIB_REF, "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
 
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
-        request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme");
+        request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
         String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);
@@ -201,7 +201,7 @@ public class FormStructureParserImplTest {
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
-        request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme");
+        request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
         String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);
@@ -213,7 +213,7 @@ public class FormStructureParserImplTest {
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
         request.setParameterMap(Collections.singletonMap(ThemeConstants.THEME_OVERRIDE,
-            "/content/dam/formsanddocuments-themes/test-theme"));
+            "/content/dam/formsanddocuments-themes/test-theme/jcr:content"));
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
         String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);
