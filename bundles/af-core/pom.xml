@@ -88,6 +88,7 @@
                         <Import-Package>
                             javax.annotation;version=0.0.0,
                             com.adobe.cq.wcm.core.components.models;version="[12.0.0,13.0.0)",
+                            com.adobe.granite.toggle.api;resolution:=optional,
                             *
                         </Import-Package>
                     </instructions>
