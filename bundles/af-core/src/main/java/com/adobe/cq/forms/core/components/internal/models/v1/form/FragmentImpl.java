@@ -48,6 +48,7 @@ import com.adobe.aemds.guide.utils.TranslationUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
@@ -56,6 +57,7 @@ import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.components.views.Views;
+import com.adobe.granite.toggle.api.ToggleRouter;
 import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -82,6 +84,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         filter = "(service.pid=org.apache.sling.i18n.impl.JcrResourceBundleProvider)",
         injectionStrategy = InjectionStrategy.OPTIONAL)
     private ResourceBundleProvider resourceBundleProvider;
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private ToggleRouter toggleRouter;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FRAGMENT_PATH)
     private String fragmentPath;
@@ -244,7 +249,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
 
     @Override
     public Map<String, String[]> getEvents() {
-        if (fragmentContainer != null) {
+        if (fragmentContainer != null && isFragmentMergeContainerRulesEventsEnabled()) {
             Map<String, String[]> userEvents = new LinkedHashMap<>(super.getEvents());
             Map<String, String[]> fragmentEvents = getEventsForResource(fragmentContainer);
             for (Map.Entry<String, String[]> entry : fragmentEvents.entrySet()) {
@@ -264,12 +269,16 @@ public class FragmentImpl extends PanelImpl implements Fragment {
 
     @Override
     public Map<String, String> getRules() {
-        if (fragmentContainer != null) {
+        if (fragmentContainer != null && isFragmentMergeContainerRulesEventsEnabled()) {
             Map<String, String> merged = new LinkedHashMap<>(getRulesForResource(fragmentContainer));
             merged.putAll(super.getRules());
             return merged;
         }
         return super.getRules();
+    }
+
+    private boolean isFragmentMergeContainerRulesEventsEnabled() {
+        return toggleRouter != null && toggleRouter.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
     }
 
     private String getClientLibForFragment() {

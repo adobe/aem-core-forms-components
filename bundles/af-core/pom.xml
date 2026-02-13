@@ -461,6 +461,12 @@
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.adobe.granite.toggle</groupId>
+            <artifactId>com.adobe.granite.toggle.api</artifactId>
+            <version>1.2.8</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>com.adobe.aem</groupId>
