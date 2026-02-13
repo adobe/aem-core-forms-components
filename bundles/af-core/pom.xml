@@ -88,6 +88,7 @@
                         <Import-Package>
                             javax.annotation;version=0.0.0,
                             com.adobe.cq.wcm.core.components.models;version="[12.0.0,13.0.0)",
+                            com.adobe.granite.toggle.api;resolution:=optional,
                             *
                         </Import-Package>
                     </instructions>
@@ -461,6 +462,14 @@
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
+        <!-- Toggle API: not in Maven repo; provided by AEM at runtime. Use system scope with JAR from AEM SDK/runtime (e.g. extract from uber-jar or crx-quickstart). -->
+        <dependency>
+            <groupId>com.adobe.granite.toggle</groupId>
+            <artifactId>com.adobe.granite.toggle.api</artifactId>
+            <version>1.2.18</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/com.adobe.granite.toggle.api-1.2.18.jar</systemPath>
+        </dependency>
 
         <dependency>
             <groupId>com.adobe.aem</groupId>

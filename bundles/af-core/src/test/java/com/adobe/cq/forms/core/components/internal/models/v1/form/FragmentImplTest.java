@@ -39,6 +39,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
@@ -46,6 +47,7 @@ import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.adobe.granite.toggle.api.ToggleRouter;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -72,6 +74,9 @@ public class FragmentImplTest {
     @BeforeEach
     void setUp() {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
+        ToggleRouter toggleRouter = Mockito.mock(ToggleRouter.class);
+        Mockito.when(toggleRouter.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(true);
+        context.registerService(ToggleRouter.class, toggleRouter);
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
             private final Set<String> IGNORED_NODE_NAMES = new HashSet<String>() {
@@ -192,6 +197,29 @@ public class FragmentImplTest {
         Assertions.assertArrayEquals(new String[] { "panelInit", "fragInit" }, events.get("initialize"));
 
         assertTrue("fd:rules is whitelisted and should not appear in properties", !properties.containsKey("fd:rules"));
+    }
+
+    @Test
+    void testNoMergeWhenToggleDisabled() throws Exception {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_PLACEHOLDER_RULES, Fragment.class, context);
+        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
+        ToggleRouter toggleOff = Mockito.mock(ToggleRouter.class);
+        Mockito.when(toggleOff.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(false);
+        Field toggleRouterField = FragmentImpl.class.getDeclaredField("toggleRouter");
+        toggleRouterField.setAccessible(true);
+        toggleRouterField.set(fragmentImpl, toggleOff);
+
+        Map<String, String> rules = fragment.getRules();
+        Map<String, String[]> events = fragment.getEvents();
+
+        assertNotNull(rules);
+        assertNotNull(events);
+        assertEquals("When toggle is off, only panel rules are used", "panelVisibleRule", rules.get("visible"));
+        assertTrue("When toggle is off, only panel events are used", events.containsKey("initialize"));
+        Assertions.assertArrayEquals(new String[] { "panelInit" }, events.get("initialize"),
+            "When toggle is off, fragment container events are not merged; only panel initialize");
+        Assertions.assertFalse(events.containsKey("change"),
+            "When toggle is off, fragment container events like change are not included");
     }
 
     @Test
