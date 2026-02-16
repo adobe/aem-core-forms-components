@@ -70,11 +70,12 @@ public class FragmentImplTest {
     private static final String PATH_FRAGMENT_WITH_INVALID_PATH = CONTENT_ROOT + "/fragment-with-invalid-path";
     private static final String PATH_FRAGMENT_WITH_PLACEHOLDER_RULES = CONTENT_ROOT + "/fragment-with-placeholder-rules";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
+    private ToggleRouter toggleRouter;
 
     @BeforeEach
     void setUp() {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
-        ToggleRouter toggleRouter = Mockito.mock(ToggleRouter.class);
+        toggleRouter = Mockito.mock(ToggleRouter.class);
         Mockito.when(toggleRouter.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(true);
         context.registerService(ToggleRouter.class, toggleRouter);
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
@@ -100,6 +101,13 @@ public class FragmentImplTest {
                     .collect(Collectors.toList());
             }
         });
+    }
+
+    /** Returns a fragment with the merge toggle enabled (test hook), since mock BundleContext does not resolve ToggleRouter by name. */
+    private Fragment getFragmentWithMergeEnabled(String path) {
+        Fragment fragment = Utils.getComponentUnderTest(path, Fragment.class, context);
+        ((FragmentImpl) fragment).setToggleRouterForTest(toggleRouter);
+        return fragment;
     }
 
     @Test
@@ -149,7 +157,7 @@ public class FragmentImplTest {
 
     @Test
     void testFragmentContainerEventsIncludedInGetEvents() {
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT);
         Map<String, String[]> events = fragment.getEvents();
         assertNotNull(events);
         assertTrue("Stitched fragment should include events from referenced fragment container",
@@ -160,7 +168,7 @@ public class FragmentImplTest {
 
     @Test
     void testFragmentContainerRulesParallelToEvents() {
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT);
         Map<String, String> rules = fragment.getRules();
         Map<String, String[]> events = fragment.getEvents();
         assertNotNull(rules);
@@ -173,7 +181,7 @@ public class FragmentImplTest {
 
     @Test
     void testPlaceholderAndFragmentContainerRulesEventsMerged() {
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_PLACEHOLDER_RULES, Fragment.class, context);
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT_WITH_PLACEHOLDER_RULES);
         Map<String, String> rules = fragment.getRules();
         Map<String, String[]> events = fragment.getEvents();
         Map<String, Object> properties = fragment.getProperties();
@@ -205,9 +213,7 @@ public class FragmentImplTest {
         FragmentImpl fragmentImpl = (FragmentImpl) fragment;
         ToggleRouter toggleOff = Mockito.mock(ToggleRouter.class);
         Mockito.when(toggleOff.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(false);
-        Field toggleRouterField = FragmentImpl.class.getDeclaredField("toggleRouter");
-        toggleRouterField.setAccessible(true);
-        toggleRouterField.set(fragmentImpl, toggleOff);
+        fragmentImpl.setToggleRouterForTest(toggleOff);
 
         Map<String, String> rules = fragment.getRules();
         Map<String, String[]> events = fragment.getEvents();
@@ -224,7 +230,7 @@ public class FragmentImplTest {
 
     @Test
     void testJSONExport() throws Exception {
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT);
         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
     }
 
@@ -236,7 +242,7 @@ public class FragmentImplTest {
 
     @Test
     void testJSONExportWithFragmentPath() throws Exception {
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_FRAGMENT_PATH, Fragment.class, context);
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT_WITH_FRAGMENT_PATH);
         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT_WITH_FRAGMENT_PATH), Views.Author.class);
     }
 

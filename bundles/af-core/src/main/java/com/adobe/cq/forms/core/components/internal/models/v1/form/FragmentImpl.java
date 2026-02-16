@@ -42,6 +42,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.osgi.framework.BundleContext;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.aemds.guide.utils.TranslationUtils;
@@ -57,7 +58,6 @@ import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.components.views.Views;
-import com.adobe.granite.toggle.api.ToggleRouter;
 import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -86,7 +86,14 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     private ResourceBundleProvider resourceBundleProvider;
 
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private ToggleRouter toggleRouter;
+    private BundleContext bundleContext;
+
+    /** For tests only: when set, used instead of BundleContext lookup so tests can inject a mock without the API on classpath. */
+    volatile Object toggleRouterForTest = null;
+
+    void setToggleRouterForTest(Object router) {
+        this.toggleRouterForTest = router;
+    }
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FRAGMENT_PATH)
     private String fragmentPath;
@@ -278,7 +285,37 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     private boolean isFragmentMergeContainerRulesEventsEnabled() {
-        return toggleRouter != null && toggleRouter.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
+        Object router = toggleRouterForTest;
+        if (router != null) {
+            return invokeIsEnabled(router);
+        }
+        if (bundleContext == null) {
+            return false;
+        }
+        org.osgi.framework.ServiceReference<?> ref = bundleContext.getServiceReference("com.adobe.granite.toggle.api.ToggleRouter");
+        if (ref == null) {
+            return false;
+        }
+        try {
+            router = bundleContext.getService(ref);
+            if (router == null) {
+                return false;
+            }
+            return invokeIsEnabled(router);
+        } catch (RuntimeException e) {
+            return false;
+        } finally {
+            bundleContext.ungetService(ref);
+        }
+    }
+
+    private static boolean invokeIsEnabled(Object router) {
+        try {
+            java.lang.reflect.Method isEnabled = router.getClass().getMethod("isEnabled", String.class);
+            return Boolean.TRUE.equals(isEnabled.invoke(router, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS));
+        } catch (ReflectiveOperationException e) {
+            return false;
+        }
     }
 
     private String getClientLibForFragment() {
