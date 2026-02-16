@@ -33,11 +33,16 @@ import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.api.wrappers.ValueMapDecorator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.granite.toggle.api.ToggleRouter;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -95,6 +100,71 @@ public class ComponentUtilsTest {
         assertTrue(ComponentUtils.isFragmentComponent(resource));
         vm.remove(FormConstants.PROP_FRAGMENT_PATH);
         assertFalse(ComponentUtils.isFragmentComponent(resource));
+    }
+
+    @Test
+    public void testIsToggleEnabledWithRouterNullRouter() {
+        assertFalse(ComponentUtils.isToggleEnabledWithRouter(null, "some-toggle-id"));
+    }
+
+    @Test
+    public void testIsToggleEnabledWithRouterReturnsTrue() {
+        ToggleRouter router = mock(ToggleRouter.class);
+        when(router.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(true);
+        assertTrue(ComponentUtils.isToggleEnabledWithRouter(router, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS));
+    }
+
+    @Test
+    public void testIsToggleEnabledWithRouterReturnsFalse() {
+        ToggleRouter router = mock(ToggleRouter.class);
+        when(router.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(false);
+        assertFalse(ComponentUtils.isToggleEnabledWithRouter(router, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS));
+    }
+
+    @Test
+    public void testIsToggleEnabledNullBundleContext() {
+        assertFalse(ComponentUtils.isToggleEnabled(null, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS));
+    }
+
+    @Test
+    public void testIsToggleEnabledNoServiceReference() {
+        BundleContext bundleContext = mock(BundleContext.class);
+        when(bundleContext.getServiceReference("com.adobe.granite.toggle.api.ToggleRouter")).thenReturn(null);
+        assertFalse(ComponentUtils.isToggleEnabled(bundleContext, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS));
+    }
+
+    @Test
+    public void testIsToggleEnabledServiceReturnsNull() {
+        BundleContext bundleContext = mock(BundleContext.class);
+        ServiceReference ref = mock(ServiceReference.class);
+        doReturn(ref).when(bundleContext).getServiceReference("com.adobe.granite.toggle.api.ToggleRouter");
+        doReturn(null).when(bundleContext).getService(ref);
+        assertFalse(ComponentUtils.isToggleEnabled(bundleContext, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS));
+        verify(bundleContext).ungetService(ref);
+    }
+
+    @Test
+    public void testIsToggleEnabledTrue() {
+        BundleContext bundleContext = mock(BundleContext.class);
+        ServiceReference ref = mock(ServiceReference.class);
+        ToggleRouter router = mock(ToggleRouter.class);
+        doReturn(ref).when(bundleContext).getServiceReference("com.adobe.granite.toggle.api.ToggleRouter");
+        doReturn(router).when(bundleContext).getService(ref);
+        when(router.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(true);
+        assertTrue(ComponentUtils.isToggleEnabled(bundleContext, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS));
+        verify(bundleContext).ungetService(ref);
+    }
+
+    @Test
+    public void testIsToggleEnabledFalse() {
+        BundleContext bundleContext = mock(BundleContext.class);
+        ServiceReference ref = mock(ServiceReference.class);
+        ToggleRouter router = mock(ToggleRouter.class);
+        doReturn(ref).when(bundleContext).getServiceReference("com.adobe.granite.toggle.api.ToggleRouter");
+        doReturn(router).when(bundleContext).getService(ref);
+        when(router.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(false);
+        assertFalse(ComponentUtils.isToggleEnabled(bundleContext, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS));
+        verify(bundleContext).ungetService(ref);
     }
 
     @Test

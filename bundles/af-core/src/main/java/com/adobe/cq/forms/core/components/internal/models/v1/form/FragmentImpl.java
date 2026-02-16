@@ -285,37 +285,11 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     private boolean isFragmentMergeContainerRulesEventsEnabled() {
-        Object router = toggleRouterForTest;
-        if (router != null) {
-            return invokeIsEnabled(router);
+        if (toggleRouterForTest != null) {
+            return ComponentUtils.isToggleEnabledWithRouter(toggleRouterForTest,
+                FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
         }
-        if (bundleContext == null) {
-            return false;
-        }
-        org.osgi.framework.ServiceReference<?> ref = bundleContext.getServiceReference("com.adobe.granite.toggle.api.ToggleRouter");
-        if (ref == null) {
-            return false;
-        }
-        try {
-            router = bundleContext.getService(ref);
-            if (router == null) {
-                return false;
-            }
-            return invokeIsEnabled(router);
-        } catch (RuntimeException e) {
-            return false;
-        } finally {
-            bundleContext.ungetService(ref);
-        }
-    }
-
-    private static boolean invokeIsEnabled(Object router) {
-        try {
-            java.lang.reflect.Method isEnabled = router.getClass().getMethod("isEnabled", String.class);
-            return Boolean.TRUE.equals(isEnabled.invoke(router, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS));
-        } catch (ReflectiveOperationException e) {
-            return false;
-        }
+        return ComponentUtils.isToggleEnabled(bundleContext, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
     }
 
     private String getClientLibForFragment() {

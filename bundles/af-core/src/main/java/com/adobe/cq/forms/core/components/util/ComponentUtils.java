@@ -39,6 +39,8 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,8 +68,60 @@ public class ComponentUtils {
     /**
      * Private constructor to prevent instantiation of utility class.
      */
+    private static final String TOGGLE_ROUTER_CLASS = "com.adobe.granite.toggle.api.ToggleRouter";
+
     private ComponentUtils() {
         // NOOP
+    }
+
+    /**
+     * Checks whether a feature toggle is enabled via the Granite Toggle API. Uses reflection so the
+     * bundle does not require the toggle API on the classpath (e.g. when it is not in the SDK).
+     *
+     * @param bundleContext OSGi bundle context for service lookup; may be null
+     * @param toggleId the toggle identifier (e.g. from {@link com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants})
+     * @return true if the toggle is enabled, false if context is null, service is absent, or the call fails
+     */
+    public static boolean isToggleEnabled(@Nullable BundleContext bundleContext, @NotNull String toggleId) {
+        if (bundleContext == null) {
+            return false;
+        }
+        ServiceReference<?> ref = bundleContext.getServiceReference(TOGGLE_ROUTER_CLASS);
+        if (ref == null) {
+            return false;
+        }
+        try {
+            Object router = bundleContext.getService(ref);
+            if (router == null) {
+                return false;
+            }
+            return isToggleEnabledWithRouter(router, toggleId);
+        } catch (RuntimeException e) {
+            return false;
+        } finally {
+            bundleContext.ungetService(ref);
+        }
+    }
+
+    /**
+     * Checks whether a feature toggle is enabled using an existing router instance. Used when the
+     * router is already available (e.g. from optional injection or tests). Uses reflection so the
+     * ToggleRouter type is not required on the classpath.
+     *
+     * @param router the ToggleRouter instance (e.g. from OSGi or test mock); may be null
+     * @param toggleId the toggle identifier
+     * @return true if the toggle is enabled, false if router is null or the call fails
+     */
+    public static boolean isToggleEnabledWithRouter(@Nullable Object router, @NotNull String toggleId) {
+        if (router == null) {
+            return false;
+        }
+        try {
+            java.lang.reflect.Method isEnabled = router.getClass().getMethod("isEnabled", String.class);
+            return Boolean.TRUE.equals(isEnabled.invoke(router, toggleId));
+        } catch (ReflectiveOperationException e) {
+            return false;
+        }
     }
 
     /**
