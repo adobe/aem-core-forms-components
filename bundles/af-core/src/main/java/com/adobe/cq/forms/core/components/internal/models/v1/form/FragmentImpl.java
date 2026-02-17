@@ -52,6 +52,7 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.internal.servlets.BundleContextServiceRegistration;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
@@ -85,7 +86,15 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         injectionStrategy = InjectionStrategy.OPTIONAL)
     private ResourceBundleProvider resourceBundleProvider;
 
-    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    /**
+     * This bundle's context, provided by {@link BundleContextServiceRegistration}. Required for
+     * feature-toggle lookups (e.g. {@link ComponentUtils#isToggleEnabled}); without that component
+     * this would be null because BundleContext is not normally published as an OSGi service.
+     */
+    @OSGiService(
+        filter = "(" + BundleContextServiceRegistration.SERVICE_PROPERTY_PROVIDER + "="
+            + BundleContextServiceRegistration.SERVICE_PROPERTY_PROVIDER_VALUE + ")",
+        injectionStrategy = InjectionStrategy.OPTIONAL)
     private BundleContext bundleContext;
 
     /** For tests only: when set, used instead of BundleContext lookup so tests can inject a mock without the API on classpath. */
