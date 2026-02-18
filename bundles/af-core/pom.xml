@@ -360,39 +360,6 @@
                 </plugins>
             </build>
         </profile>
-        <!-- Installs Toggle API JAR from lib/ into local Maven repo so the dependency resolves without systemPath (avoids Maven warning). -->
-        <profile>
-            <id>install-toggle-api</id>
-            <activation>
-                <file>
-                    <exists>${project.basedir}/lib/com.adobe.granite.toggle.api-1.2.18.jar</exists>
-                </file>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-install-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>install-toggle-api</id>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>install-file</goal>
-                                </goals>
-                                <configuration>
-                                    <file>${project.basedir}/lib/com.adobe.granite.toggle.api-1.2.18.jar</file>
-                                    <groupId>com.adobe.granite.toggle</groupId>
-                                    <artifactId>com.adobe.granite.toggle.api</artifactId>
-                                    <version>1.2.18</version>
-                                    <packaging>jar</packaging>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
 
     <!-- ====================================================================== -->
@@ -495,7 +462,7 @@
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
-        <!-- Toggle API: not in public Maven repo; provided by AEM at runtime. When lib JAR exists it is installed to local repo (see profile install-toggle-api). -->
+        <!-- Toggle API: not in Maven repo; provided by AEM at runtime. Root reactor profile install-toggle-api installs from lib/ in validate so this resolves from local repo (no systemPath warning). -->
         <dependency>
             <groupId>com.adobe.granite.toggle</groupId>
             <artifactId>com.adobe.granite.toggle.api</artifactId>

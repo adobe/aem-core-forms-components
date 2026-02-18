@@ -67,6 +67,39 @@
                 <module>ui.tests</module>
             </modules>
         </profile>
+        <!-- Installs Toggle API JAR from bundles/af-core/lib/ into local repo so af-core resolves it without systemPath (no warning). Runs in root validate, before af-core is built. -->
+        <profile>
+            <id>install-toggle-api</id>
+            <activation>
+                <file>
+                    <exists>${project.basedir}/bundles/af-core/lib/com.adobe.granite.toggle.api-1.2.18.jar</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-install-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>install-toggle-api</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>install-file</goal>
+                                </goals>
+                                <configuration>
+                                    <file>${project.basedir}/bundles/af-core/lib/com.adobe.granite.toggle.api-1.2.18.jar</file>
+                                    <groupId>com.adobe.granite.toggle</groupId>
+                                    <artifactId>com.adobe.granite.toggle.api</artifactId>
+                                    <version>1.2.18</version>
+                                    <packaging>jar</packaging>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
 
