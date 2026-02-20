@@ -55,8 +55,9 @@ describe("Form with Reset Button", () => {
                 cy.wrap(field).find("input").should('not.be.checked', `${coreComponent} must be unchecked`);
                 break;
             case "adaptiveFormDropDown":
-                debugger;
-                cy.wrap(field).find(":selected").should("not.exist", `${coreComponent} must be reset`);
+                cy.wrap(field).find("select").then(($select) => {
+                    expect($select[0].selectedOptions[0].value, `${coreComponent} must be reset to placeholder`).to.eq("");
+                });
                 break;
             case "adaptiveFormFileInput":
                 cy.wrap(field).should('not.include.text', 'empty.pdf', `${coreComponent} must be unchecked`)
