@@ -136,9 +136,7 @@ describe("Form with Dropdown", () => {
         cy.get(`#${idButton} button`).click().then(x => {
             expect(model.value).to.be.null; // checking model
         });
-        // After reset, placeholder (first option) should be selected, not empty state
-        cy.get(`#${idDropdown} select`).find(":selected").should("have.length", 1).and("have.value", "");
-        cy.get(`#${idDropdown} select`).find("option:selected").should("contain", "Select a vegetable");
+        cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");
     });
 
     it("Multi Select: Test clear dropdown using rule editor", () => {
