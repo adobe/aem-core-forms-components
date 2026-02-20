@@ -136,7 +136,9 @@ describe("Form with Dropdown", () => {
         cy.get(`#${idButton} button`).click().then(x => {
             expect(model.value).to.be.null; // checking model
         });
-        cy.get(`#${idDropdown} select`).find(":selected").should("not.exist");
+        // After reset, placeholder (first option) should be selected, not empty state
+        cy.get(`#${idDropdown} select`).find(":selected").should("have.length", 1).and("have.value", "");
+        cy.get(`#${idDropdown} select`).find("option:selected").should("contain", "Select a vegetable");
     });
 
     it("Multi Select: Test clear dropdown using rule editor", () => {
@@ -242,5 +244,5 @@ describe("Form with Dropdown", () => {
             expect(options[0].disabled, "Empty Placeholder to be disabled").to.be.true
             expect(options[0].value, "Empty Placeholder to be empty in it's visual content").to.equal('')
         });
-    });
+    });    
 })
