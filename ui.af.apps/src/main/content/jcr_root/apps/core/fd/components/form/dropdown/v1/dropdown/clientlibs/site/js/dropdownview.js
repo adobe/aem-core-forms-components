@@ -108,14 +108,17 @@
         }
 
         updateValue(value) {
-            if(value == null) { // if undefined or null, reset the widget
-                this.widget.selectedIndex = 0; // the placeholder option is at index 0
+            // Clear selection from all options first to avoid stale selected state
+            [...this.widget].forEach((option) => {
+                option.removeAttribute('selected');
+            });
+            if(value == null) { // if undefined or null, reset to placeholder (first option)
+                this.widget.selectedIndex = 0;
+                super.updateEmptyStatus();
                 return;
             }
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
-                // clear of any selection, and re-add selection (otherwise HTML shows stale state if it already existed)
-                option.removeAttribute('selected');
                 if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
                     option.setAttribute('selected', 'selected');
                 }
