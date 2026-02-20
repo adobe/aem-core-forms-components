@@ -137,7 +137,7 @@ describe("Form with Dropdown", () => {
             expect(model.value).to.be.null; // checking model
         });
         cy.get(`#${idDropdown} select`).then(($select) => {
-            expect($select[0].selectedOptions[0].text.trim()).to.eq("select the vegetable");
+            expect($select[0].selectedOptions[0].text.trim()).to.eq("Select a vegetable");
         });
 
     });
@@ -151,7 +151,7 @@ describe("Form with Dropdown", () => {
             expect(model.value).to.be.null; // checking model
         });
         cy.get(`#${idDropdown} select`).then(($select) => {
-            expect($select[0].selectedOptions[0].text.trim()).to.eq("select the vehicle");
+            expect($select[0].selectedOptions[0].text.trim()).to.eq("Select a vehicle");
         });
         
     });
