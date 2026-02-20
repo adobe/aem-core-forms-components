@@ -24,6 +24,7 @@
                     default="[b]"
                     enabled="{Boolean}true"
                     enum="[a,b,c]"
+                    placeholder="Select a vegetable"
                     enumNames="[apple,banana,cauliflower]"
                     fieldType="drop-down"
                     mandatoryMessage="This dropdown is required!"
