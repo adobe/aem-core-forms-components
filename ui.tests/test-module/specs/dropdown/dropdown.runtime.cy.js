@@ -242,5 +242,5 @@ describe("Form with Dropdown", () => {
             expect(options[0].disabled, "Empty Placeholder to be disabled").to.be.true
             expect(options[0].value, "Empty Placeholder to be empty in it's visual content").to.equal('')
         });
-    });    
+    });
 })
