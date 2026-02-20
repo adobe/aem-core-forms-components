@@ -109,7 +109,7 @@
 
         updateValue(value) {
             if(value == null) { // if undefined or null, reset the widget
-                this.widget.selectedIndex = -1;
+                this.widget.selectedIndex = 0; // the placeholder option is at index 0
                 return;
             }
             let isMultiSelect = this._model.isArrayType();
