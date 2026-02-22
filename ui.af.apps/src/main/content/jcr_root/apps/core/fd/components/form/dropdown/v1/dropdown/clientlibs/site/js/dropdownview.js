@@ -113,6 +113,10 @@
                 option.removeAttribute('selected');
             });
             if(value == null) { // if undefined or null, reset to placeholder (first option)
+                const placeholderOption = this.widget.options[0];
+                if(placeholderOption) {
+                    placeholderOption.setAttribute('selected', 'selected');
+                }
                 this.widget.selectedIndex = 0;
                 super.updateEmptyStatus();
                 return;
