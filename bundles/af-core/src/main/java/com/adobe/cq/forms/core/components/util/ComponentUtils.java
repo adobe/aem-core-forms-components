@@ -39,8 +39,6 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,63 +63,34 @@ public class ComponentUtils {
     private static final String[] EDGE_DELIVERY_RESOURCE_TYPES = new String[] { "core/franklin/components/page/v1/page" };
     private static final Logger logger = LoggerFactory.getLogger(ComponentUtils.class);
 
-    /**
-     * Private constructor to prevent instantiation of utility class.
-     */
-    private static final String TOGGLE_ROUTER_CLASS = "com.adobe.granite.toggle.api.ToggleRouter";
-
     private ComponentUtils() {
         // NOOP
     }
 
     /**
-     * Checks whether a feature toggle is enabled via the Granite Toggle API. Uses reflection so the
-     * bundle does not require the toggle API on the classpath (e.g. when it is not in the SDK).
+     * Checks whether a feature toggle is enabled via a system property. The property is set/unset
+     * by the Granite Toggle API when the toggle is wired via OSGi factory
+     * {@code com.adobe.granite.toggle.monitor.systemproperty} (see
+     * {@link com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants} for setup).
+     * <p>
+     * Convention: the system property name is the toggle ID; value {@code "true"} (via
+     * {@link Boolean#parseBoolean(String)}) means enabled.
      *
-     * @param bundleContext OSGi bundle context for service lookup; may be null
-     * @param toggleId the toggle identifier (e.g. from {@link com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants})
-     * @return true if the toggle is enabled, false if context is null, service is absent, or the call fails
+     * @param toggleId the toggle identifier (also used as the system property name)
+     * @return true if the system property is set to "true", false otherwise
      */
-    public static boolean isToggleEnabled(@Nullable BundleContext bundleContext, @NotNull String toggleId) {
-        if (bundleContext == null) {
-            return false;
-        }
-        ServiceReference<?> ref = bundleContext.getServiceReference(TOGGLE_ROUTER_CLASS);
-        if (ref == null) {
-            return false;
-        }
-        try {
-            Object router = bundleContext.getService(ref);
-            if (router == null) {
-                return false;
-            }
-            return isToggleEnabledWithRouter(router, toggleId);
-        } catch (RuntimeException e) {
-            return false;
-        } finally {
-            bundleContext.ungetService(ref);
-        }
+    public static boolean isToggleEnabledBySystemProperty(@NotNull String toggleId) {
+        return Boolean.parseBoolean(System.getProperty(toggleId, "false"));
     }
 
     /**
-     * Checks whether a feature toggle is enabled using an existing router instance. Used when the
-     * router is already available (e.g. from optional injection or tests). Uses reflection so the
-     * ToggleRouter type is not required on the classpath.
+     * Checks whether a feature toggle is enabled (system property only).
      *
-     * @param router the ToggleRouter instance (e.g. from OSGi or test mock); may be null
-     * @param toggleId the toggle identifier
-     * @return true if the toggle is enabled, false if router is null or the call fails
+     * @param toggleId the toggle identifier (e.g. from {@link com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants})
+     * @return true if the toggle is enabled, false otherwise
      */
-    public static boolean isToggleEnabledWithRouter(@Nullable Object router, @NotNull String toggleId) {
-        if (router == null) {
-            return false;
-        }
-        try {
-            java.lang.reflect.Method isEnabled = router.getClass().getMethod("isEnabled", String.class);
-            return Boolean.TRUE.equals(isEnabled.invoke(router, toggleId));
-        } catch (ReflectiveOperationException e) {
-            return false;
-        }
+    public static boolean isToggleEnabled(@NotNull String toggleId) {
+        return isToggleEnabledBySystemProperty(toggleId);
     }
 
     /**

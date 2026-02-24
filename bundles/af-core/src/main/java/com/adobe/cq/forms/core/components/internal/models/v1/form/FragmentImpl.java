@@ -42,7 +42,6 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.factory.ModelFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.osgi.framework.BundleContext;
 
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.aemds.guide.utils.TranslationUtils;
@@ -52,7 +51,6 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
-import com.adobe.cq.forms.core.components.internal.servlets.BundleContextServiceRegistration;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
@@ -85,24 +83,6 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         filter = "(service.pid=org.apache.sling.i18n.impl.JcrResourceBundleProvider)",
         injectionStrategy = InjectionStrategy.OPTIONAL)
     private ResourceBundleProvider resourceBundleProvider;
-
-    /**
-     * This bundle's context, provided by {@link BundleContextServiceRegistration}. Required for
-     * feature-toggle lookups (e.g. {@link ComponentUtils#isToggleEnabled}); without that component
-     * this would be null because BundleContext is not normally published as an OSGi service.
-     */
-    @OSGiService(
-        filter = "(" + BundleContextServiceRegistration.SERVICE_PROPERTY_PROVIDER + "="
-            + BundleContextServiceRegistration.SERVICE_PROPERTY_PROVIDER_VALUE + ")",
-        injectionStrategy = InjectionStrategy.OPTIONAL)
-    private BundleContext bundleContext;
-
-    /** For tests only: when set, used instead of BundleContext lookup so tests can inject a mock without the API on classpath. */
-    volatile Object toggleRouterForTest = null;
-
-    void setToggleRouterForTest(Object router) {
-        this.toggleRouterForTest = router;
-    }
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FRAGMENT_PATH)
     private String fragmentPath;
@@ -294,11 +274,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     private boolean isFragmentMergeContainerRulesEventsEnabled() {
-        if (toggleRouterForTest != null) {
-            return ComponentUtils.isToggleEnabledWithRouter(toggleRouterForTest,
-                FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
-        }
-        return ComponentUtils.isToggleEnabled(bundleContext, FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
+        return ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
     }
 
     private String getClientLibForFragment() {

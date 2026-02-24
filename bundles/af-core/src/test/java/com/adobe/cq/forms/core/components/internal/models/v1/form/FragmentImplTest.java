@@ -30,6 +30,7 @@ import java.util.stream.StreamSupport;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.i18n.ResourceBundleProvider;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +48,6 @@ import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
-import com.adobe.granite.toggle.api.ToggleRouter;
 import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
@@ -70,14 +70,10 @@ public class FragmentImplTest {
     private static final String PATH_FRAGMENT_WITH_INVALID_PATH = CONTENT_ROOT + "/fragment-with-invalid-path";
     private static final String PATH_FRAGMENT_WITH_PLACEHOLDER_RULES = CONTENT_ROOT + "/fragment-with-placeholder-rules";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
-    private ToggleRouter toggleRouter;
 
     @BeforeEach
     void setUp() {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
-        toggleRouter = Mockito.mock(ToggleRouter.class);
-        Mockito.when(toggleRouter.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(true);
-        context.registerService(ToggleRouter.class, toggleRouter);
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
             private final Set<String> IGNORED_NODE_NAMES = new HashSet<String>() {
@@ -103,11 +99,15 @@ public class FragmentImplTest {
         });
     }
 
-    /** Returns a fragment with the merge toggle enabled (test hook), since mock BundleContext does not resolve ToggleRouter by name. */
+    @AfterEach
+    void tearDown() {
+        System.clearProperty(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
+    }
+
+    /** Returns a fragment with the merge toggle enabled (system property set for test). */
     private Fragment getFragmentWithMergeEnabled(String path) {
-        Fragment fragment = Utils.getComponentUnderTest(path, Fragment.class, context);
-        ((FragmentImpl) fragment).setToggleRouterForTest(toggleRouter);
-        return fragment;
+        System.setProperty(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS, "true");
+        return Utils.getComponentUnderTest(path, Fragment.class, context);
     }
 
     @Test
@@ -209,23 +209,29 @@ public class FragmentImplTest {
 
     @Test
     void testNoMergeWhenToggleDisabled() throws Exception {
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_PLACEHOLDER_RULES, Fragment.class, context);
-        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
-        ToggleRouter toggleOff = Mockito.mock(ToggleRouter.class);
-        Mockito.when(toggleOff.isEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS)).thenReturn(false);
-        fragmentImpl.setToggleRouterForTest(toggleOff);
+        String key = FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS;
+        String saved = System.getProperty(key);
+        try {
+            System.setProperty(key, "false");
+            Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_PLACEHOLDER_RULES, Fragment.class, context);
+            Map<String, String> rules = fragment.getRules();
+            Map<String, String[]> events = fragment.getEvents();
 
-        Map<String, String> rules = fragment.getRules();
-        Map<String, String[]> events = fragment.getEvents();
-
-        assertNotNull(rules);
-        assertNotNull(events);
-        assertEquals("When toggle is off, only panel rules are used", "panelVisibleRule", rules.get("visible"));
-        assertTrue("When toggle is off, only panel events are used", events.containsKey("initialize"));
-        Assertions.assertArrayEquals(new String[] { "panelInit" }, events.get("initialize"),
-            "When toggle is off, fragment container events are not merged; only panel initialize");
-        Assertions.assertFalse(events.containsKey("change"),
-            "When toggle is off, fragment container events like change are not included");
+            assertNotNull(rules);
+            assertNotNull(events);
+            assertEquals("When toggle is off, only panel rules are used", "panelVisibleRule", rules.get("visible"));
+            assertTrue("When toggle is off, only panel events are used", events.containsKey("initialize"));
+            Assertions.assertArrayEquals(new String[] { "panelInit" }, events.get("initialize"),
+                "When toggle is off, fragment container events are not merged; only panel initialize");
+            Assertions.assertFalse(events.containsKey("change"),
+                "When toggle is off, fragment container events like change are not included");
+        } finally {
+            if (saved != null) {
+                System.setProperty(key, saved);
+            } else {
+                System.clearProperty(key);
+            }
+        }
     }
 
     @Test
