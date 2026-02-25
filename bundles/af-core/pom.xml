@@ -461,15 +461,6 @@
             <artifactId>aem-forms-sdk-api</artifactId>
         </dependency>
 
-        <!-- Toggle API: not in Maven repo; provided by AEM at runtime. JAR must be in lib/ (see lib/README.md). systemPath triggers a Maven warning but is the only reliable way to resolve without the artifact in a repo. -->
-        <dependency>
-            <groupId>com.adobe.granite.toggle</groupId>
-            <artifactId>com.adobe.granite.toggle.api</artifactId>
-            <version>1.2.18</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/com.adobe.granite.toggle.api-1.2.18.jar</systemPath>
-        </dependency>
-
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>aem-sdk-api</artifactId>
