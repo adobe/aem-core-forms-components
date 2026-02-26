@@ -415,6 +415,85 @@ Use popover values only when applicable; omit Lock values if not needed:
 
 ---
 
+## Round-Trip Fidelity and Missing Styles
+
+When CSS → content.xml → exported CSS produces different output, styles are lost or transformed. Document these cases and handle them to improve round-trip fidelity.
+
+### Selector Equivalence (Map Alternate Selectors)
+
+The theme editor uses specific selectors; input CSS may use equivalent but different patterns. **Map these to the same state:**
+
+| Input CSS Pattern | Theme Config Selector | State | Notes |
+|-------------------|------------------------|-------|-------|
+| `[data-cmp-enabled]:not([data-cmp-enabled=true]) .cmp-adaptiveform-button__widget` | `.cmp-adaptiveform-button__widget:disabled` | `default_x0023_disabled` | Both target disabled button |
+| `[data-cmp-valid=false]` | `[data-cmp-valid='false']` | `default_x0023_error` | Quote style may differ |
+| `[data-cmp-valid=true]` | `[data-cmp-valid='true']` | `default_x0023_success` | Quote style may differ |
+| `.cmp-container.cmp-adaptiveform-container` | `.cmp-adaptiveform-container` | `af2_form` | Compound selector targets same form element |
+
+### Padding and Margin Shorthand Expansion
+
+**Expand shorthands correctly** — wrong expansion produces invalid or different CSS on export:
+
+| Shorthand | Correct Expansion |
+|-----------|-------------------|
+| `padding: 10px` | `padding-top:10px,padding-right:10px,padding-bottom:10px,padding-left:10px` |
+| `padding: 0 20px` | `padding-top:0,padding-right:20px,padding-bottom:0,padding-left:20px` |
+| `padding: .5rem 1rem` | `padding-top:.5rem,padding-right:1rem,padding-bottom:.5rem,padding-left:1rem` |
+| `padding: 1rem 2rem 3rem` | `padding-top:1rem,padding-right:2rem,padding-bottom:3rem,padding-left:2rem` |
+| `margin: .25rem 0` | `margin-top:.25rem,margin-right:0,margin-bottom:.25rem,margin-left:0` |
+
+**Incorrect:** `padding-top: 0 20px` (invalid — two values in one property). Always expand to four longhand properties.
+
+### CheckboxGroup Selector Mapping
+
+CheckboxGroup has distinct nodes; the theme export uses different selectors than the root:
+
+| Config Node ID | cssSelector | Theme Export Selector |
+|----------------|-------------|------------------------|
+| `af2_checkboxgroupfieldwidgetandtext` | `.cmp-adaptiveform-checkboxgroup` | `.cmp-adaptiveform-checkboxgroup` |
+| `af2_checkboxgroupitemswidget` | `.cmp-adaptiveform-checkboxgroup__widget` | `.cmp-adaptiveform-checkboxgroup__widget` |
+| `af2_checkboxgroupwidgetandtext` | `.cmp-adaptiveform-checkboxgroup__option__widget` | `.cmp-adaptiveform-checkboxgroup__option__widget` |
+
+**Important:** `.cmp-adaptiveform-checkboxgroup__widget` maps to `af2_checkboxgroupitemswidget` (container). `.cmp-adaptiveform-checkboxgroup__option__widget` maps to `af2_checkboxgroupwidgetandtext` (individual option input). Do not conflate `__widget` with `__option__widget`.
+
+### Properties That Cannot Be Stored in Bracket Format
+
+These are typically **dropped** or require `cssOverride`:
+
+| Property Pattern | Reason | Alternative |
+|------------------|--------|-------------|
+| `background: url(...)` | URL values not supported in standard bracket props | Use `cssOverride` with raw CSS, or `addonCss` |
+| `background: url(...) 50%/cover no-repeat,#969696` | Complex value with URL | Split: store `background-color` in bracket; put URL in `cssOverride` |
+| Compound selectors (e.g. `.help-container .questionmark`) | Theme config has flat nodes per element | Apply to the inner element node, or use `cssOverride` |
+| `@media` rules | Breakpoint handling differs | Use `phone_x0023_*` / `tablet_x0023_*` attributes |
+
+### Root Element Styles Without Config Nodes
+
+Some root selectors (e.g. `.cmp-adaptiveform-button` with only `margin`) have no direct config node — the button config starts at `__widget`. Options:
+
+- Merge root-only styles into the primary child node (e.g. `af2_button`) when semantically appropriate
+- Use `cssOverride` on the nearest config node if the theme supports it
+- Document as "not round-trippable" if no suitable node exists
+
+### Border Shorthand Expansion
+
+| Shorthand | Expansion |
+|-----------|-----------|
+| `border: 2px solid #666` | `border-style:solid,border-top-width:2px,border-right-width:2px,border-bottom-width:2px,border-left-width:2px,border-color:rgb(102\,102\,102)` |
+| `border: 0 solid #ca1b15` | `border-style:solid,border-top-width:0,...` (expand all sides) |
+
+### cssOverride for Complex Values
+
+When a property cannot be expressed in bracket format, use `cssOverride`:
+
+```xml
+default_x0023_default="[cssOverride:background\: url(resources/images/question.svg) 50%/cover no-repeat\, #969696]"
+```
+
+Escape colons and commas in the raw CSS value.
+
+---
+
 ## Validation Checklist
 
 - [ ] Read the actual matching config file from the repository before generating

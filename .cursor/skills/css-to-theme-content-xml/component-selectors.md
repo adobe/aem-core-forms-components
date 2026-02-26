@@ -118,7 +118,18 @@ Outer states: hover, focus, disabled (`[data-cmp-enabled='false']`), error, succ
 
 ### CheckboxGroup (`checkboxgroup/v1/checkboxgroup`)
 
-Same pattern as Checkbox, replace `checkbox` with `checkboxgroup` in selectors and ids.
+CheckboxGroup has a more complex structure than Checkbox. Key nodes:
+
+| XML Node | cssSelector | id |
+|----------|-------------|-----|
+| widgetAndText (root) | `.cmp-adaptiveform-checkboxgroup` | `af2_checkboxgroupfieldwidgetandtext` |
+| checkBoxGroupLabelContainer | `.cmp-adaptiveform-checkboxgroup__label-container` | `af2_checkboxgrouplabelcontainer` |
+| checkBoxGroupWidget (items container) | `.cmp-adaptiveform-checkboxgroup__widget` | `af2_checkboxgroupitemswidget` |
+| checkBoxGroupItem | `.cmp-adaptiveform-checkboxgroup-item` | `af2_checkboxgroupitem` |
+| checkBoxGroupWidgetAndText (option input) | `.cmp-adaptiveform-checkboxgroup__option__widget` | `af2_checkboxgroupwidgetandtext` |
+
+**Important:** `.cmp-adaptiveform-checkboxgroup__widget` is the container; `.cmp-adaptiveform-checkboxgroup__option__widget` is the individual checkbox input. Theme export outputs to `__option__widget` for `af2_checkboxgroupwidgetandtext`.
+
 - `checkboxgroup/v2` has no own config — inherits from `checkboxgroup/v1`
 - `toggleablelink/v1` also inherits from `checkboxgroup/v1` (no own config)
 
@@ -218,6 +229,11 @@ Root selector: `.cmp-adaptiveform-text` or `.cmp-text`.
 ## Container / ThemeConfig
 
 ### Container _cq_themeConfig (`container/v2/container`)
+
+| Selector | id | Notes |
+|----------|-----|-------|
+| `.cmp-adaptiveform-container` | `af2_form` | Primary form selector |
+| `.cmp-container.cmp-adaptiveform-container` | `af2_form` | Compound selector — same element when both classes present |
 
 The container themeConfig aggregates ALL component styleConfigs. It uses:
 - `componentId="af2_guideContainer"` on the root
