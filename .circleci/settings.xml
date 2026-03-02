@@ -89,6 +89,12 @@
             <username>${env.DOCKER_USER}</username>
             <password>${env.DOCKER_PASS}</password>
         </server>
+        <id>maven-aemforms-snapshot</id>
+            <username>${env.DOCKER_USER}</username>
+            <password>${env.DOCKER_PASS}</password>
     </servers>
+    <id>maven-aemforms-snapshot</id>
+            <username>${env.DOCKER_USER}</username>
+            <password>${env.DOCKER_PASS}</password>
 
 </settings>
