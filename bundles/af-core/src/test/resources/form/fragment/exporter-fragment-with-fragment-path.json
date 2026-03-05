@@ -9,14 +9,10 @@
   "fragmentPath": "/content/affragment",
   "properties": {
     "customProp": "customPropValue",
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/fragment-with-fragment-path",
     "fd:fragment": true,
-    "fd:viewType": "fragment"
+    "fd:viewType": "fragment",
+    "fd:fragmentPath": "/content/affragment"
   },
   "events": {
     "custom:setProperty": ["$event.payload"],
@@ -40,9 +36,6 @@
         "value": "Text Input"
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/affragment/jcr:content/guideContainer/textinput"
       },
       "events": {

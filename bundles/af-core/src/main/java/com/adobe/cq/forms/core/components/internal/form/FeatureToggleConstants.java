@@ -61,4 +61,29 @@ public final class FeatureToggleConstants {
      * using {@code ToggleMonitorSystemPropertyFactory} or for direct -D JVM override.
      */
     public static final String FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS = "FT_FORMS-24087";
+
+    /**
+     * When enabled, the default {@code custom:setProperty} event handler ({@code "$event.payload"})
+     * is no longer injected into the model JSON by the server. The af2-web-runtime provides this
+     * default at the client side, reducing JSON payload size for every form component.
+     * <p>
+     * <strong>Prerequisite:</strong> the af2-web-runtime must include the corresponding fallback
+     * in {@code Scriptable.getCompiledEvent} before this toggle is enabled.
+     * <p>
+     * System property: same name ({@code FT_FORMS-24343}); set to {@code "true"} to enable.
+     */
+    public static final String FT_SKIP_DEFAULT_SET_PROPERTY_EVENT = "FT_FORMS-24343";
+
+    /**
+     * When enabled, container components (panels, wizards, fragments, form containers) export their
+     * children as a flat {@code "items"} JSON array instead of the Sling Model Exporter's default
+     * {@code ":items"} map + {@code ":itemsOrder"} array. This reduces JSON payload size by
+     * eliminating the redundant resource-name keys and the separate ordering array.
+     * <p>
+     * <strong>Prerequisite:</strong> the af2-web-runtime already supports the {@code items} array
+     * format natively via {@code Container._initialize()}.
+     * <p>
+     * System property: same name ({@code FT_FORMS-24358}); set to {@code "true"} to enable.
+     */
+    public static final String FT_SKIP_ITEMS_MAP = "FT_FORMS-24358";
 }

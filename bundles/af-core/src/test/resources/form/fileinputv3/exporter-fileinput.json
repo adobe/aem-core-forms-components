@@ -19,9 +19,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/fileinput",
     "fd:dragDropText": "Drag and Drop To Upload",
     "customProp": "customPropValue",

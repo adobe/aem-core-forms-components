@@ -13,7 +13,7 @@
     "fd:schemaType": "BASIC",
     "fd:formDataEnabled": true,
     "customProp": "customPropValue",
-    "fd:roleAttribute":"test-role-attribute",
+    "fd:roleAttribute": "test-role-attribute",
     "fd:customFunctionsUrl": "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
     "fd:dataUrl": "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="
   },
@@ -49,9 +49,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"

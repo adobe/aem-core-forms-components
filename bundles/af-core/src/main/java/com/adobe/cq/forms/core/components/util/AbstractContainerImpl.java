@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
@@ -45,6 +46,7 @@ import com.adobe.granite.ui.components.ds.ValueMapResource;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.day.cq.wcm.foundation.model.responsivegrid.ResponsiveGrid;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Abstract class which can be used as base class for {@link Container} implementations.
@@ -122,6 +124,9 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     @NotNull
     @Override
     public String[] getExportedItemsOrder() {
+        if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_SKIP_ITEMS_MAP)) {
+            return ArrayUtils.EMPTY_STRING_ARRAY;
+        }
         if (exportedItemsOrder == null) {
             Map<String, ? extends ComponentExporter> models = getExportedItems();
             if (!models.isEmpty()) {
@@ -179,7 +184,19 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         if (itemModels == null) {
             itemModels = getChildrenModels(request, ComponentExporter.class);
         }
+        if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_SKIP_ITEMS_MAP)) {
+            return Collections.emptyMap();
+        }
         return new LinkedHashMap<>(itemModels);
+    }
+
+    @JsonProperty("items")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    public List<? extends ComponentExporter> getExportedItemsArray() {
+        if (!ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_SKIP_ITEMS_MAP)) {
+            return Collections.emptyList();
+        }
+        return getItems();
     }
 
     protected List<Resource> getFilteredChildrenResources() {

@@ -28,9 +28,6 @@
     "afs:layout": {
       "tooltipVisible": false
     },
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/numberinput-customized"
   },
   ":type": "core/fd/components/form/numberinput/v1/numberinput"

@@ -46,6 +46,7 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.i18n.I18n;
+import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -91,6 +92,25 @@ public class ComponentUtils {
      */
     public static boolean isToggleEnabled(@NotNull String toggleId) {
         return isToggleEnabledBySystemProperty(toggleId);
+    }
+
+    /**
+     * Determines whether the current request is in author mode. Returns {@code true} when the
+     * request is in WCM EDIT or DESIGN mode and has not been explicitly marked as a publish-view
+     * request (e.g. via {@link FormConstants#REQ_ATTR_PUBLISH_VIEW}).
+     *
+     * @param request the current request, may be {@code null}
+     * @return {@code true} if the request is in author mode, {@code false} otherwise
+     */
+    public static boolean isAuthorMode(@Nullable SlingHttpServletRequest request) {
+        if (request == null) {
+            return false;
+        }
+        if (Boolean.TRUE.equals(request.getAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW))) {
+            return false;
+        }
+        WCMMode mode = WCMMode.fromRequest(request);
+        return mode == WCMMode.EDIT || mode == WCMMode.DESIGN;
     }
 
     /**

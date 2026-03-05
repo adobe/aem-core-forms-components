@@ -12,9 +12,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/datetime-without-fieldtype"
   },
   "format": "date-time",

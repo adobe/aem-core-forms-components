@@ -13,10 +13,7 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/numberinput-with-custom-display-format"
   },
   ":type": "core/fd/components/form/numberinput/v1/numberinput"
-} 
+}

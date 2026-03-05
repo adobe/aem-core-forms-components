@@ -17,6 +17,7 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -71,6 +72,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class FragmentImpl extends PanelImpl implements Fragment {
 
     public static final String CUSTOM_FRAGMENT_PROPERTY_WRAPPER = "fd:fragment";
+    public static final String CUSTOM_FRAGMENT_PATH_PROPERTY_WRAPPER = "fd:fragmentPath";
     private static final String PRINT_CHANNEL_PATH = "/" + "print";
 
     @OSGiService
@@ -87,10 +89,16 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FRAGMENT_PATH)
     private String fragmentPath;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LOAD_LAZILY)
+    private Boolean loadLazily;
+
     private Resource fragmentContainer;
 
     @PostConstruct
     private void initFragmentModel() {
+        if (Boolean.TRUE.equals(loadLazily)) {
+            return;
+        }
         ResourceResolver resourceResolver = resource.getResourceResolver();
 
         String updatedFragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
@@ -120,6 +128,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     public @NotNull Map<String, ? extends ComponentExporter> getExportedItems() {
         if (itemModels == null) {
             itemModels = getChildrenModels(request, ComponentExporter.class);
+        }
+        if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_SKIP_ITEMS_MAP)) {
+            return Collections.emptyMap();
         }
         return new LinkedHashMap<>(itemModels);
     }
@@ -240,6 +251,15 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         Map<String, Object> properties = super.getProperties();
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
         properties.put(ReservedProperties.PN_VIEWTYPE, "fragment");
+        if (StringUtils.isNotBlank(fragmentPath)) {
+            String normalizedPath = StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")
+                ? GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath)
+                : fragmentPath;
+            properties.put(CUSTOM_FRAGMENT_PATH_PROPERTY_WRAPPER, normalizedPath);
+        }
+        if (Boolean.TRUE.equals(loadLazily)) {
+            properties.put(ReservedProperties.PN_LOAD_LAZILY, true);
+        }
         return properties;
     }
 

@@ -6,9 +6,6 @@
   ":type": "core/fd/components/form/text/v1/text",
   "properties": {
     "fd:path":"/content/text",
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "customProp": "customPropValue"
   },
   "events": {

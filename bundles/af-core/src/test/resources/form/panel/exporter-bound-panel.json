@@ -18,11 +18,6 @@
     "afs:layout": {
       "tooltipVisible": false
     },
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/bound-panel"
   },
   ":itemsOrder": [
@@ -47,9 +42,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/bound-panel/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"

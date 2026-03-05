@@ -36,6 +36,7 @@ import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
+import com.day.cq.wcm.api.WCMMode;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -67,40 +68,92 @@ public class AbstractFormComponentImplTest {
     }
 
     @Test
-    public void testInvalidRule() {
+    public void testInvalidRuleNotInPublish() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_INVALID_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        assertNull(properties.get("fd:rules"), "fd:rules is whitelisted and should not appear in properties");
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
     }
 
     @Test
-    public void testValidRule() {
+    public void testValidRuleNotInPublish() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_VALID_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        assertNull(properties.get("fd:rules"), "fd:rules is whitelisted and should not appear in properties");
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
     }
 
     @Test
     public void testNoRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_NO_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Object rulesProperties = properties.get("fd:rules");
-        assertNull(rulesProperties);
+        assertNull(properties.get("fd:rules"));
     }
 
     @Test
     public void testNoValidationStatusRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_NO_VALIDATION_STATUS);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Object rulesProperties = properties.get("fd:rules");
-        assertNull(rulesProperties);
+        assertNull(properties.get("fd:rules"));
     }
 
     @Test
-    public void testInvalidValidationStatusRule() {
+    public void testInvalidValidationStatusRuleNotInPublish() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        assertNull(properties.get("fd:rules"), "fd:rules is whitelisted and should not appear in properties");
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
+    }
+
+    @Test
+    public void testValidRuleInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_VALID_RULE);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
+        assertNotNull(rulesProperties, "fd:rules should appear in author mode");
+        assertEquals("valid", rulesProperties.get("validationStatus"));
+    }
+
+    @Test
+    public void testInvalidRuleInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_INVALID_RULE);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
+        assertNotNull(rulesProperties, "fd:rules should appear in author mode");
+        assertEquals("invalid", rulesProperties.get("validationStatus"));
+    }
+
+    @Test
+    public void testNoRuleInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_NO_RULE);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear when no fd:rules node exists");
+    }
+
+    @Test
+    public void testInvalidValidationStatusInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
+        assertNotNull(rulesProperties, "fd:rules should appear in author mode even with invalid status");
+        assertEquals("invalid", rulesProperties.get("validationStatus"));
+    }
+
+    @Test
+    public void testRulesExcludedWhenPublishViewAttributeSetOnAuthor() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_VALID_RULE);
+        context.request().setAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW, Boolean.TRUE);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:rules"),
+            "fd:rules should not appear when publish view attribute is set even in author WCMMode");
+    }
+
+    @Test
+    public void testIsAuthorModeUtility() {
+        assertFalse(ComponentUtils.isAuthorMode(null), "null request should not be author mode");
+        assertFalse(ComponentUtils.isAuthorMode(context.request()), "default request should not be author mode");
+        WCMMode.EDIT.toRequest(context.request());
+        assertTrue(ComponentUtils.isAuthorMode(context.request()), "EDIT mode should be author mode");
+        context.request().setAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW, Boolean.TRUE);
+        assertFalse(ComponentUtils.isAuthorMode(context.request()),
+            "publish view attribute should override WCMMode");
     }
 
     @Test
@@ -184,6 +237,13 @@ public class AbstractFormComponentImplTest {
         return abstractFormComponentImpl;
     }
 
+    private AbstractFormComponentImpl prepareTestClassWithAuthorMode(String path) {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(path);
+        WCMMode.EDIT.toRequest(context.request());
+        Utils.setInternalState(abstractFormComponentImpl, "request", context.request());
+        return abstractFormComponentImpl;
+    }
+
     @Test
     public void testGetDorContainer() {
         Resource resource = Mockito.mock(Resource.class);
@@ -202,11 +262,11 @@ public class AbstractFormComponentImplTest {
     }
 
     @Test
-    public void testPrintChannelRule() {
+    public void testPrintChannelRuleNotInPublish() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        assertNull(properties.get("fd:rules"), "fd:rules is whitelisted and should not appear in properties");
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
     }
 
     @Test

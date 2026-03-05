@@ -4,11 +4,6 @@
   "name": "termsandconditions1694159302516",
   "type": "object",
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/termsandconditions",
     "fd:tnc": true,
     "customProp": "customPropValue"
@@ -38,10 +33,7 @@
         ]
       },
       "properties": {
-        "fd:path": "/content/termsandconditions/text",
-        "fd:dor": {
-          "dorExclusion": false
-        }
+        "fd:path": "/content/termsandconditions/text"
       },
       ":type": "core/fd/components/form/text/v1/text"
     },
@@ -61,9 +53,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/termsandconditions/approvalcheckbox"
       },
       "enum": [

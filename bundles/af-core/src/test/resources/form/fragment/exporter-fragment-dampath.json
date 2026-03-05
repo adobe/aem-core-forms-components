@@ -15,14 +15,10 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/fragment-dampath",
     "fd:fragment": true,
-    "fd:viewType": "fragment"
+    "fd:viewType": "fragment",
+    "fd:fragmentPath": "/content/forms/af/affragment"
   },
   ":itemsOrder": [
     "textinput"
@@ -42,9 +38,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/forms/af/affragment/jcr:content/guideContainer/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"

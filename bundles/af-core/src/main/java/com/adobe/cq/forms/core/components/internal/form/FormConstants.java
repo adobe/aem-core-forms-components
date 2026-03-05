@@ -149,6 +149,9 @@ public final class FormConstants {
     /** Form definition type indicating submission view */
     public static final String FORM_DEFINITION_SUBMISSION = "submission";
 
+    /** Request attribute set when the form definition is serialized with Publish view */
+    public static final String REQ_ATTR_PUBLISH_VIEW = "fd:publishView";
+
     /** The channel for print */
     public static final String CHANNEL_PRINT = "print";
 

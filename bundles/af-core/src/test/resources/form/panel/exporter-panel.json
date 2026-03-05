@@ -11,11 +11,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/panel",
     "customProp": "customPropValue"
   },
@@ -38,9 +33,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/panel/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"

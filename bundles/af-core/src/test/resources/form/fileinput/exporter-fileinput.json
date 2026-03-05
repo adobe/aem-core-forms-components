@@ -19,9 +19,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/fileinput",
     "fd:buttonText": "Attach",
     "customProp": "customPropValue"

@@ -1,37 +1,34 @@
 {
-    "id": "hcaptcha-abc574167c",
-    "fieldType": "captcha",
-    "name": "test-hcaptcha",
+  "id": "hcaptcha-abc574167c",
+  "fieldType": "captcha",
+  "name": "test-hcaptcha",
+  "visible": true,
+  "type": "string",
+  "required": true,
+  "enabled": true,
+  "readOnly": false,
+  "label": {
     "visible": true,
-    "type": "string",
-    "required": true,
-    "enabled": true,
-    "readOnly": false,
-    "label": {
-      "visible": true,
-      "value": "HCAPTCHA"
+    "value": "HCAPTCHA"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:path": "/content/hcaptcha",
+    "fd:captcha": {
+      "provider": "hcaptcha",
+      "config": {
+        "siteKey": null,
+        "uri": null,
+        "size": "normal",
+        "theme": "light",
+        "type": "image"
+      }
     },
-    "events": {
-      "custom:setProperty": [
-        "$event.payload"
-      ]
-    },
-    "properties": {
-      "fd:dor": {
-        "dorExclusion": false
-      },
-      "fd:path": "/content/hcaptcha",
-      "fd:captcha": {
-        "provider": "hcaptcha",
-        "config": {
-          "siteKey": null,
-          "uri": null,
-          "size": "normal",
-          "theme": "light",
-          "type": "image"
-        }
-      },
-      "customProp": "customPropValue"
-    },
-    ":type": "core/fd/components/form/hcaptcha/v1/hcaptcha"
+    "customProp": "customPropValue"
+  },
+  ":type": "core/fd/components/form/hcaptcha/v1/hcaptcha"
 }

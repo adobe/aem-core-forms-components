@@ -37,9 +37,6 @@
     "afs:layout": {
       "tooltipVisible": false
     },
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/multiselect-dropdown"
   },
   "enum": [

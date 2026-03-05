@@ -10,9 +10,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/text-datalayer"
   },
   ":type": "core/fd/components/form/text/v1/text",

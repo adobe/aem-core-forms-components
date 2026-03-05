@@ -19,11 +19,8 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/fileinput",
-    "dragDropText":"Drag and Drop To Upload",
+    "dragDropText": "Drag and Drop To Upload",
     "customProp": "customPropValue",
     "fd:buttonText": "Attach"
   },

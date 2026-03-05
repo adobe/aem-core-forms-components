@@ -69,6 +69,7 @@ public class FragmentImplTest {
     private static final String PATH_FRAGMENT_WITH_FRAGMENT_PATH = CONTENT_ROOT + "/fragment-with-fragment-path";
     private static final String PATH_FRAGMENT_WITH_INVALID_PATH = CONTENT_ROOT + "/fragment-with-invalid-path";
     private static final String PATH_FRAGMENT_WITH_PLACEHOLDER_RULES = CONTENT_ROOT + "/fragment-with-placeholder-rules";
+    private static final String PATH_FRAGMENT_LAZY = CONTENT_ROOT + "/fragment-lazy";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -102,6 +103,7 @@ public class FragmentImplTest {
     @AfterEach
     void tearDown() {
         System.clearProperty(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
+        System.clearProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP);
     }
 
     /** Returns a fragment with the merge toggle enabled (system property set for test). */
@@ -436,5 +438,108 @@ public class FragmentImplTest {
             "getChildrenModels should return non-null map with null request and null fragmentContainer");
         Assertions.assertTrue(childrenModels.isEmpty(),
             "getChildrenModels should return empty map when fragmentContainer is null and request is null");
+    }
+
+    @Test
+    void testLazyFragmentDoesNotResolveContainer() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Assertions.assertNull(fragment.getFragmentContainer(),
+            "Fragment container should be null when fd:loadLazily is true");
+    }
+
+    @Test
+    void testLazyFragmentChildrenEmpty() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        List<Resource> children = fragment.getFragmentChildren();
+        Assertions.assertNotNull(children);
+        Assertions.assertTrue(children.isEmpty(),
+            "Lazy fragment should have no children since container is not resolved");
+    }
+
+    @Test
+    void testLazyFragmentExportedItemsEmpty() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Map<String, ? extends ComponentExporter> items = fragment.getExportedItems();
+        Assertions.assertNotNull(items);
+        Assertions.assertTrue(items.isEmpty(),
+            "Lazy fragment should export no items since container is not resolved");
+    }
+
+    @Test
+    void testLazyFragmentPropertiesContainLoadLazily() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Map<String, Object> properties = fragment.getProperties();
+        Assertions.assertNotNull(properties);
+        Assertions.assertEquals(true, properties.get("fd:loadLazily"),
+            "Properties should include fd:loadLazily when set to true");
+        Assertions.assertEquals(true, properties.get("fd:fragment"));
+        Assertions.assertEquals("fragment", properties.get("fd:viewType"));
+        Assertions.assertEquals("/content/affragment", properties.get("fd:fragmentPath"),
+            "Properties should include fd:fragmentPath for client-side lazy resolution");
+    }
+
+    @Test
+    void testLazyFragmentPathStillAccessible() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
+            "fragmentPath should still be available for client-side lazy resolution");
+    }
+
+    @Test
+    void testNonLazyFragmentDoesNotHaveLoadLazilyProperty() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, Object> properties = fragment.getProperties();
+        Assertions.assertFalse(properties.containsKey("fd:loadLazily"),
+            "Non-lazy fragment should not include fd:loadLazily in properties");
+        Assertions.assertNotNull(fragment.getFragmentContainer(),
+            "Non-lazy fragment should have resolved container");
+        Assertions.assertEquals("/content/affragment", properties.get("fd:fragmentPath"),
+            "fd:fragmentPath should always be present in properties");
+    }
+
+    @Test
+    void testFragmentExportedItemsMapByDefault() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, ? extends ComponentExporter> exportedItems = fragment.getExportedItems();
+        Assertions.assertNotNull(exportedItems);
+        Assertions.assertFalse(exportedItems.isEmpty(),
+            "getExportedItems should return non-empty map when toggle is OFF");
+        String[] order = fragment.getExportedItemsOrder();
+        Assertions.assertTrue(order.length > 0,
+            "getExportedItemsOrder should return non-empty array when toggle is OFF");
+    }
+
+    @Test
+    void testFragmentExportedItemsEmptyWhenToggleEnabled() {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, ? extends ComponentExporter> exportedItems = fragment.getExportedItems();
+        Assertions.assertNotNull(exportedItems);
+        Assertions.assertTrue(exportedItems.isEmpty(),
+            "getExportedItems should return empty map when toggle is ON");
+        String[] order = fragment.getExportedItemsOrder();
+        Assertions.assertEquals(0, order.length,
+            "getExportedItemsOrder should return empty array when toggle is ON");
+    }
+
+    @Test
+    void testFragmentItemsArrayWhenToggleEnabled() {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
+        java.util.List<? extends ComponentExporter> itemsArray = fragmentImpl.getExportedItemsArray();
+        Assertions.assertNotNull(itemsArray);
+        Assertions.assertFalse(itemsArray.isEmpty(),
+            "getExportedItemsArray should return non-empty list when toggle is ON");
+    }
+
+    @Test
+    void testFragmentItemsArrayEmptyWhenToggleDisabled() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
+        java.util.List<? extends ComponentExporter> itemsArray = fragmentImpl.getExportedItemsArray();
+        Assertions.assertNotNull(itemsArray);
+        Assertions.assertTrue(itemsArray.isEmpty(),
+            "getExportedItemsArray should return empty list when toggle is OFF");
     }
 }

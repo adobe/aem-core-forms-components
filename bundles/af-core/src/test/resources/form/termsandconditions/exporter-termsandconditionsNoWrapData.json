@@ -3,11 +3,6 @@
   "fieldType": "panel",
   "name": "termsandconditions1694159302516",
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/termsandconditionsNoWrapData",
     "fd:tnc": true
   },
@@ -41,9 +36,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/termsandconditionsNoWrapData/approvalcheckbox"
       },
       "enum": [
@@ -71,9 +63,6 @@
       "properties": {
         "afs:layout": {
           "orientation": "vertical"
-        },
-        "fd:dor": {
-          "dorExclusion": false
         },
         "fd:path": "/content/termsandconditionsNoWrapData/link"
       },

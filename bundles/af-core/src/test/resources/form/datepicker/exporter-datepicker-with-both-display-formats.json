@@ -13,11 +13,8 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/datepicker-with-both-display-formats"
   },
   "format": "date",
   ":type": "core/fd/components/form/datepicker/v1/datepicker"
-} 
+}
