@@ -31,24 +31,24 @@
         <div class="cmp-adaptiveform-table__description cmp-container__longdescription">${table.description @ context='html'}</div>
     </sly>
     
-    <table class="cmp-adaptiveform-table__widget"
-           role="grid"
-           aria-label="${table.label.value}">
+    <div class="cmp-adaptiveform-table__widget"
+         role="grid"
+         aria-label="${table.label.value}">
         
         <sly data-sly-list.child="${resource.listChildren}">
             <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
-                <thead>
-                    <sly data-sly-resource="${child}"></sly>
-                </thead>
+                <div class="cmp-adaptiveform-table__head" role="rowgroup">
+                    <sly data-sly-resource="${child @ decorationTagName='div', cssClassName='cmp-adaptiveform-tableheader'}"></sly>
+                </div>
             </sly>
         </sly>
         
-        <tbody>
+        <div class="cmp-adaptiveform-table__body" role="rowgroup">
             <sly data-sly-list.child="${resource.listChildren}">
                 <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
-                    <sly data-sly-resource="${child}"></sly>
+                    <sly data-sly-resource="${child @ decorationTagName='div', cssClassName='cmp-adaptiveform-tablerow'}"></sly>
                 </sly>
             </sly>
-        </tbody>
-    </table>
+        </div>
+    </div>
 </div>

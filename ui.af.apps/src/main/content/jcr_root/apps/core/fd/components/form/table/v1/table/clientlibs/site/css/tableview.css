@@ -30,31 +30,50 @@
     margin-bottom: 1rem;
 }
 
+/* CSS Table Layout using divs */
 .cmp-adaptiveform-table__widget {
+    display: table;
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #DDDDDD;
 }
 
-.cmp-adaptiveform-table__widget th,
-.cmp-adaptiveform-table__widget td {
-    padding: 0.75rem;
-    border: 1px solid #DDDDDD;
-    text-align: left;
+.cmp-adaptiveform-table__head {
+    display: table-header-group;
 }
 
-.cmp-adaptiveform-table__widget thead th {
-    background-color: #F5F5F5;
-    font-weight: 600;
+.cmp-adaptiveform-table__body {
+    display: table-row-group;
+}
+
+/* Table header row (decoration div) */
+.cmp-adaptiveform-tableheader {
+    display: table-row;
+}
+
+/* Table body row (decoration div) */
+.cmp-adaptiveform-tablerow {
+    display: table-row;
 }
 
 .cmp-adaptiveform-tablerow:hover {
     background-color: #FAFAFA;
 }
 
+/* Table cells */
 .cmp-adaptiveform-tablecell,
 .cmp-adaptiveform-tablehead {
+    display: table-cell;
+    padding: 0.75rem;
+    border: 1px solid #DDDDDD;
+    text-align: left;
     vertical-align: top;
+}
+
+/* Header cells styling */
+.cmp-adaptiveform-table__head .cmp-adaptiveform-tablehead {
+    background-color: #F5F5F5;
+    font-weight: 600;
 }
 
 /* Mobile responsive */
@@ -63,8 +82,8 @@
         font-size: 0.875rem;
     }
     
-    .cmp-adaptiveform-table__widget th,
-    .cmp-adaptiveform-table__widget td {
+    .cmp-adaptiveform-tablecell,
+    .cmp-adaptiveform-tablehead {
         padding: 0.5rem;
     }
 }
