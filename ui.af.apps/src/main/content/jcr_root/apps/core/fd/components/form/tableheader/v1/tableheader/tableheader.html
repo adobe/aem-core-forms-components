@@ -15,20 +15,10 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.header="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
-
-<tr class="cmp-adaptiveform-tableheader cmp-container ${properties.cssClass}"
-    role="row"
-    id="${header.id}"
-    data-cmp-is="adaptiveFormTableHeader"
-    data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-    data-cmp-visible="${header.visible ? 'true' : 'false'}"
-    data-cmp-enabled="${header.enabled ? 'true' : 'false'}">
-    <sly data-sly-list.cell="${resource.listChildren}">
-        <th class="cmp-adaptiveform-tablehead"
-            scope="col"
-            role="columnheader"
-            data-cmp-hook-tablehead="header">
-            <sly data-sly-resource="${cell}"></sly>
-        </th>
-    </sly>
-</tr>
+<sly data-sly-list.cell="${resource.listChildren}">
+    <div class="cmp-adaptiveform-tablehead"
+         role="columnheader"
+         data-cmp-hook-tablehead="header">
+        <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+    </div>
+</sly>
