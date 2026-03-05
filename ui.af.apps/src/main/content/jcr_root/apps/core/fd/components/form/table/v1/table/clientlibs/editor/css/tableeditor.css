@@ -41,3 +41,9 @@
     position: relative;
     min-height: 40px;
 }
+
+/* Ensure table rows (decoration div wrappers) have correct positioning for overlay calculations */
+.cmp-adaptiveform-tableheader,
+.cmp-adaptiveform-tablerow {
+    position: relative;
+}
