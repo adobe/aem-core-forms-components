@@ -444,7 +444,7 @@ public class FragmentImplTest {
     void testLazyFragmentDoesNotResolveContainer() {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
         Assertions.assertNull(fragment.getFragmentContainer(),
-            "Fragment container should be null when fd:loadLazily is true");
+            "Fragment container should be null when lazy is true");
     }
 
     @Test
@@ -466,12 +466,13 @@ public class FragmentImplTest {
     }
 
     @Test
-    void testLazyFragmentPropertiesContainLoadLazily() {
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+    void testLazyFragmentHasLazyProperty() {
+        FragmentImpl fragment = (FragmentImpl) Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Assertions.assertTrue(fragment.getLazy(),
+            "getLazy() should return true when lazy is set");
         Map<String, Object> properties = fragment.getProperties();
-        Assertions.assertNotNull(properties);
-        Assertions.assertEquals(true, properties.get("fd:loadLazily"),
-            "Properties should include fd:loadLazily when set to true");
+        Assertions.assertFalse(properties.containsKey("fd:loadLazily"),
+            "fd:loadLazily should not be in properties map");
         Assertions.assertEquals(true, properties.get("fd:fragment"));
         Assertions.assertEquals("fragment", properties.get("fd:viewType"));
         Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
@@ -486,11 +487,16 @@ public class FragmentImplTest {
     }
 
     @Test
-    void testNonLazyFragmentDoesNotHaveLoadLazilyProperty() {
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
-        Map<String, Object> properties = fragment.getProperties();
-        Assertions.assertFalse(properties.containsKey("fd:loadLazily"),
-            "Non-lazy fragment should not include fd:loadLazily in properties");
+    void testLazyFragmentJSONExport() throws Exception {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Utils.testJSONExport(fragment, BASE + "/exporter-fragment-lazy.json");
+    }
+
+    @Test
+    void testNonLazyFragmentDoesNotHaveLazyProperty() {
+        FragmentImpl fragment = (FragmentImpl) Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Assertions.assertFalse(fragment.getLazy(),
+            "Non-lazy fragment should return false for getLazy()");
         Assertions.assertNotNull(fragment.getFragmentContainer(),
             "Non-lazy fragment should have resolved container");
         Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
@@ -541,5 +547,12 @@ public class FragmentImplTest {
         Assertions.assertNotNull(itemsArray);
         Assertions.assertTrue(itemsArray.isEmpty(),
             "getExportedItemsArray should return empty list when toggle is OFF");
+    }
+
+    @Test
+    void testJSONExportWithItemsArrayToggle() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Utils.testJSONExport(fragment, BASE + "/exporter-fragment-items-array.json");
     }
 }

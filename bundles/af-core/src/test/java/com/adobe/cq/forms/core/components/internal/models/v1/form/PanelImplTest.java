@@ -205,4 +205,11 @@ public class PanelImplTest {
         assertTrue(itemsArray.isEmpty(),
             "getExportedItemsArray should return empty list when toggle is OFF");
     }
+
+    @Test
+    void testJSONExportWithItemsArrayToggle() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        Utils.testJSONExport(panel, BASE + "/exporter-panel-items-array.json");
+    }
 }

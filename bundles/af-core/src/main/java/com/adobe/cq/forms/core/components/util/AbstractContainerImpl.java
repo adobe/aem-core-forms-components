@@ -123,6 +123,7 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
 
     @NotNull
     @Override
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public String[] getExportedItemsOrder() {
         if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_SKIP_ITEMS_MAP)) {
             return ArrayUtils.EMPTY_STRING_ARRAY;
@@ -180,12 +181,13 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
     }
 
     @Override
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public @NotNull Map<String, ? extends ComponentExporter> getExportedItems() {
-        if (itemModels == null) {
-            itemModels = getChildrenModels(request, ComponentExporter.class);
-        }
         if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_SKIP_ITEMS_MAP)) {
             return Collections.emptyMap();
+        }
+        if (itemModels == null) {
+            itemModels = getChildrenModels(request, ComponentExporter.class);
         }
         return new LinkedHashMap<>(itemModels);
     }

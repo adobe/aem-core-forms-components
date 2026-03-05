@@ -27,6 +27,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.jackrabbit.JcrConstants;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -36,6 +37,7 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.day.cq.wcm.api.WCMMode;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -204,6 +206,40 @@ public class ComponentUtilsTest {
         setCacheTimestampToExpired();
         List<String> actions3 = ComponentUtils.getSupportedSubmitActions(mockClientFactory);
         verify(mockHttpClient, times(2)).execute(any());
+    }
+
+    @Test
+    public void testIsAuthorModeNullRequest() {
+        assertFalse(ComponentUtils.isAuthorMode(null));
+    }
+
+    @Test
+    public void testIsAuthorModeEditMode() {
+        SlingHttpServletRequest request = mock(SlingHttpServletRequest.class);
+        when(request.getAttribute(WCMMode.REQUEST_ATTRIBUTE_NAME)).thenReturn(WCMMode.EDIT);
+        assertTrue(ComponentUtils.isAuthorMode(request));
+    }
+
+    @Test
+    public void testIsAuthorModeDesignMode() {
+        SlingHttpServletRequest request = mock(SlingHttpServletRequest.class);
+        when(request.getAttribute(WCMMode.REQUEST_ATTRIBUTE_NAME)).thenReturn(WCMMode.DESIGN);
+        assertTrue(ComponentUtils.isAuthorMode(request));
+    }
+
+    @Test
+    public void testIsAuthorModeDisabledMode() {
+        SlingHttpServletRequest request = mock(SlingHttpServletRequest.class);
+        when(request.getAttribute(WCMMode.REQUEST_ATTRIBUTE_NAME)).thenReturn(WCMMode.DISABLED);
+        assertFalse(ComponentUtils.isAuthorMode(request));
+    }
+
+    @Test
+    public void testIsAuthorModePublishViewOverridesEditMode() {
+        SlingHttpServletRequest request = mock(SlingHttpServletRequest.class);
+        when(request.getAttribute(WCMMode.REQUEST_ATTRIBUTE_NAME)).thenReturn(WCMMode.EDIT);
+        when(request.getAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW)).thenReturn(Boolean.TRUE);
+        assertFalse(ComponentUtils.isAuthorMode(request));
     }
 
     // Helper methods to access private cache fields via reflection

@@ -1,0 +1,23 @@
+{
+  "id": "fragment-de3d70f5f1",
+  "fieldType": "panel",
+  "name": "fragment-lazy",
+  "type": "object",
+  "repeatable": true,
+  "minOccur": 0,
+  "maxOccur": 4,
+  "fragmentPath": "/content/affragment",
+  "lazy": true,
+  "events": {
+    "custom:setProperty": ["$event.payload"]
+  },
+  "properties": {
+    "fd:path": "/content/fragment-lazy",
+    "fd:fragment": true,
+    "fd:viewType": "fragment"
+  },
+  "label": {
+    "value": "Lazy Fragment"
+  },
+  ":type": "core/fd/components/form/fragment/v1/fragment"
+}

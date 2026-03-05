@@ -59,6 +59,7 @@ import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -86,18 +87,14 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FRAGMENT_PATH)
     private String fragmentPath;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LOAD_LAZILY)
-    private Boolean loadLazily;
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LAZY)
+    private Boolean lazy;
 
     private Resource fragmentContainer;
 
     @PostConstruct
     private void initFragmentModel() {
-        if (Boolean.TRUE.equals(loadLazily)) {
-            return;
-        }
         ResourceResolver resourceResolver = resource.getResourceResolver();
-
         String updatedFragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, updatedFragmentPath);
         if (request != null) {
@@ -106,6 +103,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
             if (formClientLibManager != null && clientLibRef != null) {
                 formClientLibManager.addClientLibRef(clientLibRef);
             }
+        }
+        if (Boolean.TRUE.equals(lazy)) {
+            fragmentContainer = null;
         }
     }
 
@@ -120,13 +120,18 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         return fragmentPath;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public boolean getLazy() {
+        return Boolean.TRUE.equals(lazy);
+    }
+
     @Override
     public @NotNull Map<String, ? extends ComponentExporter> getExportedItems() {
-        if (itemModels == null) {
-            itemModels = getChildrenModels(request, ComponentExporter.class);
-        }
         if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_SKIP_ITEMS_MAP)) {
             return Collections.emptyMap();
+        }
+        if (itemModels == null) {
+            itemModels = getChildrenModels(request, ComponentExporter.class);
         }
         return new LinkedHashMap<>(itemModels);
     }
@@ -247,9 +252,6 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         Map<String, Object> properties = super.getProperties();
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
         properties.put(ReservedProperties.PN_VIEWTYPE, "fragment");
-        if (Boolean.TRUE.equals(loadLazily)) {
-            properties.put(ReservedProperties.PN_LOAD_LAZILY, true);
-        }
         return properties;
     }
 

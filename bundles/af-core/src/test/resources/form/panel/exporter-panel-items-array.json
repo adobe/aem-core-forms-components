@@ -1,0 +1,38 @@
+{
+  "id": "panel-d29e24f4ca",
+  "fieldType": "panel",
+  "name": "abc",
+  "label": {
+    "value": "dependent names"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:path": "/content/panel",
+    "customProp": "customPropValue"
+  },
+  ":type": "core/fd/components/form/panel/v1/panel",
+  "items": [
+    {
+      "id": "textinput-3a2afcbdfd",
+      "fieldType": "text-input",
+      "name": "abc",
+      "type": "string",
+      "label": {
+        "value": "def"
+      },
+      "events": {
+        "custom:setProperty": [
+          "$event.payload"
+        ]
+      },
+      "properties": {
+        "fd:path": "/content/panel/textinput"
+      },
+      ":type": "core/fd/components/form/textinput/v1/textinput"
+    }
+  ]
+}
