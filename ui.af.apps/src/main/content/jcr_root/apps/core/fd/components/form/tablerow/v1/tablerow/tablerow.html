@@ -15,17 +15,8 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.row="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
-
-<tr class="cmp-adaptiveform-tablerow cmp-container"
-    role="row"
-    id="${row.id}"
-    data-cmp-is="adaptiveFormTableRow"
-    data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-    data-cmp-visible="${row.visible ? 'true' : 'false'}"
-    data-cmp-enabled="${row.enabled ? 'true' : 'false'}">
-    <sly data-sly-list.cell="${resource.listChildren}">
-        <td class="cmp-adaptiveform-tablecell">
-            <sly data-sly-resource="${cell}"></sly>
-        </td>
-    </sly>
-</tr>
+<sly data-sly-list.cell="${resource.listChildren}">
+    <div class="cmp-adaptiveform-tablecell" role="gridcell">
+        <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+    </div>
+</sly>
