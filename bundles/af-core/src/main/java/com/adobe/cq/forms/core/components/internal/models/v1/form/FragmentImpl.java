@@ -57,10 +57,8 @@ import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
-import com.adobe.cq.forms.core.components.views.Views;
 import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -72,7 +70,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class FragmentImpl extends PanelImpl implements Fragment {
 
     public static final String CUSTOM_FRAGMENT_PROPERTY_WRAPPER = "fd:fragment";
-    public static final String CUSTOM_FRAGMENT_PATH_PROPERTY_WRAPPER = "fd:fragmentPath";
     private static final String PRINT_CHANNEL_PATH = "/" + "print";
 
     @OSGiService
@@ -119,7 +116,6 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         return fragmentPath;
     }
 
-    @JsonView(Views.Author.class)
     public String getFragmentPath() {
         return fragmentPath;
     }
@@ -251,12 +247,6 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         Map<String, Object> properties = super.getProperties();
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
         properties.put(ReservedProperties.PN_VIEWTYPE, "fragment");
-        if (StringUtils.isNotBlank(fragmentPath)) {
-            String normalizedPath = StringUtils.contains(fragmentPath, "/content/dam/formsanddocuments")
-                ? GuideUtils.convertFMAssetPathToFormPagePath(fragmentPath)
-                : fragmentPath;
-            properties.put(CUSTOM_FRAGMENT_PATH_PROPERTY_WRAPPER, normalizedPath);
-        }
         if (Boolean.TRUE.equals(loadLazily)) {
             properties.put(ReservedProperties.PN_LOAD_LAZILY, true);
         }

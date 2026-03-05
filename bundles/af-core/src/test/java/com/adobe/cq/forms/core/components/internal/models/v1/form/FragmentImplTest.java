@@ -474,8 +474,8 @@ public class FragmentImplTest {
             "Properties should include fd:loadLazily when set to true");
         Assertions.assertEquals(true, properties.get("fd:fragment"));
         Assertions.assertEquals("fragment", properties.get("fd:viewType"));
-        Assertions.assertEquals("/content/affragment", properties.get("fd:fragmentPath"),
-            "Properties should include fd:fragmentPath for client-side lazy resolution");
+        Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
+            "fragmentPath should be accessible for client-side lazy resolution");
     }
 
     @Test
@@ -493,8 +493,8 @@ public class FragmentImplTest {
             "Non-lazy fragment should not include fd:loadLazily in properties");
         Assertions.assertNotNull(fragment.getFragmentContainer(),
             "Non-lazy fragment should have resolved container");
-        Assertions.assertEquals("/content/affragment", properties.get("fd:fragmentPath"),
-            "fd:fragmentPath should always be present in properties");
+        Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
+            "fragmentPath should always be accessible via getter");
     }
 
     @Test

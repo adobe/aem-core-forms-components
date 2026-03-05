@@ -31,6 +31,7 @@
         ]
       },
       "fieldType": "panel",
+      "fragmentPath": "/content/forms/af/demo/jcr:content/printfragment",
       "id": "fragment-cf97dd9759",
       "label": {
         "value": "Fragment"
@@ -42,8 +43,7 @@
         "customProp": "customPropValue",
         "fd:fragment": true,
         "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2-with-fragment/fragment",
-        "fd:viewType": "fragment",
-        "fd:fragmentPath": "/content/forms/af/demo/jcr:content/printfragment"
+        "fd:viewType": "fragment"
       },
       "repeatable": true,
       "type": "object"

@@ -6,6 +6,7 @@
   "repeatable": true,
   "minOccur": 0,
   "maxOccur": 4,
+  "fragmentPath": "/content/dam/formsanddocuments/affragment",
   "label": {
     "value": "Fragment"
   },
@@ -17,8 +18,7 @@
   "properties": {
     "fd:path": "/content/fragment-dampath",
     "fd:fragment": true,
-    "fd:viewType": "fragment",
-    "fd:fragmentPath": "/content/forms/af/affragment"
+    "fd:viewType": "fragment"
   },
   ":itemsOrder": [
     "textinput"

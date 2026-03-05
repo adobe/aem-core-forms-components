@@ -6,12 +6,12 @@
   "repeatable": true,
   "minOccur": 0,
   "maxOccur": 4,
+  "fragmentPath": "/content/affragment",
   "properties": {
     "customProp": "customPropValue",
     "fd:path": "/content/fragment",
     "fd:fragment": true,
-    "fd:viewType": "fragment",
-    "fd:fragmentPath": "/content/affragment"
+    "fd:viewType": "fragment"
   },
   "events": {
     "custom:setProperty": ["$event.payload"],
