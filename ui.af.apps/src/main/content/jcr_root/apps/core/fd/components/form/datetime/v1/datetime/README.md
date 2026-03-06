@@ -42,6 +42,31 @@ The following properties are written to JCR for this Form Date & Time component 
 11. './maximumMessage' - defines the maximum date and time message that will come when the selected date and time is after the maximum date and time
 12. './default' - defines the default date and time that will be selected when the form is loaded
 
+## Server Timezone Information
+
+The component exposes server timezone information via data attributes for client-side consumption:
+
+### Data Attributes Available
+- `data-server-timezone-id` - Server timezone identifier (e.g., "America/New_York")
+
+### Getting Current Date in Server Timezone
+
+```javascript
+// Get server timezone info from the datetime component
+const datetimeComponent = document.querySelector('.cmp-adaptiveform-datetime');
+const serverTimezoneId = datetimeComponent.dataset.serverTimezoneId;
+
+// Get current date in server timezone
+function getCurrentDateInServerTimezone() {
+    const now = new Date();
+    const serverDate = new Date(now.toLocaleString("en-US", {timeZone: serverTimezoneId}));
+    return serverDate.toISOString().slice(0, 16); // Format: YYYY-MM-DDTHH:mm
+}
+
+// Set current date as default value
+const currentServerDate = getCurrentDateInServerTimezone();
+```
+
 ## Client Libraries
 The component provides a `core.forms.components.datetime.v1.runtime` client library category that contains the Javascript runtime for the component.
 It should be added to a relevant site client library using the `embed` property.

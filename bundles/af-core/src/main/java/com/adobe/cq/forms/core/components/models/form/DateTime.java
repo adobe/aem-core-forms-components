@@ -19,12 +19,23 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.osgi.annotation.versioning.ConsumerType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
- * Interface for {@code Password} Sling Model used for the {@code /apps/core/fd/components/form/password/v1/password} component.
+ * Interface for {@code DateTime} Sling Model used for the {@code /apps/core/fd/components/form/datetime/v1/datetime} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 5.12.0
  */
 @ConsumerType
 public interface DateTime extends Field, DateTimeConstraint {
+
+    /**
+     * Returns the server timezone identifier for client-side consumption.
+     *
+     * @return server timezone identifier (e.g., "America/New_York", "Asia/Kolkata")
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.0
+     */
+    @JsonIgnore
+    String getServerTimezone();
 
 }

@@ -30,7 +30,8 @@
      data-cmp-readonly="${datetime.readOnly ? 'true' : 'false'}"
      id="${datetime.id}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-     data-sly-test.widgetId="${datetime.id}-widget">
+     data-sly-test.widgetId="${datetime.id}-widget"
+     data-server-timezone-id="${datetime.serverTimezone}">
     <div class="cmp-adaptiveform-datetime__label-container">
       <div data-sly-call="${label.label @componentId=widgetId, labelValue=datetime.label.value, labelVisible=datetime.label.visible, bemBlock='cmp-adaptiveform-datetime'}" data-sly-unwrap></div>
       <div data-sly-call="${questionMark.questionMark @componentId=datetime.id, longDescription=datetime.description, bemBlock='cmp-adaptiveform-datetime'}" data-sly-unwrap></div>
