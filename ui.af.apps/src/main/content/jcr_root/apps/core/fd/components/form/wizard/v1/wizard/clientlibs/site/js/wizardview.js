@@ -61,7 +61,8 @@
 
             constructor(params) {
                 super(params);
-                const {element} = params;
+                const {element, formContainer} = params;
+                this.formContainer = formContainer;
                 this.cacheElements(element);
                 this.setActive(this.getCachedTabs())
                 this._active = this.getActiveIndex(this.getCachedTabs());
@@ -232,6 +233,9 @@
                     if (tabs && nextVisibleIndex >= 0) {
                         this.#navigateAndFocusTab(nextVisibleIndex);
                     }
+                } else {
+                    console.log('validationErrorList', validationErrorList);
+                    this.formContainer.setFocus(validationErrorList[0].fieldName);
                 }
                 this.#hideUnhideNavButtons(this._active);
             }
