@@ -234,7 +234,6 @@
                         this.#navigateAndFocusTab(nextVisibleIndex);
                     }
                 } else {
-                    console.log('validationErrorList', validationErrorList);
                     this.formContainer.setFocus(validationErrorList[0].fieldName);
                 }
                 this.#hideUnhideNavButtons(this._active);
