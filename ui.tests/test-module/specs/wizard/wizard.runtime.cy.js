@@ -223,6 +223,20 @@ describe("Form with Wizard Layout Container With Validation", () => {
             })
         })
     });
+
+    it.only("should stay on current tab and show validation errors when next is clicked with invalid fields", () => {
+        getTabs().should('have.length', 5);
+        getWizardPanels().should('have.length', 5);
+        getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+        getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+
+        getNextButton().click({force: true}).then(() => {
+            getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
+            getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
+            getWizardPanelAtIndex(0).find('.cmp-adaptiveform-numberinput__errormessage').should('be.visible');
+            getWizardPanelAtIndex(0).find('.cmp-adaptiveform-datepicker__errormessage').should('be.visible');
+        });
+    });
 });
 
 describe("Form with Wizard Layout Container with focus", () => {
