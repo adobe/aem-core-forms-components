@@ -224,7 +224,7 @@ describe("Form with Wizard Layout Container With Validation", () => {
         })
     });
 
-    it.only("should stay on current tab and show validation errors when next is clicked with invalid fields", () => {
+    it("should stay on current tab and show validation errors when next is clicked with invalid fields", () => {
         getTabs().should('have.length', 5);
         getWizardPanels().should('have.length', 5);
         getTabAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__tab--active');
