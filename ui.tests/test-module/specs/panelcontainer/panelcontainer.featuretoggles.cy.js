@@ -18,31 +18,43 @@ describe("Form Runtime - Panel Container Feature Toggles", () => {
         const pagePath = "content/forms/af/core-components-it/samples/panelcontainer/basic.html";
 
         let formContainer = null;
-        let toggle_array = [];
 
         before(() => {
-            cy.fetchFeatureToggles().then((response) => {
-                if (response.status === 200) {
-                    toggle_array = response.body.enabled;
-                }
-            });
+            cy.enableFeatureToggle("FT_FORMS-24358");
+        });
+
+        after(() => {
+            cy.disableFeatureToggle("FT_FORMS-24358");
         });
 
         it("FT_FORMS-24358: panel container children should be accessible when exported as items array", () => {
-            if (toggle_array.includes("FT_FORMS-24358")) {
-                // With FT_SKIP_ITEMS_MAP enabled, AbstractContainerImpl returns an empty :items map
-                // and an empty :itemsOrder array, but populates the "items" array instead.
-                // The runtime must initialize children correctly from the array format.
-                cy.previewFormWithPanel(pagePath).then(p => {
-                    formContainer = p;
-                    expect(formContainer, "formContainer is initialized").to.not.be.null;
-                    const fields = formContainer.getAllFields();
-                    expect(Object.keys(fields).length, "all panel children are registered").to.be.greaterThan(0);
-                    cy.get('[data-cmp-is="adaptiveFormPanel"]').should("exist");
-                    const [firstChildId] = Object.entries(formContainer._fields)[0];
-                    cy.get(`#${firstChildId}`).should("exist");
-                });
-            }
+            // With FT_SKIP_ITEMS_MAP enabled, AbstractContainerImpl omits :items and :itemsOrder
+            // entirely and populates the "items" array instead.
+            // The runtime must initialize children correctly from the array format.
+
+            cy.previewFormWithPanel(pagePath).then(p => {
+                formContainer = p;
+                expect(formContainer, "formContainer is initialized").to.not.be.null;
+                const fields = formContainer.getAllFields();
+                expect(Object.keys(fields).length, "all panel children are registered").to.be.greaterThan(0);
+                cy.get('[data-cmp-is="adaptiveFormPanel"]').should("exist");
+                const [firstChildId] = Object.entries(formContainer._fields)[0];
+                cy.get(`#${firstChildId}`).should("exist");
+            });
+
+            // The panelcontainer page embeds the guideContainer model inline (no XHR).
+            // Verify the server returns the items array format by requesting the model JSON
+            // directly via Basic Auth (same as the Sling Model Exporter endpoint).
+            const username = Cypress.env('crx.username') || 'admin';
+            const password = Cypress.env('crx.password') || 'admin';
+            cy.request({
+                url: 'content/forms/af/core-components-it/samples/panelcontainer/basic/_jcr_content/guideContainer.model.json',
+                auth: { username, password }
+            }).then(({ body }) => {
+                expect(body).to.not.have.property(':items');
+                expect(body).to.not.have.property(':itemsOrder');
+                expect(body.items, 'items array is present and non-empty').to.be.an('array').that.is.not.empty;
+            });
         });
     }
 });

@@ -306,7 +306,10 @@ class Utils {
             }
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
+            } else if (elements[i].dataset.cmpAdaptiveformcontainerInitialized) {
+                continue;
             } else {
+                elements[i].dataset.cmpAdaptiveformcontainerInitialized = 'true';
                 let _formJson, callback;
                 const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
                 // Get the schema type from the data attribute with null safety

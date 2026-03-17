@@ -498,6 +498,28 @@ Cypress.Commands.add("fetchFeatureToggles",()=>{
     return cy.request('/etc.clientlibs/toggles.json')
 })
 
+/**
+ * Enables a feature toggle at runtime by calling the Felix OSGi configuration servlet
+ * from the Node.js task runner (no browser session cookies — pure Basic Auth, like curl).
+ * Intended for use in before() hooks so the toggle is active only while the test runs.
+ *
+ * @param {string} toggleId - e.g. "FT_FORMS-24358"
+ */
+Cypress.Commands.add('enableFeatureToggle', (toggleId) => {
+    cy.task('updateOsgiToggleConfig', { action: 'enable', toggleId });
+});
+
+/**
+ * Disables a feature toggle at runtime by calling the Felix OSGi configuration servlet
+ * from the Node.js task runner (no browser session cookies — pure Basic Auth, like curl).
+ * Intended for use in after() hooks to restore state after a test run.
+ *
+ * @param {string} toggleId - e.g. "FT_FORMS-24358"
+ */
+Cypress.Commands.add('disableFeatureToggle', (toggleId) => {
+    cy.task('updateOsgiToggleConfig', { action: 'disable', toggleId });
+});
+
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
     return cy.get("body").then($body => {
