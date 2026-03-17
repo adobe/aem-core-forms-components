@@ -71,3 +71,6 @@ ui.tests/test-module/cypress
 
 # Ignore Cypress runtime JSON files
 ui.tests/test-module/**/*.cy.json
+
+# Agent working artifacts
+docs/superpowers/
