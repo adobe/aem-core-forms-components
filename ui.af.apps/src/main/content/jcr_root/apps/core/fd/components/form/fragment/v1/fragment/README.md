@@ -24,22 +24,38 @@ Allow referencing a fragment resource.
 The Fragment component uses the `com.adobe.cq.forms.core.components.models.form.Fragment` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Fragment component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Fragment component and are expected to be available as `Resource` properties.
 
-#### Fragment Properties
-1. `./jcr:title` - defines the label to use for this panel
-2. `./name` - defines the name of the panel, which will be submitted with the form data
-3. `./fragmentPath` - defines the path of the fragment resource
-4. `./bindref` - defines the data binding, and how data will be sent
-5. `./visible` - defines initial state of panel visibility
-6. `./enabled` - defines initial state of panel if its enabled or not
-7. `./tooltip` - defines tooltip on panel title
-8. `./description` - defines a help message that can be rendered in the field as a hint for the user
+See [`docs/authoring-schema/components/fragment.authoring.schema.yaml`](../../../../../../../../../../docs/authoring-schema/components/fragment.authoring.schema.yaml) for the full machine-readable schema.
 
-#### Accessibility
-1. `./assistPriority` - defines where to pick accessibility information for the Fragment. This can be one of 'Description', 'Title', 'Name', 'Custom' or 'None'
-2. `./custom` - defines custom accessibility information for the Fragment, if assistPriority is custom.
-3. `./roleAttribute` - defines a role attribute for the Fragment.
+#### Base properties (inherited)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field label | `./jcr:title` | String | — | Visible label rendered next to the panel |
+| Hide label | `./hideTitle` | Boolean | `false` | When true the label is hidden but available to screen readers |
+| Panel name | `./name` | String | — | Data key submitted with form data |
+| Data binding | `./dataRef` | String | — | JSON-path binding; set to `null` to opt out |
+| Visible | `./visible` | Boolean | — | Whether the fragment panel is visible on initial render |
+| Enabled | `./enabled` | Boolean | — | Whether the fragment panel is enabled |
+| Description | `./description` | String | — | Help text rendered as short/long description |
+| Tooltip | `./tooltip` | String | — | Shown in a popover on the question-mark icon |
+| Assistive priority | `./assistPriority` | String | — | Screen-reader announcement priority (`description`, `title`, `name`, `custom`) |
+| Custom assistive text | `./custom` | String | — | Used when assistPriority is set to `custom` |
+
+#### Container properties (inherited)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Fragment path | `./fragmentPath` | String | — | Path to the referenced fragment resource. FragmentImpl resolves child components from this path via `ReservedProperties.PN_FRAGMENT_PATH` |
+| Lazy load | `./lazy` | Boolean | `false` | When true the fragment's children are not loaded until the user navigates to this panel |
+
+#### Child nodes
+
+| Node | Description |
+|------|-------------|
+| `fd:rules` | Rule expressions and visual rule editor AST blobs |
+| `fd:events` | Event handler expressions (click, change, initialize, etc.) |
 
 ## Client Libraries
 The component provides a `core.forms.components.fragment.v1.runtime` client library category that contains the Javascript runtime for the component. 

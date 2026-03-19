@@ -32,14 +32,38 @@ Adaptive Form Cloudflare Turnstile field component written in HTL.
 The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.Turnstile` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Recaptcha component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Form Turnstile component and are expected to be available as `Resource` properties.
 
-1. `./jcr:title` - defines the label to use for this field
-2. `./hideTitle` - if set to `true`, the label of this field will be hidden
-3. `./name` - defines the name of the field, which will be submitted with the form data
-4. `./mandatoryMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-5. `./cloudServicePath` - defines the path of cloud configuration resource for Turnstile
-6. `./size` - defines the size attribute of Turnstile
+See [`docs/authoring-schema/components/turnstile.authoring.schema.yaml`](../../../../../../../../../../docs/authoring-schema/components/turnstile.authoring.schema.yaml) for the full machine-readable schema.
+
+#### Base properties (inherited)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field label | `./jcr:title` | String | — | Visible label rendered next to the field |
+| Hide label | `./hideTitle` | Boolean | `false` | When true the label is hidden but available to screen readers |
+| Field name | `./name` | String | — | Data key submitted with form data |
+| Required message | `./mandatoryMessage` | String | — | Error shown when the required captcha is not completed |
+
+#### Field properties (inherited)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Read only | `./readOnly` | Boolean | `false` | Prevents user input |
+
+#### Turnstile-specific properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Cloud service path | `./cloudServicePath` | String | — | Path to the Cloudflare Turnstile cloud configuration resource. TurnstileImpl resolves the site key, widget type (managed/non-interactive/invisible), and client-side JS URL from this path via `CloudConfigurationProvider`. Injected via `@Named("cloudServicePath")`. |
+| Widget size | `./size` | String | — | Controls the display size of the Turnstile widget. Injected by TurnstileImpl via `@Named("size")`. The widget type (managed/non-interactive/invisible) is resolved from the cloud configuration at runtime, not from this property. |
+
+#### Child nodes
+
+| Node | Description |
+|------|-------------|
+| `fd:rules` | Rule expressions and visual rule editor AST blobs |
+| `fd:events` | Event handler expressions (click, change, initialize, etc.) |
 
 ## Client Libraries
 The component provides a `core.forms.components.turnstile.v1.runtime` client library category that contains the Javascript runtime for the component.
