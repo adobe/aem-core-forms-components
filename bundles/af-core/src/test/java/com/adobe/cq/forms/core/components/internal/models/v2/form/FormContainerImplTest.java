@@ -111,6 +111,7 @@ public class FormContainerImplTest {
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
     private static final String PATH_FORM_WITH_SPEC = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2withspecversion";
+    private static final String PATH_FORM_FULL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2-full";
     private static final String LIB_FORM_CONTAINER = "/libs/core/fd/components/form/container/v2/container";
 
     protected static final String SITES_PATH = "/content/exampleSite";
@@ -930,5 +931,13 @@ public class FormContainerImplTest {
         // Test setting null language
         formContainer.setLang(null);
         assertEquals(formContainer.getLang(), "en");
+    }
+
+    @Test
+    void testJcrAuthoringSchemaCompliance() {
+        context.currentResource(PATH_FORM_FULL);
+        Resource resource = context.currentResource();
+        assertNotNull("Full formcontainer fixture must exist at " + PATH_FORM_FULL, resource);
+        Utils.testJcrSchemaValidation(resource, "/authoring-schema/formcontainer.authoring.schema.json");
     }
 }
