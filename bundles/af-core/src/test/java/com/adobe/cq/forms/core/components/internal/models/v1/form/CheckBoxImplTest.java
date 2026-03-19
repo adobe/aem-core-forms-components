@@ -57,6 +57,7 @@ public class CheckBoxImplTest {
     private static final String PATH_CHECKBOX_NOENUM = CONTENT_ROOT + "/checkboxNoEnum";
 
     private static final String PATH_CHECKBOX_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/checkbox-enableUncheckedValueFalse";
+    private static final String PATH_CHECKBOX_ENABLEUNCHECKEDABSENT = CONTENT_ROOT + "/checkbox-enableUncheckedValueAbsent";
     private static final String PATH_CHECKBOX_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/checkbox-without-fieldtype";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -348,6 +349,28 @@ public class CheckBoxImplTest {
     void shouldOnlyHaveOnEnumIfEnableUncheckedValueOff() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_ENABLEUNCHECKEDOFF);
         assertArrayEquals(new String[] { "on" }, checkbox.getEnums());
+    }
+
+    @Test
+    void shouldOnlyHaveCheckedValueEnumIfEnableUncheckedValueAbsent() {
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_ENABLEUNCHECKEDABSENT);
+        // When enableUncheckedValue is absent (null), Boolean.TRUE.equals(null) is false,
+        // so only the checkedValue should be included in enums
+        assertArrayEquals(new String[] { "on" }, checkbox.getEnums());
+    }
+
+    @Test
+    void testIsReadOnlyAbsent() {
+        // PATH_CHECKBOX has no readOnly property; isReadOnly() should default to false
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
+        assertEquals(false, checkbox.isReadOnly());
+    }
+
+    @Test
+    void testIsRequiredAbsent() {
+        // PATH_CHECKBOX has no required property; isRequired() should default to false
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX);
+        assertEquals(false, checkbox.isRequired());
     }
 
     private CheckBox getCheckBoxUnderTest(String resourcePath) {
