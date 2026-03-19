@@ -27,7 +27,7 @@ allOf:
           Flat JCR property on the FormContainer node. Read by
           AutoSaveConfigurationImpl (@ValueMapValue FD_ENABLE_AUTO_SAVE).
           Appears grouped under "fd:autoSave" in the JSON model output only.
-          v2 only.
+          v2 only. Omit from JCR when false — absent property = runtime default false.
 
       "fd:autoSaveStrategyType":
         type: string
@@ -212,3 +212,4 @@ allOf:
               path fd:view/print. Corresponds to
               ReservedProperties.FD_EXCLUDE_FROM_DOR_IF_HIDDEN
               ("fd:excludeFromDoRIfHidden") in getDorProperties() output.
+              Omit from JCR when false — absent property = runtime default false.

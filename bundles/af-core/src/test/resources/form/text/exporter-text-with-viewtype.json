@@ -2,7 +2,6 @@
   "id": "text-2c82909883",
   "fieldType": "plain-text",
   "name": "abc",
-  "richText": false,
   "properties": {
     "fd:path": "/content/text-with-viewtype"
   },

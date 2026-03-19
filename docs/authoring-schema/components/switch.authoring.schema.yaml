@@ -28,4 +28,6 @@ allOf:
         type: boolean
         title: Submit value when off
         default: false
-        description: When true, uncheckedValue is submitted when the switch is in the off state.
+        description: >-
+          When true, uncheckedValue is submitted when the switch is in the off state.
+          Omit from JCR when false — absent property = runtime default false.

@@ -30,6 +30,7 @@ allOf:
         type: boolean
         title: Enforce enum
         default: true
+        description: Omit from JCR when true — absent property = runtime default true.
       enforceEnumMessage:
         type: string
         title: Enforce enum constraint message

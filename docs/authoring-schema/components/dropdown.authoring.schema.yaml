@@ -27,12 +27,16 @@ allOf:
         description: >-
           When true the type becomes an array type (e.g. string[]) automatically.
           Stored as JCR Boolean; @Default(booleanValues=false) in DropDownImpl.
+          Omit from JCR when false — absent property = false (via @Default).
+          isMultiSelect() is @JsonIgnore — NOT serialized to JSON output directly;
+          used only to compute the array type suffix in getType().
       enforceEnum:
         type: boolean
         title: Enforce enum
         default: true
         description: >-
           When false, users can type values not in the enum list (enum acts as suggestions only).
+          Omit from JCR when true — absent property = runtime default true.
       enforceEnumMessage:
         type: string
         title: Enforce enum constraint message

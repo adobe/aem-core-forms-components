@@ -15,6 +15,9 @@ allOf:
         description: >-
           When true the widget renders as a <textarea> instead of <input type="text">.
           Stored as JCR Boolean. Injected by TextInputImpl.
+          Omit from JCR when false — absent property = false (via @Default).
+          isMultiLine() is @JsonIgnore — NOT serialized to JSON output; used only
+          to compute the fieldType (text-input vs. multiline-input) in getFieldType().
       autocomplete:
         type: string
         title: Autocomplete attribute

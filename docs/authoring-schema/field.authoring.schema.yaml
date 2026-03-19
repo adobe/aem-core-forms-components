@@ -13,6 +13,7 @@ allOf:
         type: [boolean, string]
         title: Read-only
         default: false
+        description: Omit from JCR when false — absent property = runtime default false.
 
       # --- Default & empty value ---
       default:
@@ -119,11 +120,17 @@ allOf:
           number|date values (Draft 7 style). The JCR layer uses boolean flags and the
           Sling model (AbstractFieldImpl) has @Default(booleanValues=false). These are
           reconciled by the model's getMaximum()/getMinimum() methods.
+          Omit from JCR when false — absent property = false (via @Default).
+          This flag is a computation input only; it is NOT directly serialized to JSON
+          (no public JSON getter — output is via getExclusiveMinimumDate() for date fields).
       exclusiveMaximum:
         type: boolean
         title: Exclusive maximum flag
         default: false
-        description: See exclusiveMinimum note above.
+        description: >-
+          See exclusiveMinimum note above.
+          Omit from JCR when false — absent property = false (via @Default).
+          Computation input only; NOT directly serialized to JSON.
       minimumDate:
         type: string
         title: Minimum date (JCR Date property)

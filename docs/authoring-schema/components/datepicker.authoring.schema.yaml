@@ -18,6 +18,8 @@ allOf:
         description: >-
           Actively injected by DatePickerImpl (@ValueMapValue, @Default false).
           Legacy XFA-era property; use exclusiveMinimum for new content.
+          Omit from JCR when false — absent property = false (via @Default).
+          Computation input only in initDatePicker(); NOT serialized to JSON directly.
       excludeMaximum:
         type: boolean
         title: Exclude maximum (backward compat)
@@ -25,3 +27,5 @@ allOf:
         description: >-
           Actively injected by DatePickerImpl (@ValueMapValue, @Default false).
           Legacy XFA-era property; use exclusiveMaximum for new content.
+          Omit from JCR when false — absent property = false (via @Default).
+          Computation input only in initDatePicker(); NOT serialized to JSON directly.

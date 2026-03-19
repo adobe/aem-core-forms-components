@@ -22,6 +22,7 @@ allOf:
           ReservedProperties.PN_SHOW_APPROVAL_OPTION ("showApprovalOption").
           Stored as JCR Boolean. Decorated with @JsonIgnore — consumed by the
           component's HTL template rather than exported to the JSON model.
+          Omit from JCR when true — absent property = runtime default true.
       showLink:
         type: boolean
         title: Show links instead of text content
@@ -32,6 +33,7 @@ allOf:
           based on this flag in getFilteredChildrenResources(). Injected via
           ReservedProperties.PN_SHOW_LINK ("showLink"). Stored as JCR Boolean.
           Decorated with @JsonIgnore — not exported to the JSON model.
+          Omit from JCR when false — absent property = runtime default false.
       showAsPopup:
         type: boolean
         title: Show terms content as modal popup
@@ -41,3 +43,4 @@ allOf:
           rather than inline. Injected by TermsAndConditionsImpl via
           ReservedProperties.PN_SHOW_AS_POPUP ("showAsPopup"). Stored as JCR Boolean.
           Decorated with @JsonIgnore — not exported to the JSON model.
+          Omit from JCR when false — absent property = runtime default false.

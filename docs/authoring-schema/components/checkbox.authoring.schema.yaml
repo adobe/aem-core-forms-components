@@ -27,4 +27,6 @@ allOf:
         type: boolean
         title: Submit value when unchecked
         default: false
-        description: When true, uncheckedValue is submitted when the checkbox is unchecked.
+        description: >-
+          When true, uncheckedValue is submitted when the checkbox is unchecked.
+          Omit from JCR when false — absent property = runtime default false.

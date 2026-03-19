@@ -7,6 +7,37 @@ description: >-
   the component's JCR node by the Edit Dialog and consumed by Sling Models.
 type: object
 
+# NOTE on JCR default-value persistence:
+# Properties with a runtime default (true or false) do NOT need to be stored in JCR when
+# they are at their default value. The Sling models use:
+#   @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL) + @Nullable
+#   + @JsonInclude(JsonInclude.Include.NON_NULL)
+# which means: absent from JCR → injected as null → omitted from JSON output → AF2 runtime
+# applies its own built-in default. Persisting the default value bloats the node and the
+# JSON model with no effect.
+#
+# Properties safe to OMIT when at their default:
+#   visible (default true), enabled (default true),
+#   hideTitle (default false), isTitleRichText (default false),
+#   tooltipVisible (default false), required (default false),
+#   repeatable (default false), unboundFormElement (default false),
+#   dorExclusion (default false), dorExcludeTitle (default false),
+#   dorExcludeDescription (default false),
+#   readOnly (default false — defined in field.authoring.schema.yaml)
+#
+# @Default properties (computation inputs, NOT serialized to JSON):
+#   exclusiveMinimum, exclusiveMaximum — @Default(false) in AbstractFieldImpl; used as
+#     computation inputs in DatePickerImpl.initDatePicker(); no public JSON getter.
+#   multiSelect — @Default(false) in DropDownImpl; isMultiSelect() is @JsonIgnore.
+#   multiLine — @Default(false) in TextInputImpl; isMultiLine() is @JsonIgnore.
+#   excludeMinimum, excludeMaximum — @Default(false) in DatePickerImpl; computation only.
+# All of these are safe to omit from JCR when false — they will NOT appear in JSON output
+# regardless, because their getters are @JsonIgnore or have no public JSON getter.
+#
+# Exception that WAS a bug (now fixed): textIsRich in TextImpl previously used
+# @Default(false) causing "richText": false to always appear in JSON. Fixed by switching
+# to @Nullable Boolean + @JsonInclude(NON_NULL) + separate getRichText() method.
+#
 # NOTE on additionalProperties enforcement:
 # This schema uses draft-07. In draft-07, additionalProperties only considers
 # properties/patternProperties defined in the SAME schema object — it does NOT
@@ -74,17 +105,22 @@ properties:
   visible:
     type: [boolean, string]
     title: Visible
+    default: true
     description: >-
       Whether the field is visible on initial render. When absent from JCR the
-      Sling model returns null and the AF2 runtime applies its own default (true).
-      Do NOT set this to document the runtime default — only present when authored.
+      Sling model returns null (JsonInclude.NON_NULL) and the AF2 runtime applies
+      its own default (true). Omit from JCR when true — absent property = runtime
+      default true. Only persist when explicitly set to false.
       Note: some dialogs store as JCR String "true"/"false" — Sling auto-coerces.
   enabled:
     type: [boolean, string]
     title: Enabled
+    default: true
     description: >-
       Whether the field is enabled. When absent from JCR the Sling model returns
       null (JsonInclude.NON_NULL) and the runtime applies its own default (true).
+      Omit from JCR when true — absent property = runtime default true. Only
+      persist when explicitly set to false.
       Disabled fields do not participate in rules but can still have custom events.
       Note: some dialogs store as JCR String "true"/"false" — Sling auto-coerces.
 
@@ -97,11 +133,14 @@ properties:
     type: [boolean, string]
     title: Hide label
     default: false
-    description: When true the label is hidden but still available to screen readers.
+    description: >-
+      When true the label is hidden but still available to screen readers.
+      Omit from JCR when false — absent property = runtime default false.
   isTitleRichText:
     type: [boolean, string]
     title: Label is rich text
     default: false
+    description: Omit from JCR when false — absent property = runtime default false.
   description:
     type: string
     title: Long description / help text
@@ -116,6 +155,7 @@ properties:
     type: [boolean, string]
     title: Show tooltip icon
     default: false
+    description: Omit from JCR when false — absent property = runtime default false.
 
   # --- Data type ---
   type:
@@ -144,6 +184,7 @@ properties:
     description: >-
       Whether a value is required. JCR may store as Boolean or String "true"/"false"
       depending on the dialog component — Sling auto-coerces to Boolean transparently.
+      Omit from JCR when false — absent property = runtime default false.
   mandatoryMessage:
     type: string
     title: Required constraint message
@@ -171,6 +212,7 @@ properties:
     type: [boolean, string]
     title: Repeatable
     default: false
+    description: Omit from JCR when false — absent property = runtime default false.
   minOccur:
     type: [integer, string]
     title: Minimum occurrences (deprecated; prefer minItems)
@@ -204,6 +246,7 @@ properties:
     default: false
     description: >-
       JCR may store as Boolean or String "true"/"false" — Sling auto-coerces.
+      Omit from JCR when false — absent property = runtime default false.
   dorColspan:
     type: string
     title: DOR column span
@@ -216,10 +259,12 @@ properties:
     type: [boolean, string]
     title: Exclude title from DOR
     default: false
+    description: Omit from JCR when false — absent property = runtime default false.
   dorExcludeDescription:
     type: [boolean, string]
     title: Exclude description from DOR
     default: false
+    description: Omit from JCR when false — absent property = runtime default false.
   dorNumCols:
     type: [integer, string]
     title: DOR number of columns
@@ -320,6 +365,8 @@ properties:
   unboundFormElement:
     type: [boolean, string]
     title: Unbound form element
+    default: false
     description: >-
       When true forces dataRef = null regardless of the dataRef property value.
       Present in AbstractFormComponentImpl as PN_UNBOUND_FORM_ELEMENT.
+      Omit from JCR when false — absent property = runtime default false.
