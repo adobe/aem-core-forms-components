@@ -19,3 +19,11 @@ allOf:
         title: Fragment path (for lazy containers)
         description: >-
           Path to a fragment definition when lazy=true.
+    patternProperties:
+      ".*":
+        if:
+          type: object
+          required: [fieldType]
+        then:
+          $ref: ./adaptive-form-component.authoring.schema.yaml
+        else: true

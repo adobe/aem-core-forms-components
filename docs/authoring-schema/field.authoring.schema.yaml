@@ -94,8 +94,13 @@ allOf:
         type: string
         title: Regex validation pattern
       validatePictureClauseMessage:
-        type: string
         title: Pattern constraint message
+        description: >-
+          Granite dialog may write this as a JCR multi-value String[] (same quirk as
+          minLength/maxLength). Sling model reads first value via @ValueMapValue.
+        type: [string, array]
+        items:
+          type: string
 
       # --- Number / Date constraints ---
       minimum:

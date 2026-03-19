@@ -93,7 +93,7 @@ EXAMPLES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 REQUIREMENTS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  pip install jsonschema pyyaml requests
+  pip install jsonschema referencing pyyaml requests
 """
 
 import json
@@ -287,18 +287,12 @@ def build_registry(schema_dir: Path) -> tuple["Registry", str]:
 
 
 # Module-level registry (built once); validators reference it by URI
-_SCHEMA_REGISTRY: Optional["Registry"] = None
-_ROOT_URI:        str                   = ""
+_SCHEMA_REGISTRY: Optional[Registry] = None
+_ROOT_URI:        str                 = ""
+_SCHEMA_DIR:      Path                = Path()  # kept for path checks (step 0)
 
 def fresh_validator() -> Draft7Validator:
-    """
-    Return a Draft7Validator for the root discriminator schema.
-
-    Uses the referencing library (Registry) which correctly resolves nested
-    $ref chains including patternProperties recursion across directories.
-    Validators are lightweight wrappers around the shared registry — no
-    scope-stack state to leak between calls.
-    """
+    """Return a Draft7Validator for the root discriminator schema."""
     return Draft7Validator({"$ref": _ROOT_URI}, registry=_SCHEMA_REGISTRY)
 
 
@@ -387,8 +381,6 @@ def strip_defaults(node: Any) -> Any:
 def validate_component(component: dict, path: str = "") -> list[str]:
     """
     Validate a single component dict against the root discriminator schema.
-    Creates a fresh validator per call to avoid RefResolver scope-stack leaks
-    that occur when the same validator instance is reused across multiple calls.
     Returns a list of error messages (empty = valid).
     """
     errors = []
@@ -1250,11 +1242,11 @@ def _shared_init(args):
     Called at the top of every cmd_* function.
     Exits with sys.exit(1) on failure.
     """
-    global _SCHEMA_STORE, _SCHEMA_DIR
-    if not _SCHEMA_STORE:
+    global _SCHEMA_REGISTRY, _ROOT_URI, _SCHEMA_DIR
+    if not _SCHEMA_REGISTRY:
         info(f"Fetching schemas from github:{GITHUB_REPO}@{GITHUB_BRANCH}...")
-        _SCHEMA_DIR   = fetch_schemas()
-        _SCHEMA_STORE = build_schema_store(_SCHEMA_DIR)
+        _SCHEMA_DIR              = fetch_schemas()
+        _SCHEMA_REGISTRY, _ROOT_URI = build_registry(_SCHEMA_DIR)
         ok(f"Schemas ready ({_SCHEMA_DIR.name[:8] if _SCHEMA_DIR != _LOCAL_SCHEMA_DIR else 'local'})")
     try:
         r = requests.get(f"{AEM_HOST}/libs/granite/core/content/login.html", auth=AUTH, timeout=10)
@@ -1387,11 +1379,11 @@ def cmd_clone(args):
 def cmd_validate(args):
     import json as _json
     # Schema init only (no AEM check needed for offline validation)
-    global _SCHEMA_STORE, _SCHEMA_DIR
-    if not _SCHEMA_STORE:
+    global _SCHEMA_REGISTRY, _ROOT_URI, _SCHEMA_DIR
+    if not _SCHEMA_REGISTRY:
         info(f"Fetching schemas from github:{GITHUB_REPO}@{GITHUB_BRANCH}...")
-        _SCHEMA_DIR   = fetch_schemas()
-        _SCHEMA_STORE = build_schema_store(_SCHEMA_DIR)
+        _SCHEMA_DIR                  = fetch_schemas()
+        _SCHEMA_REGISTRY, _ROOT_URI  = build_registry(_SCHEMA_DIR)
         ok(f"Schemas ready ({_SCHEMA_DIR.name[:8] if _SCHEMA_DIR != _LOCAL_SCHEMA_DIR else 'local'})")
     try:
         payload = _json.loads(args.payload)
@@ -1434,8 +1426,8 @@ def _run_demo_main():
     print(f"Site root:   {SITE_ROOT} (siteId discovered dynamically)")
     print(f"Schema src:  github:{GITHUB_REPO}@{GITHUB_BRANCH}")
 
-    # Build schema store (done once; fresh_validator() creates validators on demand)
-    global _SCHEMA_STORE, _SCHEMA_DIR
+    # Build schema registry (done once; fresh_validator() creates validators on demand)
+    global _SCHEMA_REGISTRY, _ROOT_URI, _SCHEMA_DIR
 
     info(f"Fetching schemas from github:{GITHUB_REPO}@{GITHUB_BRANCH}...")
     try:
@@ -1446,10 +1438,11 @@ def _run_demo_main():
         fail(f"Failed to fetch schemas: {e}")
         sys.exit(1)
 
-    info("Building validator store...")
+    info("Building validator registry...")
     try:
-        _SCHEMA_STORE = build_schema_store(_SCHEMA_DIR)
-        ok(f"Loaded {len(_SCHEMA_STORE)} YAML schema(s) into validator store")
+        _SCHEMA_REGISTRY, _ROOT_URI = build_registry(_SCHEMA_DIR)
+        yaml_count = sum(1 for _ in _SCHEMA_DIR.rglob("*.yaml"))
+        ok(f"Loaded {yaml_count} YAML schema(s) into validator registry")
     except Exception as e:
         fail(f"Failed to build schema validator: {e}")
         sys.exit(1)
