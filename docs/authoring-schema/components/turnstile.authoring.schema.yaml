@@ -1,0 +1,33 @@
+$id: turnstile.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Turnstile JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Cloudflare Turnstile component (v1).
+  TurnstileImpl extends AbstractCaptchaImplV2 (which extends AbstractCaptchaImpl,
+  which extends AbstractFieldImpl), so it inherits all field and base properties.
+  AbstractCaptchaImplV2 promotes captchaProvider to a top-level JSON property
+  rather than nesting it inside fd:captcha. The two component-specific JCR
+  properties configure the cloud service and widget size.
+  JCR resource type: core/fd/components/form/turnstile/v1/turnstile
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      cloudServicePath:
+        type: string
+        title: Turnstile cloud service configuration path
+        description: >-
+          JCR path to the cloud configuration resource that holds the Cloudflare
+          Turnstile site key, widget type (managed / non-interactive / invisible),
+          and client-side JS URL. At runtime TurnstileImpl resolves the
+          TurnstileConfiguration from this path via CloudConfigurationProvider.
+          Injected via the literal name "cloudServicePath" (no ReservedProperties
+          constant — uses @Named("cloudServicePath") directly in TurnstileImpl).
+      size:
+        type: string
+        title: Turnstile widget size
+        description: >-
+          Controls the display size of the Turnstile widget. Injected by
+          TurnstileImpl via @Named("size"). Stored as JCR String. The actual
+          widget type (managed/non-interactive/invisible) is resolved at runtime
+          from the TurnstileConfiguration cloud config, not from this property.
