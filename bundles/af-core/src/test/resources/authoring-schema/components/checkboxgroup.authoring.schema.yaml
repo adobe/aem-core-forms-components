@@ -1,0 +1,40 @@
+$id: checkboxgroup.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: CheckboxGroup JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Checkbox Group component (checkbox-group field type).
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      enum:
+        type: array
+        title: Option values
+        items:
+          type: ["string", "number", "boolean"]
+        description: Available checkbox values.
+      enumNames:
+        type: array
+        title: Option display labels
+        items:
+          type: string
+        description: Display text for each enum value.
+      orientation:
+        type: string
+        title: Options orientation
+        description: >-
+          Layout direction for checkboxes. Injected by CheckBoxGroupImpl (@ValueMapValue).
+        enum: [horizontal, vertical]
+      enforceEnum:
+        type: boolean
+        title: Enforce enum
+        default: true
+      enforceEnumMessage:
+        type: string
+        title: Enforce enum constraint message
+      areOptionsRichText:
+        type: boolean
+        title: Options are rich text
+        description: >-
+          When true, enumNames are rendered as rich text HTML.
+          Reserved in ReservedProperties but not currently injected via @ValueMapValue.

@@ -616,4 +616,11 @@ public class TextInputImplTest {
         assertFalse("getEvents should NOT include custom:setProperty when toggle is ON",
             events.containsKey("custom:setProperty"));
     }
+
+    @Test
+    void testJcrAuthoringSchemaCompliance() {
+        context.currentResource(PATH_TEXTINPUT);
+        Resource resource = context.currentResource();
+        Utils.testJcrSchemaValidation(resource, "/authoring-schema/textinput.authoring.schema.json");
+    }
 }

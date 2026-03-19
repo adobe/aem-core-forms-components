@@ -1,0 +1,27 @@
+$id: datetime.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: DateTime JCR Authoring Properties
+description: >-
+  DateTime-specific authoring properties. DateTimeImpl extends AbstractFieldImpl
+  directly (not DatePickerImpl), so it does NOT have excludeMinimum/excludeMaximum.
+  Constraint properties (minimumDateTime, maximumDateTime, minimumMessage,
+  maximumMessage) are inherited from field.authoring.schema.
+  IMPORTANT: minimumDateTime/maximumDateTime are stored as JCR String properties
+  (ISO-8601 offset format), unlike DatePicker's minimumDate/maximumDate which are
+  JCR Date properties. The model formats them to "yyyy-MM-dd'T'HH:mm" on export.
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      pattern:
+        type: string
+        title: DateTime pattern
+        description: >-
+          Injected via @ValueMapValue (optional). Internal pattern used for
+          datetime formatting. Not exposed as a dialog field in v1 but
+          available as a JCR property.
+          NOTE: This shadows the `pattern` property in field.authoring.schema.yaml
+          (which is a regex validation pattern). For datetime, `pattern` stores an
+          internal date formatting string. These are the same JCR property name with
+          different semantics depending on component. Do not confuse with the validation
+          pattern used in text-type fields.

@@ -531,4 +531,11 @@ public class DropDownImplTest {
         FieldUtils.writeField(dropdown, "multiSelect", false, true);
         assertEquals(Type.STRING, dropdown.getType());
     }
+
+    @Test
+    void testJcrAuthoringSchemaCompliance() {
+        context.currentResource(PATH_DROPDOWN_1);
+        Resource resource = context.currentResource();
+        Utils.testJcrSchemaValidation(resource, "/authoring-schema/dropdown.authoring.schema.json");
+    }
 }

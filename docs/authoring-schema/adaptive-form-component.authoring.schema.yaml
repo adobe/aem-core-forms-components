@@ -1,0 +1,203 @@
+$id: adaptive-form-component.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Adaptive Form Component JCR Authoring Schema (Root)
+description: >-
+  Root schema for validating any Adaptive Form component's JCR node.
+  Uses oneOf discriminated by the fieldType property to select the
+  correct per-component schema for validation.
+
+  Usage: validate any component's JCR ValueMap (as JSON) against this schema.
+  The correct component schema is selected based on the fieldType value
+  combined with fd:viewType where needed (e.g. image, signature/scribble).
+
+oneOf:
+  - title: text-input
+    if:
+      properties:
+        fieldType:
+          const: text-input
+        "fd:viewType":
+          not:
+            const: signature
+    then:
+      $ref: ./components/textinput.authoring.schema.yaml
+
+  - title: multiline-input
+    if:
+      properties:
+        fieldType:
+          const: multiline-input
+    then:
+      $ref: ./components/textinput.authoring.schema.yaml
+
+  - title: email
+    if:
+      properties:
+        fieldType:
+          const: email
+    then:
+      $ref: ./components/emailinput.authoring.schema.yaml
+
+  - title: tel
+    if:
+      properties:
+        fieldType:
+          const: tel
+    then:
+      $ref: ./components/telephoneinput.authoring.schema.yaml
+
+  - title: number-input
+    if:
+      properties:
+        fieldType:
+          const: number-input
+    then:
+      $ref: ./components/numberinput.authoring.schema.yaml
+
+  - title: date-input
+    if:
+      properties:
+        fieldType:
+          const: date-input
+    then:
+      $ref: ./components/datepicker.authoring.schema.yaml
+
+  - title: datetime-input
+    if:
+      properties:
+        fieldType:
+          const: datetime-input
+    then:
+      $ref: ./components/datetime.authoring.schema.yaml
+
+  - title: file-input
+    if:
+      properties:
+        fieldType:
+          const: file-input
+        "fd:viewType":
+          not:
+            const: signature
+    then:
+      $ref: ./components/fileinput.authoring.schema.yaml
+
+  - title: scribble (signature)
+    if:
+      properties:
+        "fd:viewType":
+          const: signature
+    then:
+      $ref: ./components/scribble.authoring.schema.yaml
+
+  - title: drop-down
+    if:
+      properties:
+        fieldType:
+          const: drop-down
+    then:
+      $ref: ./components/dropdown.authoring.schema.yaml
+
+  - title: radio-group
+    if:
+      properties:
+        fieldType:
+          const: radio-group
+    then:
+      $ref: ./components/radiobutton.authoring.schema.yaml
+
+  - title: checkbox-group
+    if:
+      properties:
+        fieldType:
+          const: checkbox-group
+    then:
+      $ref: ./components/checkboxgroup.authoring.schema.yaml
+
+  - title: checkbox
+    if:
+      properties:
+        fieldType:
+          const: checkbox
+    then:
+      $ref: ./components/checkbox.authoring.schema.yaml
+
+  - title: switch
+    if:
+      properties:
+        fieldType:
+          const: switch
+    then:
+      $ref: ./components/switch.authoring.schema.yaml
+
+  - title: image
+    if:
+      properties:
+        fieldType:
+          const: image
+    then:
+      $ref: ./components/image.authoring.schema.yaml
+
+  - title: button
+    if:
+      properties:
+        fieldType:
+          const: button
+    then:
+      $ref: ./components/button.authoring.schema.yaml
+
+  - title: plain-text
+    if:
+      properties:
+        fieldType:
+          const: plain-text
+    then:
+      $ref: ./components/text.authoring.schema.yaml
+
+  - title: panel
+    if:
+      properties:
+        fieldType:
+          const: panel
+        "fd:viewType":
+          not:
+            enum: [fragment, ""]
+    then:
+      $ref: ./components/panelcontainer.authoring.schema.yaml
+
+  - title: fragment
+    if:
+      properties:
+        "fd:viewType":
+          const: fragment
+    then:
+      $ref: ./components/fragment.authoring.schema.yaml
+
+  - title: captcha (recaptcha)
+    if:
+      properties:
+        fieldType:
+          const: captcha
+        "fd:viewType":
+          const: recaptcha
+    then:
+      $ref: ./components/recaptcha.authoring.schema.yaml
+
+  - title: captcha (hcaptcha)
+    if:
+      properties:
+        fieldType:
+          const: captcha
+        "fd:viewType":
+          const: hCaptcha
+    then:
+      $ref: ./components/hcaptcha.authoring.schema.yaml
+
+  - title: captcha (turnstile)
+    if:
+      properties:
+        fieldType:
+          const: captcha
+        "fd:viewType":
+          const: turnstile
+    then:
+      $ref: ./components/turnstile.authoring.schema.yaml

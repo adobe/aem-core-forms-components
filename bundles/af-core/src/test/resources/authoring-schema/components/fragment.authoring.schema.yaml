@@ -1,0 +1,23 @@
+$id: fragment.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Fragment JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Fragment component (v1).
+  FragmentImpl extends PanelImpl which extends AbstractContainerImpl.
+  The fragment's two key properties (fragmentPath and lazy) are already
+  defined in container.authoring.schema.yaml because they are handled at
+  the container level. This schema extends container and documents no
+  additional flat JCR properties; all fragment-specific behaviour is
+  derived at runtime from the referenced fragment path.
+  JCR resource type: core/fd/components/form/fragment/v1/fragment
+allOf:
+  - $ref: ../container.authoring.schema.yaml
+  - type: object
+    description: >-
+      No additional flat JCR properties beyond what container.authoring.schema
+      defines. FragmentImpl reads fragmentPath and lazy from the container
+      schema; all other child data is loaded from the referenced fragment
+      resource at runtime. The property fd:fragment (boolean) is written
+      dynamically to the JSON model properties map by getProperties() and
+      is not a JCR-authored value.
+    properties: {}

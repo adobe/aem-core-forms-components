@@ -1,0 +1,45 @@
+$id: dropdown.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Dropdown JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Dropdown component (drop-down field type).
+  Enum/options properties come from AbstractOptionsFieldImpl.
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      enum:
+        type: array
+        title: Option values
+        items:
+          type: ["string", "number", "boolean"]
+        description: Available values. Type must match the field's `type` property.
+      enumNames:
+        type: array
+        title: Option display labels
+        items:
+          type: string
+        description: Display text for each enum value. Length must match enum array.
+      multiSelect:
+        type: boolean
+        title: Multi-select
+        default: false
+        description: >-
+          When true the type becomes an array type (e.g. string[]) automatically.
+          Stored as JCR Boolean; @Default(booleanValues=false) in DropDownImpl.
+      enforceEnum:
+        type: boolean
+        title: Enforce enum
+        default: true
+        description: >-
+          When false, users can type values not in the enum list (enum acts as suggestions only).
+      enforceEnumMessage:
+        type: string
+        title: Enforce enum constraint message
+      areOptionsRichText:
+        type: boolean
+        title: Options are rich text
+        description: >-
+          When true, enumNames are rendered as rich text HTML.
+          Reserved in ReservedProperties but not currently injected via @ValueMapValue —
+          consumed by client-side rendering.

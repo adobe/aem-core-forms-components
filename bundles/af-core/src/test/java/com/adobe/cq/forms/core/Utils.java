@@ -28,6 +28,7 @@ import javax.json.JsonReader;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 
@@ -163,6 +164,34 @@ public class Utils {
         } catch (IOException ex) {
             fail(String.format("Unable to validate form model definition : %s",
                 ex.getMessage()));
+        }
+    }
+
+    /**
+     * Validates the JCR ValueMap of a resource against the JCR authoring schema for a given component.
+     *
+     * @param resource the Sling resource whose ValueMap to validate
+     * @param schemaResourcePath classpath path to the authoring schema JSON (e.g. "/authoring-schema/textinput.authoring.schema.json")
+     */
+    public static void testJcrSchemaValidation(@NotNull Resource resource, @NotNull String schemaResourcePath) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+        try {
+            InputStream schemaStream = Utils.class.getResourceAsStream(schemaResourcePath);
+            if (schemaStream == null) {
+                fail("Authoring schema not found: " + schemaResourcePath);
+                return;
+            }
+            JsonSchema schema = schemaFactory.getSchema(schemaStream);
+            // Convert ValueMap to JSON — serialize the flat JCR properties
+            JsonNode jcrNode = objectMapper.valueToTree(resource.getValueMap());
+            Set<ValidationMessage> validationResult = schema.validate(jcrNode);
+            if (!validationResult.isEmpty()) {
+                fail(String.format("JCR authoring schema validation failed for %s: %s",
+                    resource.getPath(), Joiner.on(" ").join(validationResult)));
+            }
+        } catch (Exception ex) {
+            fail(String.format("Unable to validate JCR node against authoring schema: %s", ex.getMessage()));
         }
     }
 
