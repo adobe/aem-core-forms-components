@@ -35,6 +35,25 @@ the following resource properties:
 5. `./dataRef` - data model reference specified
 6. `./fieldType` - field type for adaptive form component
 
+### Edit Dialog Properties
+
+#### Inherited from all components (base)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field name | `./name` | String | — | Submitted data key |
+| Visible | `./visible` | Boolean | *(runtime: true)* | Initial visibility |
+| Label | `./jcr:title` | String | — | Label text |
+| Description | `./description` | String | — | Help text |
+
+#### Text-specific
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Content is rich text | `./textIsRich` | Boolean | `false` | Renders content as HTML rich text when true |
+
+> **Note**: `textIsRich` is the JCR property (injected by `TextImpl`). The reserved property `richText` in `ReservedProperties.java` is NOT the same — it is not injected by any Sling model.
+
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-text
