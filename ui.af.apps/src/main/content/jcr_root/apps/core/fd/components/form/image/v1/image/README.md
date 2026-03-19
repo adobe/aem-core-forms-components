@@ -28,15 +28,27 @@ Image component written in HTL that renders an adaptive image.
 ### Use Object
 The Image component uses the `com.adobe.cq.forms.core.components.models.form.StaticImage` Sling Model as its Use-object.
 
-### Component Policy Configuration Properties
-The following configuration properties are used:
+### Edit Dialog Properties
+The following properties are written to JCR for this Image component and are expected to be available as `Resource` properties.
 
-1.`./fileReference` property or `file` child node - will store either a reference to the image file, or the image file
-2`./name` - defines the name of the field, which will be submitted with the form data
-3`./description` - the actual text to be rendered is stored here
-4`./altText` - alternate text for image
-5`./fieldType` - field type for adaptive form component
-6`./imageSrc` - Image Src
+See [`docs/authoring-schema/components/image.authoring.schema.yaml`](../../../../../../../../../../../../../../docs/authoring-schema/components/image.authoring.schema.yaml) for the full machine-readable schema.
+
+#### Base properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field name | `./name` | String | — | Data key (used in form model) |
+| Visible | `./visible` | Boolean | `true` | Whether the component is visible on initial render |
+| Description | `./description` | String | — | Long description (not in JSON model output) |
+| Enabled | `./enabled` | Boolean | `true` | Whether the component is enabled |
+
+#### Image-specific
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| DAM asset path | `./fileReference` | String | — | Path to image in DAM |
+| Alt text | `./altText` | String | — | Alternate text when image cannot be shown |
+| Image source URL | `./imageSrc` | String | — | Direct URL override; when absent derived from fileReference |
 
 ## BEM Description
 ```

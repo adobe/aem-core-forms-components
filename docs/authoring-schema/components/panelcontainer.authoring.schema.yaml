@@ -1,0 +1,43 @@
+$id: panelcontainer.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Panel Container JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Panel Container component (v1).
+  Extends container.authoring.schema. JCR resource type:
+  core/fd/components/form/panelcontainer/v1/panelcontainer
+allOf:
+  - $ref: ../container.authoring.schema.yaml
+  - type: object
+    properties:
+      readOnly:
+        type: boolean
+        title: Read only
+        description: >-
+          When true the panel and all its children are rendered as read-only.
+          Injected by PanelImpl via PN_READ_ONLY.
+      wrapData:
+        type: boolean
+        title: Wrap data
+        description: >-
+          When true forces the panel type to "object" regardless of dataRef,
+          wrapping submitted child data under this panel's name key.
+          Injected by PanelImpl via PN_WRAP_DATA. Not included in JSON model
+          output (@JsonIgnore); affects getType() logic only.
+      breakBeforeText:
+        type: string
+        title: DOR — break before text
+        description: >-
+          Document of Record page-break control. Injected by PanelImpl via
+          PN_BREAK_BEFORE_TEXT. Added to dorProperties map.
+      breakAfterText:
+        type: string
+        title: DOR — break after text
+        description: >-
+          Document of Record page-break control. Injected by PanelImpl via
+          PN_BREAK_AFTER_TEXT. Added to dorProperties map.
+      overflowText:
+        type: string
+        title: DOR — overflow text
+        description: >-
+          Document of Record overflow handling. Injected by PanelImpl via
+          PN_OVERFLOW_TEXT. Added to dorProperties map.
