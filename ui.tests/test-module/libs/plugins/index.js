@@ -29,6 +29,44 @@
 // the project's config changing)
 
 const path = require('path');
+const fs   = require('fs');
+const yaml = require('js-yaml');
+const $Ref = require('@apidevtools/json-schema-ref-parser');
+const Ajv  = require('ajv');
+const addFormats = require('ajv-formats');
+
+const ROOT_SCHEMA_PATH = path.resolve(
+    __dirname, '../../../../docs/authoring-schema/adaptive-form-component.authoring.schema.yaml'
+);
+
+// Compiled once per task-runner process — $ref dereferencing is expensive
+let _validate = null;
+
+/** Recursively strip all $id fields so AJV doesn't see ambiguous schema identities. */
+function stripIds(obj) {
+    if (!obj || typeof obj !== 'object') return obj;
+    if (Array.isArray(obj)) return obj.map(stripIds);
+    const copy = {};
+    for (const [k, v] of Object.entries(obj)) {
+        if (k === '$id') continue;
+        copy[k] = stripIds(v);
+    }
+    return copy;
+}
+
+async function getValidator() {
+    if (_validate) return _validate;
+    const raw = yaml.load(fs.readFileSync(ROOT_SCHEMA_PATH, 'utf8'));
+    // Dereference resolves all $ref / allOf chains (../field.authoring.schema.yaml etc.)
+    // relative to the YAML file location so the full component schemas are inlined.
+    const inlined = await $Ref.dereference(ROOT_SCHEMA_PATH, raw);
+    // Strip $id fields — after inlining, duplicate $id values confuse AJV's ref resolver.
+    const cleaned = stripIds(inlined);
+    const ajv = new Ajv({ allErrors: true, strict: false });
+    addFormats(ajv);
+    _validate = ajv.compile(cleaned);
+    return _validate;
+}
 
 /**
  * @type {Cypress.PluginConfig}
@@ -72,6 +110,40 @@ const TOGGLE_PID = 'com.adobe.granite.toggle.impl.dev.DynamicToggleProviderImpl'
 
 module.exports = (on, config) => {
     on('task', {
+        /**
+         * Walks an entire guideContainer infinity.json tree, validates every node
+         * that has a `fieldType` property against the root adaptive-form-component
+         * authoring schema, and returns a consolidated list of violations.
+         *
+         * @param {{ json: object, formPath: string }} params
+         * @returns {{ violations: Array<{path: string, fieldType: string, errors: string[]}> }}
+         */
+        async validateJcrTree({ json, formPath }) {
+            const validate = await getValidator();
+
+            function walk(node, nodePath, violations) {
+                if (!node || typeof node !== 'object' || Array.isArray(node)) return;
+                if (node.fieldType) {
+                    const valid = validate(node);
+                    if (!valid) {
+                        violations.push({
+                            path: nodePath,
+                            fieldType: node.fieldType,
+                            errors: validate.errors.map(e => `${e.instancePath || '/'} ${e.message}`)
+                        });
+                    }
+                }
+                for (const [key, value] of Object.entries(node)) {
+                    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                        walk(value, `${nodePath}/${key}`, violations);
+                    }
+                }
+            }
+
+            const violations = [];
+            walk(json, formPath, violations);
+            return { violations };
+        },
         /**
          * Enables or disables a single feature toggle in the live AEM instance via the
          * Felix OSGi configuration servlet. Runs entirely in Node.js so no browser
