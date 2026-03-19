@@ -10,7 +10,7 @@ allOf:
     properties:
       # --- Interaction ---
       readOnly:
-        type: boolean
+        type: [boolean, string]
         title: Read-only
         default: false
 

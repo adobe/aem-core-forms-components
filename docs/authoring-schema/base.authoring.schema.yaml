@@ -41,28 +41,32 @@ properties:
       - checkbox
       - switch
       - plain-text
+      - text
       - button
       - panel
       - image
       - email
       - captcha
       - tel
+      - form
 
   # --- Visibility / Interaction ---
   visible:
-    type: boolean
+    type: [boolean, string]
     title: Visible
     description: >-
       Whether the field is visible on initial render. When absent from JCR the
       Sling model returns null and the AF2 runtime applies its own default (true).
       Do NOT set this to document the runtime default — only present when authored.
+      Note: some dialogs store as JCR String "true"/"false" — Sling auto-coerces.
   enabled:
-    type: boolean
+    type: [boolean, string]
     title: Enabled
     description: >-
       Whether the field is enabled. When absent from JCR the Sling model returns
       null (JsonInclude.NON_NULL) and the runtime applies its own default (true).
       Disabled fields do not participate in rules but can still have custom events.
+      Note: some dialogs store as JCR String "true"/"false" — Sling auto-coerces.
 
   # --- Labels & Description ---
   "jcr:title":
@@ -70,12 +74,12 @@ properties:
     title: Field label
     description: The visible label rendered next to the field.
   hideTitle:
-    type: boolean
+    type: [boolean, string]
     title: Hide label
     default: false
     description: When true the label is hidden but still available to screen readers.
   isTitleRichText:
-    type: boolean
+    type: [boolean, string]
     title: Label is rich text
     default: false
   description:
@@ -89,7 +93,7 @@ properties:
     title: Tooltip text
     description: Shown in a popover when the user clicks the question-mark icon.
   tooltipVisible:
-    type: boolean
+    type: [boolean, string]
     title: Show tooltip icon
     default: false
 
@@ -114,12 +118,12 @@ properties:
 
   # --- Validation ---
   required:
-    type: boolean
+    type: [boolean, string]
     title: Required
     default: false
     description: >-
-      Whether a value is required. Note: legacy JCR content may store this as
-      String "true"/"false" — Sling auto-coerces to Boolean transparently.
+      Whether a value is required. JCR may store as Boolean or String "true"/"false"
+      depending on the dialog component — Sling auto-coerces to Boolean transparently.
   mandatoryMessage:
     type: string
     title: Required constraint message
@@ -136,7 +140,7 @@ properties:
     type: string
     title: Assistive technology priority
     description: Determines which text the screen reader announces for this field.
-    enum: [description, title, name, custom]
+    enum: [description, title, label, name, custom, caption]
   custom:
     type: string
     title: Custom assistive text
@@ -144,21 +148,25 @@ properties:
 
   # --- Repeatability ---
   repeatable:
-    type: boolean
+    type: [boolean, string]
     title: Repeatable
     default: false
   minOccur:
-    type: integer
+    type: [integer, string]
     title: Minimum occurrences (deprecated; prefer minItems)
+    description: JCR may store as Integer or String — Sling auto-coerces.
   maxOccur:
-    type: integer
+    type: [integer, string]
     title: Maximum occurrences (deprecated; prefer maxItems)
+    description: JCR may store as Integer or String — Sling auto-coerces.
   minItems:
-    type: integer
+    type: [integer, string]
     title: Minimum instances of a repeatable field/panel
+    description: JCR may store as Integer or String — Sling auto-coerces.
   maxItems:
-    type: integer
+    type: [integer, string]
     title: Maximum instances of a repeatable field/panel
+    description: JCR may store as Integer or String — Sling auto-coerces.
   minItemsMessage:
     type: string
     title: Min items constraint message
@@ -171,12 +179,11 @@ properties:
 
   # --- DOR (Document of Record) ---
   dorExclusion:
-    type: boolean
+    type: [boolean, string]
     title: Exclude from DOR
     default: false
     description: >-
-      Note: legacy JCR content may store this as String "true"/"false" —
-      Sling auto-coerces to Boolean transparently.
+      JCR may store as Boolean or String "true"/"false" — Sling auto-coerces.
   dorColspan:
     type: string
     title: DOR column span
@@ -186,15 +193,15 @@ properties:
     type: string
     title: DOR data binding ref
   dorExcludeTitle:
-    type: boolean
+    type: [boolean, string]
     title: Exclude title from DOR
     default: false
   dorExcludeDescription:
-    type: boolean
+    type: [boolean, string]
     title: Exclude description from DOR
     default: false
   dorNumCols:
-    type: integer
+    type: [integer, string]
     title: DOR number of columns
   dorLayoutType:
     type: string
@@ -291,7 +298,7 @@ properties:
 
   # --- Data binding behavior ---
   unboundFormElement:
-    type: boolean
+    type: [boolean, string]
     title: Unbound form element
     description: >-
       When true forces dataRef = null regardless of the dataRef property value.

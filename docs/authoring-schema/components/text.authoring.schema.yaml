@@ -8,7 +8,7 @@ allOf:
   - type: object
     properties:
       textIsRich:
-        type: boolean
+        type: [boolean, string]
         title: Content is rich text
         default: false
         description: >-

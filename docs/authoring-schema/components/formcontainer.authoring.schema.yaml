@@ -41,7 +41,7 @@ allOf:
         enum: [time, fieldFocus]
 
       "fd:autoSaveInterval":
-        type: integer
+        type: [integer, string]
         title: Auto-save interval (seconds)
         description: >-
           Flat JCR property on the FormContainer node. Read by
@@ -129,7 +129,7 @@ allOf:
           ReservedProperties.PN_THANK_YOU_OPTION. Determines whether a
           message or a redirect URL is shown after successful submission.
           Injected by FormContainerImpl v2 (@ValueMapValue). v2 only.
-        enum: [message, redirect]
+        enum: [message, redirect, page]
 
       thankYouMessage:
         type: string
