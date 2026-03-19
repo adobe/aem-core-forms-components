@@ -184,15 +184,6 @@ oneOf:
       $ref: ./components/text.authoring.schema.yaml
     else: false
 
-  - title: text (static text, older fieldType value)
-    if:
-      properties:
-        fieldType:
-          const: text
-    then:
-      $ref: ./components/text.authoring.schema.yaml
-    else: false
-
   - title: panel
     if:
       properties:

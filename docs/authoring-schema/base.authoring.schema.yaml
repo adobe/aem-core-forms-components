@@ -6,6 +6,27 @@ description: >-
   AbstractFormComponentImpl and AbstractBaseImpl. These are written to
   the component's JCR node by the Edit Dialog and consumed by Sling Models.
 type: object
+
+# NOTE on additionalProperties enforcement:
+# This schema uses draft-07. In draft-07, additionalProperties only considers
+# properties/patternProperties defined in the SAME schema object — it does NOT
+# "see through" allOf/$ref chains. Adding additionalProperties:false here would
+# reject field-specific properties (readOnly, lazy, etc.) when components extend
+# base via allOf, because base wouldn't see those in its own `properties` block.
+#
+# Strict-mode enforcement is implemented in the FLATTENED JSON schemas at:
+#   bundles/af-core/src/test/resources/authoring-schema/
+# Those schemas have all properties inlined (no allOf chains) and safely use
+# additionalProperties:false + patternProperties for JCR-namespaced internals.
+#
+# To upgrade YAML schemas to strict mode, upgrade to JSON Schema draft-2019-09
+# and use unevaluatedProperties:false, which correctly traverses allOf graphs.
+patternProperties:
+  "^jcr:":   {}   # jcr:primaryType, jcr:created, jcr:createdBy, jcr:lastModified, etc.
+  "^sling:": {}   # sling:resourceType, sling:resourceSuperType
+  "^cq:":    {}   # cq:panelTitle, cq:editConfig, etc.
+  "^fd:":    {}   # fd:version, fd:translationIds, fd:rules, fd:events — documented in properties below
+
 properties:
   # --- Identity & binding ---
   name:
@@ -41,7 +62,6 @@ properties:
       - checkbox
       - switch
       - plain-text
-      - text
       - button
       - panel
       - image
