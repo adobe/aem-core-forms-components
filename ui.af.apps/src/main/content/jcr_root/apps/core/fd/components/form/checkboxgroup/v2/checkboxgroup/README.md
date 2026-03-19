@@ -76,19 +76,50 @@ The v2 component demonstrates a focused improvement strategy:
 | Widget aria-label | Yes (on each checkbox) | No (legend provides context) |
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form CheckBox Group component and are expected to be available as `Resource` properties:
 
-1. `./jcr:title` - defines the label to use for this field
-2. `./hideTitle` - if set to `true`, the label of this field will be hidden
-3. `./name` - defines the name of the field, which will be submitted with the form data
-4. `./default` - defines the default value of the field
-5. `./description` - defines a help message that can be rendered in the field as a hint for the user
-6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
-7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-8. `./readOnly` - if set to `true`, the filed will be read only
-9. `./type` - defines the data type of the value
-10. `./enum` - defines the set of possible values for this field
-11. `./enumNames` - defines the user-friendly text to display for the possible options of the field.
+The following properties are written to JCR by the Edit Dialog and consumed by the Sling Model.
+v2 inherits the same dialog as v1 — all properties below apply identically.
+
+#### Inherited from all components (base)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field name | `./name` | String | — | Submitted data key |
+| Data reference | `./dataRef` | String | — | JSON-path for data binding |
+| Visible | `./visible` | Boolean | *(runtime: true)* | Initial visibility; absent = runtime default true |
+| Enabled | `./enabled` | Boolean | *(runtime: true)* | Whether field is interactive; absent = runtime default true |
+| Label | `./jcr:title` | String | — | Visible label text |
+| Hide label | `./hideTitle` | Boolean | `false` | Hides label visually |
+| Description | `./description` | String | — | Help text / long description |
+| Tooltip | `./tooltip` | String | — | Popover tooltip text |
+| Show tooltip | `./tooltipVisible` | Boolean | `false` | Shows tooltip question-mark icon |
+| Required | `./required` | Boolean | `false` | Whether a value is required |
+| Required message | `./mandatoryMessage` | String | — | Error shown when required is violated |
+| Validation expression | `./validationExpression` | String | — | json-formula returning true when valid |
+| Assistive priority | `./assistPriority` | String | — | Screen-reader source: `description`, `title`, `name`, `custom` |
+| Data type | `./type` | String | — | `string`, `number`, `boolean`, etc. |
+
+#### Field properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Read-only | `./readOnly` | Boolean | `false` | Prevents user edits |
+| Default value | `./default` | Object[] | — | Initial value |
+| Multi-value default | `./fd:multiDefaultValues` | Object[] | — | Default for multi-value fields |
+| Empty value | `./fd:emptyValue` | String | — | Value on empty submit: `"null"`, `"undefined"`, `""` |
+| Placeholder | `./placeholder` | String | — | Ghosted hint text |
+
+#### CheckboxGroup-specific
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Option values | `./enum` | String[] | — | Available checkbox values; type coerced to match `./type` at runtime; group always returns an array type |
+| Option display labels | `./enumNames` | String[] | — | Display text for each enum value |
+| Orientation | `./orientation` | String | — | Layout direction: `horizontal` or `vertical`; injected via `@ValueMapValue` in `CheckBoxGroupImpl` and placed in `customLayoutProperties` |
+| Enforce enum | `./enforceEnum` | Boolean | `true` | When false, values outside the enum list are allowed |
+| Enforce enum message | `./enforceEnumMessage` | String | — | Error message shown when enforceEnum is violated |
+| Unique items message | `./uniqueItemsMessage` | String | — | Error message shown when duplicate values are selected |
+| Options are rich text | `./areOptionsRichText` | Boolean | — | When true, enumNames are rendered as rich text HTML (consumed client-side) |
 
 ## Client Libraries
 The component provides a `core.forms.components.checkboxgroup.v2.runtime` client library category that contains the Javascript runtime for the component. 
