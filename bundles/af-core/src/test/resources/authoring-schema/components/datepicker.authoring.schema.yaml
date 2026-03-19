@@ -1,0 +1,27 @@
+$id: datepicker.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: DatePicker JCR Authoring Properties
+description: >-
+  DatePicker-specific authoring properties. Constraint properties (minimumDate,
+  maximumDate, exclusiveMinimum, exclusiveMaximum, minimumMessage, maximumMessage)
+  are inherited from field.authoring.schema.
+  IMPORTANT: minimumDate/maximumDate are stored as JCR Date properties (not String)
+  and Sling auto-coerces them to java.util.Date via @ValueMapValue.
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      excludeMinimum:
+        type: boolean
+        title: Exclude minimum (backward compat)
+        default: false
+        description: >-
+          Actively injected by DatePickerImpl (@ValueMapValue, @Default false).
+          Legacy XFA-era property; use exclusiveMinimum for new content.
+      excludeMaximum:
+        type: boolean
+        title: Exclude maximum (backward compat)
+        default: false
+        description: >-
+          Actively injected by DatePickerImpl (@ValueMapValue, @Default false).
+          Legacy XFA-era property; use exclusiveMaximum for new content.

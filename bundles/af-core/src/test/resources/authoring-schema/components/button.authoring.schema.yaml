@@ -1,0 +1,25 @@
+$id: button.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Button JCR Authoring Properties
+description: >-
+  Properties for button, submit, and reset button components.
+  NOTE: Submit action properties (actionType, mailto, spreadsheetUrl, etc.) are
+  flat JCR properties on the FormContainer node, NOT on the button node.
+  They appear nested under "fd:submit" in the JSON model output only.
+allOf:
+  - $ref: ../base.authoring.schema.yaml
+  - type: object
+    properties:
+      buttonType:
+        type: string
+        title: Button type
+        description: >-
+          Controls the button's behavior. Stored as JCR String.
+          Injected by ButtonImpl as PN_BUTTON_TYPE.
+        enum: [submit, reset, button]
+      icon:
+        type: string
+        title: Button icon
+        description: >-
+          Icon identifier or path shown alongside the button label.
+          Actively injected by ButtonImpl (@ValueMapValue, PN_ICON).

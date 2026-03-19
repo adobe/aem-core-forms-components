@@ -1,0 +1,12 @@
+$id: wizard.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Wizard JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Wizard component (v1 and v2).
+  All JCR-authored properties for wizard are inherited from PanelImpl
+  (readOnly, wrapData, breakBeforeText, breakAfterText, overflowText).
+  See panelimpl.authoring.schema.yaml for the full property set.
+allOf:
+  - $ref: ../panelimpl.authoring.schema.yaml
+  - type: object
+    properties: {}
