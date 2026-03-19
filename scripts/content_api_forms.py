@@ -431,10 +431,11 @@ def check_aem(results: list) -> bool:
     else:
         warn(f"Content API returned HTTP {r.status_code} — proceeding anyway")
 
-    if not ROOT_SCHEMA_FILE.exists():
-        fail(f"Root schema not found: {ROOT_SCHEMA_FILE}")
+    root_schema = _SCHEMA_DIR / "adaptive-form-component.authoring.schema.yaml"
+    if not root_schema.exists():
+        fail(f"Root schema not found: {root_schema}")
         return False
-    ok(f"Root schema found: {ROOT_SCHEMA_FILE.relative_to(REPO_ROOT)}")
+    ok(f"Root schema found: {root_schema.name}  (from {_SCHEMA_DIR})")
     return True
 
 
@@ -1068,6 +1069,7 @@ def main():
     print(f"\n{BOLD}AEM Content API — Adaptive Forms Script{RESET}")
     print(f"Host:        {AEM_HOST}")
     print(f"Site root:   {SITE_ROOT} (siteId discovered dynamically)")
+    print(f"Schema src:  github:{GITHUB_REPO}@{GITHUB_BRANCH}")
 
     # Build schema store (done once; fresh_validator() creates validators on demand)
     global _SCHEMA_STORE, _SCHEMA_DIR
