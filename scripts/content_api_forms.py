@@ -389,20 +389,36 @@ def validate_form_payload(payload: dict) -> list[str]:
     guideContainer tree. Each node that has a 'fieldType' is a component.
     Each component gets a fresh validator to avoid RefResolver scope leaks.
     """
-    all_errors = []
-
-    def walk(node: dict, path: str):
-        if not isinstance(node, dict):
-            return
-        if "fieldType" in node:
-            errs = validate_component(node, path)
-            all_errors.extend(errs)
-        for key, value in node.items():
-            if _is_child_node(value):
-                walk(value, f"{path}.{key}" if path else key)
-
     content = payload.get("content", {})
-    walk(content, "content")
+    return _validate_tree(content, "content")
+
+
+def _validate_tree(node: dict, path: str = "") -> list[str]:
+    """
+    Recursively walk any JCR subtree and validate every component node found.
+
+    Accepts any of:
+      - A single component dict  (has 'fieldType' at top level)
+      - A guideContainer subtree (e.g. from .infinity.json)
+      - A full page .infinity.json (jcr:content -> guideContainer -> fields)
+
+    Any dict that contains 'fieldType' is treated as a component and validated.
+    Child nodes are discovered via _is_child_node() (has 'sling:resourceType' or
+    'fieldType'), so the walk does not descend into plain scalar properties.
+    """
+    all_errors: list[str] = []
+
+    def walk(n: dict, p: str):
+        if not isinstance(n, dict):
+            return
+        if "fieldType" in n:
+            errs = validate_component(n, p)
+            all_errors.extend(errs)
+        for key, value in n.items():
+            if _is_child_node(value):
+                walk(value, f"{p}.{key}" if p else key)
+
+    walk(node, path)
     return all_errors
 
 
@@ -1192,7 +1208,13 @@ def _build_parser():
     # validate
     va = sub.add_parser("validate", help="Validate a component dict against the authoring schema")
     va.add_argument("--payload", required=True,
-                    help='JSON string of a single component node, e.g. \'{"fieldType":"text-input",...}\'')
+                    help=(
+                        'JSON string to validate. Accepts: '
+                        '(1) a single component dict with "fieldType", '
+                        '(2) a guideContainer subtree, or '
+                        '(3) a full .infinity.json page tree. '
+                        'All component nodes (any dict with "fieldType") are validated recursively.'
+                    ))
     va.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     return p
@@ -1360,15 +1382,28 @@ def cmd_validate(args):
         fail(f"Invalid JSON payload: {e}")
         _emit_json(args.json, {"op": "validate", "ok": False, "error": str(e)})
         return False
-    errs = validate_component(payload, "component")
+    # Count how many component nodes exist in the payload so we can report coverage.
+    component_count: list[int] = [0]
+
+    def _count(n):
+        if isinstance(n, dict):
+            if "fieldType" in n:
+                component_count[0] += 1
+            for v in n.values():
+                _count(v)
+
+    _count(payload)
+    n_components = component_count[0] or 1  # treat single-component payload as 1
+
+    errs = _validate_tree(payload, "")
     if errs:
-        fail(f"Validation failed ({len(errs)} error(s)):")
+        fail(f"Validation failed ({len(errs)} error(s) across {n_components} component(s)):")
         for e in errs:
             print(f"     {e}")
-        _emit_json(args.json, {"op": "validate", "ok": False, "errors": errs})
+        _emit_json(args.json, {"op": "validate", "ok": False, "errors": errs, "components": n_components})
         return False
-    ok("Component passes schema validation")
-    _emit_json(args.json, {"op": "validate", "ok": True})
+    ok(f"All {n_components} component(s) pass schema validation")
+    _emit_json(args.json, {"op": "validate", "ok": True, "components": n_components})
     return True
 
 
