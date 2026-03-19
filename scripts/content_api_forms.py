@@ -1082,41 +1082,49 @@ def _build_parser():
     cr.add_argument("--name",       required=True, help="URL-safe page node name")
     cr.add_argument("--title",      required=True)
     cr.add_argument("--description", default="")
+    cr.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # read
     rd = sub.add_parser("read", help="Read page metadata")
     rd.add_argument("--page-id", required=True)
+    rd.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # patch
     pa = sub.add_parser("patch", help="PATCH page content (JSON Patch RFC 6902)")
     pa.add_argument("--page-id", required=True)
     pa.add_argument("--title",   required=True, help="New page title")
+    pa.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # put
     pu = sub.add_parser("put", help="PUT (full replace) page content")
     pu.add_argument("--page-id", required=True)
     pu.add_argument("--title",   required=True, help="New page title")
+    pu.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # move (component reorder within /content)
     mv = sub.add_parser("move", help="Reorder components within page content (JSON Patch move)")
     mv.add_argument("--page-id",    required=True)
     mv.add_argument("--from-index", required=True, type=int, help="items[] index to move from")
     mv.add_argument("--to-index",   required=True, type=int, help="items[] index to move to")
+    mv.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # delete
     dl = sub.add_parser("delete", help="Delete a page")
     dl.add_argument("--page-id", required=True)
+    dl.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # clone
     cl = sub.add_parser("clone", help="Clone a page (read source, create copy)")
     cl.add_argument("--page-id",  required=True, help="Source page to clone from")
     cl.add_argument("--site-id",  required=True, help="Destination site")
     cl.add_argument("--name",     required=True, help="Name for the cloned page")
+    cl.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # validate
     va = sub.add_parser("validate", help="Validate a component dict against the authoring schema")
     va.add_argument("--payload", required=True,
                     help='JSON string of a single component node, e.g. \'{"fieldType":"text-input",...}\'')
+    va.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     return p
 
