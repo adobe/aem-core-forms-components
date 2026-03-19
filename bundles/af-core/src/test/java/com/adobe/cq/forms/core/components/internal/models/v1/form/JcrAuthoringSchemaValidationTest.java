@@ -15,13 +15,13 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -33,10 +33,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.SchemaValidatorsConfig;
 import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
-import com.networknt.schema.uri.URIFetcher;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -46,10 +44,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * The schemas live in docs/authoring-schema/ and are mirrored into
  * src/test/resources/authoring-schema/ so they are accessible on the classpath.
  *
- * Strategy: we register a custom URIFetcher that handles the "authoring-schema" scheme.
- * All $ref values in the YAML files are relative paths (e.g. ../field.authoring.schema.yaml).
- * We also patch each schema's $id to be an absolute authoring-schema: URI so that the
- * networknt resolver can anchor relative $refs correctly.
+ * Strategy: during test setup we convert each YAML schema to JSON and write it to a temp
+ * directory on disk. We then load schemas via file: URIs so networknt can resolve relative
+ * $refs (../field.authoring.schema.yaml) naturally using standard URI resolution — no custom
+ * fetchers or URI factories are required.
  *
  * This is the JCR analog to the af2-docs runtime schema validation: instead of validating
  * the exported JSON model, we validate the JCR ValueMap (what you author in the dialog
@@ -60,19 +58,22 @@ public class JcrAuthoringSchemaValidationTest {
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
     private static final ObjectMapper YAML_MAPPER = new ObjectMapper(new YAMLFactory());
 
-    /** Scheme name we register for our custom classpath+yaml fetcher. */
-    private static final String SCHEME = "authoring-schema";
+    /** Classpath prefix for all authoring schema YAML resources. */
+    private static final String SCHEMA_RESOURCE_ROOT = "/authoring-schema";
 
     /**
-     * All schema classpath paths that need to be served by the custom fetcher.
-     * When networknt resolves a $ref it will call our fetcher for any URI
-     * with scheme "authoring-schema".
+     * All schema classpath paths that need to be converted and placed on disk.
+     * Listed in dependency order (parents before children) so relative $refs
+     * resolve correctly when networknt encounters them.
      */
     private static final List<String> ALL_SCHEMA_PATHS = Arrays.asList(
+        // Root schemas (no parent $refs)
         "/authoring-schema/base.authoring.schema.yaml",
+        // Field and container hierarchies
         "/authoring-schema/field.authoring.schema.yaml",
         "/authoring-schema/container.authoring.schema.yaml",
         "/authoring-schema/panelimpl.authoring.schema.yaml",
+        // Component schemas
         "/authoring-schema/components/textinput.authoring.schema.yaml",
         "/authoring-schema/components/dropdown.authoring.schema.yaml",
         "/authoring-schema/components/checkboxgroup.authoring.schema.yaml",
@@ -83,74 +84,59 @@ public class JcrAuthoringSchemaValidationTest {
         "/authoring-schema/components/wizard.authoring.schema.yaml"
     );
 
+    /** Temporary directory where JSON-converted schemas are written for file: URI loading. */
+    private static Path SCHEMA_TEMP_DIR;
+
+    /** Temp subdirectory mirroring the /authoring-schema/components/ classpath layout. */
+    private static Path SCHEMA_TEMP_COMPONENTS_DIR;
+
     private static JsonSchemaFactory SCHEMA_FACTORY;
 
-    /** In-memory cache: absolute authoring-schema URI → JSON bytes (YAML converted to JSON). */
-    private static final Map<String, byte[]> SCHEMA_CACHE = new HashMap<>();
-
     @BeforeAll
-    static void setUpFactory() throws Exception {
-        /*
-         * Pre-read every schema YAML and convert to JSON bytes. Also patch each schema's
-         * $id to be an absolute authoring-schema: URI so networknt can resolve
-         * relative $refs against it.
-         */
+    static void setUpSchemas() throws Exception {
+        // Create a temp directory tree that mirrors the classpath layout
+        SCHEMA_TEMP_DIR = Files.createTempDirectory("jcr-authoring-schema-");
+        SCHEMA_TEMP_COMPONENTS_DIR = SCHEMA_TEMP_DIR.resolve("components");
+        Files.createDirectories(SCHEMA_TEMP_COMPONENTS_DIR);
+
+        // Convert each YAML schema to JSON and write to the temp tree.
+        // Strip the bare $id field so networknt uses the file: URI as identity
+        // and relative $refs resolve correctly against the file system layout.
         for (String classpathPath : ALL_SCHEMA_PATHS) {
             InputStream yamlStream = JcrAuthoringSchemaValidationTest.class.getResourceAsStream(classpathPath);
             if (yamlStream == null) {
-                throw new IllegalStateException("Missing schema on classpath: " + classpathPath);
+                throw new IllegalStateException("Schema YAML not found on classpath: " + classpathPath);
             }
             ObjectNode schemaNode = (ObjectNode) YAML_MAPPER.readTree(yamlStream);
+            // Strip the bare $id (e.g. "textinput.authoring.schema") — networknt
+            // will use the file: URI as the schema identity instead.
+            schemaNode.remove("$id");
 
-            // Patch $id to absolute URI so $ref resolution works
-            String absoluteId = SCHEME + ":" + classpathPath;
-            schemaNode.put("$id", absoluteId);
-
-            byte[] jsonBytes = JSON_MAPPER.writeValueAsBytes(schemaNode);
-            SCHEMA_CACHE.put(absoluteId, jsonBytes);
+            // Derive the output path: strip the /authoring-schema prefix, keep .yaml extension.
+            // We write JSON content to a .yaml-named file so relative $refs
+            // (e.g. ../field.authoring.schema.yaml) resolve to the correct file on disk.
+            String relativePart = classpathPath.substring(SCHEMA_RESOURCE_ROOT.length()); // e.g. /base.authoring.schema.yaml
+            Path outPath = SCHEMA_TEMP_DIR.resolve(relativePart.startsWith("/") ? relativePart.substring(1) : relativePart);
+            Files.createDirectories(outPath.getParent());
+            JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValue(outPath.toFile(), schemaNode);
         }
 
-        /*
-         * Register a custom URIFetcher for our "authoring-schema" scheme.
-         * The fetcher resolves the URI path against our pre-populated cache.
-         */
-        URIFetcher fetcher = uri -> {
-            String key = uri.toString();
-            byte[] bytes = SCHEMA_CACHE.get(key);
-            if (bytes == null) {
-                // Try to load on-demand (e.g. for paths not pre-loaded)
-                String path = uri.getPath();
-                InputStream stream = JcrAuthoringSchemaValidationTest.class.getResourceAsStream(path);
-                if (stream == null) {
-                    throw new java.io.IOException("Schema not found in cache or classpath: " + key);
-                }
-                ObjectNode node = (ObjectNode) YAML_MAPPER.readTree(stream);
-                node.put("$id", key);
-                bytes = JSON_MAPPER.writeValueAsBytes(node);
-                SCHEMA_CACHE.put(key, bytes);
-            }
-            return new ByteArrayInputStream(bytes);
-        };
-
-        SCHEMA_FACTORY = JsonSchemaFactory.builder(
-            JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7))
-            .uriFetcher(fetcher, SCHEME)
-            .build();
+        SCHEMA_FACTORY = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
     }
 
     /**
-     * Load a YAML schema from the cache using its absolute authoring-schema: URI.
-     * The factory will call our fetcher for any $ref it encounters during validation.
+     * Load a component schema by its classpath-relative path.
+     * Internally this resolves to a file: URI in the temp directory tree so that
+     * all relative $refs (../field.authoring.schema.yaml) resolve naturally.
+     *
+     * @param classpathPath e.g. /authoring-schema/components/textinput.authoring.schema.yaml
      */
-    private JsonSchema loadSchema(String classpathPath) throws Exception {
-        String absoluteId = SCHEME + ":" + classpathPath;
-        byte[] jsonBytes = SCHEMA_CACHE.get(absoluteId);
-        if (jsonBytes == null) {
-            throw new IllegalArgumentException("Schema not pre-loaded: " + classpathPath);
-        }
-        URI schemaUri = URI.create(absoluteId);
-        JsonNode schemaNode = JSON_MAPPER.readTree(jsonBytes);
-        return SCHEMA_FACTORY.getSchema(schemaUri, schemaNode);
+    private JsonSchema loadSchema(String classpathPath) {
+        // Map classpath path → temp file path (keeping .yaml extension to match $ref values)
+        String relativePart = classpathPath.substring(SCHEMA_RESOURCE_ROOT.length());
+        Path schemaFile = SCHEMA_TEMP_DIR.resolve(relativePart.startsWith("/") ? relativePart.substring(1) : relativePart);
+        URI fileUri = schemaFile.toUri();
+        return SCHEMA_FACTORY.getSchema(fileUri);
     }
 
     // -----------------------------------------------------------------------
