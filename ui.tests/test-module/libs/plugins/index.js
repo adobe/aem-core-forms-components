@@ -31,40 +31,45 @@
 const path = require('path');
 const fs   = require('fs');
 const yaml = require('js-yaml');
-const $Ref = require('@apidevtools/json-schema-ref-parser');
 const Ajv  = require('ajv');
 const addFormats = require('ajv-formats');
 
-const ROOT_SCHEMA_PATH = path.resolve(
-    __dirname, '../../../../docs/authoring-schema/adaptive-form-component.authoring.schema.yaml'
-);
+const SCHEMA_DIR = path.resolve(__dirname, '../../../../docs/authoring-schema');
+const ROOT_SCHEMA_PATH = path.join(SCHEMA_DIR, 'adaptive-form-component.authoring.schema.yaml');
 
-// Compiled once per task-runner process — $ref dereferencing is expensive
+// Compiled once per task-runner process
 let _validate = null;
 
-/** Recursively strip all $id fields so AJV doesn't see ambiguous schema identities. */
-function stripIds(obj) {
-    if (!obj || typeof obj !== 'object') return obj;
-    if (Array.isArray(obj)) return obj.map(stripIds);
-    const copy = {};
-    for (const [k, v] of Object.entries(obj)) {
-        if (k === '$id') continue;
-        copy[k] = stripIds(v);
+/**
+ * Recursively register every *.yaml schema file under `dir` with AJV.
+ * Each schema's $id is overridden with its absolute file:// URI so that
+ * AJV can resolve relative $ref paths (e.g. ../container.authoring.schema.yaml)
+ * correctly at validation time without dereferencing upfront.
+ *
+ * This avoids the $Ref.dereference() approach which creates circular JS
+ * objects when the schema graph has cycles (container.authoring.schema.yaml
+ * → adaptive-form-component → formcontainer → container).
+ */
+function loadSchemasIntoAjv(ajv, dir) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const e of entries) {
+        const full = path.join(dir, e.name);
+        if (e.isDirectory()) {
+            loadSchemasIntoAjv(ajv, full);
+        } else if (e.name.endsWith('.yaml')) {
+            const schema = yaml.load(fs.readFileSync(full, 'utf8'));
+            schema.$id = `file://${full}`;
+            ajv.addSchema(schema);
+        }
     }
-    return copy;
 }
 
 async function getValidator() {
     if (_validate) return _validate;
-    const raw = yaml.load(fs.readFileSync(ROOT_SCHEMA_PATH, 'utf8'));
-    // Dereference resolves all $ref / allOf chains (../field.authoring.schema.yaml etc.)
-    // relative to the YAML file location so the full component schemas are inlined.
-    const inlined = await $Ref.dereference(ROOT_SCHEMA_PATH, raw);
-    // Strip $id fields — after inlining, duplicate $id values confuse AJV's ref resolver.
-    const cleaned = stripIds(inlined);
     const ajv = new Ajv({ allErrors: true, strict: false });
     addFormats(ajv);
-    _validate = ajv.compile(cleaned);
+    loadSchemasIntoAjv(ajv, SCHEMA_DIR);
+    _validate = ajv.getSchema(`file://${ROOT_SCHEMA_PATH}`);
     return _validate;
 }
 

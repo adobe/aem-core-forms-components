@@ -98,7 +98,7 @@ describe('JCR Authoring Schema Validation', () => {
                     } else {
                         cy.log(`OK — no violations in ${formPath}`);
                     }
-                    expect(result).to.have.property('violations');
+                    expect(result.violations, `schema violations in ${formPath}`).to.be.empty;
                 });
             });
         });
