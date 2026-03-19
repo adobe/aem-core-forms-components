@@ -30,16 +30,47 @@ Adaptive Form Accordion component written in HTL.
 The Accordion component uses the `com.adobe.cq.forms.core.components.models.form.Accordion` Sling model as its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Accordion component and are expected to be available as `Resource` properties:
 
-1. `./jcr:title` - defines the label to use for this panel
-2. `./name` - defines the name of the panel, which will be submitted with the form data
-3. `./layout` - defines the layout type, either `simple` (default) or `responsiveGrid`; if no value is defined, the component will fallback to the value defined by the component's policy
-4. `./bindref` - defines the data binding, and how data will be sent
-5. `./visible` - defines initial state of panel visibility
-6. `./enabled` - defines initial state of panel if its enabled or not
-7. `./tooltip` - defines tooltip on panel title
-8. `./description` - defines a help message that can be rendered in the field as a hint for the user
+The following properties are written to JCR by the Edit Dialog and consumed by the Sling Model.
+
+#### Inherited from all components (base)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Panel name | `./name` | String | — | Submitted data key for panel data |
+| Data reference | `./dataRef` | String | — | JSON-path for data binding |
+| Visible | `./visible` | Boolean | *(runtime: true)* | Initial visibility |
+| Enabled | `./enabled` | Boolean | *(runtime: true)* | Whether panel is interactive |
+| Label | `./jcr:title` | String | — | Panel label text |
+| Hide label | `./hideTitle` | Boolean | `false` | Hides label visually |
+| Description | `./description` | String | — | Help text / long description |
+| Tooltip | `./tooltip` | String | — | Popover tooltip text |
+| Required | `./required` | Boolean | `false` | Whether panel requires user interaction |
+| Repeatable | `./repeatable` | Boolean | `false` | Whether panel can be repeated |
+| Min instances | `./minItems` | Integer | — | Minimum repeatable instances |
+| Max instances | `./maxItems` | Integer | — | Maximum repeatable instances |
+| Data type | `./type` | String | — | `object` or `array` |
+
+#### Container properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Lazy load | `./lazy` | Boolean | `false` | Defers loading children until navigated to |
+| Fragment path | `./fragmentPath` | String | — | Path to fragment definition (required when lazy=true) |
+
+#### Accordion specific properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Read only | `./readOnly` | Boolean | — | When true the accordion and all children render as read-only |
+| Wrap data | `./wrapData` | Boolean | — | Forces panel type to `object`; wraps child data under panel name key |
+| DOR break before | `./breakBeforeText` | String | — | Document of Record page-break control (break before panel) |
+| DOR break after | `./breakAfterText` | String | — | Document of Record page-break control (break after panel) |
+| DOR overflow | `./overflowText` | String | — | Document of Record overflow handling text |
+
+#### Child nodes
+
+**`fd:rules`** and **`fd:events`** — JCR child nodes for rules and event handlers. See base schema documentation.
 
 ## Client Libraries
 The component provides a `core.forms.components.accordion.v1.runtime` client library category that contains the Javascript runtime for the component. 

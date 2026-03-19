@@ -28,10 +28,47 @@ Adaptive Form Wizard component written in HTL.
 The Wizard component uses the `com.adobe.cq.forms.core.components.models.form.Wizard` Sling model as its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Wizard component and are expected to be available as `Resource` properties:
 
-1. `./title` - defines the title shown on the wizard
-2. `./name` - defines the component name.
+The following properties are written to JCR by the Edit Dialog and consumed by the Sling Model.
+
+#### Inherited from all components (base)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Panel name | `./name` | String | — | Submitted data key for panel data |
+| Data reference | `./dataRef` | String | — | JSON-path for data binding |
+| Visible | `./visible` | Boolean | *(runtime: true)* | Initial visibility |
+| Enabled | `./enabled` | Boolean | *(runtime: true)* | Whether panel is interactive |
+| Label | `./jcr:title` | String | — | Panel label text |
+| Hide label | `./hideTitle` | Boolean | `false` | Hides label visually |
+| Description | `./description` | String | — | Help text / long description |
+| Tooltip | `./tooltip` | String | — | Popover tooltip text |
+| Required | `./required` | Boolean | `false` | Whether panel requires user interaction |
+| Repeatable | `./repeatable` | Boolean | `false` | Whether panel can be repeated |
+| Min instances | `./minItems` | Integer | — | Minimum repeatable instances |
+| Max instances | `./maxItems` | Integer | — | Maximum repeatable instances |
+| Data type | `./type` | String | — | `object` or `array` |
+
+#### Container properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Lazy load | `./lazy` | Boolean | `false` | Defers loading children until navigated to |
+| Fragment path | `./fragmentPath` | String | — | Path to fragment definition (required when lazy=true) |
+
+#### Wizard specific properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Read only | `./readOnly` | Boolean | — | When true the wizard and all children render as read-only |
+| Wrap data | `./wrapData` | Boolean | — | Forces panel type to `object`; wraps child data under panel name key |
+| DOR break before | `./breakBeforeText` | String | — | Document of Record page-break control (break before panel) |
+| DOR break after | `./breakAfterText` | String | — | Document of Record page-break control (break after panel) |
+| DOR overflow | `./overflowText` | String | — | Document of Record overflow handling text |
+
+#### Child nodes
+
+**`fd:rules`** and **`fd:events`** — JCR child nodes for rules and event handlers. See base schema documentation.
 
 ## Client Libraries
 The component provides a `core.forms.components.wizard.v1.runtime` client library category that contains a recommended base
