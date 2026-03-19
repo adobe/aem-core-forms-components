@@ -640,7 +640,7 @@ REGISTRATION_FORM = {
     },
 }
 
-# Payload with an intentional schema violation — used to verify the validator rejects it
+# Negative test: fieldType value not in the enum — discriminator fails to match any branch
 INVALID_FORM = {
     "content": {
         "guideContainer": {
@@ -651,10 +651,9 @@ INVALID_FORM = {
             "thankYouMessage":    "Thanks.",
             "badField": {
                 "sling:resourceType": "core/fd/components/form/textinput/v2/textinput",
-                "fieldType":          "text-input",
+                "fieldType":          "not-a-valid-field-type",   # ← not in base.authoring.schema enum
                 "name":               "bad",
                 "jcr:title":          "Bad Field",
-                "unknownProp":        "this property is not in the schema",  # ← invalid
             },
         }
     }
@@ -673,11 +672,11 @@ def validate_and_create(results: list) -> bool:
     info("Validating intentionally invalid payload (expect errors)...")
     errs = validate_form_payload(INVALID_FORM)
     if errs:
-        ok(f"Validator correctly rejected invalid payload ({len(errs)} error(s))")
+        ok(f"Validator correctly rejected invalid fieldType ({len(errs)} error(s))")
         for e in errs[:3]:
             info(f"  error: {e}")
     else:
-        warn("Validator did NOT catch the invalid payload — check schema setup")
+        warn("Validator did NOT reject invalid fieldType — check discriminator schema setup")
 
     # 2b. Validate the real payload before sending
     info("Validating registration form payload...")
