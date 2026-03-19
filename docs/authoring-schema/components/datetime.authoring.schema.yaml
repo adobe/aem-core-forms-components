@@ -20,3 +20,8 @@ allOf:
           Injected via @ValueMapValue (optional). Internal pattern used for
           datetime formatting. Not exposed as a dialog field in v1 but
           available as a JCR property.
+          NOTE: This shadows the `pattern` property in field.authoring.schema.yaml
+          (which is a regex validation pattern). For datetime, `pattern` stores an
+          internal date formatting string. These are the same JCR property name with
+          different semantics depending on component. Do not confuse with the validation
+          pattern used in text-type fields.

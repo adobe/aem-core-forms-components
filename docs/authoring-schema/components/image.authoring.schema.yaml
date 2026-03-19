@@ -35,3 +35,7 @@ allOf:
           Long description of the image (not rendered in JSON model output —
           @JsonIgnore). Injected by StaticImageImpl as PN_DESCRIPTION.
           Stored as JCR String.
+          NOTE: This shadows the `description` in base.authoring.schema.yaml.
+          For StaticImageImpl, description is injected @JsonIgnore and is NOT
+          exported to the JSON model — it exists only as metadata in JCR.
+          This differs from the base schema behavior where description IS rendered.

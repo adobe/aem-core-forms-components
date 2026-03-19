@@ -36,9 +36,6 @@ allOf:
       enforceEnumMessage:
         type: string
         title: Enforce enum constraint message
-      uniqueItemsMessage:
-        type: string
-        title: Unique items constraint message
       areOptionsRichText:
         type: boolean
         title: Options are rich text
