@@ -15,25 +15,14 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.adobe.cq.forms.core.Utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.networknt.schema.JsonSchema;
-import com.networknt.schema.JsonSchemaFactory;
-import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -55,68 +44,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class JcrAuthoringSchemaValidationTest {
 
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
-    private static final ObjectMapper YAML_MAPPER = new ObjectMapper(new YAMLFactory());
 
-    /** Classpath prefix for all authoring schema YAML resources. */
-    private static final String SCHEMA_RESOURCE_ROOT = "/authoring-schema";
-
-    /** Temporary directory where JSON-converted schemas are written for file: URI loading. */
-    private static Path SCHEMA_TEMP_DIR;
-
-    private static JsonSchemaFactory SCHEMA_FACTORY;
-
-    @BeforeAll
-    static void setUpSchemas() throws Exception {
-        SCHEMA_TEMP_DIR = Files.createTempDirectory("jcr-authoring-schema-");
-
-        // Walk every *.yaml file under the authoring-schema classpath directory and
-        // convert each one to JSON in a mirrored temp directory tree.
-        // This is exhaustive by design: any new schema added to the classpath directory
-        // is automatically pre-converted — no list to maintain.
-        // (The YAML files on the classpath are copied from docs/authoring-schema/ at
-        // build time by the maven-resources-plugin, making docs/ the single source of truth.)
-        URL rootUrl = JcrAuthoringSchemaValidationTest.class.getResource(SCHEMA_RESOURCE_ROOT);
-        if (rootUrl == null) {
-            throw new IllegalStateException(
-                    "Authoring schema directory not found on classpath: " + SCHEMA_RESOURCE_ROOT);
-        }
-        Path resourceRoot = Paths.get(rootUrl.toURI());
-        try (java.util.stream.Stream<Path> yamlFiles = Files.walk(resourceRoot)) {
-            yamlFiles.filter(p -> p.toString().endsWith(".yaml")).forEach(yamlPath -> {
-                try {
-                    Path relativePart = resourceRoot.relativize(yamlPath);
-                    Path outPath = SCHEMA_TEMP_DIR.resolve(relativePart.toString());
-                    Files.createDirectories(outPath.getParent());
-                    try (InputStream in = Files.newInputStream(yamlPath)) {
-                        ObjectNode schemaNode = (ObjectNode) YAML_MAPPER.readTree(in);
-                        // Strip the bare $id so networknt uses the file: URI as identity
-                        // and relative $refs resolve correctly against the file system layout.
-                        schemaNode.remove("$id");
-                        JSON_MAPPER.writerWithDefaultPrettyPrinter().writeValue(outPath.toFile(), schemaNode);
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to convert schema: " + yamlPath, e);
-                }
-            });
-        }
-
-        SCHEMA_FACTORY = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
-    }
-
-    /**
-     * Load a component schema by its classpath-relative path. Internally this resolves to a file: URI in the temp
-     * directory tree so that all relative $refs (../field.authoring.schema.yaml) resolve naturally.
-     *
-     * @param classpathPath
-     *            e.g. /authoring-schema/components/textinput.authoring.schema.yaml
-     */
     private JsonSchema loadSchema(String classpathPath) {
-        // Map classpath path → temp file path (keeping .yaml extension to match $ref values)
-        String relativePart = classpathPath.substring(SCHEMA_RESOURCE_ROOT.length());
-        Path schemaFile = SCHEMA_TEMP_DIR
-                .resolve(relativePart.startsWith("/") ? relativePart.substring(1) : relativePart);
-        URI fileUri = schemaFile.toUri();
-        return SCHEMA_FACTORY.getSchema(fileUri);
+        return Utils.loadAuthoringSchema(classpathPath);
     }
 
     // -----------------------------------------------------------------------

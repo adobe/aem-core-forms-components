@@ -623,6 +623,6 @@ public class TextInputImplTest {
     void testJcrAuthoringSchemaCompliance() {
         context.currentResource(PATH_TEXTINPUT);
         Resource resource = context.currentResource();
-        Utils.testJcrSchemaValidation(resource, "/authoring-schema/textinput.authoring.schema.json");
+        Utils.testJcrSchemaValidation(resource, "/authoring-schema/components/textinput.authoring.schema.yaml");
     }
 }

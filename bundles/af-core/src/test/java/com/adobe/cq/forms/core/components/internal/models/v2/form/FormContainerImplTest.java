@@ -963,6 +963,6 @@ public class FormContainerImplTest {
         context.currentResource(PATH_FORM_FULL);
         Resource resource = context.currentResource();
         assertNotNull("Full formcontainer fixture must exist at " + PATH_FORM_FULL, resource);
-        Utils.testJcrSchemaValidation(resource, "/authoring-schema/formcontainer.authoring.schema.json");
+        Utils.testJcrSchemaValidation(resource, "/authoring-schema/components/formcontainer.authoring.schema.yaml");
     }
 }

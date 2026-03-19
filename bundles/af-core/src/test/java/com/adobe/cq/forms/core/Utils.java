@@ -21,7 +21,12 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.json.Json;
 import javax.json.JsonReader;
@@ -40,6 +45,7 @@ import com.adobe.cq.wcm.core.components.internal.jackson.PageModuleProvider;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.base.Joiner;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
@@ -169,32 +175,40 @@ public class Utils {
     }
 
     /**
-     * Validates the JCR ValueMap of a resource against the JCR authoring schema for a given component.
+     * Loads a JCR authoring schema by its YAML classpath path. The schema and all its $ref dependencies are resolved
+     * via a shared temp-directory cache initialised on first call — no pre-flattened JSON copies are needed.
+     *
+     * @param yamlClasspathPath
+     *            e.g. "/authoring-schema/components/textinput.authoring.schema.yaml"
+     * 
+     * @return the loaded {@link JsonSchema} ready for validation
+     */
+    public static JsonSchema loadAuthoringSchema(@NotNull String yamlClasspathPath) {
+        return SchemaCache.load(yamlClasspathPath);
+    }
+
+    /**
+     * Validates the JCR ValueMap of a resource against the JCR authoring schema for a component. The schema is loaded
+     * from the shared {@link SchemaCache} which resolves all $ref chains at runtime — no pre-flattened JSON schema
+     * files are needed in source control.
      *
      * @param resource
      *            the Sling resource whose ValueMap to validate
-     * @param schemaResourcePath
-     *            classpath path to the authoring schema JSON (e.g. "/authoring-schema/textinput.authoring.schema.json")
+     * @param yamlClasspathPath
+     *            classpath path to the component YAML authoring schema, e.g.
+     *            "/authoring-schema/components/textinput.authoring.schema.yaml"
      */
-    public static void testJcrSchemaValidation(@NotNull Resource resource, @NotNull String schemaResourcePath) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+    public static void testJcrSchemaValidation(@NotNull Resource resource, @NotNull String yamlClasspathPath) {
         try {
-            InputStream schemaStream = Utils.class.getResourceAsStream(schemaResourcePath);
-            if (schemaStream == null) {
-                fail("Authoring schema not found: " + schemaResourcePath);
-                return;
-            }
-            JsonSchema schema = schemaFactory.getSchema(schemaStream);
-            // Convert ValueMap to JSON — serialize the flat JCR properties
-            JsonNode jcrNode = objectMapper.valueToTree(resource.getValueMap());
-            Set<ValidationMessage> validationResult = schema.validate(jcrNode);
-            if (!validationResult.isEmpty()) {
+            JsonSchema schema = SchemaCache.load(yamlClasspathPath);
+            JsonNode jcrNode = new ObjectMapper().valueToTree(resource.getValueMap());
+            Set<ValidationMessage> errors = schema.validate(jcrNode);
+            if (!errors.isEmpty()) {
                 fail(String.format("JCR authoring schema validation failed for %s: %s", resource.getPath(),
-                        Joiner.on(" ").join(validationResult)));
+                        Joiner.on(" ").join(errors)));
             }
         } catch (Exception ex) {
-            fail(String.format("Unable to validate JCR node against authoring schema: %s", ex.getMessage()));
+            fail("Unable to validate JCR node against authoring schema: " + ex.getMessage());
         }
     }
 
@@ -285,6 +299,59 @@ public class Utils {
             return method;
         } catch (NoSuchMethodException e) {
             return null;
+        }
+    }
+
+    /**
+     * Lazily initialises a shared temp-directory tree of JSON-converted authoring schemas. All *.yaml files under the
+     * /authoring-schema classpath directory are converted once per JVM and written to a mirrored temp directory so
+     * networknt can resolve relative $refs via file: URIs — no pre-flattened JSON copies needed in source control.
+     */
+    private static final class SchemaCache {
+
+        private static final String SCHEMA_ROOT = "/authoring-schema";
+
+        static final Path TEMP_DIR;
+        static final JsonSchemaFactory FACTORY = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+
+        static {
+            try {
+                TEMP_DIR = Files.createTempDirectory("jcr-authoring-schema-");
+                ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
+                ObjectMapper jsonMapper = new ObjectMapper();
+                URL rootUrl = SchemaCache.class.getResource(SCHEMA_ROOT);
+                if (rootUrl == null) {
+                    throw new IllegalStateException(
+                            "Authoring schema directory not found on classpath: " + SCHEMA_ROOT);
+                }
+                Path resourceRoot = Paths.get(rootUrl.toURI());
+                try (Stream<Path> walk = Files.walk(resourceRoot)) {
+                    walk.filter(p -> p.toString().endsWith(".yaml")).forEach(yamlPath -> {
+                        try {
+                            Path rel = resourceRoot.relativize(yamlPath);
+                            Path out = TEMP_DIR.resolve(rel.toString());
+                            Files.createDirectories(out.getParent());
+                            try (InputStream in = Files.newInputStream(yamlPath)) {
+                                ObjectNode node = (ObjectNode) yamlMapper.readTree(in);
+                                node.remove("$id");
+                                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), node);
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException("Failed to convert schema: " + yamlPath, e);
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                throw new ExceptionInInitializerError(e);
+            }
+        }
+
+        static JsonSchema load(String yamlClasspathPath) {
+            String rel = yamlClasspathPath.substring(SCHEMA_ROOT.length());
+            if (rel.startsWith("/")) {
+                rel = rel.substring(1);
+            }
+            return FACTORY.getSchema(TEMP_DIR.resolve(rel).toUri());
         }
     }
 }

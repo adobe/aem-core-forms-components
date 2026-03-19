@@ -540,6 +540,6 @@ public class DropDownImplTest {
     void testJcrAuthoringSchemaCompliance() {
         context.currentResource(PATH_DROPDOWN_1);
         Resource resource = context.currentResource();
-        Utils.testJcrSchemaValidation(resource, "/authoring-schema/dropdown.authoring.schema.json");
+        Utils.testJcrSchemaValidation(resource, "/authoring-schema/components/dropdown.authoring.schema.yaml");
     }
 }
