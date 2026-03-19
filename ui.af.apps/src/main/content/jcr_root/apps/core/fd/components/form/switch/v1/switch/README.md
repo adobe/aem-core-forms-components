@@ -28,15 +28,45 @@ Adaptive Form Switch component written in HTL.
 The Form switch component uses the `com.adobe.cq.forms.core.components.models.form.Switch` extends `com.adobe.cq.forms.core.components.models.form.CheckBox` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Switch component and are expected to be available as `Resource` properties:
 
-1. `./jcr:title` - defines the label to use for this field
-2. `./hideTitle` - if set to `true`, the label of this field will be hidden
-3. `./name` - defines the name of the field, which will be submitted with the form data
-4. `./description` - defines a help message that can be rendered in the field as a hint for the user
-5. `./readOnly` - if set to `true`, the filed will be read only
-6. `./type` - defines the data type of the value
-7. `./enum` - defines the two set of possible values for this field. (On or Off)
+The following properties are written to JCR by the Edit Dialog and consumed by the Sling Model.
+
+#### Inherited from all components (base)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field name | `./name` | String | — | Submitted data key |
+| Data reference | `./dataRef` | String | — | JSON-path for data binding |
+| Visible | `./visible` | Boolean | *(runtime: true)* | Initial visibility; absent = runtime default true |
+| Enabled | `./enabled` | Boolean | *(runtime: true)* | Whether field is interactive; absent = runtime default true |
+| Label | `./jcr:title` | String | — | Visible label text |
+| Hide label | `./hideTitle` | Boolean | `false` | Hides label visually |
+| Description | `./description` | String | — | Help text / long description |
+| Tooltip | `./tooltip` | String | — | Popover tooltip text |
+| Show tooltip | `./tooltipVisible` | Boolean | `false` | Shows tooltip question-mark icon |
+| Required | `./required` | Boolean | `false` | Whether a value is required |
+| Required message | `./mandatoryMessage` | String | — | Error shown when required is violated |
+| Validation expression | `./validationExpression` | String | — | json-formula returning true when valid |
+| Assistive priority | `./assistPriority` | String | — | Screen-reader source: `description`, `title`, `name`, `custom` |
+| Data type | `./type` | String | — | `string`, `number`, `boolean`, etc. |
+
+#### Field properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Read-only | `./readOnly` | Boolean | `false` | Prevents user edits |
+| Default value | `./default` | Object[] | — | Initial value |
+| Multi-value default | `./fd:multiDefaultValues` | Object[] | — | Default for multi-value fields |
+| Empty value | `./fd:emptyValue` | String | — | Value on empty submit: `"null"`, `"undefined"`, `""` |
+| Placeholder | `./placeholder` | String | — | Ghosted hint text |
+
+#### Switch-specific
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| On value | `./checkedValue` | String/Boolean/Number | — | Value submitted when switch is in the "on" state; type coerced to match `./type`. `SwitchImpl` extends `AbstractCheckboxImpl` — enum index 0. |
+| Off value | `./uncheckedValue` | String/Boolean/Number | — | Value submitted when switch is in the "off" state; only used when `enableUncheckedValue=true`. Enum index 1. |
+| Submit value when off | `./enableUncheckedValue` | Boolean | `false` | When true, offValue is submitted when switch is in the off state. When false, `SwitchImpl` trims enumNames to a single entry. |
 
 ## Enum
 Switch component can have only one of two state i.e. ON and OFF. Since the enums are stored as array, the enum at index '0' is assumed to be OFF(i.e. switch is 'off'), and enum at index '1' is ON (i.e. switch is 'on'')

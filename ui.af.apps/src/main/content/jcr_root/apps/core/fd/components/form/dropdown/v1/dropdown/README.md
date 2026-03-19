@@ -30,20 +30,49 @@ Adaptive Form Drop-down List field component written in HTL.
 The Form Dropdown component uses the `com.adobe.cq.forms.core.components.models.form.DropDown` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Dropdown component and are expected to be available as `Resource` properties:
 
-1. `./jcr:title` - defines the label to use for this field
-2. `./hideTitle` - if set to `true`, the label of this field will be hidden
-3. `./name` - defines the name of the field, which will be submitted with the form data
-4. `./default` - defines the default value of the field
-5. `./description` - defines a help message that can be rendered in the field as a hint for the user
-6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
-7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-8. `./readOnly` - if set to `true`, the filed will be read only
-9. `./type` - defines the type of values(string, boolean, number) which can be accepted
-10. `./enum` - an array[] of type that defines  the available values for selection
-11. `./enumNames` - an array[] of strings that defines the display value of the enum
-12. `./multiSelect` - a configuration option that enables the selection of multiple values in dropdown
+The following properties are written to JCR by the Edit Dialog and consumed by the Sling Model.
+
+#### Inherited from all components (base)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field name | `./name` | String | — | Submitted data key |
+| Data reference | `./dataRef` | String | — | JSON-path for data binding |
+| Visible | `./visible` | Boolean | *(runtime: true)* | Initial visibility; absent = runtime default true |
+| Enabled | `./enabled` | Boolean | *(runtime: true)* | Whether field is interactive; absent = runtime default true |
+| Label | `./jcr:title` | String | — | Visible label text |
+| Hide label | `./hideTitle` | Boolean | `false` | Hides label visually |
+| Description | `./description` | String | — | Help text / long description |
+| Tooltip | `./tooltip` | String | — | Popover tooltip text |
+| Show tooltip | `./tooltipVisible` | Boolean | `false` | Shows tooltip question-mark icon |
+| Required | `./required` | Boolean | `false` | Whether a value is required |
+| Required message | `./mandatoryMessage` | String | — | Error shown when required is violated |
+| Validation expression | `./validationExpression` | String | — | json-formula returning true when valid |
+| Assistive priority | `./assistPriority` | String | — | Screen-reader source: `description`, `title`, `name`, `custom` |
+| Data type | `./type` | String | — | `string`, `number`, `boolean`, etc. |
+
+#### Field properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Read-only | `./readOnly` | Boolean | `false` | Prevents user edits |
+| Default value | `./default` | Object[] | — | Initial value |
+| Multi-value default | `./fd:multiDefaultValues` | Object[] | — | Default for multi-value fields |
+| Empty value | `./fd:emptyValue` | String | — | Value on empty submit: `"null"`, `"undefined"`, `""` |
+| Placeholder | `./placeholder` | String | — | Ghosted hint text |
+
+#### Dropdown-specific
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Option values | `./enum` | String[] | — | Available values; type coerced to match `./type` at runtime |
+| Option display labels | `./enumNames` | String[] | — | Display text for each enum value; length must match `./enum` |
+| Multi-select | `./multiSelect` | Boolean | `false` | When true, type becomes an array type (e.g. `string[]`); injected via `@ValueMapValue` in `DropDownImpl` |
+| Enforce enum | `./enforceEnum` | Boolean | `true` | When false, users can type values not in the enum list |
+| Enforce enum message | `./enforceEnumMessage` | String | — | Error message shown when enforceEnum is violated |
+| Unique items message | `./uniqueItemsMessage` | String | — | Error message shown when duplicate values are submitted in multi-select mode |
+| Options are rich text | `./areOptionsRichText` | Boolean | — | When true, enumNames are rendered as rich text HTML (consumed client-side) |
 
 ## Client Libraries
 The component provides a `core.forms.components.dropdown.v1.runtime` client library category that contains the Javascript runtime for the component. 
