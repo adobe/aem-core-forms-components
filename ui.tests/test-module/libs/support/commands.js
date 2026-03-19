@@ -298,6 +298,7 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
             } else {
                 cy.get(path).then($header => {
                     if (!$header.is(':visible')) {
+                        cy.get(siteSelectors.overlays.self).scrollIntoView();
                         cy.get(selector).first().click({force: true});
                         cy.get(path).should('be.visible');
                     } else {
