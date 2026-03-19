@@ -77,7 +77,7 @@ public class FormStructureParserImpl implements FormStructureParser {
         // get client library from theme content path
         if (StringUtils.isNotBlank(themeContentPath)) {
             Resource themeResource = resource.getResourceResolver()
-                    .getResource(themeContentPath + ThemeConstants.RELATIVE_PATH_METADATA);
+                .getResource(themeContentPath + ThemeConstants.RELATIVE_PATH_METADATA);
             if (themeResource != null) {
                 ValueMap themeProps = themeResource.getValueMap();
                 themeClientLibRef = themeProps.get(ThemeConstants.PROPERTY_CLIENTLIB_CATEGORY, "");
@@ -157,7 +157,7 @@ public class FormStructureParserImpl implements FormStructureParser {
             if (request != null) {
                 HtlUtil htlUtil = request.adaptTo(HtlUtil.class);
                 isSubmissionView = (htlUtil != null && htlUtil.isEdgeDeliveryRequest())
-                        || ComponentUtils.shouldIncludeSubmitProperties(request);
+                    || ComponentUtils.shouldIncludeSubmitProperties(request);
             }
 
             if (isSubmissionView) {

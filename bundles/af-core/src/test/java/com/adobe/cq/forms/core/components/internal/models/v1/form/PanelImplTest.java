@@ -80,7 +80,7 @@ public class PanelImplTest {
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
                 return StreamSupport.stream(childResources.spliterator(), false)
-                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
+                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
             }
         });
     }
@@ -157,9 +157,9 @@ public class PanelImplTest {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         Map<String, Object> dorProperties = panel.getDorProperties();
         assertTrue(dorProperties.isEmpty(),
-                "getDorProperties should return empty map when no dor properties are set in JCR");
+            "getDorProperties should return empty map when no dor properties are set in JCR");
         assertFalse(panel.getProperties().containsKey("fd:dor"),
-                "fd:dor should not appear in properties when no dor properties are set");
+            "fd:dor should not appear in properties when no dor properties are set");
     }
 
     @AfterEach

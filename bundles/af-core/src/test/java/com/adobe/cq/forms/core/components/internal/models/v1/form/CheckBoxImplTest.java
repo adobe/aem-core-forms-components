@@ -58,7 +58,7 @@ public class CheckBoxImplTest {
 
     private static final String PATH_CHECKBOX_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/checkbox-enableUncheckedValueFalse";
     private static final String PATH_CHECKBOX_ENABLEUNCHECKEDABSENT = CONTENT_ROOT
-            + "/checkbox-enableUncheckedValueAbsent";
+        + "/checkbox-enableUncheckedValueAbsent";
     private static final String PATH_CHECKBOX_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/checkbox-without-fieldtype";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 

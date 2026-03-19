@@ -50,8 +50,7 @@ package com.adobe.cq.forms.core.components.internal.form;
  */
 public final class FeatureToggleConstants {
 
-    private FeatureToggleConstants() {
-    }
+    private FeatureToggleConstants() {}
 
     /**
      * When enabled, fragment container rules and events are merged with the fragment placeholder (panel) rules and

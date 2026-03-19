@@ -299,7 +299,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             // we anyways dont need to rely on wcmmode while fetching form definition.
             if (!matches) {
                 editMode = WCMMode.fromRequest(request) == WCMMode.EDIT
-                        || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+                    || WCMMode.fromRequest(request) == WCMMode.DESIGN;
             }
         }
         return editMode;
@@ -324,8 +324,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * non empty or 2) the value is of type string[] and has more than 1 elements
      */
     private final Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String
-            && ((String) obj.getValue()).length() > 0)
-            || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
+        && ((String) obj.getValue()).length() > 0)
+        || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
@@ -376,10 +376,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     protected final Map<String, String> getRulesForResource(Resource resource) {
         String[] VALID_RULES = new String[] { "description", "enabled", "enum", "enumNames", "exclusiveMaximum",
-                "exclusiveMinimum", "label", "maximum", "minimum", "readOnly", "required", "value", "visible" };
+            "exclusiveMinimum", "label", "maximum", "minimum", "readOnly", "required", "value", "visible" };
 
         Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES)
-                .anyMatch(validKey -> validKey.equals(obj.getKey()));
+            .anyMatch(validKey -> validKey.equals(obj.getKey()));
 
         Predicate<Map.Entry<String, Object>> isRuleValid = isEntryNonEmpty.and(isRuleNameValid);
 
@@ -390,8 +390,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (ruleNode != null) {
             ValueMap ruleNodeProps = ruleNode.getValueMap();
             return ruleNodeProps.entrySet().stream().filter(isRuleValid)
-                    .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (String) entry.getValue()))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (String) entry.getValue()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
         return Collections.emptyMap();
     }
@@ -435,9 +435,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     private void populateAdditionalRulesProperties(@NotNull Resource ruleNode,
-            Map<String, Object> customRulesProperties) {
+        Map<String, Object> customRulesProperties) {
         String[] RULES = { "fd:formReady", "fd:layoutReady", "fd:docReady", "fd:calc", "fd:init", "fd:validate",
-                "fd:indexChange" };
+            "fd:indexChange" };
         ValueMap props = ruleNode.adaptTo(ValueMap.class);
         if (props != null) {
             Arrays.stream(RULES).forEach(rule -> addRuleProperty(props, customRulesProperties, rule));
@@ -485,10 +485,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     private Stream<Map.Entry<String, String[]>> sanitizeEvent(Map.Entry<String, Object> entry) {
         String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change", "submitSuccess",
-                "submitError" };
+            "submitError" };
 
         Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_")
-                || Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
+            || Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
         Predicate<Map.Entry<String, Object>> isEventValid = isEntryNonEmpty.and(isEventNameValid);
 
         Stream<Map.Entry<String, String[]>> updatedEntry;
@@ -542,7 +542,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             }
         }
         return eventSet.stream().flatMap(this::sanitizeEvent)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     /**
@@ -602,7 +602,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                     // Check at page level to allow components embedded via containers in editable templates to inherit
                     // the setting
                     this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils
-                            .isDataLayerEnabled(this.getCurrentPage().getContentResource());
+                        .isDataLayerEnabled(this.getCurrentPage().getContentResource());
                 } else {
                     this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
                 }
@@ -617,7 +617,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private static class DataRefSerializer extends JsonSerializer<String> {
         @Override
         public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-                throws IOException {
+            throws IOException {
             if (NULL_DATA_REF.equals(s)) {
                 jsonGenerator.writeString((String) null);
             } else {
@@ -633,9 +633,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     private boolean isAllowedType(Object value) {
         return value instanceof String || value instanceof String[] || value instanceof Boolean
-                || value instanceof Boolean[] || value instanceof Calendar || value instanceof Calendar[]
-                || value instanceof BigDecimal || value instanceof BigDecimal[] || value instanceof Long
-                || value instanceof Long[];
+            || value instanceof Boolean[] || value instanceof Calendar || value instanceof Calendar[]
+            || value instanceof BigDecimal || value instanceof BigDecimal[] || value instanceof Long
+            || value instanceof Long[];
     }
 
     /**
@@ -652,13 +652,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
         ValueMap resourceMap = resource.getValueMap();
         Map<String, Object> nodeBasedCustomProperties = resourceMap.entrySet().stream()
-                .filter(entry -> isAllowedType(entry.getValue()) && !reservedProperties.contains(entry.getKey())
-                        && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            .filter(entry -> isAllowedType(entry.getValue()) && !reservedProperties.contains(entry.getKey())
+                && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         nodeBasedCustomProperties.forEach(customProperties::putIfAbsent);
         try {
             templateBasedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
-                    .map(CustomPropertyInfo::getProperties).orElse(Collections.emptyMap());
+                .map(CustomPropertyInfo::getProperties).orElse(Collections.emptyMap());
         } catch (NoClassDefFoundError e) {
             logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon.");
             templateBasedCustomProperties = Collections.emptyMap();
@@ -675,11 +675,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             if (associatePropertiesResource != null) {
                 try {
                     AssociateProperties associateProperties = associatePropertiesResource
-                            .adaptTo(AssociateProperties.class);
+                        .adaptTo(AssociateProperties.class);
                     ObjectMapper objectMapper = new ObjectMapper();
                     if (associateProperties != null) {
-                        return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {
-                        });
+                        return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {});
                     }
                 } catch (Exception e) {
                     logger.warn("Unable to adapt associate properties", e);
@@ -744,8 +743,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                 DorContainer dorContainer = dorContainerResource.adaptTo(DorContainer.class);
                 ObjectMapper objectMapper = new ObjectMapper();
                 if (dorContainer != null) {
-                    return objectMapper.convertValue(dorContainer, new TypeReference<Map<String, Object>>() {
-                    });
+                    return objectMapper.convertValue(dorContainer, new TypeReference<Map<String, Object>>() {});
                 }
             }
         }

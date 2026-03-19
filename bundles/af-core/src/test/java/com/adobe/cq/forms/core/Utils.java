@@ -71,7 +71,7 @@ public class Utils {
             mapper.writerWithView(viewType).writeValue(writer, model);
         } catch (IOException e) {
             fail(String.format("Unable to generate JSON export for model %s: %s", model.getClass().getName(),
-                    e.getMessage()));
+                e.getMessage()));
         }
         return IOUtils.toInputStream(writer.toString());
     }
@@ -87,7 +87,7 @@ public class Utils {
             mapper.writerWithView(Views.Author.class).writeValue(writer, model);
         } catch (IOException e) {
             fail(String.format("Unable to generate JSON export for model %s: %s", model.getClass().getName(),
-                    e.getMessage()));
+                e.getMessage()));
         }
         return IOUtils.toInputStream(writer.toString());
     }
@@ -103,7 +103,7 @@ public class Utils {
      *            the class path resource providing the expected JSON object
      */
     public static void testJSONExport(Object model, String expectedJsonResource,
-            Class<? extends Views.Publish> viewType) {
+        Class<? extends Views.Publish> viewType) {
         InputStream modeInputStream = getJson(model, viewType);
         JsonReader outputReader = Json.createReader(modeInputStream);
         InputStream is = Utils.class.getResourceAsStream(expectedJsonResource);
@@ -205,7 +205,7 @@ public class Utils {
             Set<ValidationMessage> errors = schema.validate(jcrNode);
             if (!errors.isEmpty()) {
                 fail(String.format("JCR authoring schema validation failed for %s: %s", resource.getPath(),
-                        Joiner.on(" ").join(errors)));
+                    Joiner.on(" ").join(errors)));
             }
         } catch (Exception ex) {
             fail("Unable to validate JCR node against authoring schema: " + ex.getMessage());
@@ -259,7 +259,7 @@ public class Utils {
             f.set(target, value);
         } catch (IllegalAccessException | RuntimeException e) {
             throw new RuntimeException(
-                    "Unable to set internal state on a private field. Please report to mockito mailing list.", e);
+                "Unable to set internal state on a private field. Please report to mockito mailing list.", e);
         }
     }
 
@@ -271,7 +271,7 @@ public class Utils {
         }
         if (f == null) {
             throw new IllegalArgumentException("You want me to get this field: '" + field + "' on this class: '"
-                    + clazz.getSimpleName() + "' but this field is not declared withing hierarchy of this class!");
+                + clazz.getSimpleName() + "' but this field is not declared withing hierarchy of this class!");
         }
         return f;
     }
@@ -322,7 +322,7 @@ public class Utils {
                 URL rootUrl = SchemaCache.class.getResource(SCHEMA_ROOT);
                 if (rootUrl == null) {
                     throw new IllegalStateException(
-                            "Authoring schema directory not found on classpath: " + SCHEMA_ROOT);
+                        "Authoring schema directory not found on classpath: " + SCHEMA_ROOT);
                 }
                 Path resourceRoot = Paths.get(rootUrl.toURI());
                 try (Stream<Path> walk = Files.walk(resourceRoot)) {

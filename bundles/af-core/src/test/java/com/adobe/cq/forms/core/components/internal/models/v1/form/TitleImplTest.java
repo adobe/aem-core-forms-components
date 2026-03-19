@@ -107,7 +107,7 @@ public class TitleImplTest {
 
     @Test
     protected void defaultTitleShouldBePickedFromGuideContainer()
-            throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Title title = getTitleUnderTest(PATH_TITLE_NOPROPS, Title.PN_DESIGN_DEFAULT_TYPE, "h2");
         Resource mockGuideContainerResource = Mockito.mock(Resource.class);
         Mockito.when(mockGuideContainerResource.isResourceType(Mockito.anyString())).thenReturn(true);
@@ -156,12 +156,12 @@ public class TitleImplTest {
         context.currentResource(PATH_TITLE);
         // added this since AF API expects this to be present
         GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class,
-                Mockito.mock(GuideLocalizationService.class));
+            Mockito.mock(GuideLocalizationService.class));
         Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "de" });
         MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context
-                .getService(ResourceBundleProvider.class);
+            .getService(ResourceBundleProvider.class);
         MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider
-                .getResourceBundle("/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
+            .getResourceBundle("/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
         resourceBundle.putAll(new HashMap<String, String>() {
             {
                 put("guideContainer##title##text##5648", "Title");

@@ -62,7 +62,7 @@ public class ComponentUtils {
 
     private static final String EDGE_DELIVERY_FRAGMENT_CONTAINER_REL_PATH = "root/section/form";
     private static final String[] EDGE_DELIVERY_RESOURCE_TYPES = new String[] {
-            "core/franklin/components/page/v1/page" };
+        "core/franklin/components/page/v1/page" };
     private static final Logger logger = LoggerFactory.getLogger(ComponentUtils.class);
 
     private ComponentUtils() {
@@ -182,7 +182,7 @@ public class ComponentUtils {
      */
     @NotNull
     public static String translate(@NotNull String propertyValue, @NotNull String propertyName,
-            @NotNull Resource resource, @Nullable I18n i18n) {
+        @NotNull Resource resource, @Nullable I18n i18n) {
         return translate(propertyValue, propertyName, resource.getValueMap(), i18n);
     }
 
@@ -203,7 +203,7 @@ public class ComponentUtils {
      */
     @NotNull
     public static String translate(@NotNull String propertyValue, @NotNull String propertyName,
-            @NotNull ValueMap valueMap, @Nullable I18n i18n) {
+        @NotNull ValueMap valueMap, @Nullable I18n i18n) {
         String translatedValue = propertyValue;
         if (i18n != null) {
             translatedValue = GuideUtils.translateOrReturnOriginal(propertyValue, propertyName, i18n, valueMap);
@@ -238,7 +238,7 @@ public class ComponentUtils {
     public static <T> T getExclusiveValue(Object exclusiveValue, T value, Object exclusiveValueCheck) {
         // Check if exclusive value is a boolean and true, and value is not null
         if (exclusiveValue instanceof Boolean
-                && (Boolean.TRUE.equals(exclusiveValue) || Boolean.TRUE.equals(exclusiveValueCheck)) && value != null) {
+            && (Boolean.TRUE.equals(exclusiveValue) || Boolean.TRUE.equals(exclusiveValueCheck)) && value != null) {
             // If so, return the value
             return (T) value;
         } else if (exclusiveValue instanceof Long) { // special case
@@ -286,10 +286,10 @@ public class ComponentUtils {
     public static Object[] coerce(@NotNull BaseConstraint.Type type, @NotNull Object[] objArr) {
         if (type.equals(type.NUMBER) || type.equals(type.NUMBER_ARRAY)) {
             return Arrays.stream(objArr).filter(Objects::nonNull).map(Object::toString).map(Long::parseLong)
-                    .toArray(Long[]::new);
+                .toArray(Long[]::new);
         } else if (type.equals(type.BOOLEAN) || type.equals(type.BOOLEAN_ARRAY)) {
             return Arrays.stream(objArr).filter(Objects::nonNull).map(Object::toString).map(Boolean::parseBoolean)
-                    .toArray(Boolean[]::new);
+                .toArray(Boolean[]::new);
         } else {
             return ArrayUtils.clone(objArr);
         }
@@ -343,7 +343,7 @@ public class ComponentUtils {
         }
         String submissionHeaderName = FormConstants.FORM_DEFINITION_SUBMISSION;
         return submissionHeaderName.equals(request.getAttribute(FormConstants.X_ADOBE_FORM_DEFINITION))
-                || submissionHeaderName.equals(request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION));
+            || submissionHeaderName.equals(request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION));
     }
 
     /**
@@ -378,9 +378,9 @@ public class ComponentUtils {
         }
         try {
             RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).setSocketTimeout(5000)
-                    .setConnectionRequestTimeout(5000).build();
+                .setConnectionRequestTimeout(5000).build();
             CloseableHttpClient httpClient = clientBuilderFactory.newBuilder().setDefaultRequestConfig(requestConfig)
-                    .build();
+                .build();
             HttpGet httpGet = new HttpGet(supportedSubmitActionsUrl);
             try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
                 if (isSuccessfulResponse(response)) {
@@ -406,7 +406,7 @@ public class ComponentUtils {
 
     private static boolean isSuccessfulResponse(CloseableHttpResponse response) {
         return response.getStatusLine() != null
-                && response.getStatusLine().getStatusCode() == java.net.HttpURLConnection.HTTP_OK;
+            && response.getStatusLine().getStatusCode() == java.net.HttpURLConnection.HTTP_OK;
     }
 
 }

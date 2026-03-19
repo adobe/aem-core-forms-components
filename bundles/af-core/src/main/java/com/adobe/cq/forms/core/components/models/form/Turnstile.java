@@ -25,5 +25,4 @@ import org.osgi.annotation.versioning.ConsumerType;
  * @since com.adobe.cq.forms.core.components.models.form 5.10.0
  */
 @ConsumerType
-public interface Turnstile extends Captcha {
-}
+public interface Turnstile extends Captcha {}

@@ -35,8 +35,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Text.class,
-        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_TEXT_DRAW_V1 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { Text.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_TEXT_DRAW_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextImpl extends AbstractFormComponentImpl implements Text {
 

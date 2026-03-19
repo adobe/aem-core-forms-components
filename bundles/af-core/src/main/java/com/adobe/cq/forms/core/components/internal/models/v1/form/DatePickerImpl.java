@@ -40,9 +40,12 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { DatePicker.class,
-        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_DATE_PICKER_V1,
-                FormConstants.RT_FD_FORM_DATE_PICKER_V2 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { DatePicker.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_DATE_PICKER_V1,
+        FormConstants.RT_FD_FORM_DATE_PICKER_V2 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class DatePickerImpl extends AbstractFieldImpl implements DatePicker {
 

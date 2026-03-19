@@ -63,17 +63,17 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
     private static final String PATH_TEXTINPUT_BLANK_DATAREF = CONTENT_ROOT + "/textinput-blank-dataref";
     private static final String PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION = CONTENT_ROOT
-            + "/textinput-blank-validationExpression";
+        + "/textinput-blank-validationExpression";
     private static final String PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT
-            + "/textinput-displayValueExpression";
+        + "/textinput-displayValueExpression";
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT
-            + "/textinput-placeholder-autocomplete";
+        + "/textinput-placeholder-autocomplete";
     private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
     private static final String PATH_TEXTINPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/textinput-without-fieldtype";
     private static final String PATH_TEXTINPUT_EMPTYVALUE_NULL = CONTENT_ROOT + "/textinput-emptyvalue-null";
     private static final String PATH_TEXTINPUT_EMPTYVALUE_UNDEFINED = CONTENT_ROOT + "/textinput-emptyvalue-undefined";
     private static final String PATH_TEXTINPUT_EMPTYVALUE_EMPTY_STRING = CONTENT_ROOT
-            + "/textinput-emptyvalue-empty-string";
+        + "/textinput-emptyvalue-empty-string";
     private static final String PATH_TEXTINPUT_EMPTYVALUE_INVALID = CONTENT_ROOT + "/textinput-emptyvalue-invalid";
     private static final String PATH_TEXTINPUT_EMPTYVALUE_NOT_SET = CONTENT_ROOT + "/textinput-emptyvalue-not-set";
 
@@ -146,16 +146,16 @@ public class TextInputImplTest {
     void testDorPropertiesEmptyWhenNotSet() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
         assertTrue("getDorProperties should return empty map when no dor properties are set in JCR",
-                textInput.getDorProperties().isEmpty());
+            textInput.getDorProperties().isEmpty());
         assertFalse("fd:dor should not appear in properties when no dor properties are set",
-                textInput.getProperties().containsKey("fd:dor"));
+            textInput.getProperties().containsKey("fd:dor"));
     }
 
     @Test
     void testDorPropertiesIncludedWhenSet() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
         assertTrue("fd:dor should appear in properties when dor properties are set in JCR",
-                textInput.getProperties().containsKey("fd:dor"));
+            textInput.getProperties().containsKey("fd:dor"));
     }
 
     @Test
@@ -329,7 +329,7 @@ public class TextInputImplTest {
     @Test
     void testGetExclusiveMinimum() {
         TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT_EXCLUSIVE, TextInput.class,
-                context);
+            context);
         assertNull(numberTextInput.getMinimum());
         assertEquals(10L, numberTextInput.getExclusiveMinimum().longValue());
     }
@@ -337,7 +337,7 @@ public class TextInputImplTest {
     @Test
     void testGetExclusiveMaximum() {
         TextInput numberTextInput = Utils.getComponentUnderTest(PATH_NUMBER_TEXTINPUT_EXCLUSIVE, TextInput.class,
-                context);
+            context);
         assertNull(numberTextInput.getMaximum());
         assertEquals(100L, numberTextInput.getExclusiveMaximum().longValue());
     }
@@ -416,7 +416,7 @@ public class TextInputImplTest {
         assertArrayEquals(new Long[] { 345L, 576L }, (Object[]) result.get("customPropLongArray"));
         Assertions.assertEquals(new BigDecimal("45.67"), (BigDecimal) result.get("customPropDecimal"));
         assertArrayEquals(new BigDecimal[] { new BigDecimal("45.67"), new BigDecimal("90.34") },
-                (BigDecimal[]) result.get("customPropDecimalArray"));
+            (BigDecimal[]) result.get("customPropDecimalArray"));
         Assertions.assertEquals(new GregorianCalendar(2022, Calendar.SEPTEMBER, 13, 9, 0, 0) {
             {
                 set(Calendar.MILLISECOND, 0);
@@ -512,14 +512,14 @@ public class TextInputImplTest {
     @Test
     void testJSONExportForEmptyValidationExpression() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION, TextInput.class,
-                context);
+            context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION));
     }
 
     @Test
     void testPlaceholderAndAutocomplete() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE, TextInput.class,
-                context);
+            context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE));
         assertEquals("given-name", textInput.getAutoComplete());
         assertEquals("test-placeholder", textInput.getPlaceHolder());
@@ -528,7 +528,7 @@ public class TextInputImplTest {
     @Test
     void testJSONExportForDisplayValueExpression() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION, TextInput.class,
-                context);
+            context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION));
     }
 
@@ -554,14 +554,14 @@ public class TextInputImplTest {
     @Test
     void testEmptyValueUndefined() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_EMPTYVALUE_UNDEFINED, TextInput.class,
-                context);
+            context);
         assertEquals("undefined", textInput.getEmptyValue());
     }
 
     @Test
     void testEmptyValueEmptyString() {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_EMPTYVALUE_EMPTY_STRING, TextInput.class,
-                context);
+            context);
         assertEquals("", textInput.getEmptyValue());
     }
 
@@ -584,7 +584,7 @@ public class TextInputImplTest {
         assertEquals(AbstractFieldImpl.EmptyValue.UNDEFINED, AbstractFieldImpl.EmptyValue.fromString("undefined"));
         assertEquals(AbstractFieldImpl.EmptyValue.EMPTY_STRING, AbstractFieldImpl.EmptyValue.fromString(""));
         assertEquals(AbstractFieldImpl.EmptyValue.EMPTY_STRING,
-                AbstractFieldImpl.EmptyValue.fromString("invalid-value"));
+            AbstractFieldImpl.EmptyValue.fromString("invalid-value"));
         assertEquals(null, AbstractFieldImpl.EmptyValue.fromString(null));
     }
 
@@ -606,7 +606,7 @@ public class TextInputImplTest {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
         Map<String, String[]> events = textInput.getEvents();
         assertTrue("getEvents should include custom:setProperty when toggle is OFF",
-                events.containsKey("custom:setProperty"));
+            events.containsKey("custom:setProperty"));
         assertArrayEquals(new String[] { "$event.payload" }, events.get("custom:setProperty"));
     }
 
@@ -616,7 +616,7 @@ public class TextInputImplTest {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
         Map<String, String[]> events = textInput.getEvents();
         assertFalse("getEvents should NOT include custom:setProperty when toggle is ON",
-                events.containsKey("custom:setProperty"));
+            events.containsKey("custom:setProperty"));
     }
 
     @Test

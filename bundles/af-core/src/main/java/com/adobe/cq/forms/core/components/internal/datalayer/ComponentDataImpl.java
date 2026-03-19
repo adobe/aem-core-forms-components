@@ -54,7 +54,9 @@ public class ComponentDataImpl implements FormComponentData {
      * @param resource
      *            The JCR resource (immutable, read-only interface)
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "This constructor stores references to FormComponent and Resource objects. These objects are designed to be immutable and shared across the system. The FormComponent interface provides read-only access to form component data, and the Resource interface represents an immutable JCR resource. This is safe from a security perspective as these objects cannot be modified through the stored references.")
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "This constructor stores references to FormComponent and Resource objects. These objects are designed to be immutable and shared across the system. The FormComponent interface provides read-only access to form component data, and the Resource interface represents an immutable JCR resource. This is safe from a security perspective as these objects cannot be modified through the stored references.")
     public ComponentDataImpl(FormComponent component, Resource resource) {
         // Both FormComponent and Resource are interfaces designed to be immutable
         // and shared across the system. They provide read-only access to data.

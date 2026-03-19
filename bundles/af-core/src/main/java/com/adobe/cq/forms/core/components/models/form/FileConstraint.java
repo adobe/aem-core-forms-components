@@ -34,7 +34,7 @@ public interface FileConstraint {
     String DEFAULT_MAX_FILE_SIZE = "2MB";
 
     List<String> DEFAULT_ACCEPT = Collections
-            .unmodifiableList(Arrays.asList("audio/*", "video/*", "image/*", "text/*", "application/pdf"));
+        .unmodifiableList(Arrays.asList("audio/*", "video/*", "image/*", "text/*", "application/pdf"));
 
     /**
      * Returns the Maximum file size (in IEC specification) that a field can accept. The constraint is applicable for

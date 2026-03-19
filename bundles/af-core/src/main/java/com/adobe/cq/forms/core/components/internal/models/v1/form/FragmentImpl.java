@@ -61,8 +61,11 @@ import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Fragment.class,
-        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_FRAGMENT_V1 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { Fragment.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_FRAGMENT_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FragmentImpl extends PanelImpl implements Fragment {
 
@@ -75,7 +78,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @OSGiService
     private ModelFactory modelFactory;
 
-    @OSGiService(filter = "(service.pid=org.apache.sling.i18n.impl.JcrResourceBundleProvider)", injectionStrategy = InjectionStrategy.OPTIONAL)
+    @OSGiService(
+        filter = "(service.pid=org.apache.sling.i18n.impl.JcrResourceBundleProvider)",
+        injectionStrategy = InjectionStrategy.OPTIONAL)
     private ResourceBundleProvider resourceBundleProvider;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FRAGMENT_PATH)
@@ -131,7 +136,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request,
-            @NotNull Class<T> modelClass) {
+        @NotNull Class<T> modelClass) {
         if (fragmentContainer == null) {
             return new LinkedHashMap<>();
         }
@@ -155,7 +160,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
             };
         }
         Map<String, T> models = getChildrenModels(wrappedSlingHttpServletRequest, modelClass,
-                filteredChildrenResources);
+            filteredChildrenResources);
 
         // Set i18n for fragment children since they are processed with request != null
         // Use fragment container-specific i18n to ensure correct resource bundle path

@@ -42,7 +42,9 @@ import com.day.image.Layer;
  * Renders an image
  */
 
-@Component(service = { Servlet.class }, property = { "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_IMAGE_V1,
+@Component(
+    service = { Servlet.class },
+    property = { "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_IMAGE_V1,
         "sling.servlet.extensions=jpg", "sling.servlet.extensions=png", "sling.servlet.extensions=gif",
         "sling.servlet.methods=GET" })
 public class StaticImageGETServlet extends AbstractImageServlet {
@@ -65,7 +67,7 @@ public class StaticImageGETServlet extends AbstractImageServlet {
 
     @Override
     protected void writeLayer(SlingHttpServletRequest req, SlingHttpServletResponse resp, ImageContext imageContext,
-            Layer layer) throws IOException, RepositoryException {
+        Layer layer) throws IOException, RepositoryException {
 
         Image image = new Image(imageContext.resource);
         image = getImage(resp, imageContext, image);
@@ -93,7 +95,7 @@ public class StaticImageGETServlet extends AbstractImageServlet {
     }
 
     protected boolean isModified(SlingHttpServletRequest req, SlingHttpServletResponse resp, ImageContext imageContext,
-            Layer layer, Image image, boolean modified) throws RepositoryException {
+        Layer layer, Image image, boolean modified) throws RepositoryException {
         if (layer != null) {
             // crop
             modified = image.crop(layer) != null;

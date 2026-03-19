@@ -67,9 +67,12 @@ import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { FormContainer.class,
-        ContainerExporter.class, ComponentExporter.class }, resourceType = { FormContainerImpl.RESOURCE_TYPE,
-                FormConstants.RT_FD_FRAGMENT_CONTAINER_V1 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { FormContainer.class,
+        ContainerExporter.class, ComponentExporter.class },
+    resourceType = { FormContainerImpl.RESOURCE_TYPE,
+        FormConstants.RT_FD_FRAGMENT_CONTAINER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FormContainerImpl extends AbstractContainerImpl implements FormContainer {
     protected static final String RESOURCE_TYPE = "core/fd/components/form/container/v2/container";
@@ -277,7 +280,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             // handling use-case when AF is used in iframe mode inside embed form component
             if (request != null && request.getAttribute("formRenderingInsideEmbedContainer") != null) {
                 return ComponentUtils.getEncodedPath(StringUtils.replace(getPath(),
-                        "/" + JcrConstants.JCR_CONTENT + "/" + GuideConstants.GUIDE_CONTAINER_NODE_NAME, ""));
+                    "/" + JcrConstants.JCR_CONTENT + "/" + GuideConstants.GUIDE_CONTAINER_NODE_NAME, ""));
             }
             return ComponentUtils.getEncodedPath(getPath());
         }
@@ -318,18 +321,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                 return "";
             } else {
                 return "https://forms.adobe.com" + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/"
-                        + ComponentUtils.getEncodedPath(resource.getPath() + ".model.json");
+                    + ComponentUtils.getEncodedPath(resource.getPath() + ".model.json");
             }
         }
         return getContextPath()
-                + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId());
+            + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId());
     }
 
     @Override
     @JsonIgnore
     public String getDataUrl() {
         return getContextPath()
-                + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId());
+            + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/data/" + getId());
     }
 
     @Override
@@ -351,7 +354,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             Page currentPage = getCurrentPage();
             if (!GuideWCMUtils.isForms(currentPage.getPath())) {
                 String pagePath = currentPage.getPath(), pageLocaleRoot = LanguageUtil.getLanguageRoot(pagePath),
-                        locale = "";
+                    locale = "";
                 if (StringUtils.isNotBlank(pageLocaleRoot)) {
                     int localeStartIndex = StringUtils.lastIndexOf(pageLocaleRoot, '/');
                     locale = StringUtils.substring(pageLocaleRoot, localeStartIndex + 1);
@@ -390,7 +393,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         // adding a custom property to know if form data is enabled
         // this is done so that an extra API call from the client can be avoided
         if (StringUtils.isNotBlank(getPrefillService())
-                || (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF)))) {
+            || (request != null && StringUtils.isNotBlank(request.getParameter(GuideConstants.AF_DATA_REF)))) {
             formDataEnabled = true;
         }
 
@@ -399,7 +402,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             final String dataRef = request.getParameter(GuideConstants.AF_DATA_REF);
             if (dataRef.startsWith(DRAFT_PREFILL_SERVICE)) {
                 properties.put(ReservedProperties.FD_DRAFT_ID,
-                        StringUtils.substringAfter(dataRef, DRAFT_PREFILL_SERVICE));
+                    StringUtils.substringAfter(dataRef, DRAFT_PREFILL_SERVICE));
             }
         }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
@@ -472,7 +475,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public String getCustomFunctionUrl() {
         return getContextPath() + resourceResolver
-                .map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId());
+            .map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/customfunctions/" + getId());
     }
 
     @JsonIgnore
@@ -488,11 +491,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (request == null || ComponentUtils.shouldIncludeSubmitProperties(request)) {
             submitProps = new LinkedHashMap<>();
             List<String> submitActionProperties = Arrays.asList(ReservedProperties.PN_SUBMIT_ACTION_TYPE,
-                    ReservedProperties.PN_SUBMIT_ACTION_NAME);
+                ReservedProperties.PN_SUBMIT_ACTION_NAME);
 
             List<String> submitEmailProperties = Arrays.asList(ReservedProperties.PN_SUBMIT_EMAIL_TO,
-                    ReservedProperties.PN_SUBMIT_EMAIL_FROM, ReservedProperties.PN_SUBMIT_EMAIL_SUBJECT,
-                    ReservedProperties.PN_SUBMIT_EMAIL_CC, ReservedProperties.PN_SUBMIT_EMAIL_BCC);
+                ReservedProperties.PN_SUBMIT_EMAIL_FROM, ReservedProperties.PN_SUBMIT_EMAIL_SUBJECT,
+                ReservedProperties.PN_SUBMIT_EMAIL_CC, ReservedProperties.PN_SUBMIT_EMAIL_BCC);
 
             List<String> submitSpreadsheetProperties = Arrays.asList(ReservedProperties.PN_SUBMIT_SPREADSHEETURL);
             ValueMap resourceMap = resource.getValueMap();

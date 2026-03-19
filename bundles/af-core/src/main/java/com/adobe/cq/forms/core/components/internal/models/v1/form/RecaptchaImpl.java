@@ -42,8 +42,11 @@ import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Captcha;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Captcha.class,
-        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { Captcha.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 

@@ -89,7 +89,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             }
             String[] finalEnumNamesArray = enumNamesArray != null ? enumNamesArray : new String[enumArray.length];
             map = IntStream.range(0, enumArray.length).collect(LinkedHashMap::new,
-                    (m, i) -> m.put(enumArray[i], finalEnumNamesArray[i]), LinkedHashMap::putAll);
+                (m, i) -> m.put(enumArray[i], finalEnumNamesArray[i]), LinkedHashMap::putAll);
         }
 
         return map;
@@ -118,8 +118,8 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             Map<Object, String> map = getEnumPairs();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
-                    .map(p -> Optional.ofNullable(translate(ReservedProperties.PN_ENUM_NAMES, p)).orElse(""))
-                    .toArray(String[]::new);
+                .map(p -> Optional.ofNullable(translate(ReservedProperties.PN_ENUM_NAMES, p)).orElse(""))
+                .toArray(String[]::new);
         }
         return null;
     }

@@ -53,8 +53,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { FormContainer.class,
-        ContainerExporter.class, ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_CONTAINER_V1 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { FormContainer.class,
+        ContainerExporter.class, ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_CONTAINER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FormContainerImpl extends AbstractComponentImpl implements FormContainer {
     // not extending from AbstractBase since v1 container does not have mandatory field injections
@@ -155,7 +158,7 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     public Map<String, Object> getModel() {
         Map<String, Object> jsonMap = null;
         if (StringUtils.isNotEmpty(documentPath) && this.request != null
-                && this.request.getResourceResolver().getResource(documentPath) != null) {
+            && this.request.getResourceResolver().getResource(documentPath) != null) {
             // the json is coming from DAM
             final Resource assetResource = request.getResourceResolver().getResource(documentPath);
             if (assetResource != null) {
@@ -170,14 +173,13 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
                     }
                 } else {
                     logger.error("Unable to adapt resource '{}' used by form container '{}' to an asset.", documentPath,
-                            resource.getPath());
+                        resource.getPath());
                 }
             }
         } else {
             FormContainer formContainer = resource.adaptTo(FormContainer.class);
             ObjectMapper mapper = new ObjectMapper();
-            jsonMap = mapper.convertValue(formContainer, new TypeReference<Map<String, Object>>() {
-            });
+            jsonMap = mapper.convertValue(formContainer, new TypeReference<Map<String, Object>>() {});
         }
         return jsonMap;
     }

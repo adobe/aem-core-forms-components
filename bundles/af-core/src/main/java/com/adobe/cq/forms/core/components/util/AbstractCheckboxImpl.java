@@ -47,7 +47,8 @@ public abstract class AbstractCheckboxImpl extends AbstractOptionsFieldImpl {
             uncheckedValue = getEnums().length > 1 ? String.valueOf(getEnums()[1]) : null;
         }
         enums = (checkedValue != null) ? (Boolean.TRUE.equals(enableUncheckedValue))
-                ? new String[] { checkedValue, uncheckedValue } : new String[] { checkedValue } : null;
+            ? new String[] { checkedValue, uncheckedValue }
+            : new String[] { checkedValue } : null;
     }
 
     @Override

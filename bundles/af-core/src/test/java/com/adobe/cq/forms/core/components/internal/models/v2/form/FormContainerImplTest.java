@@ -96,10 +96,10 @@ public class FormContainerImplTest {
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainerv2";
     private static final String PATH_FORM_SUBMISSION_VIEW = CONTENT_ROOT + "/formcontainer-submissionView";
     private static final String PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION = CONTENT_ROOT
-            + "/formContainer-ue-form-spreadsheet-submission";
+        + "/formContainer-ue-form-spreadsheet-submission";
     private static final String PATH_UE_FORM_REST_SUBMISSION = CONTENT_ROOT + "/formContainer-ue-form-rest-submission";
     private static final String PATH_CC_FORM_SPREADSHEET_SUBMISSION = CONTENT_ROOT
-            + "/formContainer-cc-form-spreadsheet-submission";
+        + "/formContainer-cc-form-spreadsheet-submission";
     private static final String PATH_CC_FORM_REST_SUBMISSION = CONTENT_ROOT + "/formContainer-cc-form-rest-submission";
     private static final String PATH_FORM_WITH_FRAGMENT = CONTENT_ROOT + "/formcontainerv2-with-fragment";
 
@@ -108,18 +108,18 @@ public class FormContainerImplTest {
     private static final String PATH_FORM_1_WITHOUT_REDIRECT = CONTENT_ROOT + "/formcontainerv2WithoutRedirect";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT
-            + "/formcontainerv2WithoutPrefill";
+        + "/formcontainerv2WithoutPrefill";
     private static final String PATH_FORM_WITH_SPEC = CONTENT_FORM_WITHOUT_PREFILL_ROOT
-            + "/formcontainerv2withspecversion";
+        + "/formcontainerv2withspecversion";
     private static final String PATH_FORM_FULL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2-full";
     private static final String LIB_FORM_CONTAINER = "/libs/core/fd/components/form/container/v2/container";
 
     protected static final String SITES_PATH = "/content/exampleSite";
     protected static final String SITES_LANG_PATH = "/content/th/exampleSite";
     protected static final String FORM_CONTAINER_PATH_IN_SITES = SITES_PATH
-            + "/jcr:content/root/sitecontainer/formcontainer";
+        + "/jcr:content/root/sitecontainer/formcontainer";
     protected static final String FORM_CONTAINER_PATH_WITH_LANGUAGE_IN_SITES = SITES_LANG_PATH
-            + "/jcr:content/root/sitecontainer/formcontainer";
+        + "/jcr:content/root/sitecontainer/formcontainer";
 
     protected static final String AF_PATH = "/content/forms/af/testAf";
     private static final String SS_EMAIL = "email";
@@ -161,7 +161,7 @@ public class FormContainerImplTest {
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
                 return StreamSupport.stream(childResources.spliterator(), false)
-                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
+                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
             }
         });
     }
@@ -185,10 +185,10 @@ public class FormContainerImplTest {
     @Test
     void testGetIdForSitePage() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class,
-                context);
+            context);
         assertNotNull(formContainer.getId());
         assertEquals("L2NvbnRlbnQvZXhhbXBsZVNpdGUvamNyOmNvbnRlbnQvcm9vdC9zaXRlY29udGFpbmVyL2Zvcm1jb250YWluZXI=",
-                formContainer.getId());
+            formContainer.getId());
     }
 
     @Test
@@ -208,7 +208,7 @@ public class FormContainerImplTest {
     @Test
     void testGetPageLangForSitePage() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_WITH_LANGUAGE_IN_SITES,
-                FormContainer.class, context);
+            FormContainer.class, context);
         assertNotNull(formContainer.getContainingPageLang());
         assertEquals("th", formContainer.getContainingPageLang());
     }
@@ -222,10 +222,10 @@ public class FormContainerImplTest {
     @Test
     void testGetActionForSitePage() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class,
-                context);
+            context);
         assertEquals(
-                "/adobe/forms/af/submit/L2NvbnRlbnQvZXhhbXBsZVNpdGUvamNyOmNvbnRlbnQvcm9vdC9zaXRlY29udGFpbmVyL2Zvcm1jb250YWluZXI=",
-                formContainer.getAction());
+            "/adobe/forms/af/submit/L2NvbnRlbnQvZXhhbXBsZVNpdGUvamNyOmNvbnRlbnQvcm9vdC9zaXRlY29udGFpbmVyL2Zvcm1jb250YWluZXI=",
+            formContainer.getAction());
     }
 
     @Test
@@ -243,7 +243,7 @@ public class FormContainerImplTest {
         String originalPath = "/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
         String mappedPath = "/content/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
         Mockito.when(resourceResolver.map("/adobe/forms/af/submit/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="))
-                .thenReturn(mappedPath);
+            .thenReturn(mappedPath);
 
         // Set the mocked resource resolver in the context
         context.registerService(org.apache.sling.api.resource.ResourceResolver.class, resourceResolver);
@@ -267,7 +267,7 @@ public class FormContainerImplTest {
         String originalPath = "/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
         String mappedPath = "/content/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
         Mockito.when(resourceResolver.map("/adobe/forms/af/data/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="))
-                .thenReturn(mappedPath);
+            .thenReturn(mappedPath);
 
         // Set the mocked resource resolver in the context
         context.registerService(org.apache.sling.api.resource.ResourceResolver.class, resourceResolver);
@@ -313,7 +313,7 @@ public class FormContainerImplTest {
     void testGetLocalizedValue() throws Exception {
         FormContainer formContainer = getFormContainerWithLocaleUnderTest(PATH_FORM_1);
         TextInput textInput = (TextInput) formContainer.getItems().stream().filter(Objects::nonNull).findFirst()
-                .orElse(null);
+            .orElse(null);
         // assertEquals("dummy 1", textInput.getDescription());
     }
 
@@ -321,9 +321,9 @@ public class FormContainerImplTest {
     void testFormContainerWithI18nSetter() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context
-                .getService(ResourceBundleProvider.class);
+            .getService(ResourceBundleProvider.class);
         MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider
-                .getResourceBundle("/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
+            .getResourceBundle("/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
         resourceBundle.putAll(new HashMap<String, String>() {
             {
                 put("guideContainer##textinput##description##5648", "dummy 1");
@@ -332,7 +332,7 @@ public class FormContainerImplTest {
         I18n i18n = new I18n(resourceBundle);
         formContainer.setI18n(i18n);
         TextInput textInput = (TextInput) formContainer.getItems().stream().filter(Objects::nonNull).findFirst()
-                .orElse(null);
+            .orElse(null);
         assertEquals("dummy", textInput.getDescription()); // just a dummy test to make sure i18n is set correctly in
                                                            // the resource hierarchy
     }
@@ -347,7 +347,7 @@ public class FormContainerImplTest {
     void testJSONExportWithAutoSaveEnable() throws Exception {
         context.load().json(BASE + "/test-content-auto-save.json", PATH_FORM_WITH_AUTO_SAVE);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_AUTO_SAVE, FormContainer.class,
-                context);
+            context);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_WITH_AUTO_SAVE));
     }
 
@@ -397,13 +397,13 @@ public class FormContainerImplTest {
     @Test
     void testGetContextPathWithDefaultRedirect() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1_WITHOUT_REDIRECT, FormContainer.class,
-                context);
+            context);
         assertEquals(formContainer.getRedirectUrl(),
-                "/content/forms/af/demo/jcr:content/formcontainerv2WithoutRedirect.guideThankYouPage.html");
+            "/content/forms/af/demo/jcr:content/formcontainerv2WithoutRedirect.guideThankYouPage.html");
         // Test with contextPath set
         formContainer.setContextPath("/test");
         assertEquals(formContainer.getRedirectUrl(),
-                "/test/content/forms/af/demo/jcr:content/formcontainerv2WithoutRedirect.guideThankYouPage.html");
+            "/test/content/forms/af/demo/jcr:content/formcontainerv2WithoutRedirect.guideThankYouPage.html");
     }
 
     @Test
@@ -445,7 +445,7 @@ public class FormContainerImplTest {
     @Test
     void testGetParentPagePathInSites() throws Exception {
         FormContainer formContainerInSites = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES,
-                FormContainer.class, context);
+            FormContainer.class, context);
         assertEquals(formContainerInSites.getParentPagePath(), SITES_PATH);
     }
 
@@ -468,12 +468,12 @@ public class FormContainerImplTest {
         context.currentResource(resourcePath);
         // added this since AF API expects this to be present
         GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class,
-                mock(GuideLocalizationService.class));
+            mock(GuideLocalizationService.class));
         Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "de" });
         MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context
-                .getService(ResourceBundleProvider.class);
+            .getService(ResourceBundleProvider.class);
         MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider
-                .getResourceBundle("/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
+            .getResourceBundle("/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
         resourceBundle.putAll(new HashMap<String, String>() {
             {
                 put("guideContainer##textinput##description##5648", "dummy 1");
@@ -492,12 +492,12 @@ public class FormContainerImplTest {
         context.currentResource(resourcePath);
         // added this since AF API expects this to be present
         GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class,
-                mock(GuideLocalizationService.class));
+            mock(GuideLocalizationService.class));
         Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "ar-ae" });
         MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context
-                .getService(ResourceBundleProvider.class);
+            .getService(ResourceBundleProvider.class);
         MockResourceBundle resourceBundleRTL = (MockResourceBundle) bundleProvider
-                .getResourceBundle("/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("ar-ae"));
+            .getResourceBundle("/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("ar-ae"));
         resourceBundleRTL.putAll(new HashMap<String, String>() {
             {
                 put("guideContainer##textinput##description##5648", "dummy 1");
@@ -554,7 +554,7 @@ public class FormContainerImplTest {
     void testGetFormDataEnabledWhenPrefillServiceIsSet() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertTrue(
-                Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
+            Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
     }
 
     @Test
@@ -564,9 +564,9 @@ public class FormContainerImplTest {
         tempMap.put(GuideConstants.AF_DATA_REF, "abc");
         request.setParameterMap(tempMap);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class,
-                context);
+            context);
         assertTrue(
-                Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
+            Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
         // reset the parameter map
         request.setParameterMap(new HashMap<>());
     }
@@ -578,7 +578,7 @@ public class FormContainerImplTest {
         tempMap.put(GuideConstants.AF_DATA_REF, "service://FP/draft/KH5DOFY2RMWVOOVREE324MRXIY");
         request.setParameterMap(tempMap);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class,
-                context);
+            context);
         assertEquals("KH5DOFY2RMWVOOVREE324MRXIY", formContainer.getProperties().get(ReservedProperties.FD_DRAFT_ID));
         // reset the parameter map
         request.setParameterMap(new HashMap<>());
@@ -591,7 +591,7 @@ public class FormContainerImplTest {
         tempMap.put(GuideConstants.AF_DATA_REF, "service://FP/draft");
         request.setParameterMap(tempMap);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class,
-                context);
+            context);
         assertNull(formContainer.getProperties().get(ReservedProperties.FD_DRAFT_ID));
         // reset the parameter map
         request.setParameterMap(new HashMap<>());
@@ -600,9 +600,9 @@ public class FormContainerImplTest {
     @Test
     void testGetFormDataDisabled() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class,
-                context);
+            context);
         assertFalse(
-                Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
+            Boolean.valueOf(formContainer.getProperties().get(FormContainerImpl.FD_FORM_DATA_ENABLED).toString()));
     }
 
     @Test
@@ -626,7 +626,7 @@ public class FormContainerImplTest {
     @Test
     void testNoFieldType() {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_FIELDTYPE, FormContainer.class,
-                context);
+            context);
         assertEquals(FieldType.FORM.getValue(), formContainer.getFieldType());
     }
 
@@ -646,10 +646,10 @@ public class FormContainerImplTest {
     @Test
     void testGetPropertiesForCoreComponentCustomPropertiesProvider() throws Exception {
         CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider = Mockito
-                .mock(CoreComponentCustomPropertiesProvider.class);
+            .mock(CoreComponentCustomPropertiesProvider.class);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         Utils.setInternalState(formContainer, "coreComponentCustomPropertiesProvider",
-                coreComponentCustomPropertiesProvider);
+            coreComponentCustomPropertiesProvider);
         Mockito.when(coreComponentCustomPropertiesProvider.getProperties()).thenReturn(new HashMap<String, Object>() {
             {
                 put("fd:changeEventBehaviour", "deps");
@@ -663,10 +663,10 @@ public class FormContainerImplTest {
     @Test
     void testGetPropertiesForCoreComponentCustomPropertiesProviderForNull() throws Exception {
         CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider = Mockito
-                .mock(CoreComponentCustomPropertiesProvider.class);
+            .mock(CoreComponentCustomPropertiesProvider.class);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         Utils.setInternalState(formContainer, "coreComponentCustomPropertiesProvider",
-                coreComponentCustomPropertiesProvider);
+            coreComponentCustomPropertiesProvider);
         Mockito.when(coreComponentCustomPropertiesProvider.getProperties()).thenReturn(null);
         assertEquals("customPropValue", formContainer.getProperties().get("customProp"));
     }
@@ -675,7 +675,7 @@ public class FormContainerImplTest {
     void testCustomFunctionUrl() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==",
-                formContainer.getCustomFunctionUrl());
+            formContainer.getCustomFunctionUrl());
     }
 
     @Test
@@ -687,7 +687,7 @@ public class FormContainerImplTest {
         String originalPath = "/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
         String mappedPath = "/content/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==";
         Mockito.when(resourceResolver.map("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw=="))
-                .thenReturn(mappedPath);
+            .thenReturn(mappedPath);
 
         // Set the mocked resource resolver in the context
         context.registerService(org.apache.sling.api.resource.ResourceResolver.class, resourceResolver);
@@ -701,18 +701,18 @@ public class FormContainerImplTest {
 
         // Verify that the map method was called with the correct path (called during mock setup + actual execution)
         Mockito.verify(resourceResolver, times(2))
-                .map("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==");
+            .map("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==");
     }
 
     @Test
     public void testGetAutoSaveProperties() throws Exception {
         context.load().json(BASE + "/test-content-auto-save.json", PATH_FORM_WITH_AUTO_SAVE);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_AUTO_SAVE, FormContainer.class,
-                context);
+            context);
         assertNotNull(formContainer.getAutoSaveConfig());
         assertTrue(formContainer.getAutoSaveConfig().isEnableAutoSave());
         assertEquals(AutoSaveConfiguration.AutoSaveStrategyType.TIME,
-                formContainer.getAutoSaveConfig().getAutoSaveStrategyType());
+            formContainer.getAutoSaveConfig().getAutoSaveStrategyType());
     }
 
     @Test
@@ -779,8 +779,7 @@ public class FormContainerImplTest {
             when(mockClientBuilderFactory.newBuilder()).thenReturn(mockHttpClientBuilder);
             when(mockHttpClientBuilder.build()).thenReturn(mockHttpClient);
             when(mockHttpClient.execute(any())).thenReturn(mockResponse);
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
 
         // Register and inject mocks
         context.registerService(HttpClientBuilderFactory.class, mockClientBuilderFactory);
@@ -790,7 +789,7 @@ public class FormContainerImplTest {
     @Test
     public void testJSONExportWithSubmissionAttribute() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         setMockClientBuilderFactory(formContainer);
         context.request().setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
         ObjectMapper mapper = new ObjectMapper();
@@ -811,7 +810,7 @@ public class FormContainerImplTest {
     @Test
     public void testJSONExportWithSubmissionHeader() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         setMockClientBuilderFactory(formContainer);
         context.request().setHeader(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
         ObjectMapper mapper = new ObjectMapper();
@@ -832,7 +831,7 @@ public class FormContainerImplTest {
     @Test
     public void testJSONExportWithoutSubmissionAttribute() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SUBMISSION_VIEW,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
@@ -844,34 +843,34 @@ public class FormContainerImplTest {
     @Test
     public void testActionForUEFormSpreadsheetSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
         assertEquals("action should be empty for ue form with submit action supported via submission service", "",
-                formJson.get("action").asText());
+            formJson.get("action").asText());
         Utils.testJSONExport(formContainer,
-                Utils.getTestExporterJSONPath(BASE, PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION));
+            Utils.getTestExporterJSONPath(BASE, PATH_UE_FORM_WITH_SPREADSHEET_SUBMISSION));
     }
 
     @Test
     public void testActionForUEFormRestSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_UE_FORM_REST_SUBMISSION,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
         JsonNode formJson = mapper.readTree(json);
         assertTrue("action should not be empty for ue form with submit action not supported via submission service",
-                formJson.get("action").asText().length() > 0);
+            formJson.get("action").asText().length() > 0);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_UE_FORM_REST_SUBMISSION));
     }
 
     @Test
     public void testActionForCCFormSpreadsheetSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_CC_FORM_SPREADSHEET_SUBMISSION,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
@@ -881,15 +880,15 @@ public class FormContainerImplTest {
         String lastPart = actionParts[actionParts.length - 1];
         String decodedAction = new String(Base64.getDecoder().decode(lastPart));
         assertTrue(
-                "action should end with .model.json for cc forms for submit action  supported via submission service",
-                decodedAction.endsWith(".model.json"));
+            "action should end with .model.json for cc forms for submit action  supported via submission service",
+            decodedAction.endsWith(".model.json"));
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_CC_FORM_SPREADSHEET_SUBMISSION));
     }
 
     @Test
     public void testActionForCCFormRestSubmission() throws Exception {
         FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_CC_FORM_REST_SUBMISSION,
-                FormContainerImpl.class, context);
+            FormContainerImpl.class, context);
         setMockClientBuilderFactory(formContainer);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writerWithView(Views.Publish.class).writeValueAsString(formContainer);
@@ -899,8 +898,8 @@ public class FormContainerImplTest {
         String lastPart = actionParts[actionParts.length - 1];
         String decodedAction = new String(Base64.getDecoder().decode(lastPart));
         assertTrue(
-                "action should notend with .model.json for cc forms for submit action not supported via submission service",
-                !decodedAction.endsWith(".model.json"));
+            "action should notend with .model.json for cc forms for submit action not supported via submission service",
+            !decodedAction.endsWith(".model.json"));
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_CC_FORM_REST_SUBMISSION));
     }
 
@@ -908,12 +907,12 @@ public class FormContainerImplTest {
     void testExcludeFromDoRIfHiddenFromViewPrint() throws Exception {
         // Setup: create a resource structure with fd:view/print child and excludeFromDoRIfHidden property
         context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, "sling:resourceType",
-                "core/fd/components/form/container/v2/container");
+            "core/fd/components/form/container/v2/container");
         context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN + "/fd:view/print", "excludeFromDoRIfHidden",
-                true);
+            true);
 
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN,
-                FormContainer.class, context);
+            FormContainer.class, context);
         Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
         assertTrue(dorProperties.containsKey("fd:excludeFromDoRIfHidden"));
         assertEquals(true, dorProperties.get("fd:excludeFromDoRIfHidden"));
@@ -923,12 +922,12 @@ public class FormContainerImplTest {
     void testExcludeFromDoRIfHiddenFromViewPrintFalse() throws Exception {
         // Setup: create a resource structure with fd:view/print child and excludeFromDoRIfHidden property set to false
         context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN, "sling:resourceType",
-                "core/fd/components/form/container/v2/container");
+            "core/fd/components/form/container/v2/container");
         context.create().resource(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN + "/fd:view/print", "excludeFromDoRIfHidden",
-                false);
+            false);
 
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN,
-                FormContainer.class, context);
+            FormContainer.class, context);
         Map<String, Object> dorProperties = ((FormContainerImpl) formContainer).getDorProperties();
         assertTrue(dorProperties.containsKey("fd:excludeFromDoRIfHidden"));
         assertEquals(false, dorProperties.get("fd:excludeFromDoRIfHidden"));
@@ -937,7 +936,7 @@ public class FormContainerImplTest {
     @Test
     void testJSONExportWithFragment() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_FRAGMENT, FormContainerImpl.class,
-                context);
+            context);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_WITH_FRAGMENT));
     }
 

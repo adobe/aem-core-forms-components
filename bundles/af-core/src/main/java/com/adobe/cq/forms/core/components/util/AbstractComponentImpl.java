@@ -131,7 +131,7 @@ public abstract class AbstractComponentImpl implements Component {
     private void init() {
         // Setting currentPage to ResourcePage to prevent id miss-match when invoked via iframe mode in sites.
         if (currentPage != null && resource != null
-                && request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH) != null) {
+            && request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH) != null) {
             if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
                 PageManager pageManager = currentPage.getPageManager();
                 String pagePath = (String) request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH);
@@ -148,7 +148,7 @@ public abstract class AbstractComponentImpl implements Component {
     public String getId() {
         if (id == null) {
             String resourceCallerPath = request != null ? (String) request.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH)
-                    : null;
+                : null;
             this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
         }
         return id;
@@ -195,18 +195,18 @@ public abstract class AbstractComponentImpl implements Component {
     public String getAppliedCssClasses() {
 
         return Optional.ofNullable(this.resource.adaptTo(ComponentStyleInfo.class))
-                .map(ComponentStyleInfo::getAppliedCssClasses).filter(StringUtils::isNotBlank).orElse(null); // Returning
-                                                                                                             // null so
-                                                                                                             // sling
-                                                                                                             // model
-                                                                                                             // exporters
-                                                                                                             // don't
-                                                                                                             // return
-                                                                                                             // anything
-                                                                                                             // for this
-                                                                                                             // property
-                                                                                                             // if not
-                                                                                                             // configured
+            .map(ComponentStyleInfo::getAppliedCssClasses).filter(StringUtils::isNotBlank).orElse(null); // Returning
+                                                                                                         // null so
+                                                                                                         // sling
+                                                                                                         // model
+                                                                                                         // exporters
+                                                                                                         // don't
+                                                                                                         // return
+                                                                                                         // anything
+                                                                                                         // for this
+                                                                                                         // property
+                                                                                                         // if not
+                                                                                                         // configured
     }
 
     /**
@@ -220,10 +220,10 @@ public abstract class AbstractComponentImpl implements Component {
         return DataLayerBuilder.forComponent().withId(this::getId).withLastModifiedDate(() ->
         // Note: this can be simplified in JDK 11
         Optional.ofNullable(resource.getValueMap().get(JcrConstants.JCR_LASTMODIFIED, Calendar.class))
-                .map(Calendar::getTime).orElseGet(
-                        () -> Optional.ofNullable(resource.getValueMap().get(JcrConstants.JCR_CREATED, Calendar.class))
-                                .map(Calendar::getTime).orElse(null)))
-                .withType(() -> this.resource.getResourceType()).build();
+            .map(Calendar::getTime).orElseGet(
+                () -> Optional.ofNullable(resource.getValueMap().get(JcrConstants.JCR_CREATED, Calendar.class))
+                    .map(Calendar::getTime).orElse(null)))
+            .withType(() -> this.resource.getResourceType()).build();
     }
 
     @Nullable
@@ -232,7 +232,7 @@ public abstract class AbstractComponentImpl implements Component {
             return null;
         }
         return com.adobe.cq.forms.core.components.util.ComponentUtils.translate(propertyValue, propertyName, resource,
-                i18n);
+            i18n);
     }
 
 }

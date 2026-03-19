@@ -48,7 +48,9 @@ import com.adobe.granite.ui.components.ds.DataSource;
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
 import com.adobe.granite.ui.components.ds.ValueMapResource;
 
-@Component(service = { Servlet.class }, property = {
+@Component(
+    service = { Servlet.class },
+    property = {
         "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_REVIEW_DATASOURCE_V1, "sling.servlet.methods=GET",
         "sling.servlet.extensions=html" })
 public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
@@ -79,7 +81,7 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
             if (formInstance != null) {
                 FormContainer formContainer = formInstance.adaptTo(FormContainer.class);
                 List<Base> panels = ((List<Base>) getMultipleChildPanels(formContainer)).stream()
-                        .filter(x -> "panel".equals(x.getFieldType())).collect(Collectors.toList());
+                    .filter(x -> "panel".equals(x.getFieldType())).collect(Collectors.toList());
                 for (Base panel : panels) {
                     String name = panel != null ? panel.getName() : "";
                     String title = "";
@@ -122,7 +124,7 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
     }
 
     private SyntheticResource getResourceForDropdownDisplay(ResourceResolver resourceResolver, String displayValue,
-            String dataValue) {
+        String dataValue) {
         Map<String, Object> dropdownMap = new HashMap<>();
         dropdownMap.put("text", displayValue);
         dropdownMap.put("value", dataValue);

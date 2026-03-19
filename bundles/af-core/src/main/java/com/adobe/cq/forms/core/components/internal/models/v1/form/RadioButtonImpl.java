@@ -37,8 +37,11 @@ import com.adobe.cq.forms.core.components.models.form.RadioButton;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { RadioButton.class,
-        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_RADIO_BUTTON_V1 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { RadioButton.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_RADIO_BUTTON_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class RadioButtonImpl extends AbstractOptionsFieldImpl implements RadioButton {
 

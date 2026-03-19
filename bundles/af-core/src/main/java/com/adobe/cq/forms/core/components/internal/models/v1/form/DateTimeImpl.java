@@ -38,8 +38,11 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.xfa.ut.StringUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { DateTime.class,
-        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_DATETIME_V1 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { DateTime.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_DATETIME_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class DateTimeImpl extends AbstractFieldImpl implements DateTime {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)

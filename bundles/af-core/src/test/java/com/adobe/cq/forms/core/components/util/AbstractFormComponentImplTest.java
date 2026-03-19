@@ -91,7 +91,7 @@ public class AbstractFormComponentImplTest {
     @Test
     public void testNoValidationStatusRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(
-                PATH_COMPONENT_WITH_NO_VALIDATION_STATUS);
+            PATH_COMPONENT_WITH_NO_VALIDATION_STATUS);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         assertNull(properties.get("fd:rules"));
     }
@@ -99,7 +99,7 @@ public class AbstractFormComponentImplTest {
     @Test
     public void testInvalidValidationStatusRuleNotInPublish() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(
-                PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS);
+            PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
     }
@@ -107,7 +107,7 @@ public class AbstractFormComponentImplTest {
     @Test
     public void testValidRuleInAuthorMode() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(
-                PATH_COMPONENT_WITH_VALID_RULE);
+            PATH_COMPONENT_WITH_VALID_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
         assertNotNull(rulesProperties, "fd:rules should appear in author mode");
@@ -117,7 +117,7 @@ public class AbstractFormComponentImplTest {
     @Test
     public void testInvalidRuleInAuthorMode() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(
-                PATH_COMPONENT_WITH_INVALID_RULE);
+            PATH_COMPONENT_WITH_INVALID_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
         assertNotNull(rulesProperties, "fd:rules should appear in author mode");
@@ -127,7 +127,7 @@ public class AbstractFormComponentImplTest {
     @Test
     public void testNoRuleInAuthorMode() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(
-                PATH_COMPONENT_WITH_NO_RULE);
+            PATH_COMPONENT_WITH_NO_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         assertNull(properties.get("fd:rules"), "fd:rules should not appear when no fd:rules node exists");
     }
@@ -135,7 +135,7 @@ public class AbstractFormComponentImplTest {
     @Test
     public void testInvalidValidationStatusInAuthorMode() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(
-                PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS);
+            PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
         assertNotNull(rulesProperties, "fd:rules should appear in author mode even with invalid status");
@@ -145,11 +145,11 @@ public class AbstractFormComponentImplTest {
     @Test
     public void testRulesExcludedWhenPublishViewAttributeSetOnAuthor() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(
-                PATH_COMPONENT_WITH_VALID_RULE);
+            PATH_COMPONENT_WITH_VALID_RULE);
         context.request().setAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW, Boolean.TRUE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         assertNull(properties.get("fd:rules"),
-                "fd:rules should not appear when publish view attribute is set even in author WCMMode");
+            "fd:rules should not appear when publish view attribute is set even in author WCMMode");
     }
 
     @Test
@@ -165,7 +165,7 @@ public class AbstractFormComponentImplTest {
     @Test
     public void testDisabledXFAScripts() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(
-                PATH_COMPONENT_WITH_DISABLED_XFA_SCRIPTS);
+            PATH_COMPONENT_WITH_DISABLED_XFA_SCRIPTS);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         List<String> disabledScripts = (List<String>) properties.get("fd:disabledXfaScripts");
         assertNotNull(disabledScripts);
@@ -224,7 +224,7 @@ public class AbstractFormComponentImplTest {
             initMethod.invoke(abstractComponentImpl);
             Page newCurrentPage = abstractComponentImpl.getCurrentPageToTest();
             assertEquals(afPage.getPath(), newCurrentPage.getPath(),
-                    "Page should be set to AF page instead of sites page.");
+                "Page should be set to AF page instead of sites page.");
 
             // If requested page is forms
             Page page2 = Mockito.mock(Page.class);

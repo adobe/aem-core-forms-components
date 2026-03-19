@@ -36,8 +36,11 @@ import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Scribble.class,
-        ComponentExporter.class }, resourceType = "core/fd/components/form/scribble/v1/scribble")
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { Scribble.class,
+        ComponentExporter.class },
+    resourceType = "core/fd/components/form/scribble/v1/scribble")
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ScribbleImpl extends AbstractFieldImpl implements Scribble {
 

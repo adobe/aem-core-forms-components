@@ -36,10 +36,18 @@ public interface BaseConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     public enum Type {
-        STRING("string"), STRING_ARRAY("string[]"), NUMBER("number"),
+        STRING("string"),
+        STRING_ARRAY("string[]"),
+        NUMBER("number"),
 
-        INTEGER("integer"), NUMBER_ARRAY("number[]"), BOOLEAN("boolean"), BOOLEAN_ARRAY("boolean[]"), OBJECT("object"),
-        ARRAY("array"), FILE("file"), FILE_ARRAY("file[]");
+        INTEGER("integer"),
+        NUMBER_ARRAY("number[]"),
+        BOOLEAN("boolean"),
+        BOOLEAN_ARRAY("boolean[]"),
+        OBJECT("object"),
+        ARRAY("array"),
+        FILE("file"),
+        FILE_ARRAY("file[]");
 
         private String value;
 

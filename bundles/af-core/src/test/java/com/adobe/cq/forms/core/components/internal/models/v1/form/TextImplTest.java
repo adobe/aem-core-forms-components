@@ -100,7 +100,7 @@ public class TextImplTest {
         assertEquals(false, text.isRichText());
         String json = new ObjectMapper().writeValueAsString(text);
         assertFalse("richText must not appear in JSON when textIsRich is absent from JCR",
-                json.contains("\"richText\""));
+            json.contains("\"richText\""));
     }
 
     @Test

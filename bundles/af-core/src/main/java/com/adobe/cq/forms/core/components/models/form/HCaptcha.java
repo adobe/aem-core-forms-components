@@ -24,5 +24,4 @@ import org.osgi.annotation.versioning.ConsumerType;
  * @since com.adobe.cq.forms.core.components.models.form 5.4.0
  */
 @ConsumerType
-public interface HCaptcha extends Captcha {
-}
+public interface HCaptcha extends Captcha {}

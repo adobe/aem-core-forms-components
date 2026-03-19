@@ -69,7 +69,7 @@ public class FragmentImplTest {
     private static final String PATH_FRAGMENT_WITH_FRAGMENT_PATH = CONTENT_ROOT + "/fragment-with-fragment-path";
     private static final String PATH_FRAGMENT_WITH_INVALID_PATH = CONTENT_ROOT + "/fragment-with-invalid-path";
     private static final String PATH_FRAGMENT_WITH_PLACEHOLDER_RULES = CONTENT_ROOT
-            + "/fragment-with-placeholder-rules";
+        + "/fragment-with-placeholder-rules";
     private static final String PATH_FRAGMENT_LAZY = CONTENT_ROOT + "/fragment-lazy";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -94,7 +94,7 @@ public class FragmentImplTest {
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
                 return StreamSupport.stream(childResources.spliterator(), false)
-                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
+                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
             }
         });
     }
@@ -153,7 +153,7 @@ public class FragmentImplTest {
         Map<String, Object> properties = fragment.getProperties();
         assertNotNull(properties);
         assertTrue("fd:rules is whitelisted and should not appear in properties (rules are at root level)",
-                !properties.containsKey("fd:rules"));
+            !properties.containsKey("fd:rules"));
     }
 
     @Test
@@ -162,10 +162,10 @@ public class FragmentImplTest {
         Map<String, String[]> events = fragment.getEvents();
         assertNotNull(events);
         assertTrue("Stitched fragment should include events from referenced fragment container",
-                events.containsKey("change"));
+            events.containsKey("change"));
         Assertions.assertArrayEquals(new String[] { "fragmentChangeHandler" }, events.get("change"));
         assertTrue("Stitched fragment should include default custom:setProperty",
-                events.containsKey("custom:setProperty"));
+            events.containsKey("custom:setProperty"));
     }
 
     @Test
@@ -176,8 +176,8 @@ public class FragmentImplTest {
         assertNotNull(rules);
         assertNotNull(events);
         assertTrue(
-                "Stitched fragment should include root-level rules from referenced fragment container (parallel to events)",
-                rules.containsKey("visible"));
+            "Stitched fragment should include root-level rules from referenced fragment container (parallel to events)",
+            rules.containsKey("visible"));
         assertEquals("fragmentVisibleRule", rules.get("visible"));
         assertTrue("Rules and events should both be present at same level", events.containsKey("change"));
     }
@@ -196,7 +196,7 @@ public class FragmentImplTest {
         assertTrue("Merged rules should include placeholder rule (required)", rules.containsKey("required"));
         assertEquals("placeholderRequired", rules.get("required"));
         assertTrue("Merged rules should include visible; panel has priority over fragment container",
-                rules.containsKey("visible"));
+            rules.containsKey("visible"));
         assertEquals("panelVisibleRule", rules.get("visible"));
 
         assertTrue("Merged events should include placeholder event (click)", events.containsKey("click"));
@@ -205,7 +205,7 @@ public class FragmentImplTest {
         Assertions.assertArrayEquals(new String[] { "fragmentChangeHandler" }, events.get("change"));
         assertTrue("Merged events should include default custom:setProperty", events.containsKey("custom:setProperty"));
         assertTrue("Merged events should include initialize with panel handler first, then fragment appended",
-                events.containsKey("initialize"));
+            events.containsKey("initialize"));
         Assertions.assertArrayEquals(new String[] { "panelInit", "fragInit" }, events.get("initialize"));
 
         assertTrue("fd:rules is whitelisted and should not appear in properties", !properties.containsKey("fd:rules"));
@@ -218,7 +218,7 @@ public class FragmentImplTest {
         try {
             System.setProperty(key, "false");
             Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_PLACEHOLDER_RULES, Fragment.class,
-                    context);
+                context);
             Map<String, String> rules = fragment.getRules();
             Map<String, String[]> events = fragment.getEvents();
 
@@ -227,9 +227,9 @@ public class FragmentImplTest {
             assertEquals("When toggle is off, only panel rules are used", "panelVisibleRule", rules.get("visible"));
             assertTrue("When toggle is off, only panel events are used", events.containsKey("initialize"));
             Assertions.assertArrayEquals(new String[] { "panelInit" }, events.get("initialize"),
-                    "When toggle is off, fragment container events are not merged; only panel initialize");
+                "When toggle is off, fragment container events are not merged; only panel initialize");
             Assertions.assertFalse(events.containsKey("change"),
-                    "When toggle is off, fragment container events like change are not included");
+                "When toggle is off, fragment container events like change are not included");
         } finally {
             if (saved != null) {
                 System.setProperty(key, saved);
@@ -255,14 +255,14 @@ public class FragmentImplTest {
     void testJSONExportWithFragmentPath() throws Exception {
         Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT_WITH_FRAGMENT_PATH);
         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT_WITH_FRAGMENT_PATH),
-                Views.Author.class);
+            Views.Author.class);
     }
 
     @Test
     void testGetChildrenModels() {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
         Map<String, ComponentExporter> childrenModels = ((FragmentImpl) fragment).getChildrenModels(context.request(),
-                ComponentExporter.class);
+            ComponentExporter.class);
         Assertions.assertEquals(1, childrenModels.size());
         Assertions.assertNotNull(childrenModels.get("textinput"));
         TextInput textInput = (TextInput) childrenModels.get("textinput");
@@ -325,7 +325,7 @@ public class FragmentImplTest {
 
         // Use reflection to access the private method
         Method getFragmentContainerI18nMethod = FragmentImpl.class.getDeclaredMethod("getFragmentContainerI18n",
-                String.class);
+            String.class);
         getFragmentContainerI18nMethod.setAccessible(true);
 
         // Create mocks for the dependencies
@@ -350,31 +350,31 @@ public class FragmentImplTest {
         Mockito.when(mockFragmentContainer.getPath()).thenReturn("/content/fragment");
         Mockito.when(mockResourceResolver.getResource(Mockito.anyString())).thenReturn(mockBaseResource);
         Mockito.when(mockResourceBundleProvider.getResourceBundle(Mockito.anyString(), Mockito.any(Locale.class)))
-                .thenReturn(mockResourceBundle);
+            .thenReturn(mockResourceBundle);
 
         // Test case 1: When localeLang is null - should return I18n with null resource bundle
         I18n result1 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, (String) null);
         Assertions.assertNotNull(result1,
-                "getFragmentContainerI18n should return a non-null I18n object even when localeLang is null");
+            "getFragmentContainerI18n should return a non-null I18n object even when localeLang is null");
 
         // Test case 2: When localeLang is set and resourceBundleProvider is available - should return I18n with
         // resource bundle
         I18n result2 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "en");
         Assertions.assertNotNull(result2,
-                "getFragmentContainerI18n should return a non-null I18n object when localeLang is set");
+            "getFragmentContainerI18n should return a non-null I18n object when localeLang is set");
 
         // Verify that the method called the expected dependencies
         Mockito.verify(mockFragmentContainer, Mockito.atLeastOnce()).getResourceResolver();
         Mockito.verify(mockFragmentContainer, Mockito.atLeastOnce()).getPath();
         Mockito.verify(mockResourceResolver, Mockito.atLeastOnce()).getResource(Mockito.anyString());
         Mockito.verify(mockResourceBundleProvider, Mockito.atLeastOnce()).getResourceBundle(Mockito.anyString(),
-                Mockito.any(Locale.class));
+            Mockito.any(Locale.class));
 
         // Test case 3: When resourceBundleProvider is null - should still return I18n object
         resourceBundleProviderField.set(fragmentImpl, null);
         I18n result3 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "fr");
         Assertions.assertNotNull(result3,
-                "getFragmentContainerI18n should return a non-null I18n object even when resourceBundleProvider is null");
+            "getFragmentContainerI18n should return a non-null I18n object even when resourceBundleProvider is null");
 
         // Test case 4: When baseResource is null - should still work
         Mockito.when(mockResourceResolver.getResource(Mockito.anyString())).thenReturn(null);
@@ -395,39 +395,39 @@ public class FragmentImplTest {
 
         // Verify that fragmentContainer is null due to invalid path
         Assertions.assertNull(fragmentImpl.getFragmentContainer(),
-                "Fragment container should be null for invalid fragment path");
+            "Fragment container should be null for invalid fragment path");
 
         // Test that getChildrenModels returns empty map instead of throwing NPE
         Map<String, ComponentExporter> childrenModels = fragmentImpl.getChildrenModels(context.request(),
-                ComponentExporter.class);
+            ComponentExporter.class);
         Assertions.assertNotNull(childrenModels,
-                "getChildrenModels should return non-null map even with null fragmentContainer");
+            "getChildrenModels should return non-null map even with null fragmentContainer");
         Assertions.assertTrue(childrenModels.isEmpty(),
-                "getChildrenModels should return empty map when fragmentContainer is null");
+            "getChildrenModels should return empty map when fragmentContainer is null");
 
         // Test that getExportedItems doesn't throw NPE
         Map<String, ? extends ComponentExporter> exportedItems = fragmentImpl.getExportedItems();
         Assertions.assertNotNull(exportedItems,
-                "getExportedItems should return non-null map even with null fragmentContainer");
+            "getExportedItems should return non-null map even with null fragmentContainer");
         Assertions.assertTrue(exportedItems.isEmpty(),
-                "getExportedItems should return empty map when fragmentContainer is null");
+            "getExportedItems should return empty map when fragmentContainer is null");
 
         // Test that getExportedItemsOrder doesn't throw NPE
         String[] exportedItemsOrder = fragmentImpl.getExportedItemsOrder();
         Assertions.assertNotNull(exportedItemsOrder,
-                "getExportedItemsOrder should return non-null array even with null fragmentContainer");
+            "getExportedItemsOrder should return non-null array even with null fragmentContainer");
         Assertions.assertEquals(0, exportedItemsOrder.length,
-                "getExportedItemsOrder should return empty array when fragmentContainer is null");
+            "getExportedItemsOrder should return empty array when fragmentContainer is null");
 
         // Test getFragmentContainerI18n with null fragmentContainer
         Method getFragmentContainerI18nMethod = FragmentImpl.class.getDeclaredMethod("getFragmentContainerI18n",
-                String.class);
+            String.class);
         getFragmentContainerI18nMethod.setAccessible(true);
 
         // Should not throw NPE and should return non-null I18n object
         I18n result = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "en");
         Assertions.assertNotNull(result,
-                "getFragmentContainerI18n should return non-null I18n object even when fragmentContainer is null");
+            "getFragmentContainerI18n should return non-null I18n object even when fragmentContainer is null");
     }
 
     @Test
@@ -441,14 +441,14 @@ public class FragmentImplTest {
 
         // Verify that fragmentContainer is null
         Assertions.assertNull(fragmentImpl.getFragmentContainer(),
-                "Fragment container should be null for invalid fragment path");
+            "Fragment container should be null for invalid fragment path");
 
         // Test that getChildrenModels with null request returns empty map instead of throwing NPE
         Map<String, TextInput> childrenModels = fragmentImpl.getChildrenModels(null, TextInput.class);
         Assertions.assertNotNull(childrenModels,
-                "getChildrenModels should return non-null map with null request and null fragmentContainer");
+            "getChildrenModels should return non-null map with null request and null fragmentContainer");
         Assertions.assertTrue(childrenModels.isEmpty(),
-                "getChildrenModels should return empty map when fragmentContainer is null and request is null");
+            "getChildrenModels should return empty map when fragmentContainer is null and request is null");
     }
 
     @Test
@@ -463,7 +463,7 @@ public class FragmentImplTest {
         List<Resource> children = fragment.getFragmentChildren();
         Assertions.assertNotNull(children);
         Assertions.assertTrue(children.isEmpty(),
-                "Lazy fragment should have no children since container is not resolved");
+            "Lazy fragment should have no children since container is not resolved");
     }
 
     @Test
@@ -480,18 +480,18 @@ public class FragmentImplTest {
         Assertions.assertTrue(fragment.getLazy(), "getLazy() should return true when lazy is set");
         Map<String, Object> properties = fragment.getProperties();
         Assertions.assertFalse(properties.containsKey("fd:loadLazily"),
-                "fd:loadLazily should not be in properties map");
+            "fd:loadLazily should not be in properties map");
         Assertions.assertEquals(true, properties.get("fd:fragment"));
         Assertions.assertEquals("fragment", properties.get("fd:viewType"));
         Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
-                "fragmentPath should be accessible for client-side lazy resolution");
+            "fragmentPath should be accessible for client-side lazy resolution");
     }
 
     @Test
     void testLazyFragmentPathStillAccessible() {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
         Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
-                "fragmentPath should still be available for client-side lazy resolution");
+            "fragmentPath should still be available for client-side lazy resolution");
     }
 
     @Test
@@ -506,7 +506,7 @@ public class FragmentImplTest {
         Assertions.assertFalse(fragment.getLazy(), "Non-lazy fragment should return false for getLazy()");
         Assertions.assertNotNull(fragment.getFragmentContainer(), "Non-lazy fragment should have resolved container");
         Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
-                "fragmentPath should always be accessible via getter");
+            "fragmentPath should always be accessible via getter");
     }
 
     @Test
@@ -515,10 +515,10 @@ public class FragmentImplTest {
         Map<String, ? extends ComponentExporter> exportedItems = fragment.getExportedItems();
         Assertions.assertNotNull(exportedItems);
         Assertions.assertFalse(exportedItems.isEmpty(),
-                "getExportedItems should return non-empty map when toggle is OFF");
+            "getExportedItems should return non-empty map when toggle is OFF");
         String[] order = fragment.getExportedItemsOrder();
         Assertions.assertTrue(order.length > 0,
-                "getExportedItemsOrder should return non-empty array when toggle is OFF");
+            "getExportedItemsOrder should return non-empty array when toggle is OFF");
     }
 
     @Test
@@ -540,7 +540,7 @@ public class FragmentImplTest {
         java.util.List<? extends ComponentExporter> itemsArray = fragmentImpl.getExportedItemsArray();
         Assertions.assertNotNull(itemsArray);
         Assertions.assertFalse(itemsArray.isEmpty(),
-                "getExportedItemsArray should return non-empty list when toggle is ON");
+            "getExportedItemsArray should return non-empty list when toggle is ON");
     }
 
     @Test
@@ -550,7 +550,7 @@ public class FragmentImplTest {
         java.util.List<? extends ComponentExporter> itemsArray = fragmentImpl.getExportedItemsArray();
         Assertions.assertNotNull(itemsArray);
         Assertions.assertTrue(itemsArray.isEmpty(),
-                "getExportedItemsArray should return empty list when toggle is OFF");
+            "getExportedItemsArray should return empty list when toggle is OFF");
     }
 
     @Test

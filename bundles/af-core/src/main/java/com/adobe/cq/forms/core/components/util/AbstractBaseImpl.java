@@ -346,112 +346,112 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
         @Nullable
         public String getTypeConstraintMessage() {
             return translate(ReservedProperties.PN_TYPE_MESSAGE,
-                    properties.get(ReservedProperties.PN_TYPE_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_TYPE_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getRequiredConstraintMessage() {
             return translate(ReservedProperties.PN_REQUIRED_MESSAGE,
-                    properties.get(ReservedProperties.PN_REQUIRED_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_REQUIRED_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinimumConstraintMessage() {
             return translate(ReservedProperties.PN_MINIMUM_MESSAGE,
-                    properties.get(ReservedProperties.PN_MINIMUM_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_MINIMUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaximumConstraintMessage() {
             return translate(ReservedProperties.PN_MAXIMUM_MESSAGE,
-                    properties.get(ReservedProperties.PN_MAXIMUM_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_MAXIMUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinLengthConstraintMessage() {
             return translate(ReservedProperties.PN_MINLENGTH_MESSAGE,
-                    properties.get(ReservedProperties.PN_MINLENGTH_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_MINLENGTH_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaxLengthConstraintMessage() {
             return translate(ReservedProperties.PN_MAXLENGTH_MESSAGE,
-                    properties.get(ReservedProperties.PN_MAXLENGTH_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_MAXLENGTH_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaxFileSizeConstraintMessage() {
             return translate(ReservedProperties.PN_MAX_FILE_SIZE_MESSAGE,
-                    properties.get(ReservedProperties.PN_MAX_FILE_SIZE_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_MAX_FILE_SIZE_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getAcceptConstraintMessage() {
             return translate(ReservedProperties.PN_ACCEPT_MESSAGE,
-                    properties.get(ReservedProperties.PN_ACCEPT_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_ACCEPT_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getStepConstraintMessage() {
             return translate(ReservedProperties.PN_STEP_MESSAGE,
-                    properties.get(ReservedProperties.PN_STEP_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_STEP_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getFormatConstraintMessage() {
             return translate(ReservedProperties.PN_FORMAT_MESSAGE,
-                    properties.get(ReservedProperties.PN_FORMAT_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_FORMAT_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getPatternConstraintMessage() {
             return translate(ReservedProperties.PN_PATTERN_MESSAGE,
-                    properties.get(ReservedProperties.PN_PATTERN_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_PATTERN_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMinItemsConstraintMessage() {
             return translate(ReservedProperties.PN_MINITEMS_MESSAGE,
-                    properties.get(ReservedProperties.PN_MINITEMS_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_MINITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getMaxItemsConstraintMessage() {
             return translate(ReservedProperties.PN_MAXITEMS_MESSAGE,
-                    properties.get(ReservedProperties.PN_MAXITEMS_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_MAXITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getUniqueItemsConstraintMessage() {
             return translate(ReservedProperties.PN_UNIQUE_ITEMS_MESSAGE,
-                    properties.get(ReservedProperties.PN_UNIQUE_ITEMS_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_UNIQUE_ITEMS_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getEnforceEnumConstraintMessage() {
             return translate(ReservedProperties.PN_ENFORCE_ENUM_MESSAGE,
-                    properties.get(ReservedProperties.PN_ENFORCE_ENUM_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_ENFORCE_ENUM_MESSAGE, String.class));
         }
 
         @Override
         @Nullable
         public String getValidationExpressionConstraintMessage() {
             return translate(ReservedProperties.PN_VALIDATION_EXPRESSION_MESSAGE,
-                    properties.get(ReservedProperties.PN_VALIDATION_EXPRESSION_MESSAGE, String.class));
+                properties.get(ReservedProperties.PN_VALIDATION_EXPRESSION_MESSAGE, String.class));
         }
     }
 

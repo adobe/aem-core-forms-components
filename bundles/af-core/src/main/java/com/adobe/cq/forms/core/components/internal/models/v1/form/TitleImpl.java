@@ -42,8 +42,11 @@ import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.designer.Style;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Title.class,
-        ComponentExporter.class }, resourceType = FormConstants.RT_FD_FORM_TITLE_V1)
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { Title.class,
+        ComponentExporter.class },
+    resourceType = FormConstants.RT_FD_FORM_TITLE_V1)
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 
 public class TitleImpl extends AbstractComponentImpl implements Title {

@@ -385,12 +385,10 @@ public interface FormContainer extends Container {
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     @JsonIgnore
-    default void setContextPath(String contextPath) {
-    }
+    default void setContextPath(String contextPath) {}
 
     @JsonIgnore
-    default void visit(Consumer<ComponentExporter> callback) throws Exception {
-    }
+    default void visit(Consumer<ComponentExporter> callback) throws Exception {}
 
     /**
      * Returns site page path if dropped in sites else the form page path.

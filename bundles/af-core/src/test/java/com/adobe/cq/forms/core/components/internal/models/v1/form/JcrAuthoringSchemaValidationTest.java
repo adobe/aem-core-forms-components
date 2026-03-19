@@ -63,7 +63,7 @@ public class JcrAuthoringSchemaValidationTest {
 
         Set<ValidationMessage> errors = schema.validate(fixture);
         assertTrue(errors.isEmpty(),
-                "Minimal textinput JCR node should conform to authoring schema but got: " + errors);
+            "Minimal textinput JCR node should conform to authoring schema but got: " + errors);
     }
 
     @Test
@@ -72,11 +72,11 @@ public class JcrAuthoringSchemaValidationTest {
 
         // Full customized textinput — mirrors "textinput-customized" from test-content.json
         String fixtureJson = "{" + "\"name\": \"abc\"," + "\"jcr:title\": \"def\"," + "\"hideTitle\": false,"
-                + "\"dorExclusion\": true," + "\"dorColspan\": \"4\"," + "\"description\": \"dummy\","
-                + "\"visible\": false," + "\"readOnly\": false," + "\"enabled\": true," + "\"required\": true,"
-                + "\"assistPriority\": \"custom\"," + "\"dataRef\": \"a.b\","
-                + "\"custom\": \"Custom screen reader text\"," + "\"tooltip\": \"test-short-description\","
-                + "\"fieldType\": \"text-input\"" + "}";
+            + "\"dorExclusion\": true," + "\"dorColspan\": \"4\"," + "\"description\": \"dummy\","
+            + "\"visible\": false," + "\"readOnly\": false," + "\"enabled\": true," + "\"required\": true,"
+            + "\"assistPriority\": \"custom\"," + "\"dataRef\": \"a.b\","
+            + "\"custom\": \"Custom screen reader text\"," + "\"tooltip\": \"test-short-description\","
+            + "\"fieldType\": \"text-input\"" + "}";
         JsonNode fixture = JSON_MAPPER.readTree(fixtureJson);
 
         Set<ValidationMessage> errors = schema.validate(fixture);
@@ -93,7 +93,7 @@ public class JcrAuthoringSchemaValidationTest {
 
         // Mirrors the "dropdown" fixture from dropdown/test-content.json
         String fixtureJson = "{" + "\"name\": \"abc\"," + "\"jcr:title\": \"def\"," + "\"fieldType\": \"drop-down\","
-                + "\"enum\": [0, 1, 2]," + "\"enumNames\": [\"m\", \"f\", \"o\"]" + "}";
+            + "\"enum\": [0, 1, 2]," + "\"enumNames\": [\"m\", \"f\", \"o\"]" + "}";
         JsonNode fixture = JSON_MAPPER.readTree(fixtureJson);
 
         Set<ValidationMessage> errors = schema.validate(fixture);
@@ -106,14 +106,14 @@ public class JcrAuthoringSchemaValidationTest {
 
         // Mirrors the "multiselect-dropdown" fixture from dropdown/test-content.json
         String fixtureJson = "{" + "\"name\": \"abc\"," + "\"jcr:title\": \"def\"," + "\"hideTitle\": true,"
-                + "\"description\": \"dummy\"," + "\"visible\": false," + "\"fieldType\": \"drop-down\","
-                + "\"type\": \"number[]\"," + "\"multiSelect\": true," + "\"enum\": [0, 1, 2],"
-                + "\"enumNames\": [\"m\", \"f\", \"o\"]" + "}";
+            + "\"description\": \"dummy\"," + "\"visible\": false," + "\"fieldType\": \"drop-down\","
+            + "\"type\": \"number[]\"," + "\"multiSelect\": true," + "\"enum\": [0, 1, 2],"
+            + "\"enumNames\": [\"m\", \"f\", \"o\"]" + "}";
         JsonNode fixture = JSON_MAPPER.readTree(fixtureJson);
 
         Set<ValidationMessage> errors = schema.validate(fixture);
         assertTrue(errors.isEmpty(),
-                "Multiselect dropdown JCR node should conform to authoring schema but got: " + errors);
+            "Multiselect dropdown JCR node should conform to authoring schema but got: " + errors);
     }
 
     // -----------------------------------------------------------------------
@@ -126,12 +126,12 @@ public class JcrAuthoringSchemaValidationTest {
 
         // Mirrors the "panelcontainer" fixture from panelcontainer/test-content.json
         String fixtureJson = "{" + "\"name\": \"abc\"," + "\"jcr:title\": \"dependent names\","
-                + "\"fieldType\": \"panel\"" + "}";
+            + "\"fieldType\": \"panel\"" + "}";
         JsonNode fixture = JSON_MAPPER.readTree(fixtureJson);
 
         Set<ValidationMessage> errors = schema.validate(fixture);
         assertTrue(errors.isEmpty(),
-                "Minimal panelcontainer JCR node should conform to authoring schema but got: " + errors);
+            "Minimal panelcontainer JCR node should conform to authoring schema but got: " + errors);
     }
 
     @Test
@@ -140,15 +140,15 @@ public class JcrAuthoringSchemaValidationTest {
 
         // Mirrors the "panelcontainer-customized" fixture (flat properties only, no child nodes)
         String fixtureJson = "{" + "\"name\": \"abc\"," + "\"jcr:title\": \"dependent names\","
-                + "\"description\": \"dependent names description\"," + "\"tooltip\": \"dependent names tooltip\","
-                + "\"fieldType\": \"panel\"," + "\"dorExclusion\": true," + "\"dorExcludeTitle\": false,"
-                + "\"dorExcludeDescription\": false," + "\"visible\": false," + "\"enabled\": false,"
-                + "\"required\": true," + "\"readOnly\": true," + "\"breakBeforeText\": \"Following Previous\","
-                + "\"breakAfterText\": \"Continue Filling Parent\"," + "\"overflowText\": \"None\"" + "}";
+            + "\"description\": \"dependent names description\"," + "\"tooltip\": \"dependent names tooltip\","
+            + "\"fieldType\": \"panel\"," + "\"dorExclusion\": true," + "\"dorExcludeTitle\": false,"
+            + "\"dorExcludeDescription\": false," + "\"visible\": false," + "\"enabled\": false,"
+            + "\"required\": true," + "\"readOnly\": true," + "\"breakBeforeText\": \"Following Previous\","
+            + "\"breakAfterText\": \"Continue Filling Parent\"," + "\"overflowText\": \"None\"" + "}";
         JsonNode fixture = JSON_MAPPER.readTree(fixtureJson);
 
         Set<ValidationMessage> errors = schema.validate(fixture);
         assertTrue(errors.isEmpty(),
-                "Customized panelcontainer JCR node should conform to authoring schema but got: " + errors);
+            "Customized panelcontainer JCR node should conform to authoring schema but got: " + errors);
     }
 }

@@ -33,7 +33,7 @@ public class HtlUtilImpl implements HtlUtil {
     public Boolean isEdgeDeliveryRequest() {
         if (request != null) {
             Object isEdgeDelivery = request
-                    .getAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet");
+                .getAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet");
             return isEdgeDelivery != null && isEdgeDelivery.equals(Boolean.TRUE);
         }
         return false;

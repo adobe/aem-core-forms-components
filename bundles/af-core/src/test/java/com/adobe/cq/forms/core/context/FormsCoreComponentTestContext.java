@@ -37,10 +37,10 @@ public final class FormsCoreComponentTestContext {
 
     public static io.wcm.testing.mock.aem.junit5.AemContext newAemContext() {
         return new AemContextBuilder().resourceResolverType(
-                ResourceResolverType.JCR_MOCK).<io.wcm.testing.mock.aem.junit5.AemContext> afterSetUp(context -> {
-                    context.addModelsForClasses(MockResponsiveGrid.class);
-                    context.addModelsForPackage("com.adobe.cq.forms.core.components.models");
-                    context.registerService(ImplementationPicker.class, new ResourceTypeBasedResourcePicker());
-                }).build();
+            ResourceResolverType.JCR_MOCK).<io.wcm.testing.mock.aem.junit5.AemContext>afterSetUp(context -> {
+                context.addModelsForClasses(MockResponsiveGrid.class);
+                context.addModelsForPackage("com.adobe.cq.forms.core.components.models");
+                context.registerService(ImplementationPicker.class, new ResourceTypeBasedResourcePicker());
+            }).build();
     }
 }
