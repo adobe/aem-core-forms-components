@@ -1,0 +1,28 @@
+$id: numberinput.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: NumberInput JCR Authoring Properties
+description: >-
+  NumberInput-specific JCR properties. All field constraints (minimum, maximum,
+  exclusiveMinimum, exclusiveMaximum, etc.) are inherited from field.authoring.schema.
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      step:
+        title: Step
+        description: Value must be a multiple of step. Stored as String or Long in JCR.
+        oneOf:
+          - type: number
+          - type: string
+      excludeMaximumCheck:
+        type: boolean
+        title: Exclude maximum check (backward compat)
+        description: >-
+          Actively injected by NumberInputImpl (@ValueMapValue). Legacy XFA-era property;
+          use exclusiveMaximum for new content.
+      excludeMinimumCheck:
+        type: boolean
+        title: Exclude minimum check (backward compat)
+        description: >-
+          Actively injected by NumberInputImpl (@ValueMapValue). Legacy XFA-era property;
+          use exclusiveMinimum for new content.

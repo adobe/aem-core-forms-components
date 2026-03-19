@@ -1,0 +1,7 @@
+$id: emailinput.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: EmailInput JCR Authoring Properties
+description: >-
+  Email Input has no component-specific JCR properties beyond field.authoring.schema.
+  The fieldType is hard-coded to "email" in EmailInputImpl.getFieldType().
+$ref: ../field.authoring.schema.yaml
