@@ -4,4 +4,10 @@ title: TelephoneInput JCR Authoring Properties
 description: >-
   Telephone Input has no component-specific JCR properties beyond field.authoring.schema.
   The fieldType is hard-coded to "tel" in TelephoneInputImpl.getFieldType().
-$ref: ../field.authoring.schema.yaml
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    description: >-
+      No additional JCR properties beyond field.authoring.schema.yaml.
+      EmailImpl/TelephoneImpl inject no extra @ValueMapValue fields.
+    properties: {}
