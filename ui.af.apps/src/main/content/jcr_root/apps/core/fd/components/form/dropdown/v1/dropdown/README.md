@@ -99,7 +99,7 @@ By placing the class names `cmp-adaptiveform-dropdown__label` and `cmp-adaptivef
 ## JavaScript Data Attribute Bindings
 
 The following attributes must be added for the initialization of the dropdown-list component in the form view:  
- 1. `data-cmp-is="adaptiveFormDatePicker"`
+ 1. `data-cmp-is="adaptiveFormDropDown"`
  2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 
@@ -112,7 +112,7 @@ The following are optional attributes that can be added to the component in the 
 6. `data-cmp-enabled` having a boolean value to indicate whether the field is currently enabled or not
 
 ## Replace feature:
-We support replace feature that allows replacing Reset Button component to any of the below components:
+We support replace feature that allows replacing Drop Down component to any of the below components:
 
 * Check Box Group
 * Radio Button
