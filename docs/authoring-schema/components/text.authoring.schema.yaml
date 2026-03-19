@@ -1,0 +1,18 @@
+$id: text.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Text JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Text (static text / plain-text) component.
+allOf:
+  - $ref: ../base.authoring.schema.yaml
+  - type: object
+    properties:
+      textIsRich:
+        type: boolean
+        title: Content is rich text
+        default: false
+        description: >-
+          When true the static text content is treated as HTML rich text.
+          Injected by TextImpl (@ValueMapValue, @Default false, PN_TEXT_IS_RICH).
+          IMPORTANT: This is PN_TEXT_IS_RICH ("textIsRich"), NOT "richText" which
+          is reserved in ReservedProperties but not injected by any Sling model.

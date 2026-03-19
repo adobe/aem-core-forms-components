@@ -35,6 +35,21 @@ The following configuration properties are used:
 1. `./type` - defines the default HTML heading element type (`h1` - `h6`) this component will use for its rendering
 
 ### Edit Dialog Properties
+
+#### Inherited from all components (base)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Label | `./jcr:title` | String | — | Title text |
+| Visible | `./visible` | Boolean | *(runtime: true)* | Initial visibility |
+| Data type | `./type` | String | — | Data type |
+
+#### Title v2-specific
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| HTML element type | `./fd:htmlelementType` | String | — | Heading element: `h1`–`h6` or `p` (v2 only) |
+
 The following properties are written to JCR for this Title component and are expected to be available as `Resource` properties:
 
 1. `./jcr:title` - will store the text of the title to be rendered
