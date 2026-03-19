@@ -1192,7 +1192,13 @@ def _build_parser():
     # put
     pu = sub.add_parser("put", help="PUT (full replace) page content")
     pu.add_argument("--page-id", required=True)
-    pu.add_argument("--title",   required=True, help="New page title")
+    pu.add_argument("--title",   default="", help="New page title (optional when --content-file is given)")
+    pu.add_argument("--content-file", default="", dest="content_file",
+                    help="Path to a JSON file containing the full content model body. "
+                         "Mutually exclusive with --content.")
+    pu.add_argument("--content", default="", dest="content",
+                    help="Inline JSON string for the full content model body. "
+                         "Mutually exclusive with --content-file.")
     pu.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # move (component reorder within /content)
@@ -1206,6 +1212,12 @@ def _build_parser():
     dl = sub.add_parser("delete", help="Delete a page")
     dl.add_argument("--page-id", required=True)
     dl.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
+
+    # create-site
+    cs = sub.add_parser("create-site", help="Create a site root cq:Page via Sling import and return its siteId")
+    cs.add_argument("--path",  required=True, help="Full JCR path for the site root, e.g. /content/forms/af/my-site")
+    cs.add_argument("--title", default="",    help="jcr:title for the site root page (defaults to the node name)")
+    cs.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # clone
     cl = sub.add_parser("clone", help="Clone a page (read source, create copy)")
@@ -1260,6 +1272,101 @@ def _shared_init(args):
         sys.exit(1)
 
 
+def cmd_create_site(args):
+    """
+    Create a site root cq:Page at an arbitrary JCR path via Sling import,
+    then discover and return its siteId from the Content API.
+
+    Reuses create_site_root_page() / discover_site_id() but accepts --path
+    and --title from the command line instead of relying on the demo constants.
+    """
+    _shared_init(args)
+
+    site_path  = args.path.rstrip("/")
+    site_name  = site_path.split("/")[-1]
+    site_title = args.title or site_name
+    parent     = "/".join(site_path.split("/")[:-1]) or "/content/forms/af"
+
+    # Check if already exists
+    r = requests.get(f"{AEM_HOST}{site_path}.2.json", auth=AUTH, timeout=10)
+    if r.status_code == 200 and r.json().get("jcr:primaryType") == "cq:Page":
+        jc = r.json().get("jcr:content", {})
+        if jc.get("jcr:uuid"):
+            ok(f"Site already exists at {site_path}")
+            site_id = discover_site_id(site_name)
+            if site_id:
+                ok(f"siteId: {site_id}")
+                _emit_json(args.json, {"op": "create-site", "ok": True, "siteId": site_id, "path": site_path})
+                return True
+
+    # Strategy: single Sling :operation=import to the site path (same as create_site_root_page).
+    # The :content JSON carries both the cq:Page primaryType and the jcr:content subnode,
+    # including mix:referenceable (required for jcr:uuid / siteId).
+    #
+    # If a non-cq:Page stub exists from a previous failed attempt, delete it first.
+    # Sling cannot change jcr:primaryType; a brief sleep lets the JCR transaction commit.
+    info(f"Creating site root cq:Page at {site_path}")
+    r_check = requests.get(f"{AEM_HOST}{site_path}.1.json", auth=AUTH, timeout=10)
+    if r_check.status_code == 200:
+        node_type = r_check.json().get("jcr:primaryType", "")
+        if node_type and node_type != "cq:Page":
+            info(f"Removing existing {node_type} stub at {site_path}")
+            requests.post(f"{AEM_HOST}{site_path}", auth=AUTH,
+                          files={":operation": (None, "delete")}, timeout=10)
+            time.sleep(1)
+
+    node_content = json.dumps({
+        "jcr:primaryType": "cq:Page",
+        "jcr:content": {
+            "jcr:primaryType":    "cq:PageContent",
+            "jcr:mixinTypes":     ["mix:referenceable"],
+            "jcr:title":          site_title,
+            "jcr:language":       "en",
+            "sling:resourceType": "forms-components-examples/components/page",
+            "cq:template":        "/conf/core-components-examples/settings/wcm/templates/af-blank-v2",
+            "cq:conf":            "/conf/core-components-examples",
+        },
+    })
+    r = requests.post(
+        f"{AEM_HOST}{site_path}",
+        auth=AUTH,
+        files={
+            ":operation":         (None, "import"),
+            ":contentType":       (None, "json"),
+            ":replace":           (None, "true"),
+            ":replaceProperties": (None, "true"),
+            ":content":           (None, node_content),
+        },
+        timeout=15,
+    )
+    if r.status_code not in (200, 201):
+        fail(f"Sling import failed (HTTP {r.status_code}): {r.text[:200]}")
+        _emit_json(args.json, {"op": "create-site", "ok": False, "error": r.text[:200]})
+        return False
+
+    ok(f"Site root created: {site_path}")
+    info("Waiting 4s for Content API to index new site...")
+    time.sleep(4)
+
+    site_id = None
+    for attempt in range(4):
+        site_id = discover_site_id(site_name)
+        if site_id:
+            break
+        if attempt < 3:
+            info(f"  Not indexed yet, retrying in 3s (attempt {attempt+1}/4)...")
+            time.sleep(3)
+
+    if not site_id:
+        fail(f"Site created at {site_path} but siteId not discoverable via /adobe/sites")
+        _emit_json(args.json, {"op": "create-site", "ok": False, "error": "siteId not found after creation"})
+        return False
+
+    ok(f"siteId: {site_id}")
+    _emit_json(args.json, {"op": "create-site", "ok": True, "siteId": site_id, "path": site_path})
+    return True
+
+
 def cmd_create(args):
     _shared_init(args)
     r = post("/adobe/pages", {
@@ -1307,14 +1414,31 @@ def cmd_patch(args):
 def cmd_put(args):
     _shared_init(args)
     content_path = f"/adobe/pages/{args.page_id}/content"
-    r_get = get(content_path)
-    if r_get.status_code != 200:
-        fail(f"Cannot GET /content: {r_get.status_code}")
-        _emit_json(args.json, {"op": "put", "ok": False, "error": f"Cannot GET /content: {r_get.status_code}"})
+    if args.content_file and args.content:
+        fail("Specify only one of --content-file or --content, not both")
+        _emit_json(args.json, {"op": "put", "ok": False, "error": "conflicting --content-file and --content"})
         return False
-    component_type = r_get.json().get("componentType", "core/wcm/components/page/v2/page")
-    body = {"id": "jcr:content", "componentType": component_type,
-            "properties": {"jcr:title": args.title}, "items": []}
+    if args.content_file:
+        with open(args.content_file) as f:
+            body = json.load(f)
+        info(f"PUT {content_path} from {args.content_file}")
+    elif args.content:
+        body = json.loads(args.content)
+        info(f"PUT {content_path} (inline JSON)")
+    else:
+        if not args.title:
+            fail("One of --title, --content-file, or --content is required")
+            _emit_json(args.json, {"op": "put", "ok": False, "error": "--title, --content-file, or --content required"})
+            return False
+        r_get = get(content_path)
+        if r_get.status_code != 200:
+            fail(f"Cannot GET /content: {r_get.status_code}")
+            _emit_json(args.json, {"op": "put", "ok": False, "error": f"Cannot GET /content: {r_get.status_code}"})
+            return False
+        component_type = r_get.json().get("componentType", "core/wcm/components/page/v2/page")
+        body = {"id": "jcr:content", "componentType": component_type,
+                "properties": {"jcr:title": args.title}, "items": []}
+        info(f"PUT {content_path} (title update)")
     r = put(content_path, body)
     if r.status_code in (200, 201, 204):
         new_title = r.json().get("properties", {}).get("jcr:title", "") if r.content else args.title
@@ -1502,6 +1626,7 @@ def main():
         return
 
     dispatch = {
+        "create-site": cmd_create_site,
         "create":   cmd_create,
         "read":     cmd_read,
         "patch":    cmd_patch,
