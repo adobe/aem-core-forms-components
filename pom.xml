@@ -127,6 +127,7 @@
                         <exclude>frontend-maven-plugin/**/*</exclude>
                         <exclude>it/**/*</exclude>
                         <exclude>ui.tests/**/*</exclude>
+                        <exclude>docs/authoring-schema/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

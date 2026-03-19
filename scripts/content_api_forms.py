@@ -1,4 +1,17 @@
 #!/usr/bin/env python3
+# Copyright 2026 Adobe Systems Incorporated
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """
 content_api_forms.py — AEM Content API form management with JCR authoring schema validation.
 
@@ -93,7 +106,9 @@ from typing import Any, Optional
 import requests
 import yaml
 import jsonschema
-from jsonschema import Draft7Validator, RefResolver
+from jsonschema import Draft7Validator
+from referencing import Registry, Resource
+from referencing.jsonschema import DRAFT7
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -249,40 +264,42 @@ def fetch_schemas() -> Path:
     )
 
 
-def build_schema_store(schema_dir: Path) -> dict[str, Any]:
-    """Walk schema_dir/**/*.yaml and build a file-URI -> schema dict."""
-    store = {}
+def build_registry(schema_dir: Path) -> tuple["Registry", str]:
+    """
+    Walk schema_dir/**/*.yaml and build a referencing.Registry for Draft7Validator.
+
+    Returns (registry, root_uri) where root_uri is the file URI for
+    adaptive-form-component.authoring.schema.yaml (the root discriminator).
+
+    The referencing library correctly handles nested $ref chains through
+    patternProperties — including cross-directory references — without the
+    scope-stack drift that affected the deprecated RefResolver.
+    """
+    resources = []
     for yaml_file in sorted(schema_dir.rglob("*.yaml")):
         with open(yaml_file) as f:
             schema = yaml.safe_load(f)
         uri = yaml_file.resolve().as_uri()
-        store[uri] = schema
-    return store
+        resources.append((uri, Resource.from_contents(schema, default_specification=DRAFT7)))
+    registry = Registry().with_resources(resources)
+    root_uri = (schema_dir / "adaptive-form-component.authoring.schema.yaml").resolve().as_uri()
+    return registry, root_uri
 
 
-def make_root_validator(store: dict[str, Any], schema_dir: Path) -> Draft7Validator:
-    """
-    Build a Draft7Validator for adaptive-form-component.authoring.schema.yaml
-    using file-URI based $ref resolution against the store.
-
-    NOTE: RefResolver maintains a scope stack that can leak across multiple
-    iter_errors() calls if an exception aborts mid-iteration. Always call
-    fresh_validator() rather than reusing this validator across validations.
-    """
-    root_file   = schema_dir / "adaptive-form-component.authoring.schema.yaml"
-    root_uri    = root_file.resolve().as_uri()
-    root_schema = store[root_uri]
-    resolver    = RefResolver(base_uri=root_uri, referrer=root_schema, store=store)
-    return Draft7Validator(root_schema, resolver=resolver)
-
-
-# Module-level store (built once); fresh validator per call avoids scope leaks
-_SCHEMA_STORE: dict[str, Any] = {}
-_SCHEMA_DIR:   Path           = Path()   # set in main() via global declaration
+# Module-level registry (built once); validators reference it by URI
+_SCHEMA_REGISTRY: Optional["Registry"] = None
+_ROOT_URI:        str                   = ""
 
 def fresh_validator() -> Draft7Validator:
-    """Return a brand-new Draft7Validator with a fresh RefResolver scope stack."""
-    return make_root_validator(_SCHEMA_STORE, _SCHEMA_DIR)
+    """
+    Return a Draft7Validator for the root discriminator schema.
+
+    Uses the referencing library (Registry) which correctly resolves nested
+    $ref chains including patternProperties recursion across directories.
+    Validators are lightweight wrappers around the shared registry — no
+    scope-stack state to leak between calls.
+    """
+    return Draft7Validator({"$ref": _ROOT_URI}, registry=_SCHEMA_REGISTRY)
 
 
 # ---------------------------------------------------------------------------
