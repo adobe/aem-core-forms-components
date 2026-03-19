@@ -187,7 +187,7 @@ By placing the class names `cmp-adaptiveform-numberinput__label` and `cmp-adapti
 ## JavaScript Data Attribute Bindings
 
 The following attributes must be added for the initialization of the number-input component in the form view:
-1. `data-cmp-is="adaptiveFormButton"`
+1. `data-cmp-is="adaptiveFormNumberInput"`
 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 
