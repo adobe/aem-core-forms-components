@@ -2,15 +2,84 @@
 """
 content_api_forms.py — AEM Content API form management with JCR authoring schema validation.
 
-Validation uses docs/authoring-schema/adaptive-form-component.authoring.schema.yaml
-as the root discriminator schema. It routes each component to its specific schema
-via oneOf + if/then/else on fieldType, so every field is validated against the
-exact schema for its component type.
+Fetches JCR authoring schemas from GitHub at startup (cached in ~/.cache/aem-authoring-schema/)
+and validates component payloads against the root discriminator schema before any AEM operation.
 
-Usage:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ENVIRONMENT VARIABLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  AEM_HOST      AEM instance URL        (default: http://localhost:4502)
+  AEM_USER      AEM admin username      (default: admin)
+  AEM_PASS      AEM admin password      (default: admin)
+  SCHEMA_BRANCH GitHub branch for schemas
+                (default: rismehta/jcr-authoring-schema)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DEMO MODE  (run all 9 steps in sequence)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   python3 scripts/content_api_forms.py
+  python3 scripts/content_api_forms.py demo
 
-Requirements:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CLI SUBCOMMANDS  (skill-ready interface)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+All subcommands accept --json to emit a machine-readable result as the LAST stdout
+line (e.g. {"op":"create","ok":true,"pageId":"..."}).  Parse with:
+  ... | tail -1 | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['pageId'])"
+
+  create   --site-id SITE_ID --name NAME --title TITLE [--description DESC]
+           Create a new page in a site. Returns pageId.
+
+  read     --page-id PAGE_ID
+           Read page metadata (title, name, siteId, ...).
+
+  patch    --page-id PAGE_ID --title NEW_TITLE
+           PATCH page title via JSON Patch RFC 6902.
+
+  put      --page-id PAGE_ID --title NEW_TITLE
+           PUT (full replace) page content model.
+
+  move     --page-id PAGE_ID --from-index N --to-index M
+           Reorder components in /content (JSON Patch move on items[]).
+
+  delete   --page-id PAGE_ID
+           Delete a page (ETag-aware).
+
+  clone    --page-id SRC_PAGE_ID --site-id SITE_ID --name NEW_NAME
+           Clone a page into the same or different site.
+
+  validate --payload JSON_STRING
+           Validate a component dict against the authoring schema (offline, no AEM needed).
+           JSON_STRING is a single component node, e.g.:
+             '{"fieldType":"text-input","name":"x","jcr:title":"X"}'
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXAMPLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # Discover siteId from the demo output
+  python3 scripts/content_api_forms.py demo 2>&1 | grep siteId
+
+  # Create a page and capture its pageId
+  PAGE_ID=$(python3 scripts/content_api_forms.py create \\
+    --site-id "$SITE_ID" --name my-form --title "My Form" --json 2>/dev/null \\
+    | tail -1 | python3 -c "import json,sys; print(json.load(sys.stdin)['pageId'])")
+
+  # Read it back
+  python3 scripts/content_api_forms.py read --page-id "$PAGE_ID"
+
+  # Patch title
+  python3 scripts/content_api_forms.py patch --page-id "$PAGE_ID" --title "Updated Title"
+
+  # Validate offline (no AEM required)
+  python3 scripts/content_api_forms.py validate \\
+    --payload '{"fieldType":"text-input","name":"x","jcr:title":"X"}' --json
+
+  # Delete
+  python3 scripts/content_api_forms.py delete --page-id "$PAGE_ID"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   pip install jsonschema pyyaml requests
 """
 
