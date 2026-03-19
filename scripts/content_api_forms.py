@@ -1061,10 +1061,243 @@ def print_summary(results: list):
 
 
 # ---------------------------------------------------------------------------
+# CLI argument parser
+# ---------------------------------------------------------------------------
+
+def _build_parser():
+    import argparse
+    p = argparse.ArgumentParser(
+        prog="content_api_forms.py",
+        description="AEM Content API — Adaptive Forms CLI",
+    )
+    p.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
+    sub = p.add_subparsers(dest="cmd", metavar="COMMAND")
+
+    # demo — run full 9-step sequence (default when no subcommand given)
+    sub.add_parser("demo", help="Run full 9-step demo (default)")
+
+    # create
+    cr = sub.add_parser("create", help="Create a page in a site")
+    cr.add_argument("--site-id",    required=True)
+    cr.add_argument("--name",       required=True, help="URL-safe page node name")
+    cr.add_argument("--title",      required=True)
+    cr.add_argument("--description", default="")
+
+    # read
+    rd = sub.add_parser("read", help="Read page metadata")
+    rd.add_argument("--page-id", required=True)
+
+    # patch
+    pa = sub.add_parser("patch", help="PATCH page content (JSON Patch RFC 6902)")
+    pa.add_argument("--page-id", required=True)
+    pa.add_argument("--title",   required=True, help="New page title")
+
+    # put
+    pu = sub.add_parser("put", help="PUT (full replace) page content")
+    pu.add_argument("--page-id", required=True)
+    pu.add_argument("--title",   required=True, help="New page title")
+
+    # move (component reorder within /content)
+    mv = sub.add_parser("move", help="Reorder components within page content (JSON Patch move)")
+    mv.add_argument("--page-id",    required=True)
+    mv.add_argument("--from-index", required=True, type=int, help="items[] index to move from")
+    mv.add_argument("--to-index",   required=True, type=int, help="items[] index to move to")
+
+    # delete
+    dl = sub.add_parser("delete", help="Delete a page")
+    dl.add_argument("--page-id", required=True)
+
+    # clone
+    cl = sub.add_parser("clone", help="Clone a page (read source, create copy)")
+    cl.add_argument("--page-id",  required=True, help="Source page to clone from")
+    cl.add_argument("--site-id",  required=True, help="Destination site")
+    cl.add_argument("--name",     required=True, help="Name for the cloned page")
+
+    # validate
+    va = sub.add_parser("validate", help="Validate a component dict against the authoring schema")
+    va.add_argument("--payload", required=True,
+                    help='JSON string of a single component node, e.g. \'{"fieldType":"text-input",...}\'')
+
+    return p
+
+
+def _emit_json(emit, data):
+    """Print a JSON result line if --json flag is set. Always the last line of stdout."""
+    if emit:
+        import json as _json
+        print(_json.dumps(data))
+
+
+def _shared_init(args):
+    """
+    Load schemas from GitHub and verify AEM reachability.
+    Called at the top of every cmd_* function.
+    Exits with sys.exit(1) on failure.
+    """
+    global _SCHEMA_STORE, _SCHEMA_DIR
+    if not _SCHEMA_STORE:
+        info(f"Fetching schemas from github:{GITHUB_REPO}@{GITHUB_BRANCH}...")
+        _SCHEMA_DIR   = fetch_schemas()
+        _SCHEMA_STORE = build_schema_store(_SCHEMA_DIR)
+        ok(f"Schemas ready ({_SCHEMA_DIR.name[:8] if _SCHEMA_DIR != _LOCAL_SCHEMA_DIR else 'local'})")
+    try:
+        r = requests.get(f"{AEM_HOST}/libs/granite/core/content/login.html", auth=AUTH, timeout=10)
+        if r.status_code not in (200, 302):
+            fail(f"AEM not reachable (HTTP {r.status_code})")
+            _emit_json(getattr(args, "json", False), {"ok": False, "error": "AEM not reachable"})
+            sys.exit(1)
+    except Exception as e:
+        fail(f"AEM not reachable: {e}")
+        _emit_json(getattr(args, "json", False), {"ok": False, "error": str(e)})
+        sys.exit(1)
+
+
+def cmd_create(args):
+    _shared_init(args)
+    r = post("/adobe/pages", {
+        "siteId": args.site_id, "title": args.title,
+        "name": args.name, "description": args.description,
+    })
+    if r.status_code in (200, 201):
+        page_id = r.json().get("id", "")
+        ok(f"Created: pageId={page_id[:30]}...")
+        _emit_json(args.json, {"op": "create", "ok": True, "pageId": page_id,
+                               "name": r.json().get("name"), "title": r.json().get("title")})
+        return True
+    fail(f"Create failed: HTTP {r.status_code} — {r.text[:200]}")
+    _emit_json(args.json, {"op": "create", "ok": False, "error": r.text[:200]})
+    return False
+
+
+def cmd_read(args):
+    _shared_init(args)
+    r = get(f"/adobe/pages/{args.page_id}")
+    if r.status_code == 200:
+        data = r.json()
+        ok(f"title={data.get('title')!r}  name={data.get('name')!r}")
+        _emit_json(args.json, {"op": "read", "ok": True, **data})
+        return True
+    fail(f"Read failed: HTTP {r.status_code}")
+    _emit_json(args.json, {"op": "read", "ok": False, "error": r.text[:200]})
+    return False
+
+
+def cmd_patch(args):
+    _shared_init(args)
+    content_path = f"/adobe/pages/{args.page_id}/content"
+    r = patch(content_path, [{"op": "replace", "path": "/properties/jcr:title", "value": args.title}])
+    if r.status_code in (200, 201, 204):
+        new_title = r.json().get("properties", {}).get("jcr:title", "") if r.content else args.title
+        ok(f"Patched title -> {new_title!r}")
+        _emit_json(args.json, {"op": "patch", "ok": True, "title": new_title})
+        return True
+    fail(f"Patch failed: HTTP {r.status_code} — {r.text[:200]}")
+    _emit_json(args.json, {"op": "patch", "ok": False, "error": r.text[:200]})
+    return False
+
+
+def cmd_put(args):
+    _shared_init(args)
+    content_path = f"/adobe/pages/{args.page_id}/content"
+    r_get = get(content_path)
+    if r_get.status_code != 200:
+        fail(f"Cannot GET /content: {r_get.status_code}")
+        return False
+    component_type = r_get.json().get("componentType", "core/wcm/components/page/v2/page")
+    body = {"id": "jcr:content", "componentType": component_type,
+            "properties": {"jcr:title": args.title}, "items": []}
+    r = put(content_path, body)
+    if r.status_code in (200, 201, 204):
+        new_title = r.json().get("properties", {}).get("jcr:title", "") if r.content else args.title
+        ok(f"PUT title -> {new_title!r}")
+        _emit_json(args.json, {"op": "put", "ok": True, "title": new_title})
+        return True
+    fail(f"PUT failed: HTTP {r.status_code} — {r.text[:200]}")
+    _emit_json(args.json, {"op": "put", "ok": False, "error": r.text[:200]})
+    return False
+
+
+def cmd_move(args):
+    _shared_init(args)
+    content_path = f"/adobe/pages/{args.page_id}/content"
+    ops = [{"op": "move", "from": f"/items/{args.from_index}", "path": f"/items/{args.to_index}"}]
+    r = patch(content_path, ops)
+    if r.status_code in (200, 201, 204):
+        ok(f"Moved items[{args.from_index}] -> items[{args.to_index}]")
+        _emit_json(args.json, {"op": "move", "ok": True})
+        return True
+    fail(f"Move failed: HTTP {r.status_code} — {r.text[:200]}")
+    _emit_json(args.json, {"op": "move", "ok": False, "error": r.text[:200]})
+    return False
+
+
+def cmd_delete(args):
+    _shared_init(args)
+    r = delete(f"/adobe/pages/{args.page_id}")
+    if r.status_code in (200, 204, 404):
+        ok(f"Deleted (HTTP {r.status_code})")
+        _emit_json(args.json, {"op": "delete", "ok": True})
+        return True
+    fail(f"Delete failed: HTTP {r.status_code} — {r.text[:200]}")
+    _emit_json(args.json, {"op": "delete", "ok": False, "error": r.text[:200]})
+    return False
+
+
+def cmd_clone(args):
+    _shared_init(args)
+    src = get(f"/adobe/pages/{args.page_id}")
+    if src.status_code != 200:
+        fail(f"Cannot read source page: {src.status_code}")
+        return False
+    source_title = src.json().get("title", "Page")
+    r = post("/adobe/pages", {
+        "siteId": args.site_id,
+        "title":  source_title + " (clone)",
+        "name":   args.name,
+    })
+    if r.status_code in (200, 201):
+        clone_id = r.json().get("id", "")
+        ok(f"Cloned -> pageId={clone_id[:30]}...")
+        _emit_json(args.json, {"op": "clone", "ok": True, "pageId": clone_id,
+                               "name": r.json().get("name"), "title": r.json().get("title")})
+        return True
+    fail(f"Clone failed: HTTP {r.status_code} — {r.text[:200]}")
+    _emit_json(args.json, {"op": "clone", "ok": False, "error": r.text[:200]})
+    return False
+
+
+def cmd_validate(args):
+    import json as _json
+    # Schema init only (no AEM check needed for offline validation)
+    global _SCHEMA_STORE, _SCHEMA_DIR
+    if not _SCHEMA_STORE:
+        info(f"Fetching schemas from github:{GITHUB_REPO}@{GITHUB_BRANCH}...")
+        _SCHEMA_DIR   = fetch_schemas()
+        _SCHEMA_STORE = build_schema_store(_SCHEMA_DIR)
+        ok(f"Schemas ready ({_SCHEMA_DIR.name[:8] if _SCHEMA_DIR != _LOCAL_SCHEMA_DIR else 'local'})")
+    try:
+        payload = _json.loads(args.payload)
+    except Exception as e:
+        fail(f"Invalid JSON payload: {e}")
+        _emit_json(args.json, {"op": "validate", "ok": False, "error": str(e)})
+        return False
+    errs = validate_component(payload, "component")
+    if errs:
+        fail(f"Validation failed ({len(errs)} error(s)):")
+        for e in errs:
+            print(f"     {e}")
+        _emit_json(args.json, {"op": "validate", "ok": False, "errors": errs})
+        return False
+    ok("Component passes schema validation")
+    _emit_json(args.json, {"op": "validate", "ok": True})
+    return True
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
-def main():
+def _run_demo_main():
     print(f"\n{BOLD}AEM Content API — Adaptive Forms Script{RESET}")
     print(f"Host:        {AEM_HOST}")
     print(f"Site root:   {SITE_ROOT} (siteId discovered dynamically)")
@@ -1126,6 +1359,33 @@ def main():
     delete_forms(results)
 
     success = print_summary(results)
+    sys.exit(0 if success else 1)
+
+
+def main():
+    parser = _build_parser()
+    args   = parser.parse_args()
+
+    # No subcommand -> run the full demo (backward-compatible default)
+    if args.cmd is None or args.cmd == "demo":
+        _run_demo_main()
+        return
+
+    dispatch = {
+        "create":   cmd_create,
+        "read":     cmd_read,
+        "patch":    cmd_patch,
+        "put":      cmd_put,
+        "move":     cmd_move,
+        "delete":   cmd_delete,
+        "clone":    cmd_clone,
+        "validate": cmd_validate,
+    }
+    fn = dispatch.get(args.cmd)
+    if fn is None:
+        parser.print_help()
+        sys.exit(1)
+    success = fn(args)
     sys.exit(0 if success else 1)
 
 
