@@ -29,23 +29,101 @@ Adaptive Form Number input field component written in HTL.
 The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.NumberInput` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Text component and are expected to be available as `Resource` properties:
 
-1. `./jcr:title` - defines the label to use for this field
-2. `./hideTitle` - if set to `true`, the label of this field will be hidden
-3. `./name` - defines the name of the field, which will be submitted with the form data
-4. `./default` - defines the default value of the field
-5. `./description` - defines a help message that can be rendered in the field as a hint for the user
-6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
-7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-8. `./readOnly` - if set to `true`, the field will be read only
-9. `./minimum` - the minimum value that can be entered in this input
-10. `./maximum` - the maximum value that can be entered in this input
-11. `./minimumMessage` - the message showed to the user if the entered value is less than the minimum value
-12. `./maximumMessage` - the message showed to the user if the entered value is more than the maximum value
-13. `./leadDigits` - the max no of digits before decimal that can be entered if the type of field is Decimal.
-14. `./fracDigits` - the max no of digits after decimal that can be entered if the type of field is Decimal.
-15. `./displayFormat` - define the template for display pattern (Reference can be found [here](https://unicode.org/reports/tr35/tr35-numbers.html#Number_Format_Patterns)).
+The following properties are written to JCR by the Edit Dialog and consumed by the Sling Model.
+
+#### Inherited from all components (base)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field name | `./name` | String | — | Submitted data key |
+| Data reference | `./dataRef` | String | — | JSON-path for data binding |
+| Visible | `./visible` | Boolean | *(runtime: true)* | Initial visibility; absent = runtime default true |
+| Enabled | `./enabled` | Boolean | *(runtime: true)* | Whether field is interactive; absent = runtime default true |
+| Label | `./jcr:title` | String | — | Visible label text |
+| Hide label | `./hideTitle` | Boolean | `false` | Hides label visually |
+| Rich text label | `./isTitleRichText` | Boolean | `false` | Treat label as rich text HTML |
+| Description | `./description` | String | — | Help text / long description |
+| Tooltip | `./tooltip` | String | — | Popover tooltip text |
+| Show tooltip | `./tooltipVisible` | Boolean | `false` | Shows tooltip question-mark icon |
+| Required | `./required` | Boolean | `false` | Whether a value is required |
+| Required message | `./mandatoryMessage` | String | — | Error shown when required is violated |
+| Validation expression | `./validationExpression` | String | — | json-formula returning true when valid |
+| Validation expression message | `./validateExpMessage` | String | — | Error for validation expression failure |
+| Assistive priority | `./assistPriority` | String | — | Screen-reader source: `description`, `title`, `name`, `custom` |
+| Custom assistive text | `./custom` | String | — | Used when assistPriority is `custom` |
+| Data type | `./type` | String | — | `string`, `number`, `integer`, `boolean`, etc. |
+
+#### Field properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Read-only | `./readOnly` | Boolean | `false` | Prevents user edits |
+| Default value | `./default` | Object[] | — | Initial value |
+| Empty value | `./fd:emptyValue` | String | — | Value on empty submit: `"null"`, `"undefined"`, `""` |
+| Placeholder | `./placeholder` | String | — | Ghosted hint text |
+| Display format | `./displayFormat` | String | — | Display pattern (date/number formats) |
+| Custom display format | `./fd:customDisplayFormat` | String | — | Overrides displayFormat when present |
+| Edit format | `./editFormat` | String | — | Format for value entry |
+| Display value expression | `./displayValueExpression` | String | — | json-formula for computed display value |
+| Data format | `./dataFormat` | String | — | Format for value export/submission |
+| Min length | `./minLength` | Integer | — | Minimum character count |
+| Max length | `./maxLength` | Integer | — | Maximum character count |
+| Min length message | `./minLengthMessage` | String | — | Error for minLength violation |
+| Max length message | `./maxLengthMessage` | String | — | Error for maxLength violation |
+| Pattern | `./pattern` | String | — | Regex validation pattern |
+| Pattern message | `./validatePictureClauseMessage` | String | — | Error for pattern violation |
+| Type message | `./typeMessage` | String | — | Error for type constraint violation |
+| Format message | `./formatMessage` | String | — | Error for format constraint violation |
+
+#### Child nodes
+
+> These are JCR child nodes, not flat properties on the component node.
+
+**`fd:rules`** (child node) — contains runtime rules (category A), visual rule editor AST (category B), and metadata (category C). The web runtime model only reads category A keys via `getRules()`.
+
+| JCR property name | Category | Type | Description |
+|-------------------|----------|------|-------------|
+| `visible` | A — runtime rule | String | Show/hide json-formula expression |
+| `required` | A — runtime rule | String | Required json-formula expression |
+| `enabled` | A — runtime rule | String | Enable/disable json-formula expression |
+| `readOnly` | A — runtime rule | String | Read-only json-formula expression |
+| `value` | A — runtime rule | String | Computed value json-formula expression |
+| `label` | A — runtime rule | String | Dynamic label json-formula expression |
+| `enum` / `enumNames` | A — runtime rule | String | Dynamic options expressions |
+| `minimum` / `maximum` | A — runtime rule | String | Dynamic constraint expressions |
+| `exclusiveMinimum` / `exclusiveMaximum` | A — runtime rule | String | Dynamic exclusive constraint expressions |
+| `description` | A — runtime rule | String | Dynamic description expression |
+| `fd:click`, `fd:validate`, `fd:valueCommit`, `fd:format` | B — rule editor AST | String[] | Visual rule editor AST (ignored by web runtime) |
+| `validationStatus` | C — metadata | String | Rule editor validity: `"none"` \| `"valid"` \| `"invalid"` |
+
+**`fd:events`** (child node) — each property is an event name → handler expression (String or String[]):
+
+| Event name | JCR property name | Description |
+|------------|------------------|-------------|
+| `click` | `click` | Button/field click handler |
+| `submit` | `submit` | Form submit handler |
+| `initialize` | `initialize` | On field initialization |
+| `load` | `load` | On form load |
+| `change` | `change` | On value change |
+| `submitSuccess` | `submitSuccess` | After successful submit |
+| `submitError` | `submitError` | After failed submit |
+| `custom:eventName` | `custom_eventName` | Custom event (stored with `_`, read as `:`) |
+
+#### NumberInput-specific
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Step | `./step` | String/Integer | — | Value must be a multiple of step |
+| Step message | `./stepMessage` | String | — | Error for step constraint violation |
+| Minimum | `./minimum` | String/Integer | — | Minimum numeric value (inclusive) |
+| Maximum | `./maximum` | String/Integer | — | Maximum numeric value (inclusive) |
+| Exclusive minimum | `./exclusiveMinimum` | Boolean | `false` | Whether minimum is exclusive |
+| Exclusive maximum | `./exclusiveMaximum` | Boolean | `false` | Whether maximum is exclusive |
+| Exclude minimum check (legacy) | `./excludeMinimumCheck` | Boolean | — | Legacy XFA property; use exclusiveMinimum |
+| Exclude maximum check (legacy) | `./excludeMaximumCheck` | Boolean | — | Legacy XFA property; use exclusiveMaximum |
+| Minimum message | `./minimumMessage` | String | — | Error for minimum constraint violation |
+| Maximum message | `./maximumMessage` | String | — | Error for maximum constraint violation |
 
 ## Client Libraries
 The component provides a `core.forms.components.numberinput.v1.runtime` client library category that contains the Javascript runtime for the component. 
