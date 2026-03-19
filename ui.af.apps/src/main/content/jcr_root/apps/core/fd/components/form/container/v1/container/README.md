@@ -32,12 +32,46 @@ The following configuration properties are used:
 1. `./components` - defines the allowed components that can be dropped onto a Form Container associated to this component policy
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Adaptive Form Container component and are expected to be available as `Resource` 
-properties:
 
-1. `./action` - defines the action that will be performed by the form
-2. `./thankyouMessage` - defines the thank you message to shown after submission
-3. `./formModelDocumentPath` - json document defining the form model
+The following properties are written to JCR by the Edit Dialog and consumed by the Sling Model.
+
+> **Important**: In the runtime JSON model, auto-save properties are grouped under the `fd:autoSave` key
+> and submission properties under `fd:submit`. These are output-time groupings only — JCR stores all
+> of them as flat properties directly on this FormContainer node.
+
+#### Inherited container properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Visible | `./visible` | Boolean | `true` | Whether the container is visible |
+| Enabled | `./enabled` | Boolean | `true` | Whether the container is enabled |
+| Title | `./title` | String | — | Form title |
+| Description | `./description` | String | — | Form description |
+
+#### Submission properties (flat JCR, grouped under `fd:submit` in JSON output)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Action type | `./actionType` | String | — | Submit action type |
+| Action name | `./actionName` | String | — | Submit action name |
+| Email To | `./mailto` | String | — | Recipient email address(es) |
+| Email From | `./from` | String | — | Sender email address |
+| Email Subject | `./subject` | String | — | Email subject line |
+| Email CC | `./cc` | String | — | CC email address(es) |
+| Email BCC | `./bcc` | String | — | BCC email address(es) |
+| Spreadsheet URL | `./spreadsheetUrl` | String | — | OneDrive/SharePoint spreadsheet URL |
+
+#### Post-submission properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Thank you message (v1) | `./thankyouMessage` | String | — | Message shown after submit (lowercase y) |
+
+#### Legacy / DAM-based form model
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Form model document path | `./formModelDocumentPath` | String | — | Path to DAM asset containing form JSON definition |
 
 ## Client Libraries
 
