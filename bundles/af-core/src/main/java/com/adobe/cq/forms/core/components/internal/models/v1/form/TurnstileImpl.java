@@ -44,11 +44,8 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Turnstile;
 import com.adobe.cq.forms.core.components.util.AbstractCaptchaImplV2;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Turnstile.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_TURNSTILE_V1 })
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Turnstile.class,
+        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_TURNSTILE_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TurnstileImpl extends AbstractCaptchaImplV2 implements Turnstile {
     private static final Logger LOGGER = LoggerFactory.getLogger(TurnstileImpl.class);
@@ -91,8 +88,7 @@ public class TurnstileImpl extends AbstractCaptchaImplV2 implements Turnstile {
     }
 
     /**
-     * Set the turnstileConfiguration, by fetching it from the cloud configurations.
-     * Also sets the captchaSiteKey.
+     * Set the turnstileConfiguration, by fetching it from the cloud configurations. Also sets the captchaSiteKey.
      */
     private void setTurnstileConfiguration() {
         LOGGER.debug("[AF] [Captcha] [TURNSTILE] Fetching cloud configuration for turnstile.");
@@ -103,15 +99,17 @@ public class TurnstileImpl extends AbstractCaptchaImplV2 implements Turnstile {
                 if (turnstileConfiguration != null) {
                     captchaSiteKey = turnstileConfiguration.getSiteKey();
                 } else {
-                    LOGGER.debug("[AF] [Captcha] [TURNSTILE] Cloud configuration for turnstile is not available for " + this.getPath());
+                    LOGGER.debug("[AF] [Captcha] [TURNSTILE] Cloud configuration for turnstile is not available for "
+                            + this.getPath());
                 }
             } catch (GuideException e) {
                 LOGGER.error(
-                    "[AF] [Captcha] [TURNSTILE] Error while fetching cloud configuration, upgrade to latest release to use turnstile.", e);
+                        "[AF] [Captcha] [TURNSTILE] Error while fetching cloud configuration, upgrade to latest release to use turnstile.",
+                        e);
             }
         } else {
             LOGGER.error(
-                "[AF] [Captcha] [TURNSTILE] Error while fetching cloud configuration, upgrade to latest release to use turnstile.");
+                    "[AF] [Captcha] [TURNSTILE] Error while fetching cloud configuration, upgrade to latest release to use turnstile.");
         }
     }
 
@@ -139,7 +137,8 @@ public class TurnstileImpl extends AbstractCaptchaImplV2 implements Turnstile {
         if (turnstileConfiguration == null) {
             setTurnstileConfiguration();
         }
-        if (turnstileConfiguration != null && CaptchaDisplayMode.INVISIBLE.getValue().equals(turnstileConfiguration.getWidgetType())) {
+        if (turnstileConfiguration != null
+                && CaptchaDisplayMode.INVISIBLE.getValue().equals(turnstileConfiguration.getWidgetType())) {
             captchaDisplayMode = CaptchaDisplayMode.INVISIBLE;
         }
         return captchaDisplayMode.getValue();

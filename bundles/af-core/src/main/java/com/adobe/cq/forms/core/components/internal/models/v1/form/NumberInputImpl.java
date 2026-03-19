@@ -35,11 +35,8 @@ import com.adobe.cq.forms.core.components.models.form.NumberInput;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { NumberInput.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_NUMBER_INPUT_V1 })
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { NumberInput.class,
+        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_NUMBER_INPUT_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
 
@@ -137,10 +134,10 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
 
     @PostConstruct
     private void initNumberInput() {
-        Object tempExclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximumAsStr != null ? maximumAsStr : maximum,
-            excludeMaximumCheck);
-        Object tempExclusiveMinimumValue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimumAsStr != null ? minimumAsStr : minimum,
-            excludeMinimumCheck);
+        Object tempExclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum,
+                maximumAsStr != null ? maximumAsStr : maximum, excludeMaximumCheck);
+        Object tempExclusiveMinimumValue = ComponentUtils.getExclusiveValue(exclusiveMinimum,
+                minimumAsStr != null ? minimumAsStr : minimum, excludeMinimumCheck);
         if (tempExclusiveMaximumValue != null) {
             exclusiveMaximumValue = ComponentUtils.parseNumber(tempExclusiveMaximumValue.toString());
         }

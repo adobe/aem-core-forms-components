@@ -104,23 +104,27 @@ public final class ReservedProperties {
     public static final String PN_IS_TITLE_RICH_TEXT = "isTitleRichText";
     public static final String PN_ORIENTATION = "orientation";
     public static final String PN_TYPE_MESSAGE = "typeMessage";
-    public static final String PN_REQUIRED_MESSAGE = "mandatoryMessage"; // reusing the same property name as in foundation
+    public static final String PN_REQUIRED_MESSAGE = "mandatoryMessage"; // reusing the same property name as in
+                                                                         // foundation
     public static final String PN_MINIMUM_MESSAGE = "minimumMessage";
     public static final String PN_MAXIMUM_MESSAGE = "maximumMessage";
     public static final String PN_MINLENGTH_MESSAGE = "minLengthMessage";
     public static final String PN_MAXLENGTH_MESSAGE = "maxLengthMessage";
-    public static final String PN_MAX_FILE_SIZE_MESSAGE = "maxFileSizeMessage"; // for fileInput min, max number of files, maximum file size
+    public static final String PN_MAX_FILE_SIZE_MESSAGE = "maxFileSizeMessage"; // for fileInput min, max number of
+                                                                                // files, maximum file size
                                                                                 // and accept of file type messages
     public static final String PN_ACCEPT_MESSAGE = "acceptMessage";
     public static final String PN_STEP_MESSAGE = "stepMessage";
     public static final String PN_FORMAT_MESSAGE = "formatMessage";
     public static final String PN_PATTERN = "pattern";
-    public static final String PN_PATTERN_MESSAGE = "validatePictureClauseMessage"; // reusing the same property name as in foundation
+    public static final String PN_PATTERN_MESSAGE = "validatePictureClauseMessage"; // reusing the same property name as
+                                                                                    // in foundation
     public static final String PN_MINITEMS_MESSAGE = "minItemsMessage";
     public static final String PN_MAXITEMS_MESSAGE = "maxItemsMessage";
     public static final String PN_UNIQUE_ITEMS_MESSAGE = "uniqueItemsMessage";
     public static final String PN_ENFORCE_ENUM_MESSAGE = "enforceEnumMessage";
-    public static final String PN_VALIDATION_EXPRESSION_MESSAGE = "validateExpMessage"; // reusing the same property name as in foundation
+    public static final String PN_VALIDATION_EXPRESSION_MESSAGE = "validateExpMessage"; // reusing the same property
+                                                                                        // name as in foundation
     public static final String PN_MULTISELECT = "multiSelect";
     public static final String PN_MULTISELECTION = "multiSelection";
     public static final String PN_ENABLE_UNCHECKED_VALUE = "enableUncheckedValue";

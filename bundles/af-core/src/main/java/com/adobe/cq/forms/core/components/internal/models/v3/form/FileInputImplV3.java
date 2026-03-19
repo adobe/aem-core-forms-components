@@ -40,11 +40,8 @@ import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.internal.models.v2.form.FileInputImplV2;
 import com.adobe.cq.forms.core.components.models.form.FileInput;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { FileInput.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_FILE_INPUT_V3 })
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { FileInput.class,
+        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_FILE_INPUT_V3 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FileInputImplV3 extends FileInputImplV2 {
 
@@ -76,8 +73,6 @@ public class FileInputImplV3 extends FileInputImplV2 {
                 acceptExtensions[i] = "." + acceptExtensions[i];
             }
         }
-        return Optional.ofNullable(acceptExtensions)
-            .map(Arrays::asList)
-            .orElse(Collections.emptyList());
+        return Optional.ofNullable(acceptExtensions).map(Arrays::asList).orElse(Collections.emptyList());
     }
 }

@@ -65,7 +65,7 @@ public class Utils {
             mapper.writerWithView(viewType).writeValue(writer, model);
         } catch (IOException e) {
             fail(String.format("Unable to generate JSON export for model %s: %s", model.getClass().getName(),
-                e.getMessage()));
+                    e.getMessage()));
         }
         return IOUtils.toInputStream(writer.toString());
     }
@@ -81,7 +81,7 @@ public class Utils {
             mapper.writerWithView(Views.Author.class).writeValue(writer, model);
         } catch (IOException e) {
             fail(String.format("Unable to generate JSON export for model %s: %s", model.getClass().getName(),
-                e.getMessage()));
+                    e.getMessage()));
         }
         return IOUtils.toInputStream(writer.toString());
     }
@@ -96,7 +96,8 @@ public class Utils {
      * @param expectedJsonResource
      *            the class path resource providing the expected JSON object
      */
-    public static void testJSONExport(Object model, String expectedJsonResource, Class<? extends Views.Publish> viewType) {
+    public static void testJSONExport(Object model, String expectedJsonResource,
+            Class<? extends Views.Publish> viewType) {
         InputStream modeInputStream = getJson(model, viewType);
         JsonReader outputReader = Json.createReader(modeInputStream);
         InputStream is = Utils.class.getResourceAsStream(expectedJsonResource);
@@ -131,7 +132,8 @@ public class Utils {
     /**
      * The given model is validated against adaptive form specification
      *
-     * @param model reference to the sling model
+     * @param model
+     *            reference to the sling model
      */
     public static void testSchemaValidation(@NotNull Object model) {
         // we check complete json in schema validation, to validate complete model json
@@ -145,7 +147,8 @@ public class Utils {
             JsonSchema schema = schemaFactory.getSchema(schemaStream);
             // read data from the stream and store it into JsonNode
             JsonNode json = objectMapper.readTree(jsonStream);
-            // if there is a version bump of schema, then it needs to be validated against its corresponding sling model here
+            // if there is a version bump of schema, then it needs to be validated against its corresponding sling model
+            // here
             // by explicitly checking the model implementation
             if (!(model instanceof FormContainerImpl)) {
                 InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.15.2/form.json");
@@ -158,20 +161,20 @@ public class Utils {
             // show the validation errors
             if (!validationResult.isEmpty()) {
                 // show all the validation error
-                fail(String.format("Error found during schema validation : %s",
-                    Joiner.on(" ").join(validationResult)));
+                fail(String.format("Error found during schema validation : %s", Joiner.on(" ").join(validationResult)));
             }
         } catch (IOException ex) {
-            fail(String.format("Unable to validate form model definition : %s",
-                ex.getMessage()));
+            fail(String.format("Unable to validate form model definition : %s", ex.getMessage()));
         }
     }
 
     /**
      * Validates the JCR ValueMap of a resource against the JCR authoring schema for a given component.
      *
-     * @param resource the Sling resource whose ValueMap to validate
-     * @param schemaResourcePath classpath path to the authoring schema JSON (e.g. "/authoring-schema/textinput.authoring.schema.json")
+     * @param resource
+     *            the Sling resource whose ValueMap to validate
+     * @param schemaResourcePath
+     *            classpath path to the authoring schema JSON (e.g. "/authoring-schema/textinput.authoring.schema.json")
      */
     public static void testJcrSchemaValidation(@NotNull Resource resource, @NotNull String schemaResourcePath) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -187,8 +190,8 @@ public class Utils {
             JsonNode jcrNode = objectMapper.valueToTree(resource.getValueMap());
             Set<ValidationMessage> validationResult = schema.validate(jcrNode);
             if (!validationResult.isEmpty()) {
-                fail(String.format("JCR authoring schema validation failed for %s: %s",
-                    resource.getPath(), Joiner.on(" ").join(validationResult)));
+                fail(String.format("JCR authoring schema validation failed for %s: %s", resource.getPath(),
+                        Joiner.on(" ").join(validationResult)));
             }
         } catch (Exception ex) {
             fail(String.format("Unable to validate JCR node against authoring schema: %s", ex.getMessage()));
@@ -216,6 +219,7 @@ public class Utils {
      *            the test base folder (under the {@code src/test/resources} folder)
      * @param testResourcePath
      *            the test resource path in the virtual repository
+     * 
      * @return the expected class path location of the JSON exporter file
      */
     public static String getTestExporterJSONPath(String testBase, String testResourcePath) {
@@ -225,9 +229,12 @@ public class Utils {
     /**
      * Set internal state on a private field.
      *
-     * @param target target object to set the private field
-     * @param field name of the private field
-     * @param value value of the private field
+     * @param target
+     *            target object to set the private field
+     * @param field
+     *            name of the private field
+     * @param value
+     *            value of the private field
      */
     @SuppressWarnings("squid:S00112")
     public static void setInternalState(Object target, String field, Object value) {
@@ -237,7 +244,8 @@ public class Utils {
             f.setAccessible(true);
             f.set(target, value);
         } catch (IllegalAccessException | RuntimeException e) {
-            throw new RuntimeException("Unable to set internal state on a private field. Please report to mockito mailing list.", e);
+            throw new RuntimeException(
+                    "Unable to set internal state on a private field. Please report to mockito mailing list.", e);
         }
     }
 
@@ -248,10 +256,8 @@ public class Utils {
             f = getField(clazz, field);
         }
         if (f == null) {
-            throw new IllegalArgumentException(
-                "You want me to get this field: '" + field +
-                    "' on this class: '" + clazz.getSimpleName() +
-                    "' but this field is not declared withing hierarchy of this class!");
+            throw new IllegalArgumentException("You want me to get this field: '" + field + "' on this class: '"
+                    + clazz.getSimpleName() + "' but this field is not declared withing hierarchy of this class!");
         }
         return f;
     }

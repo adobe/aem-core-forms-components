@@ -15,8 +15,8 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /**
  * <p>
- * This package defines the JSONViews exposed by the Adobe Experience Manager Forms Components Bundle for the form components.
- * It is meant to be used by Jackson serialisation of Sling models of core components.
+ * This package defines the JSONViews exposed by the Adobe Experience Manager Forms Components Bundle for the form
+ * components. It is meant to be used by Jackson serialisation of Sling models of core components.
  * </p>
  */
 @Version("1.0.0")

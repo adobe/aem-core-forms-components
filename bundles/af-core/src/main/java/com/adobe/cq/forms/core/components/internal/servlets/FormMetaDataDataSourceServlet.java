@@ -57,13 +57,9 @@ import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.foundation.forms.FormsManager;
 
-@Component(
-    service = { Servlet.class },
-    property = {
-        "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_CONTAINER_DATASOURCE_V1,
-        "sling.servlet.methods=GET",
-        "sling.servlet.extensions=html"
-    })
+@Component(service = { Servlet.class }, property = {
+        "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_CONTAINER_DATASOURCE_V1, "sling.servlet.methods=GET",
+        "sling.servlet.extensions=html" })
 public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
 
     private static final String TYPE = "type";
@@ -83,10 +79,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
      * @todo: Add other metadata types here like fragment, actions etc
      */
     public enum FormMetaDataType {
-        SUBMIT_ACTION("submitAction"),
-        PREFILL_ACTION("prefillServiceProvider"),
-        LANG("lang"),
-        FORMATTERS("formatters");
+        SUBMIT_ACTION("submitAction"), PREFILL_ACTION("prefillServiceProvider"), LANG("lang"), FORMATTERS("formatters");
 
         private String value;
 
@@ -95,10 +88,12 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         }
 
         /**
-         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-         * representation. If no representation is found,
+         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the
+         * provided string representation. If no representation is found,
          *
-         * @param value the string representation for which an enum value should be returned
+         * @param value
+         *            the string representation for which an enum value should be returned
+         * 
          * @return the corresponding enum value, if one was found
          */
         public static FormMetaDataType fromString(String value) {
@@ -136,14 +131,14 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
 
     @Override
     protected void doGet(@NotNull SlingHttpServletRequest request, @NotNull SlingHttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         Config config = getConfig(request);
         SimpleDataSource actionTypeDataSource = null;
         if (config != null) {
             FormMetaDataType type = FormMetaDataType.fromString(getParameter(config, TYPE, request, null));
             String dataModel = getParameter(config, DATA_MODEL, request, "");
-            actionTypeDataSource = new SimpleDataSource(getDataSourceResources(
-                request, request.getResourceResolver(), type, dataModel, config).iterator());
+            actionTypeDataSource = new SimpleDataSource(
+                    getDataSourceResources(request, request.getResourceResolver(), type, dataModel, config).iterator());
         }
         request.setAttribute(DataSource.class.getName(), actionTypeDataSource);
     }
@@ -151,9 +146,13 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     /**
      * Checks if the type is related to formatters policy and the entry's key starts with the allowedformat.
      *
-     * @param type The type of form meta data.
-     * @param entry The entry in the form meta data map.
-     * @return True if the type is related to formatters policy and the entry's key starts with the allowedformat, otherwise false.
+     * @param type
+     *            The type of form meta data.
+     * @param entry
+     *            The entry in the form meta data map.
+     * 
+     * @return True if the type is related to formatters policy and the entry's key starts with the allowedformat,
+     *         otherwise false.
      */
     private Boolean isFormattersPolicy(FormMetaDataType type, Map.Entry<String, Object> entry) {
         return type.equals(FormMetaDataType.FORMATTERS) && entry.getKey().startsWith(ALLOWED_FORMAT);
@@ -162,67 +161,72 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     /**
      * Checks if the type is related to language policy and the entry's key starts with the value of language metadata.
      *
-     * @param type The type of form meta data.
-     * @param entry The entry in the form meta data map.
-     * @return True if the type is related to language policy and the entry's key starts with the value of language metadata, otherwise
-     *         false.
+     * @param type
+     *            The type of form meta data.
+     * @param entry
+     *            The entry in the form meta data map.
+     * 
+     * @return True if the type is related to language policy and the entry's key starts with the value of language
+     *         metadata, otherwise false.
      */
     private Boolean isLangPolicy(FormMetaDataType type, Map.Entry<String, Object> entry) {
         return type.equals(FormMetaDataType.LANG) && entry.getKey().startsWith(FormMetaDataType.LANG.getValue());
     }
 
-    private List<Resource> getDataSourceResources(SlingHttpServletRequest request, ResourceResolver resourceResolver, FormMetaDataType type,
-        String dataModel, Config config) {
+    private List<Resource> getDataSourceResources(SlingHttpServletRequest request, ResourceResolver resourceResolver,
+            FormMetaDataType type, String dataModel, Config config) {
         List<Resource> resources = new ArrayList<>();
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
             switch (type) {
-                case FORMATTERS:
-                case LANG:
-                    ContentPolicy policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
-                        resourceResolver);
-                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Select", ""));
-                    if (policy != null) {
-                        ValueMap props = policy.getProperties();
-                        if (props != null) {
-                            for (Map.Entry<String, Object> entry : props.entrySet()) {
-                                if (isFormattersPolicy(type, entry) || isLangPolicy(type, entry)) {
-                                    String[] arr = entry.getValue().toString().split("=", 2);
-                                    resources.add(getResourceForDropdownDisplay(resourceResolver, arr[0], arr[1]));
-                                }
-                            }
-                        }
-                        if (type.equals(FormMetaDataType.FORMATTERS)) {
-                            Map<String, String> allowedCustomFormattersMap = this.getAllowedCustomFormatters(policy, resourceResolver);
-                            for (Map.Entry<String, String> entry : allowedCustomFormattersMap.entrySet()) {
-                                resources.add(getResourceForDropdownDisplay(resourceResolver, entry.getKey(), entry.getValue()));
+            case FORMATTERS:
+            case LANG:
+                ContentPolicy policy = ComponentUtils
+                        .getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE), resourceResolver);
+                resources.add(getResourceForDropdownDisplay(resourceResolver, "Select", ""));
+                if (policy != null) {
+                    ValueMap props = policy.getProperties();
+                    if (props != null) {
+                        for (Map.Entry<String, Object> entry : props.entrySet()) {
+                            if (isFormattersPolicy(type, entry) || isLangPolicy(type, entry)) {
+                                String[] arr = entry.getValue().toString().split("=", 2);
+                                resources.add(getResourceForDropdownDisplay(resourceResolver, arr[0], arr[1]));
                             }
                         }
                     }
-                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Custom", "custom"));
-                    break;
-                case SUBMIT_ACTION:
-                    // filter the submit actions by uniqueness and data model
-                    Set<String> uniques = new HashSet<>();
-                    metaDataList = StreamSupport.stream(Spliterators.spliteratorUnknownSize(formMetaData.getSubmitActions(),
-                        Spliterator.ORDERED), false)
+                    if (type.equals(FormMetaDataType.FORMATTERS)) {
+                        Map<String, String> allowedCustomFormattersMap = this.getAllowedCustomFormatters(policy,
+                                resourceResolver);
+                        for (Map.Entry<String, String> entry : allowedCustomFormattersMap.entrySet()) {
+                            resources.add(
+                                    getResourceForDropdownDisplay(resourceResolver, entry.getKey(), entry.getValue()));
+                        }
+                    }
+                }
+                resources.add(getResourceForDropdownDisplay(resourceResolver, "Custom", "custom"));
+                break;
+            case SUBMIT_ACTION:
+                // filter the submit actions by uniqueness and data model
+                Set<String> uniques = new HashSet<>();
+                metaDataList = StreamSupport
+                        .stream(Spliterators.spliteratorUnknownSize(formMetaData.getSubmitActions(),
+                                Spliterator.ORDERED), false)
                         .filter(e -> uniques.add(e.getResourceType())) // In case of overlay, we honor only one
                         .filter(e -> {
                             // only return submit action based on data model configured
-                            return resourceResolver.getResource(e.getResourceType()).getValueMap().get(DATA_MODEL, "").toLowerCase()
-                                .contains(dataModel.toLowerCase());
-                        })
-                        .collect(Collectors.toList()).iterator();
-                    resources = this.getResourceListFromComponentDescription(metaDataList, resourceResolver);
-                    break;
-                case PREFILL_ACTION:
-                    metaDataList = formMetaData.getPrefillActions();
-                    // Add an explicit empty option so authors can clear an already selected prefill service.
-                    I18n i18n = new I18n(request.getResourceBundle(request.getLocale()));
-                    resources.add(getResourceForDropdownDisplay(resourceResolver, i18n.get("None"), ""));
-                    resources.addAll(this.getResourceListFromComponentDescription(metaDataList, resourceResolver));
-                    break;
+                            return resourceResolver.getResource(e.getResourceType()).getValueMap().get(DATA_MODEL, "")
+                                    .toLowerCase().contains(dataModel.toLowerCase());
+                        }).collect(Collectors.toList()).iterator();
+                resources = this.getResourceListFromComponentDescription(metaDataList, resourceResolver);
+                break;
+            case PREFILL_ACTION:
+                metaDataList = formMetaData.getPrefillActions();
+                // Add an explicit empty option so authors can clear an already selected prefill service.
+                I18n i18n = new I18n(request.getResourceBundle(request.getLocale()));
+                resources.add(getResourceForDropdownDisplay(resourceResolver, i18n.get("None"), ""));
+                resources.addAll(this.getResourceListFromComponentDescription(metaDataList, resourceResolver));
+                break;
             }
         }
         return resources;
@@ -231,8 +235,10 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     private Map<String, String> getAllowedCustomFormatters(ContentPolicy policy, ResourceResolver resourceResolver) {
         Resource policyResource = resourceResolver.resolve(policy.getPath());
         Map<String, String> allowedCustomFormattersMap = new HashMap<>();
-        List<Resource> allowedcustomFormattersResourceList = StreamSupport.stream(policyResource.getChildren().spliterator(), false).filter(
-            (childResource) -> childResource.getName().equals(ALLOWED_CUSTOM_FORMAT)).collect(Collectors.toList());
+        List<Resource> allowedcustomFormattersResourceList = StreamSupport
+                .stream(policyResource.getChildren().spliterator(), false)
+                .filter((childResource) -> childResource.getName().equals(ALLOWED_CUSTOM_FORMAT))
+                .collect(Collectors.toList());
 
         allowedcustomFormattersResourceList.forEach((allowedcustomFormattersResource) -> {
             allowedcustomFormattersResource.getChildren().forEach(allowedCustomFormatters -> {
@@ -253,7 +259,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         return allowedCustomFormattersMap;
     }
 
-    private SyntheticResource getResourceForDropdownDisplay(ResourceResolver resourceResolver, String key, String value) {
+    private SyntheticResource getResourceForDropdownDisplay(ResourceResolver resourceResolver, String key,
+            String value) {
         Map<String, Object> dropdownMap = new HashMap<>();
         dropdownMap.put("text", key);
         dropdownMap.put("value", value);
@@ -262,8 +269,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     }
 
     private List<Resource> getResourceListFromComponentDescription(
-        Iterator<FormsManager.ComponentDescription> metaDataList,
-        ResourceResolver resourceResolver) {
+            Iterator<FormsManager.ComponentDescription> metaDataList, ResourceResolver resourceResolver) {
         List<Resource> resources = new ArrayList<>();
         if (metaDataList != null) {
             while (metaDataList.hasNext()) {

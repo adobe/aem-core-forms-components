@@ -61,7 +61,8 @@ import static com.adobe.cq.forms.core.components.internal.form.FormConstants.FOR
 public class ComponentUtils {
 
     private static final String EDGE_DELIVERY_FRAGMENT_CONTAINER_REL_PATH = "root/section/form";
-    private static final String[] EDGE_DELIVERY_RESOURCE_TYPES = new String[] { "core/franklin/components/page/v1/page" };
+    private static final String[] EDGE_DELIVERY_RESOURCE_TYPES = new String[] {
+            "core/franklin/components/page/v1/page" };
     private static final Logger logger = LoggerFactory.getLogger(ComponentUtils.class);
 
     private ComponentUtils() {
@@ -69,15 +70,16 @@ public class ComponentUtils {
     }
 
     /**
-     * Checks whether a feature toggle is enabled via a system property. The property is set/unset
-     * by the Granite Toggle API when the toggle is wired via OSGi factory
-     * {@code com.adobe.granite.toggle.monitor.systemproperty} (see
+     * Checks whether a feature toggle is enabled via a system property. The property is set/unset by the Granite Toggle
+     * API when the toggle is wired via OSGi factory {@code com.adobe.granite.toggle.monitor.systemproperty} (see
      * {@link com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants} for setup).
      * <p>
      * Convention: the system property name is the toggle ID; value {@code "true"} (via
      * {@link Boolean#parseBoolean(String)}) means enabled.
      *
-     * @param toggleId the toggle identifier (also used as the system property name)
+     * @param toggleId
+     *            the toggle identifier (also used as the system property name)
+     * 
      * @return true if the system property is set to "true", false otherwise
      */
     public static boolean isToggleEnabledBySystemProperty(@NotNull String toggleId) {
@@ -87,7 +89,10 @@ public class ComponentUtils {
     /**
      * Checks whether a feature toggle is enabled (system property only).
      *
-     * @param toggleId the toggle identifier (e.g. from {@link com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants})
+     * @param toggleId
+     *            the toggle identifier (e.g. from
+     *            {@link com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants})
+     * 
      * @return true if the toggle is enabled, false otherwise
      */
     public static boolean isToggleEnabled(@NotNull String toggleId) {
@@ -95,11 +100,13 @@ public class ComponentUtils {
     }
 
     /**
-     * Determines whether the current request is in author mode. Returns {@code true} when the
-     * request is in WCM EDIT or DESIGN mode and has not been explicitly marked as a publish-view
-     * request (e.g. via {@link FormConstants#REQ_ATTR_PUBLISH_VIEW}).
+     * Determines whether the current request is in author mode. Returns {@code true} when the request is in WCM EDIT or
+     * DESIGN mode and has not been explicitly marked as a publish-view request (e.g. via
+     * {@link FormConstants#REQ_ATTR_PUBLISH_VIEW}).
      *
-     * @param request the current request, may be {@code null}
+     * @param request
+     *            the current request, may be {@code null}
+     * 
      * @return {@code true} if the request is in author mode, {@code false} otherwise
      */
     public static boolean isAuthorMode(@Nullable SlingHttpServletRequest request) {
@@ -116,7 +123,9 @@ public class ComponentUtils {
     /**
      * Returns the base64 encoded path
      *
-     * @param path page path
+     * @param path
+     *            page path
+     * 
      * @return base64 encoded path
      */
     @NotNull
@@ -127,7 +136,9 @@ public class ComponentUtils {
     /**
      * Checks if the given resource if a core adaptive form container
      *
-     * @param resource reference to the {@link Resource}
+     * @param resource
+     *            reference to the {@link Resource}
+     * 
      * @return true, if it is an adaptive form container, false otherwise
      */
     @NotNull
@@ -139,7 +150,9 @@ public class ComponentUtils {
     /**
      * Returns the form container resource
      *
-     * @param resource reference to the {@link Resource}
+     * @param resource
+     *            reference to the {@link Resource}
+     * 
      * @return form container resource, null if no form container found
      */
     public static Resource getFormContainer(Resource resource) {
@@ -155,32 +168,42 @@ public class ComponentUtils {
     /**
      * Translates the given property as per the {@link I18n} object passed
      *
-     * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
-     *            index)
-     * @param propertyName name of the property
-     * @param resource reference to the {@link Resource}
-     * @param i18n reference to the {@link I18n} object
+     * @param propertyValue
+     *            value of the property (for example, in case of array type property, one needs to pass the value stored
+     *            in array index)
+     * @param propertyName
+     *            name of the property
+     * @param resource
+     *            reference to the {@link Resource}
+     * @param i18n
+     *            reference to the {@link I18n} object
+     * 
      * @return translated value
      */
     @NotNull
-    public static String translate(@NotNull String propertyValue, @NotNull String propertyName, @NotNull Resource resource,
-        @Nullable I18n i18n) {
+    public static String translate(@NotNull String propertyValue, @NotNull String propertyName,
+            @NotNull Resource resource, @Nullable I18n i18n) {
         return translate(propertyValue, propertyName, resource.getValueMap(), i18n);
     }
 
     /**
      * Translates the given property as per the {@link I18n} object passed
      *
-     * @param propertyValue value of the property (for example, in case of array type property, one needs to pass the value stored in array
-     *            index)
-     * @param propertyName name of the property
-     * @param valueMap reference to the {@link ValueMap}
-     * @param i18n reference to the {@link I18n} object
+     * @param propertyValue
+     *            value of the property (for example, in case of array type property, one needs to pass the value stored
+     *            in array index)
+     * @param propertyName
+     *            name of the property
+     * @param valueMap
+     *            reference to the {@link ValueMap}
+     * @param i18n
+     *            reference to the {@link I18n} object
+     * 
      * @return translated value
      */
     @NotNull
-    public static String translate(@NotNull String propertyValue, @NotNull String propertyName, @NotNull ValueMap valueMap,
-        @Nullable I18n i18n) {
+    public static String translate(@NotNull String propertyValue, @NotNull String propertyName,
+            @NotNull ValueMap valueMap, @Nullable I18n i18n) {
         String translatedValue = propertyValue;
         if (i18n != null) {
             translatedValue = GuideUtils.translateOrReturnOriginal(propertyValue, propertyName, i18n, valueMap);
@@ -191,28 +214,31 @@ public class ComponentUtils {
     /**
      * Returns clone of the date object (mutable) provided as input
      *
-     * @param date date
+     * @param date
+     *            date
+     * 
      * @return clone of date object
      */
     public static Date clone(@Nullable Date date) {
-        return Optional.ofNullable(date)
-            .map(Date::getTime)
-            .map(Date::new)
-            .orElse(null);
+        return Optional.ofNullable(date).map(Date::getTime).map(Date::new).orElse(null);
     }
 
     /**
      * Retrieves the exclusive value based on certain conditions.
      *
-     * @param exclusiveValue The exclusive value to be checked.
-     * @param value The actual value to be returned if conditions are met.
-     * @param exclusiveValueCheck An additional check for exclusive value.
+     * @param exclusiveValue
+     *            The exclusive value to be checked.
+     * @param value
+     *            The actual value to be returned if conditions are met.
+     * @param exclusiveValueCheck
+     *            An additional check for exclusive value.
+     * 
      * @return The exclusive value if conditions are met; otherwise, null.
      */
     public static <T> T getExclusiveValue(Object exclusiveValue, T value, Object exclusiveValueCheck) {
         // Check if exclusive value is a boolean and true, and value is not null
-        if (exclusiveValue instanceof Boolean && (Boolean.TRUE.equals(exclusiveValue) || Boolean.TRUE.equals(exclusiveValueCheck))
-            && value != null) {
+        if (exclusiveValue instanceof Boolean
+                && (Boolean.TRUE.equals(exclusiveValue) || Boolean.TRUE.equals(exclusiveValueCheck)) && value != null) {
             // If so, return the value
             return (T) value;
         } else if (exclusiveValue instanceof Long) { // special case
@@ -225,7 +251,8 @@ public class ComponentUtils {
             } else {
                 return null;
             }
-        } else if (Boolean.TRUE.equals(exclusiveValueCheck) && value != null) { // backward compatibility case // not to be changed
+        } else if (Boolean.TRUE.equals(exclusiveValueCheck) && value != null) { // backward compatibility case // not to
+                                                                                // be changed
             // If so, return the value
             return (T) value;
         } else {
@@ -235,11 +262,12 @@ public class ComponentUtils {
     }
 
     /**
-     * Parses a given string value into a Number.
-     * The method attempts to parse the string as a Long first, and if that fails,
-     * it attempts to parse it as a Float. If both parsing attempts fail, it returns null.
+     * Parses a given string value into a Number. The method attempts to parse the string as a Long first, and if that
+     * fails, it attempts to parse it as a Float. If both parsing attempts fail, it returns null.
      *
-     * @param value the string value to be parsed, can be null
+     * @param value
+     *            the string value to be parsed, can be null
+     * 
      * @return the parsed Number (Long or Float), or null if the value cannot be parsed
      */
     public static Number parseNumber(@Nullable String value) {
@@ -257,17 +285,11 @@ public class ComponentUtils {
     @NotNull
     public static Object[] coerce(@NotNull BaseConstraint.Type type, @NotNull Object[] objArr) {
         if (type.equals(type.NUMBER) || type.equals(type.NUMBER_ARRAY)) {
-            return Arrays.stream(objArr)
-                .filter(Objects::nonNull)
-                .map(Object::toString)
-                .map(Long::parseLong)
-                .toArray(Long[]::new);
+            return Arrays.stream(objArr).filter(Objects::nonNull).map(Object::toString).map(Long::parseLong)
+                    .toArray(Long[]::new);
         } else if (type.equals(type.BOOLEAN) || type.equals(type.BOOLEAN_ARRAY)) {
-            return Arrays.stream(objArr)
-                .filter(Objects::nonNull)
-                .map(Object::toString)
-                .map(Boolean::parseBoolean)
-                .toArray(Boolean[]::new);
+            return Arrays.stream(objArr).filter(Objects::nonNull).map(Object::toString).map(Boolean::parseBoolean)
+                    .toArray(Boolean[]::new);
         } else {
             return ArrayUtils.clone(objArr);
         }
@@ -303,16 +325,16 @@ public class ComponentUtils {
     }
 
     /**
-     * Determines whether submit properties should be included in the form
-     * definition.
+     * Determines whether submit properties should be included in the form definition.
      * 
      * <p>
-     * This method checks if the request contains x-adobe-form-definition attribute
-     * or header and if it is equal to submission
-     * that indicates submit properties should be included in the form definition.
+     * This method checks if the request contains x-adobe-form-definition attribute or header and if it is equal to
+     * submission that indicates submit properties should be included in the form definition.
      * </p>
      *
-     * @param request the {@link SlingHttpServletRequest} to check
+     * @param request
+     *            the {@link SlingHttpServletRequest} to check
+     * 
      * @return true if submit properties should be included, false otherwise
      */
     public static boolean shouldIncludeSubmitProperties(SlingHttpServletRequest request) {
@@ -320,29 +342,27 @@ public class ComponentUtils {
             return false;
         }
         String submissionHeaderName = FormConstants.FORM_DEFINITION_SUBMISSION;
-        return submissionHeaderName.equals(request.getAttribute(FormConstants.X_ADOBE_FORM_DEFINITION)) ||
-            submissionHeaderName.equals(request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION));
+        return submissionHeaderName.equals(request.getAttribute(FormConstants.X_ADOBE_FORM_DEFINITION))
+                || submissionHeaderName.equals(request.getHeader(FormConstants.X_ADOBE_FORM_DEFINITION));
     }
 
     /**
      * Retrieves a list of supported submit actions from the Adobe Forms service.
      * 
      * <p>
-     * This method makes an HTTP GET request to the Adobe Forms service to fetch
-     * the list of supported submit actions. The response is expected to be a
-     * JSON object containing a "submissions" array of action names, which is then
+     * This method makes an HTTP GET request to the Adobe Forms service to fetch the list of supported submit actions.
+     * The response is expected to be a JSON object containing a "submissions" array of action names, which is then
      * converted to a list.
      * </p>
      * 
      * <p>
-     * If the request fails or an error occurs during processing, an error is logged
-     * and an empty list is returned.
+     * If the request fails or an error occurs during processing, an error is logged and an empty list is returned.
      * </p>
      *
-     * @param clientBuilderFactory The HTTP client builder factory used to create
-     *            the HTTP client
-     * @return A list of supported submit action names, or an empty list if the
-     *         request fails
+     * @param clientBuilderFactory
+     *            The HTTP client builder factory used to create the HTTP client
+     * 
+     * @return A list of supported submit action names, or an empty list if the request fails
      */
     public static List<String> getSupportedSubmitActions(HttpClientBuilderFactory clientBuilderFactory) {
         // Check cache first
@@ -357,14 +377,10 @@ public class ComponentUtils {
             return supportedSubmitActions;
         }
         try {
-            RequestConfig requestConfig = RequestConfig.custom()
-                .setConnectTimeout(5000)
-                .setSocketTimeout(5000)
-                .setConnectionRequestTimeout(5000)
-                .build();
-            CloseableHttpClient httpClient = clientBuilderFactory.newBuilder()
-                .setDefaultRequestConfig(requestConfig)
-                .build();
+            RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).setSocketTimeout(5000)
+                    .setConnectionRequestTimeout(5000).build();
+            CloseableHttpClient httpClient = clientBuilderFactory.newBuilder().setDefaultRequestConfig(requestConfig)
+                    .build();
             HttpGet httpGet = new HttpGet(supportedSubmitActionsUrl);
             try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
                 if (isSuccessfulResponse(response)) {
@@ -390,7 +406,7 @@ public class ComponentUtils {
 
     private static boolean isSuccessfulResponse(CloseableHttpResponse response) {
         return response.getStatusLine() != null
-            && response.getStatusLine().getStatusCode() == java.net.HttpURLConnection.HTTP_OK;
+                && response.getStatusLine().getStatusCode() == java.net.HttpURLConnection.HTTP_OK;
     }
 
 }

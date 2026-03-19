@@ -171,7 +171,7 @@ public class StaticImageGETServletTest {
 
     private void registerFormMetadataAdapter() {
         context.registerAdapter(ResourceResolver.class, AbstractImageServlet.ImageContext.class,
-            (Function<ResourceResolver, AbstractImageServlet.ImageContext>) input -> imageContext);
+                (Function<ResourceResolver, AbstractImageServlet.ImageContext>) input -> imageContext);
     }
 
     private StaticImage getAEMFormUnderTest(String resourcePath) {

@@ -50,11 +50,14 @@ public class CheckBoxGroupImplTest {
     private static final String PATH_CHECKBOX_GROUP = CONTENT_ROOT + "/checkboxgroup";
     private static final String PATH_CHECKBOX_GROUP_DATALAYER = CONTENT_ROOT + "/checkboxgroup-datalayer";
 
-    private static final String PATH_CHECKBOX_GROUP_WITH_DUPLICATE_ENUMS = CONTENT_ROOT + "/checkboxgroup-duplicate-enum";
-    private static final String PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER = CONTENT_ROOT + "/checkboxgroup-insertion-order";
+    private static final String PATH_CHECKBOX_GROUP_WITH_DUPLICATE_ENUMS = CONTENT_ROOT
+            + "/checkboxgroup-duplicate-enum";
+    private static final String PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER = CONTENT_ROOT
+            + "/checkboxgroup-insertion-order";
     private static final String PATH_CHECKBOX_GROUP_FOR_BOOLEAN = CONTENT_ROOT + "/checkboxgroup-boolean";
     private static final String PATH_CHECKBOX_GROUP_NO_FIELDTYPE = CONTENT_ROOT + "/checkboxgroup-without-fieldtype";
-    private static final String PATH_CHECKBOX_GROUP_OPTION_SCREEN_READER_LABEL = CONTENT_ROOT + "/checkboxgroup-option-screenreader-label";
+    private static final String PATH_CHECKBOX_GROUP_OPTION_SCREEN_READER_LABEL = CONTENT_ROOT
+            + "/checkboxgroup-option-screenreader-label";
     private static final String PATH_CHECKBOX_GROUP_WITH_NULL_VALUES = CONTENT_ROOT + "/checkboxgroup-with-null-values";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
@@ -358,7 +361,8 @@ public class CheckBoxGroupImplTest {
 
     @Test
     void testDataLayerProperties() throws IllegalAccessException {
-        CheckBoxGroup checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBoxGroup.class, context);
+        CheckBoxGroup checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBoxGroup.class,
+                context);
         FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
         FormComponentData dataObject = (FormComponentData) checkBox.getData();
         assert (dataObject != null);
@@ -371,7 +375,8 @@ public class CheckBoxGroupImplTest {
 
     @Test
     void testJSONExportDataLayer() throws Exception {
-        CheckBoxGroup checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBoxGroup.class, context);
+        CheckBoxGroup checkBox = Utils.getComponentUnderTest(PATH_CHECKBOX_GROUP_DATALAYER, CheckBoxGroup.class,
+                context);
         FieldUtils.writeField(checkBox, "dataLayerEnabled", true, true);
         Utils.testJSONExport(checkBox, Utils.getTestExporterJSONPath(BASE, PATH_CHECKBOX_GROUP_DATALAYER));
     }
@@ -379,8 +384,8 @@ public class CheckBoxGroupImplTest {
     @Test
     void testInsertionOrderForEnums() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER);
-        Set<Object> set = new LinkedHashSet<>(Arrays.asList(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L,
-            15L, 16L, 17L, 18L, 19L, 20L));
+        Set<Object> set = new LinkedHashSet<>(Arrays.asList(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L,
+                14L, 15L, 16L, 17L, 18L, 19L, 20L));
         assertArrayEquals(set.toArray(new Object[0]), checkboxGroup.getEnums());
     }
 
@@ -394,8 +399,9 @@ public class CheckBoxGroupImplTest {
     @Test
     void testInsertionOrderForEnumNames() {
         CheckBoxGroup checkboxGroup = getCheckBoxGroupUnderTest(PATH_CHECKBOX_GROUP_FOR_INSERTION_ORDER);
-        Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
-            "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
+        Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six",
+                "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+                "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), checkboxGroup.getEnumNames());
     }
 

@@ -23,7 +23,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Defines the form {@code FileInput} Sling Model used for the {@code /apps/core/fd/components/form/fileinput/v1/fileinput} component.
+ * Defines the form {@code FileInput} Sling Model used for the
+ * {@code /apps/core/fd/components/form/fileinput/v1/fileinput} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
@@ -44,8 +45,8 @@ public interface FileInput extends Field, FileConstraint, ContainerConstraint {
     }
 
     /**
-     * Returns the list of file extensions which field can accept. The constraint is
-     * applicable for file attachment field
+     * Returns the list of file extensions which field can accept. The constraint is applicable for file attachment
+     * field
      *
      * @return the list of extensions supported by the field
      */

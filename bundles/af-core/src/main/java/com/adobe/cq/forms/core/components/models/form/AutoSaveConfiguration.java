@@ -42,11 +42,14 @@ public interface AutoSaveConfiguration {
         }
 
         /**
-         * Given a {@link String} <code>strategyType</code>, this method returns the enum's value that corresponds to the provided string
-         * representation
+         * Given a {@link String} <code>strategyType</code>, this method returns the enum's value that corresponds to
+         * the provided string representation
          *
-         * @param strategyType the string representation for which an enum value should be returned
+         * @param strategyType
+         *            the string representation for which an enum value should be returned
+         * 
          * @return the corresponding enum value, if one was found
+         * 
          * @since com.adobe.cq.forms.core.components.models.form 5.5.4
          */
         public static AutoSaveStrategyType fromString(String strategyType) {

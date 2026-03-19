@@ -25,10 +25,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 public enum AssistPriority {
-    CUSTOM("custom"),
-    DESCRIPTION("description"),
-    LABEL("label"),
-    NAME("name");
+    CUSTOM("custom"), DESCRIPTION("description"), LABEL("label"), NAME("name");
 
     private String value;
 
@@ -37,11 +34,14 @@ public enum AssistPriority {
     }
 
     /**
-     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-     * representation
+     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided
+     * string representation
      *
-     * @param value the string representation for which an enum value should be returned
+     * @param value
+     *            the string representation for which an enum value should be returned
+     * 
      * @return the corresponding enum value, if one was found
+     * 
      * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
      */
     public static AssistPriority fromString(String value) {
@@ -57,6 +57,7 @@ public enum AssistPriority {
      * Returns the string value of this enum constant.
      *
      * @return the string value of this enum constant
+     * 
      * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
      */
     public String getValue() {

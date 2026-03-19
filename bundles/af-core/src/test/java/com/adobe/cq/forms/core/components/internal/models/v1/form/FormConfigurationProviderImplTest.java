@@ -56,7 +56,8 @@ public class FormConfigurationProviderImplTest {
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
-    private ConfigurationResourceResolver configurationResourceResolverMock = Mockito.mock(ConfigurationResourceResolver.class);
+    private ConfigurationResourceResolver configurationResourceResolverMock = Mockito
+            .mock(ConfigurationResourceResolver.class);
 
     @BeforeEach
     void setUp() {
@@ -80,10 +81,8 @@ public class FormConfigurationProviderImplTest {
 
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
-                return StreamSupport
-                    .stream(childResources.spliterator(), false)
-                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
-                    .collect(Collectors.toList());
+                return StreamSupport.stream(childResources.spliterator(), false)
+                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
             }
         });
     }
@@ -93,10 +92,11 @@ public class FormConfigurationProviderImplTest {
         context.load().json(BASE + TEST_CONTENT_CONF_JSON, CONF_PATH);
         String path = "/content/formcontainerv2";
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(path);
-        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
-        assertEquals("https://main--test-repo--testOwner.hlx.live/blocks/form/functions.js", formConfigurationProvider
-            .getCustomFunctionModuleUrl());
+        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(),
+                CUSTOM_FUNCTION_CONFIG_BUCKET_NAME, CUSTOM_FUNCTION_CONFIG_NAME))
+                .thenReturn(context.resourceResolver().resolve(CONF_PATH));
+        assertEquals("https://main--test-repo--testOwner.hlx.live/blocks/form/functions.js",
+                formConfigurationProvider.getCustomFunctionModuleUrl());
     }
 
     @Test
@@ -104,30 +104,29 @@ public class FormConfigurationProviderImplTest {
         context.load().json(BASE + TEST_CONTENT_CONF_JSON, CONF_PATH);
         String path = "/content/formcontainerv2";
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(path);
-        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(null);
-        assertEquals("", formConfigurationProvider
-            .getCustomFunctionModuleUrl());
+        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(),
+                CUSTOM_FUNCTION_CONFIG_BUCKET_NAME, CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(null);
+        assertEquals("", formConfigurationProvider.getCustomFunctionModuleUrl());
     }
 
     @Test
     void testGetCustomFunctionModuleUrlWithNoOwner() {
         context.load().json(BASE + TEST_BLANK_OWNER_CONF_JSON, CONF_PATH);
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(CONF_PATH);
-        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
-        assertEquals("", formConfigurationProvider
-            .getCustomFunctionModuleUrl());
+        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(),
+                CUSTOM_FUNCTION_CONFIG_BUCKET_NAME, CUSTOM_FUNCTION_CONFIG_NAME))
+                .thenReturn(context.resourceResolver().resolve(CONF_PATH));
+        assertEquals("", formConfigurationProvider.getCustomFunctionModuleUrl());
     }
 
     @Test
     void testGetCustomFunctionModuleUrlWithNoRepo() {
         context.load().json(BASE + TEST_BLANK_REPO_CONF_JSON, CONF_PATH);
         FormConfigurationProvider formConfigurationProvider = getFormConfigProviderUnderTest(CONF_PATH);
-        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(), CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-            CUSTOM_FUNCTION_CONFIG_NAME)).thenReturn(context.resourceResolver().resolve(CONF_PATH));
-        assertEquals("", formConfigurationProvider
-            .getCustomFunctionModuleUrl());
+        Mockito.when(configurationResourceResolverMock.getResource(context.currentResource(),
+                CUSTOM_FUNCTION_CONFIG_BUCKET_NAME, CUSTOM_FUNCTION_CONFIG_NAME))
+                .thenReturn(context.resourceResolver().resolve(CONF_PATH));
+        assertEquals("", formConfigurationProvider.getCustomFunctionModuleUrl());
     }
 
     private FormConfigurationProvider getFormConfigProviderUnderTest(String resourcePath) {

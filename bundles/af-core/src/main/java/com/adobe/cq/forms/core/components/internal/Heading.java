@@ -18,12 +18,7 @@ package com.adobe.cq.forms.core.components.internal;
 import org.apache.commons.lang3.StringUtils;
 
 public enum Heading {
-    H1("h1"),
-    H2("h2"),
-    H3("h3"),
-    H4("h4"),
-    H5("h5"),
-    H6("h6");
+    H1("h1"), H2("h2"), H3("h3"), H4("h4"), H5("h5"), H6("h6");
 
     private String element;
 

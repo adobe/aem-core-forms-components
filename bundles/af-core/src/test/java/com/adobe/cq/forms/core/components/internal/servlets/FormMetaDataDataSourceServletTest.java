@@ -85,7 +85,7 @@ public class FormMetaDataDataSourceServletTest {
     public void testDataSource() throws Exception {
         context.currentResource("/apps/actiontypedatasource");
         when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
-            .then(returnsFirstArg());
+                .then(returnsFirstArg());
         ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
         componentDescriptions.add(description);
         when(formMetaDataMock.getSubmitActions()).thenReturn(componentDescriptions.iterator());
@@ -95,8 +95,8 @@ public class FormMetaDataDataSourceServletTest {
         // set expression resolver mock
         Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
         dataSourceServlet.doGet(context.request(), context.response());
-        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
-            DataSource.class.getName());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request()
+                .getAttribute(DataSource.class.getName());
         assertNotNull(dataSource);
         Resource resource = dataSource.iterator().next();
         assertEquals("Form Action", resource.getValueMap().get(PN_TEXT, String.class));
@@ -108,7 +108,7 @@ public class FormMetaDataDataSourceServletTest {
     public void testDataSourceForPrefillActionsAddsDefaultNoneOption() throws Exception {
         context.currentResource("/apps/prefilltypedatasource");
         when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
-            .then(returnsFirstArg());
+                .then(returnsFirstArg());
         ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
         componentDescriptions.add(description);
         when(formMetaDataMock.getPrefillActions()).thenReturn(componentDescriptions.iterator());
@@ -118,8 +118,8 @@ public class FormMetaDataDataSourceServletTest {
         // set expression resolver mock
         Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
         dataSourceServlet.doGet(context.request(), context.response());
-        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
-            DataSource.class.getName());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request()
+                .getAttribute(DataSource.class.getName());
         assertNotNull(dataSource);
         Iterator<Resource> iterator = dataSource.iterator();
         Resource defaultNoneOption = iterator.next();
@@ -135,17 +135,17 @@ public class FormMetaDataDataSourceServletTest {
     public void testDataSourceForFormattersForNumberInput() throws Exception {
         context.currentResource("/apps/formattertypedatasourcenumberinput");
         when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
-            .then(returnsFirstArg());
-        ContentPolicy contentPolicyMock = new MockContentPolicy(context.resourceResolver().getResource(
-            "/apps/formattertypedatasourcenumberinputPolicy"));
+                .then(returnsFirstArg());
+        ContentPolicy contentPolicyMock = new MockContentPolicy(
+                context.resourceResolver().getResource("/apps/formattertypedatasourcenumberinputPolicy"));
         when(contentPolicyManagerMock.getPolicy(any(Resource.class))).thenReturn(contentPolicyMock);
         context.request().setAttribute(Value.CONTENTPATH_ATTRIBUTE, "/apps/formattertypedatasourcenumberinput");
         FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
         // set expression resolver mock
         Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
         dataSourceServlet.doGet(context.request(), context.response());
-        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
-            DataSource.class.getName());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request()
+                .getAttribute(DataSource.class.getName());
         assertNotNull(dataSource);
         int size = 0;
         Iterator<Resource> iterator = dataSource.iterator();
@@ -161,17 +161,17 @@ public class FormMetaDataDataSourceServletTest {
     public void testDataSourceForLangForNumberInput() throws Exception {
         context.currentResource("/apps/langtypedatasourcenumberinput");
         when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
-            .then(returnsFirstArg());
-        ContentPolicy contentPolicyMock = new MockContentPolicy(context.resourceResolver().getResource(
-            "/apps/langtypedatasourcenumberinputPolicy"));
+                .then(returnsFirstArg());
+        ContentPolicy contentPolicyMock = new MockContentPolicy(
+                context.resourceResolver().getResource("/apps/langtypedatasourcenumberinputPolicy"));
         when(contentPolicyManagerMock.getPolicy(any(Resource.class))).thenReturn(contentPolicyMock);
         context.request().setAttribute(Value.CONTENTPATH_ATTRIBUTE, "/apps/langtypedatasourcenumberinput");
         FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
         // set expression resolver mock
         Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
         dataSourceServlet.doGet(context.request(), context.response());
-        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
-            DataSource.class.getName());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request()
+                .getAttribute(DataSource.class.getName());
         assertNotNull(dataSource);
         int size = 0;
         Iterator<Resource> iterator = dataSource.iterator();
@@ -184,11 +184,11 @@ public class FormMetaDataDataSourceServletTest {
 
     private void registerFormMetadataAdapter() {
         context.registerAdapter(ResourceResolver.class, FormMetaData.class,
-            (Function<ResourceResolver, FormMetaData>) input -> formMetaDataMock);
+                (Function<ResourceResolver, FormMetaData>) input -> formMetaDataMock);
     }
 
     private void registerContentPolicyManager() {
         context.registerAdapter(ResourceResolver.class, ContentPolicyManager.class,
-            (Function<ResourceResolver, ContentPolicyManager>) input -> contentPolicyManagerMock);
+                (Function<ResourceResolver, ContentPolicyManager>) input -> contentPolicyManagerMock);
     }
 }

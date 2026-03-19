@@ -44,9 +44,10 @@ public class CacheManager {
     /**
      * Retrieves a value from the cache if it exists and has not expired
      *
-     * @param cacheKey The key to look up in the cache
-     * @return The cached List<String> if found and valid, null if not found or
-     *         expired
+     * @param cacheKey
+     *            The key to look up in the cache
+     * 
+     * @return The cached List<String> if found and valid, null if not found or expired
      */
     public static List<String> getFromCache(String cacheKey) {
         Long timestamp = CACHE_TIMESTAMPS.get(cacheKey);
@@ -66,8 +67,10 @@ public class CacheManager {
     /**
      * Stores a value in the cache with the current timestamp
      *
-     * @param cacheKey The key under which to store the value
-     * @param value The List<String> value to cache
+     * @param cacheKey
+     *            The key under which to store the value
+     * @param value
+     *            The List<String> value to cache
      */
     public static void putInCache(String cacheKey, List<String> value) {
         SUBMIT_ACTIONS_CACHE.put(cacheKey, value);

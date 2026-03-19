@@ -36,11 +36,8 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.TermsAndConditions;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { TermsAndConditions.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_TERMS_AND_CONDITIONS_V1 })
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { TermsAndConditions.class,
+        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_TERMS_AND_CONDITIONS_V1 })
 
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TermsAndConditionsImpl extends PanelImpl implements TermsAndConditions {
@@ -96,12 +93,12 @@ public class TermsAndConditionsImpl extends PanelImpl implements TermsAndConditi
         List<Resource> childResources = getFilteredChildrenResources(resource);
         // the tnc component will either have links or consent text based upon showLink value
         if (showLink) {
-            childResources.removeIf(child -> FieldType.PLAIN_TEXT.getValue().equals(child.getValueMap().get(
-                ReservedProperties.PN_FIELDTYPE)));
+            childResources.removeIf(child -> FieldType.PLAIN_TEXT.getValue()
+                    .equals(child.getValueMap().get(ReservedProperties.PN_FIELDTYPE)));
 
         } else {
-            childResources.removeIf(child -> FieldType.CHECKBOX_GROUP.getValue().equals(child.getValueMap().get(
-                ReservedProperties.PN_FIELDTYPE)));
+            childResources.removeIf(child -> FieldType.CHECKBOX_GROUP.getValue()
+                    .equals(child.getValueMap().get(ReservedProperties.PN_FIELDTYPE)));
         }
         return childResources;
     }

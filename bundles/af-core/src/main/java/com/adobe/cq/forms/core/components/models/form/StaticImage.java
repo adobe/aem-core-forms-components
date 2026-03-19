@@ -31,6 +31,7 @@ public interface StaticImage extends FormComponent {
      * Returns the source where the image is present.
      *
      * @return the source where the image is present
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -43,6 +44,7 @@ public interface StaticImage extends FormComponent {
      * Retrieves the text value to be displayed.
      *
      * @return the text value to be displayed, or {@code null} if no value can be returned
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1;
      */
     default String getValue() {
@@ -53,6 +55,7 @@ public interface StaticImage extends FormComponent {
      * Returns the alternate text in place of image.
      *
      * @return the alternate text in place of image
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable

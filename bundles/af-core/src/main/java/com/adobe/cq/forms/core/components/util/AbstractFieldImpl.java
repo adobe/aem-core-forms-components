@@ -42,9 +42,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
      * Enum representing the possible values for emptyValue property.
      */
     public static enum EmptyValue {
-        NULL("null"),
-        UNDEFINED("undefined"),
-        EMPTY_STRING("");
+        NULL("null"), UNDEFINED("undefined"), EMPTY_STRING("");
 
         private final String value;
 
@@ -57,8 +55,7 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
         }
 
         /**
-         * Converts a string value to EmptyValue enum.
-         * Returns EMPTY_STRING for any unrecognized values.
+         * Converts a string value to EmptyValue enum. Returns EMPTY_STRING for any unrecognized values.
          */
         public static EmptyValue fromString(String value) {
             if (value == null) {
@@ -196,15 +193,13 @@ public abstract class AbstractFieldImpl extends AbstractBaseImpl implements Fiel
     @Override
     public Object[] getDefault() {
         if (defaultValue != null) {
-            return Arrays.stream(defaultValue)
-                .map(p -> {
-                    if (p instanceof Calendar) {
-                        return ((Calendar) p).getTime();
-                    } else {
-                        return p;
-                    }
-                })
-                .toArray();
+            return Arrays.stream(defaultValue).map(p -> {
+                if (p instanceof Calendar) {
+                    return ((Calendar) p).getTime();
+                } else {
+                    return p;
+                }
+            }).toArray();
         }
         return null;
     }

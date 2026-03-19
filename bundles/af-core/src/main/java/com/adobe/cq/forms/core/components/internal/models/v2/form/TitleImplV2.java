@@ -42,10 +42,8 @@ import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.WCMMode;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { FormTitle.class, ComponentExporter.class },
-    resourceType = FormConstants.RT_FD_FORM_TITLE_V2)
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { FormTitle.class,
+        ComponentExporter.class }, resourceType = FormConstants.RT_FD_FORM_TITLE_V2)
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 
 public class TitleImplV2 extends AbstractFormComponentImpl implements FormTitle {

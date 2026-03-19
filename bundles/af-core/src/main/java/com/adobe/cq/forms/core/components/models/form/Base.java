@@ -47,6 +47,7 @@ public interface Base extends FormComponent {
      * Returns label of the form field
      *
      * @return label of the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -58,6 +59,7 @@ public interface Base extends FormComponent {
      * Returns the description of the field
      *
      * @return the description of the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -66,9 +68,11 @@ public interface Base extends FormComponent {
     }
 
     /**
-     * Returns json formula rule to indicate the text to be read by screen readers based on the {@link AssistPriority} configured.
+     * Returns json formula rule to indicate the text to be read by screen readers based on the {@link AssistPriority}
+     * configured.
      *
      * @return the screen reader text as json formula rule
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -77,10 +81,11 @@ public interface Base extends FormComponent {
     }
 
     /**
-     * Returns the string to indicate the text to be read by screen readers. This
-     * could be used on server side to compute initial rendition
+     * Returns the string to indicate the text to be read by screen readers. This could be used on server side to
+     * compute initial rendition
      *
      * @return the screen reader text
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @Nullable
@@ -93,6 +98,7 @@ public interface Base extends FormComponent {
      * Returns {@code true} if form field should be enabled, otherwise {@code false}.
      *
      * @return {@code true} if form field should be enabled, otherwise {@code false}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -105,6 +111,7 @@ public interface Base extends FormComponent {
      * list would change based on the form field type
      *
      * @return map of constraint messages specific to each constraint.
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @NotNull
@@ -117,6 +124,7 @@ public interface Base extends FormComponent {
      * Returns the tool tip of the field
      *
      * @return the tool tip of the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @Nullable
@@ -128,6 +136,7 @@ public interface Base extends FormComponent {
      * Returns {@code true} if tooltip should always be visible, otherwise {@code false}.
      *
      * @return {@code true} if tooltip should always be visible, otherwise {@code false}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonIgnore

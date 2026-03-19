@@ -79,7 +79,7 @@ public class DateTimeImplTest {
     void testDorProperties() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
         assertTrue("getDorProperties should return empty map when no dor properties are set in JCR",
-            datetime.getDorProperties().isEmpty());
+                datetime.getDorProperties().isEmpty());
     }
 
     @Test

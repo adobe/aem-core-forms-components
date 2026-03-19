@@ -52,16 +52,23 @@ public class NumberInputImplTest {
     private static final String PATH_NUMBER_INPUT_CUSTOMIZED = CONTENT_ROOT + "/numberinput-customized";
     private static final String PATH_NUMBER_INPUT_INTEGER_TYPE = CONTENT_ROOT + "/numberinput-integer-type";
     private static final String PATH_NUMBER_INPUT_CONSTRAINTS = CONTENT_ROOT + "/numberinput-exclusive";
-    private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/numberinput-backwardcompatible";
-    private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_2 = CONTENT_ROOT + "/numberinput-backwardcompatible-2";
-    private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING = CONTENT_ROOT + "/numberinput-backwardcompatible-string";
+    private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE = CONTENT_ROOT
+            + "/numberinput-backwardcompatible";
+    private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_2 = CONTENT_ROOT
+            + "/numberinput-backwardcompatible-2";
+    private static final String PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING = CONTENT_ROOT
+            + "/numberinput-backwardcompatible-string";
     private static final String PATH_NUMBER_INPUT = CONTENT_ROOT + "/numberinput";
     private static final String PATH_NUMBER_INPUT_DATALAYER = CONTENT_ROOT + "/numberinput-datalayer";
-    private static final String PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/numberinput-displayvalueExpression";
+    private static final String PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT
+            + "/numberinput-displayvalueExpression";
     private static final String PATH_NUMBER_INPUT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/numberinput-without-fieldtype";
-    private static final String PATH_NUMBER_INPUT_WITH_DISPLAY_FORMAT = CONTENT_ROOT + "/numberinput-with-display-format";
-    private static final String PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT = CONTENT_ROOT + "/numberinput-with-custom-display-format";
-    private static final String PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS = CONTENT_ROOT + "/numberinput-with-both-display-formats";
+    private static final String PATH_NUMBER_INPUT_WITH_DISPLAY_FORMAT = CONTENT_ROOT
+            + "/numberinput-with-display-format";
+    private static final String PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT = CONTENT_ROOT
+            + "/numberinput-with-custom-display-format";
+    private static final String PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS = CONTENT_ROOT
+            + "/numberinput-with-both-display-formats";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -212,13 +219,15 @@ public class NumberInputImplTest {
 
     @Test
     void testGetDisplayFormatWithCustomDisplayFormat() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT,
+                NumberInput.class, context);
         assertEquals("customCurrency", numberInput.getDisplayFormat());
     }
 
     @Test
     void testGetDisplayFormatWithBothFormats() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS,
+                NumberInput.class, context);
         // customDisplayFormat should take priority over displayFormat
         assertEquals("customCurrency", numberInput.getDisplayFormat());
     }
@@ -262,7 +271,8 @@ public class NumberInputImplTest {
 
     @Test
     void testGetConstraintMessagesTypeInteger() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_INTEGER_TYPE, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_INTEGER_TYPE, NumberInput.class,
+                context);
         Map<ConstraintType, String> constraintsMessages = numberInput.getConstraintMessages();
         assertEquals(constraintsMessages.get(ConstraintType.MAXIMUM), "Please enter a valid Number");
         assertEquals(constraintsMessages.get(ConstraintType.MINIMUM), "Please enter a valid Number");
@@ -282,13 +292,15 @@ public class NumberInputImplTest {
 
     @Test
     void testJSONExportBackwardCompatible() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE, NumberInput.class,
+                context);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE));
     }
 
     @Test
     void testJSONExportBackwardCompatible2() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_2, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_2,
+                NumberInput.class, context);
         Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_2));
     }
 
@@ -351,7 +363,8 @@ public class NumberInputImplTest {
 
     @Test
     void testGetExclusiveMinimum() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CONSTRAINTS, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CONSTRAINTS, NumberInput.class,
+                context);
         assertEquals(10002L, numberInput.getExclusiveMinimumNumber().longValue());
         NumberConstraint numberInputConstraintMock = Mockito.mock(NumberConstraint.class);
         NumberConstraintV2 numberInputConstraintMock2 = Mockito.mock(NumberConstraintV2.class);
@@ -364,7 +377,8 @@ public class NumberInputImplTest {
 
     @Test
     void testGetExclusiveMaximum() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CONSTRAINTS, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_CONSTRAINTS, NumberInput.class,
+                context);
         assertEquals(2000002, numberInput.getExclusiveMaximum().longValue());
         assertEquals(2000002, numberInput.getExclusiveMaximumNumber().longValue());
         NumberConstraint numberInputConstraintMock = Mockito.mock(NumberConstraint.class);
@@ -377,7 +391,8 @@ public class NumberInputImplTest {
 
     @Test
     void testGetExclusiveMinimum_BC() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING,
+                NumberInput.class, context);
         assertNull(numberInput.getMinimum());
         assertEquals(10002L, numberInput.getExclusiveMinimum().longValue());
         assertEquals(10002L, numberInput.getExclusiveMinimumNumber().longValue());
@@ -385,7 +400,8 @@ public class NumberInputImplTest {
 
     @Test
     void testGetExclusiveMaximum_BC() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_BACKWARD_COMPATIBLE_STRING,
+                NumberInput.class, context);
         assertNull(numberInput.getMaximum());
         assertEquals(2000002, numberInput.getExclusiveMaximum().longValue());
         assertEquals(2000002, numberInput.getExclusiveMaximumNumber().longValue());
@@ -429,32 +445,40 @@ public class NumberInputImplTest {
         NumberInput numberInputMock = Mockito.mock(NumberInput.class);
         Mockito.when(numberInputMock.getDisplayValueExpression()).thenCallRealMethod();
         assertEquals(null, numberInputMock.getDisplayValueExpression());
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION,
+                NumberInput.class, context);
         assertEquals("($field.$value & abc)", numberInput.getDisplayValueExpression());
     }
 
     @Test
     void testJSONExportForDisplayValueExpression() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION, NumberInput.class, context);
-        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION));
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION,
+                NumberInput.class, context);
+        Utils.testJSONExport(numberInput,
+                Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_DISPLAY_VALUE_EXPRESSION));
     }
 
     @Test
     void testNoFieldType() {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITHOUT_FIELDTYPE, NumberInput.class, context);
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITHOUT_FIELDTYPE, NumberInput.class,
+                context);
         assertEquals(FieldType.NUMBER_INPUT.getValue(), numberInput.getFieldType());
     }
 
     @Test
     void testJSONExportWithCustomDisplayFormat() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT, NumberInput.class, context);
-        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT));
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT,
+                NumberInput.class, context);
+        Utils.testJSONExport(numberInput,
+                Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_CUSTOM_DISPLAY_FORMAT));
     }
 
     @Test
     void testJSONExportWithBothDisplayFormats() throws Exception {
-        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS, NumberInput.class, context);
-        Utils.testJSONExport(numberInput, Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS));
+        NumberInput numberInput = Utils.getComponentUnderTest(PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS,
+                NumberInput.class, context);
+        Utils.testJSONExport(numberInput,
+                Utils.getTestExporterJSONPath(BASE, PATH_NUMBER_INPUT_WITH_BOTH_DISPLAY_FORMATS));
     }
 
 }

@@ -22,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Defines the form {@code CheckBox} Sling Model used for the {@code /apps/core/fd/components/form/checkbox/v1/checkbox} component.
+ * Defines the form {@code CheckBox} Sling Model used for the {@code /apps/core/fd/components/form/checkbox/v1/checkbox}
+ * component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
@@ -35,8 +36,7 @@ public interface CheckBox extends Field, OptionsConstraint {
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     public enum Orientation {
-        HORIZONTAL("horizontal"),
-        VERTICAL("vertical");
+        HORIZONTAL("horizontal"), VERTICAL("vertical");
 
         private String value;
 
@@ -45,11 +45,14 @@ public interface CheckBox extends Field, OptionsConstraint {
         }
 
         /**
-         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-         * representation. If no representation is found, {@link #HORIZONTAL} will be returned.
+         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the
+         * provided string representation. If no representation is found, {@link #HORIZONTAL} will be returned.
          *
-         * @param value the string representation for which an enum value should be returned
+         * @param value
+         *            the string representation for which an enum value should be returned
+         * 
          * @return the corresponding enum value, if one was found, or {@link #HORIZONTAL}
+         * 
          * @since com.adobe.cq.forms.core.components.models.form 2.0.0
          */
         public static Orientation fromString(String value) {
@@ -65,6 +68,7 @@ public interface CheckBox extends Field, OptionsConstraint {
          * Returns the string value of this enum constant.
          *
          * @return the string value of this enum constant
+         * 
          * @since com.adobe.cq.forms.core.components.models.form 2.0.0
          */
         public String getValue() {
@@ -82,6 +86,7 @@ public interface CheckBox extends Field, OptionsConstraint {
      * Returns the orientation of the checkbox component
      *
      * @return {@link Orientation}.
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonIgnore

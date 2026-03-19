@@ -64,9 +64,8 @@ public class DefaultValueSerializer extends StdSerializer<Object[]> {
     }
 
     @Override
-    public void serialize(
-        Object[] value, JsonGenerator gen, SerializerProvider arg2)
-        throws IOException, JsonProcessingException {
+    public void serialize(Object[] value, JsonGenerator gen, SerializerProvider arg2)
+            throws IOException, JsonProcessingException {
         if (value.length == 1) {
             serialize(value[0], gen);
         } else {

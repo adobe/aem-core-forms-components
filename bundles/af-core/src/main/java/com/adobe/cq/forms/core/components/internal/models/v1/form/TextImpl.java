@@ -35,11 +35,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Text.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_TEXT_DRAW_V1 })
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Text.class,
+        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_TEXT_DRAW_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextImpl extends AbstractFormComponentImpl implements Text {
 
@@ -61,6 +58,16 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
         return textIsRich != null && textIsRich;
     }
 
+    /**
+     * Returns the rich-text flag for JSON serialization, or {@code null} when not authored in JCR.
+     *
+     * <p>
+     * <strong>Behavior change:</strong> When {@code textIsRich} is absent from JCR, this returns {@code null} and the
+     * {@code richText} key is <em>omitted</em> from the JSON model (via {@code @JsonInclude(NON_NULL)}). Previously the
+     * field used {@code @Default(false)}, which caused {@code "richText": false} to always appear in the JSON even when
+     * the dialog default was unchanged. Downstream consumers must treat an absent {@code richText} key as {@code false}
+     * — the AF2 runtime already does this.
+     */
     @JsonProperty("richText")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Boolean getRichText() {

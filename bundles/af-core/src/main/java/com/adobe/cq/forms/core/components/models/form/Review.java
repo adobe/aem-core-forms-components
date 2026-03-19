@@ -28,15 +28,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public interface Review extends Base {
 
     /**
-     * @return an array of linked panels to be reviewed on the review page. Each linked panel is the name of a panel that is linked to the
-     *         review page.
+     * @return an array of linked panels to be reviewed on the review page. Each linked panel is the name of a panel
+     *         that is linked to the review page.
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.9.6
      */
     @JsonIgnore
     String[] getLinkedPanels();
 
     /**
-     * @return the edit mode action, which indicates whether edit button is visible on the review page at field, panel, both, or none
+     * @return the edit mode action, which indicates whether edit button is visible on the review page at field, panel,
+     *         both, or none
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.9.6
      */
     @JsonIgnore

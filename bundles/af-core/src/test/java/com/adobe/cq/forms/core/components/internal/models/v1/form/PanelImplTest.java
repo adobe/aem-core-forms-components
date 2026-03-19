@@ -79,10 +79,8 @@ public class PanelImplTest {
 
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
-                return StreamSupport
-                    .stream(childResources.spliterator(), false)
-                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
-                    .collect(Collectors.toList());
+                return StreamSupport.stream(childResources.spliterator(), false)
+                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
             }
         });
     }
@@ -159,9 +157,9 @@ public class PanelImplTest {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         Map<String, Object> dorProperties = panel.getDorProperties();
         assertTrue(dorProperties.isEmpty(),
-            "getDorProperties should return empty map when no dor properties are set in JCR");
+                "getDorProperties should return empty map when no dor properties are set in JCR");
         assertFalse(panel.getProperties().containsKey("fd:dor"),
-            "fd:dor should not appear in properties when no dor properties are set");
+                "fd:dor should not appear in properties when no dor properties are set");
     }
 
     @AfterEach
@@ -173,8 +171,7 @@ public class PanelImplTest {
     void testExportedItemsMapByDefault() {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         Map<String, ? extends ComponentExporter> exportedItems = panel.getExportedItems();
-        assertFalse(exportedItems.isEmpty(),
-            "getExportedItems should return non-empty map when toggle is OFF");
+        assertFalse(exportedItems.isEmpty(), "getExportedItems should return non-empty map when toggle is OFF");
         assertTrue(exportedItems.containsKey("textinput"));
         String[] order = panel.getExportedItemsOrder();
         assertEquals(1, order.length);
@@ -186,14 +183,12 @@ public class PanelImplTest {
         System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         Map<String, ? extends ComponentExporter> exportedItems = panel.getExportedItems();
-        assertTrue(exportedItems.isEmpty(),
-            "getExportedItems should return empty map when toggle is ON");
+        assertTrue(exportedItems.isEmpty(), "getExportedItems should return empty map when toggle is ON");
         String[] order = panel.getExportedItemsOrder();
         assertEquals(0, order.length);
         PanelImpl panelImpl = (PanelImpl) panel;
         List<? extends ComponentExporter> itemsArray = panelImpl.getExportedItemsArray();
-        assertFalse(itemsArray.isEmpty(),
-            "getExportedItemsArray should return non-empty list when toggle is ON");
+        assertFalse(itemsArray.isEmpty(), "getExportedItemsArray should return non-empty list when toggle is ON");
         assertEquals(1, itemsArray.size());
     }
 
@@ -202,8 +197,7 @@ public class PanelImplTest {
         Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
         PanelImpl panelImpl = (PanelImpl) panel;
         List<? extends ComponentExporter> itemsArray = panelImpl.getExportedItemsArray();
-        assertTrue(itemsArray.isEmpty(),
-            "getExportedItemsArray should return empty list when toggle is OFF");
+        assertTrue(itemsArray.isEmpty(), "getExportedItemsArray should return empty list when toggle is OFF");
     }
 
     @Test

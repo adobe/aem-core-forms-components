@@ -23,6 +23,7 @@ public interface HtlUtil {
      * Checks whether this request has been originated from edge delivery services
      *
      * @return {Boolean} true if the request is from edge delivery services, false otherwise
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.3.2
      */
     Boolean isEdgeDeliveryRequest();

@@ -38,11 +38,8 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { CheckBoxGroup.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_CHECKBOX_GROUP_V1 })
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { CheckBoxGroup.class,
+        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_CHECKBOX_GROUP_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class CheckBoxGroupImpl extends AbstractOptionsFieldImpl implements CheckBoxGroup {
 
@@ -82,7 +79,8 @@ public class CheckBoxGroupImpl extends AbstractOptionsFieldImpl implements Check
 
     @Override
     public Type getType() {
-        return super.getType(); // check box group always has type array // we always return boolean[], string[] or number[]
+        return super.getType(); // check box group always has type array // we always return boolean[], string[] or
+                                // number[]
     }
 
     @Override

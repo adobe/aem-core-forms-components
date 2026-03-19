@@ -142,9 +142,21 @@ allOf:
       minimumDateTime:
         type: string
         title: Minimum date-time (string)
+        format: date-time
+        description: >-
+          ISO-8601 offset format string (e.g. "2024-01-01T00:00:00+00:00").
+          Stored as a JCR String property and parsed by OffsetDateTime.parse()
+          in DateTimeImpl. A plain date string without time and timezone offset
+          (e.g. "2024-01-01") will throw DateTimeParseException at runtime.
       maximumDateTime:
         type: string
         title: Maximum date-time (string)
+        format: date-time
+        description: >-
+          ISO-8601 offset format string (e.g. "2024-01-01T00:00:00+00:00").
+          Stored as a JCR String property and parsed by OffsetDateTime.parse()
+          in DateTimeImpl. A plain date string without time and timezone offset
+          (e.g. "2024-01-01") will throw DateTimeParseException at runtime.
       minimumMessage:
         type: string
         title: Minimum constraint message

@@ -34,11 +34,8 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Review;
 import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Review.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_REVIEW_V1 })
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Review.class,
+        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_REVIEW_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ReviewImpl extends AbstractBaseImpl implements Review {
 

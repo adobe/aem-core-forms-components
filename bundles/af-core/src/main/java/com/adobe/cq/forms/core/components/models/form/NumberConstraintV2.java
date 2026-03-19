@@ -32,6 +32,7 @@ public interface NumberConstraintV2 extends NumberConstraint {
      * Returns the minimum value for the number. The constraint is applicable only for field with type number.
      *
      * @return minimum value for the number
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.6.4
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -44,6 +45,7 @@ public interface NumberConstraintV2 extends NumberConstraint {
      * Returns the maximum value for the number. The constraint is applicable only for field with type number.
      *
      * @return maximum value for the number
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.6.4
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -56,6 +58,7 @@ public interface NumberConstraintV2 extends NumberConstraint {
      * Returns the Maximum value (exclusive) that can be entered by the user.
      *
      * @return maximum value (exclusive) for the number
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.6.4
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -68,6 +71,7 @@ public interface NumberConstraintV2 extends NumberConstraint {
      * Returns the minimum value (exclusive) that can be entered by the user.
      *
      * @return minimum value (exclusive) for the number
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.6.4
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)

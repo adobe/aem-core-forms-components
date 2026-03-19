@@ -21,29 +21,17 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Defines the constraint type. Possible values: {@code type}, {@code required}, {@code minimum}, {@code maximum},
- * {@code minLength}, {@code maxLength}, {@code step}, {@code format}, {@code pattern}, {@code minItems}, {@code maxItems},
- * {@code minOccur}, {@code maxOccur}, {@code uniqueItems}, {@code enforceEnum}, {@code validationExpression}
+ * {@code minLength}, {@code maxLength}, {@code step}, {@code format}, {@code pattern}, {@code minItems},
+ * {@code maxItems}, {@code minOccur}, {@code maxOccur}, {@code uniqueItems}, {@code enforceEnum},
+ * {@code validationExpression}
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
 public enum ConstraintType {
-    TYPE("type"),
-    REQUIRED("required"),
-    MINIMUM("minimum"),
-    MAXIMUM("maximum"),
-    MIN_LENGTH("minLength"),
-    MAX_LENGTH("maxLength"),
-    STEP("step"),
-    FORMAT("format"),
-    PATTERN("pattern"),
-    MIN_ITEMS("minItems"),
-    MAX_ITEMS("maxItems"),
-    MIN_OCCUR("minOccur"),
-    MAX_OCCUR("maxOccur"),
-    UNIQUE_ITEMS("uniqueItems"),
-    ENFORCE_ENUM("enforceEnum"),
-    VALIDATION_EXPRESSION("validationExpression"),
-    MAXFILE_SIZE("maxFileSize"),
+    TYPE("type"), REQUIRED("required"), MINIMUM("minimum"), MAXIMUM("maximum"), MIN_LENGTH("minLength"),
+    MAX_LENGTH("maxLength"), STEP("step"), FORMAT("format"), PATTERN("pattern"), MIN_ITEMS("minItems"),
+    MAX_ITEMS("maxItems"), MIN_OCCUR("minOccur"), MAX_OCCUR("maxOccur"), UNIQUE_ITEMS("uniqueItems"),
+    ENFORCE_ENUM("enforceEnum"), VALIDATION_EXPRESSION("validationExpression"), MAXFILE_SIZE("maxFileSize"),
     ACCEPT("accept");
 
     private String value;
@@ -53,11 +41,14 @@ public enum ConstraintType {
     }
 
     /**
-     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-     * representation
+     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided
+     * string representation
      *
-     * @param value the string representation for which an enum value should be returned
+     * @param value
+     *            the string representation for which an enum value should be returned
+     * 
      * @return the corresponding enum value, if one was found
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     public static ConstraintType fromString(String value) {
@@ -73,6 +64,7 @@ public enum ConstraintType {
      * Returns the string value of this enum constant.
      *
      * @return the string value of this enum constant
+     * 
      * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
      */
     public String getValue() {

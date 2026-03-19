@@ -53,9 +53,9 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
     protected String[] enumNames;
 
     /**
-     * Default for single and multivalued fields used the same 'default' crx property.
-     * This was not compatible with Universal Editor's Property Rail Configuration.
-     * Therefore, adding this property as an additional way of defining default values.
+     * Default for single and multivalued fields used the same 'default' crx property. This was not compatible with
+     * Universal Editor's Property Rail Configuration. Therefore, adding this property as an additional way of defining
+     * default values.
      **/
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_MULTI_DEFAULT_VALUES)
     @Nullable
@@ -88,8 +88,8 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
                 }
             }
             String[] finalEnumNamesArray = enumNamesArray != null ? enumNamesArray : new String[enumArray.length];
-            map = IntStream.range(0, enumArray.length).collect(LinkedHashMap::new, (m, i) -> m.put(enumArray[i], finalEnumNamesArray[i]),
-                LinkedHashMap::putAll);
+            map = IntStream.range(0, enumArray.length).collect(LinkedHashMap::new,
+                    (m, i) -> m.put(enumArray[i], finalEnumNamesArray[i]), LinkedHashMap::putAll);
         }
 
         return map;
@@ -101,7 +101,8 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
         if (enums == null) {
             return null;
         } else {
-            // todo: we can only typecast to number or boolean if type is present in JCR, for array types, we need to store the type of each
+            // todo: we can only typecast to number or boolean if type is present in JCR, for array types, we need to
+            // store the type of each
             // array element in JCR
             // todo: and compute based on it (hence using typeJcr below)
             // may expose internal representation of mutable object, hence cloning
@@ -117,8 +118,8 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
             Map<Object, String> map = getEnumPairs();
             String[] enumName = map.values().toArray(new String[0]);
             return Arrays.stream(enumName)
-                .map(p -> Optional.ofNullable(translate(ReservedProperties.PN_ENUM_NAMES, p)).orElse(""))
-                .toArray(String[]::new);
+                    .map(p -> Optional.ofNullable(translate(ReservedProperties.PN_ENUM_NAMES, p)).orElse(""))
+                    .toArray(String[]::new);
         }
         return null;
     }

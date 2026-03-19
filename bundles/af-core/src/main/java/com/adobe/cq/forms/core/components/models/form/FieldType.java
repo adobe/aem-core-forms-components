@@ -20,29 +20,11 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum FieldType {
-    TEXT_INPUT("text-input"),
-    EMAIL("email"),
-    CAPTCHA("captcha"),
-    MULTILINE_INPUT("multiline-input"),
-    NUMBER_INPUT("number-input"),
-    DATE_INPUT("date-input"),
-    FILE_INPUT("file-input"),
-    DROP_DOWN("drop-down"),
-    RADIO_GROUP("radio-group"),
-    PLAIN_TEXT("plain-text"),
-    CHECKBOX("checkbox"),
-    BUTTON("button"),
-    PANEL("panel"),
-    FORM("form"),
-    CHECKBOX_GROUP("checkbox-group"),
-    IMAGE("image"),
-    TELEPHONE("tel"),
-    PASSWORD("password"),
-    DATETIME_INPUT("datetime-input"),
-    RANGE("range"),
-    COLOR("color"),
-    URL("url"),
-    HIDDEN("hidden");
+    TEXT_INPUT("text-input"), EMAIL("email"), CAPTCHA("captcha"), MULTILINE_INPUT("multiline-input"),
+    NUMBER_INPUT("number-input"), DATE_INPUT("date-input"), FILE_INPUT("file-input"), DROP_DOWN("drop-down"),
+    RADIO_GROUP("radio-group"), PLAIN_TEXT("plain-text"), CHECKBOX("checkbox"), BUTTON("button"), PANEL("panel"),
+    FORM("form"), CHECKBOX_GROUP("checkbox-group"), IMAGE("image"), TELEPHONE("tel"), PASSWORD("password"),
+    DATETIME_INPUT("datetime-input"), RANGE("range"), COLOR("color"), URL("url"), HIDDEN("hidden");
 
     private String value;
 
@@ -51,11 +33,14 @@ public enum FieldType {
     }
 
     /**
-     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-     * representation. If no representation is found, {@link #TEXT_INPUT} will be returned.
+     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided
+     * string representation. If no representation is found, {@link #TEXT_INPUT} will be returned.
      *
-     * @param value the string representation for which an enum value should be returned
+     * @param value
+     *            the string representation for which an enum value should be returned
+     * 
      * @return the corresponding enum value, if one was found, or {@link #TEXT_INPUT}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     public static FieldType fromString(String value) {
@@ -71,6 +56,7 @@ public enum FieldType {
      * Returns the string value of this enum constant.
      *
      * @return the string value of this enum constant
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     public String getValue() {

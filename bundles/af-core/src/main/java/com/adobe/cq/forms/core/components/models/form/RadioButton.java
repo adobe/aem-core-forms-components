@@ -24,4 +24,5 @@ import org.osgi.annotation.versioning.ConsumerType;
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface RadioButton extends CheckBox {}
+public interface RadioButton extends CheckBox {
+}

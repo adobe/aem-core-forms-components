@@ -23,4 +23,5 @@ import org.osgi.annotation.versioning.ConsumerType;
  * @since com.adobe.cq.forms.core.components.models 4.7.0
  */
 @ConsumerType
-public interface Switch extends CheckBox {}
+public interface Switch extends CheckBox {
+}

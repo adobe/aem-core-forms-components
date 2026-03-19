@@ -48,18 +48,13 @@ import com.adobe.granite.ui.components.ds.DataSource;
 import com.adobe.granite.ui.components.ds.SimpleDataSource;
 import com.adobe.granite.ui.components.ds.ValueMapResource;
 
-@Component(
-    service = { Servlet.class },
-    property = {
-        "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_REVIEW_DATASOURCE_V1,
-        "sling.servlet.methods=GET",
-        "sling.servlet.extensions=html"
-    })
+@Component(service = { Servlet.class }, property = {
+        "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_REVIEW_DATASOURCE_V1, "sling.servlet.methods=GET",
+        "sling.servlet.extensions=html" })
 public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
 
     /**
-     * Defines the form meta data type. Possible values: {@code submitAction},
-     * {@code prefillServiceProvider}
+     * Defines the form meta data type. Possible values: {@code submitAction}, {@code prefillServiceProvider}
      *
      * @todo: Add other metadata types here like fragment, actions etc
      */
@@ -83,8 +78,8 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
             Resource formInstance = ComponentUtils.getFormContainer(componentInstance);
             if (formInstance != null) {
                 FormContainer formContainer = formInstance.adaptTo(FormContainer.class);
-                List<Base> panels = ((List<Base>) getMultipleChildPanels(formContainer))
-                    .stream().filter(x -> "panel".equals(x.getFieldType())).collect(Collectors.toList());
+                List<Base> panels = ((List<Base>) getMultipleChildPanels(formContainer)).stream()
+                        .filter(x -> "panel".equals(x.getFieldType())).collect(Collectors.toList());
                 for (Base panel : panels) {
                     String name = panel != null ? panel.getName() : "";
                     String title = "";
@@ -108,10 +103,12 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
     }
 
     /**
-     * Retrieves a list of child panels that have at least two siblings.
-     * If a panel has fewer than two siblings, it will not be included in the returned list.
+     * Retrieves a list of child panels that have at least two siblings. If a panel has fewer than two siblings, it will
+     * not be included in the returned list.
      *
-     * @param formContainer the top-level form container
+     * @param formContainer
+     *            the top-level form container
+     * 
      * @return a list of panels with at least two siblings
      */
     private List<? extends ComponentExporter> getMultipleChildPanels(FormComponent formContainer) {
@@ -125,7 +122,7 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
     }
 
     private SyntheticResource getResourceForDropdownDisplay(ResourceResolver resourceResolver, String displayValue,
-        String dataValue) {
+            String dataValue) {
         Map<String, Object> dropdownMap = new HashMap<>();
         dropdownMap.put("text", displayValue);
         dropdownMap.put("value", dataValue);

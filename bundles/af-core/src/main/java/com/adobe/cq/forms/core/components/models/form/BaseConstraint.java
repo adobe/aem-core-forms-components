@@ -30,24 +30,16 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public interface BaseConstraint {
 
     /**
-     * Defines the data type. Possible values: {@code string}, {@code file}, {@code file[]}, {@code number}, {@code boolean}, {@code array}
-     * , {@code object}
+     * Defines the data type. Possible values: {@code string}, {@code file}, {@code file[]}, {@code number},
+     * {@code boolean}, {@code array} , {@code object}
      *
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     public enum Type {
-        STRING("string"),
-        STRING_ARRAY("string[]"),
-        NUMBER("number"),
+        STRING("string"), STRING_ARRAY("string[]"), NUMBER("number"),
 
-        INTEGER("integer"),
-        NUMBER_ARRAY("number[]"),
-        BOOLEAN("boolean"),
-        BOOLEAN_ARRAY("boolean[]"),
-        OBJECT("object"),
-        ARRAY("array"),
-        FILE("file"),
-        FILE_ARRAY("file[]");
+        INTEGER("integer"), NUMBER_ARRAY("number[]"), BOOLEAN("boolean"), BOOLEAN_ARRAY("boolean[]"), OBJECT("object"),
+        ARRAY("array"), FILE("file"), FILE_ARRAY("file[]");
 
         private String value;
 
@@ -56,11 +48,14 @@ public interface BaseConstraint {
         }
 
         /**
-         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-         * representation. If no representation is found, {@link #STRING} will be returned.
+         * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the
+         * provided string representation. If no representation is found, {@link #STRING} will be returned.
          *
-         * @param value the string representation for which an enum value should be returned
+         * @param value
+         *            the string representation for which an enum value should be returned
+         * 
          * @return the corresponding enum value, if one was found, or {@link #STRING}
+         * 
          * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
          */
         public static Type fromString(String value) {
@@ -76,6 +71,7 @@ public interface BaseConstraint {
          * Returns the string value of this enum constant.
          *
          * @return the string value of this enum constant
+         * 
          * @since com.adobe.cq.wcm.core.components.models.form 13.0.0
          */
         public String getValue() {
@@ -93,6 +89,7 @@ public interface BaseConstraint {
      * Returns {@code true} if field is required, otherwise {@code false}.
      *
      * @return {@code true} if field is required, otherwise {@code false}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -104,6 +101,7 @@ public interface BaseConstraint {
      * Returns the data type of the form field.
      *
      * @return the data type of the form field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default Type getType() {
@@ -114,6 +112,7 @@ public interface BaseConstraint {
      * Returns an expression returning boolean value indicating whether the value in the field is valid or not
      *
      * @return an expression
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable

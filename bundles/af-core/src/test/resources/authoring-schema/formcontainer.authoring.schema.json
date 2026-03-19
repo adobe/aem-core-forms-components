@@ -4,7 +4,7 @@
   "title": "FormContainer JCR Authoring Properties (flattened for test validation)",
   "description": "Inlined/flattened version of formcontainer.authoring.schema.yaml + container.authoring.schema.yaml + base.authoring.schema.yaml. All submission and auto-save properties are FLAT JCR properties on this node — fd:submit and fd:autoSave are JSON model output groupings only.",
   "type": "object",
-  "additionalProperties": false,
+  "additionalProperties": true,
   "patternProperties": {
     "^jcr:":   {},
     "^sling:": {},

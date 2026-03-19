@@ -35,12 +35,14 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 @ProviderType
 public interface FormComponent extends Component {
-    public final String CUSTOM_PROPERTY_WRAPPER = "afs:layout"; // needs to be renamed to "CUSTOM_LAYOUT_PROPERTY_WRAPPER" later
+    public final String CUSTOM_PROPERTY_WRAPPER = "afs:layout"; // needs to be renamed to
+                                                                // "CUSTOM_LAYOUT_PROPERTY_WRAPPER" later
 
     /**
      * Returns the field type
      *
      * @return the field type
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 1.0.0
      */
     String getFieldType(); // todo: keeping string here to support custom view types
@@ -49,6 +51,7 @@ public interface FormComponent extends Component {
      * Returns {@code true} if form field should be visible, otherwise {@code false}.
      *
      * @return {@code true} if form field should be visible, otherwise {@code false}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -93,6 +96,7 @@ public interface FormComponent extends Component {
      * Returns getPath of the form field
      *
      * @return getPath of the field
+     * 
      * @since com.adobe.cq.forms.core.components.util 3.1.0
      */
     @JsonView(Views.Author.class)
@@ -105,6 +109,7 @@ public interface FormComponent extends Component {
      * Returns the name of the form field
      *
      * @return name of the form field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -116,6 +121,7 @@ public interface FormComponent extends Component {
      * Returns the reference to the data model
      *
      * @return reference to the data model
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -124,8 +130,8 @@ public interface FormComponent extends Component {
     }
 
     /**
-     * Returns the rules defined for the component after filtering out invalid rules
-     * If no rules are defined, returns an empty map
+     * Returns the rules defined for the component after filtering out invalid rules If no rules are defined, returns an
+     * empty map
      *
      * @return map containing the rules and their expressions
      */
@@ -138,8 +144,7 @@ public interface FormComponent extends Component {
     /**
      * Returns the events defined for the component after filtering out invalid rules
      *
-     * @return map containing the events and their expressions
-     *         If no rules are defined, returns an empty map
+     * @return map containing the events and their expressions If no rules are defined, returns an empty map
      */
     @NotNull
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -150,7 +155,9 @@ public interface FormComponent extends Component {
     /**
      * Sets i18n object
      *
-     * @param i18n reference to the {@link I18n} object
+     * @param i18n
+     *            reference to the {@link I18n} object
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonIgnore
@@ -161,7 +168,9 @@ public interface FormComponent extends Component {
     /**
      * Sets the language for the form component
      *
-     * @param lang the language code
+     * @param lang
+     *            the language code
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.12.2
      */
     default void setLang(@Nullable String lang) {
@@ -172,6 +181,7 @@ public interface FormComponent extends Component {
      * Returns the language to use for formatting the field.
      *
      * @return returns the language to use for formatting the field.
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.3.1
      */
     @Nullable
@@ -183,6 +193,7 @@ public interface FormComponent extends Component {
      * Returns the language if it is present as a property in JCR
      *
      * @return the language code if present in JCR, null otherwise
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.12.2
      */
     @JsonProperty("lang")
@@ -193,6 +204,7 @@ public interface FormComponent extends Component {
 
     /**
      * @see ComponentExporter#getExportedType()
+     * 
      * @since com.adobe.cq.wcm.core.components.models.form 14.2.0
      */
     @NotNull

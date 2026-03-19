@@ -54,7 +54,8 @@ public class DropDownImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_DROPDOWN_1 = CONTENT_ROOT + "/dropdown-1";
     private static final String PATH_MULTISELECT_DROPDOWN = CONTENT_ROOT + "/multiselect-dropdown";
-    private static final String PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY = CONTENT_ROOT + "/multiselect-dropdown-2";
+    private static final String PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY = CONTENT_ROOT
+            + "/multiselect-dropdown-2";
     private static final String PATH_DROPDOWN2 = CONTENT_ROOT + "/dropdown2";
 
     private static final String PATH_DROPDOWN = CONTENT_ROOT + "/dropdown";
@@ -357,7 +358,8 @@ public class DropDownImplTest {
 
     @Test
     void testGetMultiSelectDefault_WithDiffProperty() {
-        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY, DropDown.class, context);
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY, DropDown.class,
+                context);
         assertArrayEquals(new Long[] { 0L, 1L }, dropdown.getDefault());
     }
 
@@ -438,24 +440,25 @@ public class DropDownImplTest {
     @Test
     void testInsertionOrderForEnums() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_INSERTION_ORDER, DropDown.class, context);
-        Set<String> set = new LinkedHashSet<>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
-            "15", "16", "17", "18", "19", "20"));
+        Set<String> set = new LinkedHashSet<>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"));
         assertArrayEquals(set.toArray(new String[0]), dropdown.getEnums());
     }
 
     @Test
     void testInsertionOrderForEnumNames() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_INSERTION_ORDER, DropDown.class, context);
-        Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
-            "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"));
+        Set<String> set = new LinkedHashSet<>(Arrays.asList("Zero", "One", "Two", "Three", "Four", "Five", "Six",
+                "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+                "Seventeen", "Eighteen", "Nineteen", "Twenty"));
         assertArrayEquals(set.toArray(new String[0]), dropdown.getEnumNames());
     }
 
     @Test
     void testEnumsWithoutEnumNames() {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_NO_ENUM_NAMES, DropDown.class, context);
-        Set<String> set = new LinkedHashSet<>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14",
-            "15", "16", "17", "18", "19", "20"));
+        Set<String> set = new LinkedHashSet<>(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"));
         assertArrayEquals(set.toArray(new String[0]), dropdown.getEnums());
         assertNull(dropdown.getEnumNames());
     }
@@ -463,7 +466,8 @@ public class DropDownImplTest {
     @Test
     void testEnumsWithLesserEnumNames() {
         DropDown dropdown1 = Utils.getComponentUnderTest(PATH_DROPDOWN_FOR_LESSER_ENUM_NAMES, DropDown.class, context);
-        Set<String> set1 = new LinkedHashSet<>(Arrays.asList("zero", "one", "two", "three", "4", "5", "6", "7", "8", "9"));
+        Set<String> set1 = new LinkedHashSet<>(
+                Arrays.asList("zero", "one", "two", "three", "4", "5", "6", "7", "8", "9"));
         assertArrayEquals(set1.toArray(new String[0]), dropdown1.getEnumNames());
     }
 

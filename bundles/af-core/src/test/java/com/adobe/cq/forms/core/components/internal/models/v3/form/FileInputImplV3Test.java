@@ -59,7 +59,8 @@ public class FileInputImplV3Test {
     private static final String PATH_FILEINPUT = CONTENT_ROOT + "/fileinput";
     private static final String PATH_FILEINPUT_DATALAYER = CONTENT_ROOT + "/fileinput-datalayer";
     private static final String PATH_MULTISELECT_FILEINPUT = CONTENT_ROOT + "/multiselect-fileinput";
-    private static final String PATH_MULTISELECT_FILEINPUT_WITHNOTYPE = CONTENT_ROOT + "/multiselect-fileinput-withNoType";
+    private static final String PATH_MULTISELECT_FILEINPUT_WITHNOTYPE = CONTENT_ROOT
+            + "/multiselect-fileinput-withNoType";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -85,7 +86,8 @@ public class FileInputImplV3Test {
 
     @Test
     void testType() {
-        FileInput fileInput = Utils.getComponentUnderTest(PATH_MULTISELECT_FILEINPUT_WITHNOTYPE, FileInput.class, context);
+        FileInput fileInput = Utils.getComponentUnderTest(PATH_MULTISELECT_FILEINPUT_WITHNOTYPE, FileInput.class,
+                context);
         assertEquals(fileInput.getType(), fileInput.getType());
     }
 

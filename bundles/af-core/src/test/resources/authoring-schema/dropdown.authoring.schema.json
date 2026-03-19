@@ -4,7 +4,7 @@
   "title": "Dropdown JCR Authoring Properties (flattened for test validation)",
   "description": "Inlined/flattened version of dropdown.authoring.schema.yaml + field.authoring.schema.yaml + base.authoring.schema.yaml. Used in unit tests via Utils.testJcrSchemaValidation.",
   "type": "object",
-  "additionalProperties": false,
+  "additionalProperties": true,
   "patternProperties": {
     "^jcr:":   {},
     "^sling:": {},

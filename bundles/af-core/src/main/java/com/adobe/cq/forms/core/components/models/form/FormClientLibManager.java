@@ -29,7 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface FormClientLibManager {
 
     /**
-     * Adds a client library associated with form or fragment for a request, that can be consumed later within the scope of request.
+     * Adds a client library associated with form or fragment for a request, that can be consumed later within the scope
+     * of request.
      *
      * @param clientLibRef
      */

@@ -89,10 +89,8 @@ public class FormContainerImplTest {
 
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
-                return StreamSupport
-                    .stream(childResources.spliterator(), false)
-                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
-                    .collect(Collectors.toList());
+                return StreamSupport.stream(childResources.spliterator(), false)
+                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
             }
         });
     }
@@ -177,10 +175,8 @@ public class FormContainerImplTest {
 
     private void createAsset(Asset asset, String path) throws Exception {
         InputStream jsonStream = getClass().getResourceAsStream(BASE + path);
-        context.create().resource(asset.getOriginal().getPath() + "/" + JCR_CONTENT, ImmutableMap.of(
-            JCR_PRIMARYTYPE, NT_RESOURCE,
-            JCR_DATA, jsonStream,
-            JCR_MIMETYPE, ContentType.APPLICATION_JSON.toString()));
+        context.create().resource(asset.getOriginal().getPath() + "/" + JCR_CONTENT, ImmutableMap.of(JCR_PRIMARYTYPE,
+                NT_RESOURCE, JCR_DATA, jsonStream, JCR_MIMETYPE, ContentType.APPLICATION_JSON.toString()));
     }
 
     @Test

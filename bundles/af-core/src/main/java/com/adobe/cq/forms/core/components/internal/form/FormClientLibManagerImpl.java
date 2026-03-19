@@ -29,9 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class },
-    adapters = FormClientLibManager.class)
+@Model(adaptables = { SlingHttpServletRequest.class }, adapters = FormClientLibManager.class)
 public class FormClientLibManagerImpl implements FormClientLibManager {
 
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)

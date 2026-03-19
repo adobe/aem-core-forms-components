@@ -28,11 +28,8 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Switch;
 import com.adobe.cq.forms.core.components.util.AbstractCheckboxImpl;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Switch.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_SWITCH_V1 })
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Switch.class,
+        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_SWITCH_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class SwitchImpl extends AbstractCheckboxImpl implements Switch {
     @PostConstruct
@@ -40,7 +37,7 @@ public class SwitchImpl extends AbstractCheckboxImpl implements Switch {
         if (enumNames != null) {
             String[] enumNameArray = enumNames;
             enumNames = Boolean.TRUE.equals(enableUncheckedValue) ? new String[] { enumNameArray[0], enumNameArray[1] }
-                : new String[] { enumNameArray[0] };
+                    : new String[] { enumNameArray[0] };
         }
     }
 }

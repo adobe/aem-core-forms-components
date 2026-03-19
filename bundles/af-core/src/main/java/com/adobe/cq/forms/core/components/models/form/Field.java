@@ -35,6 +35,7 @@ public interface Field extends Base, BaseConstraint {
      * Checks if the field should be rendered read only.
      *
      * @return {@code true} if the field should be read-only, {@code false} otherwise
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -46,6 +47,7 @@ public interface Field extends Base, BaseConstraint {
      * The placeholder to show on the field.
      *
      * @return placeholder to show on the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonProperty("placeholder")
@@ -54,10 +56,11 @@ public interface Field extends Base, BaseConstraint {
     }
 
     /**
-     * The format in which the value will be displayed to the user on screen in the field.
-     * For example when using a currency field, the currency sign should be shown to the user.
+     * The format in which the value will be displayed to the user on screen in the field. For example when using a
+     * currency field, the currency sign should be shown to the user.
      *
      * @return display format of the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getDisplayFormat() {
@@ -65,10 +68,11 @@ public interface Field extends Base, BaseConstraint {
     }
 
     /**
-     * The format in which the value will be edited by the user.
-     * For instance users in Germany would want to interchange decimal (.) and comma (,) when entering numerical values.
+     * The format in which the value will be edited by the user. For instance users in Germany would want to interchange
+     * decimal (.) and comma (,) when entering numerical values.
      *
      * @return edit format of the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getEditFormat() {
@@ -79,6 +83,7 @@ public interface Field extends Base, BaseConstraint {
      * The format in which the value will be exported or submitted.
      *
      * @return data format of the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getDataFormat() {
@@ -86,11 +91,12 @@ public interface Field extends Base, BaseConstraint {
     }
 
     /**
-     * The value of the field when no value is provided by the end user or data model.
-     * The type of this property should match the value of the type property defined in the Field.
-     * If not, then a type coercion will be tried and if that fails, the value will be set to null.
+     * The value of the field when no value is provided by the end user or data model. The type of this property should
+     * match the value of the type property defined in the Field. If not, then a type coercion will be tried and if that
+     * fails, the value will be set to null.
      *
      * @return default value of the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonSerialize(using = DefaultValueSerializer.class)
@@ -99,16 +105,15 @@ public interface Field extends Base, BaseConstraint {
     }
 
     /**
-     * The value that represents an empty state for the field.
-     * This can be used to distinguish between null, empty string, or undefined values.
+     * The value that represents an empty state for the field. This can be used to distinguish between null, empty
+     * string, or undefined values.
      * 
-     * Valid values for this property are:
-     * - "null" - represents null value
-     * - "undefined" - represents undefined value
-     * - "" - represents empty string
+     * Valid values for this property are: - "null" - represents null value - "undefined" - represents undefined value -
+     * "" - represents empty string
      * 
      *
      * @return empty value representation for the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.12.1
      */
     @Nullable
@@ -120,6 +125,7 @@ public interface Field extends Base, BaseConstraint {
      * The expression that when evaluated would determine what the displayValue of a field would be
      *
      * @return display value expression of the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.2.0
      */
     default String getDisplayValueExpression() {

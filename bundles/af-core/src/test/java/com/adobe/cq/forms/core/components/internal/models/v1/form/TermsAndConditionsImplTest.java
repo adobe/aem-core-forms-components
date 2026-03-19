@@ -74,10 +74,8 @@ public class TermsAndConditionsImplTest {
 
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
-                return StreamSupport
-                    .stream(childResources.spliterator(), false)
-                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
-                    .collect(Collectors.toList());
+                return StreamSupport.stream(childResources.spliterator(), false)
+                        .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
             }
         });
     }
@@ -128,7 +126,8 @@ public class TermsAndConditionsImplTest {
 
     @Test
     void testNoFieldType() {
-        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_TNC_WITHOUT_FIELDTYPE, TermsAndConditions.class, context);
+        TermsAndConditions tnc = Utils.getComponentUnderTest(PATH_TNC_WITHOUT_FIELDTYPE, TermsAndConditions.class,
+                context);
         assertEquals(FieldType.PANEL.getValue(), tnc.getFieldType());
     }
 }

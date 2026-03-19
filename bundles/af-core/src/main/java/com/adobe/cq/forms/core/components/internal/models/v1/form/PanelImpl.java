@@ -38,12 +38,10 @@ import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Panel.class,
-        ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_PANEL_V1, FormConstants.RT_FD_FORM_ACCORDION_V1, FormConstants.RT_FD_FORM_TABS_ON_TOP_V1,
-        FormConstants.RT_FD_FORM_WIZARD_V1, FormConstants.RT_FD_FORM_VERTICAL_TABS_V1 })
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Panel.class,
+        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_PANEL_V1,
+                FormConstants.RT_FD_FORM_ACCORDION_V1, FormConstants.RT_FD_FORM_TABS_ON_TOP_V1,
+                FormConstants.RT_FD_FORM_WIZARD_V1, FormConstants.RT_FD_FORM_VERTICAL_TABS_V1 })
 
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class PanelImpl extends AbstractContainerImpl implements Panel {
@@ -96,7 +94,8 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     @JsonIgnore
     @Override
     public Boolean isRequired() {
-        return false; // overriding since base is defining isRequired, to avoid creating a new interface, added jsonIgnore here
+        return false; // overriding since base is defining isRequired, to avoid creating a new interface, added
+                      // jsonIgnore here
     }
 
     @Override
