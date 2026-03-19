@@ -1070,7 +1070,7 @@ def _build_parser():
         prog="content_api_forms.py",
         description="AEM Content API — Adaptive Forms CLI",
     )
-    p.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
+    p.add_argument("--json", action="store_true", dest="global_json", help="Emit machine-readable JSON as last output line")
     sub = p.add_subparsers(dest="cmd", metavar="COMMAND")
 
     # demo — run full 9-step sequence (default when no subcommand given)
@@ -1210,6 +1210,7 @@ def cmd_put(args):
     r_get = get(content_path)
     if r_get.status_code != 200:
         fail(f"Cannot GET /content: {r_get.status_code}")
+        _emit_json(args.json, {"op": "put", "ok": False, "error": f"Cannot GET /content: {r_get.status_code}"})
         return False
     component_type = r_get.json().get("componentType", "core/wcm/components/page/v2/page")
     body = {"id": "jcr:content", "componentType": component_type,
@@ -1256,6 +1257,7 @@ def cmd_clone(args):
     src = get(f"/adobe/pages/{args.page_id}")
     if src.status_code != 200:
         fail(f"Cannot read source page: {src.status_code}")
+        _emit_json(args.json, {"op": "clone", "ok": False, "error": f"Cannot read source page: {src.status_code}"})
         return False
     source_title = src.json().get("title", "Page")
     r = post("/adobe/pages", {
@@ -1373,6 +1375,12 @@ def _run_demo_main():
 def main():
     parser = _build_parser()
     args   = parser.parse_args()
+
+    # Propagate top-level --json flag to the subparser namespace.
+    # argparse subparser defaults overwrite the parent flag when --json appears
+    # before the subcommand, so we normalise here.
+    if getattr(args, "global_json", False):
+        args.json = True
 
     # No subcommand -> run the full demo (backward-compatible default)
     if args.cmd is None or args.cmd == "demo":
