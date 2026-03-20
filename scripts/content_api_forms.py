@@ -170,26 +170,37 @@ def _resolve_branch_sha(branch: str) -> Optional[str]:
     return None
 
 
-def _list_schema_paths(sha: str) -> list:
+def _fetch_schema_tree_info(commit_sha: str) -> tuple:
     """
-    Return all docs/authoring-schema/**/*.yaml paths in the repo tree at `sha`.
-    Uses recursive Git tree API (single request for the whole tree).
-    Returns empty list on failure.
+    Return (tree_sha, yaml_paths) for docs/authoring-schema/ at `commit_sha`.
+
+    Makes a single recursive Git tree API call and extracts both:
+    - tree_sha: the SHA of the docs/authoring-schema/ subtree. This only changes
+      when a schema file changes — unrelated commits on a busy branch (dev/master)
+      leave it unchanged, so it is used as the cache key.
+    - yaml_paths: list of all docs/authoring-schema/**/*.yaml blob paths, used
+      for downloading.
+
+    Returns (None, []) on failure.
     """
-    url = f"https://api.github.com/repos/{GITHUB_REPO}/git/trees/{sha}?recursive=1"
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/git/trees/{commit_sha}?recursive=1"
     try:
         r = requests.get(url, headers={"Accept": "application/vnd.github+json"}, timeout=15)
-        if r.status_code == 200:
-            return [
-                item["path"]
-                for item in r.json().get("tree", [])
-                if item["path"].startswith(GITHUB_SCHEMA_ROOT)
-                and item["path"].endswith(".yaml")
-                and item["type"] == "blob"
-            ]
+        if r.status_code != 200:
+            return None, []
+        tree = r.json().get("tree", [])
+        tree_sha = None
+        yaml_paths = []
+        for item in tree:
+            if item["path"] == GITHUB_SCHEMA_ROOT and item["type"] == "tree":
+                tree_sha = item["sha"]
+            if (item["path"].startswith(GITHUB_SCHEMA_ROOT)
+                    and item["path"].endswith(".yaml")
+                    and item["type"] == "blob"):
+                yaml_paths.append(item["path"])
+        return tree_sha, yaml_paths
     except Exception:
-        pass
-    return []
+        return None, []
 
 
 def _download_schemas(sha: str, paths: list, cache_dir: Path) -> bool:
@@ -220,27 +231,32 @@ def fetch_schemas() -> Path:
     Ensure the latest authoring schemas from GITHUB_BRANCH are available locally.
 
     Strategy:
-      1. Resolve HEAD SHA of GITHUB_BRANCH via GitHub API.
-      2. If ~/.cache/aem-authoring-schema/{sha}/ already exists -> reuse (cache hit).
-      3. Otherwise download all docs/authoring-schema/**/*.yaml files via raw GitHub URLs
-         into the SHA-keyed cache directory, preserving relative path structure.
-      4. If GitHub is unreachable:
-         a. Use the newest existing SHA cache directory if one exists.
+      1. Resolve HEAD commit SHA of GITHUB_BRANCH via GitHub API.
+      2. Resolve the docs/authoring-schema/ subtree SHA from the root tree.
+         This SHA only changes when a schema file changes — unrelated commits on
+         a busy branch (dev/master) do not invalidate the cache.
+      3. If ~/.cache/aem-authoring-schema/{tree-sha}/ already exists -> reuse (cache hit).
+      4. Otherwise download all docs/authoring-schema/**/*.yaml via raw GitHub URLs
+         (using the commit SHA for raw content addressing) into the tree-SHA-keyed
+         cache directory.
+      5. If GitHub is unreachable:
+         a. Use the newest existing cache directory if one exists.
          b. Fall back to the local working copy docs/authoring-schema/ with a warning.
 
     Returns the Path to the local schema root directory ready for file: URI loading.
     """
-    sha = _resolve_branch_sha(GITHUB_BRANCH)
+    commit_sha = _resolve_branch_sha(GITHUB_BRANCH)
 
-    if sha:
-        cache_dir = SCHEMA_CACHE_BASE / sha
+    if commit_sha:
+        tree_sha, paths = _fetch_schema_tree_info(commit_sha)
+        cache_key = tree_sha or commit_sha   # fall back to commit SHA if tree SHA unavailable
+        cache_dir = SCHEMA_CACHE_BASE / cache_key
         if cache_dir.exists():
-            return cache_dir          # cache hit
-        # Cache miss — download
-        paths = _list_schema_paths(sha)
+            return cache_dir          # cache hit — schemas unchanged
+        # Cache miss — schema files changed, re-download
         if paths:
             cache_dir.mkdir(parents=True, exist_ok=True)
-            if _download_schemas(sha, paths, cache_dir):
+            if _download_schemas(commit_sha, paths, cache_dir):
                 return cache_dir
             # Partial download — remove incomplete dir
             import shutil
