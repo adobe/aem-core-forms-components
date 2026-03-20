@@ -19,18 +19,19 @@
 /**
  * JCR Authoring Schema Validation
  *
- * Fetches a random sample of live Adaptive Forms from AEM via infinity.json and
- * validates each form's entire guideContainer tree in a single Node.js task call.
- * The task walks every node with a `fieldType` property and validates it against
- * the root adaptive-form-component authoring schema (oneOf discriminator keyed on
- * fieldType / fd:viewType). Schema violations are logged as warnings.
+ * Fetches ALL Adaptive Form pages under the samples root from AEM via the
+ * QueryBuilder API, then validates each form's entire guideContainer tree in
+ * a single Node.js task call.  The task walks every node with a `fieldType`
+ * property and validates it against the root adaptive-form-component authoring
+ * schema (oneOf discriminator keyed on fieldType / fd:viewType).
  *
- * Discovery: samples root (depth=1) → component categories → individual form dirs.
+ * Discovery: QueryBuilder (type=cq:Page, path=samples root, p.limit=-1) returns
+ * every form page regardless of nesting depth — avoiding the manual 2-level
+ * traversal that previously missed top-level pages such as
+ * .../samples/accessibility.
  */
 
 const SAMPLES_ROOT = '/content/forms/af/core-components-it/samples';
-// Number of individual form paths to validate per run (random subset for speed)
-const SAMPLE_SIZE  = 5;
 
 describe('JCR Authoring Schema Validation', () => {
     const username    = Cypress.env('crx.username') || 'admin';
@@ -40,32 +41,22 @@ describe('JCR Authoring Schema Validation', () => {
     let formPaths = [];
 
     before(() => {
-        // Fetch the top-level samples listing (depth=1) to discover component categories.
-        // Forms live one level deeper: samples/<category>/<formName>
+        // QueryBuilder returns all cq:Page nodes under the samples root in one
+        // request, regardless of nesting depth.
         cy.request({
-            url: `${contextPath}${SAMPLES_ROOT}.1.json`,
+            url: `${contextPath}/bin/querybuilder.json`,
+            qs: {
+                path: SAMPLES_ROOT,
+                type: 'cq:Page',
+                'p.limit': '-1',
+                'p.hits': 'selective',
+                'p.properties': 'jcr:path'
+            },
             auth: { username, password }
-        }).then(listingResponse => {
-            expect(listingResponse.status).to.eq(200);
-            const categories = Object.keys(listingResponse.body)
-                .filter(key => !key.startsWith('jcr:') && typeof listingResponse.body[key] === 'object');
-
-            const discoveredPaths = [];
-            cy.wrap(categories).each(category => {
-                cy.request({
-                    url: `${contextPath}${SAMPLES_ROOT}/${category}.1.json`,
-                    auth: { username, password },
-                    failOnStatusCode: false
-                }).then(catResponse => {
-                    if (catResponse.status !== 200) return;
-                    Object.keys(catResponse.body)
-                        .filter(key => !key.startsWith('jcr:') && typeof catResponse.body[key] === 'object')
-                        .forEach(formName => discoveredPaths.push(`${SAMPLES_ROOT}/${category}/${formName}`));
-                });
-            }).then(() => {
-                formPaths = Cypress._.sampleSize(discoveredPaths, SAMPLE_SIZE);
-                cy.log(`Sampled ${formPaths.length} forms from ${discoveredPaths.length} discovered: ${formPaths.join(', ')}`);
-            });
+        }).then(response => {
+            expect(response.status).to.eq(200);
+            formPaths = (response.body.hits || []).map(h => h['jcr:path']);
+            cy.log(`Discovered ${formPaths.length} form pages under ${SAMPLES_ROOT}`);
         });
     });
 
