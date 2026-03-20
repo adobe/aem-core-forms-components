@@ -65,6 +65,10 @@ describe('JCR Authoring Schema Validation', () => {
             expect(formPaths.length, 'at least one form path discovered').to.be.greaterThan(0);
         });
 
+        // Collect all violations across all forms before asserting, so every
+        // form is validated even when some have failures.
+        const allViolations = [];
+
         cy.wrap(formPaths).each(formPath => {
             // Sling encodes jcr:content as _jcr_content in URLs
             const infinityUrl = `${contextPath}${formPath}/_jcr_content/guideContainer.infinity.json`;
@@ -85,13 +89,16 @@ describe('JCR Authoring Schema Validation', () => {
                     if (result.violations.length > 0) {
                         result.violations.forEach(v => {
                             cy.log(`SCHEMA VIOLATION at ${v.path} (fieldType=${v.fieldType}): ${v.errors.join('; ')}`);
+                            allViolations.push(`${v.path} (fieldType=${v.fieldType}): ${v.errors.join('; ')}`);
                         });
                     } else {
                         cy.log(`OK — no violations in ${formPath}`);
                     }
-                    expect(result.violations, `schema violations in ${formPath}`).to.be.empty;
                 });
             });
+        }).then(() => {
+            // Single assertion after all forms have been validated
+            expect(allViolations, `schema violations across all forms`).to.be.empty;
         });
     });
 });

@@ -139,29 +139,27 @@ allOf:
       minimumDate:
         type: string
         title: Minimum date (JCR Date property)
-        format: date-time
+        description: >-
+          JCR Date property serialized by .infinity.json as a JS toUTCString() value
+          (e.g. "Wed Jul 10 2024 00:00:00 GMT+0000"), NOT ISO 8601. No format constraint.
       maximumDate:
         type: string
         title: Maximum date (JCR Date property)
-        format: date-time
+        description: >-
+          JCR Date property serialized by .infinity.json as a JS toUTCString() value
+          (e.g. "Wed Jul 10 2024 00:00:00 GMT+0000"), NOT ISO 8601. No format constraint.
       minimumDateTime:
         type: string
-        title: Minimum date-time (string)
-        format: date-time
+        title: Minimum date-time (JCR Date property)
         description: >-
-          ISO-8601 offset format string (e.g. "2024-01-01T00:00:00+00:00").
-          Stored as a JCR String property and parsed by OffsetDateTime.parse()
-          in DateTimeImpl. A plain date string without time and timezone offset
-          (e.g. "2024-01-01") will throw DateTimeParseException at runtime.
+          JCR Date property serialized by .infinity.json as a JS toUTCString() value
+          (e.g. "Thu Jul 17 2025 16:43:00 GMT+0000"), NOT ISO 8601. No format constraint.
       maximumDateTime:
         type: string
-        title: Maximum date-time (string)
-        format: date-time
+        title: Maximum date-time (JCR Date property)
         description: >-
-          ISO-8601 offset format string (e.g. "2024-01-01T00:00:00+00:00").
-          Stored as a JCR String property and parsed by OffsetDateTime.parse()
-          in DateTimeImpl. A plain date string without time and timezone offset
-          (e.g. "2024-01-01") will throw DateTimeParseException at runtime.
+          JCR Date property serialized by .infinity.json as a JS toUTCString() value
+          (e.g. "Thu Jul 17 2025 16:43:00 GMT+0000"), NOT ISO 8601. No format constraint.
       minimumMessage:
         type: string
         title: Minimum constraint message

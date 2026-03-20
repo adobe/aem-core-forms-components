@@ -20,7 +20,7 @@ allOf:
       # with @Self into FormContainerImpl v2)
       # -----------------------------------------------------------------------
       "fd:enableAutoSave":
-        type: boolean
+        type: [boolean, string]
         default: false
         title: Enable auto-save
         description: >-
@@ -70,13 +70,15 @@ allOf:
           getSubmitProperties() and emitted under "fd:submit" in JSON output.
 
       mailto:
-        type: string
         title: Email — To
         description: >-
           Flat JCR property on the FormContainer node. Corresponds to
           ReservedProperties.PN_SUBMIT_EMAIL_TO. Collected by
           getSubmitProperties() and emitted nested under "fd:submit.email"
-          in JSON output.
+          in JSON output. May be stored as a JCR multi-value String[].
+        type: [string, array]
+        items:
+          type: string
 
       from:
         type: string
