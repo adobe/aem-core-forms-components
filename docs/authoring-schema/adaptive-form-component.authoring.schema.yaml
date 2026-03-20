@@ -206,38 +206,16 @@ oneOf:
       $ref: ./components/fragment.authoring.schema.yaml
     else: false
 
-  - title: captcha (recaptcha)
+  - title: captcha
+    description: >-
+      All captcha variants (reCAPTCHA, hCaptcha, Turnstile). The captcha type is
+      determined by sling:resourceType — fd:viewType is NOT written to JCR for any
+      captcha component. The shared captcha schema covers common properties across
+      all three implementations.
     if:
-      required: ["fieldType", "fd:viewType"]
       properties:
         fieldType:
           const: captcha
-        "fd:viewType":
-          const: recaptcha
     then:
-      $ref: ./components/recaptcha.authoring.schema.yaml
-    else: false
-
-  - title: captcha (hcaptcha)
-    if:
-      required: ["fieldType", "fd:viewType"]
-      properties:
-        fieldType:
-          const: captcha
-        "fd:viewType":
-          const: hCaptcha
-    then:
-      $ref: ./components/hcaptcha.authoring.schema.yaml
-    else: false
-
-  - title: captcha (turnstile)
-    if:
-      required: ["fieldType", "fd:viewType"]
-      properties:
-        fieldType:
-          const: captcha
-        "fd:viewType":
-          const: turnstile
-    then:
-      $ref: ./components/turnstile.authoring.schema.yaml
+      $ref: ./components/captcha.authoring.schema.yaml
     else: false
