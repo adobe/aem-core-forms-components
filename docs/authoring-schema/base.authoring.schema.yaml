@@ -61,9 +61,12 @@ patternProperties:
 properties:
   # --- Identity & binding ---
   name:
-    type: string
+    type: [string, object]
     title: Field name / data key
-    description: Submitted as data key unless overridden by dataRef.
+    description: >-
+      Submitted as data key unless overridden by dataRef.
+      Also accepts object — a JCR child node named "name" appears as an
+      object in infinity.json (naming collision with this property).
   dataRef:
     type: ["string", "null"]
     title: Data binding JSON-path
@@ -71,9 +74,12 @@ properties:
       JSON-path of the data value this field binds to, relative to the parent's
       dataRef. Use null to opt out of data binding.
   id:
-    type: string
+    type: [string, object]
     title: HTML id override
-    description: Overrides the auto-generated component id.
+    description: >-
+      Overrides the auto-generated component id.
+      Also accepts object — a JCR child node named "id" appears as an
+      object in infinity.json (naming collision with this property).
   fieldType:
     type: string
     title: Widget field type
@@ -93,6 +99,7 @@ properties:
       - checkbox
       - switch
       - plain-text
+      - text
       - button
       - panel
       - image
@@ -142,11 +149,13 @@ properties:
     default: false
     description: Omit from JCR when false — absent property = runtime default false.
   description:
-    type: string
+    type: [string, object]
     title: Long description / help text
     description: >-
       Rendered as short/long description. Supports rich text. Used as help
       text for individual fields or top-level description for panels.
+      Also accepts object — a JCR child node named "description" appears as
+      an object in infinity.json (naming collision with this property).
   tooltip:
     type: string
     title: Tooltip text
@@ -159,22 +168,42 @@ properties:
 
   # --- Data type ---
   type:
-    type: string
     title: Data type
     description: >-
       The data type this field captures. Coerced to this type on submit.
-    enum:
-      - string
-      - number
-      - integer
-      - boolean
-      - "string[]"
-      - "number[]"
-      - "boolean[]"
-      - file
-      - "file[]"
-      - object
-      - array
+      In some JCR content models, a child node may be named "type" — in that
+      case this property appears as an object in infinity.json output. Plain-text
+      components may also use heading-level variants ("h1"–"h6") here.
+      ButtonImpl stores HTML button type in this same JCR property name (PN_BUTTON_TYPE = "type").
+    oneOf:
+      - type: string
+        enum:
+          - string
+          - number
+          - integer
+          - boolean
+          - float
+          - "string[]"
+          - "number[]"
+          - "boolean[]"
+          - file
+          - "file[]"
+          - object
+          - array
+          - button
+          - submit
+          - reset
+          - h1
+          - h2
+          - h3
+          - h4
+          - h5
+          - h6
+      - type: object
+        description: >-
+          A JCR child node that happens to be named "type" — appears as an object
+          in infinity.json output. The child node itself is validated separately via
+          patternProperties in container.authoring.schema.yaml.
 
   # --- Validation ---
   required:

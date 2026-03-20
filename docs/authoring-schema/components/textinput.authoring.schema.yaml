@@ -9,7 +9,7 @@ allOf:
   - type: object
     properties:
       multiLine:
-        type: boolean
+        type: [boolean, string]
         title: Allow multiple lines (textarea)
         default: false
         description: >-

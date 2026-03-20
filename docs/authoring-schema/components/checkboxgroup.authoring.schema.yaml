@@ -8,17 +8,21 @@ allOf:
   - type: object
     properties:
       enum:
-        type: array
+        type: [array, string]
         title: Option values
         items:
           type: ["string", "number", "boolean"]
-        description: Available checkbox values.
+        description: >-
+          Available checkbox values.
+          Accepts string when a single value is stored as a scalar (Granite quirk).
       enumNames:
-        type: array
+        type: [array, string]
         title: Option display labels
         items:
           type: string
-        description: Display text for each enum value.
+        description: >-
+          Display text for each enum value.
+          Accepts string when a single label is stored as a scalar (Granite quirk).
       orientation:
         type: string
         title: Options orientation
@@ -34,7 +38,7 @@ allOf:
         type: string
         title: Enforce enum constraint message
       areOptionsRichText:
-        type: boolean
+        type: [boolean, string]
         title: Options are rich text
         description: >-
           When true, enumNames are rendered as rich text HTML.

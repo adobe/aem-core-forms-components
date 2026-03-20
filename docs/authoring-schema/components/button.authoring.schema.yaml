@@ -10,13 +10,9 @@ allOf:
   - $ref: ../base.authoring.schema.yaml
   - type: object
     properties:
-      buttonType:
-        type: string
-        title: Button type
-        description: >-
-          Controls the button's behavior. Stored as JCR String.
-          Injected by ButtonImpl as PN_BUTTON_TYPE.
-        enum: [submit, reset, button]
+      # NOTE: ButtonImpl stores HTML button type in the JCR property "type" (PN_BUTTON_TYPE = "type"),
+      # reusing the same property name as the base schema's data-type field. The base schema's
+      # type enum has been extended to include "button", "submit", "reset" to accommodate this.
       icon:
         type: string
         title: Button icon

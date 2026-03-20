@@ -12,14 +12,14 @@ allOf:
   - type: object
     properties:
       readOnly:
-        type: boolean
+        type: [boolean, string]
         title: Read only
         description: >-
           When true the panel and all its children are rendered as read-only.
           Injected by PanelImpl via PN_READ_ONLY (@ValueMapValue, @Nullable Boolean).
           Boxed Boolean — null when absent (treated as false by runtime).
       wrapData:
-        type: boolean
+        type: [boolean, string]
         title: Wrap data
         description: >-
           When true forces the panel type to "object" regardless of dataRef.

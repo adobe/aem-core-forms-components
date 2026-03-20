@@ -184,6 +184,18 @@ oneOf:
       $ref: ./components/text.authoring.schema.yaml
     else: false
 
+  - title: text (alias for plain-text)
+    description: >-
+      Legacy/example fieldType="text" — same schema as plain-text.
+      Used by forms-components-examples and some older component implementations.
+    if:
+      properties:
+        fieldType:
+          const: text
+    then:
+      $ref: ./components/text.authoring.schema.yaml
+    else: false
+
   - title: panel
     if:
       properties:

@@ -9,17 +9,21 @@ allOf:
   - type: object
     properties:
       enum:
-        type: array
+        type: [array, string]
         title: Option values
         items:
           type: ["string", "number", "boolean"]
-        description: Available values. Type must match the field's `type` property.
+        description: >-
+          Available values. Type must match the field's `type` property.
+          Accepts string when a single value is stored as a scalar (Granite quirk).
       enumNames:
-        type: array
+        type: [array, string]
         title: Option display labels
         items:
           type: string
-        description: Display text for each enum value. Length must match enum array.
+        description: >-
+          Display text for each enum value. Length must match enum array.
+          Accepts string when a single label is stored as a scalar (Granite quirk).
       multiSelect:
         type: boolean
         title: Multi-select
@@ -41,7 +45,7 @@ allOf:
         type: string
         title: Enforce enum constraint message
       areOptionsRichText:
-        type: boolean
+        type: [boolean, string]
         title: Options are rich text
         description: >-
           When true, enumNames are rendered as rich text HTML.

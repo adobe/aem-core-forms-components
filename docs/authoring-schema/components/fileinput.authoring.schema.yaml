@@ -8,7 +8,7 @@ allOf:
   - type: object
     properties:
       multiSelection:
-        type: boolean
+        type: [boolean, string]
         title: Allow multiple attachments
         default: false
         description: >-
