@@ -114,10 +114,12 @@
             });
             if(value == null) { // if undefined or null, reset to placeholder (first option)
                 const placeholderOption = this.widget.options[0];
-                if(placeholderOption) {
+                if(placeholderOption && placeholderOption.value === '') {
                     placeholderOption.setAttribute('selected', 'selected');
+                    this.widget.selectedIndex = 0;
+                } else {
+                    this.widget.selectedIndex = -1; 
                 }
-                this.widget.selectedIndex = 0;
                 super.updateEmptyStatus();
                 return;
             }
