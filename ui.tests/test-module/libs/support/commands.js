@@ -288,28 +288,14 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
     .invoke('attr', 'data-path')
     .then(($path) => {
         const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
-        cy.get("body").then($body => {
-            if ($body.find(path).length === 0) {
-                //evaluates as true if toolbar doesnt exists at all
-                //you get here only if toolbar is visible
-                cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
-                // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-                cy.get(path).should('be.visible');
-            } else {
-                cy.get(path).then($header => {
-                    if (!$header.is(':visible')) {
-                        cy.get(siteSelectors.overlays.self).scrollIntoView();
-                        cy.get(selector).first().click({force: true});
-                        cy.get(path).should('be.visible');
-                    } else {
-                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
-                        cy.get(selector).click({force: true});
-                        cy.get(path).should('be.visible');
-                    }
-                });
-            }
-        });
-    })
+        // Always scroll the overlay wrapper into view before clicking to ensure AEM's pointer
+        // event handler fires reliably, then wait for the toolbar to become visible.
+        // force:true is needed because Cypress visibility checks can fail on overlay elements
+        // whose ancestor containers are temporarily display:none during AEM re-renders.
+        cy.get(siteSelectors.overlays.self).scrollIntoView();
+        cy.get(selector).first().click({force: true});
+        cy.get(path).should('be.visible');
+    });
 });
 
 // cypress command to invoke an editable action
