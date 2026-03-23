@@ -116,37 +116,37 @@
                 <artifactId>spotbugs-maven-plugin</artifactId>
             </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>copy-authoring-schemas-from-docs</id>
-                            <phase>generate-test-resources</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                            <configuration>
-                                <!--
-                                    Single source of truth: docs/authoring-schema/ YAML files.
-                                    Copied here at build time so tests can load them from the classpath.
-                                    Do NOT manually edit YAML files in src/test/resources/authoring-schema/ —
-                                    edit docs/authoring-schema/ instead and rebuild.
-                                -->
-                                <outputDirectory>${project.build.testOutputDirectory}/authoring-schema</outputDirectory>
-                                <resources>
-                                    <resource>
-                                        <directory>${project.basedir}/../../docs/authoring-schema</directory>
-                                        <includes>
-                                            <include>**/*.yaml</include>
-                                        </includes>
-                                        <filtering>false</filtering>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-authoring-schemas-from-docs</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <!--
+                                Single source of truth: docs/authoring-schema/ YAML files.
+                                Copied here at build time so tests can load them from the classpath.
+                                Do NOT manually edit YAML files in src/test/resources/authoring-schema/ —
+                                edit docs/authoring-schema/ instead and rebuild.
+                            -->
+                            <outputDirectory>${project.build.testOutputDirectory}/authoring-schema</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/../../docs/authoring-schema</directory>
+                                    <includes>
+                                        <include>**/*.yaml</include>
+                                    </includes>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
