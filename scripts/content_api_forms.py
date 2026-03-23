@@ -614,6 +614,11 @@ def create_site_root_page() -> bool:
 
     if r.status_code in (200, 201):
         ok(f"Site root page created: {SITE_ROOT}")
+        # Also create the matching DAM folder so forms created under this site
+        # will appear in Forms Manager (/aem/forms.html).
+        dam_folder = _dam_site_path(SITE_NAME)
+        _ensure_dam_folder(dam_folder)
+        ok(f"Forms Manager DAM folder ensured: {dam_folder}")
         return True
 
     fail(f"Sling import failed ({r.status_code}): {r.text[:200]}")
@@ -635,6 +640,130 @@ def discover_site_id(site_name: str):
             if site.get("name") == site_name:
                 return site.get("id")
     return None
+
+
+# ---------------------------------------------------------------------------
+# Forms Manager (dam:Asset) helpers
+#
+# AEM Forms Manager (/aem/forms.html) lists dam:Asset nodes under
+# /content/dam/formsanddocuments — not the cq:Page nodes under
+# /content/forms/af.  For a script-created form to appear in Forms Manager
+# we must create a parallel dam:Asset stub at the matching DAM path.
+#
+# Path mapping:
+#   cq:Page :  /content/forms/af/<site>/<form>
+#   dam:Asset: /content/dam/formsanddocuments/<site>/<form>
+# ---------------------------------------------------------------------------
+
+DAM_ROOT = "/content/dam/formsanddocuments"
+
+
+def _dam_site_path(site_name: str) -> str:
+    return f"{DAM_ROOT}/{site_name}"
+
+
+def _dam_asset_path(site_name: str, page_name: str) -> str:
+    return f"{DAM_ROOT}/{site_name}/{page_name}"
+
+
+def _site_name_from_id(site_id: str) -> Optional[str]:
+    """Return the site node name for a given siteId (reverse of discover_site_id)."""
+    r = requests.get(f"{AEM_HOST}/adobe/sites", auth=AUTH,
+                     headers={"Accept": "application/json"}, timeout=15)
+    if r.status_code == 200:
+        for site in r.json().get("items", []):
+            if site.get("id") == site_id:
+                return site.get("name")
+    return None
+
+
+def _ensure_dam_folder(dam_path: str):
+    """Create a sling:Folder at dam_path if it does not already exist."""
+    r = requests.get(f"{AEM_HOST}{dam_path}.1.json", auth=AUTH, timeout=10)
+    if r.status_code == 200:
+        return  # already exists
+    node_content = json.dumps({
+        "jcr:primaryType": "sling:Folder",
+        "jcr:content": {
+            "jcr:primaryType": "nt:unstructured",
+            "dam:noThumbnail": True,
+        },
+    })
+    requests.post(
+        f"{AEM_HOST}{dam_path}",
+        auth=AUTH,
+        files={
+            ":operation":   (None, "import"),
+            ":contentType": (None, "json"),
+            ":replace":     (None, "false"),
+            ":content":     (None, node_content),
+        },
+        timeout=15,
+    )
+
+
+def _create_dam_asset_stub(dam_path: str, title: str):
+    """
+    Create (or overwrite) a dam:Asset stub at dam_path so the form appears in
+    Forms Manager (/aem/forms.html).
+
+    Two-step approach required because the Sling POST import operation cannot
+    change jcr:primaryType on an auto-created node — it defaults to sling:Folder
+    on DAM paths.  Instead we:
+      1. POST with jcr:primaryType=dam:Asset to set the correct node type.
+      2. POST import the jcr:content subtree into the now-typed node.
+    """
+    # Step 1: create the dam:Asset node with the correct primary type
+    r1 = requests.post(
+        f"{AEM_HOST}{dam_path}",
+        auth=AUTH,
+        data={"jcr:primaryType": "dam:Asset"},
+        timeout=15,
+    )
+    if r1.status_code not in (200, 201):
+        return r1
+
+    # Step 2: import jcr:content (AssetContent + metadata) into the asset node
+    content_json = json.dumps({
+        "jcr:content": {
+            "jcr:primaryType":    "dam:AssetContent",
+            "type":               "guide",
+            "guide":              "1",
+            "sling:resourceType": "fd/fm/af/render",
+            "metadata": {
+                "jcr:primaryType":     "nt:unstructured",
+                "fd:version":          "2.1",
+                "title":               title,
+                "formmodel":           "none",
+                "dorType":             "none",
+                "allowedRenderFormat": "HTML",
+                "author":              AEM_USER,
+            },
+        },
+    })
+    return requests.post(
+        f"{AEM_HOST}{dam_path}",
+        auth=AUTH,
+        files={
+            ":operation":   (None, "import"),
+            ":contentType": (None, "json"),
+            ":replace":     (None, "false"),
+            ":content":     (None, content_json),
+        },
+        timeout=15,
+    )
+
+
+def _delete_dam_asset_stub(dam_path: str):
+    """Delete the Forms Manager dam:Asset stub at dam_path if it exists."""
+    r = requests.get(f"{AEM_HOST}{dam_path}.1.json", auth=AUTH, timeout=10)
+    if r.status_code == 200:
+        requests.post(
+            f"{AEM_HOST}{dam_path}",
+            auth=AUTH,
+            files={":operation": (None, "delete")},
+            timeout=10,
+        )
 
 
 def register_site(results: list) -> bool:
@@ -815,6 +944,13 @@ def validate_and_create(results: list) -> bool:
         edit    = r.json().get("_links", {}).get("edit", "")
         ok(f"Page created (HTTP {r.status_code}): pageId={PAGE_ID[:30] if PAGE_ID else 'N/A'}...")
         ok(f"JCR path: {PAGE_JCR}  edit: {edit}")
+        # Create matching dam:Asset stub so the form appears in Forms Manager
+        dam_path = _dam_asset_path(SITE_NAME, PAGE_NAME)
+        r_dam = _create_dam_asset_stub(dam_path, "Registration Form")
+        if r_dam.status_code in (200, 201):
+            ok(f"Forms Manager stub created: {dam_path}")
+        else:
+            warn(f"Forms Manager stub failed (HTTP {r_dam.status_code}) — form won't appear in /aem/forms.html")
         results.append(("create", True))
         return True
     elif r.status_code == 409:
@@ -1077,6 +1213,10 @@ def delete_forms(results: list):
     r = delete(f"/adobe/pages/{PAGE_ID}")
     if r.status_code in (200, 204):
         ok(f"DELETE succeeded (HTTP {r.status_code})")
+        # Also remove the Forms Manager dam:Asset stub
+        dam_path = _dam_asset_path(SITE_NAME, PAGE_NAME)
+        _delete_dam_asset_stub(dam_path)
+        info(f"Forms Manager stub removed: {dam_path}")
         results.append(("delete", True))
     elif r.status_code == 404:
         info("Page already deleted (404 — OK)")
@@ -1361,6 +1501,10 @@ def cmd_create_site(args):
         return False
 
     ok(f"Site root created: {site_path}")
+    # Create matching DAM folder so forms created under this site appear in Forms Manager
+    dam_folder = _dam_site_path(site_name)
+    _ensure_dam_folder(dam_folder)
+    ok(f"Forms Manager DAM folder ensured: {dam_folder}")
     info("Waiting 4s for Content API to index new site...")
     time.sleep(4)
 
@@ -1392,6 +1536,19 @@ def cmd_create(args):
     if r.status_code in (200, 201):
         page_id = r.json().get("id", "")
         ok(f"Created: pageId={page_id[:30]}...")
+        # Create matching dam:Asset stub so the form appears in Forms Manager
+        site_name = _site_name_from_id(args.site_id)
+        if site_name:
+            dam_folder = _dam_site_path(site_name)
+            _ensure_dam_folder(dam_folder)
+            dam_path = _dam_asset_path(site_name, args.name)
+            r_dam = _create_dam_asset_stub(dam_path, args.title)
+            if r_dam.status_code in (200, 201):
+                ok(f"Forms Manager stub created: {dam_path}")
+            else:
+                warn(f"Forms Manager stub failed (HTTP {r_dam.status_code}) — form won't appear in /aem/forms.html")
+        else:
+            warn("Could not resolve site name — Forms Manager stub skipped")
         _emit_json(args.json, {"op": "create", "ok": True, "pageId": page_id,
                                "name": r.json().get("name"), "title": r.json().get("title")})
         return True
@@ -1482,9 +1639,24 @@ def cmd_move(args):
 
 def cmd_delete(args):
     _shared_init(args)
+    # Look up page metadata before deleting so we can remove the Forms Manager stub
+    dam_path_to_clean = None
+    r_read = get(f"/adobe/pages/{args.page_id}")
+    if r_read.status_code == 200:
+        page_data = r_read.json()
+        page_name = page_data.get("name")
+        site_id   = page_data.get("siteId")
+        if page_name and site_id:
+            site_name = _site_name_from_id(site_id)
+            if site_name:
+                dam_path_to_clean = _dam_asset_path(site_name, page_name)
+
     r = delete(f"/adobe/pages/{args.page_id}")
     if r.status_code in (200, 204, 404):
         ok(f"Deleted (HTTP {r.status_code})")
+        if dam_path_to_clean:
+            _delete_dam_asset_stub(dam_path_to_clean)
+            info(f"Forms Manager stub removed: {dam_path_to_clean}")
         _emit_json(args.json, {"op": "delete", "ok": True})
         return True
     fail(f"Delete failed: HTTP {r.status_code} — {r.text[:200]}")
