@@ -109,6 +109,7 @@ describe("View Qualified Name Tests", () => {
             cy.get(".cq-dialog").should("be.visible");
             cy.get("[name='./name']").click().clear().type(name);
             cy.get(submitBtnSelector).click({force: true});
+            cy.get(".cq-dialog").should("not.exist");
         }
 
         const testQualifiedName = (componentEditPathSelector, componentDrop, isSites) => {

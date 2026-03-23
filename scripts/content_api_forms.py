@@ -28,10 +28,14 @@ ENVIRONMENT VARIABLES
                 (default: rismehta/jcr-authoring-schema)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-DEMO MODE  (run all 9 steps in sequence)
+DEMO MODE  (run all steps in sequence)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   python3 scripts/content_api_forms.py
   python3 scripts/content_api_forms.py demo
+
+  Demo includes Step 8b (wcm_form_ops): reads the 'accordion' WCM sample page,
+  validates its Content API tree, performs PATCH replace/add-field/add-panel
+  with pre-send schema validation, post-write validation, and cleanup.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CLI SUBCOMMANDS  (skill-ready interface)
@@ -46,8 +50,12 @@ line (e.g. {"op":"create","ok":true,"pageId":"..."}).  Parse with:
   read     --page-id PAGE_ID
            Read page metadata (title, name, siteId, ...).
 
-  patch    --page-id PAGE_ID --title NEW_TITLE
-           PATCH page title via JSON Patch RFC 6902.
+  patch    --page-id PAGE_ID --ops OPS_JSON
+           PATCH page content with arbitrary JSON Patch ops (RFC 6902).
+           Fetches current content, validates all ops against the authoring schema,
+           then sends. OPS_JSON is a JSON array, e.g.:
+             '[{"op":"replace","path":"/properties/jcr:title","value":"New Title"}]'
+             '[{"op":"add","path":"/items/0/items/-","value":{...}}]'
 
   put      --page-id PAGE_ID --title NEW_TITLE
            PUT (full replace) page content model.
@@ -61,10 +69,13 @@ line (e.g. {"op":"create","ok":true,"pageId":"..."}).  Parse with:
   clone    --page-id SRC_PAGE_ID --site-id SITE_ID --name NEW_NAME
            Clone a page into the same or different site.
 
-  validate --payload JSON_STRING
+  validate --payload JSON_STRING [--content-api]
            Validate a component dict against the authoring schema (offline, no AEM needed).
-           JSON_STRING is a single component node, e.g.:
+           JSON_STRING is a JCR-format node by default:
              '{"fieldType":"text-input","name":"x","jcr:title":"X"}'
+           Add --content-api to validate Content API format (properties{} + items[]):
+             '{"componentType":"core/fd/.../textinput/v1/textinput",
+               "properties":{"fieldType":"text-input","name":"x","jcr:title":"X"}}'
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EXAMPLES
@@ -80,8 +91,13 @@ EXAMPLES
   # Read it back
   python3 scripts/content_api_forms.py read --page-id "$PAGE_ID"
 
-  # Patch title
-  python3 scripts/content_api_forms.py patch --page-id "$PAGE_ID" --title "Updated Title"
+  # Patch — replace title
+  python3 scripts/content_api_forms.py patch --page-id "$PAGE_ID" \
+    --ops '[{"op":"replace","path":"/properties/jcr:title","value":"Updated Title"}]'
+
+  # Patch — add a text-input field to the first panel
+  python3 scripts/content_api_forms.py patch --page-id "$PAGE_ID" \
+    --ops '[{"op":"add","path":"/items/0/items/-","value":{"componentType":"core/fd/components/form/textinput/v1/textinput","properties":{"fieldType":"text-input","name":"zip","jcr:title":"Zip Code"}}}]'
 
   # Validate offline (no AEM required)
   python3 scripts/content_api_forms.py validate \\
@@ -353,13 +369,6 @@ OMIT_WHEN_FALSE = frozenset({
 _TRUTHY  = (True,  "true",  "{Boolean}true")
 _FALSY   = (False, "false", "{Boolean}false", "false\n")
 
-# Keys that hold child component nodes (should be recursed into)
-_NON_COMPONENT_KEYS = frozenset({
-    "sling:resourceType", "jcr:primaryType", "jcr:title", "jcr:description",
-    "cq:template", "cq:lastModified", "cq:lastModifiedBy",
-})
-
-
 def _is_child_node(value: Any) -> bool:
     """True if value looks like a JCR child node (dict with sling:resourceType or fieldType)."""
     return isinstance(value, dict) and (
@@ -391,15 +400,105 @@ def strip_defaults(node: Any) -> Any:
 
 
 # ---------------------------------------------------------------------------
+# Known core/fd resource type whitelist
+#
+# Only core/fd/ resource types are checked — custom resource types always pass.
+# Derived from cq:Component nodes under /libs/core/fd/components on AEM 6.5 /
+# AEM Cloud Service as of the aem-core-forms-components release this script ships with.
+# Update this set when new component versions are released.
+# ---------------------------------------------------------------------------
+
+_KNOWN_CORE_FD_TYPES: frozenset[str] = frozenset({
+    # Form container
+    "core/fd/components/form/container/v1/container",
+    "core/fd/components/form/container/v2/container",
+    # Text input
+    "core/fd/components/form/textinput/v1/textinput",
+    # Multiline (textarea) — shares textinput resource type
+    # Email
+    "core/fd/components/form/emailinput/v1/emailinput",
+    # Telephone
+    "core/fd/components/form/telephoneinput/v1/telephoneinput",
+    # Number
+    "core/fd/components/form/numberinput/v1/numberinput",
+    # Date
+    "core/fd/components/form/datepicker/v1/datepicker",
+    # Date-time
+    "core/fd/components/form/datetime/v1/datetime",
+    # File upload
+    "core/fd/components/form/fileinput/v1/fileinput",
+    "core/fd/components/form/fileinput/v2/fileinput",
+    "core/fd/components/form/fileinput/v3/fileinput",
+    "core/fd/components/form/fileinput/v4/fileinput",
+    # Dropdown
+    "core/fd/components/form/dropdown/v1/dropdown",
+    # Radio group
+    "core/fd/components/form/radiobutton/v1/radiobutton",
+    "core/fd/components/form/radiobutton/v2/radiobutton",
+    # Checkbox group
+    "core/fd/components/form/checkboxgroup/v1/checkboxgroup",
+    "core/fd/components/form/checkboxgroup/v2/checkboxgroup",
+    # Checkbox (single)
+    "core/fd/components/form/checkbox/v1/checkbox",
+    # Switch / toggle
+    "core/fd/components/form/switch/v1/switch",
+    # Image
+    "core/fd/components/form/image/v1/image",
+    # Button (dedicated component)
+    "core/fd/components/form/button/v1/button",
+    "core/fd/components/form/button/v2/button",
+    # Submit / Reset actions (also surfaced as fieldType=button)
+    "core/fd/components/form/actions/submit/v1/submit",
+    "core/fd/components/form/actions/submit/v2/submit",
+    "core/fd/components/form/actions/reset/v1/reset",
+    "core/fd/components/form/actions/reset/v2/reset",
+    # Plain text / rich text
+    "core/fd/components/form/text/v1/text",
+    # Title
+    "core/fd/components/form/title/v1/title",
+    "core/fd/components/form/title/v2/title",
+    # Panel containers (fieldType=panel, different resource types)
+    "core/fd/components/form/panelcontainer/v1/panelcontainer",
+    "core/fd/components/form/accordion/v1/accordion",
+    "core/fd/components/form/tabsontop/v1/tabsontop",
+    "core/fd/components/form/verticaltabs/v1/verticaltabs",
+    "core/fd/components/form/wizard/v1/wizard",
+    "core/fd/components/form/wizard/v2/wizard",
+    # Captcha variants (all share fieldType=captcha)
+    "core/fd/components/form/recaptcha/v1/recaptcha",
+    "core/fd/components/form/hcaptcha/v1/hcaptcha",
+    "core/fd/components/form/turnstile/v1/turnstile",
+    # Scribble signature
+    "core/fd/components/form/scribble/v1/scribble",
+    # Terms and conditions
+    "core/fd/components/form/termsandconditions/v1/termsandconditions",
+    # Fragment / fragment container
+    "core/fd/components/form/fragment/v1/fragment",
+    "core/fd/components/form/fragmentcontainer/v1/fragmentcontainer",
+    # Review step
+    "core/fd/components/form/review/v1/review",
+})
+
+
+# ---------------------------------------------------------------------------
 # Per-component validation
 # ---------------------------------------------------------------------------
 
 def validate_component(component: dict, path: str = "") -> list[str]:
     """
     Validate a single component dict against the root discriminator schema.
+    Also checks that core/fd/ resource types are in the known whitelist —
+    custom resource types (not starting with core/fd/) always pass this check.
     Returns a list of error messages (empty = valid).
     """
     errors = []
+    rt = component.get("sling:resourceType", "")
+    if rt.startswith("core/fd/") and rt not in _KNOWN_CORE_FD_TYPES:
+        errors.append(
+            f"{path or 'component'}: sling:resourceType {rt!r} is not a known "
+            f"core/fd component — check for typos or wrong version suffix"
+        )
+        return errors  # skip schema validation; discriminator would also fail
     v = fresh_validator()
     for err in v.iter_errors(component):
         location = "/".join(str(p) for p in err.absolute_path)
@@ -444,6 +543,186 @@ def _validate_tree(node: dict, path: str = "") -> list[str]:
                 walk(value, f"{p}.{key}" if p else key)
 
     walk(node, path)
+    return all_errors
+
+
+# ---------------------------------------------------------------------------
+# Content API format validation helpers
+# ---------------------------------------------------------------------------
+
+def _content_api_to_jcr(node: dict) -> dict:
+    """
+    Recursively convert a Content API node (properties{} + items[]) to the
+    flat JCR dict the authoring schema expects.
+
+    - Flattens 'properties' to the top level
+    - Maps 'componentType' → 'sling:resourceType'
+    - Converts each item in 'items[]' to a child key using item['id']
+      (id is required by the Content API spec: PageContent.required includes 'id')
+
+    The resulting dict can be passed directly to validate_component().  The
+    container schema's patternProperties:".*" then validates child nodes
+    recursively — no manual walking needed.
+    """
+    props = node.get("properties") or {}
+    ct    = node.get("componentType") or ""
+    jcr   = {**props, "sling:resourceType": ct}
+    for i, item in enumerate(node.get("items") or []):
+        if isinstance(item, dict):
+            # id is required in API responses; write payloads may omit it
+            key = item.get("id") or f"item{i}"
+            jcr[key] = _content_api_to_jcr(item)
+    return jcr
+
+
+def validate_content_api_payload(node: dict) -> list[str]:
+    """
+    Validate a Content API content tree (items[] format) against the authoring schema.
+
+    Walks every node in the tree.  For nodes that carry a 'fieldType' property
+    (i.e. AF components):
+      - Builds a flat JCR-equivalent dict: {**properties, sling:resourceType: componentType}
+        WITHOUT children, so that validate_component()'s Python-level resource-type
+        whitelist fires on every individual node (not just the root).
+      - Calls validate_component() on that flat dict.
+      - Children are validated recursively in subsequent walk steps.
+
+    For non-component nodes (no 'fieldType' in properties, e.g. the root
+    jcr:content wrapper returned by the Content API):
+      - Skips schema validation and recurses into items[] so that AF component
+        nodes nested inside WCM wrappers are still reached.
+
+    Note: _content_api_to_jcr() (which embeds children as keys) is intentionally
+    NOT used here because the Python whitelist check in validate_component() only
+    runs on the top-level dict, not on embedded child keys that the JSON Schema
+    validates via patternProperties.
+    """
+    props = node.get("properties") or {}
+    if "fieldType" not in props:
+        # Non-component wrapper — recurse into items[] without validating this node
+        all_errors: list[str] = []
+        for item in node.get("items") or []:
+            if isinstance(item, dict):
+                all_errors.extend(validate_content_api_payload(item))
+        return all_errors
+
+    # Flat JCR dict for this node only (no children)
+    ct  = node.get("componentType") or ""
+    nid = node.get("id") or "component"
+    jcr = {**props, "sling:resourceType": ct}
+    all_errors = validate_component(jcr, nid)
+
+    # Recurse into children
+    for item in node.get("items") or []:
+        if isinstance(item, dict):
+            all_errors.extend(validate_content_api_payload(item))
+
+    return all_errors
+
+
+def _get_at_pointer(root, pointer: str):
+    """
+    Navigate a nested dict/list using a JSON Pointer string (RFC 6901).
+    Returns (parent, last_key) so the caller can read or mutate the target.
+    """
+    parts = [p for p in pointer.lstrip("/").split("/") if p]
+    if not parts:
+        raise ValueError("Empty JSON Pointer")
+    node = root
+    for part in parts[:-1]:
+        if isinstance(node, list):
+            node = node[int(part)]
+        else:
+            node = node[part]
+    last = parts[-1]
+    return node, last
+
+
+def _simulate_patch(data: dict, ops: list) -> dict:
+    """
+    Apply a list of JSON Patch ops (RFC 6902) to a deep copy of *data* and
+    return the result.  Only replace/add/remove are simulated; other ops are
+    skipped (they don't affect schema validation).
+    """
+    import copy
+    result = copy.deepcopy(data)
+    for op in ops:
+        kind = op.get("op", "")
+        path = op.get("path", "")
+        if not path:
+            continue
+        try:
+            parent, key = _get_at_pointer(result, path)
+        except (KeyError, IndexError, ValueError):
+            continue
+        if kind == "replace":
+            if isinstance(parent, list):
+                parent[int(key)] = op["value"]
+            else:
+                parent[key] = op["value"]
+        elif kind == "add":
+            if isinstance(parent, list):
+                if key == "-":
+                    parent.append(op["value"])
+                else:
+                    parent.insert(int(key), op["value"])
+            else:
+                parent[key] = op["value"]
+        elif kind == "remove":
+            if isinstance(parent, list):
+                del parent[int(key)]
+            else:
+                del parent[key]
+    return result
+
+
+def validate_patch_ops(current_content: dict, ops: list) -> list[str]:
+    """
+    Pre-flight schema validation for a list of JSON Patch ops against the
+    current content tree fetched from the Content API.
+
+    Strategy per op type:
+      add (dict value)         — validate the added Content API node directly.
+      replace whole item       — validate the replacement node directly.
+      replace /properties/key  — simulate patch, navigate to owning item,
+                                  validate post-patch item (only the changed
+                                  property can introduce a new error).
+      remove / move / copy / test — no schema impact; skipped.
+    """
+    import re
+    all_errors: list[str] = []
+    simulated = _simulate_patch(current_content, ops)
+
+    for op in ops:
+        kind = op.get("op", "")
+        path = op.get("path", "")
+
+        if kind in ("remove", "move", "copy", "test"):
+            continue
+
+        value = op.get("value")
+
+        if kind == "add" and isinstance(value, dict):
+            # Node being added — validate it directly (handles nested items[])
+            all_errors.extend(validate_content_api_payload(value))
+
+        elif kind == "replace":
+            if isinstance(value, dict) and "/properties/" not in path:
+                # Whole-item replacement — validate the new node directly
+                all_errors.extend(validate_content_api_payload(value))
+            elif "/properties/" in path:
+                # Single-property replacement — simulate, navigate to owning item
+                item_pointer = re.sub(r"/properties/[^/]+$", "", path)
+                if not item_pointer or item_pointer == "/":
+                    continue  # top-level page property, not a component
+                try:
+                    parent, key = _get_at_pointer(simulated, item_pointer)
+                    item = parent[int(key)] if isinstance(parent, list) else parent[key]
+                    if isinstance(item, dict):
+                        all_errors.extend(validate_content_api_payload(item))
+                except (KeyError, IndexError, ValueError) as exc:
+                    all_errors.append(f"Cannot navigate to item at {item_pointer}: {exc}")
+
     return all_errors
 
 
@@ -831,7 +1110,7 @@ REGISTRATION_FORM = {
             "thankYouMessage":    "Thank you for registering.",
 
             "firstName": {
-                "sling:resourceType": "core/fd/components/form/textinput/v2/textinput",
+                "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
                 "fieldType":          "text-input",
                 "name":               "firstName",
                 "jcr:title":          "First Name",
@@ -840,7 +1119,7 @@ REGISTRATION_FORM = {
             },
 
             "age": {
-                "sling:resourceType": "core/fd/components/form/numberinput/v2/numberinput",
+                "sling:resourceType": "core/fd/components/form/numberinput/v1/numberinput",
                 "fieldType":          "number-input",
                 "name":               "age",
                 "jcr:title":          "Age",
@@ -850,7 +1129,7 @@ REGISTRATION_FORM = {
             },
 
             "country": {
-                "sling:resourceType": "core/fd/components/form/dropdown/v2/dropdown",
+                "sling:resourceType": "core/fd/components/form/dropdown/v1/dropdown",
                 "fieldType":          "drop-down",
                 "name":               "country",
                 "jcr:title":          "Country",
@@ -860,7 +1139,7 @@ REGISTRATION_FORM = {
             },
 
             "agreement": {
-                "sling:resourceType": "core/fd/components/form/checkbox/v2/checkbox",
+                "sling:resourceType": "core/fd/components/form/checkbox/v1/checkbox",
                 "fieldType":          "checkbox",
                 "name":               "agreement",
                 "jcr:title":          "I agree to the terms and conditions",
@@ -869,7 +1148,7 @@ REGISTRATION_FORM = {
             },
 
             "submit": {
-                "sling:resourceType": "core/fd/components/form/actions/submit/v2/submit",
+                "sling:resourceType": "core/fd/components/form/actions/submit/v1/submit",
                 "fieldType":          "button",
                 "name":               "submit",
                 "jcr:title":          "Register",
@@ -889,7 +1168,7 @@ INVALID_FORM = {
             "thankYouOption":     "message",
             "thankYouMessage":    "Thanks.",
             "badField": {
-                "sling:resourceType": "core/fd/components/form/textinput/v2/textinput",
+                "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
                 "fieldType":          "not-a-valid-field-type",   # ← not in base.authoring.schema enum
                 "name":               "bad",
                 "jcr:title":          "Bad Field",
@@ -1230,10 +1509,6 @@ def delete_forms(results: list):
 # Step 8 — Clone existing form (read → strip defaults → post to new path)
 # ---------------------------------------------------------------------------
 
-CLONE_SOURCE = "core-components-it/samples/numberinput/validation"
-CLONE_DEST   = "samples/api-test/numberinput-clone"
-
-
 CLONE_SOURCE_NAME = "numberinput-clone-source"
 
 
@@ -1284,6 +1559,308 @@ def clone_form(results: list):
     else:
         fail(f"Clone failed: HTTP {r2.status_code} — {r2.text[:300]}")
         results.append(("clone", False))
+
+
+# ---------------------------------------------------------------------------
+# Step 8b — WCM form ops: read-validate → PATCH ops → post-write validate
+#
+# Uses the "accordion" sample page which is a WCM page with an embedded AF2
+# form. Unlike standalone AF2 pages, WCM pages expose their items[] tree via
+# GET /content so all PATCH operations (replace, add field, add panel) work.
+#
+# Empirically-verified JSON Pointer paths (accordion page layout):
+#   Dropdown title  : /items/0/items/0/items/6/items/0/items/0/items/0/items/0/items/0/items/0/properties/jcr:title
+#   Panel 2         : /items/0/items/0/items/6/items/0/items/0/items/0/items/0/items/1
+#   Accordion demo  : /items/0/items/0/items/6/items/0/items/0/items/0/items/0
+# ---------------------------------------------------------------------------
+
+# Pointer to the jcr:title property of the first dropdown inside the accordion demo
+_P_DROPDOWN_TITLE = (
+    "/items/0/items/0/items/6/items/0/items/0"
+    "/items/0/items/0/items/0/items/0"
+    "/properties/jcr:title"
+)
+# Pointer to panel 2 (panelcontainer_20874) — where we add the zip field
+_P_PANEL2 = (
+    "/items/0/items/0/items/6/items/0/items/0"
+    "/items/0/items/0/items/1"
+)
+# Pointer to the accordion demo container — where we add the preferences panel
+_P_ACCORDION_DEMO = (
+    "/items/0/items/0/items/6/items/0/items/0"
+    "/items/0/items/0"
+)
+
+# Name of the existing WCM sample page that contains an embedded AF2 form
+_WCM_DEMO_PAGE_NAME = "accordion"
+
+
+def _find_wcm_page_id(page_name: str) -> str:
+    """
+    Discover the pageId for a WCM page by listing all pages and matching
+    by name.  Returns empty string if not found.
+    """
+    r = get("/adobe/pages")
+    if r.status_code != 200:
+        return ""
+    for page in r.json().get("items", []):
+        if page.get("name") == page_name:
+            return page.get("id", "")
+    return ""
+
+
+def wcm_form_ops(results: list):
+    """
+    Step 8b: Demonstrate Content API PATCH operations + authoring schema
+    validation on the 'accordion' WCM sample page.
+
+    Flow:
+      a) GET /content + validate entire tree (pre-write baseline)
+      b) PATCH replace — update dropdown jcr:title + validate before send
+      c) PATCH add field — append zip text-input to panel 2 + validate before send
+      d) PATCH add panel — append preferences panel with nested checkbox + validate
+      e) GET /content + validate final state (post-write check)
+      f) Cleanup — remove added items, restore dropdown title
+    """
+    section("Step 8b: WCM form ops — PATCH replace / add field / add panel + schema validation")
+
+    # Discover the accordion page id dynamically
+    info(f"Looking up WCM page '{_WCM_DEMO_PAGE_NAME}'...")
+    wcm_page_id = _find_wcm_page_id(_WCM_DEMO_PAGE_NAME)
+    if not wcm_page_id:
+        warn(f"WCM page '{_WCM_DEMO_PAGE_NAME}' not found — skipping wcm_form_ops")
+        results.append(("wcm_form_ops", "skipped"))
+        return
+
+    content_path = f"/adobe/pages/{wcm_page_id}/content"
+    info(f"Found pageId={wcm_page_id[:30]}...")
+
+    # ------------------------------------------------------------------
+    # a) Read + pre-flight validate the entire tree
+    # ------------------------------------------------------------------
+    info(f"GET {content_path[:60]}...")
+    r_get = get(content_path)
+    if r_get.status_code != 200:
+        fail(f"Cannot GET accordion /content: HTTP {r_get.status_code}")
+        results.append(("wcm_form_ops", False))
+        return
+
+    current = r_get.json()
+    pre_errs = validate_content_api_payload(current)
+    if pre_errs:
+        warn(f"Pre-write validation found {len(pre_errs)} existing violation(s) — continuing:")
+        for e in pre_errs:
+            info(f"  {e}")
+    else:
+        ok("Pre-write validation: entire tree passes authoring schema")
+
+    # ------------------------------------------------------------------
+    # b) PATCH replace — update the dropdown's jcr:title
+    # ------------------------------------------------------------------
+    new_dropdown_title = "Reason (updated via PATCH)"
+    replace_ops = [{"op": "replace", "path": _P_DROPDOWN_TITLE, "value": new_dropdown_title}]
+
+    info("Validating PATCH replace (dropdown title) before sending...")
+    errs = validate_patch_ops(current, replace_ops)
+    if errs:
+        fail(f"PATCH replace would violate schema ({len(errs)} error(s)):")
+        for e in errs:
+            print(f"     {e}")
+        results.append(("wcm_form_ops", False))
+        return
+    ok("PATCH replace: pre-flight validation passed")
+
+    info(f"PATCH {content_path[:50]}... (replace dropdown title)")
+    r_patch = patch(content_path, replace_ops)
+    if r_patch.status_code not in (200, 201, 204):
+        fail(f"PATCH replace failed: HTTP {r_patch.status_code} — {r_patch.text[:200]}")
+        results.append(("wcm_form_ops", False))
+        return
+    ok(f"PATCH replace succeeded (HTTP {r_patch.status_code})")
+
+    # Refresh current content after the replace
+    current = get(content_path).json()
+
+    # ------------------------------------------------------------------
+    # c) PATCH add field — append a zip text-input to panel 2
+    # ------------------------------------------------------------------
+    zip_field = {
+        "componentType": "core/fd/components/form/textinput/v1/textinput",
+        "properties": {
+            "fieldType":  "text-input",
+            "name":       "zip",
+            "jcr:title":  "Zip Code",
+        },
+    }
+    add_field_ops = [{"op": "add", "path": f"{_P_PANEL2}/items/-", "value": zip_field}]
+
+    info("Validating PATCH add (zip field) before sending...")
+    errs = validate_patch_ops(current, add_field_ops)
+    if errs:
+        fail(f"PATCH add field would violate schema ({len(errs)} error(s)):")
+        for e in errs:
+            print(f"     {e}")
+        results.append(("wcm_form_ops", False))
+        return
+    ok("PATCH add field: pre-flight validation passed")
+
+    info(f"PATCH {content_path[:50]}... (add zip field to panel 2)")
+    r_add_field = patch(content_path, add_field_ops)
+    if r_add_field.status_code not in (200, 201, 204):
+        fail(f"PATCH add field failed: HTTP {r_add_field.status_code} — {r_add_field.text[:200]}")
+        results.append(("wcm_form_ops", False))
+        return
+    ok(f"PATCH add field succeeded (HTTP {r_add_field.status_code})")
+
+    # Verify the added field appears in the response
+    if r_add_field.content:
+        try:
+            _p, _k = _get_at_pointer(r_add_field.json(), _P_PANEL2)
+            panel2_after = _p[int(_k)] if isinstance(_p, list) else _p[_k]
+        except (KeyError, IndexError, ValueError):
+            panel2_after = None
+        if panel2_after:
+            added_items = panel2_after.get("items", [])
+            zip_item = next(
+                (i for i in added_items
+                 if i.get("properties", {}).get("name") == "zip"),
+                None
+            )
+            if zip_item:
+                capi_key = zip_item.get("capiKey", "")
+                ok(f"Zip field added — capiKey={capi_key!r}")
+            else:
+                warn("Zip field not found in panel2 items after add")
+
+    # Refresh current content after the add
+    current = get(content_path).json()
+
+    # ------------------------------------------------------------------
+    # d) PATCH add panel — append a preferences panel with a nested checkbox
+    # ------------------------------------------------------------------
+    prefs_panel = {
+        "componentType": "core/fd/components/form/panelcontainer/v1/panelcontainer",
+        "properties": {
+            "fieldType":  "panel",
+            "name":       "preferences",
+            "jcr:title":  "Preferences",
+        },
+        "items": [
+            {
+                "componentType": "core/fd/components/form/checkbox/v1/checkbox",
+                "properties": {
+                    "fieldType":  "checkbox",
+                    "name":       "newsletter",
+                    "jcr:title":  "Subscribe to newsletter",
+                },
+            }
+        ],
+    }
+    add_panel_ops = [{"op": "add", "path": f"{_P_ACCORDION_DEMO}/items/-", "value": prefs_panel}]
+
+    info("Validating PATCH add (preferences panel) before sending...")
+    errs = validate_patch_ops(current, add_panel_ops)
+    if errs:
+        fail(f"PATCH add panel would violate schema ({len(errs)} error(s)):")
+        for e in errs:
+            print(f"     {e}")
+        results.append(("wcm_form_ops", False))
+        return
+    ok("PATCH add panel: pre-flight validation passed")
+
+    info(f"PATCH {content_path[:50]}... (add preferences panel with nested checkbox)")
+    r_add_panel = patch(content_path, add_panel_ops)
+    if r_add_panel.status_code not in (200, 201, 204):
+        fail(f"PATCH add panel failed: HTTP {r_add_panel.status_code} — {r_add_panel.text[:200]}")
+        results.append(("wcm_form_ops", False))
+        return
+    ok(f"PATCH add panel succeeded (HTTP {r_add_panel.status_code})")
+
+    # Verify the added panel and its nested checkbox appear in the response
+    added_panel_idx = None
+    if r_add_panel.content:
+        try:
+            _p, _k = _get_at_pointer(r_add_panel.json(), _P_ACCORDION_DEMO)
+            demo_container = _p[int(_k)] if isinstance(_p, list) else _p[_k]
+        except (KeyError, IndexError, ValueError):
+            demo_container = None
+        if demo_container:
+            demo_items = demo_container.get("items", [])
+            for idx, item in enumerate(demo_items):
+                if item.get("properties", {}).get("name") == "preferences":
+                    added_panel_idx = idx
+                    capi_key = item.get("capiKey", "")
+                    nested = item.get("items", [])
+                    ok(f"Preferences panel added at idx={idx} — capiKey={capi_key!r}, "
+                       f"nested items={len(nested)}")
+                    break
+            if added_panel_idx is None:
+                warn("Preferences panel not found in accordion demo items after add")
+
+    # Refresh current content for post-write validation
+    r_final = get(content_path)
+    current_final = r_final.json() if r_final.status_code == 200 else {}
+
+    # ------------------------------------------------------------------
+    # e) Post-write validation — validate the entire tree after all ops
+    # ------------------------------------------------------------------
+    if current_final:
+        post_errs = validate_content_api_payload(current_final)
+        if post_errs:
+            fail(f"Post-write validation: {len(post_errs)} violation(s) after PATCH ops:")
+            for e in post_errs:
+                print(f"     {e}")
+            results.append(("wcm_form_ops", False))
+            # Continue to cleanup even on validation failure
+        else:
+            ok("Post-write validation: entire tree passes authoring schema after all PATCH ops")
+
+    # ------------------------------------------------------------------
+    # f) Cleanup — remove added panel, remove zip field, restore dropdown title
+    # ------------------------------------------------------------------
+    info("Cleanup: removing added panel and field, restoring dropdown title...")
+    cleanup_current = current_final if current_final else get(content_path).json()
+
+    cleanup_ops = []
+
+    # Remove preferences panel (find its index in the accordion demo container)
+    try:
+        _p, _k = _get_at_pointer(cleanup_current, _P_ACCORDION_DEMO)
+        demo_container = _p[int(_k)] if isinstance(_p, list) else _p[_k]
+    except (KeyError, IndexError, ValueError):
+        demo_container = None
+    if demo_container and added_panel_idx is not None:
+        cleanup_ops.append({"op": "remove", "path": f"{_P_ACCORDION_DEMO}/items/{added_panel_idx}"})
+
+    # Remove zip field from panel 2 (find its index)
+    try:
+        _p, _k = _get_at_pointer(cleanup_current, _P_PANEL2)
+        panel2_node = _p[int(_k)] if isinstance(_p, list) else _p[_k]
+    except (KeyError, IndexError, ValueError):
+        panel2_node = None
+    if panel2_node:
+        panel2_items = panel2_node.get("items", [])
+        zip_idx = next(
+            (i for i, item in enumerate(panel2_items)
+             if item.get("properties", {}).get("name") == "zip"),
+            None
+        )
+        if zip_idx is not None:
+            cleanup_ops.append({"op": "remove", "path": f"{_P_PANEL2}/items/{zip_idx}"})
+
+    # Restore dropdown title
+    cleanup_ops.append({"op": "replace", "path": _P_DROPDOWN_TITLE, "value": "Reason"})
+
+    if cleanup_ops:
+        r_cleanup = patch(content_path, cleanup_ops)
+        if r_cleanup.status_code in (200, 201, 204):
+            ok(f"Cleanup patch succeeded (HTTP {r_cleanup.status_code}, {len(cleanup_ops)} ops)")
+        else:
+            warn(f"Cleanup patch HTTP {r_cleanup.status_code} — {r_cleanup.text[:200]}")
+    else:
+        info("No cleanup ops required")
+
+    results.append(("wcm_form_ops", True if not locals().get("post_errs") else False))
 
 
 # ---------------------------------------------------------------------------
@@ -1340,9 +1917,16 @@ def _build_parser():
     rd.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # patch
-    pa = sub.add_parser("patch", help="PATCH page content (JSON Patch RFC 6902)")
+    pa = sub.add_parser("patch", help="PATCH page content with arbitrary JSON Patch ops (RFC 6902)")
     pa.add_argument("--page-id", required=True)
-    pa.add_argument("--title",   required=True, help="New page title")
+    pa.add_argument("--ops", required=True,
+                    help=(
+                        "JSON Patch ops array (RFC 6902) as a JSON string. "
+                        "The current content is fetched first and all ops are validated "
+                        "against the authoring schema before being sent. Examples: "
+                        '"[{\\"op\\":\\"replace\\",\\"path\\":\\"/properties/jcr:title\\",\\"value\\":\\"New Title\\"}]" '
+                        '"[{\\"op\\":\\"add\\",\\"path\\":\\"/items/0/items/-\\",\\"value\\":{...}}]"'
+                    ))
     pa.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
     # put
@@ -1388,9 +1972,15 @@ def _build_parser():
                     help=(
                         'JSON string to validate. Accepts: '
                         '(1) a single component dict with "fieldType", '
-                        '(2) a guideContainer subtree, or '
-                        '(3) a full .infinity.json page tree. '
-                        'All component nodes (any dict with "fieldType") are validated recursively.'
+                        '(2) a guideContainer subtree (.infinity.json format), or '
+                        '(3) a Content API content node (items[] format, use with --content-api). '
+                        'All component nodes are validated recursively.'
+                    ))
+    va.add_argument("--content-api", action="store_true", dest="content_api",
+                    help=(
+                        "Treat payload as Content API format (properties{} + items[] + componentType) "
+                        "instead of JCR flat format. Use when validating GET /content responses or "
+                        "bodies intended for PUT /content."
                     ))
     va.add_argument("--json", action="store_true", help="Emit machine-readable JSON as last output line")
 
@@ -1572,12 +2162,37 @@ def cmd_read(args):
 
 def cmd_patch(args):
     _shared_init(args)
+    try:
+        ops = json.loads(args.ops)
+    except Exception as e:
+        fail(f"Invalid --ops JSON: {e}")
+        _emit_json(args.json, {"op": "patch", "ok": False, "error": str(e)})
+        return False
+    if not isinstance(ops, list):
+        fail("--ops must be a JSON array of patch operations")
+        _emit_json(args.json, {"op": "patch", "ok": False, "error": "--ops must be a JSON array"})
+        return False
+
     content_path = f"/adobe/pages/{args.page_id}/content"
-    r = patch(content_path, [{"op": "replace", "path": "/properties/jcr:title", "value": args.title}])
+    # Fetch current content for pre-flight validation
+    r_get = get(content_path)
+    if r_get.status_code != 200:
+        fail(f"Cannot GET current content for validation: HTTP {r_get.status_code}")
+        _emit_json(args.json, {"op": "patch", "ok": False, "error": f"Cannot GET /content: {r_get.status_code}"})
+        return False
+    errs = validate_patch_ops(r_get.json(), ops)
+    if errs:
+        fail(f"PATCH would violate authoring schema ({len(errs)} error(s)):")
+        for e in errs:
+            print(f"     {e}")
+        _emit_json(args.json, {"op": "patch", "ok": False, "errors": errs})
+        return False
+    info(f"Pre-flight validation passed ({len(ops)} op(s))")
+    r = patch(content_path, ops)
     if r.status_code in (200, 201, 204):
-        new_title = r.json().get("properties", {}).get("jcr:title", "") if r.content else args.title
-        ok(f"Patched title -> {new_title!r}")
-        _emit_json(args.json, {"op": "patch", "ok": True, "title": new_title})
+        ok(f"PATCH succeeded (HTTP {r.status_code})")
+        result = r.json() if r.content else {}
+        _emit_json(args.json, {"op": "patch", "ok": True, **result})
         return True
     fail(f"Patch failed: HTTP {r.status_code} — {r.text[:200]}")
     _emit_json(args.json, {"op": "patch", "ok": False, "error": r.text[:200]})
@@ -1612,6 +2227,14 @@ def cmd_put(args):
         body = {"id": "jcr:content", "componentType": component_type,
                 "properties": {"jcr:title": args.title}, "items": []}
         info(f"PUT {content_path} (title update)")
+    # Pre-flight: validate the body against the authoring schema
+    errs = validate_content_api_payload(body)
+    if errs:
+        fail(f"PUT body would violate authoring schema ({len(errs)} error(s)):")
+        for e in errs:
+            print(f"     {e}")
+        _emit_json(args.json, {"op": "put", "ok": False, "errors": errs})
+        return False
     r = put(content_path, body)
     if r.status_code in (200, 201, 204):
         new_title = r.json().get("properties", {}).get("jcr:title", "") if r.content else args.title
@@ -1713,17 +2336,36 @@ def cmd_validate(args):
             for v in n.values():
                 _count(v)
 
-    _count(payload)
-    n_components = component_count[0] or 1  # treat single-component payload as 1
+    use_content_api = getattr(args, "content_api", False)
 
-    errs = _validate_tree(payload, "")
+    if use_content_api:
+        # Content API format: properties{} + items[] + componentType
+        # Count components by looking inside properties for fieldType
+        def _count_capi(n):
+            if isinstance(n, dict):
+                if "fieldType" in n.get("properties", {}):
+                    component_count[0] += 1
+                for item in n.get("items", []):
+                    _count_capi(item)
+
+        _count_capi(payload)
+        n_components = component_count[0] or 1
+        errs = validate_content_api_payload(payload)
+        mode_label = "Content API"
+    else:
+        # JCR format: flat fieldType at top level, child nodes as dict values
+        _count(payload)
+        n_components = component_count[0] or 1
+        errs = _validate_tree(payload, "")
+        mode_label = "JCR"
+
     if errs:
-        fail(f"Validation failed ({len(errs)} error(s) across {n_components} component(s)):")
+        fail(f"Validation failed [{mode_label}] ({len(errs)} error(s) across {n_components} component(s)):")
         for e in errs:
             print(f"     {e}")
         _emit_json(args.json, {"op": "validate", "ok": False, "errors": errs, "components": n_components})
         return False
-    ok(f"All {n_components} component(s) pass schema validation")
+    ok(f"All {n_components} component(s) pass schema validation [{mode_label}]")
     _emit_json(args.json, {"op": "validate", "ok": True, "components": n_components})
     return True
 
@@ -1761,7 +2403,7 @@ def _run_demo_main():
 
     # Sanity: validate a known-good component with a fresh validator
     test_node = {
-        "sling:resourceType": "core/fd/components/form/textinput/v2/textinput",
+        "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
         "fieldType":          "text-input",
         "name":               "test",
         "jcr:title":          "Test",
@@ -1791,6 +2433,7 @@ def _run_demo_main():
     patch_form(results)
     update_form(results)
     move_form(results)
+    wcm_form_ops(results)
     clone_form(results)
     delete_forms(results)
 
