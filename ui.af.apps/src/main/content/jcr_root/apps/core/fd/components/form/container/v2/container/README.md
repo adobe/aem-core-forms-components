@@ -37,13 +37,72 @@ The following configuration properties are used:
 2. `./columns` - defines the number of columns for the container's grid for a Form Container associated to this component policy
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Adaptive Form Container component and are expected to be available as `Resource` 
-properties:
 
-1. `./action` - defines the action that will be performed by the form
-2. `./thankyouMessage` - defines the thank you message to shown after submission
-3. `./redirect` - if left empty the form will be rendered after submission, otherwise the user will be redirected to the page stored by this
-property
+The following properties are written to JCR by the Edit Dialog and consumed by the Sling Model.
+
+> **Important**: In the runtime JSON model, auto-save properties are grouped under the `fd:autoSave` key
+> and submission properties under `fd:submit`. These are output-time groupings only — JCR stores all
+> of them as flat properties directly on this FormContainer node.
+
+#### Inherited container properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Visible | `./visible` | Boolean | `true` | Whether the container is visible |
+| Enabled | `./enabled` | Boolean | `true` | Whether the container is enabled |
+| Title | `./title` | String | — | Form title |
+| Description | `./description` | String | — | Form description |
+| Repeatable | `./repeatable` | Boolean | `false` | Whether the container is repeatable |
+| Min items | `./minItems` | Integer | — | Minimum number of instances (repeatable) |
+| Max items | `./maxItems` | Integer | — | Maximum number of instances (repeatable) |
+| Fragment path | `./fragmentPath` | String | — | Path to fragment definition (lazy containers) |
+| Lazy | `./lazy` | Boolean | `false` | Defers loading children until navigation |
+
+#### Auto-save properties (flat JCR, grouped under `fd:autoSave` in JSON output)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Enable auto-save | `./fd:enableAutoSave` | Boolean | `false` | Enables automatic draft saving |
+| Auto-save strategy | `./fd:autoSaveStrategyType` | String | — | `time` or `fieldFocus` |
+| Auto-save interval | `./fd:autoSaveInterval` | Integer | — | Interval in seconds (for `time` strategy) |
+
+#### Submission properties (flat JCR, grouped under `fd:submit` in JSON output)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Action type | `./actionType` | String | — | Submit action type |
+| Action name | `./actionName` | String | — | Submit action name |
+| Email To | `./mailto` | String | — | Recipient email address(es) |
+| Email From | `./from` | String | — | Sender email address |
+| Email Subject | `./subject` | String | — | Email subject line |
+| Email CC | `./cc` | String | — | CC email address(es) |
+| Email BCC | `./bcc` | String | — | BCC email address(es) |
+| Spreadsheet URL | `./spreadsheetUrl` | String | — | OneDrive/SharePoint spreadsheet URL |
+
+#### Post-submission properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Thank you option | `./thankYouOption` | String | — | `message` or `redirect` |
+| Thank you message (v2) | `./thankYouMessage` | String | — | Message shown after submit (capital Y) |
+| Redirect URL | `./redirect` | String | — | URL to redirect to after submit |
+
+#### General
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Prefill service | `./prefillService` | String | — | Prefill service sling selector |
+| Spec version | `./specVersion` | String | — | AF spec version (e.g. `1.0.0`) |
+| Client library ref | `./clientLibRef` | String | — | Custom client library category |
+
+#### v2-only: `fd:view/print` child node
+
+> Available in v2 only. `excludeFromDoRIfHidden` is stored at the child node path `fd:view/print`,
+> not as a flat property on the FormContainer node.
+
+| Property | Child node path | Type | Default | Description |
+|----------|----------------|------|---------|-------------|
+| Exclude hidden from DOR | `fd:view/print/excludeFromDoRIfHidden` | Boolean | `false` | Excludes hidden fields from Document of Record |
 
 ## Client Libraries
 

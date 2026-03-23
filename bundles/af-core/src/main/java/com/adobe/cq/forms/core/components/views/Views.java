@@ -23,15 +23,13 @@ public class Views {
     public static class Publish {}
 
     /**
-     * Use this view for serialising the property required in control plane.
-     * It is a superset of properties in Publish view.
-     * Eg: DoR related properties of forms core components
+     * Use this view for serialising the property required in control plane. It is a superset of properties in Publish
+     * view. Eg: DoR related properties of forms core components
      */
     public static class Author extends Publish {}
 
     /**
-     * Use this view for including the print-specific properties
-     * Eg; dorContainer and pageTemplate
+     * Use this view for including the print-specific properties Eg; dorContainer and pageTemplate
      */
     public static class DoR extends Author {}
 

@@ -25,6 +25,7 @@ public interface DateTimeConstraint extends FormatConstraint {
      * Returns the minimum value for the date. The constraint is applicable only for field with type date
      *
      * @return minimum date
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.11.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -36,6 +37,7 @@ public interface DateTimeConstraint extends FormatConstraint {
      * Returns the maximum value for the date. The constraint is applicable only for field with type date
      *
      * @return maximum date
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.11.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)

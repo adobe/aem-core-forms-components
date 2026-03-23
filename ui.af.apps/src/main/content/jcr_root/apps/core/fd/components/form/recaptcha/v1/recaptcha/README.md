@@ -34,18 +34,41 @@ Adaptive Form Recaptcha field component written in HTL.
 The Form Text component uses the `com.adobe.cq.forms.core.components.models.form.Recaptcha` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Recaptcha component and are expected to be available as `Resource` properties:
+The following properties are written to JCR for this Form Recaptcha component and are expected to be available as `Resource` properties.
 
-1. `./jcr:title` - defines the label to use for this field
-2. `./hideTitle` - if set to `true`, the label of this field will be hidden
-3. `./name` - defines the name of the field, which will be submitted with the form data
-4. `./default` - defines the default value of the field
-5. `./description` - defines a help message that can be rendered in the field as a hint for the user
-6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
-7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-8. `./readOnly` - if set to `true`, the filed will be read only
-9. `./rcCloudServicePath` - defines the path of cloud configuration resource for reCAPTCHA
-10. `./recaptchaSize` - defines the size attribute of Google reCAPTCHA. This property is only valid for reCAPTCHA v2 and the checkbox keys of reCAPTCHA enterprise. This property will be disabled for reCAPTCHA Enteprise score-based keys.
+See [`docs/authoring-schema/components/recaptcha.authoring.schema.yaml`](../../../../../../../../../../docs/authoring-schema/components/recaptcha.authoring.schema.yaml) for the full machine-readable schema.
+
+#### Base properties (inherited)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field label | `./jcr:title` | String | — | Visible label rendered next to the field |
+| Hide label | `./hideTitle` | Boolean | `false` | When true the label is hidden but available to screen readers |
+| Field name | `./name` | String | — | Data key submitted with form data |
+| Description | `./description` | String | — | Help text rendered as short/long description |
+| Required | `./required` | Boolean | `false` | Marks the field as mandatory |
+| Required message | `./mandatoryMessage` | String | — | Error shown when required field is empty |
+
+#### Field properties (inherited)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Read only | `./readOnly` | Boolean | `false` | Prevents user input |
+| Default value | `./default` | String/Number/Boolean | — | Initial value on form load |
+
+#### reCAPTCHA-specific properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Cloud service path | `./rcCloudServicePath` | String | — | Path to the reCAPTCHA cloud configuration resource. RecaptchaImpl resolves the site key, version (v2 or enterprise), and key type from this path via `ReservedProperties.PN_RECAPTCHA_CLOUD_SERVICE_PATH`. Note: this property name differs from the `cloudServicePath` used by hCaptcha and Turnstile. |
+| Widget size | `./recaptchaSize` | String | — | Size of the reCAPTCHA widget. Valid values: `normal`, `compact`. Only applicable to reCAPTCHA v2 and Enterprise checkbox keys; disabled for score-based Enterprise keys. Injected via `ReservedProperties.PN_RECAPTCHA_SIZE`. |
+
+#### Child nodes
+
+| Node | Description |
+|------|-------------|
+| `fd:rules` | Rule expressions and visual rule editor AST blobs |
+| `fd:events` | Event handler expressions (click, change, initialize, etc.) |
 
 ## Client Libraries
 The component provides a `core.forms.components.recaptcha.v1.runtime` client library category that contains the Javascript runtime for the component.

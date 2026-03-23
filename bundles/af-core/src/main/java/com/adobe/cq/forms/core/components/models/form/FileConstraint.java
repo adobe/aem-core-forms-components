@@ -33,13 +33,15 @@ public interface FileConstraint {
 
     String DEFAULT_MAX_FILE_SIZE = "2MB";
 
-    List<String> DEFAULT_ACCEPT = Collections.unmodifiableList(Arrays.asList("audio/*", "video/*", "image/*", "text/*", "application/pdf"));
+    List<String> DEFAULT_ACCEPT = Collections
+        .unmodifiableList(Arrays.asList("audio/*", "video/*", "image/*", "text/*", "application/pdf"));
 
     /**
-     * Returns the Maximum file size (in IEC specification) that a field can accept. The constraint is
-     * applicable for file attachment field
+     * Returns the Maximum file size (in IEC specification) that a field can accept. The constraint is applicable for
+     * file attachment field
      *
      * @return the maximum file size
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getMaxFileSize() {
@@ -47,10 +49,11 @@ public interface FileConstraint {
     }
 
     /**
-     * Returns the list of standard IANA media types which field can accept. The constraint is
-     * applicable for file attachment field
+     * Returns the list of standard IANA media types which field can accept. The constraint is applicable for file
+     * attachment field
      *
      * @return the list of standard IANA media types
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default List<String> getAccept() {
@@ -58,10 +61,11 @@ public interface FileConstraint {
     }
 
     /**
-     * Returns the list of file extensions which field can accept. The constraint is
-     * applicable for file attachment field
+     * Returns the list of file extensions which field can accept. The constraint is applicable for file attachment
+     * field
      *
      * @return the list of extensions supported by the field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default List<String> getAcceptExtensions() {
@@ -69,8 +73,8 @@ public interface FileConstraint {
     }
 
     /**
-     * The constraint is
-     * applicable for file attachment field. If the type is {@code String}, the format will always be {@code data-url}.
+     * The constraint is applicable for file attachment field. If the type is {@code String}, the format will always be
+     * {@code data-url}.
      *
      * @since com.adobe.cq.forms.core.components.models.form 5.7.4
      */

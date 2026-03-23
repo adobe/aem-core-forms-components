@@ -32,6 +32,7 @@ public interface Scribble extends Field {
      * Returns the data-url string of the scribble.
      *
      * @return data-url string representing the scribble
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.12.0
      */
     String getValue();
@@ -40,6 +41,7 @@ public interface Scribble extends Field {
      * Returns the format of the scribble.
      *
      * @return the format of the scribble, e.g., data-url
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.12.0
      */
     String getFormat();

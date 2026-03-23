@@ -55,7 +55,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
+    adapters = { FormContainer.class,
+        ContainerExporter.class, ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_CONTAINER_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FormContainerImpl extends AbstractComponentImpl implements FormContainer {
@@ -156,8 +157,8 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @JsonIgnore
     public Map<String, Object> getModel() {
         Map<String, Object> jsonMap = null;
-        if (StringUtils.isNotEmpty(documentPath)
-            && this.request != null && this.request.getResourceResolver().getResource(documentPath) != null) {
+        if (StringUtils.isNotEmpty(documentPath) && this.request != null
+            && this.request.getResourceResolver().getResource(documentPath) != null) {
             // the json is coming from DAM
             final Resource assetResource = request.getResourceResolver().getResource(documentPath);
             if (assetResource != null) {
@@ -171,8 +172,8 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
                         logger.error("Unable to read json from resource '{}'", documentPath);
                     }
                 } else {
-                    logger.error("Unable to adapt resource '{}' used by form container '{}' to an asset.", documentPath, resource
-                        .getPath());
+                    logger.error("Unable to adapt resource '{}' used by form container '{}' to an asset.", documentPath,
+                        resource.getPath());
                 }
             }
         } else {

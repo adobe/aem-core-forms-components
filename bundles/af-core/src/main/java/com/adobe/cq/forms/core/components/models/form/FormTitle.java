@@ -30,7 +30,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 // import com.adobe.cq.forms.core.components.models.form.BaseConstraint.Type;
 
 /**
- * Defines the form {@code Title} Sling Model used for the {@code /apps/core/fd/components/form/title/v2/title} component.
+ * Defines the form {@code Title} Sling Model used for the {@code /apps/core/fd/components/form/title/v2/title}
+ * component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 5.5.3
  */
@@ -41,6 +42,7 @@ public interface FormTitle extends FormComponent {
      * Returns the HTML element type (h1-h6) used for the markup.
      *
      * @return the element type
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.5.3;
      */
     @JsonIgnore
@@ -64,6 +66,7 @@ public interface FormTitle extends FormComponent {
      * Retrieves the text value to be displayed.
      *
      * @return the text value to be displayed, or {@code null} if no value can be returned
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.5.3;
      */
     default String getValue() {

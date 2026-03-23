@@ -1,0 +1,46 @@
+$id: radiobutton.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: RadioButton JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Radio Button component (radio-group field type).
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      enum:
+        type: [array, string]
+        title: Option values
+        items:
+          type: ["string", "number", "boolean"]
+        description: >-
+          Available radio button values.
+          Accepts string when a single value is stored as a scalar (Granite quirk).
+      enumNames:
+        type: [array, string]
+        title: Option display labels
+        items:
+          type: string
+        description: >-
+          Display text for each enum value.
+          Accepts string when a single label is stored as a scalar (Granite quirk).
+      orientation:
+        type: string
+        title: Options orientation
+        description: >-
+          Layout direction for radio buttons. Injected by RadioButtonImpl (@ValueMapValue).
+          Stored as JCR String.
+        enum: [horizontal, vertical]
+      enforceEnum:
+        type: boolean
+        title: Enforce enum
+        default: true
+        description: Omit from JCR when true — absent property = runtime default true.
+      enforceEnumMessage:
+        type: string
+        title: Enforce enum constraint message
+      areOptionsRichText:
+        type: [boolean, string]
+        title: Options are rich text
+        description: >-
+          When true, enumNames are rendered as rich text HTML.
+          Reserved in ReservedProperties but not currently injected via @ValueMapValue.

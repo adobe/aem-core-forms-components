@@ -22,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Defines the form {@code Text} Sling Model used for the {@code /apps/core/fd/components/form/textinput/v1/textinput} component.
+ * Defines the form {@code Text} Sling Model used for the {@code /apps/core/fd/components/form/textinput/v1/textinput}
+ * component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
@@ -36,6 +37,7 @@ public interface TextInput extends Field, NumberConstraint, DateConstraint, Stri
      * Returns {@code true} if multi line, otherwise {@code false}.
      *
      * @return {@code true} if multi line, otherwise {@code false}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
@@ -59,6 +61,7 @@ public interface TextInput extends Field, NumberConstraint, DateConstraint, Stri
      * Returns the format of the form field as specified in the json schema specification(for example, date, binary etc)
      *
      * @return the format of the form field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable

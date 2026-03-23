@@ -29,6 +29,7 @@ public interface FormMetaData {
      * Returns the version of the adaptive form specification
      *
      * @return the version of adaptive form specification
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getVersion() {
@@ -39,6 +40,7 @@ public interface FormMetaData {
      * Returns the version of the rule grammar
      *
      * @return the version of the rule grammar
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getGrammar() {

@@ -96,7 +96,8 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
         String siteKey = null, uri = null;
         resource = resourceResolver.getResource(this.getPath());
         if (cloudConfigurationProvider == null) {
-            LOGGER.info("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+            LOGGER.info(
+                "[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
         }
         try {
             if (resource != null && cloudConfigurationProvider != null) {
@@ -107,7 +108,8 @@ public class HCaptchaImpl extends AbstractCaptchaImpl implements HCaptcha {
                 }
             }
         } catch (GuideException e) {
-            LOGGER.error("[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
+            LOGGER.error(
+                "[AF] [Captcha] [HCAPTCHA] Error while fetching cloud configuration, upgrade to latest release to use hCaptcha.");
         }
         customCaptchaProperties.put(CAPTCHA_SITE_KEY, siteKey);
         customCaptchaProperties.put(CAPTCHA_URI, uri);

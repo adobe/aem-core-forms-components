@@ -1,0 +1,401 @@
+$id: base.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Base JCR Authoring Properties
+description: >-
+  Properties common to ALL adaptive form components, derived from
+  AbstractFormComponentImpl and AbstractBaseImpl. These are written to
+  the component's JCR node by the Edit Dialog and consumed by Sling Models.
+type: object
+
+# NOTE on JCR default-value persistence:
+# Properties with a runtime default (true or false) do NOT need to be stored in JCR when
+# they are at their default value. The Sling models use:
+#   @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL) + @Nullable
+#   + @JsonInclude(JsonInclude.Include.NON_NULL)
+# which means: absent from JCR → injected as null → omitted from JSON output → AF2 runtime
+# applies its own built-in default. Persisting the default value bloats the node and the
+# JSON model with no effect.
+#
+# Properties safe to OMIT when at their default:
+#   visible (default true), enabled (default true),
+#   hideTitle (default false), isTitleRichText (default false),
+#   tooltipVisible (default false), required (default false),
+#   repeatable (default false), unboundFormElement (default false),
+#   dorExclusion (default false), dorExcludeTitle (default false),
+#   dorExcludeDescription (default false),
+#   readOnly (default false — defined in field.authoring.schema.yaml)
+#
+# @Default properties (computation inputs, NOT serialized to JSON):
+#   exclusiveMinimum, exclusiveMaximum — @Default(false) in AbstractFieldImpl; used as
+#     computation inputs in DatePickerImpl.initDatePicker(); no public JSON getter.
+#   multiSelect — @Default(false) in DropDownImpl; isMultiSelect() is @JsonIgnore.
+#   multiLine — @Default(false) in TextInputImpl; isMultiLine() is @JsonIgnore.
+#   excludeMinimum, excludeMaximum — @Default(false) in DatePickerImpl; computation only.
+# All of these are safe to omit from JCR when false — they will NOT appear in JSON output
+# regardless, because their getters are @JsonIgnore or have no public JSON getter.
+#
+# Exception that WAS a bug (now fixed): textIsRich in TextImpl previously used
+# @Default(false) causing "richText": false to always appear in JSON. Fixed by switching
+# to @Nullable Boolean + @JsonInclude(NON_NULL) + separate getRichText() method.
+#
+# NOTE on additionalProperties enforcement:
+# This schema uses draft-07. In draft-07, additionalProperties only considers
+# properties/patternProperties defined in the SAME schema object — it does NOT
+# "see through" allOf/$ref chains. Adding additionalProperties:false here would
+# reject field-specific properties (readOnly, lazy, etc.) when components extend
+# base via allOf, because base wouldn't see those in its own `properties` block.
+#
+# Strict-mode enforcement is implemented in the FLATTENED JSON schemas at:
+#   bundles/af-core/src/test/resources/authoring-schema/
+# Those schemas have all properties inlined (no allOf chains) and safely use
+# additionalProperties:false + patternProperties for JCR-namespaced internals.
+#
+# To upgrade YAML schemas to strict mode, upgrade to JSON Schema draft-2019-09
+# and use unevaluatedProperties:false, which correctly traverses allOf graphs.
+patternProperties:
+  "^jcr:":   {}   # jcr:primaryType, jcr:created, jcr:createdBy, jcr:lastModified, etc.
+  "^sling:": {}   # sling:resourceType, sling:resourceSuperType
+  "^cq:":    {}   # cq:panelTitle, cq:editConfig, etc.
+  "^fd:":    {}   # fd:version, fd:translationIds, fd:rules, fd:events — documented in properties below
+
+properties:
+  # --- Identity & binding ---
+  name:
+    type: [string, object]
+    title: Field name / data key
+    description: >-
+      Submitted as data key unless overridden by dataRef.
+      Also accepts object — a JCR child node named "name" appears as an
+      object in infinity.json (naming collision with this property).
+  dataRef:
+    type: ["string", "null"]
+    title: Data binding JSON-path
+    description: >-
+      JSON-path of the data value this field binds to, relative to the parent's
+      dataRef. Use null to opt out of data binding.
+  id:
+    type: [string, object]
+    title: HTML id override
+    description: >-
+      Overrides the auto-generated component id.
+      Also accepts object — a JCR child node named "id" appears as an
+      object in infinity.json (naming collision with this property).
+  fieldType:
+    type: string
+    title: Widget field type
+    description: >-
+      Maps to the runtime fieldType. Usually hard-coded per component via
+      getFieldType() in the Sling model.
+    enum:
+      - text-input
+      - number-input
+      - date-input
+      - datetime-input
+      - file-input
+      - multiline-input
+      - drop-down
+      - radio-group
+      - checkbox-group
+      - checkbox
+      - switch
+      - plain-text
+      - text
+      - button
+      - panel
+      - image
+      - email
+      - captcha
+      - tel
+      - form
+
+  # --- Visibility / Interaction ---
+  visible:
+    type: [boolean, string]
+    title: Visible
+    default: true
+    description: >-
+      Whether the field is visible on initial render. When absent from JCR the
+      Sling model returns null (JsonInclude.NON_NULL) and the AF2 runtime applies
+      its own default (true). Omit from JCR when true — absent property = runtime
+      default true. Only persist when explicitly set to false.
+      Note: some dialogs store as JCR String "true"/"false" — Sling auto-coerces.
+  enabled:
+    type: [boolean, string]
+    title: Enabled
+    default: true
+    description: >-
+      Whether the field is enabled. When absent from JCR the Sling model returns
+      null (JsonInclude.NON_NULL) and the runtime applies its own default (true).
+      Omit from JCR when true — absent property = runtime default true. Only
+      persist when explicitly set to false.
+      Disabled fields do not participate in rules but can still have custom events.
+      Note: some dialogs store as JCR String "true"/"false" — Sling auto-coerces.
+
+  # --- Labels & Description ---
+  "jcr:title":
+    type: string
+    title: Field label
+    description: The visible label rendered next to the field.
+  hideTitle:
+    type: [boolean, string]
+    title: Hide label
+    default: false
+    description: >-
+      When true the label is hidden but still available to screen readers.
+      Omit from JCR when false — absent property = runtime default false.
+  isTitleRichText:
+    type: [boolean, string]
+    title: Label is rich text
+    default: false
+    description: Omit from JCR when false — absent property = runtime default false.
+  description:
+    type: [string, object]
+    title: Long description / help text
+    description: >-
+      Rendered as short/long description. Supports rich text. Used as help
+      text for individual fields or top-level description for panels.
+      Also accepts object — a JCR child node named "description" appears as
+      an object in infinity.json (naming collision with this property).
+  tooltip:
+    type: string
+    title: Tooltip text
+    description: Shown in a popover when the user clicks the question-mark icon.
+  tooltipVisible:
+    type: [boolean, string]
+    title: Show tooltip icon
+    default: false
+    description: Omit from JCR when false — absent property = runtime default false.
+
+  # --- Data type ---
+  type:
+    title: Data type
+    description: >-
+      The data type this field captures. Coerced to this type on submit.
+      In some JCR content models, a child node may be named "type" — in that
+      case this property appears as an object in infinity.json output. Plain-text
+      components may also use heading-level variants ("h1"–"h6") here.
+      ButtonImpl stores HTML button type in this same JCR property name (PN_BUTTON_TYPE = "type").
+    oneOf:
+      - type: string
+        enum:
+          - string
+          - number
+          - integer
+          - boolean
+          - float
+          - "string[]"
+          - "number[]"
+          - "boolean[]"
+          - file
+          - "file[]"
+          - object
+          - array
+          - button
+          - submit
+          - reset
+          - h1
+          - h2
+          - h3
+          - h4
+          - h5
+          - h6
+      - type: object
+        description: >-
+          A JCR child node that happens to be named "type" — appears as an object
+          in infinity.json output. The child node itself is validated separately via
+          patternProperties in container.authoring.schema.yaml.
+
+  # --- Validation ---
+  required:
+    type: [boolean, string]
+    title: Required
+    default: false
+    description: >-
+      Whether a value is required. JCR may store as Boolean or String "true"/"false"
+      depending on the dialog component — Sling auto-coerces to Boolean transparently.
+      Omit from JCR when false — absent property = runtime default false.
+  mandatoryMessage:
+    type: string
+    title: Required constraint message
+  validationExpression:
+    type: string
+    title: Custom validation expression (json-formula)
+    description: A json-formula expression that returns true when the value is valid.
+  validateExpMessage:
+    type: string
+    title: Custom validation expression error message
+
+  # --- Accessibility ---
+  assistPriority:
+    type: string
+    title: Assistive technology priority
+    description: Determines which text the screen reader announces for this field.
+    enum: [description, title, label, name, custom, caption]
+  custom:
+    type: string
+    title: Custom assistive text
+    description: Used when assistPriority is set to "custom".
+
+  # --- Repeatability ---
+  repeatable:
+    type: [boolean, string]
+    title: Repeatable
+    default: false
+    description: Omit from JCR when false — absent property = runtime default false.
+  minOccur:
+    type: [integer, string]
+    title: Minimum occurrences (deprecated; prefer minItems)
+    description: JCR may store as Integer or String — Sling auto-coerces.
+  maxOccur:
+    type: [integer, string]
+    title: Maximum occurrences (deprecated; prefer maxItems)
+    description: JCR may store as Integer or String — Sling auto-coerces.
+  minItems:
+    type: [integer, string]
+    title: Minimum instances of a repeatable field/panel
+    description: JCR may store as Integer or String — Sling auto-coerces.
+  maxItems:
+    type: [integer, string]
+    title: Maximum instances of a repeatable field/panel
+    description: JCR may store as Integer or String — Sling auto-coerces.
+  minItemsMessage:
+    type: string
+    title: Min items constraint message
+  maxItemsMessage:
+    type: string
+    title: Max items constraint message
+  uniqueItemsMessage:
+    type: string
+    title: Unique items constraint message
+
+  # --- DOR (Document of Record) ---
+  dorExclusion:
+    type: [boolean, string]
+    title: Exclude from DOR
+    default: false
+    description: >-
+      JCR may store as Boolean or String "true"/"false" — Sling auto-coerces.
+      Omit from JCR when false — absent property = runtime default false.
+  dorColspan:
+    type: string
+    title: DOR column span
+    description: >-
+      Stored as JCR String in AbstractFormComponentImpl (PN_DOR_COLSPAN).
+  dorBindRef:
+    type: string
+    title: DOR data binding ref
+  dorExcludeTitle:
+    type: [boolean, string]
+    title: Exclude title from DOR
+    default: false
+    description: Omit from JCR when false — absent property = runtime default false.
+  dorExcludeDescription:
+    type: [boolean, string]
+    title: Exclude description from DOR
+    default: false
+    description: Omit from JCR when false — absent property = runtime default false.
+  dorNumCols:
+    type: [integer, string]
+    title: DOR number of columns
+  dorLayoutType:
+    type: string
+    title: DOR layout type
+  dorTemplateRef:
+    type: string
+    title: DOR template path
+  dorType:
+    type: string
+    title: DOR type
+  "fd:formType":
+    type: string
+    title: DOR template type
+
+  # --- Localization ---
+  lang:
+    type: string
+    title: Language for field formatting
+    description: >-
+      BCP 47 language tag (e.g. "en-US", "de-DE") used for date/number formatting.
+  langDisplayValue:
+    type: string
+    title: Language display value
+
+  # --- Internal rendering ---
+  "fd:channel":
+    type: string
+    title: Rendering channel
+    description: >-
+      Internal property injected by AbstractComponentImpl (@JsonIgnore — not in JSON model output).
+      Propagated to children by AbstractContainerImpl for print vs. web rendering selection.
+      Authors do not typically set this directly.
+
+  # -----------------------------------------------------------------------
+  # CHILD NODES (not flat properties — stored as separate JCR nodes)
+  # These are read via resource.getChild(...) in AbstractFormComponentImpl
+  # -----------------------------------------------------------------------
+  "fd:rules":
+    type: object
+    title: Rules child node
+    description: >-
+      A JCR child node named "fd:rules" directly under the component node.
+      Contains three categories of data:
+      (A) Runtime rule expressions (String, plain property-name keys) — returned by getRules()
+          and appear in the JSON model "rules" key. Valid keys: visible, required, enabled,
+          readOnly, value, label, enum, enumNames, minimum, maximum, exclusiveMinimum,
+          exclusiveMaximum, description.
+      (B) Visual rule editor AST (String[], fd:-prefixed keys) — written by the rule editor
+          UI, ignored by the web runtime model. Keys: fd:click, fd:validate, fd:valueCommit,
+          fd:format, fd:formReady, fd:layoutReady, fd:docReady, fd:calc, fd:init, fd:indexChange.
+          Values are arrays of JSON-encoded AST blobs.
+      (C) Rule editor metadata: validationStatus (String "none"|"valid"|"invalid").
+      Do NOT document as a flat property — document as a child node.
+    properties:
+      validationStatus:
+        type: string
+        enum: ["none", "valid", "invalid"]
+        description: Internal rule editor validity marker. Written by the rule editor UI.
+    additionalProperties:
+      oneOf:
+        - type: string
+          description: A json-formula rule expression (category A — runtime rules).
+        - type: array
+          items:
+            type: string
+          description: JSON-encoded AST blob array (category B — visual rule editor, ignored by runtime).
+
+  "fd:events":
+    type: object
+    title: Events child node
+    description: >-
+      A JCR child node named "fd:events" directly under the component node.
+      Each property inside is an event name to handler expression (String or String[]).
+      Valid event names: click, submit, initialize, load, change, submitSuccess, submitError.
+      Custom events are stored with underscores instead of colons (JCR restriction):
+        "custom:foo" is stored as "custom_foo" in JCR, renamed at read time.
+      Do NOT document as a flat property — document as a child node.
+    additionalProperties:
+      oneOf:
+        - type: string
+          description: A single json-formula handler expression.
+        - type: array
+          items:
+            type: string
+          description: Multiple json-formula handler expressions executed in order.
+
+  # --- View type ---
+  "fd:viewType":
+    type: string
+    title: Custom rendering hint
+    description: >-
+      Optional. When set, the AF2 runtime uses this value to select an alternate
+      component renderer. Present in AbstractFormComponentImpl as PN_VIEWTYPE.
+
+  # --- Data binding behavior ---
+  unboundFormElement:
+    type: [boolean, string]
+    title: Unbound form element
+    default: false
+    description: >-
+      When true forces dataRef = null regardless of the dataRef property value.
+      Present in AbstractFormComponentImpl as PN_UNBOUND_FORM_ELEMENT.
+      Omit from JCR when false — absent property = runtime default false.

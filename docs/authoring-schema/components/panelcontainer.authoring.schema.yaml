@@ -1,0 +1,12 @@
+$id: panelcontainer.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Panel Container JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Panel Container component (v1).
+  All JCR-authored properties for panelcontainer are inherited from PanelImpl
+  (readOnly, wrapData, breakBeforeText, breakAfterText, overflowText).
+  See panelimpl.authoring.schema.yaml for the full property set.
+allOf:
+  - $ref: ../panelimpl.authoring.schema.yaml
+  - type: object
+    properties: {}

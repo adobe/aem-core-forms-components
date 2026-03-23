@@ -31,6 +31,7 @@ public interface ContainerConstraint {
      * Returns the minimum items of the container (ie array data type)
      *
      * @return the minimum items
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -43,6 +44,7 @@ public interface ContainerConstraint {
      * Returns the maximum items of the container (ie array data type)
      *
      * @return the maximum items
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -55,6 +57,7 @@ public interface ContainerConstraint {
      * Returns the minimum occurrence of the container (ie array data type)
      *
      * @return the minimum occurrence
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -67,6 +70,7 @@ public interface ContainerConstraint {
      * Returns the maximum occurrence of the container (ie array data type)
      *
      * @return the maximum occurrence
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)

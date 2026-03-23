@@ -51,11 +51,14 @@ public enum FieldType {
     }
 
     /**
-     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-     * representation. If no representation is found, {@link #TEXT_INPUT} will be returned.
+     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided
+     * string representation. If no representation is found, {@link #TEXT_INPUT} will be returned.
      *
-     * @param value the string representation for which an enum value should be returned
+     * @param value
+     *            the string representation for which an enum value should be returned
+     * 
      * @return the corresponding enum value, if one was found, or {@link #TEXT_INPUT}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     public static FieldType fromString(String value) {
@@ -71,6 +74,7 @@ public enum FieldType {
      * Returns the string value of this enum constant.
      *
      * @return the string value of this enum constant
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     public String getValue() {

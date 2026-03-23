@@ -42,9 +42,7 @@ import com.fasterxml.jackson.core.io.CharacterEscapes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = FormStructureParser.class)
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = FormStructureParser.class)
 public class FormStructureParserImpl implements FormStructureParser {
     private static final Logger logger = LoggerFactory.getLogger(FormStructureParserImpl.class);
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
@@ -78,7 +76,8 @@ public class FormStructureParserImpl implements FormStructureParser {
         }
         // get client library from theme content path
         if (StringUtils.isNotBlank(themeContentPath)) {
-            Resource themeResource = resource.getResourceResolver().getResource(themeContentPath + ThemeConstants.RELATIVE_PATH_METADATA);
+            Resource themeResource = resource.getResourceResolver()
+                .getResource(themeContentPath + ThemeConstants.RELATIVE_PATH_METADATA);
             if (themeResource != null) {
                 ValueMap themeProps = themeResource.getValueMap();
                 themeClientLibRef = themeProps.get(ThemeConstants.PROPERTY_CLIENTLIB_CATEGORY, "");

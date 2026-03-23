@@ -82,7 +82,8 @@ public class CheckBoxGroupImpl extends AbstractOptionsFieldImpl implements Check
 
     @Override
     public Type getType() {
-        return super.getType(); // check box group always has type array // we always return boolean[], string[] or number[]
+        return super.getType(); // check box group always has type array // we always return boolean[], string[] or
+                                // number[]
     }
 
     @Override

@@ -46,12 +46,15 @@ public class DatePickerImplTest {
 
     private static final String PATH_DATEPICKER = CONTENT_ROOT + "/datepicker";
     private static final String PATH_DATEPICKER_DATALAYER = CONTENT_ROOT + "/datepicker-datalayer";
-    private static final String PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/datepicker-displayValueExpression";
+    private static final String PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT
+        + "/datepicker-displayValueExpression";
     private static final String PATH_DATEPICKER_BACKWARD_COMPATIBLE = CONTENT_ROOT + "/datepicker-backwardcompatible";
     private static final String PATH_DATEPICKER_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/datepicker-without-fieldtype";
     private static final String PATH_DATEPICKER_WITH_DISPLAY_FORMAT = CONTENT_ROOT + "/datepicker-with-display-format";
-    private static final String PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT = CONTENT_ROOT + "/datepicker-with-custom-display-format";
-    private static final String PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS = CONTENT_ROOT + "/datepicker-with-both-display-formats";
+    private static final String PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT = CONTENT_ROOT
+        + "/datepicker-with-custom-display-format";
+    private static final String PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS = CONTENT_ROOT
+        + "/datepicker-with-both-display-formats";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -214,13 +217,15 @@ public class DatePickerImplTest {
 
     @Test
     void testGetDisplayFormatWithCustomDisplayFormat() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT,
+            DatePicker.class, context);
         assertEquals("DD/MM/YYYY", datePicker.getDisplayFormat());
     }
 
     @Test
     void testGetDisplayFormatWithBothFormats() {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS, DatePicker.class,
+            context);
         // customDisplayFormat should take priority over displayFormat
         assertEquals("DD/MM/YYYY", datePicker.getDisplayFormat());
     }
@@ -261,7 +266,8 @@ public class DatePickerImplTest {
 
     @Test
     void testJSONExportBackwardCompatibility() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_BACKWARD_COMPATIBLE, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_BACKWARD_COMPATIBLE, DatePicker.class,
+            context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_BACKWARD_COMPATIBLE));
     }
 
@@ -320,26 +326,32 @@ public class DatePickerImplTest {
 
     @Test
     void testJSONExportForDisplayValueExpression() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION, DatePicker.class,
+            context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_DISPLAY_VALUE_EXPRESSION));
     }
 
     @Test
     void testNoFieldType() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITHOUT_FIELDTYPE, DatePicker.class, context);
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITHOUT_FIELDTYPE, DatePicker.class,
+            context);
         Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITHOUT_FIELDTYPE));
     }
 
     @Test
     void testJSONExportWithCustomDisplayFormat() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT, DatePicker.class, context);
-        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT));
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT,
+            DatePicker.class, context);
+        Utils.testJSONExport(datePicker,
+            Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_CUSTOM_DISPLAY_FORMAT));
     }
 
     @Test
     void testJSONExportWithBothDisplayFormats() throws Exception {
-        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS, DatePicker.class, context);
-        Utils.testJSONExport(datePicker, Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS));
+        DatePicker datePicker = Utils.getComponentUnderTest(PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS, DatePicker.class,
+            context);
+        Utils.testJSONExport(datePicker,
+            Utils.getTestExporterJSONPath(BASE, PATH_DATEPICKER_WITH_BOTH_DISPLAY_FORMATS));
     }
 
 }

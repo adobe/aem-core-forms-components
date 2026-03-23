@@ -28,21 +28,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * AbstractCaptchaImplV2 is an updated implementation for handling captcha field types.
  * 
- * This class represents an evolution in the captcha JSON structure where captchaProvider
- * is promoted to a top-level property, improving JSON clarity and eliminating redundancy.
+ * This class represents an evolution in the captcha JSON structure where captchaProvider is promoted to a top-level
+ * property, improving JSON clarity and eliminating redundancy.
  * 
- * Background:
- * Previous Implementation (AbstractCaptchaImpl):
- * - Captcha provider information was embedded within the fd:captcha custom property
- * - This led to redundant data and a less clean JSON structure with the updated forms spec
+ * Background: Previous Implementation (AbstractCaptchaImpl): - Captcha provider information was embedded within the
+ * fd:captcha custom property - This led to redundant data and a less clean JSON structure with the updated forms spec
  * 
- * Current Implementation (AbstractCaptchaImplV2):
- * - CaptchaProvider is now a first-class citizen at the root level of the JSON
- * - This change results in a cleaner and more efficient JSON structure
+ * Current Implementation (AbstractCaptchaImplV2): - CaptchaProvider is now a first-class citizen at the root level of
+ * the JSON - This change results in a cleaner and more efficient JSON structure
  * 
- * Note: AbstractCaptchaImpl is not deprecated yet, as it is still used by
- * recaptcha/hcaptcha v1 implementations in core components. Once these are migrated
- * to AbstractCaptchaImplV2, the V1 implementation will be deprecated.
+ * Note: AbstractCaptchaImpl is not deprecated yet, as it is still used by recaptcha/hcaptcha v1 implementations in core
+ * components. Once these are migrated to AbstractCaptchaImplV2, the V1 implementation will be deprecated.
  */
 public abstract class AbstractCaptchaImplV2 extends AbstractCaptchaImpl implements Captcha {
 

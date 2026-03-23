@@ -96,12 +96,12 @@ public class TermsAndConditionsImpl extends PanelImpl implements TermsAndConditi
         List<Resource> childResources = getFilteredChildrenResources(resource);
         // the tnc component will either have links or consent text based upon showLink value
         if (showLink) {
-            childResources.removeIf(child -> FieldType.PLAIN_TEXT.getValue().equals(child.getValueMap().get(
-                ReservedProperties.PN_FIELDTYPE)));
+            childResources.removeIf(child -> FieldType.PLAIN_TEXT.getValue()
+                .equals(child.getValueMap().get(ReservedProperties.PN_FIELDTYPE)));
 
         } else {
-            childResources.removeIf(child -> FieldType.CHECKBOX_GROUP.getValue().equals(child.getValueMap().get(
-                ReservedProperties.PN_FIELDTYPE)));
+            childResources.removeIf(child -> FieldType.CHECKBOX_GROUP.getValue()
+                .equals(child.getValueMap().get(ReservedProperties.PN_FIELDTYPE)));
         }
         return childResources;
     }

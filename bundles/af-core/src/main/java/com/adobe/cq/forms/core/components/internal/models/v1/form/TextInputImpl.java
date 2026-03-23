@@ -39,11 +39,11 @@ import com.adobe.cq.forms.core.components.util.ComponentUtils;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { TextInput.class, ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_TEXT_V1, FormConstants.RT_FD_FORM_EMAIL_V1, FormConstants.RT_FD_FORM_TELEPHONE_V1 })
-@Exporter(
-    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
-    extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+    adapters = { TextInput.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_TEXT_V1, FormConstants.RT_FD_FORM_EMAIL_V1,
+        FormConstants.RT_FD_FORM_TELEPHONE_V1 })
+@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextInputImpl extends AbstractFieldImpl implements TextInput {
 
     // type number and date are implemented in sling model as per crispr specification

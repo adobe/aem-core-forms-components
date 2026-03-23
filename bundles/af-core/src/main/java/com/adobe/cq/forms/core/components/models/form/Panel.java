@@ -20,7 +20,8 @@ import javax.annotation.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Defines the form {@code panel} Sling Model used for the {@code /apps/core/fd/components/form/panel/v1/panel} component.
+ * Defines the form {@code panel} Sling Model used for the {@code /apps/core/fd/components/form/panel/v1/panel}
+ * component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
@@ -30,6 +31,7 @@ public interface Panel extends Container, ContainerConstraint {
      * Checks if the container should be rendered read only.
      *
      * @return {@code true} if the container should be read-only, {@code false} otherwise
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     @Nullable

@@ -58,7 +58,9 @@ public abstract class AbstractDataSourceServlet extends SlingSafeMethodsServlet 
     /**
      * Returns datasource configuration.
      *
-     * @param request the request
+     * @param request
+     *            the request
+     * 
      * @return datasource configuration.
      */
     Config getConfig(SlingHttpServletRequest request) {
@@ -92,7 +94,8 @@ public abstract class AbstractDataSourceServlet extends SlingSafeMethodsServlet 
      * Creates a virtual resource to use in a datasource.
      */
     @NotNull
-    protected Resource createResource(@NotNull ResourceResolver resolver, @NotNull FormsManager.ComponentDescription desc) {
+    protected Resource createResource(@NotNull ResourceResolver resolver,
+        @NotNull FormsManager.ComponentDescription desc) {
         ValueMap properties = new ValueMapDecorator(new HashMap<>());
         List<Resource> children = new ArrayList<Resource>();
         properties.put(PN_TEXT, desc.getTitle());
@@ -105,8 +108,9 @@ public abstract class AbstractDataSourceServlet extends SlingSafeMethodsServlet 
             Resource graniteData = formMetaDataResource.getChild(GRANITE_DATA);
             if (graniteData != null) {
                 ValueMap graniteDataValueMap = new ValueMapDecorator(graniteData.getValueMap());
-                Resource childResource = new ValueMapResource(resolver, formMetaDataResource.getPath() + "/" + GRANITE_DATA,
-                    RESOURCE_TYPE_NON_EXISTING, graniteDataValueMap);
+                Resource childResource = new ValueMapResource(resolver,
+                    formMetaDataResource.getPath() + "/" + GRANITE_DATA, RESOURCE_TYPE_NON_EXISTING,
+                    graniteDataValueMap);
                 children.add(childResource);
             }
         }

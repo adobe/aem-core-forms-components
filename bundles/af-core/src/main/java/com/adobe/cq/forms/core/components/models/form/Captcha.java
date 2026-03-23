@@ -31,14 +31,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public interface Captcha extends Field {
 
     /**
-     * Defines the display mode for captcha.
-     * Possible values: {@code visible}, {@code invisible}
+     * Defines the display mode for captcha. Possible values: {@code visible}, {@code invisible}
      *
      * @since com.adobe.cq.forms.core.components.models.form 5.10.0
      */
     enum CaptchaDisplayMode {
-        VISIBLE("visible"),
-        INVISIBLE("invisible");
+        VISIBLE("visible"), INVISIBLE("invisible");
 
         private String displayMode;
 
@@ -50,6 +48,7 @@ public interface Captcha extends Field {
          * Returns the string value of this enum constant.
          *
          * @return the string value of this enum constant
+         * 
          * @since com.adobe.cq.forms.core.components.models.form 5.10.0
          */
         public String getValue() {
@@ -74,6 +73,7 @@ public interface Captcha extends Field {
      * Returns the display mode of the captcha component.
      *
      * @return the string value of the one of the {@link CaptchaDisplayMode} enum
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.10.0
      */
     default String getCaptchaDisplayMode() {
@@ -84,6 +84,7 @@ public interface Captcha extends Field {
      * Returns the site key of the captcha component.
      *
      * @return the site key
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.10.0
      */
     default String getCaptchaSiteKey() {

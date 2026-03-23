@@ -120,7 +120,8 @@ public abstract class AbstractComponentImpl implements Component {
     /**
      * Setter for current page.
      *
-     * @param currentPage The {@link Page} to set
+     * @param currentPage
+     *            The {@link Page} to set
      */
     protected void setCurrentPage(Page currentPage) {
         this.currentPage = currentPage;
@@ -129,7 +130,8 @@ public abstract class AbstractComponentImpl implements Component {
     @PostConstruct
     private void init() {
         // Setting currentPage to ResourcePage to prevent id miss-match when invoked via iframe mode in sites.
-        if (currentPage != null && resource != null && request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH) != null) {
+        if (currentPage != null && resource != null
+            && request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH) != null) {
             if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
                 PageManager pageManager = currentPage.getPageManager();
                 String pagePath = (String) request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH);
@@ -145,7 +147,8 @@ public abstract class AbstractComponentImpl implements Component {
     @Override
     public String getId() {
         if (id == null) {
-            String resourceCallerPath = request != null ? (String) request.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH) : null;
+            String resourceCallerPath = request != null ? (String) request.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH)
+                : null;
             this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
         }
         return id;
@@ -168,7 +171,8 @@ public abstract class AbstractComponentImpl implements Component {
         if (componentData == null) {
             if (this.dataLayerEnabled == null) {
                 if (this.currentPage != null) {
-                    // Check at page level to allow components embedded via containers in editable templates to inherit the setting
+                    // Check at page level to allow components embedded via containers in editable templates to inherit
+                    // the setting
                     this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.currentPage.getContentResource());
                 } else {
                     this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
@@ -191,9 +195,18 @@ public abstract class AbstractComponentImpl implements Component {
     public String getAppliedCssClasses() {
 
         return Optional.ofNullable(this.resource.adaptTo(ComponentStyleInfo.class))
-            .map(ComponentStyleInfo::getAppliedCssClasses)
-            .filter(StringUtils::isNotBlank)
-            .orElse(null);		// Returning null so sling model exporters don't return anything for this property if not configured
+            .map(ComponentStyleInfo::getAppliedCssClasses).filter(StringUtils::isNotBlank).orElse(null); // Returning
+                                                                                                         // null so
+                                                                                                         // sling
+                                                                                                         // model
+                                                                                                         // exporters
+                                                                                                         // don't
+                                                                                                         // return
+                                                                                                         // anything
+                                                                                                         // for this
+                                                                                                         // property
+                                                                                                         // if not
+                                                                                                         // configured
     }
 
     /**
@@ -204,17 +217,13 @@ public abstract class AbstractComponentImpl implements Component {
      */
     @NotNull
     protected ComponentData getComponentData() {
-        return DataLayerBuilder.forComponent()
-            .withId(this::getId)
-            .withLastModifiedDate(() ->
-            // Note: this can be simplified in JDK 11
-            Optional.ofNullable(resource.getValueMap().get(JcrConstants.JCR_LASTMODIFIED, Calendar.class))
-                .map(Calendar::getTime)
-                .orElseGet(() -> Optional.ofNullable(resource.getValueMap().get(JcrConstants.JCR_CREATED, Calendar.class))
-                    .map(Calendar::getTime)
-                    .orElse(null)))
-            .withType(() -> this.resource.getResourceType())
-            .build();
+        return DataLayerBuilder.forComponent().withId(this::getId).withLastModifiedDate(() ->
+        // Note: this can be simplified in JDK 11
+        Optional.ofNullable(resource.getValueMap().get(JcrConstants.JCR_LASTMODIFIED, Calendar.class))
+            .map(Calendar::getTime).orElseGet(
+                () -> Optional.ofNullable(resource.getValueMap().get(JcrConstants.JCR_CREATED, Calendar.class))
+                    .map(Calendar::getTime).orElse(null)))
+            .withType(() -> this.resource.getResourceType()).build();
     }
 
     @Nullable
@@ -222,7 +231,8 @@ public abstract class AbstractComponentImpl implements Component {
         if (StringUtils.isBlank(propertyValue)) {
             return null;
         }
-        return com.adobe.cq.forms.core.components.util.ComponentUtils.translate(propertyValue, propertyName, resource, i18n);
+        return com.adobe.cq.forms.core.components.util.ComponentUtils.translate(propertyValue, propertyName, resource,
+            i18n);
     }
 
 }

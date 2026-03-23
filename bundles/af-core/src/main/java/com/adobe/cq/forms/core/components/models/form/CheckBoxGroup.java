@@ -18,8 +18,8 @@ package com.adobe.cq.forms.core.components.models.form;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Defines the form {@code CheckBoxGroup} Sling Model used for the {@code /apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup}
- * component.
+ * Defines the form {@code CheckBoxGroup} Sling Model used for the
+ * {@code /apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */

@@ -45,13 +45,14 @@ public class ComponentDataImpl implements FormComponentData {
     /**
      * Creates a new ComponentDataImpl instance.
      * 
-     * Note: This constructor stores references to FormComponent and Resource objects.
-     * These objects are designed to be immutable and shared across the system.
-     * The FormComponent interface provides read-only access to form component data,
-     * and the Resource interface represents an immutable JCR resource.
+     * Note: This constructor stores references to FormComponent and Resource objects. These objects are designed to be
+     * immutable and shared across the system. The FormComponent interface provides read-only access to form component
+     * data, and the Resource interface represents an immutable JCR resource.
      * 
-     * @param component The form component (immutable, read-only interface)
-     * @param resource The JCR resource (immutable, read-only interface)
+     * @param component
+     *            The form component (immutable, read-only interface)
+     * @param resource
+     *            The JCR resource (immutable, read-only interface)
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
@@ -161,9 +162,7 @@ public class ComponentDataImpl implements FormComponentData {
     @Nullable
     public final String getJson() {
         try {
-            return String.format("{\"%s\":%s}",
-                this.getId(),
-                new ObjectMapper().writeValueAsString(this));
+            return String.format("{\"%s\":%s}", this.getId(), new ObjectMapper().writeValueAsString(this));
         } catch (JsonProcessingException e) {
             LOGGER.error("Unable to generate dataLayer JSON string", e);
         }

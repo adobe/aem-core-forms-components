@@ -1,0 +1,32 @@
+$id: checkbox.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Checkbox JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Checkbox component (checkbox field type).
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      checkedValue:
+        title: Checked value
+        description: >-
+          The value submitted when the checkbox is checked. Type matches the field's
+          `type` property (string, boolean, or number).
+        oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+      uncheckedValue:
+        title: Unchecked value
+        description: Value submitted when checkbox is unchecked (only when enableUncheckedValue=true).
+        oneOf:
+          - type: string
+          - type: boolean
+          - type: number
+      enableUncheckedValue:
+        type: boolean
+        title: Submit value when unchecked
+        default: false
+        description: >-
+          When true, uncheckedValue is submitted when the checkbox is unchecked.
+          Omit from JCR when false — absent property = runtime default false.

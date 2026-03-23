@@ -117,9 +117,7 @@ public class FileInputImpl extends AbstractFieldImpl implements FileInput {
 
     @Override
     public List<String> getAccept() {
-        return Optional.ofNullable(accept)
-            .map(Arrays::asList)
-            .orElse(Collections.emptyList());
+        return Optional.ofNullable(accept).map(Arrays::asList).orElse(Collections.emptyList());
     }
 
     @Override

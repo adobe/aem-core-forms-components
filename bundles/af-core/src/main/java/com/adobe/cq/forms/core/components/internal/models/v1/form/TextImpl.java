@@ -17,12 +17,12 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -32,6 +32,8 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Text;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -42,8 +44,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class TextImpl extends AbstractFormComponentImpl implements Text {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TEXT_IS_RICH)
-    @Default(booleanValues = false)
-    private boolean textIsRich;
+    @Nullable
+    private Boolean textIsRich;
 
     @SlingObject
     private Resource resource;
@@ -54,7 +56,24 @@ public class TextImpl extends AbstractFormComponentImpl implements Text {
     }
 
     @Override
+    @JsonIgnore
     public boolean isRichText() {
+        return textIsRich != null && textIsRich;
+    }
+
+    /**
+     * Returns the rich-text flag for JSON serialization, or {@code null} when not authored in JCR.
+     *
+     * <p>
+     * <strong>Behavior change:</strong> When {@code textIsRich} is absent from JCR, this returns {@code null} and the
+     * {@code richText} key is <em>omitted</em> from the JSON model (via {@code @JsonInclude(NON_NULL)}). Previously the
+     * field used {@code @Default(false)}, which caused {@code "richText": false} to always appear in the JSON even when
+     * the dialog default was unchanged. Downstream consumers must treat an absent {@code richText} key as {@code false}
+     * — the AF2 runtime already does this.
+     */
+    @JsonProperty("richText")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Boolean getRichText() {
         return textIsRich;
     }
 

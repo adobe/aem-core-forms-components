@@ -1,0 +1,41 @@
+$id: image.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Image JCR Authoring Properties
+description: >-
+  Properties for the Adaptive Form Image component (image field type).
+  Image is a non-data-capturing display component; it extends base (not field).
+allOf:
+  - $ref: ../base.authoring.schema.yaml
+  - type: object
+    properties:
+      fileReference:
+        type: string
+        title: DAM asset path
+        description: >-
+          Path to the image asset in the DAM. Injected by StaticImageImpl
+          as PN_FILE_REF. Stored as JCR String. When set, the model also
+          exports this value under the "fd:repoPath" custom property key.
+      altText:
+        type: string
+        title: Alt text
+        description: >-
+          Alternate text for the image shown when the image cannot be displayed.
+          Injected by StaticImageImpl as PN_ALT_TEXT. Stored as JCR String.
+      imageSrc:
+        type: string
+        title: Image source URL override
+        description: >-
+          Direct URL override for the image source. Injected by StaticImageImpl
+          as PN_IMAGE_SRC. When absent the model derives the src from the DAM
+          asset referenced by fileReference. Stored as JCR String.
+      description:
+        type: string
+        title: Long description
+        description: >-
+          Long description of the image (not rendered in JSON model output —
+          @JsonIgnore). Injected by StaticImageImpl as PN_DESCRIPTION.
+          Stored as JCR String.
+          NOTE: This shadows the `description` in base.authoring.schema.yaml.
+          For StaticImageImpl, description is injected @JsonIgnore and is NOT
+          exported to the JSON model — it exists only as metadata in JCR.
+          This differs from the base schema behavior where description IS rendered.

@@ -42,11 +42,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { StaticImage.class, ComponentExporter.class },
+    adapters = { StaticImage.class,
+        ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_IMAGE_V1 })
-@Exporter(
-    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
-    extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class StaticImageImpl extends AbstractFormComponentImpl implements StaticImage {
 
     public static final String DAM_REPO_PATH = "fd:repoPath";

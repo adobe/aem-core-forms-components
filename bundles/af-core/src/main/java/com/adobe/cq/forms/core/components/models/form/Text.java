@@ -28,6 +28,7 @@ public interface Text extends FormComponent {
      * Retrieves the text value to be displayed.
      *
      * @return the text value to be displayed, or {@code null} if no value can be returned
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1;
      */
     default String getValue() {
@@ -38,6 +39,7 @@ public interface Text extends FormComponent {
      * Checks if the text to be displayed is rich text or not.
      *
      * @return {@code true} if the text is rich (HTML formatting), {@code false otherwise}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1;
      */
     default boolean isRichText() {

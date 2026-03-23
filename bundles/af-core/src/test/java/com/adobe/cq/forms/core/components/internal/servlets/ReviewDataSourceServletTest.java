@@ -74,10 +74,8 @@ public class ReviewDataSourceServletTest {
 
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
-                return StreamSupport
-                    .stream(childResources.spliterator(), false)
-                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
-                    .collect(Collectors.toList());
+                return StreamSupport.stream(childResources.spliterator(), false)
+                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
             }
         });
     }
@@ -92,7 +90,8 @@ public class ReviewDataSourceServletTest {
         MockRequestPathInfo mockRequestPathInfo = (MockRequestPathInfo) request.getRequestPathInfo();
         mockRequestPathInfo.setSuffix(componentInstancePath);
         reviewDataSourceServlet.doGet(request, response);
-        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) request.getAttribute(DataSource.class.getName());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) request
+            .getAttribute(DataSource.class.getName());
         assertNotNull(dataSource);
         Resource resource = dataSource.iterator().next();
         assertEquals("Item 1", resource.getValueMap().get("text", String.class));
@@ -110,7 +109,8 @@ public class ReviewDataSourceServletTest {
         MockRequestPathInfo mockRequestPathInfo = (MockRequestPathInfo) request.getRequestPathInfo();
         mockRequestPathInfo.setSuffix(componentInstancePath2);
         reviewDataSourceServlet.doGet(request, response);
-        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) request.getAttribute(DataSource.class.getName());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) request
+            .getAttribute(DataSource.class.getName());
         assertNotNull(dataSource);
         assertFalse(dataSource.iterator().hasNext());
 

@@ -20,7 +20,8 @@ package com.adobe.cq.forms.core.components.models.form;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Interface for {@code Password} Sling Model used for the {@code /apps/core/fd/components/form/password/v1/password} component.
+ * Interface for {@code Password} Sling Model used for the {@code /apps/core/fd/components/form/password/v1/password}
+ * component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 5.12.0
  */

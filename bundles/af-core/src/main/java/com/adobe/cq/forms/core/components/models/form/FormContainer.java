@@ -29,7 +29,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Defines the form container {@code FormContainer} Sling Model used for the {@code /apps/core/fd/components/form/formcontainer} component.
+ * Defines the form container {@code FormContainer} Sling Model used for the
+ * {@code /apps/core/fd/components/form/formcontainer} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 0.0.1
  */
@@ -70,6 +71,7 @@ public interface FormContainer extends Container {
      * Returns form metadata {@link FormMetaData}
      *
      * @return form meta data
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonProperty("metadata")
@@ -102,6 +104,7 @@ public interface FormContainer extends Container {
      * Returns schema type {@link GuideSchemaType}
      *
      * @return schema type
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable
@@ -114,6 +117,7 @@ public interface FormContainer extends Container {
      * Returns name of the client lib category
      *
      * @return name of the client lib category
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.1.0
      */
     @Nullable
@@ -126,6 +130,7 @@ public interface FormContainer extends Container {
      * Returns a unique identifier
      *
      * @return unique identifier
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Nullable
@@ -141,7 +146,8 @@ public interface FormContainer extends Container {
     @JsonIgnore
     @Override
     default Boolean isEnabled() {
-        // explicitly setting true, since form container does not have enabled property, but other containers like panel have enabled
+        // explicitly setting true, since form container does not have enabled property, but other containers like panel
+        // have enabled
         return true;
     }
 
@@ -149,6 +155,7 @@ public interface FormContainer extends Container {
      * Returns the hamburger menu support
      *
      * @return the hamburger menu support of the form
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.7.5
      */
     @JsonIgnore
@@ -159,28 +166,32 @@ public interface FormContainer extends Container {
     @Override
     @JsonIgnore
     default Label getLabel() {
-        // explicitly setting null, since form container does not have label, but other containers like panel have a label
+        // explicitly setting null, since form container does not have label, but other containers like panel have a
+        // label
         return null;
     }
 
     @JsonIgnore
     @Override
     default Boolean isVisible() {
-        // explicitly setting true, since form container does not have visible property, but other containers like panel have visible
+        // explicitly setting true, since form container does not have visible property, but other containers like panel
+        // have visible
         return true;
     }
 
     @JsonIgnore
     @Override
     default String getName() {
-        // explicitly setting null, since form container does not have name property, but other containers like panel have a name
+        // explicitly setting null, since form container does not have name property, but other containers like panel
+        // have a name
         return null;
     }
 
     @JsonIgnore
     @Override
     default BaseConstraint.Type getType() {
-        // explicitly setting null, since form container does not have type property, but other containers like panel have a type
+        // explicitly setting null, since form container does not have type property, but other containers like panel
+        // have a type
         return null;
     }
 
@@ -188,6 +199,7 @@ public interface FormContainer extends Container {
      * Returns the form title
      *
      * @return form title
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getTitle() {
@@ -198,6 +210,7 @@ public interface FormContainer extends Container {
      * Returns the form description
      *
      * @return form description
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getDescription() {
@@ -208,6 +221,7 @@ public interface FormContainer extends Container {
      * Returns the form model
      *
      * @return the form model, based on the document path configured or the items
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
@@ -219,6 +233,7 @@ public interface FormContainer extends Container {
      * Returns the document path (dam asset) containing the form model json
      *
      * @return the document path containing form model json, if one was set, or {@code null}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
@@ -230,6 +245,7 @@ public interface FormContainer extends Container {
      * Returns base64 encoded current page path
      *
      * @return base64 encoded current page path
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
@@ -240,6 +256,7 @@ public interface FormContainer extends Container {
      * Returns the form thank you message
      *
      * @return form thank you message
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
@@ -249,6 +266,7 @@ public interface FormContainer extends Container {
      * Returns the form thank you page
      *
      * @return form thank you page
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonIgnore
@@ -260,6 +278,7 @@ public interface FormContainer extends Container {
      * Returns the form thank you option
      *
      * @return form thank you option
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     @JsonIgnore
@@ -271,6 +290,7 @@ public interface FormContainer extends Container {
      * Returns the form data
      *
      * @return the form data
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonProperty("data")
@@ -282,6 +302,7 @@ public interface FormContainer extends Container {
      * Returns the submit action
      *
      * @return the submit action
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.0.0
      */
     default String getAction() {
@@ -292,6 +313,7 @@ public interface FormContainer extends Container {
      * Returns the data url to fetch form data
      *
      * @return the data url to fetch form data
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.0.0
      */
     default String getDataUrl() {
@@ -302,6 +324,7 @@ public interface FormContainer extends Container {
      * Returns the language in which the form was authored
      *
      * @return the language of the form
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.0.0
      */
     default String getLang() {
@@ -312,6 +335,7 @@ public interface FormContainer extends Container {
      * Returns the language of the containing page
      *
      * @return the language of the containing page
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.7.1
      */
     @JsonIgnore
@@ -323,6 +347,7 @@ public interface FormContainer extends Container {
      * API to give direction of content in HTML for a given language.
      *
      * @return one of the constants "rtl" or "ltr" depending on direction of given language
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.5.0
      */
     @JsonIgnore
@@ -334,6 +359,7 @@ public interface FormContainer extends Container {
      * Returns the redirect url after form submission
      *
      * @return the redirect url of the form
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     @JsonIgnore
@@ -345,6 +371,7 @@ public interface FormContainer extends Container {
      * Returns the prefill service for the form
      *
      * @return the prefill service
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     @JsonIgnore
@@ -367,6 +394,7 @@ public interface FormContainer extends Container {
      * Returns site page path if dropped in sites else the form page path.
      *
      * @return parent page path before jcr:content
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     @JsonIgnore
@@ -378,6 +406,7 @@ public interface FormContainer extends Container {
      * Returns the url from where the custom functions should be registered
      * 
      * @return custom function registration url
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.9.5
      */
     @JsonIgnore
@@ -389,6 +418,7 @@ public interface FormContainer extends Container {
      * Returns the auto save configuration
      *
      * @return auto save configuration
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.11.0
      */
     @JsonIgnore

@@ -137,10 +137,10 @@ public class NumberInputImpl extends AbstractFieldImpl implements NumberInput {
 
     @PostConstruct
     private void initNumberInput() {
-        Object tempExclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum, maximumAsStr != null ? maximumAsStr : maximum,
-            excludeMaximumCheck);
-        Object tempExclusiveMinimumValue = ComponentUtils.getExclusiveValue(exclusiveMinimum, minimumAsStr != null ? minimumAsStr : minimum,
-            excludeMinimumCheck);
+        Object tempExclusiveMaximumValue = ComponentUtils.getExclusiveValue(exclusiveMaximum,
+            maximumAsStr != null ? maximumAsStr : maximum, excludeMaximumCheck);
+        Object tempExclusiveMinimumValue = ComponentUtils.getExclusiveValue(exclusiveMinimum,
+            minimumAsStr != null ? minimumAsStr : minimum, excludeMinimumCheck);
         if (tempExclusiveMaximumValue != null) {
             exclusiveMaximumValue = ComponentUtils.parseNumber(tempExclusiveMaximumValue.toString());
         }

@@ -27,21 +27,76 @@ Adaptive Form Date Picker field component written in HTL.
 The Form Date Picker component uses the `com.adobe.cq.forms.core.components.models.form.DatePicker` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
-The following properties are written to JCR for this Form Date component and are expected to be available as `Resource` properties:
 
-1. `./jcr:title` - defines the label to use for this field
-2. `./hideTitle` - if set to `true`, the label of this field will be hidden
-3. `./name` - defines the name of the field, which will be submitted with the form data
-4. `./default` - defines the default value of the field
-5. `./description` - defines a help message that can be rendered in the field as a hint for the user
-6. `./required` - if set to `true`, this field will be marked as required, not allowing the form to be submitted until the field has a value
-7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
-8. `./readOnly` - if set to `true`, the filed will be read only
-9. `./dataFormat` - defines the format in which the value exported/submitted
-10. `./editFormat` - defines the format in which the value will be edited by the user
-11. `./minimumDate` - define the minimum date input allowed for the field
-12. `./maximumDate` - define the maximum date input allowed for the field
-13. `./displayFormat` - define the template for display pattern (Reference can be found [here](https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns)).
+The following properties are written to JCR by the Edit Dialog and consumed by the Sling Model.
+
+#### Inherited from all components (base)
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Field name | `./name` | String | — | Submitted data key |
+| Data reference | `./dataRef` | String | — | JSON-path for data binding |
+| Visible | `./visible` | Boolean | *(runtime: true)* | Initial visibility; absent = runtime default true |
+| Enabled | `./enabled` | Boolean | *(runtime: true)* | Whether field is interactive; absent = runtime default true |
+| Label | `./jcr:title` | String | — | Visible label text |
+| Hide label | `./hideTitle` | Boolean | `false` | Hides label visually |
+| Rich text label | `./isTitleRichText` | Boolean | `false` | Treat label as rich text HTML |
+| Description | `./description` | String | — | Help text / long description |
+| Tooltip | `./tooltip` | String | — | Popover tooltip text |
+| Show tooltip | `./tooltipVisible` | Boolean | `false` | Shows tooltip question-mark icon |
+| Required | `./required` | Boolean | `false` | Whether a value is required |
+| Required message | `./mandatoryMessage` | String | — | Error shown when required is violated |
+| Validation expression | `./validationExpression` | String | — | json-formula returning true when valid |
+| Validation expression message | `./validateExpMessage` | String | — | Error for validation expression failure |
+| Assistive priority | `./assistPriority` | String | — | Screen-reader source: `description`, `title`, `name`, `custom` |
+| Custom assistive text | `./custom` | String | — | Used when assistPriority is `custom` |
+| Data type | `./type` | String | — | `string`, `number`, `integer`, `boolean`, etc. |
+
+#### Field properties
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Read-only | `./readOnly` | Boolean | `false` | Prevents user edits |
+| Default value | `./default` | Object[] | — | Initial value |
+| Empty value | `./fd:emptyValue` | String | — | Value on empty submit: `"null"`, `"undefined"`, `""` |
+| Placeholder | `./placeholder` | String | — | Ghosted hint text |
+| Display format | `./displayFormat` | String | — | Display pattern (date/number formats) |
+| Custom display format | `./fd:customDisplayFormat` | String | — | Overrides displayFormat when present |
+| Edit format | `./editFormat` | String | — | Format for value entry |
+| Display value expression | `./displayValueExpression` | String | — | json-formula for computed display value |
+| Data format | `./dataFormat` | String | — | Format for value export/submission |
+| Type message | `./typeMessage` | String | — | Error for type constraint violation |
+| Format message | `./formatMessage` | String | — | Error for format constraint violation |
+
+#### DatePicker-specific
+
+| Property | JCR Name | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| Minimum date | `./minimumDate` | Date | — | Minimum selectable date (JCR Date property) |
+| Maximum date | `./maximumDate` | Date | — | Maximum selectable date (JCR Date property) |
+| Minimum date-time | `./minimumDateTime` | String | — | Minimum date-time (string) |
+| Maximum date-time | `./maximumDateTime` | String | — | Maximum date-time (string) |
+| Exclusive minimum | `./exclusiveMinimum` | Boolean | `false` | Whether minimum date is exclusive |
+| Exclusive maximum | `./exclusiveMaximum` | Boolean | `false` | Whether maximum date is exclusive |
+| Exclude minimum (legacy) | `./excludeMinimum` | Boolean | `false` | Legacy XFA property; use exclusiveMinimum |
+| Exclude maximum (legacy) | `./excludeMaximum` | Boolean | `false` | Legacy XFA property; use exclusiveMaximum |
+| Minimum message | `./minimumMessage` | String | — | Error for minimum date constraint violation |
+| Maximum message | `./maximumMessage` | String | — | Error for maximum date constraint violation |
+
+#### Child nodes
+
+> These are JCR child nodes, not flat properties on the component node.
+
+**`fd:rules`** (child node) — contains runtime rules (category A), visual rule editor AST (category B), and metadata (category C). The web runtime model only reads category A keys via `getRules()`.
+
+**`fd:events`** (child node) — each property is an event name → handler expression (String or String[]):
+
+| Event name | JCR property name | Description |
+|------------|------------------|-------------|
+| `click` | `click` | Button/field click handler |
+| `change` | `change` | On value change |
+| `initialize` | `initialize` | On field initialization |
+| `custom:eventName` | `custom_eventName` | Custom event (stored with `_`, read as `:`) |
 
 ## Client Libraries
 The component provides a `core.forms.components.datePicker.v1.runtime` client library category that contains the Javascript runtime for the component. 

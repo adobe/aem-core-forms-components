@@ -1,0 +1,26 @@
+$id: textinput.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: TextInput JCR Authoring Properties
+description: >-
+  Properties specific to Adaptive Form Text Input (v1) beyond those in
+  field.authoring.schema. JCR resource type: core/fd/components/form/textinput/v1/textinput
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      multiLine:
+        type: [boolean, string]
+        title: Allow multiple lines (textarea)
+        default: false
+        description: >-
+          When true the widget renders as a <textarea> instead of <input type="text">.
+          Stored as JCR Boolean. Injected by TextInputImpl.
+          Omit from JCR when false — absent property = false (via @Default).
+          isMultiLine() is @JsonIgnore — NOT serialized to JSON output; used only
+          to compute the fieldType (text-input vs. multiline-input) in getFieldType().
+      autocomplete:
+        type: string
+        title: Autocomplete attribute
+        description: >-
+          Maps to HTML autocomplete attribute (e.g. "name", "email", "off").
+          Stored as JCR String.

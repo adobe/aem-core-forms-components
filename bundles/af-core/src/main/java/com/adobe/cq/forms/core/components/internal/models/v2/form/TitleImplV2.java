@@ -44,7 +44,8 @@ import com.day.cq.wcm.api.WCMMode;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { FormTitle.class, ComponentExporter.class },
+    adapters = { FormTitle.class,
+        ComponentExporter.class },
     resourceType = FormConstants.RT_FD_FORM_TITLE_V2)
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 

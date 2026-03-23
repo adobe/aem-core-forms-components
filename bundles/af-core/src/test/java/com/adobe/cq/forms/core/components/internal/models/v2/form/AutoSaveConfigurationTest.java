@@ -54,8 +54,8 @@ public class AutoSaveConfigurationTest {
     @Test
     void testAutoSaveConfigurationForResourceAdaptation() {
 
-        final AutoSaveConfiguration autoSaveConfiguration = context.currentResource(GUIDE_CONTAINER_ROOT).adaptTo(
-            AutoSaveConfiguration.class);
+        final AutoSaveConfiguration autoSaveConfiguration = context.currentResource(GUIDE_CONTAINER_ROOT)
+            .adaptTo(AutoSaveConfiguration.class);
         assertEquals(true, autoSaveConfiguration.isEnableAutoSave());
         assertEquals(AutoSaveConfiguration.AutoSaveStrategyType.TIME, autoSaveConfiguration.getAutoSaveStrategyType());
         assertEquals((Integer) 2, autoSaveConfiguration.getAutoSaveInterval());

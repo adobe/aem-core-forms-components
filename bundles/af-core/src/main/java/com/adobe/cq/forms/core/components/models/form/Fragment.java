@@ -21,7 +21,8 @@ import org.apache.sling.api.resource.Resource;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * Defines the form {@code Fragment} Sling Model used for the {@code /apps/core/fd/components/form/fragment/v1/fragment} component.
+ * Defines the form {@code Fragment} Sling Model used for the {@code /apps/core/fd/components/form/fragment/v1/fragment}
+ * component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 4.4.0
  */
@@ -32,6 +33,7 @@ public interface Fragment extends Panel {
      * Fragment reference
      *
      * @return {@code fragRef}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     String getFragmentPath();
@@ -40,6 +42,7 @@ public interface Fragment extends Panel {
      * List of children of fragment container
      * 
      * @return
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     List<Resource> getFragmentChildren();
@@ -48,6 +51,7 @@ public interface Fragment extends Panel {
      * Returns fragment container resource
      *
      * @return
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.4.1
      */
     Resource getFragmentContainer();

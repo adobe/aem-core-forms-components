@@ -44,18 +44,13 @@ import com.day.image.Layer;
 
 @Component(
     service = { Servlet.class },
-    property = {
-        "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_IMAGE_V1,
-        "sling.servlet.extensions=jpg",
-        "sling.servlet.extensions=png",
-        "sling.servlet.extensions=gif",
-        "sling.servlet.methods=GET"
-    })
+    property = { "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_IMAGE_V1,
+        "sling.servlet.extensions=jpg", "sling.servlet.extensions=png", "sling.servlet.extensions=gif",
+        "sling.servlet.methods=GET" })
 public class StaticImageGETServlet extends AbstractImageServlet {
 
     @Override
-    protected Layer createLayer(ImageContext c)
-        throws RepositoryException, IOException {
+    protected Layer createLayer(ImageContext c) throws RepositoryException, IOException {
         // don't create the layer yet. handle everything later
         return null;
     }
@@ -71,10 +66,8 @@ public class StaticImageGETServlet extends AbstractImageServlet {
     }
 
     @Override
-    protected void writeLayer(SlingHttpServletRequest req,
-        SlingHttpServletResponse resp,
-        ImageContext imageContext, Layer layer)
-        throws IOException, RepositoryException {
+    protected void writeLayer(SlingHttpServletRequest req, SlingHttpServletResponse resp, ImageContext imageContext,
+        Layer layer) throws IOException, RepositoryException {
 
         Image image = new Image(imageContext.resource);
         image = getImage(resp, imageContext, image);
@@ -101,8 +94,8 @@ public class StaticImageGETServlet extends AbstractImageServlet {
         resp.flushBuffer();
     }
 
-    protected boolean isModified(SlingHttpServletRequest req, SlingHttpServletResponse resp, ImageContext imageContext, Layer layer,
-        Image image, boolean modified) throws RepositoryException {
+    protected boolean isModified(SlingHttpServletRequest req, SlingHttpServletResponse resp, ImageContext imageContext,
+        Layer layer, Image image, boolean modified) throws RepositoryException {
         if (layer != null) {
             // crop
             modified = image.crop(layer) != null;

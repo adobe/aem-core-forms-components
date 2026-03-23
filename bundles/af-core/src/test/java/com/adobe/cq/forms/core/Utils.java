@@ -21,13 +21,19 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.json.Json;
 import javax.json.JsonReader;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,6 +45,7 @@ import com.adobe.cq.wcm.core.components.internal.jackson.PageModuleProvider;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.base.Joiner;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
@@ -95,7 +102,8 @@ public class Utils {
      * @param expectedJsonResource
      *            the class path resource providing the expected JSON object
      */
-    public static void testJSONExport(Object model, String expectedJsonResource, Class<? extends Views.Publish> viewType) {
+    public static void testJSONExport(Object model, String expectedJsonResource,
+        Class<? extends Views.Publish> viewType) {
         InputStream modeInputStream = getJson(model, viewType);
         JsonReader outputReader = Json.createReader(modeInputStream);
         InputStream is = Utils.class.getResourceAsStream(expectedJsonResource);
@@ -130,7 +138,8 @@ public class Utils {
     /**
      * The given model is validated against adaptive form specification
      *
-     * @param model reference to the sling model
+     * @param model
+     *            reference to the sling model
      */
     public static void testSchemaValidation(@NotNull Object model) {
         // we check complete json in schema validation, to validate complete model json
@@ -144,7 +153,8 @@ public class Utils {
             JsonSchema schema = schemaFactory.getSchema(schemaStream);
             // read data from the stream and store it into JsonNode
             JsonNode json = objectMapper.readTree(jsonStream);
-            // if there is a version bump of schema, then it needs to be validated against its corresponding sling model here
+            // if there is a version bump of schema, then it needs to be validated against its corresponding sling model
+            // here
             // by explicitly checking the model implementation
             if (!(model instanceof FormContainerImpl)) {
                 InputStream formContainerTemplate = Utils.class.getResourceAsStream("/schema/0.15.2/form.json");
@@ -157,12 +167,48 @@ public class Utils {
             // show the validation errors
             if (!validationResult.isEmpty()) {
                 // show all the validation error
-                fail(String.format("Error found during schema validation : %s",
-                    Joiner.on(" ").join(validationResult)));
+                fail(String.format("Error found during schema validation : %s", Joiner.on(" ").join(validationResult)));
             }
         } catch (IOException ex) {
-            fail(String.format("Unable to validate form model definition : %s",
-                ex.getMessage()));
+            fail(String.format("Unable to validate form model definition : %s", ex.getMessage()));
+        }
+    }
+
+    /**
+     * Loads a JCR authoring schema by its YAML classpath path. The schema and all its $ref dependencies are resolved
+     * via a shared temp-directory cache initialised on first call — no pre-flattened JSON copies are needed.
+     *
+     * @param yamlClasspathPath
+     *            e.g. "/authoring-schema/components/textinput.authoring.schema.yaml"
+     * 
+     * @return the loaded {@link JsonSchema} ready for validation
+     */
+    public static JsonSchema loadAuthoringSchema(@NotNull String yamlClasspathPath) {
+        return SchemaCache.load(yamlClasspathPath);
+    }
+
+    /**
+     * Validates the JCR ValueMap of a resource against the JCR authoring schema for a component. The schema is loaded
+     * from the shared {@link SchemaCache} which resolves all $ref chains at runtime — no pre-flattened JSON schema
+     * files are needed in source control.
+     *
+     * @param resource
+     *            the Sling resource whose ValueMap to validate
+     * @param yamlClasspathPath
+     *            classpath path to the component YAML authoring schema, e.g.
+     *            "/authoring-schema/components/textinput.authoring.schema.yaml"
+     */
+    public static void testJcrSchemaValidation(@NotNull Resource resource, @NotNull String yamlClasspathPath) {
+        try {
+            JsonSchema schema = SchemaCache.load(yamlClasspathPath);
+            JsonNode jcrNode = new ObjectMapper().valueToTree(resource.getValueMap());
+            Set<ValidationMessage> errors = schema.validate(jcrNode);
+            if (!errors.isEmpty()) {
+                fail(String.format("JCR authoring schema validation failed for %s: %s", resource.getPath(),
+                    Joiner.on(" ").join(errors)));
+            }
+        } catch (Exception ex) {
+            fail("Unable to validate JCR node against authoring schema: " + ex.getMessage());
         }
     }
 
@@ -187,6 +233,7 @@ public class Utils {
      *            the test base folder (under the {@code src/test/resources} folder)
      * @param testResourcePath
      *            the test resource path in the virtual repository
+     * 
      * @return the expected class path location of the JSON exporter file
      */
     public static String getTestExporterJSONPath(String testBase, String testResourcePath) {
@@ -196,9 +243,12 @@ public class Utils {
     /**
      * Set internal state on a private field.
      *
-     * @param target target object to set the private field
-     * @param field name of the private field
-     * @param value value of the private field
+     * @param target
+     *            target object to set the private field
+     * @param field
+     *            name of the private field
+     * @param value
+     *            value of the private field
      */
     @SuppressWarnings("squid:S00112")
     public static void setInternalState(Object target, String field, Object value) {
@@ -208,7 +258,8 @@ public class Utils {
             f.setAccessible(true);
             f.set(target, value);
         } catch (IllegalAccessException | RuntimeException e) {
-            throw new RuntimeException("Unable to set internal state on a private field. Please report to mockito mailing list.", e);
+            throw new RuntimeException(
+                "Unable to set internal state on a private field. Please report to mockito mailing list.", e);
         }
     }
 
@@ -219,10 +270,8 @@ public class Utils {
             f = getField(clazz, field);
         }
         if (f == null) {
-            throw new IllegalArgumentException(
-                "You want me to get this field: '" + field +
-                    "' on this class: '" + clazz.getSimpleName() +
-                    "' but this field is not declared withing hierarchy of this class!");
+            throw new IllegalArgumentException("You want me to get this field: '" + field + "' on this class: '"
+                + clazz.getSimpleName() + "' but this field is not declared withing hierarchy of this class!");
         }
         return f;
     }
@@ -250,6 +299,59 @@ public class Utils {
             return method;
         } catch (NoSuchMethodException e) {
             return null;
+        }
+    }
+
+    /**
+     * Lazily initialises a shared temp-directory tree of JSON-converted authoring schemas. All *.yaml files under the
+     * /authoring-schema classpath directory are converted once per JVM and written to a mirrored temp directory so
+     * networknt can resolve relative $refs via file: URIs — no pre-flattened JSON copies needed in source control.
+     */
+    private static final class SchemaCache {
+
+        private static final String SCHEMA_ROOT = "/authoring-schema";
+
+        static final Path TEMP_DIR;
+        static final JsonSchemaFactory FACTORY = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+
+        static {
+            try {
+                TEMP_DIR = Files.createTempDirectory("jcr-authoring-schema-");
+                ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
+                ObjectMapper jsonMapper = new ObjectMapper();
+                URL rootUrl = SchemaCache.class.getResource(SCHEMA_ROOT);
+                if (rootUrl == null) {
+                    throw new IllegalStateException(
+                        "Authoring schema directory not found on classpath: " + SCHEMA_ROOT);
+                }
+                Path resourceRoot = Paths.get(rootUrl.toURI());
+                try (Stream<Path> walk = Files.walk(resourceRoot)) {
+                    walk.filter(p -> p.toString().endsWith(".yaml")).forEach(yamlPath -> {
+                        try {
+                            Path rel = resourceRoot.relativize(yamlPath);
+                            Path out = TEMP_DIR.resolve(rel.toString());
+                            Files.createDirectories(out.getParent());
+                            try (InputStream in = Files.newInputStream(yamlPath)) {
+                                ObjectNode node = (ObjectNode) yamlMapper.readTree(in);
+                                node.remove("$id");
+                                jsonMapper.writerWithDefaultPrettyPrinter().writeValue(out.toFile(), node);
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException("Failed to convert schema: " + yamlPath, e);
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                throw new ExceptionInInitializerError(e);
+            }
+        }
+
+        static JsonSchema load(String yamlClasspathPath) {
+            String rel = yamlClasspathPath.substring(SCHEMA_ROOT.length());
+            if (rel.startsWith("/")) {
+                rel = rel.substring(1);
+            }
+            return FACTORY.getSchema(TEMP_DIR.resolve(rel).toUri());
         }
     }
 }

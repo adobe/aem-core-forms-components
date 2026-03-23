@@ -179,8 +179,7 @@ public class ComponentUtilsTest {
         // Configure mock response
         when(mockStatusLine.getStatusCode()).thenReturn(200);
         when(mockResponse.getStatusLine()).thenReturn(mockStatusLine);
-        when(mockResponse.getEntity()).thenReturn(
-            new StringEntity("{\"supported\":[\"spreadsheet\",\"email\"]}"));
+        when(mockResponse.getEntity()).thenReturn(new StringEntity("{\"supported\":[\"spreadsheet\",\"email\"]}"));
 
         // Wire up mock chain
         when(mockClientFactory.newBuilder()).thenReturn(mockHttpClientBuilder);

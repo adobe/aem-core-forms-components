@@ -139,13 +139,14 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         return Arrays.copyOf(exportedItemsOrder, exportedItemsOrder.length);
     }
 
-    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request,
+        @NotNull Class<T> modelClass) {
         List<Resource> filteredChildrenResources = getFilteredChildrenResources();
         return getChildrenModels(request, modelClass, filteredChildrenResources);
     }
 
-    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass,
-        List<Resource> filteredChildrenResources) {
+    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request,
+        @NotNull Class<T> modelClass, List<Resource> filteredChildrenResources) {
         Map<String, T> models = new LinkedHashMap<>();
         for (Resource child : filteredChildrenResources) {
             T model = null;
@@ -154,7 +155,8 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
                 ValueMap additionalProperties = new ValueMapDecorator(new HashMap<>());
                 additionalProperties.put("fd:channel", this.channel);
                 ValueMap properties = ValueMapUtil.merge(ResourceUtil.getValueMap(child), additionalProperties);
-                child = new ValueMapResource(child.getResourceResolver(), child.getPath(), child.getResourceType(), properties);
+                child = new ValueMapResource(child.getResourceResolver(), child.getPath(), child.getResourceType(),
+                    properties);
             }
             if (request != null) {
                 // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
@@ -167,10 +169,12 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
                         ((FormComponent) model).setLang(lang);
                     }
                 } catch (Exception e) {
-                    // Log the exception as info, since there can be site component inside form, but we don't care about they being adapted
+                    // Log the exception as info, since there can be site component inside form, but we don't care about
+                    // they being adapted
                     // or not
                     // by default, site component cannot be adapted with resource
-                    logger.info("Could not adapt resource {} to model class {}: {}", child.getPath(), modelClass.getName(), e.getMessage());
+                    logger.info("Could not adapt resource {} to model class {}: {}", child.getPath(),
+                        modelClass.getName(), e.getMessage());
                 }
             }
             if (model != null) {

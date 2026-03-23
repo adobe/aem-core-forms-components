@@ -1,0 +1,51 @@
+$id: captcha.authoring.schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Captcha JCR Authoring Properties
+description: >-
+  Shared properties for all Adaptive Form captcha components (reCAPTCHA, hCaptcha,
+  Turnstile). All three have fieldType=captcha and are distinguished at the JCR level
+  by sling:resourceType — NOT by fd:viewType (which is never written to JCR for any
+  captcha component). The captcha type surfaces in the runtime JSON via getProvider()
+  inside the fd:captcha.provider property.
+
+  Property name differences across implementations:
+    - reCAPTCHA v1: cloud service path = "rcCloudServicePath", size = "recaptchaSize"
+    - hCaptcha v1:  cloud service path = "cloudServicePath",   size = "size"
+    - Turnstile v1: cloud service path = "cloudServicePath",   size = "size"
+
+  All three extend AbstractCaptchaImpl → AbstractFieldImpl, so they inherit all
+  field and base properties.
+allOf:
+  - $ref: ../field.authoring.schema.yaml
+  - type: object
+    properties:
+      rcCloudServicePath:
+        type: string
+        title: reCAPTCHA cloud service configuration path
+        description: >-
+          Used by reCAPTCHA v1 only. JCR path to the cloud configuration resource
+          holding the reCAPTCHA site key, secret key, and version. Injected via
+          ReservedProperties.PN_RECAPTCHA_CLOUD_SERVICE_PATH ("rcCloudServicePath").
+          Note: hCaptcha and Turnstile use "cloudServicePath" instead.
+      cloudServicePath:
+        type: string
+        title: Cloud service configuration path (hCaptcha / Turnstile)
+        description: >-
+          Used by hCaptcha v1 and Turnstile v1. JCR path to the cloud configuration
+          resource. Injected via ReservedProperties.PN_CLOUD_SERVICE_PATH
+          ("cloudServicePath"). Note: reCAPTCHA v1 uses "rcCloudServicePath" instead.
+      recaptchaSize:
+        type: string
+        title: reCAPTCHA widget size
+        description: >-
+          Used by reCAPTCHA v1 only. Controls the visual size of the reCAPTCHA widget.
+          Injected via ReservedProperties.PN_RECAPTCHA_SIZE ("recaptchaSize").
+        enum:
+          - normal
+          - compact
+      size:
+        type: string
+        title: Widget size (hCaptcha / Turnstile)
+        description: >-
+          Used by hCaptcha v1 and Turnstile v1. Controls the visual size of the
+          captcha widget. Injected via @Named("size").

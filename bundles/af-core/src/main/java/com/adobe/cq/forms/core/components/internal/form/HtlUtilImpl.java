@@ -24,9 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.forms.core.components.models.form.HtlUtil;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = HtlUtil.class)
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = HtlUtil.class)
 public class HtlUtilImpl implements HtlUtil {
     @SlingObject(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
@@ -34,7 +32,8 @@ public class HtlUtilImpl implements HtlUtil {
 
     public Boolean isEdgeDeliveryRequest() {
         if (request != null) {
-            Object isEdgeDelivery = request.getAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet");
+            Object isEdgeDelivery = request
+                .getAttribute("com.adobe.aem.wcm.franklin.internal.servlets.FranklinDeliveryServlet");
             return isEdgeDelivery != null && isEdgeDelivery.equals(Boolean.TRUE);
         }
         return false;

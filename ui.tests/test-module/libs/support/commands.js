@@ -298,7 +298,14 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
             } else {
                 cy.get(path).then($header => {
                     if (!$header.is(':visible')) {
+                        cy.get(siteSelectors.overlays.self).scrollIntoView();
                         cy.get(selector).first().click({force: true});
+                        // AEM may still be processing dialog close; retry once if toolbar is still hidden
+                        cy.get(path).then($el => {
+                            if (!$el.is(':visible')) {
+                                cy.get(selector).first().click({force: true});
+                            }
+                        });
                         cy.get(path).should('be.visible');
                     } else {
                         cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click

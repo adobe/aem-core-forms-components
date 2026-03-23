@@ -63,11 +63,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Fragment.class, ComponentExporter.class },
+    adapters = { Fragment.class,
+        ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_FRAGMENT_V1 })
-@Exporter(
-    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
-    extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class FragmentImpl extends PanelImpl implements Fragment {
 
     public static final String CUSTOM_FRAGMENT_PROPERTY_WRAPPER = "fd:fragment";
@@ -136,7 +135,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         return new LinkedHashMap<>(itemModels);
     }
 
-    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+    protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request,
+        @NotNull Class<T> modelClass) {
         if (fragmentContainer == null) {
             return new LinkedHashMap<>();
         }
@@ -159,7 +159,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                 }
             };
         }
-        Map<String, T> models = getChildrenModels(wrappedSlingHttpServletRequest, modelClass, filteredChildrenResources);
+        Map<String, T> models = getChildrenModels(wrappedSlingHttpServletRequest, modelClass,
+            filteredChildrenResources);
 
         // Set i18n for fragment children since they are processed with request != null
         // Use fragment container-specific i18n to ensure correct resource bundle path
@@ -178,9 +179,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     /**
-     * Creates a new I18n object for fragment children using the fragment container resource path
-     * instead of the parent form's resource path. This ensures that fragment children use the
-     * correct resource bundle path for translations.
+     * Creates a new I18n object for fragment children using the fragment container resource path instead of the parent
+     * form's resource path. This ensures that fragment children use the correct resource bundle path for translations.
      * 
      * @return a new I18n object configured for the fragment container resource
      */
@@ -199,7 +199,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                     // Use the fragment container's resource bundle if available
                     resourceBundle = resourceBundleProvider.getResourceBundle(baseName, desiredLocale);
                 } else {
-                    // Fallback to a random UUID-based resource bundle if fragment-specific translations are not available
+                    // Fallback to a random UUID-based resource bundle if fragment-specific translations are not
+                    // available
                     resourceBundle = resourceBundleProvider.getResourceBundle("/" + UUID.randomUUID(), desiredLocale);
                 }
             }

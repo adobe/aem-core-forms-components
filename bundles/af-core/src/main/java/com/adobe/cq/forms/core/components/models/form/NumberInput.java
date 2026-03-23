@@ -21,7 +21,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Defines the form {@code NumberInput} Sling Model used for the {@code /apps/core/fd/components/form/numberinput/v1/numberinput} component.
+ * Defines the form {@code NumberInput} Sling Model used for the
+ * {@code /apps/core/fd/components/form/numberinput/v1/numberinput} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
@@ -35,6 +36,7 @@ public interface NumberInput extends Field, NumberConstraintV2 {
 
     /**
      * @see BaseConstraint#getType()
+     * 
      * @since com.adobe.cq.wcm.core.components.models.form 4.4.0
      */
     @Override

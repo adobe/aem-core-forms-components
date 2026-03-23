@@ -20,8 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ThankYouOption {
-    PAGE("page"),
-    MESSAGE("message");
+    PAGE("page"), MESSAGE("message");
 
     private String value;
 
@@ -30,11 +29,14 @@ public enum ThankYouOption {
     }
 
     /**
-     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided string
-     * representation.
+     * Given a {@link String} <code>value</code>, this method returns the enum's value that corresponds to the provided
+     * string representation.
      *
-     * @param value the string representation for which an enum value should be returned
+     * @param value
+     *            the string representation for which an enum value should be returned
+     * 
      * @return the corresponding enum value
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     public static ThankYouOption fromString(String value) {
@@ -50,6 +52,7 @@ public enum ThankYouOption {
      * Returns the string value of this enum constant.
      *
      * @return the string value of this enum constant
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 4.4.0
      */
     public String getValue() {

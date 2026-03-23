@@ -28,6 +28,7 @@ public interface Button extends Base {
      * Returns the button value.
      *
      * @return the button value
+     * 
      * @since com.adobe.cq.forms.core.components.models 2.1.0
      */
     default String getValue() {
@@ -38,6 +39,7 @@ public interface Button extends Base {
      * Returns the button icon identifier.
      *
      * @return the button icon identifier
+     * 
      * @since com.adobe.cq.forms.core.components.models 2.1.0
      */
     default String getIcon() {
@@ -48,6 +50,7 @@ public interface Button extends Base {
      * Returns the button default value.
      *
      * @return the button icon identifier
+     * 
      * @since com.adobe.cq.forms.core.components.models 2.1.0
      */
     default String getDefault() {

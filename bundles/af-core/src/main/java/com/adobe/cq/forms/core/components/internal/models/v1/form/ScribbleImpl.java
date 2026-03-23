@@ -38,11 +38,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = { Scribble.class, ComponentExporter.class },
+    adapters = { Scribble.class,
+        ComponentExporter.class },
     resourceType = "core/fd/components/form/scribble/v1/scribble")
-@Exporter(
-    name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
-    extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ScribbleImpl extends AbstractFieldImpl implements Scribble {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)

@@ -31,6 +31,7 @@ public interface StringConstraint extends BaseConstraint, FormatConstraint {
      * Returns the minimum length of the data. The constraint is applicable only for field with type string
      *
      * @return minimum length of the data
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -40,17 +41,20 @@ public interface StringConstraint extends BaseConstraint, FormatConstraint {
      * Returns the maximum length of the data. The constraint is applicable only for field with type string
      *
      * @return maximum length of the data
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Integer getMaxLength();
 
     /**
-     * As specified in the JSON Schema specification, the regex against which the value of the field should be tested with.
+     * As specified in the JSON Schema specification, the regex against which the value of the field should be tested
+     * with.
      *
      * Returns the regex. The constraint is applicable only for field with type string
      *
      * @return string represented as pattern
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     default String getPattern() {

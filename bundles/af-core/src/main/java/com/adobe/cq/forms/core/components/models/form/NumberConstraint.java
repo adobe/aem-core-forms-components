@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * A interface which specifies the different form number type constraints
  *
  * @deprecated Use {@link NumberConstraintV2} instead.
+ * 
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @Deprecated
@@ -34,6 +35,7 @@ public interface NumberConstraint {
      * Returns the minimum value for the number. The constraint is applicable only for field with type number
      *
      * @return minimum value for the number
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -46,6 +48,7 @@ public interface NumberConstraint {
      * Returns the maximum value for the number. The constraint is applicable only for field with type number
      *
      * @return maximum value for the number
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -58,6 +61,7 @@ public interface NumberConstraint {
      * Returns the Maximum value (exclusive) that can be entered by the user.
      *
      * @return maximum value (exclusive) for the number
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -70,6 +74,7 @@ public interface NumberConstraint {
      * Returns the minimum value (exclusive) that can be entered by the user.
      *
      * @return minimum value (exclusive) for the number
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)

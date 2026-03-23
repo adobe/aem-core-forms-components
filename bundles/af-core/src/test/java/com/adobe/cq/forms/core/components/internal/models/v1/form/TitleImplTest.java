@@ -155,12 +155,13 @@ public class TitleImplTest {
     void testTitleWithLocale() throws Exception {
         context.currentResource(PATH_TITLE);
         // added this since AF API expects this to be present
-        GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class, Mockito.mock(
-            GuideLocalizationService.class));
+        GuideLocalizationService guideLocalizationService = context.registerService(GuideLocalizationService.class,
+            Mockito.mock(GuideLocalizationService.class));
         Mockito.when(guideLocalizationService.getSupportedLocales()).thenReturn(new String[] { "en", "de" });
-        MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context.getService(ResourceBundleProvider.class);
-        MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider.getResourceBundle(
-            "/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
+        MockResourceBundleProvider bundleProvider = (MockResourceBundleProvider) context
+            .getService(ResourceBundleProvider.class);
+        MockResourceBundle resourceBundle = (MockResourceBundle) bundleProvider
+            .getResourceBundle("/content/dam/formsanddocuments/demo/jcr:content/dictionary", new Locale("de"));
         resourceBundle.putAll(new HashMap<String, String>() {
             {
                 put("guideContainer##title##text##5648", "Title");

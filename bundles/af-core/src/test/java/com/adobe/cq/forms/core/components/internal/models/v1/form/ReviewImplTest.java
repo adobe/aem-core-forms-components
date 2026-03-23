@@ -54,8 +54,8 @@ public class ReviewImplTest {
     public void testGetLinkedPanelsWithNonNullArray() throws IOException {
         Review review = Utils.getComponentUnderTest(PATH_REVIEW, ReviewImpl.class, context);
         String[] linkedPanels = review.getLinkedPanels();
-        String[] expectedLinkedPanels = context.resourceResolver().getResource(PATH_REVIEW).getValueMap().get("fd:linkedPanels",
-            String[].class);
+        String[] expectedLinkedPanels = context.resourceResolver().getResource(PATH_REVIEW).getValueMap()
+            .get("fd:linkedPanels", String[].class);
         assertNotNull(expectedLinkedPanels);
         assertArrayEquals(expectedLinkedPanels, linkedPanels);
     }

@@ -74,10 +74,8 @@ public class FormStructureParserImplTest {
 
             @Override
             public Iterable<Resource> filterChildResources(Iterable<Resource> childResources) {
-                return StreamSupport
-                    .stream(childResources.spliterator(), false)
-                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName()))
-                    .collect(Collectors.toList());
+                return StreamSupport.stream(childResources.spliterator(), false)
+                    .filter(r -> !IGNORED_NODE_NAMES.contains(r.getName())).collect(Collectors.toList());
             }
         });
     }
@@ -108,10 +106,12 @@ public class FormStructureParserImplTest {
         HashMap<String, Object> formJson = (HashMap<String, Object>) new ObjectMapper().readValue(formDef,
             new TypeReference<Map<String, Object>>() {});
         Assertions.assertNotNull(formStructureParser.getFormDefinition());
-        Map<String, Object> datepicker = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items")).get("datepicker");
+        Map<String, Object> datepicker = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items"))
+            .get("datepicker");
         Assertions.assertEquals(datepicker.get("description"), "<p>dummy</p>");
         Assertions.assertEquals(datepicker.get("tooltip"), "<p>test-short-description</p>");
-        Map<String, Object> textinput = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items")).get("textinput");
+        Map<String, Object> textinput = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items"))
+            .get("textinput");
         Assertions.assertEquals(textinput.get("description"),
             "&lt;ul>&#xa;&lt;li style=&quot;font-weight: bold;&quot;>&lt;strong>abc&lt;/strong>&lt;/li>&#xa;&lt;li style=&quot;font-weight: bold;&quot;>&lt;strong>def&lt;/strong>&lt;/li>&#xa;&lt;li style=&quot;font-weight: bold;&quot;>&lt;strong>xyz&lt;/strong>&lt;/li>&#xa;&lt;/ul>");
         Assertions.assertEquals(textinput.get("pattern"),
@@ -124,7 +124,8 @@ public class FormStructureParserImplTest {
 
     @Test
     void testFormContainerPathEmbedWithoutIframe() {
-        FormStructureParser formStructureParser = getFormStructureParserUnderTest(JCR_CONTENT_PATH, FORM_CONTAINER_PATH);
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(JCR_CONTENT_PATH,
+            FORM_CONTAINER_PATH);
         assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
     }
 
@@ -185,12 +186,14 @@ public class FormStructureParserImplTest {
     void testGetThemeEditorThemeRef() {
         Resource formContainer = context.resourceResolver().getResource(FORM_CONTAINER_PATH);
         ModifiableValueMap formContainerProps = formContainer.adaptTo(ModifiableValueMap.class);
-        formContainerProps.put(FormContainer.PN_CLIENT_LIB_REF, "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
+        formContainerProps.put(FormContainer.PN_CLIENT_LIB_REF,
+            "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
 
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
-        request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
+        request.setAttribute(ThemeConstants.THEME_OVERRIDE,
+            "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
         String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);
@@ -201,7 +204,8 @@ public class FormStructureParserImplTest {
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
-        request.setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
+        request.setAttribute(ThemeConstants.THEME_OVERRIDE,
+            "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
         String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);

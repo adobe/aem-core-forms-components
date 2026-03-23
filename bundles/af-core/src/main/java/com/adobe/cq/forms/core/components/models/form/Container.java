@@ -43,6 +43,7 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
      * Returns the list of items present inside the container as an array.
      *
      * @return list of items
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -53,6 +54,7 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
 
     /**
      * @see ContainerExporter#getExportedItems()
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @NotNull
@@ -78,6 +80,7 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
 
     /**
      * @see ContainerExporter#getExportedType()
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @NotNull
@@ -94,6 +97,7 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
 
     /**
      * @return returns the role attribute that will be applied on the container.
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 5.4.3
      */
     @Nullable
@@ -103,7 +107,8 @@ public interface Container extends Base, BaseConstraint, ContainerExporter {
     }
 
     // the below mentioned interface methods are copied from ResponsiveGridExporter
-    // done because CM throws this, the product interface com.day.cq.wcm.foundation.model.responsivegrid.export.ResponsiveGridExporter
+    // done because CM throws this, the product interface
+    // com.day.cq.wcm.foundation.model.responsivegrid.export.ResponsiveGridExporter
     // annotated with @ProviderType should not be implemented by custom code.
 
     /**

@@ -28,9 +28,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.forms.core.components.models.form.FormConfigurationProvider;
 
-@Model(
-    adaptables = { Resource.class },
-    adapters = FormConfigurationProvider.class)
+@Model(adaptables = { Resource.class }, adapters = FormConfigurationProvider.class)
 public class FormConfigurationProviderImpl implements FormConfigurationProvider {
 
     private static final String CUSTOM_FUNCTION_CONFIG_BUCKET_NAME = "settings/cloudconfigs";
@@ -51,8 +49,8 @@ public class FormConfigurationProviderImpl implements FormConfigurationProvider 
     public String getCustomFunctionModuleUrl() {
         String customFunctionUrl = "";
         if (resource != null && configurationResourceResolver != null) {
-            Resource configResource = configurationResourceResolver.getResource(resource, CUSTOM_FUNCTION_CONFIG_BUCKET_NAME,
-                CUSTOM_FUNCTION_CONFIG_NAME);
+            Resource configResource = configurationResourceResolver.getResource(resource,
+                CUSTOM_FUNCTION_CONFIG_BUCKET_NAME, CUSTOM_FUNCTION_CONFIG_NAME);
             if (configResource != null) {
                 Resource jcrResource = configResource.getChild(JcrConstants.JCR_CONTENT);
                 if (jcrResource != null) {

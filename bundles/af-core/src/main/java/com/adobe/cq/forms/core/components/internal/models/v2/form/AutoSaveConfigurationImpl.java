@@ -32,9 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Model(
-    adaptables = { SlingHttpServletRequest.class, Resource.class },
-    adapters = AutoSaveConfiguration.class)
+@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = AutoSaveConfiguration.class)
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class AutoSaveConfigurationImpl implements AutoSaveConfiguration {
 

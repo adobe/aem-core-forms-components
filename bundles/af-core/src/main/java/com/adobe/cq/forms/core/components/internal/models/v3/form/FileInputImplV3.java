@@ -76,8 +76,6 @@ public class FileInputImplV3 extends FileInputImplV2 {
                 acceptExtensions[i] = "." + acceptExtensions[i];
             }
         }
-        return Optional.ofNullable(acceptExtensions)
-            .map(Arrays::asList)
-            .orElse(Collections.emptyList());
+        return Optional.ofNullable(acceptExtensions).map(Arrays::asList).orElse(Collections.emptyList());
     }
 }

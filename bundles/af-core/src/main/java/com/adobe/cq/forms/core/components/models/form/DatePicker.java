@@ -20,7 +20,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * Defines the form {@code DatePicker} Sling Model used for the {@code /apps/core/fd/components/form/datepicker/v1/datepicker} component.
+ * Defines the form {@code DatePicker} Sling Model used for the
+ * {@code /apps/core/fd/components/form/datepicker/v1/datepicker} component.
  *
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
@@ -29,6 +30,7 @@ public interface DatePicker extends Field, DateConstraint {
 
     /**
      * @see Field#getDefault()
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 2.0.0
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER, timezone = "UTC")

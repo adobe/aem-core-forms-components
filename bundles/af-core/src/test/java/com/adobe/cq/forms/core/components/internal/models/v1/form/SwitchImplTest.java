@@ -47,9 +47,11 @@ public class SwitchImplTest {
 
     private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/switch-enableUncheckedValueFalse";
     private static final String PATH_SWITCH_ENABLEUNCHECKED_BOOLEAN = CONTENT_ROOT + "/switch-boolean";
-    private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF_BOOLEAN = CONTENT_ROOT + "/switch-enableUncheckedValueFalse-boolean";
+    private static final String PATH_SWITCH_ENABLEUNCHECKEDOFF_BOOLEAN = CONTENT_ROOT
+        + "/switch-enableUncheckedValueFalse-boolean";
     private static final String PATH_SWITCH_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/switch-without-fieldtype";
-    private static final String PATH_SWITCH_OPTION_SCREEN_READER_LABEL = CONTENT_ROOT + "/switch-option-screenreader-label";
+    private static final String PATH_SWITCH_OPTION_SCREEN_READER_LABEL = CONTENT_ROOT
+        + "/switch-option-screenreader-label";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
