@@ -431,6 +431,10 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                     name="./readOnly@TypeHint"
                                                     value="Boolean"/>
+                                            <fd-viewType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fd:viewType"/>
                                         </items>
                                     </column>
                                 </items>
