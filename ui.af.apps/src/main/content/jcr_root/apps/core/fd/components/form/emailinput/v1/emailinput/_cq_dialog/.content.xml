@@ -86,6 +86,11 @@
                                                             value="email"/>
                                                 </items>
                                             </autocomplete-email>
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fieldType"
+                                                    value="email"/>
                                         </items>
                                     </column>
                                 </items>

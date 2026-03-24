@@ -94,6 +94,11 @@
                                                               value="vertical"/>
                                                 </items>
                                             </orientation>
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fieldType"
+                                                    value="radio-group"/>
                                         </items>
                                     </column>
                                 </items>

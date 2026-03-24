@@ -36,6 +36,11 @@
                                                     fieldLabel="Default date and time"
                                                     emptyText="YYYY-MM-DD HH:mm:ss"
                                                     name="./default"/>
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fieldType"
+                                                    value="datetime-input"/>
 
                                         </items>
                                     </column>

@@ -194,6 +194,11 @@
                                                             value="cc-type"/>
                                                 </items>
                                             </autocomplete>
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fieldType"
+                                                    value="text-input"/>
                                         </items>
                                     </column>
                                 </items>

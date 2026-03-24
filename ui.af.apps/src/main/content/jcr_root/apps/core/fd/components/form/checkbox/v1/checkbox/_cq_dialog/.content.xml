@@ -105,6 +105,11 @@
                                               sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                               fieldLabel="Default value"
                                               name="./default"/>
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fieldType"
+                                                    value="checkbox"/>
                                         </items>
                                     </column>
                                 </items>

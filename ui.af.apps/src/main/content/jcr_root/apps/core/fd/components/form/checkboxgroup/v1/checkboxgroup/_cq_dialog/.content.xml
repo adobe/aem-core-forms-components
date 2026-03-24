@@ -102,6 +102,11 @@
                                                         name="./default"
                                                         required="{Boolean}false"/>
                                             </value>
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fieldType"
+                                                    value="checkbox-group"/>
                                         </items>
                                     </column>
                                 </items>

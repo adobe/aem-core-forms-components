@@ -71,6 +71,11 @@
                                             <readonly
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true" />
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fieldType"
+                                                    value="plain-text"/>
                                         </items>
                                     </column>
                                 </items>

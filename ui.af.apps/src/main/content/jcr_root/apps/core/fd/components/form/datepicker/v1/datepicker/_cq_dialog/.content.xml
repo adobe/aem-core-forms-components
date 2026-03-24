@@ -54,6 +54,11 @@
                                                     fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
                                                     fieldLabel="Default date"
                                                     name="./default"/>
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                    name="./fieldType"
+                                                    value="date-input"/>
                                         </items>
                                     </column>
                                 </items>
