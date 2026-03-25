@@ -76,10 +76,17 @@
                                 sling:hideResource="{Boolean}true" />
                         <fieldType
                                 jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                 name="./fieldType"
-                                value="button"
-                                required="{Boolean}true"/>
+                                required="{Boolean}true"
+                                granite:hidden="true">
+                            <items jcr:primaryType="nt:unstructured">
+                                <item jcr:primaryType="nt:unstructured"
+                                      text="Button"
+                                      value="button"
+                                      selected="{Boolean}true"/>
+                            </items>
+                        </fieldType>
                       </items>
                     </column>
                   </items>
