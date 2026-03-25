@@ -98,7 +98,8 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                     name="./fieldType"
-                                                    value="radio-group"/>
+                                                    value="radio-group"
+                                                    required="{Boolean}true"/>
                                         </items>
                                     </column>
                                 </items>

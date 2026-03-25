@@ -74,3 +74,6 @@ ui.tests/test-module/**/*.cy.json
 
 # Agent working artifacts
 docs/superpowers/
+
+# Git worktrees
+.worktrees/

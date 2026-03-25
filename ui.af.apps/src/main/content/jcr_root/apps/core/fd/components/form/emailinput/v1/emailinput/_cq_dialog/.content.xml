@@ -90,7 +90,8 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                     name="./fieldType"
-                                                    value="email"/>
+                                                    value="email"
+                                                    required="{Boolean}true"/>
                                         </items>
                                     </column>
                                 </items>

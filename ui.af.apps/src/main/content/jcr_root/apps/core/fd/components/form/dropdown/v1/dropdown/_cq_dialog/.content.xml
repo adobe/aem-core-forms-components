@@ -155,7 +155,8 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                     name="./fieldType"
-                                                    value="drop-down"/>
+                                                    value="drop-down"
+                                                    required="{Boolean}true"/>
                                         </items>
                                     </column>
                                 </items>

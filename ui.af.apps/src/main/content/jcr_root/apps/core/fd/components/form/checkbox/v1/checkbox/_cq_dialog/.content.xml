@@ -109,7 +109,8 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                     name="./fieldType"
-                                                    value="checkbox"/>
+                                                    value="checkbox"
+                                                    required="{Boolean}true"/>
                                         </items>
                                     </column>
                                 </items>

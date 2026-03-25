@@ -78,7 +78,8 @@
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                 name="./fieldType"
-                                value="button"/>
+                                value="button"
+                                required="{Boolean}true"/>
                       </items>
                     </column>
                   </items>

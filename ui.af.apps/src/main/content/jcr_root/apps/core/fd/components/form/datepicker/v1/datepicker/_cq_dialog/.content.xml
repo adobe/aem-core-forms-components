@@ -58,7 +58,8 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                     name="./fieldType"
-                                                    value="date-input"/>
+                                                    value="date-input"
+                                                    required="{Boolean}true"/>
                                         </items>
                                     </column>
                                 </items>
