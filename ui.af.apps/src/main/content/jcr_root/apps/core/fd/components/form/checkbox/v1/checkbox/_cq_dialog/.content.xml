@@ -74,7 +74,7 @@
                                                   jcr:primaryType="nt:unstructured"
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                   fieldLabel="When Checked, return value"
-                                                  fieldDescription="Specify the value to be returned when the checkbox is checked by the user."
+                                                  fieldDescription="Value submitted when the checkbox is checked. Enter the value as text. For boolean fields, use true. For numeric intent, enter values such as 1 as text."
                                                   name="./checkedValue"/>
                                                 <enableUncheckedValue
                                                   jcr:primaryType="nt:unstructured"
@@ -82,7 +82,7 @@
                                                   wrapperClass="cmp-adaptiveform-checkbox__enable-unchecked-value"
                                                   name="./enableUncheckedValue"
                                                   fieldLabel="Preserve Uncheck state value."
-                                                  fieldDescription="Specify the value to be returned when the checkbox is not checked by the user."
+                                                  fieldDescription="When enabled, the unchecked value is submitted when the checkbox is not selected."
                                                   uncheckedValue="false"
                                                   value="true">
                                                 </enableUncheckedValue>
@@ -96,6 +96,7 @@
                                                   fieldLabel="When Unchecked, return value"
                                                   jcr:primaryType="nt:unstructured"
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                  fieldDescription="Value submitted when the checkbox is unchecked. Used only when 'Preserve Uncheck state value' is enabled. Enter the value as text. For boolean fields, use false."
                                                   name="./uncheckedValue"/>
                                                 </items>
                                             </enumsCustom>
