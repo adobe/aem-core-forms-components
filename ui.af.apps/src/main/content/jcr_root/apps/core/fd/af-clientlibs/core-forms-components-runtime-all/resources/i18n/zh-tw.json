@@ -1,6 +1,6 @@
 {
   "FileCloseAccessText": "按 Enter 以刪除檔案",
-  "FileSizeGreater": "檔案 ${0} 的大小比預期大: ${1}MB。",
+  "FileSizeGreater": "檔案 ${0} 的大小比預期大: ${1}。",
   "FileNameInvalid": "不要附加以下檔案：檔案名稱以 (.) 開頭且包含 \\ / : * ? \" < > | ; % $，或檔案名稱為保留關鍵字，例如 nul、prn、con、lpt 或 com。",
   "FileMimeTypeInvalid": "${0} 檔案的檔案類型不受支援",
   "InternalFormSubmissionError": "提交表單時發生內部錯誤。",
