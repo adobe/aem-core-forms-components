@@ -33,6 +33,7 @@
             text="Edit Rules"/>
         <addrow
             jcr:primaryType="nt:unstructured"
+            condition="function(editable){return !CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderRow(editable);}"
             icon="tableRowAdd"
             handler="CQ.FormsCoreComponents.editorhooks.addTableRow"
             text="Add Row"/>
