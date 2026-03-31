@@ -22,7 +22,9 @@
 
     var RESOURCE_TYPE_TABLEROW = "core/fd/components/form/tablerow/v1/tablerow";
     var RESOURCE_TYPE_TEXTINPUT = "core/fd/components/form/textinput/v1/textinput";
+    var RESOURCE_TYPE_TEXT_DRAW = "core/fd/components/form/text/v1/text";
     var DELETE_ROW_DIALOG_ID = "core-forms-delete-table-row-dialog";
+    var DELETE_COLUMN_DIALOG_ID = "core-forms-delete-table-column-dialog";
 
     function getEditableDom(editable) {
         if (editable.dom && editable.dom.length) {
@@ -459,6 +461,292 @@
         }).fail(function () {
             author.ui.helpers.notify({
                 content: Granite.I18n.get("Could not resolve the next row for reorder."),
+                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+            });
+        });
+    };
+
+    /**
+     * True when the editable is Adaptive Form Text (draw) used inside a core table header column.
+     * @param {Granite.author.Editable} editable
+     * @returns {boolean}
+     */
+    window.CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell = function (editable) {
+        if (!editable || typeof editable.type !== "string") {
+            return false;
+        }
+        if (editable.type !== RESOURCE_TYPE_TEXT_DRAW) {
+            return false;
+        }
+        return $(getEditableDom(editable)).closest(".cmp-adaptiveform-table__head").length > 0;
+    };
+
+    function getTableEditableFromHeaderCellText(editable) {
+        var headerEditable = Granite.author.editables.getParent(editable);
+        if (!headerEditable) {
+            return null;
+        }
+        return Granite.author.editables.getParent(headerEditable);
+    }
+
+    function fetchOrderedChildNames(parentPath) {
+        return $.ajax({
+            url: Granite.HTTP.externalize(parentPath + ".1.json"),
+            type: "GET",
+            dataType: "json",
+            cache: false
+        }).then(function (json) {
+            return getOrderedChildResourceNames(json);
+        });
+    }
+
+    function getResourceTypeFromTableJson(tableJson, nodeName) {
+        var container = tableJson[":items"] && typeof tableJson[":items"] === "object"
+            ? tableJson[":items"]
+            : tableJson;
+        var item = container[nodeName];
+        return item && item["sling:resourceType"] ? item["sling:resourceType"] : null;
+    }
+
+    function buildHeaderTextColumnJson(uniqueSuffix) {
+        return {
+            "jcr:primaryType": "nt:unstructured",
+            "sling:resourceType": RESOURCE_TYPE_TEXT_DRAW,
+            "fieldType": "plain-text",
+            "jcr:title": Granite.I18n.get("Column"),
+            "name": "column_" + uniqueSuffix,
+            "value": Granite.I18n.get("Column")
+        };
+    }
+
+    function buildBodyTextInputJson(uniqueSuffix, colNumber) {
+        return {
+            "jcr:primaryType": "nt:unstructured",
+            "sling:resourceType": RESOURCE_TYPE_TEXTINPUT,
+            "fieldType": "text-input",
+            "jcr:title": Granite.I18n.get("Cell") + " " + colNumber
+        };
+    }
+
+    function postImportAndOrderAfter(targetPath, jsonContent, orderAfterNodeName) {
+        var importParams = {
+            "_charset_": "UTF-8",
+            ":operation": "import",
+            ":contentType": "json",
+            ":replace": true,
+            ":replaceProperties": true,
+            ":content": JSON.stringify(jsonContent)
+        };
+        var orderKey = getSlingOrderParam();
+        var orderParams = { "_charset_": "UTF-8" };
+        orderParams[orderKey] = "after " + orderAfterNodeName;
+        return $.ajax({
+            url: Granite.HTTP.externalize(targetPath),
+            type: "POST",
+            data: importParams
+        }).then(function () {
+            return $.ajax({
+                url: Granite.HTTP.externalize(targetPath),
+                type: "POST",
+                data: orderParams
+            });
+        });
+    }
+
+    /**
+     * Adds a column to the right of the selected header cell (new header label + one cell per body row).
+     * @param {Granite.author.Editable} editable selected header text field
+     */
+    window.CQ.FormsCoreComponents.editorhooks.addTableColumn = function (editable) {
+        var headerPath = editable.getParentPath();
+        var tablePath = headerPath.substring(0, headerPath.lastIndexOf("/"));
+        var selectedCellName = editable.path.substring(editable.path.lastIndexOf("/") + 1);
+        var tableEditable = getTableEditableFromHeaderCellText(editable);
+
+        fetchOrderedChildNames(headerPath).done(function (headerOrder) {
+            var colIndex = headerOrder.indexOf(selectedCellName);
+            if (colIndex < 0) {
+                author.ui.helpers.notify({
+                    content: Granite.I18n.get("Could not resolve the selected column."),
+                    type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+                });
+                return;
+            }
+            var orderAfterName = headerOrder[colIndex];
+            var uid = Date.now();
+            var newHeaderName = "column_" + uid;
+            var newHeaderPath = headerPath + "/" + newHeaderName;
+
+            postImportAndOrderAfter(newHeaderPath, buildHeaderTextColumnJson(uid), orderAfterName)
+                .then(function () {
+                    return $.ajax({
+                        url: Granite.HTTP.externalize(tablePath + ".1.json"),
+                        type: "GET",
+                        dataType: "json",
+                        cache: false
+                    });
+                })
+                .then(function (tableJson) {
+                    var rowNames = getOrderedChildResourceNames(tableJson);
+                    var chain = $.when();
+                    var dataRowIndex = 0;
+                    rowNames.forEach(function (rowName) {
+                        var rt = getResourceTypeFromTableJson(tableJson, rowName);
+                        if (rt !== RESOURCE_TYPE_TABLEROW) {
+                            return;
+                        }
+                        var rowPath = tablePath + "/" + rowName;
+                        (function (rp, rIndex) {
+                            chain = chain.then(function () {
+                                return fetchOrderedChildNames(rp).then(function (cellNames) {
+                                    if (colIndex < 0 || colIndex >= cellNames.length) {
+                                        return $.when();
+                                    }
+                                    var afterCell = cellNames[colIndex];
+                                    var newCellName = "cell_" + uid + "_" + rIndex;
+                                    var newCellPath = rp + "/" + newCellName;
+                                    return postImportAndOrderAfter(
+                                        newCellPath,
+                                        buildBodyTextInputJson(uid + "_" + rIndex, colIndex + 2),
+                                        afterCell
+                                    );
+                                });
+                            });
+                        })(rowPath, dataRowIndex);
+                        dataRowIndex += 1;
+                    });
+                    return chain;
+                })
+                .done(function () {
+                    if (tableEditable) {
+                        tableEditable.refresh();
+                    }
+                })
+                .fail(function () {
+                    author.ui.helpers.notify({
+                        content: Granite.I18n.get("Failed to add table column."),
+                        type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+                    });
+                });
+        }).fail(function () {
+            author.ui.helpers.notify({
+                content: Granite.I18n.get("Failed to read table header."),
+                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+            });
+        });
+    };
+
+    /**
+     * Deletes the column for the selected header cell (header label + same index cell in each body row).
+     * @param {Granite.author.Editable} editable selected header text field
+     */
+    window.CQ.FormsCoreComponents.editorhooks.deleteTableColumn = function (editable) {
+        var headerPath = editable.getParentPath();
+        var tablePath = headerPath.substring(0, headerPath.lastIndexOf("/"));
+        var selectedCellName = editable.path.substring(editable.path.lastIndexOf("/") + 1);
+        var tableEditable = getTableEditableFromHeaderCellText(editable);
+
+        fetchOrderedChildNames(headerPath).done(function (headerOrder) {
+            if (headerOrder.length <= 1) {
+                author.ui.helpers.notify({
+                    content: Granite.I18n.get("The table must keep at least one column."),
+                    type: author.ui.helpers.NOTIFICATION_TYPES.INFO
+                });
+                return;
+            }
+            var colIndex = headerOrder.indexOf(selectedCellName);
+            if (colIndex < 0) {
+                author.ui.helpers.notify({
+                    content: Granite.I18n.get("Could not resolve the selected column."),
+                    type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+                });
+                return;
+            }
+
+            $("#" + DELETE_COLUMN_DIALOG_ID).remove();
+
+            var dialog = new Coral.Dialog().set({
+                id: DELETE_COLUMN_DIALOG_ID,
+                header: {
+                    innerHTML: Granite.I18n.get("Delete Column")
+                },
+                content: {
+                    innerHTML: Granite.I18n.get("Do you want to delete the selected column from the table?")
+                },
+                footer: {},
+                closable: "on"
+            });
+
+            var yesBtn = new Coral.Button();
+            yesBtn.label.textContent = Granite.I18n.get("Yes");
+            yesBtn.variant = Coral.Button.variant.PRIMARY;
+            yesBtn.on("click", function () {
+                var headerCellPath = headerPath + "/" + selectedCellName;
+
+                $.ajax({
+                    url: Granite.HTTP.externalize(headerCellPath),
+                    type: "POST",
+                    data: getDeleteParams()
+                }).then(function () {
+                    return $.ajax({
+                        url: Granite.HTTP.externalize(tablePath + ".1.json"),
+                        type: "GET",
+                        dataType: "json",
+                        cache: false
+                    });
+                }).then(function (tableJson) {
+                    var rowNames = getOrderedChildResourceNames(tableJson);
+                    var chain = $.when();
+                    rowNames.forEach(function (rowName) {
+                        var rt = getResourceTypeFromTableJson(tableJson, rowName);
+                        if (rt !== RESOURCE_TYPE_TABLEROW) {
+                            return;
+                        }
+                        var rowPath = tablePath + "/" + rowName;
+                        chain = chain.then(function () {
+                            return fetchOrderedChildNames(rowPath).then(function (cellNames) {
+                                if (colIndex >= cellNames.length) {
+                                    return $.when();
+                                }
+                                var cellToRemove = rowPath + "/" + cellNames[colIndex];
+                                return $.ajax({
+                                    url: Granite.HTTP.externalize(cellToRemove),
+                                    type: "POST",
+                                    data: getDeleteParams()
+                                });
+                            });
+                        });
+                    });
+                    return chain;
+                }).done(function () {
+                    if (tableEditable) {
+                        tableEditable.refresh();
+                    }
+                }).fail(function () {
+                    author.ui.helpers.notify({
+                        content: Granite.I18n.get("Failed to delete table column."),
+                        type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+                    });
+                });
+
+                dialog.hide();
+                dialog.remove();
+            });
+
+            var noBtn = new Coral.Button();
+            noBtn.label.textContent = Granite.I18n.get("No");
+            noBtn.on("click", function () {
+                dialog.hide();
+                dialog.remove();
+            });
+
+            dialog.footer.appendChild(yesBtn);
+            dialog.footer.appendChild(noBtn);
+            document.body.appendChild(dialog);
+            dialog.show();
+        }).fail(function () {
+            author.ui.helpers.notify({
+                content: Granite.I18n.get("Failed to read table header."),
                 type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
             });
         });

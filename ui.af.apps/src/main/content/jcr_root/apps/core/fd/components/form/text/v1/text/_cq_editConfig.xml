@@ -150,5 +150,19 @@
                 handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"
                 icon="viewSOMExpression"
                 text="View Qualified Name"/>
+        <addcolumn
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.addTableColumn"
+                hidden="{Boolean}true"
+                icon="columnAdd"
+                text="Add Column"/>
+        <delcolumn
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.deleteTableColumn"
+                hidden="{Boolean}true"
+                icon="tableColumnRemove"
+                text="Delete Column"/>
     </cq:actionConfigs>
 </jcr:root>
