@@ -25,6 +25,7 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
 
     private static final String GUIDE_CONTAINER_V1 = "core/fd/components/form/container/v1/container";
     private static final String GUIDE_CONTAINER_V2 = "core/fd/components/form/container/v2/container";
+    private static final String GUIDE_CONTAINER_EDS = "fd/franklin/components/form/v1/form";
     private static final String ACTION_TYPE_FIELD = "./actionType";
     private static final String PREFILL_SERVICE_FIELD = "./prefillService";
     private static final String DATASOURCE_NODE = "datasource";
@@ -157,6 +158,8 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
             return false;
         }
         String normalizedComponentType = normalizeComponentType(componentType);
+        // TODO: Support EDS form container enrichment for fd/franklin/components/form/v1/form
+        // once AEM_EDGE content definition exposes compatible runtime-backed form properties.
         return GUIDE_CONTAINER_V1.equals(normalizedComponentType) || GUIDE_CONTAINER_V2.equals(normalizedComponentType);
     }
 
