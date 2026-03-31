@@ -1,6 +1,6 @@
 {
   "FileCloseAccessText": "按 Enter 可删除文件",
-  "FileSizeGreater": "文件 ${0} 大于预期大小: ${1}MB。",
+  "FileSizeGreater": "文件 ${0} 大于预期大小: ${1}。",
   "FileNameInvalid": "请勿附加文件名以 (.) 开头、包含 \\ / : * ? \" < > | ; % $ 或为保留关键字（如 nul、prn、con、lpt 或 com）的文件。",
   "FileMimeTypeInvalid": "文件 ${0} 的类型不受支持",
   "InternalFormSubmissionError": "提交表单时遇到内部错误。",
