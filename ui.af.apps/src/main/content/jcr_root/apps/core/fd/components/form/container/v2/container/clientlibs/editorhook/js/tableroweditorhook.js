@@ -286,8 +286,7 @@
             content[cellName] = {
                 "jcr:primaryType": "nt:unstructured",
                 "sling:resourceType": RESOURCE_TYPE_TEXTINPUT,
-                "fieldType": "text-input",
-                "jcr:title": Granite.I18n.get("Cell") + " " + (i + 1)
+                "fieldType": "text-input"
             };
         }
         return content;
@@ -519,12 +518,11 @@
         };
     }
 
-    function buildBodyTextInputJson(uniqueSuffix, colNumber) {
+    function buildBodyTextInputJson() {
         return {
             "jcr:primaryType": "nt:unstructured",
             "sling:resourceType": RESOURCE_TYPE_TEXTINPUT,
             "fieldType": "text-input",
-            "jcr:title": Granite.I18n.get("Cell") + " " + colNumber
         };
     }
 
@@ -607,7 +605,7 @@
                                     var newCellPath = rp + "/" + newCellName;
                                     return postImportAndOrderAfter(
                                         newCellPath,
-                                        buildBodyTextInputJson(uid + "_" + rIndex, colIndex + 2),
+                                        buildBodyTextInputJson(),
                                         afterCell
                                     );
                                 });
