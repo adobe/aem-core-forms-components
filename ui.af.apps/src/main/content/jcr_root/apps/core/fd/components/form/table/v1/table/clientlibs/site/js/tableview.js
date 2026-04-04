@@ -100,6 +100,46 @@
             this.initializeHelpContent(state);
             this.updateLabel(state.label);
         }
+
+        /**
+         * Repeatable table rows: align add/remove control visibility with minOccur / maxOccur (accordion pattern).
+         */
+        handleChildAddition(childView) {
+            this.#syncTableRowRepeatableControls(childView.getInstanceManager());
+        }
+
+        handleChildRemoval(removedInstanceView) {
+            this.#syncTableRowRepeatableControls(removedInstanceView.getInstanceManager());
+        }
+
+        #syncTableRowRepeatableControls(instanceManager) {
+            if (!instanceManager || !instanceManager.children || instanceManager.children.length === 0) {
+                return;
+            }
+            const model = instanceManager._model;
+            const items = model.items || [];
+            const activeIds = new Set(items.map((item) => item.id));
+            const minOccur = model.minOccur;
+            const maxOccur = model.maxOccur;
+            const dataVisible = FormView.Constants.DATA_ATTRIBUTE_VISIBLE;
+            instanceManager.children.forEach((childView) => {
+                if (!activeIds.has(childView.id)) {
+                    return;
+                }
+                const rowWrapper = childView.element && childView.element.parentElement;
+                if (!rowWrapper) {
+                    return;
+                }
+                const addBtn = rowWrapper.querySelector("[data-cmp-hook-add-instance]");
+                const removeBtn = rowWrapper.querySelector("[data-cmp-hook-remove-instance]");
+                if (addBtn) {
+                    addBtn.setAttribute(dataVisible, !(items.length === maxOccur && maxOccur !== -1));
+                }
+                if (removeBtn) {
+                    removeBtn.setAttribute(dataVisible, items.length > minOccur && minOccur !== -1);
+                }
+            });
+        }
     }
 
     FormView.Utils.setupField(({element, formContainer}) => {
