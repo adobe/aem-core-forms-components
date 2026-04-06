@@ -18,9 +18,35 @@
     let superSitesEditorAppendButton = ns.edit.Toolbar.prototype.appendButton;
 
     /**
+     * Table row cells must not expose the standard Delete action (row/column flows handle structure).
+     * @param {Granite.author.Editable} editable
+     * @returns {boolean}
+     */
+    function isEditableInsideCoreTableRow(editable) {
+        if (!editable || !ns.editables || typeof ns.editables.getParent !== "function") {
+            return false;
+        }
+        var p = ns.editables.getParent(editable);
+        while (p) {
+            if (typeof p.type === "string" && p.type.indexOf("/form/tablerow/") !== -1) {
+                return true;
+            }
+            p = ns.editables.getParent(p);
+        }
+        return false;
+    }
+
+    function shouldSuppressStandardDelete(editable, name) {
+        return editable && String(name).toUpperCase() === "DELETE" && isEditableInsideCoreTableRow(editable);
+    }
+
+    /**
      * @override
      */
     ns.edit.Toolbar.prototype.appendButton = function (editable, name, action) {
+        if (shouldSuppressStandardDelete(editable, name)) {
+            return;
+        }
         correctEditableEditorType(editable, name);
         superSitesEditorAppendButton.apply(this, [editable, name, action]);
     };
@@ -33,6 +59,9 @@
     if(window.guidelib){
         var superFormsEditorAppendButton = window.guidelib.touchlib.editToolbar.prototype.appendButton;
         window.guidelib.touchlib.editToolbar.prototype.appendButton = function (editable, name, action) {
+            if (shouldSuppressStandardDelete(editable, name)) {
+                return;
+            }
             //adding this check because we don't want to change editorType for v1 forms.
             if(window.guidelib.touchlib.utils.checkIfCoreComponentsBasedForm()){
                 correctEditableEditorType(editable, name);
