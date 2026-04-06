@@ -30,7 +30,10 @@
     margin-bottom: 1rem;
 }
 
-/* CSS Table Layout using divs */
+/*
+ * Widget: explicit display:table covers BOTH the edit-mode div wrapper AND the
+ * publish-mode <table> element (which already has display:table by default).
+ */
 .cmp-adaptiveform-table__widget {
     display: table;
     width: 100%;
@@ -38,6 +41,7 @@
     border: 1px solid #DDDDDD;
 }
 
+/* These are no-ops on real <thead>/<tbody> but required for the edit-mode divs. */
 .cmp-adaptiveform-table__head {
     display: table-header-group;
 }
@@ -46,21 +50,32 @@
     display: table-row-group;
 }
 
-/* Table header row (decoration div) */
+/* No-ops on real <tr> but required for edit-mode decoration divs. */
 .cmp-adaptiveform-tableheader {
     display: table-row;
 }
 
-/* Table body row (decoration div) */
 .cmp-adaptiveform-tablerow {
     display: table-row;
 }
 
-.cmp-adaptiveform-tablerow:hover {
+/*
+ * Row hover: target the CELLS directly so it works reliably in both paths:
+ *  - Edit mode (divs):  div.tablerow:hover → div.tablecell children
+ *  - Publish mode (<tr>/<td>): tr:hover → td children (needed because in CSS table
+ *    painting order the <td> background paints on top of the <tr> background, so
+ *    setting it on the <td> directly is the only guaranteed approach).
+ */
+.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow:hover > .cmp-adaptiveform-tablecell {
     background-color: #FAFAFA;
 }
 
-/* Table cells */
+/* Individual cell hover: slightly stronger tint + subtle inset ring. */
+.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow > .cmp-adaptiveform-tablecell:hover {
+    background-color: #F0F0F0;
+}
+
+/* No-ops on real <th>/<td> but required for edit-mode cell divs. */
 .cmp-adaptiveform-tablecell,
 .cmp-adaptiveform-tablehead {
     display: table-cell;
@@ -70,10 +85,19 @@
     vertical-align: top;
 }
 
-/* Header cells styling */
+/* Header cells base styling */
 .cmp-adaptiveform-table__head .cmp-adaptiveform-tablehead {
     background-color: #F5F5F5;
     font-weight: 600;
+}
+
+/* Header row hover */
+.cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader:hover > .cmp-adaptiveform-tablehead {
+    background-color: #EBEBEB;
+}
+
+.cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader > .cmp-adaptiveform-tablehead:hover {
+    background-color: #E0E0E0;
 }
 
 /* Mobile responsive */
