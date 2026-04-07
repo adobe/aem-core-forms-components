@@ -30,6 +30,29 @@
             this.children = [];
         }
 
+        /**
+         * For table rows in a single tbody, the row element is the repeatable unit.
+         * In edit mode with div wrappers, return the Sling wrapper div.
+         * @returns {HTMLElement}
+         */
+        getRepeatableDomWrapper() {
+            const parent = this.element.parentElement;
+            if (parent && parent.classList && parent.classList.contains(TableRow.bemBlock)) {
+                return parent;
+            }
+            return this.element;
+        }
+
+        /**
+         * Container where sibling rows are inserted — the {@code <tbody>} or div.table__body.
+         * @returns {HTMLElement}
+         */
+        getRepeatableInstancesContainerElement() {
+            const tableBody = this.element.closest(".cmp-adaptiveform-table__body") ||
+                this.element.closest("tbody");
+            return tableBody || this.element.parentElement;
+        }
+
         getClass() {
             return TableRow.IS;
         }

@@ -102,7 +102,68 @@
         }
 
         /**
-         * Repeatable table rows: align add/remove control visibility with minOccur / maxOccur (accordion pattern).
+         * Get the <tbody> element for row insertion.
+         */
+        #getTableBody() {
+            return this.element.querySelector(`.${Table.bemBlock}__body`) ||
+                   this.element.querySelector('tbody');
+        }
+
+        /**
+         * Inserts a new table row into the <tbody> at the correct position.
+         * This is called by InstanceManager.handleAddition() when repeatableParentView is set.
+         * Foundation-style approach: insert <tr> directly as sibling within single <tbody>.
+         * 
+         * @param {Object} instanceManager - The instance manager
+         * @param {Object} addedModel - The model of the added row
+         * @param {HTMLElement} htmlElement - The cloned row element (<tr>)
+         * @returns {HTMLElement} The inserted element
+         */
+        addRepeatableMarkup(instanceManager, addedModel, htmlElement) {
+            const tbody = this.#getTableBody();
+            if (!tbody) {
+                console.error('Table: No tbody found for row insertion');
+                return htmlElement;
+            }
+
+            const instanceIndex = addedModel.index;
+            const children = instanceManager.children;
+
+            if (children.length === 0) {
+                tbody.appendChild(htmlElement);
+            } else if (instanceIndex === 0) {
+                const firstChild = children[0];
+                if (firstChild && firstChild.element) {
+                    tbody.insertBefore(htmlElement, firstChild.element);
+                } else {
+                    tbody.insertBefore(htmlElement, tbody.firstElementChild);
+                }
+            } else {
+                const prevIndex = instanceIndex - 1;
+                const prevChild = children.find(c => c.getModel && c.getModel().index === prevIndex);
+                if (prevChild && prevChild.element) {
+                    prevChild.element.after(htmlElement);
+                } else {
+                    const items = instanceManager._model.items || [];
+                    const prevModel = items.find(m => m.index === prevIndex);
+                    if (prevModel) {
+                        const prevElement = tbody.querySelector(`#${prevModel.id}`);
+                        if (prevElement) {
+                            prevElement.after(htmlElement);
+                        } else {
+                            tbody.appendChild(htmlElement);
+                        }
+                    } else {
+                        tbody.appendChild(htmlElement);
+                    }
+                }
+            }
+
+            return htmlElement;
+        }
+
+        /**
+         * Repeatable table rows: align add/remove control visibility with minOccur / maxOccur.
          */
         handleChildAddition(childView) {
             this.#syncTableRowRepeatableControls(childView.getInstanceManager());
@@ -126,12 +187,12 @@
                 if (!activeIds.has(childView.id)) {
                     return;
                 }
-                const rowWrapper = childView.element && childView.element.parentElement;
-                if (!rowWrapper) {
+                const rowElement = childView.element;
+                if (!rowElement) {
                     return;
                 }
-                const addBtn = rowWrapper.querySelector("[data-cmp-hook-add-instance]");
-                const removeBtn = rowWrapper.querySelector("[data-cmp-hook-remove-instance]");
+                const addBtn = rowElement.querySelector("[data-cmp-hook-add-instance]");
+                const removeBtn = rowElement.querySelector("[data-cmp-hook-remove-instance]");
                 if (addBtn) {
                     addBtn.setAttribute(dataVisible, !(items.length === maxOccur && maxOccur !== -1));
                 }
