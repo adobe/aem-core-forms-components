@@ -87,6 +87,10 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Disabled"
                                                 cssSelector=".cmp-adaptiveform-review__edit-button:disabled"/>
+                                        <htmlDisabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled (HTML)"
+                                                cssSelector=".cmp-adaptiveform-review__edit-button[disabled=&quot;true&quot;]"/>
                                     </states>
                                 </reviewEditButton>
                             </items>
@@ -113,6 +117,13 @@
                                         longTitle="Review Panel Label Container"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
+                                        <reviewPanelLabelInLabelContainer
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Label"
+                                                id="af2_reviewpanellabel"
+                                                cssSelector=".cmp-adaptiveform-review__label-container .cmp-adaptiveform-review__label"
+                                                longTitle="Review Label"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
                                         <reviewPanelLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Label"
@@ -151,6 +162,10 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Disabled"
                                                         cssSelector=".cmp-adaptiveform-review__panel .cmp-adaptiveform-review__edit-button:disabled"/>
+                                                <htmlDisabled
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Disabled (HTML)"
+                                                        cssSelector=".cmp-adaptiveform-review__panel .cmp-adaptiveform-review__edit-button[disabled=&quot;true&quot;]"/>
                                             </states>
                                         </reviewPanelEditButton>
                                     </items>

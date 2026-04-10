@@ -31,25 +31,25 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
                                         id="af2_switchlabel"
-                                        cssSelector=".cmp-adaptiveform-switch__label"
+                                        cssSelector=".cmp-adaptiveform-switch__label-container .cmp-adaptiveform-switch__label"
                                         longTitle="Switch Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-switch__label:hover"/>
+                                                cssSelector=".cmp-adaptiveform-switch__label-container .cmp-adaptiveform-switch__label:hover"/>
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-switch__label:focus"/>
+                                                cssSelector=".cmp-adaptiveform-switch__label-container .cmp-adaptiveform-switch__label:focus"/>
                                     </states>
                                 </switchLabel>
                                 <switchHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
                                         id="af2_switchhelpicon"
-                                        cssSelector=".cmp-adaptiveform-switch__questionmark"
+                                        cssSelector=".cmp-adaptiveform-switch__label-container .cmp-adaptiveform-switch__questionmark"
                                         longTitle="Switch Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
@@ -57,15 +57,19 @@
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-switch__questionmark:focus"/>
+                                                cssSelector=".cmp-adaptiveform-switch__label-container .cmp-adaptiveform-switch__questionmark:focus"/>
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-switch__questionmark:hover"/>
+                                                cssSelector=".cmp-adaptiveform-switch__label-container .cmp-adaptiveform-switch__questionmark:hover"/>
                                         <disabled
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Disabled"
-                                                cssSelector=".cmp-adaptiveform-switch__questionmark:disabled"/>
+                                                cssSelector=".cmp-adaptiveform-switch__label-container .cmp-adaptiveform-switch__questionmark:disabled"/>
+                                        <rtl
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="RTL"
+                                                cssSelector="[dir=&quot;rtl&quot;] .cmp-adaptiveform-switch__label-container .cmp-adaptiveform-switch__questionmark"/>
                                     </states>
                                 </switchHelpIcon>
                             </items>
@@ -73,15 +77,15 @@
                                 <disabled
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Disabled"
-                                        cssSelector="cmp-adaptiveform-switch__label-container:disabled"/>
+                                        cssSelector=".cmp-adaptiveform-switch__label-container:disabled"/>
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector="cmp-adaptiveform-switch__label-container:hover"/>
+                                        cssSelector=".cmp-adaptiveform-switch__label-container:hover"/>
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector="cmp-adaptiveform-switch__label-container:focus"/>
+                                        cssSelector=".cmp-adaptiveform-switch__label-container:focus"/>
                             </states>
                         </switchLabelContainer>
                         <switchContainer
@@ -108,13 +112,47 @@
                                             jcr:primaryType="nt:unstructured"
                                             jcr:title="Focus"
                                             cssSelector=".cmp-adaptiveform-switch__option:focus"/>
+                                        <hideLabelsOn
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hide Labels (On)"
+                                            cssSelector=".cmp-adaptiveform-switch__hide-labels .cmp-adaptiveform-switch__option--on"/>
+                                        <hideLabelsOff
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hide Labels (Off)"
+                                            cssSelector=".cmp-adaptiveform-switch__hide-labels .cmp-adaptiveform-switch__option--off"/>
+                                        <unhideLabelsOn
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Unhide Labels (On)"
+                                            cssSelector=".cmp-adaptiveform-switch__unhide-labels .cmp-adaptiveform-switch__option--on"/>
+                                        <unhideLabelsOff
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Unhide Labels (Off)"
+                                            cssSelector=".cmp-adaptiveform-switch__unhide-labels .cmp-adaptiveform-switch__option--off"/>
                                     </states>
                                 </switchOption>
+                                <switchWidgetInput
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Widget Input"
+                                        id="af2_switchwidgetinput"
+                                        cssSelector=".cmp-adaptiveform-switch__widget"
+                                        longTitle="Switch Widget Input"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector="input:focus + .cmp-adaptiveform-switch__widget-slider"/>
+                                        <checked
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Selected"
+                                                cssSelector="input:checked + .cmp-adaptiveform-switch__widget-slider"/>
+                                    </states>
+                                </switchWidgetInput>
                                 <switchWidget
                                         jcr:primaryType="nt:unstructured"
-                                        jcr:title="Widget"
+                                        jcr:title="Widget Label"
                                         id="af2_switchwidget"
-                                        cssSelector=".adaptiveform-switch__widget-label"
+                                        cssSelector=".cmp-adaptiveform-switch__widget-label"
                                         longTitle="Switch Widget"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
@@ -156,6 +194,14 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Selected"
                                                 cssSelector=".cmp-adaptiveform-switch__widget:checked + .cmp-adaptiveform-switch__widget-slider .cmp-adaptiveform-switch__circle-indicator"/>
+                                        <filled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Filled"
+                                                cssSelector=".cmp-adaptiveform-switch--filled .cmp-adaptiveform-switch__circle-indicator"/>
+                                        <filledRtl
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Filled RTL"
+                                                cssSelector="[dir=&quot;rtl&quot;] .cmp-adaptiveform-switch--filled .cmp-adaptiveform-switch__circle-indicator"/>
                                     </states>
                                 </switchHandle>
                                 <switchSlider
@@ -201,6 +247,15 @@
                                 cssSelector=".cmp-adaptiveform-switch__longdescription"
                                 longTitle="Switch Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_switchdescriptionlongparagraph"
+                                cssSelector=".cmp-adaptiveform-switch__longdescription p"
+                                longTitle="Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"

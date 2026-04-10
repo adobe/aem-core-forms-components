@@ -23,25 +23,25 @@
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label"
                                 id="af2_verticalTabslabel"
-                                cssSelector=".cmp-verticaltabs__label"
+                                cssSelector=".cmp-verticaltabs__label-container .cmp-verticaltabs__label"
                                 longTitle="Vertical Tabs Label"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector=".cmp-verticaltabs__label:hover"/>
+                                        cssSelector=".cmp-verticaltabs__label-container .cmp-verticaltabs__label:hover"/>
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector=".cmp-verticaltabs__label:focus"/>
+                                        cssSelector=".cmp-verticaltabs__label-container .cmp-verticaltabs__label:focus"/>
                             </states>
                         </verticalTabsLabel>
                         <verticalTabsHelpIcon
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Help Icon"
                                 id="af2_verticalTabshelpicon"
-                                cssSelector=".cmp-verticaltabs__questionmark"
+                                cssSelector=".cmp-verticaltabs__label-container .cmp-verticaltabs__questionmark"
                                 longTitle="Vertical Tabs Help Icon"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_helpicon">
@@ -49,15 +49,15 @@
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector=".cmp-verticaltabs__questionmark:focus"/>
+                                        cssSelector=".cmp-verticaltabs__label-container .cmp-verticaltabs__questionmark:focus"/>
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector=".cmp-verticaltabs__questionmark:hover"/>
+                                        cssSelector=".cmp-verticaltabs__label-container .cmp-verticaltabs__questionmark:hover"/>
                                 <disabled
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Disabled"
-                                        cssSelector=".cmp-verticaltabs__questionmark:disabled"/>
+                                        cssSelector=".cmp-verticaltabs__label-container .cmp-verticaltabs__questionmark:disabled"/>
                             </states>
                         </verticalTabsHelpIcon>
                     </items>
@@ -91,6 +91,15 @@
                         cssSelector=".cmp-verticaltabs__longdescription"
                         longTitle="Vertical Tabs Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_verticalTabsdescriptionlongparagraph"
+                                cssSelector=".cmp-verticaltabs__longdescription p"
+                                longTitle="Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -102,6 +111,20 @@
                                 cssSelector=".cmp-verticaltabs__longdescription:hover"/>
                     </states>
                 </verticalTabsDescriptionLong>
+                <verticalTabsTabPanel
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Tab Panel"
+                        id="af2_verticalTabstabpanel"
+                        cssSelector=".cmp-verticaltabs__tabpanel"
+                        longTitle="Vertical Tabs Tab Panel"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <states jcr:primaryType="nt:unstructured">
+                        <active
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Active"
+                                cssSelector=".cmp-verticaltabs__tabpanel--active"/>
+                    </states>
+                </verticalTabsTabPanel>
                 <verticalTabsTabContainer
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Tab Container"
@@ -130,6 +153,10 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Active"
                                                 cssSelector=".cmp-verticaltabs__tab--active"/>
+                                        <activeCompound
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Active (Compound)"
+                                                cssSelector=".cmp-verticaltabs__tab.cmp-verticaltabs__tab--active"/>
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
@@ -158,6 +185,30 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Disabled"
                                         cssSelector=".cmp-verticaltabs__tablist:disabled"/>
+                                <tablistMarkerDefault
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Marker"
+                                        cssSelector=".cmp-verticaltabs__tablist &gt; li::before"/>
+                                <tablistMarkerActive
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Marker (Active)"
+                                        cssSelector=".cmp-verticaltabs__tablist &gt; li.cmp-verticaltabs__tab--active::before"/>
+                                <tablistMarkerStepped
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Marker (Stepped)"
+                                        cssSelector=".cmp-verticaltabs__tablist &gt; li.cmp-verticaltabs__tab--stepped::before"/>
+                                <tablistMarkerActiveStepped
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Marker (Active Stepped)"
+                                        cssSelector=".cmp-verticaltabs__tablist &gt; li.cmp-verticaltabs__tab--active.cmp-verticaltabs__tab--stepped::before"/>
+                                <tablistItemStepped
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Item (Stepped)"
+                                        cssSelector=".cmp-verticaltabs__tablist &gt; li.cmp-verticaltabs__tab--stepped"/>
+                                <tablistItem
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Item"
+                                        cssSelector=".cmp-verticaltabs__tablist &gt; li"/>
                             </states>
                         </verticalTabsTabList>
                     </items>

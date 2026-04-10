@@ -11,6 +11,13 @@
             cssSelector=".cmp-adaptiveform-footer"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
+                <footerTextPlain
+                    longTitle="Footer Text"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Footer Text (Plain)"
+                    id="af2_footertextplain"
+                    cssSelector=".cmp-adaptiveform-footer__text"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
                 <footerText
                     longTitle="Footer Text"
                     jcr:primaryType="nt:unstructured"

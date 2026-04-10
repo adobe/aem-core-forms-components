@@ -85,6 +85,9 @@
                         <datePickerWidgetAndText
                             jcr:primaryType="nt:unstructured"
                             target="/mnt/override/libs/core/fd/components/form/datepicker/v1/datepicker/cq:styleConfig/items/field/items/widgetAndText"/>
+                        <dateTimeWidgetAndText
+                            jcr:primaryType="nt:unstructured"
+                            target="/mnt/override/libs/core/fd/components/form/datetime/v1/datetime/cq:styleConfig/items/field/items/widgetAndText"/>
                         <checkBoxWidgetAndText
                             jcr:primaryType="nt:unstructured"
                             target="/mnt/override/libs/core/fd/components/form/checkbox/v1/checkbox/cq:styleConfig/items/field/items/widgetAndText"/>
@@ -99,7 +102,10 @@
                             target="/mnt/override/libs/core/fd/components/form/switch/v1/switch/cq:styleConfig/items/field/items/widgetAndText"/>
                         <fileUploadButton
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/libs/core/fd/components/form/fileinput/v3/fileinput/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/fileinput/v4/fileinput/cq:styleConfig/items/field/items/widgetAndText"/>
+                        <scribbleWidgetAndText
+                            jcr:primaryType="nt:unstructured"
+                            target="/mnt/override/libs/core/fd/components/form/scribble/v1/scribble/cq:styleConfig/items/field/items/widgetAndText"/>
                         <tncWidgetAndText
                             jcr:primaryType="nt:unstructured"
                             target="/mnt/override/libs/core/fd/components/form/termsandconditions/v1/termsandconditions/cq:styleConfig/items/field/items/widgetAndText"/>
