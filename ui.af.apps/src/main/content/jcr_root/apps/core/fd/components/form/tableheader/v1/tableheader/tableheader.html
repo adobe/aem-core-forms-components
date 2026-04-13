@@ -15,8 +15,7 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.header="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
-<!--/* EDIT MODE: decoration div (from table.html) acts as the table-row; inner div uses
-      display:contents so header cells participate directly in that table-row layout. */-->
+<!--/* EDIT MODE */-->
 <sly data-sly-test="${wcmmode.edit}">
     <div id="${header.id}"
          data-cmp-is="adaptiveFormTableHeader"
@@ -33,7 +32,7 @@
         </sly>
     </div>
 </sly>
-<!--/* PUBLISH MODE: native tr/th with scope="col" for screen-reader column associations. */-->
+<!--/* PUBLISH MODE: column widths come from parent <table><colgroup> in table.html */-->
 <sly data-sly-test="${!wcmmode.edit}">
     <tr id="${header.id}"
         class="cmp-adaptiveform-tableheader"
