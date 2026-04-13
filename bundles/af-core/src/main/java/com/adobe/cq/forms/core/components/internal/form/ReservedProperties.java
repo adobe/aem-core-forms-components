@@ -177,6 +177,7 @@ public final class ReservedProperties {
     public static final String FD_DRAFT_ID = "fd:draftId";
 
     public static final String PN_CQ_ANNOTATIONS = "cq:annotations";
+    public static final String PN_COLUMN_WIDTH = "columnWidth";
 
     // Begin: Form submission related properties
     public static final String FD_SUBMIT_PROPERTIES = "fd:submit";

@@ -36,21 +36,50 @@
     <div data-sly-call="${shortDescription.shortDescription @componentId=table.id, shortDescriptionVisible=table.tooltipVisible, shortDescription=table.tooltip, bemBlock='cmp-adaptiveform-table'}" data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @componentId=table.id, longDescription=table.description, bemBlock='cmp-adaptiveform-table'}" data-sly-unwrap></div>
 
-    <table class="cmp-adaptiveform-table__widget"
-           aria-label="${table.label.value @ context='attribute'}">
-        <thead class="cmp-adaptiveform-table__head">
-            <sly data-sly-list.child="${resource.listChildren}">
-                <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
-                    <sly data-sly-resource="${child @ decoration=false}"></sly>
+    <!--/* EDIT MODE: column widths not applied; children render their own <tr> with data-cq-data-path for the overlay. */-->
+    <sly data-sly-test="${wcmmode.edit}">
+        <table class="cmp-adaptiveform-table__widget"
+               aria-label="${table.label.value @ context='attribute'}">
+            <thead class="cmp-adaptiveform-table__head">
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
+                    </sly>
                 </sly>
-            </sly>
-        </thead>
-        <tbody class="cmp-adaptiveform-table__body">
-            <sly data-sly-list.child="${resource.listChildren}">
-                <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
-                    <sly data-sly-resource="${child @ decoration=false}"></sly>
+            </thead>
+            <tbody class="cmp-adaptiveform-table__body">
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
+                    </sly>
                 </sly>
+            </tbody>
+        </table>
+    </sly>
+    <!--/* PUBLISH MODE: column widths applied via colgroup; proper semantic table for accessibility. */-->
+    <sly data-sly-test="${!wcmmode.edit}">
+        <table class="cmp-adaptiveform-table__widget"
+               aria-label="${table.label.value @ context='attribute'}"
+               data-sly-attribute.style="${properties.columnWidth ? 'table-layout: fixed; width: 100%' : false}">
+            <sly data-sly-test="${table.columnWidthsConfigured}">
+                <colgroup data-sly-list.colStyle="${table.columnWidthColStyles}">
+                    <col style="${colStyle @ context='styleString'}" />
+                </colgroup>
             </sly>
-        </tbody>
-    </table>
+            <thead class="cmp-adaptiveform-table__head">
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
+                    </sly>
+                </sly>
+            </thead>
+            <tbody class="cmp-adaptiveform-table__body">
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
+                    </sly>
+                </sly>
+            </tbody>
+        </table>
+    </sly>
 </div>
