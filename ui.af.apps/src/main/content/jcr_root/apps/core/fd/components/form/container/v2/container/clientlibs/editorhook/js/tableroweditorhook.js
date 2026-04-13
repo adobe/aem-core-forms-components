@@ -21,9 +21,11 @@
     window.CQ.FormsCoreComponents.editorhooks = window.CQ.FormsCoreComponents.editorhooks || {};
 
     var RESOURCE_TYPE_TABLEROW = "core/fd/components/form/tablerow/v1/tablerow";
+    var RESOURCE_TYPE_TABLEHEADER = "core/fd/components/form/tableheader/v1/tableheader";
     var RESOURCE_TYPE_TEXTINPUT = "core/fd/components/form/textinput/v1/textinput";
     var RESOURCE_TYPE_TEXT_DRAW = "core/fd/components/form/text/v1/text";
     var DELETE_ROW_DIALOG_ID = "core-forms-delete-table-row-dialog";
+    var DELETE_HEADER_ROW_DIALOG_ID = "core-forms-delete-table-header-row-dialog";
     var DELETE_COLUMN_DIALOG_ID = "core-forms-delete-table-column-dialog";
 
     function getEditableDom(editable) {
@@ -196,6 +198,32 @@
     };
 
     /**
+     * Number of header rows currently rendered under the table (edit mode DOM).
+     * @param {Granite.author.Editable} editable
+     * @returns {number}
+     */
+    function countCoreTableHeaderRowsInDom(editable) {
+        var $dom = $(getEditableDom(editable));
+        var $table = $dom.closest(".cmp-adaptiveform-table");
+        if (!$table.length) {
+            return 0;
+        }
+        return $table.find(".cmp-adaptiveform-table__widget > .cmp-adaptiveform-table__head").length;
+    }
+
+    /**
+     * True when the selected row is a header row and another header row exists (delete allowed).
+     * @param {Granite.author.Editable} editable
+     * @returns {boolean}
+     */
+    window.CQ.FormsCoreComponents.editorhooks.canDeleteCoreTableHeaderRow = function (editable) {
+        if (!isTableHeaderRow(editable)) {
+            return false;
+        }
+        return countCoreTableHeaderRowsInDom(editable) > 1;
+    };
+
+    /**
      * @param {Granite.author.Editable} editable
      * @returns {boolean} true if the row cannot move up (first data row or header).
      */
@@ -293,6 +321,45 @@
     }
 
     /**
+     * Column count for the header row that contains the selection (for new header rows).
+     * @param {Granite.author.Editable} editable
+     * @returns {number}
+     */
+    function getHeaderRowColumnCount(editable) {
+        var $row = getRowWrapper(editable);
+        var n = $row.find(".cmp-adaptiveform-tablehead").length;
+        if (n > 0) {
+            return n;
+        }
+        var $table = $(getEditableDom(editable)).closest(".cmp-adaptiveform-table");
+        var $firstHead = $table.find(".cmp-adaptiveform-table__widget > .cmp-adaptiveform-table__head").first();
+        var fallback = $firstHead.find(".cmp-adaptiveform-tablehead").length;
+        return fallback > 0 ? fallback : 1;
+    }
+
+    /**
+     * JSON for a new table header row (plain-text header cells), matching table _cq_template.
+     * @param {number} numCols
+     * @returns {object}
+     */
+    function buildHeaderRowContent(numCols) {
+        var baseTime = Date.now();
+        var content = {
+            "jcr:primaryType": "nt:unstructured",
+            "sling:resourceType": RESOURCE_TYPE_TABLEHEADER,
+            "fieldType": "panel",
+            "jcr:title": Granite.I18n.get("Header Row")
+        };
+        var i;
+        for (i = 0; i < numCols; i++) {
+            var uid = baseTime + "_" + i;
+            var cellName = "column_" + uid;
+            content[cellName] = buildHeaderTextColumnJson(uid);
+        }
+        return content;
+    }
+
+    /**
      * Inserts a new table row after the selected row (same parent path, Sling import + order).
      * @param {Granite.author.Editable} editable selected core tablerow
      */
@@ -329,6 +396,48 @@
         }).fail(function () {
             author.ui.helpers.notify({
                 content: Granite.I18n.get("Failed to add table row."),
+                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+            });
+        });
+    };
+
+    /**
+     * Inserts a new table header row after the selected header row (same column count).
+     * @param {Granite.author.Editable} editable selected core tableheader
+     */
+    window.CQ.FormsCoreComponents.editorhooks.addTableHeaderRow = function (editable) {
+        var tableParentPath = editable.getParentPath();
+        var selectedNodeName = editable.path.substring(editable.path.lastIndexOf("/") + 1);
+        var newNodePath = tableParentPath + "/header" + Date.now();
+        var numCols = getHeaderRowColumnCount(editable);
+        var templateJson = buildHeaderRowContent(numCols);
+        var importParams = {
+            "_charset_": "UTF-8",
+            ":operation": "import",
+            ":contentType": "json",
+            ":replace": true,
+            ":replaceProperties": true,
+            ":content": JSON.stringify(templateJson)
+        };
+        var orderKey = getSlingOrderParam();
+        var orderParams = { "_charset_": "UTF-8" };
+        orderParams[orderKey] = "after " + selectedNodeName;
+
+        $.ajax({
+            url: Granite.HTTP.externalize(newNodePath),
+            type: "POST",
+            data: importParams
+        }).then(function () {
+            return $.ajax({
+                url: Granite.HTTP.externalize(newNodePath),
+                type: "POST",
+                data: orderParams
+            });
+        }).done(function () {
+            refreshParentTable(editable);
+        }).fail(function () {
+            author.ui.helpers.notify({
+                content: Granite.I18n.get("Failed to add table header row."),
                 type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
             });
         });
@@ -376,6 +485,96 @@
             });
             dialog.hide();
             dialog.remove();
+        });
+
+        var noBtn = new Coral.Button();
+        noBtn.label.textContent = Granite.I18n.get("No");
+        noBtn.on("click", function () {
+            dialog.hide();
+            dialog.remove();
+        });
+
+        dialog.footer.appendChild(yesBtn);
+        dialog.footer.appendChild(noBtn);
+        document.body.appendChild(dialog);
+        dialog.show();
+    };
+
+    /**
+     * Deletes the selected header row after confirmation; keeps at least one header row on the table.
+     * @param {Granite.author.Editable} editable
+     */
+    window.CQ.FormsCoreComponents.editorhooks.deleteTableHeaderRow = function (editable) {
+        var rowPath = editable.path;
+        var tableEditable = Granite.author.editables.getParent(editable);
+        var tablePath = editable.getParentPath();
+
+        $("#" + DELETE_HEADER_ROW_DIALOG_ID).remove();
+
+        var dialog = new Coral.Dialog().set({
+            id: DELETE_HEADER_ROW_DIALOG_ID,
+            header: {
+                innerHTML: Granite.I18n.get("Delete Header Row")
+            },
+            content: {
+                innerHTML: Granite.I18n.get("Do you want to delete the selected header row?")
+            },
+            footer: {},
+            closable: "on"
+        });
+
+        var yesBtn = new Coral.Button();
+        yesBtn.label.textContent = Granite.I18n.get("Yes");
+        yesBtn.variant = Coral.Button.variant.PRIMARY;
+        yesBtn.on("click", function () {
+            $.ajax({
+                url: Granite.HTTP.externalize(tablePath + ".1.json"),
+                type: "GET",
+                dataType: "json",
+                cache: false
+            }).done(function (tableJson) {
+                var rowNames = getOrderedChildResourceNames(tableJson);
+                var headerCount = 0;
+                rowNames.forEach(function (rowName) {
+                    if (getResourceTypeFromTableJson(tableJson, rowName) === RESOURCE_TYPE_TABLEHEADER) {
+                        headerCount += 1;
+                    }
+                });
+                if (headerCount <= 1) {
+                    author.ui.helpers.notify({
+                        content: Granite.I18n.get("The table must keep at least one header row."),
+                        type: author.ui.helpers.NOTIFICATION_TYPES.INFO
+                    });
+                    dialog.hide();
+                    dialog.remove();
+                    return;
+                }
+                $.ajax({
+                    url: Granite.HTTP.externalize(rowPath),
+                    type: "POST",
+                    data: getDeleteParams()
+                }).done(function () {
+                    if (tableEditable) {
+                        tableEditable.refresh();
+                    }
+                    dialog.hide();
+                    dialog.remove();
+                }).fail(function () {
+                    author.ui.helpers.notify({
+                        content: Granite.I18n.get("Failed to delete table header row."),
+                        type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+                    });
+                    dialog.hide();
+                    dialog.remove();
+                });
+            }).fail(function () {
+                author.ui.helpers.notify({
+                    content: Granite.I18n.get("Failed to read table structure."),
+                    type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+                });
+                dialog.hide();
+                dialog.remove();
+            });
         });
 
         var noBtn = new Coral.Button();

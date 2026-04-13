@@ -31,6 +31,18 @@
             handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
             icon="bidRule"
             text="Edit Rules"/>
+        <addheaderrow
+            jcr:primaryType="nt:unstructured"
+            condition="function(editable){return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderRow(editable);}"
+            icon="tableRowAdd"
+            handler="CQ.FormsCoreComponents.editorhooks.addTableHeaderRow"
+            text="Add Header Row"/>
+        <deleteheaderrow
+            jcr:primaryType="nt:unstructured"
+            condition="function(editable){return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderRow(editable) &amp;&amp; CQ.FormsCoreComponents.editorhooks.canDeleteCoreTableHeaderRow(editable);}"
+            handler="CQ.FormsCoreComponents.editorhooks.deleteTableHeaderRow"
+            icon="tableRowRemove"
+            text="Delete Header Row"/>
         <addrow
             jcr:primaryType="nt:unstructured"
             condition="function(editable){return !CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderRow(editable);}"
