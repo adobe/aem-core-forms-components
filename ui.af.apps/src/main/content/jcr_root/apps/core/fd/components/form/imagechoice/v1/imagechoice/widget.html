@@ -1,0 +1,45 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<template data-sly-template.widget="${ @ imagechoice, widgetId }">
+    <div class="cmp-adaptiveform-imagechoice__widget ${imagechoice.orientation.value}"
+         id="${widgetId}"
+         role="${imagechoice.fieldType == 'checkbox-group' ? 'group' : 'radiogroup'}"
+         aria-required="${imagechoice.required ? 'true' : 'false'}">
+        <div data-sly-list="${imagechoice.enums}" data-sly-unwrap>
+            <div class="cmp-adaptiveform-imagechoice__option">
+                <label class="cmp-adaptiveform-imagechoice__option-label"
+                       title="${imagechoice.tooltipVisible ? '' : imagechoice.tooltipText}">
+                    <input type="${imagechoice.fieldType == 'checkbox-group' ? 'checkbox' : 'radio'}"
+                           name="${imagechoice.name}"
+                           class="cmp-adaptiveform-imagechoice__option__widget"
+                           value="${item.toString}"
+                           disabled="${!imagechoice.enabled || imagechoice.readOnly}"
+                           checked="${imagechoice.fieldType == 'checkbox-group' ? imagechoice.enums[itemList.index] in imagechoice.default : imagechoice.enums[itemList.index] == imagechoice.default[0]}"
+                           aria-readonly="${imagechoice.readOnly ? 'true' : ''}"
+                           aria-label="${imagechoice.optionScreenReaderLabels[itemList.index]}"
+                           tabindex="0"/>
+                    <span class="cmp-adaptiveform-imagechoice__option-image"
+                          data-sly-test="${imagechoice.imageSrc}">
+                        <img src="${imagechoice.imageSrc[itemList.index]}"
+                             alt="${imagechoice.enumNames[itemList.index] @ context='text'}"
+                             class="cmp-adaptiveform-imagechoice__image"/>
+                    </span>
+                    <span class="cmp-adaptiveform-imagechoice__option-text">${imagechoice.enumNames[itemList.index] @ context = 'html'}</span>
+                </label>
+            </div>
+        </div>
+    </div>
+</template>

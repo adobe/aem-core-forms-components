@@ -1,0 +1,139 @@
+/* Reset fieldset defaults for semantic grouping */
+.cmp-adaptiveform-imagechoice {
+    border: none;
+    margin: 0;
+    padding: 0;
+    min-inline-size: 0;
+}
+
+.cmp-adaptiveform-imagechoice__label-container {
+    padding: 0;
+}
+
+.cmp-adaptiveform-imagechoice__label {
+}
+
+.cmp-adaptiveform-imagechoice__widget {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.cmp-adaptiveform-imagechoice__widget.vertical {
+    flex-direction: column;
+}
+
+.cmp-adaptiveform-imagechoice__option {
+    position: relative;
+}
+
+.cmp-adaptiveform-imagechoice__option-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    padding: 8px;
+    transition: border-color 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cmp-adaptiveform-imagechoice__option-label {
+        transition: none;
+    }
+}
+
+.cmp-adaptiveform-imagechoice__option-label:hover {
+    border-color: #b3b3b3;
+}
+
+/* Visually hidden but accessible to screen readers and keyboard navigation */
+.cmp-adaptiveform-imagechoice__option__widget {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Selected state - highlight image and text */
+.cmp-adaptiveform-imagechoice__option__widget:checked + .cmp-adaptiveform-imagechoice__option-image {
+    outline: 3px solid #1473e6;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.cmp-adaptiveform-imagechoice__option__widget:checked ~ .cmp-adaptiveform-imagechoice__option-text {
+    color: #1473e6;
+    font-weight: 600;
+}
+
+/* Focus visible - keyboard focus indicator */
+.cmp-adaptiveform-imagechoice__option__widget:focus-visible + .cmp-adaptiveform-imagechoice__option-image {
+    outline: 2px solid #1473e6;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Fallback for browsers without :focus-visible support */
+.cmp-adaptiveform-imagechoice__option__widget:focus:not(:focus-visible) + .cmp-adaptiveform-imagechoice__option-image {
+    outline: none;
+}
+
+.cmp-adaptiveform-imagechoice__option__widget:focus + .cmp-adaptiveform-imagechoice__option-image {
+    outline: 2px solid #1473e6;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Combined checked + focus state */
+.cmp-adaptiveform-imagechoice__option__widget:checked:focus-visible + .cmp-adaptiveform-imagechoice__option-image {
+    outline: 3px solid #0d66d0;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.cmp-adaptiveform-imagechoice__option-image {
+    display: block;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.cmp-adaptiveform-imagechoice__image {
+    display: block;
+    max-width: 150px;
+    max-height: 120px;
+    object-fit: contain;
+}
+
+.cmp-adaptiveform-imagechoice__option-text {
+    margin-top: 4px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Disabled state */
+.cmp-adaptiveform-imagechoice__option__widget:disabled + .cmp-adaptiveform-imagechoice__option-image {
+    opacity: 0.5;
+}
+
+.cmp-adaptiveform-imagechoice__option__widget:disabled ~ .cmp-adaptiveform-imagechoice__option-text {
+    opacity: 0.5;
+}
+
+.cmp-adaptiveform-imagechoice__longdescription {
+}
+
+.cmp-adaptiveform-imagechoice__shortdescription {
+}
+
+.cmp-adaptiveform-imagechoice__questionmark {
+}
+
+.cmp-adaptiveform-imagechoice__errormessage {
+}
