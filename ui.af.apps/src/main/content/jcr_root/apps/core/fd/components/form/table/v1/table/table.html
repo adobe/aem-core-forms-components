@@ -25,7 +25,8 @@
      data-cmp-is="adaptiveFormTable"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-cmp-visible="${table.visible ? 'true' : 'false'}"
-     data-cmp-enabled="${table.enabled ? 'true' : 'false'}">
+     data-cmp-enabled="${table.enabled ? 'true' : 'false'}"
+     data-cmp-sorting-enabled="${properties.enableSorting ? 'true' : 'false'}">
     
     <sly data-sly-test="${table.label.visible != false}">
         <div class="cmp-adaptiveform-table__title cmp-container__label">${table.label.value @ context='html'}</div>
