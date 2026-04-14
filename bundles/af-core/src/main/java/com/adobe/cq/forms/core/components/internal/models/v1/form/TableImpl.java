@@ -34,6 +34,8 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Panel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -45,6 +47,20 @@ public class TableImpl extends PanelImpl {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_COLUMN_WIDTH)
     @Nullable
     protected String columnWidth;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ENABLE_SORTING)
+    @Nullable
+    protected Boolean enableSorting;
+
+    /**
+     * When {@code true}, runtime (publish) enables client-side column sorting.
+     * Omitted from JSON when {@code false} (see {@link JsonInclude.Include#NON_DEFAULT}).
+     */
+    @JsonProperty("enableSorting")
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public boolean isEnableSorting() {
+        return Boolean.TRUE.equals(enableSorting);
+    }
 
     /**
      * Returns the raw comma-separated column width string from JCR (e.g. "1,1,4").
