@@ -177,6 +177,9 @@ public final class ReservedProperties {
 
     public static final String PN_COLUMN_WIDTH = "columnWidth";
 
+    /** When true, adaptive form table columns can be sorted at runtime (publish). */
+    public static final String PN_ENABLE_SORTING = "enableSorting";
+
     // Begin: Form submission related properties
     public static final String FD_SUBMIT_PROPERTIES = "fd:submit";
     public static final String PN_SUBMIT_ACTION_TYPE = "actionType";

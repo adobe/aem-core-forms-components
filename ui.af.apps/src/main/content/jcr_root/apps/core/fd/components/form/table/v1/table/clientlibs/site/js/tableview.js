@@ -29,6 +29,15 @@
         constructor(params) {
             super(params);
             this.children = [];
+            /** @type {{ col: number, dir: 'asc'|'desc' }|null} */
+            this._tableSortState = null;
+        }
+
+        setModel(model) {
+            super.setModel(model);
+            queueMicrotask(() => {
+                this.#initColumnSortingIfEnabled();
+            });
         }
 
         getClass() {
@@ -200,6 +209,137 @@
                     removeBtn.setAttribute(dataVisible, items.length > minOccur && minOccur !== -1);
                 }
             });
+        }
+
+        /**
+         * @returns {boolean}
+         */
+        #isSortingEnabled() {
+            if (this._model && this._model.enableSorting === true) {
+                return true;
+            }
+            return this.element.getAttribute("data-cmp-sorting-enabled") === "true";
+        }
+
+        #initColumnSortingIfEnabled() {
+            if (!this.#isSortingEnabled()) {
+                return;
+            }
+            const widget = this.element.querySelector(Table.selectors.widget);
+            if (!widget) {
+                return;
+            }
+            const thead = widget.querySelector("thead");
+            const tbody = widget.querySelector("tbody");
+            if (!thead || !tbody) {
+                return;
+            }
+            const headerCells = thead.querySelectorAll("th.cmp-adaptiveform-tablehead");
+            headerCells.forEach((th, index) => {
+                if (th.querySelector(".cmp-adaptiveform-table__sort-button")) {
+                    return;
+                }
+                const inner = document.createElement("div");
+                inner.className = "cmp-adaptiveform-table__sort-header-inner";
+                while (th.firstChild) {
+                    inner.appendChild(th.firstChild);
+                }
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "cmp-adaptiveform-table__sort-button";
+                btn.setAttribute("data-cmp-hook-table-sort", String(index));
+                btn.setAttribute("aria-label", "Sort column");
+                inner.appendChild(btn);
+                th.appendChild(inner);
+                btn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.#sortTableByColumn(tbody, thead, index);
+                });
+            });
+        }
+
+        /**
+         * @param {HTMLTableSectionElement} tbody
+         * @param {HTMLTableSectionElement} thead
+         * @param {number} colIndex
+         */
+        #sortTableByColumn(tbody, thead, colIndex) {
+            const rows = Array.from(tbody.querySelectorAll(":scope > tr"));
+            if (rows.length <= 1) {
+                return;
+            }
+            let dir = "asc";
+            if (this._tableSortState && this._tableSortState.col === colIndex) {
+                dir = this._tableSortState.dir === "asc" ? "desc" : "asc";
+            }
+            this._tableSortState = { col: colIndex, dir: dir };
+            const mult = dir === "asc" ? 1 : -1;
+            const sorted = rows.slice().sort((a, b) => {
+                const va = this.#getCellSortValue(a.cells[colIndex]);
+                const vb = this.#getCellSortValue(b.cells[colIndex]);
+                return mult * va.localeCompare(vb, undefined, { numeric: true, sensitivity: "base" });
+            });
+            sorted.forEach((r) => tbody.appendChild(r));
+            this.#syncInstanceManagerOrderAfterSort(sorted);
+            const headerCells = thead.querySelectorAll("th.cmp-adaptiveform-tablehead");
+            headerCells.forEach((th) => {
+                th.removeAttribute("aria-sort");
+                const b = th.querySelector(".cmp-adaptiveform-table__sort-button");
+                if (b) {
+                    b.classList.remove("cmp-adaptiveform-table__sort-button--asc");
+                    b.classList.remove("cmp-adaptiveform-table__sort-button--desc");
+                }
+            });
+            const activeTh = headerCells[colIndex];
+            const activeBtn = activeTh && activeTh.querySelector(".cmp-adaptiveform-table__sort-button");
+            if (activeTh && activeBtn) {
+                activeBtn.classList.add(
+                    dir === "asc" ? "cmp-adaptiveform-table__sort-button--asc" : "cmp-adaptiveform-table__sort-button--desc"
+                );
+                activeTh.setAttribute("aria-sort", dir === "asc" ? "ascending" : "descending");
+            }
+        }
+
+        /**
+         * Keep repeatable row views aligned with DOM order after a sort.
+         * @param {HTMLTableRowElement[]} sortedRows
+         */
+        #syncInstanceManagerOrderAfterSort(sortedRows) {
+            const firstId = sortedRows[0] && sortedRows[0].id;
+            if (!firstId || !this.formContainer || !this.formContainer.getField) {
+                return;
+            }
+            const firstView = this.formContainer.getField(firstId);
+            const im = firstView && typeof firstView.getInstanceManager === "function" ? firstView.getInstanceManager() : null;
+            if (!im || !im.children || im.children.length !== sortedRows.length) {
+                return;
+            }
+            const byId = new Map(im.children.map((cv) => [cv.getId(), cv]));
+            const reordered = sortedRows.map((r) => byId.get(r.id)).filter(Boolean);
+            if (reordered.length === im.children.length) {
+                im.children = reordered;
+            }
+        }
+
+        /**
+         * @param {HTMLTableCellElement|undefined} cell
+         * @returns {string}
+         */
+        #getCellSortValue(cell) {
+            if (!cell) {
+                return "";
+            }
+            const control = cell.querySelector("input:not([type='hidden']):not([type='button']), select, textarea");
+            if (control) {
+                if (control.type === "checkbox" || control.type === "radio") {
+                    return control.checked ? "1" : "0";
+                }
+                if (typeof control.value === "string") {
+                    return control.value.trim();
+                }
+            }
+            return cell.innerText.replace(/\s+/g, " ").trim();
         }
     }
 

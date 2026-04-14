@@ -91,6 +91,61 @@
     font-weight: 600;
 }
 
+/* Column sorting (publish): header layout + sort control */
+.cmp-adaptiveform-table__sort-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cmp-adaptiveform-table__sort-button {
+    flex-shrink: 0;
+    min-width: 2rem;
+    min-height: 2rem;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #C8C8C8;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    position: relative;
+    font-size: 0;
+    line-height: 0;
+}
+
+.cmp-adaptiveform-table__sort-button:hover,
+.cmp-adaptiveform-table__sort-button:focus-visible {
+    background-color: #EBEBEB;
+    outline: 2px solid #2680EB;
+    outline-offset: 1px;
+}
+
+/* Neutral state: up/down chevrons */
+.cmp-adaptiveform-table__sort-button::before {
+    content: "\2191 \2193";
+    font-size: 0.65rem;
+    letter-spacing: -0.15em;
+    color: #505050;
+    display: block;
+    line-height: 1;
+    padding: 0.15rem 0;
+}
+
+.cmp-adaptiveform-table__sort-button--asc::before {
+    content: "\2191";
+    font-size: 0.85rem;
+    color: #222222;
+}
+
+.cmp-adaptiveform-table__sort-button--desc::before {
+    content: "\2193";
+    font-size: 0.85rem;
+    color: #222222;
+}
+
 /* Header row hover */
 .cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader:hover > .cmp-adaptiveform-tablehead {
     background-color: #EBEBEB;
