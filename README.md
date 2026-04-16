@@ -15,6 +15,10 @@ This project is intended to be used in conjunction with the [AEM Sites Core Comp
 
 See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experience-manager-core-components/using/introduction.html) for usage and configuration instructions of the AEM Forms Core Components.
 
+## JavaScript Documentation
+
+https://opensource.adobe.com/aem-core-forms-components/
+
 ## Available Components
 
 ### Page Authoring Components
@@ -29,9 +33,42 @@ See [AEM Sites Core Components](https://docs.adobe.com/content/help/en/experienc
 
 ### Adaptive Form
 
+-   [Form Container](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container)
+-   [Text Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
+-   [Number Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/numberinput/v1/numberinput)
+-   [Date Picker](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/datepicker/v1/datepicker)
+-   [File Attachment](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/fileinput/v4/fileinput)
+-   [Dropdown List](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/dropdown/v1/dropdown)
+-   [Checkbox Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkboxgroup/v1/checkboxgroup)
+-   [Radio Button Group](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/radiobutton/v1/radiobutton)
+-   [Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/button/v1/button)
+-   [Panel](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/panelcontainer/v1/panelcontainer)
+-   [Accordion](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/accordion/v1/accordion)
+-   [Wizard](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/wizard/v1/wizard)
+-   [Horizontal Tabs](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/tabsontop/v1/tabsontop)
+-   [Text](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/text/v1/text)
+-   [Image](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/image/v1/image)
+-   [Title](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/title/v1/title)
+-   [Submit Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/actions/submit/v1/submit)
+-   [Reset Button](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/actions/reset/v1/reset)
+-   [Email Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/emailinput/v1/emailinput)
+-   [Telephone Input](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/telephoneinput/v1/telephoneinput)
+-   [Header](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/pageheader/v1/pageheader)
+-   [Footer](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/footer/v1/footer)
+-   [Switch](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/switch/v1/switch)
+-   [ReCaptcha](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/recaptcha/v1/recaptcha)
+-   [HCaptcha](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/hcaptcha/v1/hcaptcha)
+-   [Terms and Conditions](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/termsandconditions/v1/termsandconditions)
+-   [Checkbox](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/checkbox/v1/checkbox)
+-   [Review](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/review/v1/review)
+-   [Turnstile](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/turnstile/v1/turnstile)
 
--   [Form Container](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container)
--   [Text Input](ui.apps/src/main/content/jcr_root/apps/core/fd/components/form/textinput/v1/textinput)
+
+### XFA-based Form
+
+-   [XFA Page](ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/xfa-page/v1/xfa-page)
+
+To create XFA-based core component forms, you need to use the XFA Page component. This component serves as the foundation for rendering XFA forms.
 
 ## Theme Editor
 
@@ -46,8 +83,8 @@ When adding, creating, or modifying a component, update the style configuration 
 The latest version of the AEM Forms Core Components, require the below minimum system requirements:
 
 | Forms Core Components | WCM Core Components | AEM Forms as a cloud service | Java  | Maven  |  
-| --------------------- |---------------------| ---------------------------- | ----- | ------ | 
-| 1.0.16                | 2.23.0              | Continual                    | 8, 11 | 3.3.9+ |
+|-----------------------|---------------------| ---------------------------- | ----- | ------ | 
+| 3.0.150               | 2.24.6             | Continual                    | 11 | 3.3.9+ |
 
 For a list of requirements for previous versions, see [Historical System Requirements](VERSIONS.md).
 
@@ -112,6 +149,26 @@ To allow recompilation of the HTL scripts, you should disable `aem-precompiled-s
 Due to [FELIX-6365](https://issues.apache.org/jira/browse/FELIX-6365), 
 please only use `autoInstallPackage` and `autoInstallPackagePublish` when 
 working with the AEM as a Cloud Service SDK!
+
+### Important Note for AEM as a Cloud Service SDK
+
+When working with the AEM as a Cloud Service local SDK, be aware that Forms Core Components are already included as part of the product in the `/libs` directory. Installing additional versions in `/apps/core/fd` may cause duplicate component installations and related issues.
+
+If you encounter problems with components or clientlibs:
+
+1. Check if you have duplicate installations of core components (both in `/libs` and `/apps`)
+2. Remove any duplicated components in `/apps/core/fd` if they conflict with the built-in ones
+3. Rebuild the client library cache by accessing: `http://<host>:<port>/libs/granite/ui/content/dumplibs.rebuild.html`
+
+This ensures your environment uses the correct component versions and avoids conflicts that can occur with multiple installations.
+
+### Important Note for AEM Cloud Service
+
+We've identified that core component-based forms fail to render due to a version mismatch in the Forms Core Components package. This occurs when the version used in the customer's project (archetype project) is equal to or higher than the version bundled with the product (e.g., 3.0.104).
+To resolve this, either:
+
+1. Use a lower version than the one included in the product, or
+2. Remove the Forms Core Components dependency from the customer's code entirely, as it is already included as part of the product.
 
 ### UberJar
 

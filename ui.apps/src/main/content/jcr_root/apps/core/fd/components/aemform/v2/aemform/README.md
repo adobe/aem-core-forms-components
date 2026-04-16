@@ -46,6 +46,10 @@ BLOCK cmp-aemform
     ELEMENT cmp-aemform__content
 ```
 
+## Embedding Adaptive Form with Div Mode
+
+If you’re employing the div mode for embedding the adaptive form, it’s necessary to also incorporate the `core.forms.components.runtime.all` client library into the site’s page component. This requirement is also documented at the following [link](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-service/content/forms/adaptive-forms-authoring/create-or-add-an-adaptive-form-to-aem-sites-page#:~:text=Add%20Adaptive%20Forms-,Client,-Libraries%20to%20your%20AEM%20Sites%20page%20or)
+
 ## Information
 * **Vendor**: Adobe
 * **Version**: v2

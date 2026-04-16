@@ -35,6 +35,7 @@ jobs:
           echo "::set-output name=base_ref::${{ github.event.pull_request.base.ref }}"
 
       - name: Sync with Base Branch
+        if: ${{ github.event.pull_request.base.ref != 'master' }}
         run: |
           git fetch origin ${{ steps.validate.outputs.head_ref }}
           git fetch origin ${{ steps.validate.outputs.base_ref }}

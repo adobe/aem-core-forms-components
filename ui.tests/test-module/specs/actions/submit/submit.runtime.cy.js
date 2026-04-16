@@ -191,6 +191,7 @@ describe("Form with Submit Button", () => {
         });
     }
 
+
     if (!cy.af.isOldCoreComponent()) {
         it(`should have type as submit`, () => {
             cy.previewForm(pagePath);
