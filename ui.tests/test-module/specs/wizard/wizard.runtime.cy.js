@@ -235,6 +235,8 @@ describe("Form with Wizard Layout Container With Validation", () => {
             getWizardPanelAtIndex(0).should('have.class', 'cmp-adaptiveform-wizard__wizardpanel--active');
             getWizardPanelAtIndex(0).find('.cmp-adaptiveform-numberinput__errormessage').should('be.visible');
             getWizardPanelAtIndex(0).find('.cmp-adaptiveform-datepicker__errormessage').should('be.visible');
+            // verify focus moved to the first invalid field
+            cy.focused().closest('[data-cmp-is]').should('have.attr', 'data-cmp-is', 'adaptiveFormNumberInput');
         });
     });
 });
