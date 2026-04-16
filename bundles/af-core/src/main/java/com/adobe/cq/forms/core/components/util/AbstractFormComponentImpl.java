@@ -42,9 +42,11 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.settings.SlingSettingsService;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -116,6 +118,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     @SlingObject
     private Resource resource;
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private SlingSettingsService slingSettingsService;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUSION)
     @Nullable
@@ -315,6 +320,19 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
     /**
+     * Returns true when the model is being resolved in the IC print channel headless authoring path
+     * (e.g. FormModelReader in af2-rest-api) where no {@code SlingHttpServletRequest} is present.
+     * Uses AEM run-mode to distinguish the author instance from the publish instance,
+     * since both have a null request and {@code fd:channel == print}.
+     */
+    private boolean isPrintChannelHeadlessAuthorContext() {
+        if (request != null || !FormConstants.CHANNEL_PRINT.equals(this.channel)) {
+            return false;
+        }
+        return slingSettingsService != null && slingSettingsService.getRunModes().contains("author");
+    }
+
+    /**
      * Predicate to check if a map entry is non empty
      * return true if and only if
      * 1) the value is not of type string and non empty or
@@ -338,7 +356,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
         properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
-        if (isAuthorMode(request)) {
+        if (isAuthorMode(request) || isPrintChannelHeadlessAuthorContext()) {
             Map<String, Object> rulesProperties = getRulesProperties();
             if (!rulesProperties.isEmpty()) {
                 properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);

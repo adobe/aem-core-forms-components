@@ -30,6 +30,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import org.apache.sling.settings.SlingSettingsService;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
@@ -267,6 +268,55 @@ public class AbstractFormComponentImplTest {
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
+    }
+
+    /**
+     * IC / FormModelReader headless author path: request is null, channel is print, running on an author instance.
+     * SlingSettingsService reports run-mode "author" → fd:rules must be present.
+     */
+    @Test
+    public void testHeadlessPrintChannelOnAuthorInstanceIncludesFdRules() {
+        AbstractFormComponentImpl impl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
+        Utils.setInternalState(impl, "channel", "print");
+        SlingSettingsService mockSettings = Mockito.mock(SlingSettingsService.class);
+        Mockito.when(mockSettings.getRunModes()).thenReturn(new java.util.HashSet<>(java.util.Arrays.asList("author")));
+        Utils.setInternalState(impl, "slingSettingsService", mockSettings);
+        Map<String, Object> properties = impl.getProperties();
+        @SuppressWarnings("unchecked")
+        Map<String, Object> fdRules = (Map<String, Object>) properties.get(AbstractFormComponentImpl.CUSTOM_RULE_PROPERTY_WRAPPER);
+        assertNotNull(fdRules, "IC headless author: fd:rules must be present on author instance");
+        assertTrue(fdRules.containsKey("fd:formReady"));
+        assertArrayEquals(new String[] { "form Ready" }, (String[]) fdRules.get("fd:formReady"));
+    }
+
+    /**
+     * IC / FormModelReader headless publish path: request is null, channel is print, running on a publish instance.
+     * SlingSettingsService reports run-mode "publish" → fd:rules must be absent.
+     */
+    @Test
+    public void testHeadlessPrintChannelOnPublishInstanceExcludesFdRules() {
+        AbstractFormComponentImpl impl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
+        Utils.setInternalState(impl, "channel", "print");
+        SlingSettingsService mockSettings = Mockito.mock(SlingSettingsService.class);
+        Mockito.when(mockSettings.getRunModes()).thenReturn(new java.util.HashSet<>(java.util.Arrays.asList("publish")));
+        Utils.setInternalState(impl, "slingSettingsService", mockSettings);
+        Map<String, Object> properties = impl.getProperties();
+        assertNull(properties.get(AbstractFormComponentImpl.CUSTOM_RULE_PROPERTY_WRAPPER),
+                "IC headless publish: fd:rules must be absent on publish instance");
+    }
+
+    @Test
+    public void testAuthorModeWithPrintChannelIncludesRuleGrammarInFdRules() {
+        AbstractFormComponentImpl impl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_RULES);
+        Utils.setInternalState(impl, "channel", "print");
+        Map<String, Object> properties = impl.getProperties();
+        @SuppressWarnings("unchecked")
+        Map<String, Object> fdRules = (Map<String, Object>) properties.get(AbstractFormComponentImpl.CUSTOM_RULE_PROPERTY_WRAPPER);
+        assertNotNull(fdRules,
+                "author + print channel: fd:rules must be present when the resource has fd:rules (grammar for DoR/authoring)");
+        assertTrue(fdRules.containsKey("fd:formReady"),
+                "author + print channel: fd:rules must include fd:formReady from the resource");
+        assertArrayEquals(new String[] { "form Ready" }, (String[]) fdRules.get("fd:formReady"));
     }
 
     @Test
