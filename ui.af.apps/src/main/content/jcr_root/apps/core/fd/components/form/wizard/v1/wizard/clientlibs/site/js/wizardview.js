@@ -234,7 +234,7 @@
                         this.#navigateAndFocusTab(nextVisibleIndex);
                     }
                 } else {
-                    this.formContainer.setFocus(validationErrorList[0].fieldName);
+                    this.formContainer?.setFocus(validationErrorList[0].fieldName);
                 }
                 this.#hideUnhideNavButtons(this._active);
             }
