@@ -13,3 +13,7 @@ AEM Core Forms Components — Adaptive Forms v2 component library.
 ### E2E Testing
 - **Feature Toggle Tests**: [`docs/e2e-testing/feature-toggles.md`](docs/e2e-testing/feature-toggles.md)
   How to add Cypress e2e tests for new feature toggles: OSGi config changes, system property wiring, and the isLatestAddon + fetchFeatureToggles test pattern.
+
+### Debugging
+- **Known issues & patterns**: [`docs/debugging/known-issues.md`](docs/debugging/known-issues.md)
+  Catalog of resolved issues, root causes, and reusable debugging patterns organized by area.
