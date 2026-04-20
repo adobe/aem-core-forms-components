@@ -17,25 +17,21 @@
     "use strict";
 
     var DOR_DIALOG_PATH = "fd/af/authoring/components/dor/dorPropertiesTabs",
-         PRINT_NODE_RELATIVE_PATH = "/jcr:content/guideContainer/fd:view/print";
+        FD_VIEW_PATH = "/fd:view/print",
+        PRINT_NODE_RELATIVE_PATH = "/jcr:content/guideContainer" + FD_VIEW_PATH,
+        DOR_PREVIEW_SELECTOR = ".af.dor.pdf";
 
       var getFormPath = function (contentPath) {
                 return contentPath.replace(Granite.HTTP.getContextPath(), "");
             },
 
-            options = {
-                getPath : function () {
-                    return "/mnt/override/libs/" +
-                        DOR_DIALOG_PATH +
-                        "/cq:dialog.html" + getFormPath(ns.ContentFrame.getContentPath()) +
-                        PRINT_NODE_RELATIVE_PATH;
-                }
-            };
+            options = {};
+
     var dorPropertiesDialogConfig = function () {
             return {
                 src : options.getPath() + '?resourceType=' + encodeURIComponent(DOR_DIALOG_PATH),
                 isFloating : false,
-                loadingMode : "sidePanel",
+                loadingMode : "auto",
                 layout : "auto"
             };
         };
@@ -64,9 +60,17 @@
     var dorDialog = new ns.ui.Dialog(dorPropertiesDialogDef);
 
     window.CQ.FormsCoreComponents.editorhooks.openDorDialog =  function (editable) {
+        var url = ns.ContentFrame.getContentPath() + PRINT_NODE_RELATIVE_PATH;
+        if (!Granite.author.page.path.startsWith("/content/forms/af")) {
+            url = editable.path + FD_VIEW_PATH;
+        }
+        options.getPath = function () {
+            return "/mnt/override/libs/" + DOR_DIALOG_PATH + "/cq:dialog.html" + url;
+        };
+
          ns.DialogFrame.openDialog(function getDialog() {
              var editable = {
-                 path : ns.ContentFrame.getContentPath().replace(Granite.HTTP.getContextPath(), "") + PRINT_NODE_RELATIVE_PATH,
+                 path : url.replace(Granite.HTTP.getContextPath(), ""),
                  type : DOR_DIALOG_PATH
              };
              dorDialog.editable = editable;
@@ -74,8 +78,11 @@
          }());
     }
 
-    window.CQ.FormsCoreComponents.editorhooks.initPreviewDoR = function() {
-        var url = getFormPath(ns.ContentFrame.getContentPath()) + "/jcr:content/guideContainer.af.dor.pdf";
+    window.CQ.FormsCoreComponents.editorhooks.initPreviewDoR = function(editable) {
+        var url = getFormPath(ns.ContentFrame.getContentPath()) + "/jcr:content/guideContainer" + DOR_PREVIEW_SELECTOR;
+        if (!Granite.author.page.path.startsWith("/content/forms/af")) {
+            url = editable.path + DOR_PREVIEW_SELECTOR;
+        }
         window.open(Granite.HTTP.externalize(url), "_blank");
     }
 
