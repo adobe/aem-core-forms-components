@@ -20,7 +20,8 @@
     flex-wrap: wrap;
     align-items: flex-start;
     gap: 0.5rem 0.75rem;
-    border: none; 
+    border: 1px solid #DDDDDD; 
+    margin: -1px;
 }
 
 .cmp-adaptiveform-tablecell--with-row-controls > div:first-of-type {
