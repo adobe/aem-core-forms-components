@@ -256,3 +256,138 @@ npm run cypress:open
 ```
 
 Test files live under `specs/` organized by component name. There are approximately 149 spec files covering the full component set.
+
+---
+
+## 8. New Component Checklist
+
+Use this when authoring a new form component or reviewing a PR that introduces one. Every item here reflects a real defect class found in production PRs.
+
+### 8.1 Required artifacts
+
+Every new component must ship all of the following. A PR missing any of these is incomplete.
+
+| Artifact | Location | Example |
+|---|---|---|
+| Resource type constant | `FormConstants.java` | `RT_FD_FORM_IMAGE_CHOICE_V1` |
+| Public interface | `models/form/<Component>.java` | `ImageChoice.java` |
+| Sling Model impl | `internal/models/v1/form/<Component>Impl.java` | `ImageChoiceImpl.java` |
+| Unit test | `test/.../v1/form/<Component>ImplTest.java` | `ImageChoiceImplTest.java` |
+| Test fixture JSON | `test/resources/form/<component>/test-content.json` | — |
+| **JSON exporter golden files** | `test/resources/form/<component>/exporter-<component>*.json` | see `radiobutton/` for examples |
+| `ui.af.apps` component definition | `ui.af.apps/.../form/<component>/v1/<component>/` | `.content.xml`, HTL template, `_cq_dialog/`, clientlibs |
+| Example component overlay | `examples/ui.apps/.../form/<component>/` | `.content.xml`, `_cq_template.xml` |
+| Example content page | `examples/ui.content/.../adaptive-form/<component>/` | `.content.xml` |
+| IT content page | `it/content/.../samples/<component>/` | one page per component |
+| Cypress spec | `ui.tests/test-module/specs/<component>/` | `<component>.cy.js` |
+
+The `ui.af.apps` component definition is the most commonly missed item. Without it, the Sling Model's `resourceType` annotation has nothing to resolve against — the component cannot be used in AEM even though all Java code compiles.
+
+### 8.2 `ReservedProperties` — the double-emission trap
+
+**Every JCR property name used by a component must be registered in `ReservedProperties.java`.**
+
+`AbstractFormComponentImpl.getCustomProperties()` reads all node properties and emits any key **not in `ReservedProperties`** as a raw top-level custom property in the form JSON. If a property is also put into `customLayoutProperties` (under `fd:layout`), it appears twice in the JSON:
+
+```json
+{
+  "selectionType": "single",    // stray top-level — NOT expected by AF2 runtime
+  "fd:layout": {
+    "selectionType": "single"   // intended
+  }
+}
+```
+
+`ReservedProperties` is self-maintaining — the `aggregateReservedProperties()` method collects all `String` fields automatically. Just add the constant:
+
+```java
+// ReservedProperties.java
+public static final String PN_SELECTION_TYPE = "selectionType";
+```
+
+Then reference it in the impl instead of a local private constant.
+
+**Check:** Search the impl for any `private static final String PN_` — if that string is not in `ReservedProperties`, it is a bug.
+
+### 8.3 `getFieldType()` contract
+
+Always delegate to the parent, never hardcode:
+
+```java
+// Correct — reads JCR fieldType first, falls back to default
+@Override
+public String getFieldType() {
+    return super.getFieldType(FieldType.RADIO_GROUP);
+}
+
+// Wrong — silently ignores any fieldType stored in JCR
+@Override
+public String getFieldType() {
+    if (someCondition) return FieldType.CHECKBOX_GROUP.getValue();
+    return FieldType.RADIO_GROUP.getValue();
+}
+```
+
+When a component's effective field type depends on another property (e.g. `selectionType`), derive the *default* from that property and still pass it to `super.getFieldType()`:
+
+```java
+@Override
+public String getFieldType() {
+    FieldType defaultType = selectionType == SelectionType.MULTI
+        ? FieldType.CHECKBOX_GROUP : FieldType.RADIO_GROUP;
+    return super.getFieldType(defaultType);
+}
+```
+
+### 8.4 Reuse existing enums — don't duplicate
+
+`CheckBox.Orientation` (HORIZONTAL/VERTICAL) is the canonical orientation enum in the public API since 2.0.0. New option-style components should reuse it rather than declaring an identical one:
+
+```java
+// Wrong — verbatim copy of CheckBox.Orientation
+enum Orientation { HORIZONTAL("horizontal"), VERTICAL("vertical"); ... }
+
+// Correct — reuse
+import com.adobe.cq.forms.core.components.models.form.CheckBox;
+// return type: CheckBox.Orientation
+```
+
+The same applies to any other enum that already exists in the `models/form/` package.
+
+### 8.5 `ContainerConstraint` for option fields
+
+Option-style fields (radio, checkbox group, image choice) that support `minItems`/`maxItems` selection limits must:
+
+1. Implement `ContainerConstraint` in their public interface (see `CheckBoxGroup.java`)
+2. Override `getMinItems()` and `getMaxItems()` in the impl to return the `minItems`/`maxItems` fields injected by `AbstractBaseImpl`
+3. Add test coverage for both methods
+
+The `ContainerConstraint.getMinItems()` default returns null — without the override the injected JCR values are never exposed.
+
+### 8.6 Required test patterns
+
+Beyond basic getter tests, every component test must include:
+
+```java
+// 1. JSON export — verifies the full serialized contract against a golden file
+@Test
+void testJSONExport() throws Exception {
+    MyComponent comp = getComponentUnderTest(PATH_DEFAULT);
+    Utils.testJSONExport(comp, Utils.getTestExporterJSONPath(BASE, PATH_DEFAULT));
+}
+
+// 2. getProperties() completeness — verify layout properties are under fd:layout,
+//    not leaking as stray top-level custom properties
+@Test
+void testGetProperties() {
+    MyComponent comp = getComponentUnderTest(PATH_CUSTOMIZED);
+    Map<String, Object> props = comp.getProperties();
+    Map<String, Object> layout = (Map<String, Object>) props.get(Base.CUSTOM_PROPERTY_WRAPPER);
+    // assert expected keys are in layout
+    assertEquals("value", layout.get("myProp"));
+    // assert the same key is NOT at the top level (ReservedProperties guard)
+    assertNull(props.get("myProp"));
+}
+```
+
+Create one golden file per fixture variant (default, customized, datalayer). See `radiobutton/` for the naming convention (`exporter-radiobutton.json`, `exporter-radiobutton-customized.json`, etc.).
