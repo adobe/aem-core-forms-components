@@ -163,13 +163,13 @@ public class ImageChoiceImplTest {
     @Test
     void testGetOrientation_horizontal() {
         ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE);
-        assertEquals(ImageChoice.Orientation.HORIZONTAL, imageChoice.getOrientation());
+        assertEquals(CheckBox.Orientation.HORIZONTAL, imageChoice.getOrientation());
     }
 
     @Test
     void testGetOrientation_vertical() {
         ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE_CUSTOMIZED);
-        assertEquals(ImageChoice.Orientation.VERTICAL, imageChoice.getOrientation());
+        assertEquals(CheckBox.Orientation.VERTICAL, imageChoice.getOrientation());
     }
 
     @Test
@@ -209,6 +209,8 @@ public class ImageChoiceImplTest {
         assertTrue((boolean) customProperties.get("tooltipVisible"));
         assertEquals("vertical", customProperties.get("orientation"));
         assertEquals("single", customProperties.get("selectionType"));
+        // selectionType must only be emitted under the layout wrapper, never as a stray top-level custom property
+        assertNull(properties.get("selectionType"));
     }
 
     @Test
@@ -249,7 +251,7 @@ public class ImageChoiceImplTest {
     void testDefaultInterface() {
         ImageChoice imageChoiceMock = Mockito.mock(ImageChoice.class);
         Mockito.when(imageChoiceMock.getOrientation()).thenCallRealMethod();
-        assertEquals(ImageChoice.Orientation.HORIZONTAL, imageChoiceMock.getOrientation());
+        assertEquals(CheckBox.Orientation.HORIZONTAL, imageChoiceMock.getOrientation());
         Mockito.when(imageChoiceMock.getSelectionType()).thenCallRealMethod();
         assertEquals(ImageChoice.SelectionType.SINGLE, imageChoiceMock.getSelectionType());
     }
@@ -263,11 +265,9 @@ public class ImageChoiceImplTest {
     }
 
     @Test
-    void testOrientationFromString() {
-        assertEquals(ImageChoice.Orientation.HORIZONTAL, ImageChoice.Orientation.fromString("horizontal"));
-        assertEquals(ImageChoice.Orientation.VERTICAL, ImageChoice.Orientation.fromString("vertical"));
-        assertEquals(ImageChoice.Orientation.HORIZONTAL, ImageChoice.Orientation.fromString("invalid"));
-        assertEquals(ImageChoice.Orientation.HORIZONTAL, ImageChoice.Orientation.fromString(null));
+    void testJSONExport() throws Exception {
+        ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE);
+        Utils.testJSONExport(imageChoice, Utils.getTestExporterJSONPath(BASE, PATH_IMAGECHOICE));
     }
 
     private ImageChoice getImageChoiceUnderTest(String resourcePath) {

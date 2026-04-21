@@ -186,7 +186,8 @@
 
             // Look up image by finding the index of this value in the model's enum array
             let imgHtml = '';
-            let imageSrcArray = this._model.imageSrc;
+            let layout = this._model.properties && this._model.properties['afs:layout'];
+            let imageSrcArray = layout && layout.imageSrc;
             let enumArray = this._model.enum;
             if (imageSrcArray && enumArray) {
                 let idx = enumArray.indexOf(value);

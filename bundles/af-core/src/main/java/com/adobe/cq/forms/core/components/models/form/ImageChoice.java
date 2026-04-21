@@ -48,7 +48,7 @@ public interface ImageChoice extends Field, OptionsConstraint, ContainerConstrai
         SINGLE("single"),
         MULTI("multi");
 
-        private String value;
+        private final String value;
 
         SelectionType(String value) {
             this.value = value;
@@ -75,50 +75,14 @@ public interface ImageChoice extends Field, OptionsConstraint, ContainerConstrai
     }
 
     /**
-     * Defines the orientation for image choice layout.
-     * Possible values: {@code horizontal}, {@code vertical}
-     *
-     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
-     */
-    enum Orientation {
-        HORIZONTAL("horizontal"),
-        VERTICAL("vertical");
-
-        private String value;
-
-        Orientation(String value) {
-            this.value = value;
-        }
-
-        public static Orientation fromString(String value) {
-            for (Orientation type : Orientation.values()) {
-                if (StringUtils.equals(value, type.value)) {
-                    return type;
-                }
-            }
-            return HORIZONTAL;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        @Override
-        @JsonValue
-        public String toString() {
-            return value;
-        }
-    }
-
-    /**
      * Returns the orientation of the image choice component.
      *
-     * @return {@link Orientation}
+     * @return {@link CheckBox.Orientation}
      * @since com.adobe.cq.forms.core.components.models.form 5.13.0
      */
     @JsonIgnore
-    default Orientation getOrientation() {
-        return Orientation.HORIZONTAL;
+    default CheckBox.Orientation getOrientation() {
+        return CheckBox.Orientation.HORIZONTAL;
     }
 
     /**
@@ -141,6 +105,7 @@ public interface ImageChoice extends Field, OptionsConstraint, ContainerConstrai
      * @return array of image source paths, or null if not set
      * @since com.adobe.cq.forms.core.components.models.form 5.13.0
      */
+    @JsonIgnore
     @Nullable
     String[] getImageSrc();
 }

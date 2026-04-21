@@ -32,6 +32,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.CheckBox;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.ImageChoice;
 import com.adobe.cq.forms.core.components.util.AbstractOptionsFieldImpl;
@@ -45,13 +46,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class ImageChoiceImpl extends AbstractOptionsFieldImpl implements ImageChoice {
 
-    private static final String PN_SELECTION_TYPE = "selectionType";
-
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ORIENTATION)
     @Nullable
     protected String orientationJcr;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_SELECTION_TYPE)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SELECTION_TYPE)
     @Nullable
     protected String selectionTypeJcr;
 
@@ -59,30 +58,29 @@ public class ImageChoiceImpl extends AbstractOptionsFieldImpl implements ImageCh
     @Nullable
     protected String[] imageSrcArray;
 
-    private Orientation orientation;
+    private CheckBox.Orientation orientation;
     private SelectionType selectionType;
 
     @PostConstruct
     private void initImageChoiceModel() {
-        orientation = Orientation.fromString(orientationJcr);
+        orientation = CheckBox.Orientation.fromString(orientationJcr);
         selectionType = SelectionType.fromString(selectionTypeJcr);
     }
 
     @Override
     public @NotNull Map<String, Object> getCustomLayoutProperties() {
         Map<String, Object> customLayoutProperties = super.getCustomLayoutProperties();
-        if (orientation != null) {
-            customLayoutProperties.put(ReservedProperties.PN_ORIENTATION, orientation.getValue());
-        }
-        if (selectionType != null) {
-            customLayoutProperties.put(PN_SELECTION_TYPE, selectionType.getValue());
+        customLayoutProperties.put(ReservedProperties.PN_ORIENTATION, orientation.getValue());
+        customLayoutProperties.put(ReservedProperties.PN_SELECTION_TYPE, selectionType.getValue());
+        if (imageSrcArray != null) {
+            customLayoutProperties.put(ReservedProperties.PN_IMAGE_SRC, imageSrcArray.clone());
         }
         return customLayoutProperties;
     }
 
     @Override
     @JsonIgnore
-    public Orientation getOrientation() {
+    public CheckBox.Orientation getOrientation() {
         return orientation;
     }
 
@@ -109,9 +107,9 @@ public class ImageChoiceImpl extends AbstractOptionsFieldImpl implements ImageCh
 
     @Override
     public String getFieldType() {
-        if (selectionType == SelectionType.MULTI) {
-            return FieldType.CHECKBOX_GROUP.getValue();
-        }
-        return FieldType.RADIO_GROUP.getValue();
+        FieldType defaultType = selectionType == SelectionType.MULTI
+            ? FieldType.CHECKBOX_GROUP
+            : FieldType.RADIO_GROUP;
+        return super.getFieldType(defaultType);
     }
 }
