@@ -664,6 +664,24 @@
         });
     };
 
+    var MERGE_HEADER_CELLS_DIALOG_ID = "core-forms-merge-header-cells-dialog";
+    var SPLIT_HEADER_CELL_DIALOG_ID = "core-forms-split-header-cell-dialog";
+
+    /**
+     * Returns the header cell colspan from the .cmp-adaptiveform-tablehead wrapper:
+     * data-colspan (edit mode div) or native colspan (publish mode <th>).
+     * @param {Granite.author.Editable} editable
+     * @returns {number}
+     */
+    function getHeaderCellColspan(editable) {
+        var $wrapper = $(getEditableDom(editable)).closest(".cmp-adaptiveform-tablehead");
+        var cs = parseInt($wrapper.attr("data-colspan"), 10);
+        if (isNaN(cs) || cs < 1) {
+            cs = parseInt($wrapper.attr("colspan"), 10);
+        }
+        return isNaN(cs) || cs < 1 ? 1 : cs;
+    }
+
     /**
      * True when the editable is Adaptive Form Text (draw) used inside a core table header column.
      * @param {Granite.author.Editable} editable
@@ -948,4 +966,207 @@
             });
         });
     };
+    /**
+     * True when the header cell has a colspan > 1 (has been merged).
+     * Used as the condition for the "Split Cell" action config.
+     * @param {Granite.author.Editable} editable
+     * @returns {boolean}
+     */
+    window.CQ.FormsCoreComponents.editorhooks.isMergedHeaderCell = function (editable) {
+        if (!window.CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable)) {
+            return false;
+        }
+        return getHeaderCellColspan(editable) > 1;
+    };
+
+    /**
+     * Merges 2+ consecutive, same-row selected header cells into one by:
+     * - summing their colspan values
+     * - deleting all but the first (DOM-order) cell
+     * - posting the total colspan to the first cell
+     * @param {Granite.author.Editable} editable
+     */
+    window.CQ.FormsCoreComponents.editorhooks.mergeTableHeaderCells = function (editable) {
+        var currentSelectionItems = Granite.author.selection.getAllSelected();
+        var selectedCount = currentSelectionItems ? currentSelectionItems.length : 0;
+
+        function showError(message) {
+            $("#" + MERGE_HEADER_CELLS_DIALOG_ID).remove();
+            var dialog = new Coral.Dialog().set({
+                id: MERGE_HEADER_CELLS_DIALOG_ID,
+                header: { innerHTML: Granite.I18n.get("Invalid Selection") },
+                content: { innerHTML: Granite.I18n.get(message) },
+                footer: {
+                    innerHTML: '<button is="coral-button" variant="primary" coral-close>' + Granite.I18n.get("Ok") + '</button>'
+                },
+                closable: "on",
+                variant: "error"
+            });
+            document.body.appendChild(dialog);
+            dialog.show();
+        }
+
+        if (!currentSelectionItems || selectedCount < 2) {
+            showError("Select two or more header cells to merge.");
+            return;
+        }
+
+        // All selected items must be header cells
+        var allHeaderCells = currentSelectionItems.every(function (item) {
+            return window.CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(item);
+        });
+        if (!allHeaderCells) {
+            showError("All selected cells must be table header cells.");
+            return;
+        }
+
+        // All must share the same parent header row path
+        var firstParentPath = currentSelectionItems[0].getParentPath();
+        var allSameRow = currentSelectionItems.every(function (item) {
+            return item.getParentPath() === firstParentPath;
+        });
+        if (!allSameRow) {
+            showError("All selected cells must be in the same header row.");
+            return;
+        }
+
+        // Determine DOM order within the header row and verify cells are consecutive.
+        // In edit mode the row is a decoration div with class cmp-adaptiveform-tableheader
+        // (no data-cmp-is attribute — that only exists in publish mode <tr>).
+        var $headerRow = $(getEditableDom(currentSelectionItems[0]))
+            .closest(".cmp-adaptiveform-tableheader");
+        var $allWrappers = $headerRow.find(".cmp-adaptiveform-tablehead");
+
+        var indices = currentSelectionItems.map(function (item) {
+            return $allWrappers.index($(getEditableDom(item)).closest(".cmp-adaptiveform-tablehead"));
+        }).sort(function (a, b) { return a - b; });
+
+        var isConsecutive = indices.every(function (idx, i) {
+            return i === 0 || idx === indices[i - 1] + 1;
+        });
+        if (!isConsecutive) {
+            showError("Select consecutive header cells in the same row to merge.");
+            return;
+        }
+
+        // Re-sort items by DOM index so the first in DOM order is kept
+        var sortedItems = currentSelectionItems.slice().sort(function (a, b) {
+            var aIdx = $allWrappers.index($(getEditableDom(a)).closest(".cmp-adaptiveform-tablehead"));
+            var bIdx = $allWrappers.index($(getEditableDom(b)).closest(".cmp-adaptiveform-tablehead"));
+            return aIdx - bIdx;
+        });
+
+        var firstItem = sortedItems[0];
+        var firstCellPath = firstItem.path;
+        var totalColspan = 0;
+        sortedItems.forEach(function (item) {
+            totalColspan += getHeaderCellColspan(item);
+        });
+
+        var deleteParams = getDeleteParams();
+        var chain = $.when();
+
+        // Delete all cells except the first (in DOM order)
+        sortedItems.slice(1).forEach(function (item) {
+            var itemPath = item.path;
+            chain = chain.then(function () {
+                return $.ajax({
+                    url: Granite.HTTP.externalize(itemPath),
+                    type: "POST",
+                    data: deleteParams
+                });
+            });
+        });
+
+        // Set the accumulated colspan on the surviving first cell
+        chain.then(function () {
+            return $.ajax({
+                url: Granite.HTTP.externalize(firstCellPath),
+                type: "POST",
+                data: { "_charset_": "UTF-8", "colspan": String(totalColspan) }
+            });
+        }).done(function () {
+            var tableEditable = getTableEditableFromHeaderCellText(firstItem);
+            if (tableEditable) {
+                tableEditable.refresh();
+            }
+        }).fail(function () {
+            author.ui.helpers.notify({
+                content: Granite.I18n.get("Failed to merge header cells."),
+                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+            });
+        });
+    };
+
+    /**
+     * Splits a merged header cell (colspan > 1) back into individual cells by:
+     * - removing the colspan property from the current cell
+     * - inserting (colspan - 1) new header text cells immediately after it
+     * @param {Granite.author.Editable} editable
+     */
+    window.CQ.FormsCoreComponents.editorhooks.splitTableHeaderCell = function (editable) {
+        var colSpan = getHeaderCellColspan(editable);
+
+        if (colSpan <= 1) {
+            $("#" + SPLIT_HEADER_CELL_DIALOG_ID).remove();
+            var dialog = new Coral.Dialog().set({
+                id: SPLIT_HEADER_CELL_DIALOG_ID,
+                header: { innerHTML: Granite.I18n.get("Invalid Selection") },
+                content: { innerHTML: Granite.I18n.get("Select a merged cell to split.") },
+                footer: {
+                    innerHTML: '<button is="coral-button" variant="primary" coral-close>' + Granite.I18n.get("Ok") + '</button>'
+                },
+                closable: "on",
+                variant: "error"
+            });
+            document.body.appendChild(dialog);
+            dialog.show();
+            return;
+        }
+
+        var cellPath = editable.path;
+        var headerPath = editable.getParentPath();
+        var cellName = cellPath.substring(cellPath.lastIndexOf("/") + 1);
+        var tableEditable = getTableEditableFromHeaderCellText(editable);
+        var numNewCells = colSpan - 1;
+
+        // Pre-build the new cell descriptors so each closure captures the right values
+        var uid = Date.now();
+        var cellsToCreate = [];
+        for (var i = 0; i < numNewCells; i++) {
+            var suffix = uid + "_" + i;
+            var newName = "column_" + suffix;
+            cellsToCreate.push({
+                name: newName,
+                path: headerPath + "/" + newName,
+                content: buildHeaderTextColumnJson(suffix)
+            });
+        }
+
+        // Remove the colspan property from the current cell, then insert new cells sequentially
+        $.ajax({
+            url: Granite.HTTP.externalize(cellPath),
+            type: "POST",
+            data: { "_charset_": "UTF-8", "colspan@Delete": "true" }
+        }).then(function () {
+            var chain = $.when();
+            cellsToCreate.forEach(function (cell, i) {
+                var orderAfter = i === 0 ? cellName : cellsToCreate[i - 1].name;
+                chain = chain.then(function () {
+                    return postImportAndOrderAfter(cell.path, cell.content, orderAfter);
+                });
+            });
+            return chain;
+        }).done(function () {
+            if (tableEditable) {
+                tableEditable.refresh();
+            }
+        }).fail(function () {
+            author.ui.helpers.notify({
+                content: Granite.I18n.get("Failed to split header cell."),
+                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+            });
+        });
+    };
+
 })(window, Granite.author, jQuery, Coral);

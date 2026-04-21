@@ -17,22 +17,16 @@
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
 <!--/* EDIT MODE */-->
 <sly data-sly-test="${wcmmode.edit}">
-    <div id="${header.id}"
-         data-cmp-is="adaptiveFormTableHeader"
-         data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-         data-cmp-visible="${header.visible ? 'true' : 'false'}"
-         data-cmp-enabled="${header.enabled ? 'true' : 'false'}"
-         style="display: contents">
-        <sly data-sly-list.cell="${resource.listChildren}">
-            <div class="cmp-adaptiveform-tablehead"
-                 role="columnheader"
-                 data-cmp-hook-tablehead="header">
-                <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
-            </div>
-        </sly>
-    </div>
+    <sly data-sly-list.cell="${resource.listChildren}">
+        <div class="cmp-adaptiveform-tablehead"
+             role="columnheader"
+             colspan="${cell.valueMap.colspan}"
+             data-cmp-hook-tablehead="header">
+            <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+        </div>
+    </sly>
 </sly>
-<!--/* PUBLISH MODE: column widths come from parent <table><colgroup> in table.html */-->
+<!--/* PUBLISH MODE: semantic <tr>/<th> with real HTML colspan. */-->
 <sly data-sly-test="${!wcmmode.edit}">
     <tr id="${header.id}"
         class="cmp-adaptiveform-tableheader"
@@ -43,6 +37,7 @@
         <sly data-sly-list.cell="${resource.listChildren}">
             <th class="cmp-adaptiveform-tablehead"
                 scope="col"
+                data-sly-attribute.colspan="${cell.valueMap.colspan}"
                 data-cmp-hook-tablehead="header">
                 <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
             </th>
