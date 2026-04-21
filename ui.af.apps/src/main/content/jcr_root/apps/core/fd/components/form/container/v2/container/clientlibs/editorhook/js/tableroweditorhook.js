@@ -570,6 +570,7 @@
 
     /**
      * Returns the header cell colspan from .cmp-adaptiveform-tablehead (data-colspan or native colspan).
+     * data-colspan (edit mode div) or native colspan (publish mode <th>).
      * @param {Granite.author.Editable} editable
      * @returns {number}
      */
@@ -927,6 +928,8 @@
         }
 
         // Determine DOM order within the header row and verify cells are consecutive.
+        // In edit mode the row is a decoration div with class cmp-adaptiveform-tableheader
+        // (no data-cmp-is attribute — that only exists in publish mode <tr>).
         var $headerRow = $(getEditableDom(currentSelectionItems[0]))
             .closest(".cmp-adaptiveform-tableheader");
         var $allWrappers = $headerRow.find(".cmp-adaptiveform-tablehead");

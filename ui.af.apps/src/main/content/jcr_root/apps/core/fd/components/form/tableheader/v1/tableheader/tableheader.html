@@ -44,7 +44,7 @@
         </sly>
     </tr>
 </sly>
-<!--/* PUBLISH MODE: column widths come from parent <table><colgroup> in table.html */-->
+<!--/* PUBLISH MODE: semantic <tr>/<th> with real HTML colspan. */-->
 <sly data-sly-test="${!wcmmode.edit}">
     <tr id="${header.id}"
         class="cmp-adaptiveform-tableheader"
@@ -55,6 +55,7 @@
         <sly data-sly-list.cell="${resource.listChildren}">
             <th class="cmp-adaptiveform-tablehead"
                 scope="col"
+                data-sly-attribute.colspan="${cell.valueMap.colspan}"
                 data-cmp-hook-tablehead="header">
                 <sly data-sly-test="${sortingEnabled && !cell.valueMap.disableSorting}">
                     <div class="cmp-adaptiveform-table__sort-header-inner">
