@@ -245,7 +245,7 @@ describe('Click on button tag (V-4)', () => {
 
     it('should display an alert if the file size exceeds the maximum allowed size', () => {
         const maxFileSize = 2 * 1024 * 1024; // 2MB
-        const expectedAlertMessage = `File(s) FileAttachment3mb.jpg are greater than the expected size: ${maxFileSize / (1024 * 1024)}MBMB.`;
+        const expectedAlertMessage = `File(s) FileAttachment3mb.jpg are greater than the expected size: ${maxFileSize / (1024 * 1024)}MB.`;
         const fileInput = 'input[name=\'fileinput5\']';
         cy.attachFile(fileInput, ['FileAttachment3mb.jpg']);
         cy.on('window:alert', (alertText) => {
