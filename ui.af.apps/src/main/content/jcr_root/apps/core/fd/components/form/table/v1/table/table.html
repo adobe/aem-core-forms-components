@@ -30,29 +30,26 @@
     <sly data-sly-test="${table.description}">
         <div class="cmp-adaptiveform-table__description cmp-container__longdescription">${table.description @ context='html'}</div>
     </sly>
-    
-    <!--/* EDIT MODE: div-based layout so AEM can safely inject edit chrome (parse markers,
-          placeholders) without invalidating the table structure.
-          position:relative on div rows works correctly here for overlay anchoring. */-->
+
+    <!--/* EDIT MODE: semantic table elements; tr decoration lets AEM inject edit chrome. */-->
     <sly data-sly-test="${wcmmode.edit}">
-        <div class="cmp-adaptiveform-table__widget"
-             role="grid"
-             aria-label="${table.label.value @ context='attribute'}">
-            <sly data-sly-list.child="${resource.listChildren}">
-                <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
-                    <div class="cmp-adaptiveform-table__head" role="rowgroup">
-                        <sly data-sly-resource="${child @ decorationTagName='div', cssClassName='cmp-adaptiveform-tableheader'}"></sly>
-                    </div>
-                </sly>
-            </sly>
-            <div class="cmp-adaptiveform-table__body" role="rowgroup">
+        <table class="cmp-adaptiveform-table__widget"
+               aria-label="${table.label.value @ context='attribute'}">
+            <thead class="cmp-adaptiveform-table__head">
                 <sly data-sly-list.child="${resource.listChildren}">
-                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
-                        <sly data-sly-resource="${child @ decorationTagName='div', cssClassName='cmp-adaptiveform-tablerow'}"></sly>
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
+                        <sly data-sly-resource="${child @ decorationTagName='tr', cssClassName='cmp-adaptiveform-tableheader'}"></sly>
                     </sly>
                 </sly>
-            </div>
-        </div>
+            </thead>
+            <tbody class="cmp-adaptiveform-table__body">
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
+                        <sly data-sly-resource="${child @ decorationTagName='tr', cssClassName='cmp-adaptiveform-tablerow'}"></sly>
+                    </sly>
+                </sly>
+            </tbody>
+        </table>
     </sly>
     <!--/* PUBLISH MODE: proper semantic table elements for accessibility and SEO. */-->
     <sly data-sly-test="${!wcmmode.edit}">
