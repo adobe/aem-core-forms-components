@@ -184,43 +184,60 @@
             let richScreenReaderText = `${this._model.label.value}:  ${itemLabel}`;
             let plainScreenReaderText = window.DOMPurify ? window.DOMPurify.sanitize(richScreenReaderText, { ALLOWED_TAGS: [] }) : richScreenReaderText;
 
+            const optionDiv = document.createElement('div');
+            optionDiv.className = ImageChoice.selectors.option.slice(1);
+
+            const label = document.createElement('label');
+            label.className = ImageChoice.selectors.optionLabel.slice(1);
+
+            const input = document.createElement('input');
+            input.type = inputType;
+            input.name = this._model.name;
+            input.className = ImageChoice.selectors.widget.slice(1);
+            input.value = value;
+            input.setAttribute('aria-label', plainScreenReaderText);
+            input.tabIndex = 0;
+            if (this._model.readOnly === true || this._model.enabled === false) {
+                input.setAttribute('disabled', 'true');
+                if (this._model.readOnly === true) {
+                    input.setAttribute('aria-readonly', 'true');
+                }
+            }
+
+            const imageSpan = document.createElement('span');
+            imageSpan.className = ImageChoice.selectors.optionImage.slice(1);
+
             // Look up image by finding the index of this value in the model's enum array
-            let imgHtml = '';
             let layout = this._model.properties && this._model.properties['afs:layout'];
             let imageSrcArray = layout && layout.imageSrc;
             let enumArray = this._model.enum;
             if (imageSrcArray && enumArray) {
                 let idx = enumArray.indexOf(value);
                 if (idx === -1) {
-                    // try string comparison
                     idx = enumArray.findIndex(e => String(e) === String(value));
                 }
                 if (idx >= 0 && imageSrcArray[idx]) {
                     let altText = window.DOMPurify ? window.DOMPurify.sanitize(itemLabel, { ALLOWED_TAGS: [] }) : itemLabel;
-                    imgHtml = `<img src="${imageSrcArray[idx]}" alt="${altText}" class="cmp-adaptiveform-imagechoice__image"/>`;
+                    const img = document.createElement('img');
+                    img.src = imageSrcArray[idx];
+                    img.alt = altText;
+                    img.className = 'cmp-adaptiveform-imagechoice__image';
+                    imageSpan.appendChild(img);
                 }
             }
 
-            const optionTemplate = `
-            <div class="${ImageChoice.selectors.option.slice(1)}">
-                <label class="${ImageChoice.selectors.optionLabel.slice(1)}">
-                    <input type="${inputType}" name="${this._model.name}" class="${ImageChoice.selectors.widget.slice(1)}" value="${value}" aria-label="${plainScreenReaderText}" tabindex="0">
-                    <span class="${ImageChoice.selectors.optionImage.slice(1)}">${imgHtml}</span>
-                    <span class="${ImageChoice.selectors.optionText.slice(1)}">${itemLabel}</span>
-                </label>
-            </div>`;
+            const textSpan = document.createElement('span');
+            textSpan.className = ImageChoice.selectors.optionText.slice(1);
+            let purifiedLabel = window.DOMPurify ? window.DOMPurify.sanitize(itemLabel) : itemLabel;
+            textSpan.innerHTML = purifiedLabel;
 
-            const container = document.createElement('div');
-            container.innerHTML = optionTemplate;
-            let addedOptionWidget = container.querySelector(ImageChoice.selectors.widget);
-            if (this._model.readOnly === true || this._model.enabled === false) {
-                addedOptionWidget.setAttribute("disabled", true);
-                if (this._model.readOnly === true) {
-                    addedOptionWidget.setAttribute("aria-readonly", true);
-                }
-            }
-            this.#addWidgetListeners(addedOptionWidget);
-            return container.firstElementChild;
+            label.appendChild(input);
+            label.appendChild(imageSpan);
+            label.appendChild(textSpan);
+            optionDiv.appendChild(label);
+
+            this.#addWidgetListeners(input);
+            return optionDiv;
         }
 
         updateEnum(newEnums) {
@@ -235,8 +252,9 @@
             // Instead, target the __option-text span specifically.
             let options = [...this.getOptions()];
             if (options.length === 0) {
-                newEnumNames.forEach((value) => {
-                    this.getWidgets().appendChild(this.#createOption(value, value));
+                newEnumNames.forEach((enumName, index) => {
+                    const enumValue = this._model.enum?.[index] ?? enumName;
+                    this.getWidgets().appendChild(this.#createOption(enumValue, enumName));
                 });
             } else {
                 options.forEach((option, index) => {

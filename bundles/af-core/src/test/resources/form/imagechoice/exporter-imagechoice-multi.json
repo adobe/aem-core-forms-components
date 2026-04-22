@@ -1,0 +1,42 @@
+{
+  "id": "imagechoice-33251b3cfa",
+  "fieldType": "checkbox-group",
+  "name": "imagechoice_multi",
+  "type": "string[]",
+  "enforceEnum": true,
+  "enumNames": [
+    "Red",
+    "Green",
+    "Blue"
+  ],
+  "default": [
+    "red",
+    "blue"
+  ],
+  "label": {
+    "value": "Select Colors"
+  },
+  "properties": {
+    "afs:layout": {
+      "orientation": "horizontal",
+      "selectionType": "multi",
+      "imageSrc": [
+        "/content/dam/colors/red.png",
+        "/content/dam/colors/green.png",
+        "/content/dam/colors/blue.png"
+      ]
+    },
+    "fd:path": "/content/imagechoice-multi"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "enum": [
+    "red",
+    "green",
+    "blue"
+  ],
+  ":type": "core/fd/components/form/imagechoice/v1/imagechoice"
+}

@@ -270,6 +270,25 @@ public class ImageChoiceImplTest {
         Utils.testJSONExport(imageChoice, Utils.getTestExporterJSONPath(BASE, PATH_IMAGECHOICE));
     }
 
+    @Test
+    void testJSONExportForCustomized() throws Exception {
+        ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE_CUSTOMIZED);
+        Utils.testJSONExport(imageChoice, Utils.getTestExporterJSONPath(BASE, PATH_IMAGECHOICE_CUSTOMIZED));
+    }
+
+    @Test
+    void testJSONExportForMulti() throws Exception {
+        ImageChoice imageChoice = getImageChoiceUnderTest(PATH_IMAGECHOICE_MULTI);
+        Utils.testJSONExport(imageChoice, Utils.getTestExporterJSONPath(BASE, PATH_IMAGECHOICE_MULTI));
+    }
+
+    @Test
+    void testJSONExportForDataLayer() throws Exception {
+        ImageChoice imageChoice = Utils.getComponentUnderTest(PATH_IMAGECHOICE_DATALAYER, ImageChoice.class, context);
+        FieldUtils.writeField(imageChoice, "dataLayerEnabled", true, true);
+        Utils.testJSONExport(imageChoice, Utils.getTestExporterJSONPath(BASE, PATH_IMAGECHOICE_DATALAYER));
+    }
+
     private ImageChoice getImageChoiceUnderTest(String resourcePath) {
         context.currentResource(resourcePath);
         MockSlingHttpServletRequest request = context.request();

@@ -32,7 +32,7 @@
                            aria-label="${imagechoice.optionScreenReaderLabels[itemList.index]}"
                            tabindex="0"/>
                     <span class="cmp-adaptiveform-imagechoice__option-image"
-                          data-sly-test="${imagechoice.imageSrc}">
+                          data-sly-test="${imagechoice.imageSrc[itemList.index]}">
                         <img src="${imagechoice.imageSrc[itemList.index]}"
                              alt="${imagechoice.enumNames[itemList.index] @ context='text'}"
                              class="cmp-adaptiveform-imagechoice__image"/>

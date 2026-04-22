@@ -109,7 +109,7 @@
                                                        sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                        name="./imageSrc"
                                                        rootPath="/content/dam"
-                                                       filter="hierarchyNotFile"/>
+                                                       filter="file"/>
                                             </imageSrcField>
                                             <orientation jcr:primaryType="nt:unstructured"
                                                          sling:orderBefore="visible"
