@@ -1197,4 +1197,46 @@
         });
     };
 
+    // When a tablerow/tableheader editable's .dom gets resolved to the <table>
+    // wrapper (foster-parented markers, refresh edge cases) instead of the real
+    // <tr>, relocate it by data-cq-data-path before the overlay paints.
+    // See cq-guides GuideTouchAuthoringEditListeners.js for the original pattern.
+    function isTableRowLikeEditable(editable) {
+        if (!editable || typeof editable.type !== "string") {
+            return false;
+        }
+        return editable.type.indexOf("tablerow") !== -1
+            || editable.type.indexOf("tableheader") !== -1;
+    }
+
+    function installOverlayRenderOverride() {
+        if (!author.edit || !author.edit.Overlay || !author.edit.Overlay.prototype
+            || typeof author.edit.Overlay.prototype.render !== "function") {
+            return false;
+        }
+        if (author.edit.Overlay.prototype.render.__afTableWrapped) {
+            return true;
+        }
+        var _superOverlayRender = author.edit.Overlay.prototype.render;
+        var wrapped = function (editable, container) {
+            if (isTableRowLikeEditable(editable)
+                && editable.dom
+                && typeof editable.dom.attr === "function"
+                && editable.dom.attr("data-cq-data-path") !== editable.path) {
+                var $real = editable.dom.find('[data-cq-data-path="' + editable.path + '"]');
+                if ($real.length) {
+                    editable.dom = $real;
+                }
+            }
+            return _superOverlayRender.apply(this, [editable, container]);
+        };
+        wrapped.__afTableWrapped = true;
+        author.edit.Overlay.prototype.render = wrapped;
+        return true;
+    }
+
+    if (!installOverlayRenderOverride()) {
+        $(function () { installOverlayRenderOverride(); });
+    }
+
 })(window, Granite.author, jQuery, Coral);

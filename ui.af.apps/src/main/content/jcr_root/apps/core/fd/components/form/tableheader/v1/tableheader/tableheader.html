@@ -15,16 +15,20 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.header="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
-<!--/* EDIT MODE: semantic <th> cells inside the AEM-provided <tr> decoration. */-->
+<!--/* EDIT MODE: hand-rendered <tr> with Granite editable markers so the overlay
+     can bind to the real header row instead of foster-parenting to the <table>. */-->
 <sly data-sly-test="${wcmmode.edit}">
-    <sly data-sly-list.cell="${resource.listChildren}">
-        <th class="cmp-adaptiveform-tablehead"
-            scope="col"
-            data-sly-attribute.colspan="${cell.valueMap.colspan}"
-            data-cmp-hook-tablehead="header">
-            <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
-        </th>
-    </sly>
+    <tr class="cmp-adaptiveform-tableheader cq-Editable-dom cq-Editable-dom--container"
+        data-cq-data-path="${resource.path}">
+        <sly data-sly-list.cell="${resource.listChildren}">
+            <th class="cmp-adaptiveform-tablehead"
+                scope="col"
+                data-sly-attribute.colspan="${cell.valueMap.colspan}"
+                data-cmp-hook-tablehead="header">
+                <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+            </th>
+        </sly>
+    </tr>
 </sly>
 <!--/* PUBLISH MODE: semantic <tr>/<th> with real HTML colspan. */-->
 <sly data-sly-test="${!wcmmode.edit}">
