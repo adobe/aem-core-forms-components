@@ -262,11 +262,14 @@ public class AbstractFormComponentImplTest {
     }
 
     @Test
-    public void testPrintChannelRuleNotInPublish() {
+    public void testPrintChannelRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
+        Object rulesProperties = properties.get("fd:rules");
+        assertNotNull(rulesProperties);
+        Object formReadyRule = ((Map<String, Object>) rulesProperties).get("fd:formReady");
+        assertNotNull(formReadyRule);
     }
 
     @Test
