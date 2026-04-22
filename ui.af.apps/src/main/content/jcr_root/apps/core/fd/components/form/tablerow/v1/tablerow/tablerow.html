@@ -15,13 +15,17 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.row="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
-<!--/* EDIT MODE: semantic <td> cells inside the AEM-provided <tr> decoration. */-->
+<!--/* EDIT MODE: hand-rendered <tr> with Granite editable markers so the overlay
+     can bind to the real row instead of foster-parenting to the <table>. */-->
 <sly data-sly-test="${wcmmode.edit}">
-    <sly data-sly-list.cell="${resource.listChildren}">
-        <td class="cmp-adaptiveform-tablecell">
-            <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
-        </td>
-    </sly>
+    <tr class="cmp-adaptiveform-tablerow cq-Editable-dom cq-Editable-dom--container"
+        data-cq-data-path="${resource.path}">
+        <sly data-sly-list.cell="${resource.listChildren}">
+            <td class="cmp-adaptiveform-tablecell">
+                <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+            </td>
+        </sly>
+    </tr>
 </sly>
 <!--/* PUBLISH MODE: native tr/td for proper table semantics and accessibility. */-->
 <sly data-sly-test="${!wcmmode.edit}">
