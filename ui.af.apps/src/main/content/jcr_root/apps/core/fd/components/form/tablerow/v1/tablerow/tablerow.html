@@ -15,25 +15,13 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.row="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
-<!--/* EDIT MODE: decoration div (from table.html) acts as the table-row; this inner div uses
-      display:contents so cells participate directly in that table-row layout.
-      position:relative on the decoration div works for overlay anchoring. */-->
+<!--/* EDIT MODE: semantic <td> cells inside the AEM-provided <tr> decoration. */-->
 <sly data-sly-test="${wcmmode.edit}">
-    <div id="${row.id}"
-         class="cmp-adaptiveform-tablerow__root"
-         data-cmp-is="adaptiveFormTableRow"
-         data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
-         data-cmp-visible="${row.visible ? 'true' : 'false'}"
-         data-cmp-enabled="${row.enabled ? 'true' : 'false'}"
-         data-cmp-readonly="${row.readOnly ? 'true' : 'false'}"
-         style="display: contents">
-        <sly data-sly-list.cell="${resource.listChildren}">
-            <div class="cmp-adaptiveform-tablecell"
-                 role="gridcell">
-                <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
-            </div>
-        </sly>
-    </div>
+    <sly data-sly-list.cell="${resource.listChildren}">
+        <td class="cmp-adaptiveform-tablecell">
+            <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+        </td>
+    </sly>
 </sly>
 <!--/* PUBLISH MODE: native tr/td for proper table semantics and accessibility. */-->
 <sly data-sly-test="${!wcmmode.edit}">
