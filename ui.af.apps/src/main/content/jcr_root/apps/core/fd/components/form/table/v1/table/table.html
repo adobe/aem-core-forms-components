@@ -31,21 +31,21 @@
         <div class="cmp-adaptiveform-table__description cmp-container__longdescription">${table.description @ context='html'}</div>
     </sly>
 
-    <!--/* EDIT MODE: semantic table elements; tr decoration lets AEM inject edit chrome. */-->
+    <!--/* EDIT MODE: children render their own <tr> so we can stamp data-cq-data-path on it. */-->
     <sly data-sly-test="${wcmmode.edit}">
         <table class="cmp-adaptiveform-table__widget"
                aria-label="${table.label.value @ context='attribute'}">
             <thead class="cmp-adaptiveform-table__head">
                 <sly data-sly-list.child="${resource.listChildren}">
                     <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
-                        <sly data-sly-resource="${child @ decorationTagName='tr', cssClassName='cmp-adaptiveform-tableheader'}"></sly>
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
                     </sly>
                 </sly>
             </thead>
             <tbody class="cmp-adaptiveform-table__body">
                 <sly data-sly-list.child="${resource.listChildren}">
                     <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
-                        <sly data-sly-resource="${child @ decorationTagName='tr', cssClassName='cmp-adaptiveform-tablerow'}"></sly>
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
                     </sly>
                 </sly>
             </tbody>
