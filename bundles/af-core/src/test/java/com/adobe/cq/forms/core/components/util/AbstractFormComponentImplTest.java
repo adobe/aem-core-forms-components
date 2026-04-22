@@ -267,6 +267,7 @@ public class AbstractFormComponentImplTest {
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         Object rulesProperties = properties.get("fd:rules");
+        // Print Channel requires this to be present in both author and publish environments.
         assertNotNull(rulesProperties);
         Object formReadyRule = ((Map<String, Object>) rulesProperties).get("fd:formReady");
         assertNotNull(formReadyRule);
