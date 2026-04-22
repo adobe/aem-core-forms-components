@@ -61,7 +61,7 @@
 
     window.CQ.FormsCoreComponents.editorhooks.openDorDialog =  function (editable) {
         var url = ns.ContentFrame.getContentPath() + PRINT_NODE_RELATIVE_PATH;
-        if (!Granite.author.page.path.startsWith("/content/forms/af")) {
+        if (!Granite.author.page.path.startsWith("/content/forms/af/")) {
             url = editable.path + FD_VIEW_PATH;
         }
         options.getPath = function () {
@@ -80,7 +80,7 @@
 
     window.CQ.FormsCoreComponents.editorhooks.initPreviewDoR = function(editable) {
         var url = getFormPath(ns.ContentFrame.getContentPath()) + "/jcr:content/guideContainer" + DOR_PREVIEW_SELECTOR;
-        if (!Granite.author.page.path.startsWith("/content/forms/af")) {
+        if (!Granite.author.page.path.startsWith("/content/forms/af/")) {
             url = editable.path + DOR_PREVIEW_SELECTOR;
         }
         window.open(Granite.HTTP.externalize(url), "_blank");
