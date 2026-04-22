@@ -63,9 +63,11 @@
                 }
             } else {
                 deleteField.remove();
-                foundationField.setRequired(true);
-                if (DEFAULT_VALUE_MAP[fieldName]) {
-                    foundationField.setValue(DEFAULT_VALUE_MAP[fieldName]);
+                if (foundationField) {
+                    foundationField.setRequired(true);
+                    if (DEFAULT_VALUE_MAP[fieldName]) {
+                        foundationField.setValue(DEFAULT_VALUE_MAP[fieldName]);
+                    }
                 }
             }
         }
@@ -83,12 +85,11 @@
 
     function manageFDViewPayload(dialog, shouldDelete) {
         var form = dialog.find('form');
-        if (shouldDelete) {
-            form.find('input[name="./fd:view/print/jcr:created"]').remove();
-            form.find('input[name="./fd:view/print/jcr:lastModified"]').remove();
-            form.find('input[name="./fd:view/print/sling:resourceType"]').remove();
-            form.find('input[name="./fd:view/print/metaTemplateRef"]').remove();
-        } else {
+        form.find('input[name="./fd:view/print/jcr:created"]').remove();
+        form.find('input[name="./fd:view/print/jcr:lastModified"]').remove();
+        form.find('input[name="./fd:view/print/sling:resourceType"]').remove();
+        form.find('input[name="./fd:view/print/metaTemplateRef"]').remove();
+        if (!shouldDelete) {
             form.append($('<input>', {
                 type: 'hidden',
                 name: './fd:view/print/jcr:created',
@@ -98,7 +99,7 @@
                 type: 'hidden',
                 name: './fd:view/print/jcr:lastModified',
                 value: ''
-            }));    
+            }));
             form.append($('<input>', {
                 type: 'hidden',
                 name: './fd:view/print/sling:resourceType',
@@ -200,7 +201,8 @@
                 var dorTypeValue = dorTypeField.value;
                 // Prepare POST data
                 var postData = {
-                    './dorTemplateChanged': 'Boolean',
+                    './dorTemplateChanged': 'true',
+                    './dorTemplateChanged@TypeHint': 'Boolean',
                     './dorType': dorTypeValue
                 };
                 
