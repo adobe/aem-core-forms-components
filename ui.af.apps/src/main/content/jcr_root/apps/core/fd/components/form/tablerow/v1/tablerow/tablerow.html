@@ -15,15 +15,12 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.row="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
-<!--/*
-    EDIT MODE: div cells inside AEM's decoration <div class="cq-Editable-dom cmp-adaptiveform-tablerow">.
-    The decoration div uses display:flex (from tableeditor.css). Each cell div is a flex item.
-*/-->
+<!--/* EDIT MODE: semantic <td> cells inside the AEM-provided <tr> decoration. */-->
 <sly data-sly-test="${wcmmode.edit}">
     <sly data-sly-list.cell="${resource.listChildren}">
-        <div class="cmp-adaptiveform-tablecell">
+        <td class="cmp-adaptiveform-tablecell">
             <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
-        </div>
+        </td>
     </sly>
 </sly>
 <!--/* PUBLISH MODE: semantic <tr>/<td> with repeatable row controls. */-->

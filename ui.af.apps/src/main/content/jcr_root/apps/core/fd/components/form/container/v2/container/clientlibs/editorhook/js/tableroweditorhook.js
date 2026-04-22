@@ -198,7 +198,7 @@
     };
 
     /**
-     * Number of header rows currently rendered under the table (edit mode DOM).
+     * Number of header rows under the table (each tableheader renders a tr.cmp-adaptiveform-tableheader).
      * @param {Granite.author.Editable} editable
      * @returns {number}
      */
@@ -208,7 +208,7 @@
         if (!$table.length) {
             return 0;
         }
-        return $table.find(".cmp-adaptiveform-table__widget > .cmp-adaptiveform-table__head").length;
+        return $table.find(".cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader").length;
     }
 
     /**
@@ -280,18 +280,53 @@
     }
 
     /**
-     * Number of columns from the table header row in the authoring DOM, or from the current row.
+     * Logical column span for one header cell (native colspan or legacy data-colspan).
+     * @param {jQuery} $cell .cmp-adaptiveform-tablehead element
+     * @returns {number}
+     */
+    function getTableHeadCellColspan($cell) {
+        var cs = parseInt($cell.attr("data-colspan"), 10);
+        if (isNaN(cs) || cs < 1) {
+            cs = parseInt($cell.attr("colspan"), 10);
+        }
+        return isNaN(cs) || cs < 1 ? 1 : cs;
+    }
+
+    /**
+     * Sum of colspans for a set of header cells (logical table width).
+     * @param {jQuery} $headerCells
+     * @returns {number}
+     */
+    function sumTableHeadCellColspans($headerCells) {
+        var total = 0;
+        if (!$headerCells || !$headerCells.length) {
+            return 0;
+        }
+        $headerCells.each(function () {
+            total += getTableHeadCellColspan($(this));
+        });
+        return total;
+    }
+
+    /**
+     * Number of logical columns: first header row's colspan sum, else cell count from the data row.
      * @param {Granite.author.Editable} editable selected table row
      * @returns {number}
      */
     function getColumnCount(editable) {
         var $dom = $(getEditableDom(editable));
         var $table = $dom.closest(".cmp-adaptiveform-table");
-        var headerCols = $table.find(".cmp-adaptiveform-table__head .cmp-adaptiveform-tablehead").length;
-        if (headerCols > 0) {
-            return headerCols;
+        var $firstHeaderRow = $table.find(".cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader").first();
+        var fromHeader = sumTableHeadCellColspans($firstHeaderRow.find(".cmp-adaptiveform-tablehead"));
+        if (fromHeader > 0) {
+            return fromHeader;
         }
-        var rowCells = $dom.find(".cmp-adaptiveform-tablecell").length;
+        var $dataRow = $dom.closest(".cmp-adaptiveform-tablerow");
+        var rowCells = $dataRow.length ? $dataRow.find(".cmp-adaptiveform-tablecell").length : 0;
+        if (rowCells > 0) {
+            return rowCells;
+        }
+        rowCells = $dom.find(".cmp-adaptiveform-tablecell").length;
         return rowCells > 0 ? rowCells : 1;
     }
 
@@ -327,13 +362,13 @@
      */
     function getHeaderRowColumnCount(editable) {
         var $row = getRowWrapper(editable);
-        var n = $row.find(".cmp-adaptiveform-tablehead").length;
-        if (n > 0) {
-            return n;
+        var fromRow = sumTableHeadCellColspans($row.find(".cmp-adaptiveform-tablehead"));
+        if (fromRow > 0) {
+            return fromRow;
         }
         var $table = $(getEditableDom(editable)).closest(".cmp-adaptiveform-table");
-        var $firstHead = $table.find(".cmp-adaptiveform-table__widget > .cmp-adaptiveform-table__head").first();
-        var fallback = $firstHead.find(".cmp-adaptiveform-tablehead").length;
+        var $firstHeadRow = $table.find(".cmp-adaptiveform-table__widget > .cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader").first();
+        var fallback = sumTableHeadCellColspans($firstHeadRow.find(".cmp-adaptiveform-tablehead"));
         return fallback > 0 ? fallback : 1;
     }
 
@@ -668,18 +703,13 @@
     var SPLIT_HEADER_CELL_DIALOG_ID = "core-forms-split-header-cell-dialog";
 
     /**
-     * Returns the header cell colspan from the .cmp-adaptiveform-tablehead wrapper:
-     * data-colspan (edit mode div) or native colspan (publish mode <th>).
+     * Returns the header cell colspan from .cmp-adaptiveform-tablehead (data-colspan or native colspan).
      * @param {Granite.author.Editable} editable
      * @returns {number}
      */
     function getHeaderCellColspan(editable) {
         var $wrapper = $(getEditableDom(editable)).closest(".cmp-adaptiveform-tablehead");
-        var cs = parseInt($wrapper.attr("data-colspan"), 10);
-        if (isNaN(cs) || cs < 1) {
-            cs = parseInt($wrapper.attr("colspan"), 10);
-        }
-        return isNaN(cs) || cs < 1 ? 1 : cs;
+        return getTableHeadCellColspan($wrapper);
     }
 
     /**
@@ -1031,8 +1061,6 @@
         }
 
         // Determine DOM order within the header row and verify cells are consecutive.
-        // In edit mode the row is a decoration div with class cmp-adaptiveform-tableheader
-        // (no data-cmp-is attribute — that only exists in publish mode <tr>).
         var $headerRow = $(getEditableDom(currentSelectionItems[0]))
             .closest(".cmp-adaptiveform-tableheader");
         var $allWrappers = $headerRow.find(".cmp-adaptiveform-tablehead");

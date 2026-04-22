@@ -15,15 +15,15 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.header="com.adobe.cq.forms.core.components.models.form.Panel"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
-<!--/* EDIT MODE */-->
+<!--/* EDIT MODE: semantic <th> cells inside the AEM-provided <tr> decoration. */-->
 <sly data-sly-test="${wcmmode.edit}">
     <sly data-sly-list.cell="${resource.listChildren}">
-        <div class="cmp-adaptiveform-tablehead"
-             role="columnheader"
-             colspan="${cell.valueMap.colspan}"
-             data-cmp-hook-tablehead="header">
+        <th class="cmp-adaptiveform-tablehead"
+            scope="col"
+            data-sly-attribute.colspan="${cell.valueMap.colspan}"
+            data-cmp-hook-tablehead="header">
             <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
-        </div>
+        </th>
     </sly>
 </sly>
 <!--/* PUBLISH MODE: semantic <tr>/<th> with real HTML colspan. */-->
