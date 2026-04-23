@@ -107,6 +107,7 @@ class Utils {
 
         const pathAttr = '[data-cmp-path="' + formContainer.getPath() + '"]';
         const formContainerElement = document.querySelector(pathAttr);
+        if(!formContainerElement) return;
         observer.observe(formContainerElement, {
             subtree: true,
             childList: true,
@@ -295,7 +296,14 @@ class Utils {
      */
     static async setupFormContainer(createFormContainer, formContainerSelector, formContainerClass) {
         FunctionRuntime.registerFunctions(customFunctions);
-        let elements = document.querySelectorAll(formContainerSelector);
+        let elements = Array.from(document.querySelectorAll(formContainerSelector));
+        // Avoid already initialised form container ( in case of multiple container in site )
+        elements = elements
+            .filter(element => element.dataset["cmpVisited"] !== "true")
+            .map(element => {
+                element.dataset["cmpVisited"] = "true";
+                return element;
+            });
         for (let i = 0; i < elements.length; i++) {
             const dataset = Utils.readData(elements[i], formContainerClass);
             const customFunctionUrl = dataset["customFunctionsModuleUrl"];
