@@ -65,7 +65,8 @@
                 deleteField.remove();
                 if (foundationField) {
                     foundationField.setRequired(true);
-                    if (DEFAULT_VALUE_MAP[fieldName]) {
+                    var value = foundationField.getValue();
+                    if ((!value || value === '') && DEFAULT_VALUE_MAP[fieldName]) {
                         foundationField.setValue(DEFAULT_VALUE_MAP[fieldName]);
                     }
                 }
