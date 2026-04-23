@@ -70,7 +70,15 @@ class LanguageUtils {
         }
     }
 
-
+    /**
+     * Check if the given locale is a valid product locale.
+     * @param {string} lang - The language code to check.
+     * @returns {boolean} True if the locale is a valid product locale, false otherwise.
+     */
+    static isProductLocale(lang) {
+        const productLocales = ['en', 'de', 'es', 'fr', 'it', 'ja', 'ko-kr', 'pt-br', 'zh-cn', 'zh-tw'];
+        return productLocales.includes(lang);
+    }
 
     /**
      * Returns the translated string for the given language and key.
