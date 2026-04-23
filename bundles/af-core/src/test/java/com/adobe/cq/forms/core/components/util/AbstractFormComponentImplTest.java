@@ -279,7 +279,7 @@ public class AbstractFormComponentImplTest {
         AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
         Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
-
+        Mockito.doReturn(null).when(resource).getChild("fd:rules");
         ValueMap valueMap = new MockValueMap(resource);
         Mockito.doReturn(valueMap).when(resource).getValueMap();
         Mockito.doReturn(null).when(resource).getChild("fd:dorContainer");
