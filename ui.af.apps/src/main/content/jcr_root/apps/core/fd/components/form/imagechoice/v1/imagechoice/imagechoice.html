@@ -1,0 +1,48 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.renderer="${'imagechoice.js'}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.legend="${renderer.legendPath}"
+     data-sly-use.shortdescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longdescription="${renderer.longDescriptionPath}"
+     data-sly-use.errormessage="${renderer.errorMessagePath}"
+     data-sly-use.questionmark="${renderer.questionMarkPath}" />
+<sly data-sly-use.widget="widget.html" />
+<fieldset data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.imagechoice="com.adobe.cq.forms.core.components.models.form.ImageChoice"
+     class="cmp-adaptiveform-imagechoice"
+     data-cmp-is="adaptiveFormImageChoice"
+     data-cmp-visible="${imagechoice.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${imagechoice.enabled ? 'true' : 'false'}"
+     data-cmp-required="${imagechoice.required ? 'true': 'false'}"
+     data-cmp-readonly="${imagechoice.readOnly ? 'true' : 'false'}"
+     data-cmp-selection-type="${imagechoice.fieldType == 'checkbox-group' ? 'multi' : 'single'}"
+     data-name="${imagechoice.name}"
+     id="${imagechoice.id}"
+     aria-required="${imagechoice.required ? 'true' : 'false'}"
+     data-cmp-data-layer="${imagechoice.data.json}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[imagechoice.id, 'widget']}">
+    <legend class="cmp-adaptiveform-imagechoice__label-container">
+      <span data-sly-call="${legend.legend @componentId=widgetId, labelValue=imagechoice.label.value, labelVisible=imagechoice.label.visible, labelRichText=imagechoice.label.richText, bemBlock='cmp-adaptiveform-imagechoice'}" data-sly-unwrap></span>
+      <span data-sly-call="${questionmark.questionMark @componentId=imagechoice.id, longDescription=imagechoice.description, bemBlock='cmp-adaptiveform-imagechoice'}" data-sly-unwrap></span>
+    </legend>
+    <div data-sly-call="${widget.widget @imagechoice=imagechoice, widgetId=widgetId}" data-sly-unwrap></div>
+    <div data-sly-call="${shortdescription.shortDescription @componentId=imagechoice.id, shortDescriptionVisible=imagechoice.tooltipVisible, shortDescription=imagechoice.tooltip, bemBlock='cmp-adaptiveform-imagechoice'}" data-sly-unwrap></div>
+    <div data-sly-call="${longdescription.longDescription @componentId=imagechoice.id, longDescription=imagechoice.description, bemBlock='cmp-adaptiveform-imagechoice'}" data-sly-unwrap></div>
+    <div data-sly-call="${errormessage.errorMessage @componentId=imagechoice.id, bemBlock='cmp-adaptiveform-imagechoice'}" data-sly-unwrap></div>
+</fieldset>
