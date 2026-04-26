@@ -312,17 +312,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     public String getAction() {
-        List<String> supportedSubmitActions = ComponentUtils.getSupportedSubmitActions(clientBuilderFactory);
         String resourceType = resource.getValueMap().get("sling:resourceType", String.class);
-        if (supportedSubmitActions.contains(resource.getValueMap().get(ReservedProperties.PN_SUBMIT_ACTION_NAME))) {
-            if (resourceType != null && resourceType.contains("/franklin")) {
-                return "";
-            } else {
-                return "https://forms.adobe.com" + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" +
-                    ComponentUtils.getEncodedPath(resource.getPath() + ".model.json");
-            }
+        if (resourceType != null && resourceType.contains("/franklin")) {
+            return "";
+        } else {
+            return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId());
         }
-        return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId());
     }
 
     @Override
@@ -509,6 +504,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                     ((Map<String, Object>) submitProps.get(SS_SPREADSHEET)).put(entry.getKey(), entry.getValue());
                 }
             }
+            submitProps.put("aemDomainPublish", System.getenv("AEM_DOMAIN_PUBLISH"));
         }
         return submitProps;
     }
