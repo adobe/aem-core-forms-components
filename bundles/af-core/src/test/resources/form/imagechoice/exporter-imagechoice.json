@@ -1,0 +1,35 @@
+{
+  "id": "imagechoice-5b1500d241",
+  "fieldType": "radio-group",
+  "name": "imagechoice_12345",
+  "type": "string",
+  "enforceEnum": true,
+  "enumNames": [
+    "Option 1",
+    "Option 2"
+  ],
+  "label": {
+    "value": "Image Choice"
+  },
+  "properties": {
+    "afs:layout": {
+      "orientation": "horizontal",
+      "selectionType": "single",
+      "imageSrc": [
+        "/content/dam/image1.png",
+        "/content/dam/image2.png"
+      ]
+    },
+    "fd:path": "/content/imagechoice"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "enum": [
+    "0",
+    "1"
+  ],
+  ":type": "core/fd/components/form/imagechoice/v1/imagechoice"
+}

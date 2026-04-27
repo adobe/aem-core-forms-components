@@ -108,14 +108,23 @@
         }
 
         updateValue(value) {
-            if(value == null) { // if undefined or null, reset the widget
-                this.widget.selectedIndex = -1;
+            // Clear selection from all options first to avoid stale selected state
+            [...this.widget].forEach((option) => {
+                option.removeAttribute('selected');
+            });
+            if(value == null) { // if undefined or null, reset to placeholder (first option)
+                const placeholderOption = this.widget.options[0];
+                if(placeholderOption && placeholderOption.value === '') {
+                    placeholderOption.setAttribute('selected', 'selected');
+                    this.widget.selectedIndex = 0;
+                } else {
+                    this.widget.selectedIndex = -1; 
+                }
+                super.updateEmptyStatus();
                 return;
             }
             let isMultiSelect = this._model.isArrayType();
             [...this.widget].forEach((option) => {
-                // clear of any selection, and re-add selection (otherwise HTML shows stale state if it already existed)
-                option.removeAttribute('selected');
                 if(this.#checkIfEqual(value, option.value, isMultiSelect)) {
                     option.setAttribute('selected', 'selected');
                 }

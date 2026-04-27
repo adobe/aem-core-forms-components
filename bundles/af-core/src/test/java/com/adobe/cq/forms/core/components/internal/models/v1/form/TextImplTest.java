@@ -26,6 +26,7 @@ import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -89,6 +90,15 @@ public class TextImplTest {
         Text textMock = Mockito.mock(Text.class);
         Mockito.when(textMock.isRichText()).thenCallRealMethod();
         assertEquals(false, textMock.isRichText());
+    }
+
+    @Test
+    void testRichTextAbsentFromJcr() throws Exception {
+        Text text = Utils.getComponentUnderTest(PATH_TEXT, Text.class, context);
+        assertEquals(false, text.isRichText());
+        String json = new ObjectMapper().writeValueAsString(text);
+        assertFalse("richText must not appear in JSON when textIsRich is absent from JCR",
+            json.contains("\"richText\""));
     }
 
     @Test

@@ -26,7 +26,6 @@
       "fieldType": "plain-text",
       "name": "consenttext",
       "value": "Text related to the terms and conditions come here",
-      "richText": false,
       "events": {
         "custom:setProperty": [
           "$event.payload"

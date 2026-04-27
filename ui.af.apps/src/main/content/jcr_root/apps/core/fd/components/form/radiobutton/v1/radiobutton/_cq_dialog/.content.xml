@@ -94,6 +94,19 @@
                                                               value="vertical"/>
                                                 </items>
                                             </orientation>
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    name="./fieldType"
+                                                    required="{Boolean}true"
+                                                    granite:hidden="true">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <item jcr:primaryType="nt:unstructured"
+                                                          text="Radio Group"
+                                                          value="radio-group"
+                                                          selected="{Boolean}true"/>
+                                                </items>
+                                            </fieldType>
                                         </items>
                                     </column>
                                 </items>
