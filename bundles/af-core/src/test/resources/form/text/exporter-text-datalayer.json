@@ -3,7 +3,6 @@
   "fieldType": "plain-text",
   "name": "text1680491190398",
   "value": "This is an AF",
-  "richText": false,
   "events": {
     "custom:setProperty": [
       "$event.payload"

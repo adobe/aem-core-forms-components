@@ -106,7 +106,10 @@
                                                     fieldDescription="Specify allowed MIME types (for example, image/jpeg) to filter uploads. You can use this option or 'Allowed file extensions'. However, this setting is disabled if any 'Allowed file extensions' are specified."
                                                     defaultValue="">
                                                 <field
+                                                        fieldLabel="Allowed file types"
+                                                        fieldDescription="Allowed file MIME types. Add one MIME type per value, for example application/pdf or image/png. Do not use file extensions or comma-separated text. Leave empty to allow any file type."
                                                         name="./accept"
+                                                        multiple="{Boolean}true"
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
                                             </mimeType>

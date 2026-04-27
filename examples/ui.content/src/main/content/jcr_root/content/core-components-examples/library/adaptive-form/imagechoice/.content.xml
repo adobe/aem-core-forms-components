@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:lastModified="{Date}2024-01-15T13:25:39.732+02:00"
+            cq:lastModifiedBy="admin"
+            cq:tags="[]"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
+            jcr:description="Image Choice"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Image Choice"
+            sling:resourceType="forms-components-examples/components/page">
+        <root
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="wcm/foundation/components/responsivegrid">
+                <text_1740702241
+                        cq:styleIds="[1644862132301]"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core/wcm/components/text/v2/text"
+                        text="&lt;h1>Image Choice&lt;sub>v1&lt;/sub>&lt;/h1>"
+                        textIsRich="true"/>
+                <text
+                        cq:styleIds="[1544762734201]"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core/wcm/components/text/v2/text"
+                        text="&lt;p>An image choice in an Adaptive Form allows users to select one or more options by clicking on images. It supports both single-select (radio button behavior) and multi-select (checkbox group behavior) modes, making it ideal for visual selection scenarios like choosing products, colors, or styles.&lt;/p>"
+                        textIsRich="true"/>
+                <teaser
+                        cq:styleIds="[1550165685463]"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;"
+                        jcr:title="Technical Documentation"
+                        sling:resourceType="core-components-examples/components/teaser"
+                        actionsEnabled="false"
+                        descriptionFromPage="false"
+                        fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                        linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/imagechoice/v1/imagechoice"
+                        textIsRich="true"
+                        titleFromPage="false"/>
+                <title_865328580
+                        cq:styleIds="[1544759664489]"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Examples"
+                        sling:resourceType="core/wcm/components/title/v2/title"
+                        type="h2"/>
+                <title_290384408
+                        cq:styleIds="[1544759676459]"
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Single Select (Radio Behavior)"
+                        sling:resourceType="core/wcm/components/title/v2/title"
+                        type="h3"/>
+                <text_1337506761
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="core/wcm/components/text/v2/text"
+                        text="&lt;p>Simple Image Choice with two options in single-select mode.&lt;/p>"
+                        textIsRich="true"/>
+                <demo
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="forms-components-examples/components/demo">
+                    <component
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="forms-components-examples/components/demo/component">
+                        <guideContainer
+                          fd:version="2.1"
+                          fieldType="form"
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="forms-components-examples/components/form/container">
+                            <container
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="forms-components-examples/components/demo/component">
+                                <imagechoice_demo
+                                  jcr:title="Favorite Component"
+                                  selectionType="single"
+                                  enum="[radiobutton,checkbox,dropdown]"
+                                  enumNames="[Radio Button,Checkbox Group,Dropdown]"
+                                  imageSrc="[/content/dam/core-components-examples/library/forms-components/radiobuttongroup.svg/_jcr_content/renditions/cq5dam.thumbnail.319.319.png,/content/dam/core-components-examples/library/forms-components/checkboxgroup.svg/_jcr_content/renditions/cq5dam.thumbnail.319.319.png,/content/dam/core-components-examples/library/forms-components/dropdown.svg/_jcr_content/renditions/cq5dam.thumbnail.319.319.png]"
+                                  fieldType="radio-group"
+                                  jcr:primaryType="nt:unstructured"
+                                  orientation="horizontal"
+                                  type="string"
+                                  description="&lt;p>Select your favorite form component.&lt;/p>"
+                                  tooltip="&lt;p>Choose one option.&lt;/p>"
+                                  tooltipVisible="true"
+                                  sling:resourceType="forms-components-examples/components/form/imagechoice"/>
+                            </container>
+                        </guideContainer>
+                    </component>
+                    <info
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="core-components-examples/components/tabs">
+                        <properties
+                                cq:panelTitle="Properties"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="core-components-examples/components/demo/properties"
+                                reference="../../component/guideContainer/container"/>
+                        <markup
+                                cq:panelTitle="Markup"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="core-components-examples/components/demo/markup"
+                                reference="../../component/guideContainer/container"/>
+                        <json
+                                cq:panelTitle="JSON"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="core-components-examples/components/demo/json"
+                                reference="../../component/guideContainer/container"/>
+                    </info>
+                </demo>
+            </responsivegrid>
+        </root>
+    </jcr:content>
+</jcr:root>

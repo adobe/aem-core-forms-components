@@ -22,6 +22,8 @@
       SWITCH_TYPE = EDIT_DIALOG + " .cmp-adaptiveform-switch__type",
       SWITCH_DEFAULTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-switch__value",
       SWITCH_ENUM = EDIT_DIALOG + " .cmp-adaptiveform-base__enum",
+      SWITCH_ASSISTPRIORITY = EDIT_DIALOG + " .cmp-adaptiveform-switch__assistpriority",
+      SWITCH_CUSTOMTEXT = EDIT_DIALOG + " .cmp-adaptiveform-switch__customtext",
 
       Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
@@ -76,6 +78,26 @@
         offDisplayTextLabelRich.innerHTML = Granite.I18n.get('OFF Display text *');
     }
 
-  Utils.initializeEditDialog(EDIT_DIALOG)(handleOffFieldVisibility, registerDialogValidator, setDataAndDisplayTextFieldLabel);
+  /**
+   * Shows/hides the custom text field based on the assist priority dropdown value.
+   * @param dialog
+   */
+  function handleAssistPriority(dialog) {
+    var assistPriority = dialog.find(SWITCH_ASSISTPRIORITY)[0];
+    var customText = dialog.find(SWITCH_CUSTOMTEXT);
+    var toggleCustomText = function() {
+      if (assistPriority && assistPriority.value === "custom") {
+        customText.show();
+      } else {
+        customText.hide();
+      }
+    };
+    if (assistPriority) {
+      toggleCustomText();
+      assistPriority.on("change", toggleCustomText);
+    }
+  }
+
+  Utils.initializeEditDialog(EDIT_DIALOG)(handleOffFieldVisibility, registerDialogValidator, setDataAndDisplayTextFieldLabel, handleAssistPriority);
 
 })(jQuery);

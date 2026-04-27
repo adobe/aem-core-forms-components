@@ -50,6 +50,10 @@ describe('Page - Authoring', function () {
     cy.invokeEditableAction("[data-action='CONFIGURE']");
     cy.get("[name='./name']")
     .should("exist");
+    cy.get("[name='./assistPriority']")
+    .should("exist");
+    cy.get("[name='./custom']")
+    .should("exist");
 
     cy.get('.cq-dialog-cancel').click();
     cy.deleteComponentByPath(switchDrop);
@@ -95,6 +99,26 @@ describe('Page - Authoring', function () {
         testSwitchBehaviour(switchEditPathSelector, switchDrop, false);
       });
     });
+
+    it('custom text is shown only when assistPriority is custom', {retries: 3}, function () {
+      cy.cleanTest(switchDrop).then(() => {
+        dropSwitchInContainer();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get(".cmp-adaptiveform-switch__editdialog").contains('Accessibility').click({force: true});
+        cy.get(".cmp-adaptiveform-switch__customtext").should('not.be.visible');
+        cy.get(".cmp-adaptiveform-switch__assistpriority").should("exist").click();
+        cy.get('coral-selectlist-item[value="custom"]').should("exist").click().then(() => {
+          cy.get(".cmp-adaptiveform-switch__customtext").should('be.visible');
+        });
+        cy.get(".cmp-adaptiveform-switch__assistpriority").click();
+        cy.get('coral-selectlist-item[value="label"]').should("exist").click().then(() => {
+          cy.get(".cmp-adaptiveform-switch__customtext").should('not.be.visible');
+        });
+        cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
+        cy.deleteComponentByPath(switchDrop);
+      });
+    });
   })
 
   context('Open Sites Editor', function() {
@@ -132,6 +156,26 @@ describe('Page - Authoring', function () {
     it('open edit dialog of aem forms switch', {retries: 3}, function() {
       cy.cleanTest(switchDrop).then(() => {
         testSwitchBehaviour(switchEditPathSelector, switchDrop, true);
+      });
+    });
+
+    it('custom text is shown only when assistPriority is custom', {retries: 3}, function () {
+      cy.cleanTest(switchDrop).then(() => {
+        dropSwitchInSites();
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get(".cmp-adaptiveform-switch__editdialog").contains('Accessibility').click({force: true});
+        cy.get(".cmp-adaptiveform-switch__customtext").should('not.be.visible');
+        cy.get(".cmp-adaptiveform-switch__assistpriority").should("exist").click();
+        cy.get('coral-selectlist-item[value="custom"]').should("exist").click().then(() => {
+          cy.get(".cmp-adaptiveform-switch__customtext").should('be.visible');
+        });
+        cy.get(".cmp-adaptiveform-switch__assistpriority").click();
+        cy.get('coral-selectlist-item[value="label"]').should("exist").click().then(() => {
+          cy.get(".cmp-adaptiveform-switch__customtext").should('not.be.visible');
+        });
+        cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
+        cy.deleteComponentByPath(switchDrop);
       });
     });
   })

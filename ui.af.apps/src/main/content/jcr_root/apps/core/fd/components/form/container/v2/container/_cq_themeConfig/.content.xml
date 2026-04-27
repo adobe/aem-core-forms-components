@@ -103,6 +103,9 @@
                         <tncWidgetAndText
                             jcr:primaryType="nt:unstructured"
                             target="/mnt/override/libs/core/fd/components/form/termsandconditions/v1/termsandconditions/cq:styleConfig/items/field/items/widgetAndText"/>
+                        <imageChoiceWidgetAndText
+                            jcr:primaryType="nt:unstructured"
+                            target="/mnt/override/libs/core/fd/components/form/imagechoice/v1/imagechoice/cq:styleConfig/items/field/items/widgetAndText"/>
                     </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus

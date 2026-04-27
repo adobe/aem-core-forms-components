@@ -338,7 +338,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
         properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
-        if (isAuthorMode(request)) {
+        if (isAuthorMode(request) || FormConstants.CHANNEL_PRINT.equals(this.channel)) {
             Map<String, Object> rulesProperties = getRulesProperties();
             if (!rulesProperties.isEmpty()) {
                 properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);

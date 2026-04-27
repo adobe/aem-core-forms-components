@@ -1,0 +1,47 @@
+{
+  "id": "imagechoice-bafbf1a102",
+  "fieldType": "radio-group",
+  "name": "FavoriteColor",
+  "visible": true,
+  "description": "Choose your favorite color",
+  "type": "string",
+  "enabled": true,
+  "readOnly": false,
+  "enforceEnum": true,
+  "enumNames": [
+    "Red",
+    "Blue"
+  ],
+  "label": {
+    "value": "Favorite Color"
+  },
+  "properties": {
+    "afs:layout": {
+      "orientation": "horizontal",
+      "selectionType": "single",
+      "imageSrc": [
+        "/content/dam/colors/red.png",
+        "/content/dam/colors/blue.png"
+      ]
+    },
+    "fd:path": "/content/imagechoice-datalayer"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "enum": [
+    "red",
+    "blue"
+  ],
+  ":type": "core/fd/components/form/imagechoice/v1/imagechoice",
+  "dataLayer": {
+    "imagechoice-bafbf1a102": {
+      "dc:description": "Choose your favorite color",
+      "@type": "core/fd/components/form/imagechoice/v1/imagechoice",
+      "fieldType": "radio-group",
+      "dc:title": "Favorite Color"
+    }
+  }
+}

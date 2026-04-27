@@ -103,6 +103,7 @@ public final class ReservedProperties {
     public static final String PN_HIDE_TITLE = "hideTitle";
     public static final String PN_IS_TITLE_RICH_TEXT = "isTitleRichText";
     public static final String PN_ORIENTATION = "orientation";
+    public static final String PN_SELECTION_TYPE = "selectionType";
     public static final String PN_TYPE_MESSAGE = "typeMessage";
     public static final String PN_REQUIRED_MESSAGE = "mandatoryMessage"; // reusing the same property name as in foundation
     public static final String PN_MINIMUM_MESSAGE = "minimumMessage";

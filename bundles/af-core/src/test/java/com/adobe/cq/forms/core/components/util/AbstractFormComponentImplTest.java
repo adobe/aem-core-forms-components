@@ -262,11 +262,15 @@ public class AbstractFormComponentImplTest {
     }
 
     @Test
-    public void testPrintChannelRuleNotInPublish() {
+    public void testPrintChannelRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
+        Object rulesProperties = properties.get("fd:rules");
+        // Print Channel requires this to be present in both author and publish environments.
+        assertNotNull(rulesProperties);
+        Object formReadyRule = ((Map<String, Object>) rulesProperties).get("fd:formReady");
+        assertNotNull(formReadyRule);
     }
 
     @Test
@@ -275,7 +279,7 @@ public class AbstractFormComponentImplTest {
         AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
         Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
-
+        Mockito.doReturn(null).when(resource).getChild("fd:rules");
         ValueMap valueMap = new MockValueMap(resource);
         Mockito.doReturn(valueMap).when(resource).getValueMap();
         Mockito.doReturn(null).when(resource).getChild("fd:dorContainer");
