@@ -6,6 +6,8 @@
 .project
 .settings
 .DS_Store
+.codex/
+reasoning/
 
 # auto-generated clientlib
 ui.af.apps/src/main/content/jcr_root/apps/core/fd/af-clientlibs/core-forms-components-runtime-base/**
