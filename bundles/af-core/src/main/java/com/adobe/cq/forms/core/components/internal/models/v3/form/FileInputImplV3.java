@@ -18,11 +18,11 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v3.form;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -70,14 +70,18 @@ public class FileInputImplV3 extends FileInputImplV2 {
 
     @Override
     public List<String> getAcceptExtensions() {
-        // adding . in front of the accept extensions
-        if (acceptExtensions != null) {
-            for (int i = 0; i < acceptExtensions.length; i++) {
-                acceptExtensions[i] = "." + acceptExtensions[i];
-            }
+        if (acceptExtensions == null) {
+            return Collections.emptyList();
         }
-        return Optional.ofNullable(acceptExtensions)
-            .map(Arrays::asList)
-            .orElse(Collections.emptyList());
+        return Arrays.stream(acceptExtensions)
+            .map(ext -> "." + ext)
+            .collect(java.util.stream.Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAccept() {
+        List<String> combined = new ArrayList<>(super.getAccept());
+        combined.addAll(getAcceptExtensions()); // adds .pdf, .docx etc.
+        return combined;
     }
 }
