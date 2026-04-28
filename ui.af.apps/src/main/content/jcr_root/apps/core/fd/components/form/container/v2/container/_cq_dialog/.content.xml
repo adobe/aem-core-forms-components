@@ -469,6 +469,19 @@
                                         name="./dorTitle"/>
                                 </items>
                             </dorDetails>
+                            <excludeAttachmentsFromDor
+                                jcr:primaryType="nt:unstructured"
+                                granite:class="cmp-adaptiveform-container__excludeAttachmentsFromDor"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                name="./excludeAttachmentsFromDor"
+                                text="Exclude file attachments from Document of Record"
+                                uncheckedValue="false"
+                                value="true">
+                                <granite:rendercondition
+                                  jcr:primaryType="nt:unstructured"
+                                  sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                  toggleName="FT_FORMS-24887"/>
+                            </excludeAttachmentsFromDor>
                         </items>
                         <granite:rendercondition
                             jcr:primaryType="nt:unstructured"
