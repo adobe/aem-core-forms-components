@@ -181,7 +181,7 @@
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Terms Text"
                                 id="af2_tncstandalonetext"
-                                cssSelector=".cmp-adaptiveform-termsandcondition__text"
+                                cssSelector=".cmp-adaptiveform-termsandcondition__content-container:not(.cmp-adaptiveform-termsandcondition__content-container--modal) .cmp-adaptiveform-termsandcondition__text"
                                 longTitle="Terms Text"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
                         <tncLink

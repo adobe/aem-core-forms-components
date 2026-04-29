@@ -92,7 +92,7 @@
                         longTitle="Accordion Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
-                        <accordionDescriptionLongParagraph
+                        <longDescriptionParagraph
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Long Description Paragraph"
                                 id="af2_accordiondescriptionlongparagraph"

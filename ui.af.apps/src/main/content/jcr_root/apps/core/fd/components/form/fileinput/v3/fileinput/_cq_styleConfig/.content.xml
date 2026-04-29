@@ -193,24 +193,6 @@
                                                 cssSelector=".cmp-adaptiveform-fileinput__widgetlabel:required"/>
                                     </states>
                                 </fileinputWidget>
-                                <fileinputNativeWidget
-                                        jcr:primaryType="nt:unstructured"
-                                        jcr:title="Native File Input"
-                                        id="af2_fileinputnativewidget"
-                                        cssSelector=".cmp-adaptiveform-fileinput__widget"
-                                        longTitle="File Input Native Widget"
-                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
-                                    <states jcr:primaryType="nt:unstructured">
-                                        <webkitUploadButton
-                                                jcr:primaryType="nt:unstructured"
-                                                jcr:title="WebKit Upload Button"
-                                                cssSelector=".cmp-adaptiveform-fileinput__widget::-webkit-file-upload-button"/>
-                                        <before
-                                                jcr:primaryType="nt:unstructured"
-                                                jcr:title="Before Pseudo"
-                                                cssSelector=".cmp-adaptiveform-fileinput__widget::before"/>
-                                    </states>
-                                </fileinputNativeWidget>
                             </items>
                             <states jcr:primaryType="nt:unstructured">
                                 <focus

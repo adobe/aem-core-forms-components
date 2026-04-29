@@ -90,7 +90,7 @@
                                         <htmlDisabled
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Disabled (HTML)"
-                                                cssSelector=".cmp-adaptiveform-review__edit-button[disabled=&quot;true&quot;]"/>
+                                                cssSelector=".cmp-adaptiveform-review__edit-button[disabled]"/>
                                     </states>
                                 </reviewEditButton>
                             </items>
@@ -165,7 +165,7 @@
                                                 <htmlDisabled
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Disabled (HTML)"
-                                                        cssSelector=".cmp-adaptiveform-review__panel .cmp-adaptiveform-review__edit-button[disabled=&quot;true&quot;]"/>
+                                                        cssSelector=".cmp-adaptiveform-review__panel .cmp-adaptiveform-review__edit-button[disabled]"/>
                                             </states>
                                         </reviewPanelEditButton>
                                     </items>

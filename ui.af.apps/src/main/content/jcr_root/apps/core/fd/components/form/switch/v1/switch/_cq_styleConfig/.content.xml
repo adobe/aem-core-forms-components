@@ -112,24 +112,36 @@
                                             jcr:primaryType="nt:unstructured"
                                             jcr:title="Focus"
                                             cssSelector=".cmp-adaptiveform-switch__option:focus"/>
-                                        <hideLabelsOn
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Hide Labels (On)"
-                                            cssSelector=".cmp-adaptiveform-switch__hide-labels .cmp-adaptiveform-switch__option--on"/>
-                                        <hideLabelsOff
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Hide Labels (Off)"
-                                            cssSelector=".cmp-adaptiveform-switch__hide-labels .cmp-adaptiveform-switch__option--off"/>
-                                        <unhideLabelsOn
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Unhide Labels (On)"
-                                            cssSelector=".cmp-adaptiveform-switch__unhide-labels .cmp-adaptiveform-switch__option--on"/>
-                                        <unhideLabelsOff
-                                            jcr:primaryType="nt:unstructured"
-                                            jcr:title="Unhide Labels (Off)"
-                                            cssSelector=".cmp-adaptiveform-switch__unhide-labels .cmp-adaptiveform-switch__option--off"/>
                                     </states>
                                 </switchOption>
+                                <switchHideLabelsOn
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hide Labels (On)"
+                                        id="af2_switchhidelabelson"
+                                        cssSelector=".cmp-adaptiveform-switch__hide-labels .cmp-adaptiveform-switch__option--on"
+                                        longTitle="Switch Hide Labels On Option"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                <switchHideLabelsOff
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hide Labels (Off)"
+                                        id="af2_switchhidelabelsoff"
+                                        cssSelector=".cmp-adaptiveform-switch__hide-labels .cmp-adaptiveform-switch__option--off"
+                                        longTitle="Switch Hide Labels Off Option"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                <switchUnhideLabelsOn
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Unhide Labels (On)"
+                                        id="af2_switchunhidelabelson"
+                                        cssSelector=".cmp-adaptiveform-switch__unhide-labels .cmp-adaptiveform-switch__option--on"
+                                        longTitle="Switch Unhide Labels On Option"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                <switchUnhideLabelsOff
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Unhide Labels (Off)"
+                                        id="af2_switchunhidelabelsoff"
+                                        cssSelector=".cmp-adaptiveform-switch__unhide-labels .cmp-adaptiveform-switch__option--off"
+                                        longTitle="Switch Unhide Labels Off Option"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
                                 <switchWidgetInput
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Widget Input"

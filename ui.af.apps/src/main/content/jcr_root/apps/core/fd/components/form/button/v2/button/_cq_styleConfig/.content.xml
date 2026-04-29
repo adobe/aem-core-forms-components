@@ -60,7 +60,7 @@
                         longTitle="Button Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
-                        <buttonDescriptionLongParagraph
+                        <longDescriptionParagraph
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Long Description Paragraph"
                                 id="af2_buttondescriptionlongparagraph"
