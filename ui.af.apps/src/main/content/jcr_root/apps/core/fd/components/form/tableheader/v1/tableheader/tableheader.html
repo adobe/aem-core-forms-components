@@ -14,7 +14,8 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.header="com.adobe.cq.forms.core.components.models.form.Panel"
-     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-set.sortingEnabled="${resource.parent.valueMap.enableSorting}"></sly>
 <!--/* EDIT MODE: hand-rendered <tr> with Granite editable markers so the overlay
      can bind to the real header row instead of foster-parenting to the <table>. */-->
 <sly data-sly-test="${wcmmode.edit}">
@@ -25,7 +26,20 @@
                 scope="col"
                 data-sly-attribute.colspan="${cell.valueMap.colspan}"
                 data-cmp-hook-tablehead="header">
-                <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+                <sly data-sly-test="${sortingEnabled}">
+                    <div class="cmp-adaptiveform-table__sort-header-inner">
+                        <div class="cell-wrapper">
+  							<sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+						</div>
+                        <button type="button"
+                                class="cmp-adaptiveform-table__sort-button"
+                                data-cmp-hook-table-sort="${cellList.index}"
+                                aria-label="Sort column"></button>
+                    </div>
+                </sly>
+                <sly data-sly-test="${!sortingEnabled}">
+                    <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+                </sly>
             </th>
         </sly>
     </tr>
@@ -42,7 +56,18 @@
             <th class="cmp-adaptiveform-tablehead"
                 scope="col"
                 data-cmp-hook-tablehead="header">
-                <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+                <sly data-sly-test="${sortingEnabled}">
+                    <div class="cmp-adaptiveform-table__sort-header-inner">
+                        <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+                        <button type="button"
+                                class="cmp-adaptiveform-table__sort-button"
+                                data-cmp-hook-table-sort="${cellList.index}"
+                                aria-label="Sort column"></button>
+                    </div>
+                </sly>
+                <sly data-sly-test="${!sortingEnabled}">
+                    <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+                </sly>
             </th>
         </sly>
     </tr>
