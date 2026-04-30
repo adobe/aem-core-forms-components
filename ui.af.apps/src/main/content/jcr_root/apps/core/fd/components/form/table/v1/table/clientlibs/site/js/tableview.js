@@ -232,20 +232,7 @@
             });
         }
 
-        /**
-         * @returns {boolean}
-         */
-        #isSortingEnabled() {
-            if (this._model && this._model.enableSorting === true) {
-                return true;
-            }
-            return this.element.getAttribute("data-cmp-sorting-enabled") === "true";
-        }
-
         #initColumnSortingIfEnabled() {
-            if (!this.#isSortingEnabled()) {
-                return;
-            }
             const widget = this.element.querySelector(Table.selectors.widget);
             if (!widget) {
                 return;
@@ -255,23 +242,11 @@
             if (!thead || !tbody) {
                 return;
             }
-            const headerCells = thead.querySelectorAll("th.cmp-adaptiveform-tablehead");
-            headerCells.forEach((th, index) => {
-                if (th.querySelector(".cmp-adaptiveform-table__sort-button")) {
+            thead.querySelectorAll("th.cmp-adaptiveform-tablehead").forEach((th, index) => {
+                const btn = th.querySelector(".cmp-adaptiveform-table__sort-button");
+                if (!btn) {
                     return;
                 }
-                const inner = document.createElement("div");
-                inner.className = "cmp-adaptiveform-table__sort-header-inner";
-                while (th.firstChild) {
-                    inner.appendChild(th.firstChild);
-                }
-                const btn = document.createElement("button");
-                btn.type = "button";
-                btn.className = "cmp-adaptiveform-table__sort-button";
-                btn.setAttribute("data-cmp-hook-table-sort", String(index));
-                btn.setAttribute("aria-label", "Sort column");
-                inner.appendChild(btn);
-                th.appendChild(inner);
                 btn.addEventListener("click", (e) => {
                     e.preventDefault();
                     e.stopPropagation();

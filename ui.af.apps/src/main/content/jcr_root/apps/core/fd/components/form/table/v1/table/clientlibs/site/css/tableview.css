@@ -155,6 +155,10 @@
     background-color: #E0E0E0;
 }
 
+.cell-wrapper{
+    width: 80%;
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
     .cmp-adaptiveform-table__widget {
