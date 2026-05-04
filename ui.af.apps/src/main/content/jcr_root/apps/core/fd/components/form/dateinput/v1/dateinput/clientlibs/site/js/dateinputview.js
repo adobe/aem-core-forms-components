@@ -37,7 +37,6 @@
 
         // Determine order of D, M, Y by their first occurrence in the inner string
         var tokens = ["D", "M", "Y"].map(function (t) {
-            // Use case-insensitive search; treat both 'D' and 'DD' etc. as the same token
             var idx = inner.search(new RegExp(t, "i"));
             return { token: t, idx: idx };
         });
@@ -53,6 +52,27 @@
         M: /^(?:0?[1-9]|1[012])$/,
         Y: /^[0-9]{4}$/
     };
+
+    /** Maximum number of digits accepted per sub-field. */
+    var MAX_LEN = { D: 2, M: 2, Y: 4 };
+
+    /**
+     * Key codes allowed through the digit-only keydown gate:
+     * Backspace(8), Tab(9), Escape(27), Delete(46), Home(35), End(36),
+     * Left(37), Up(38), Right(39), Down(40), numpad 0-9 (96-105), digit 0-9 (48-57).
+     */
+    var ALLOWED_KEYS = [8, 9, 27, 46, 35, 36, 37, 38, 39, 40];
+
+    function isDigitKey(e) {
+        return (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105);
+    }
+
+    function isAllowedKey(e) {
+        if (ALLOWED_KEYS.indexOf(e.keyCode) !== -1) return true;
+        // Allow Ctrl/Cmd + A, C, V, X
+        if ((e.ctrlKey || e.metaKey) && [65, 67, 86, 88].indexOf(e.keyCode) !== -1) return true;
+        return isDigitKey(e);
+    }
 
     class DateInput extends FormView.FormFieldBase {
 
@@ -121,7 +141,6 @@
         #applyFieldOrder(order) {
             var container = this.element.querySelector(DateInput.selectors.container);
             if (!container) return;
-            // append wrappers in the desired order — browser reorders naturally
             order.forEach((token) => {
                 var wrapper = this.#getWrapperByToken(token);
                 if (wrapper) container.appendChild(wrapper);
@@ -139,21 +158,53 @@
 
         /**
          * Splits an ISO YYYY-MM-DD value and populates the three sub-inputs.
-         * Also accepts the format-separator concatenation if value comes in that form.
          */
         #splitISOValue(isoValue) {
             if (!isoValue) {
                 ["D", "M", "Y"].forEach((t) => { this.#getInputByToken(t).value = ""; });
                 return;
             }
-            // ISO format is always YYYY-MM-DD
             var parts = String(isoValue).split("-");
             this.#getInputByToken("Y").value = parts[0] || "";
             this.#getInputByToken("M").value = parts[1] ? String(parseInt(parts[1], 10)) : "";
             this.#getInputByToken("D").value = parts[2] ? String(parseInt(parts[2], 10)) : "";
         }
 
-        /** Validates a single sub-input against its regex and marks aria-invalid accordingly. */
+        /** Allows only digit keys and navigation keys through. */
+        #onKeyDown(e) {
+            if (!isAllowedKey(e)) {
+                e.preventDefault();
+            }
+        }
+
+        /**
+         * Fires after every character typed.
+         * Strips non-digit characters, enforces maxLength, then auto-advances
+         * focus to the next sub-field when the field reaches its max length.
+         */
+        #onInput(token, nextToken) {
+            var input = this.#getInputByToken(token);
+            // Strip non-digit characters that can slip through (e.g. paste)
+            var digits = input.value.replace(/\D/g, "");
+            var maxLen = MAX_LEN[token];
+            if (digits.length > maxLen) {
+                digits = digits.slice(0, maxLen);
+            }
+            input.value = digits;
+
+            this.#syncCombinedValue();
+
+            // Auto-advance to next sub-field once this one is full
+            if (digits.length === maxLen && nextToken) {
+                var nextInput = this.#getInputByToken(nextToken);
+                if (nextInput) nextInput.focus();
+            }
+        }
+
+        /**
+         * Validates a single sub-input against its regex and marks aria-invalid.
+         * Returns true when the value is empty (permitted) or matches the regex.
+         */
         #validateSubField(token) {
             var input = this.#getInputByToken(token);
             var val = input.value.trim();
@@ -166,8 +217,16 @@
             return valid;
         }
 
-        #onSubInputChange(token) {
-            this.#validateSubField(token);
+        /** Returns true only when all three non-empty sub-fields pass their regex. */
+        #allSubFieldsValid() {
+            return ["D", "M", "Y"].every((t) => {
+                var val = this.#getInputByToken(t).value.trim();
+                return val === "" || VALIDATORS[t].test(val);
+            });
+        }
+
+        /** Rebuilds the ISO value and pushes it to the combined input and the model. */
+        #syncCombinedValue() {
             var iso = this.#buildISOValue();
             var combined = this.getWidget();
             if (combined) combined.value = iso;
@@ -177,7 +236,6 @@
         setModel(model) {
             super.setModel(model);
 
-            // Read and apply the format from the data attribute
             var fmt = this.element.getAttribute("data-cmp-date-display-format") || "date{D/M/YYYY}";
             var parsed = parseDateDisplayFormat(fmt);
             this.#applyFieldOrder(parsed.order);
@@ -186,17 +244,21 @@
                 this.#splitISOValue(model.value);
             }
 
-            ["D", "M", "Y"].forEach((token) => {
+            // Wire up event handlers in field order so auto-advance works correctly
+            parsed.order.forEach((token, idx) => {
                 var input = this.#getInputByToken(token);
                 if (!input) return;
-                input.addEventListener("change", () => this.#onSubInputChange(token));
-                input.addEventListener("input", () => this.#onSubInputChange(token));
+                var nextToken = parsed.order[idx + 1] || null;
+
+                input.addEventListener("keydown", (e) => this.#onKeyDown(e));
+                input.addEventListener("input", () => this.#onInput(token, nextToken));
                 input.addEventListener("focus", () => {
                     this.setActive();
                     this.triggerEnter();
                 });
                 input.addEventListener("blur", () => {
                     this.#validateSubField(token);
+                    this.#syncCombinedValue();
                     this.setInactive();
                     this.triggerExit();
                 });

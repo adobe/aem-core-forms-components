@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
-    xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
-    xmlns:cq="http://www.day.com/jcr/cq/1.0"
-    xmlns:jcr="http://www.jcp.org/jcr/1.0"
-    xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title="Adaptive Form Date Input"
     sling:resourceType="cq/gui/components/authoring/dialog"
@@ -35,14 +46,11 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <base_dialog
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/include"
-                                                path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items"/>
                                             <default
                                                 jcr:primaryType="nt:unstructured"
+                                                wrapperClass="cmp-adaptiveform-dateinput__defaultdate"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter the default date in YYYY-MM-DD format."
+                                                fieldDescription="Please enter the date in the required format  &quot;yyyy-mm-dd&quot;."
                                                 fieldLabel="Default date"
                                                 name="./default"/>
                                             <fieldType
@@ -58,27 +66,98 @@
                                                           selected="{Boolean}true"/>
                                                 </items>
                                             </fieldType>
-                                            <!-- Date Format — XFA picture-clause values matching foundation guidedateinput -->
-                                            <dateDisplayFormat
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                                fieldLabel="Date Format"
-                                                fieldDescription="Controls the display order of day, month, and year fields."
-                                                name="./dateDisplayFormat"
-                                                translateOptions="{Boolean}false">
+                                            <titleAndPlaceholder
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Title and Placeholder"
+                                                    sling:orderBefore="guideGlobalLazyField"
+                                                    sling:resourceType="fd/af/authoring/components/granite/form/fieldset"
+                                                    name="./titleandplaceholder"
+                                                    text="Title and Placeholder">
                                                 <items jcr:primaryType="nt:unstructured">
-                                                    <mdy jcr:primaryType="nt:unstructured"
-                                                         text="MM-DD-YYYY"
-                                                         value="date{M/D/YYYY}"/>
-                                                    <dmy jcr:primaryType="nt:unstructured"
-                                                         text="DD-MM-YYYY"
-                                                         value="date{D/M/YYYY}"
-                                                         selected="{Boolean}true"/>
-                                                    <ymd jcr:primaryType="nt:unstructured"
-                                                         text="YYYY-MM-DD"
-                                                         value="date{YYYY/M/D}"/>
+                                                    <dayTitleAndPlaceholder
+                                                            granite:class="title-placeholder"
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                        <items jcr:primaryType="nt:unstructured">
+                                                            <labelDay
+                                                                    granite:class="label-date"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                                    name="./labelDay"
+                                                                    text="Day"/>
+                                                            <titleDay
+                                                                    granite:class="title-date"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    emptyText="Title"
+                                                                    name="./titleDay"/>
+                                                            <placeholderDay
+                                                                    granite:class="placeholder-date"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    emptyText="Placeholder"
+                                                                    name="./placeholderDay"/>
+                                                        </items>
+                                                    </dayTitleAndPlaceholder>
+                                                    <monthTitleAndPlaceholder
+                                                            granite:class="title-placeholder"
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                        <items jcr:primaryType="nt:unstructured">
+                                                            <labelMonth
+                                                                    granite:class="label-date"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                                    name="./labelMonth"
+                                                                    text="Month"/>
+                                                            <titleMonth
+                                                                    granite:class="title-date"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    emptyText="Title"
+                                                                    name="./titleMonth"/>
+                                                            <placeholderMonth
+                                                                    granite:class="placeholder-date"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    emptyText="Placeholder"
+                                                                    name="./placeholderMonth"/>
+                                                        </items>
+                                                    </monthTitleAndPlaceholder>
+                                                    <yearTitleAndPlaceholder
+                                                            granite:class="title-placeholder"
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                        <items jcr:primaryType="nt:unstructured">
+                                                            <labelYear
+                                                                    granite:class="label-date"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/text"
+                                                                    name="./labelYear"
+                                                                    text="Year"/>
+                                                            <titleYear
+                                                                    granite:class="title-date"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    emptyText="Title"
+                                                                    name="./titleYear"/>
+                                                            <placeholderYear
+                                                                    granite:class="placeholder-date"
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    emptyText="Placeholder"
+                                                                    name="./placeholderYear"/>
+                                                        </items>
+                                                    </yearTitleAndPlaceholder>
+                                                    <placeholder
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:hideResource="{Boolean}true"
+                                                            granite:class="cmp-adaptiveform-base__placeholder"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="*Placeholder text will not work for the native Date widget."
+                                                            name="./placeholder"/>
                                                 </items>
-                                            </dateDisplayFormat>
+                                            </titleAndPlaceholder>
                                         </items>
                                     </column>
                                 </items>
@@ -156,93 +235,6 @@
                             </columns>
                         </items>
                     </validation>
-                    <!-- Title and Placeholder tab — mirrors foundation TitleAndPlaceholder fieldset -->
-                    <titleandplaceholder
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Title and Placeholder"
-                        sling:resourceType="granite/ui/components/coral/foundation/container">
-                        <items jcr:primaryType="nt:unstructured">
-                            <columns
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
-                                margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <dayGroup
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <titleDay
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                        emptyText="Title"
-                                                        fieldLabel="Day title"
-                                                        name="./titleDay"/>
-                                                    <placeholderDay
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                        emptyText="Placeholder"
-                                                        fieldLabel="Day placeholder"
-                                                        name="./placeholderDay"/>
-                                                </items>
-                                            </dayGroup>
-                                            <monthGroup
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <titleMonth
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                        emptyText="Title"
-                                                        fieldLabel="Month title"
-                                                        name="./titleMonth"/>
-                                                    <placeholderMonth
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                        emptyText="Placeholder"
-                                                        fieldLabel="Month placeholder"
-                                                        name="./placeholderMonth"/>
-                                                </items>
-                                            </monthGroup>
-                                            <yearGroup
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <titleYear
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                        emptyText="Title"
-                                                        fieldLabel="Year title"
-                                                        name="./titleYear"/>
-                                                    <placeholderYear
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                        emptyText="Placeholder"
-                                                        fieldLabel="Year placeholder"
-                                                        name="./placeholderYear"/>
-                                                </items>
-                                            </yearGroup>
-                                            <hideTitleDate
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                text="Hide titles for day, month, and year fields"
-                                                fieldLabel="Hide sub-field titles"
-                                                value="true"
-                                                name="./hideTitleDate"/>
-                                            <hideTitleDate-typehint
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                name="./hideTitleDate@TypeHint"
-                                                value="Boolean"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </columns>
-                        </items>
-                    </titleandplaceholder>
                     <formats
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Formats"

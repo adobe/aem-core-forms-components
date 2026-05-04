@@ -1,0 +1,108 @@
+/*******************************************************************************
+ * Copyright 2026 Adobe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+.cmp-adaptiveform-dateinput {
+}
+
+.cmp-adaptiveform-dateinput__label-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.cmp-adaptiveform-dateinput__label {
+    display: block;
+}
+
+/* Three sub-field wrappers rendered in a horizontal row.
+   align-items: flex-end keeps all inputs on the same baseline
+   even when sub-field labels have slightly different heights. */
+.cmp-adaptiveform-dateinput__widget-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.cmp-adaptiveform-dateinput__field-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.cmp-adaptiveform-dateinput__field-label {
+    display: block;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    margin-bottom: 2px;
+    color: inherit;
+}
+
+/* Visually hidden but present in the accessibility tree */
+.cmp-adaptiveform-dateinput__field-label--hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.cmp-adaptiveform-dateinput__widget {
+    box-sizing: border-box;
+    height: 38px;
+    padding: 0 6px;
+    text-align: center;
+}
+
+.cmp-adaptiveform-dateinput__widget--day,
+.cmp-adaptiveform-dateinput__widget--month {
+    width: 3em;
+}
+
+.cmp-adaptiveform-dateinput__widget--year {
+    width: 4.5em;
+}
+
+.cmp-adaptiveform-dateinput__widget:focus {
+    outline: 2px solid var(--cmp-adaptiveform-focus-color, #0265DC);
+    outline-offset: 2px;
+}
+
+.cmp-adaptiveform-dateinput__widget[aria-invalid="true"] {
+    border-color: var(--cmp-adaptiveform-error-color, #D7373F);
+    outline-color: var(--cmp-adaptiveform-error-color, #D7373F);
+}
+
+.cmp-adaptiveform-dateinput__errormessage {
+    color: var(--cmp-adaptiveform-error-color, #D7373F);
+    font-size: 0.875rem;
+    margin-top: 4px;
+}
+
+.cmp-adaptiveform-dateinput__questionmark {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+}
+
+.cmp-adaptiveform-dateinput__shortdescription,
+.cmp-adaptiveform-dateinput__longdescription {
+    font-size: 0.875rem;
+    color: var(--cmp-adaptiveform-description-color, #6E6E6E);
+    margin-top: 4px;
+}
