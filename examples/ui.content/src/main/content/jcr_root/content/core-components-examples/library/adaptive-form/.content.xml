@@ -17,6 +17,7 @@
     <accordion/>
     <button/>
     <checkboxgroup/>
+    <dateinput/>
     <datepicker/>
     <dropdown/>
     <emailinput/>

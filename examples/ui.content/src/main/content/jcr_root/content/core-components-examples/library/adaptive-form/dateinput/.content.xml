@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Date Input"
+        sling:resourceType="forms-components-examples/components/page">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="wcm/foundation/components/responsivegrid">
+                <demo
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="forms-components-examples/components/demo">
+                    <component
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="forms-components-examples/components/demo/component"
+                        jcr:title="Date Input">
+                        <guideContainer
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="forms-components-examples/components/form/container"
+                            fd:version="2.1"
+                            fieldType="form">
+                            <dateinput_demo
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="forms-components-examples/components/form/dateinput"
+                                jcr:title="Date Input"
+                                fieldType="date-input"
+                                name="dateinput1"
+                                placeholderDay="DD"
+                                placeholderMonth="MM"
+                                placeholderYear="YYYY"
+                                dateDisplayFormat="date{D/M/YYYY}"
+                                visible="{Boolean}true"
+                                enabled="{Boolean}true"/>
+                        </guideContainer>
+                    </component>
+                </demo>
+            </responsivegrid>
+        </root>
+    </jcr:content>
+</jcr:root>

@@ -1,0 +1,133 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.renderer="${'dateinput.js'}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
+
+<div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.dateInput="com.adobe.cq.forms.core.components.models.form.DateInput"
+     class="cmp-adaptiveform-dateinput"
+     data-cmp-is="adaptiveFormDateInput"
+     data-cmp-visible="${dateInput.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${dateInput.enabled ? 'true' : 'false'}"
+     data-cmp-required="${dateInput.required ? 'true' : 'false'}"
+     data-cmp-readonly="${dateInput.readOnly ? 'true' : 'false'}"
+     data-cmp-date-display-format="${dateInput.dateDisplayFormat ? dateInput.dateDisplayFormat : 'date{D/M/YYYY}'}"
+     id="${dateInput.id}"
+     data-cmp-data-layer="${dateInput.data.json}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[dateInput.id, 'widget']}">
+
+    <div class="cmp-adaptiveform-dateinput__label-container">
+        <div data-sly-call="${label.label @ componentId=widgetId,
+             labelValue=dateInput.label.value,
+             labelVisible=dateInput.label.visible,
+             labelRichText=dateInput.label.richText,
+             bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @ componentId=dateInput.id,
+             longDescription=dateInput.description,
+             bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap></div>
+    </div>
+
+    <!--
+         Split date widget: three wrapper divs, one per sub-field.
+         The JS view reads data-cmp-date-display-format, derives field order and
+         separator, then assigns day/month/year to the wrappers in the correct order.
+         The three wrappers are always rendered in fixed DOM order; JS reorders them.
+    -->
+    <div class="cmp-adaptiveform-dateinput__widget-container"
+         role="group"
+         aria-labelledby="${dateInput.id}__label">
+
+        <!-- Day wrapper -->
+        <div class="cmp-adaptiveform-dateinput__field-wrapper cmp-adaptiveform-dateinput__field-wrapper--day">
+            <label class="${dateInput.hideTitleDate ? 'cmp-adaptiveform-dateinput__field-label cmp-adaptiveform-dateinput__field-label--hidden' : 'cmp-adaptiveform-dateinput__field-label'}"
+                   for="${'{0}-{1}' @ format=[dateInput.id, 'widget-day']}">
+                ${dateInput.titleDay ? dateInput.titleDay : 'Day'}
+            </label>
+            <input type="number"
+                   id="${'{0}-{1}' @ format=[dateInput.id, 'widget-day']}"
+                   class="cmp-adaptiveform-dateinput__widget cmp-adaptiveform-dateinput__widget--day"
+                   name="${'{0}-{1}' @ format=[dateInput.name, 'day']}"
+                   min="1"
+                   max="31"
+                   disabled="${!dateInput.enabled}"
+                   readonly="${dateInput.readOnly}"
+                   required="${dateInput.required}"
+                   placeholder="${dateInput.placeholderDay ? dateInput.placeholderDay : 'DD'}"
+                   dir="auto"/>
+        </div>
+
+        <!-- Month wrapper -->
+        <div class="cmp-adaptiveform-dateinput__field-wrapper cmp-adaptiveform-dateinput__field-wrapper--month">
+            <label class="${dateInput.hideTitleDate ? 'cmp-adaptiveform-dateinput__field-label cmp-adaptiveform-dateinput__field-label--hidden' : 'cmp-adaptiveform-dateinput__field-label'}"
+                   for="${'{0}-{1}' @ format=[dateInput.id, 'widget-month']}">
+                ${dateInput.titleMonth ? dateInput.titleMonth : 'Month'}
+            </label>
+            <input type="number"
+                   id="${'{0}-{1}' @ format=[dateInput.id, 'widget-month']}"
+                   class="cmp-adaptiveform-dateinput__widget cmp-adaptiveform-dateinput__widget--month"
+                   name="${'{0}-{1}' @ format=[dateInput.name, 'month']}"
+                   min="1"
+                   max="12"
+                   disabled="${!dateInput.enabled}"
+                   readonly="${dateInput.readOnly}"
+                   required="${dateInput.required}"
+                   placeholder="${dateInput.placeholderMonth ? dateInput.placeholderMonth : 'MM'}"
+                   dir="auto"/>
+        </div>
+
+        <!-- Year wrapper -->
+        <div class="cmp-adaptiveform-dateinput__field-wrapper cmp-adaptiveform-dateinput__field-wrapper--year">
+            <label class="${dateInput.hideTitleDate ? 'cmp-adaptiveform-dateinput__field-label cmp-adaptiveform-dateinput__field-label--hidden' : 'cmp-adaptiveform-dateinput__field-label'}"
+                   for="${'{0}-{1}' @ format=[dateInput.id, 'widget-year']}">
+                ${dateInput.titleYear ? dateInput.titleYear : 'Year'}
+            </label>
+            <input type="number"
+                   id="${'{0}-{1}' @ format=[dateInput.id, 'widget-year']}"
+                   class="cmp-adaptiveform-dateinput__widget cmp-adaptiveform-dateinput__widget--year"
+                   name="${'{0}-{1}' @ format=[dateInput.name, 'year']}"
+                   min="1"
+                   max="9999"
+                   disabled="${!dateInput.enabled}"
+                   readonly="${dateInput.readOnly}"
+                   required="${dateInput.required}"
+                   placeholder="${dateInput.placeholderYear ? dateInput.placeholderYear : 'YYYY'}"
+                   dir="auto"/>
+        </div>
+
+        <!-- Hidden combined ISO value input for form submission -->
+        <input type="hidden"
+               id="${widgetId}"
+               class="cmp-adaptiveform-dateinput__widget--combined"
+               name="${dateInput.name}"
+               value="${dateInput.default ? dateInput.default : ''}"/>
+    </div>
+
+    <div data-sly-call="${shortDescription.shortDescription @ componentId=dateInput.id,
+         shortDescriptionVisible=dateInput.tooltipVisible,
+         shortDescription=dateInput.tooltip,
+         bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @ componentId=dateInput.id,
+         longDescription=dateInput.description,
+         bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @ componentId=dateInput.id,
+         bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap></div>
+</div>

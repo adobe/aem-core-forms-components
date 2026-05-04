@@ -1,0 +1,19 @@
+{
+  "id": "dateinput-d7d234756e",
+  "fieldType": "date-input",
+  "name": "testdateinput",
+  "type": "string",
+  "label": {
+    "value": "Test Date Input"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:path": "/content/dateinput"
+  },
+  "format": "date",
+  ":type": "core/fd/components/form/dateinput/v1/dateinput"
+}
