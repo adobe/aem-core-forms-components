@@ -164,5 +164,33 @@
                 hidden="{Boolean}true"
                 icon="tableColumnRemove"
                 text="Delete Column"/>
+        <mergeheadercells
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.mergeTableHeaderCells"
+                hidden="{Boolean}true"
+                icon="tableMergeCells"
+                text="Merge Cells"/>
+        <splitheadercell
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isMergedHeaderCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.splitTableHeaderCell"
+                hidden="{Boolean}true"
+                icon="tableCellsSplit"
+                text="Split Cell"/>
+        <removecolumnsorting
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCellSortingEnabled(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.removeColumnSorting"
+                hidden="{Boolean}true"
+                icon="filterRemove"
+                text="Remove Sorting"/>
+        <enablecolumnsorting
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCellSortingDisabled(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.enableColumnSorting"
+                hidden="{Boolean}true"
+                icon="filterAdd"
+                text="Enable Sorting"/>
     </cq:actionConfigs>
 </jcr:root>
