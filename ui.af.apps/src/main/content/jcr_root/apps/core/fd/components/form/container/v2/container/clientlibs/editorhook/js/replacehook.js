@@ -105,7 +105,8 @@
     function isUnderCoreTableRow(editable) {
         var p = author.editables.getParent(editable);
         while (p) {
-            if (typeof p.type === "string" && p.type.indexOf("/form/tablerow/") !== -1) {
+            if (typeof p.type === "string" &&
+                (p.type.indexOf("/form/tablerow/") !== -1 || p.type.indexOf("/form/tableheader/") !== -1)) {
                 return true;
             }
             p = author.editables.getParent(p);
