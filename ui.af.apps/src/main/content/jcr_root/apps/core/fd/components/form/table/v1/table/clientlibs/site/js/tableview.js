@@ -122,7 +122,7 @@
          * Inserts a new table row into the <tbody> at the correct position.
          * This is called by InstanceManager.handleAddition() when repeatableParentView is set.
          * Foundation-style approach: insert <tr> directly as sibling within single <tbody>.
-         * 
+         *
          * @param {Object} instanceManager - The instance manager
          * @param {Object} addedModel - The model of the added row
          * @param {HTMLElement} htmlElement - The cloned row element (<tr>)
@@ -168,7 +168,28 @@
                 }
             }
 
+            // Utils.updateId only patches id attributes, not data-cmp-hook-* attrs.
+            // Without this, cloned rows keep the template's stale row ID on their
+            // add/remove buttons, causing every dynamically-added row to dispatch
+            // the wrong model index when clicked.
+            this.#syncTableRowHooks(htmlElement, addedModel.id);
+
             return htmlElement;
+        }
+
+        /**
+         * Patches data-cmp-hook-add-instance / data-cmp-hook-remove-instance on a
+         * freshly cloned row so they reference the row's own model ID.
+         */
+        #syncTableRowHooks(rowElement, rowId) {
+            const addBtn = rowElement.querySelector('[data-cmp-hook-add-instance]');
+            if (addBtn) {
+                addBtn.setAttribute('data-cmp-hook-add-instance', rowId);
+            }
+            const removeBtn = rowElement.querySelector('[data-cmp-hook-remove-instance]');
+            if (removeBtn) {
+                removeBtn.setAttribute('data-cmp-hook-remove-instance', rowId);
+            }
         }
 
         /**
