@@ -1105,4 +1105,100 @@
         $(function () { installOverlayRenderOverride(); });
     }
 
+    /**
+     * True when the header cell currently has a sort button rendered (table-level sorting is on
+     * and this column has not had its sort button individually removed).
+     * Used as the condition for the "Remove Sorting" action config.
+     * @param {Granite.author.Editable} editable
+     * @returns {boolean}
+     */
+    window.CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCellSortingEnabled = function (editable) {
+        if (!window.CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable)) {
+            return false;
+        }
+        return $(getEditableDom(editable))
+            .closest(".cmp-adaptiveform-tablehead")
+            .find(".cmp-adaptiveform-table__sort-button")
+            .length > 0;
+    };
+
+    /**
+     * True when table-level sorting is on but this column's sort button has been individually
+     * removed (disableSorting=true on the cell node).
+     * Used as the condition for the "Enable Sorting" action config.
+     * @param {Granite.author.Editable} editable
+     * @returns {boolean}
+     */
+    window.CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCellSortingDisabled = function (editable) {
+        if (!window.CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable)) {
+            return false;
+        }
+        var $dom = $(getEditableDom(editable));
+        var tableSortingOn = $dom.closest(".cmp-adaptiveform-table")
+            .attr("data-cmp-sorting-enabled") === "true";
+        if (!tableSortingOn) {
+            return false;
+        }
+        return $dom.closest(".cmp-adaptiveform-tablehead")
+            .find(".cmp-adaptiveform-table__sort-button")
+            .length === 0;
+    };
+
+    /**
+     * Removes the sort button from a single header column by writing disableSorting=true
+     * on the cell's JCR node, then refreshes the parent table editable.
+     * @param {Granite.author.Editable} editable
+     */
+    window.CQ.FormsCoreComponents.editorhooks.removeColumnSorting = function (editable) {
+        var cellPath = editable.path;
+        var tableEditable = getTableEditableFromHeaderCellText(editable);
+
+        $.ajax({
+            url: Granite.HTTP.externalize(cellPath),
+            type: "POST",
+            data: {
+                "_charset_": "UTF-8",
+                "disableSorting": "true",
+                "disableSorting@TypeHint": "Boolean"
+            }
+        }).done(function () {
+            if (tableEditable) {
+                tableEditable.refresh();
+            }
+        }).fail(function () {
+            author.ui.helpers.notify({
+                content: Granite.I18n.get("Failed to remove sorting for this column."),
+                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+            });
+        });
+    };
+
+    /**
+     * Re-enables the sort button for a single header column by deleting the disableSorting
+     * property from the cell's JCR node, then refreshes the parent table editable.
+     * @param {Granite.author.Editable} editable
+     */
+    window.CQ.FormsCoreComponents.editorhooks.enableColumnSorting = function (editable) {
+        var cellPath = editable.path;
+        var tableEditable = getTableEditableFromHeaderCellText(editable);
+
+        $.ajax({
+            url: Granite.HTTP.externalize(cellPath),
+            type: "POST",
+            data: {
+                "_charset_": "UTF-8",
+                "disableSorting@Delete": "true"
+            }
+        }).done(function () {
+            if (tableEditable) {
+                tableEditable.refresh();
+            }
+        }).fail(function () {
+            author.ui.helpers.notify({
+                content: Granite.I18n.get("Failed to enable sorting for this column."),
+                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+            });
+        });
+    };
+
 })(window, Granite.author, jQuery, Coral);
