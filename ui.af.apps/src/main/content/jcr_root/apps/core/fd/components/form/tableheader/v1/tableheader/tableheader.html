@@ -26,7 +26,7 @@
                 scope="col"
                 data-sly-attribute.colspan="${cell.valueMap.colspan}"
                 data-cmp-hook-tablehead="header">
-                <sly data-sly-test="${sortingEnabled}">
+                <sly data-sly-test="${sortingEnabled && !cell.valueMap.disableSorting}">
                     <div class="cmp-adaptiveform-table__sort-header-inner">
                         <div class="cell-wrapper">
   							<sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
@@ -37,7 +37,7 @@
                                 aria-label="Sort column"></button>
                     </div>
                 </sly>
-                <sly data-sly-test="${!sortingEnabled}">
+                <sly data-sly-test="${!sortingEnabled || cell.valueMap.disableSorting}">
                     <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
                 </sly>
             </th>
@@ -56,7 +56,7 @@
             <th class="cmp-adaptiveform-tablehead"
                 scope="col"
                 data-cmp-hook-tablehead="header">
-                <sly data-sly-test="${sortingEnabled}">
+                <sly data-sly-test="${sortingEnabled && !cell.valueMap.disableSorting}">
                     <div class="cmp-adaptiveform-table__sort-header-inner">
                         <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
                         <button type="button"
@@ -65,7 +65,7 @@
                                 aria-label="Sort column"></button>
                     </div>
                 </sly>
-                <sly data-sly-test="${!sortingEnabled}">
+                <sly data-sly-test="${!sortingEnabled || cell.valueMap.disableSorting}">
                     <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
                 </sly>
             </th>
