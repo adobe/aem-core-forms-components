@@ -153,7 +153,7 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
 let loginRedirected = false;
 /** Waits for Touch UI editor APIs; uses Cypress retries instead of a raw Promise (avoids flaky "returned a promise" / tight loop issues). */
 const waitForEditorToInitialize = () => {
-  cy.window().should({ timeout: 120000 }, (win) => {
+  cy.window({ timeout: 120000 }).should((win) => {
     try {
       const editables = win.Granite && win.Granite.author && win.Granite.author.editables;
       expect(editables && editables.length > 0, 'Editor should expose Granite.author.editables when loaded').to.equal(true);
