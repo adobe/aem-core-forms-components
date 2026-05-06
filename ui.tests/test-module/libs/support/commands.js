@@ -151,42 +151,37 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
 });
 
 let loginRedirected = false;
+/** Waits for Touch UI editor APIs; uses Cypress retries instead of a raw Promise (avoids flaky "returned a promise" / tight loop issues). */
 const waitForEditorToInitialize = () => {
-  cy.window().then((win) => {
-    // keeps rechecking "editables"
-    return new Cypress.Promise((resolve, reject) => {
-      const timeoutDuration = 60000;
-      const startTime = Date.now();
-      const isReady = () => {
-        // temporary added this to check if editor is loaded
-        if (win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) {
-          return resolve()
-        }
-        const currentTime = Date.now();
-        if (currentTime - startTime >= timeoutDuration) {
-          // Reject the promise if the timeout has occurred
-          return reject(new Error('Editor initialization timed out'));
-        }
-        setTimeout(isReady, 0)
-      };
-      isReady()
-    })
+  cy.window().should({ timeout: 120000 }, (win) => {
+    try {
+      const editables = win.Granite && win.Granite.author && win.Granite.author.editables;
+      expect(editables && editables.length > 0, 'Editor should expose Granite.author.editables when loaded').to.equal(true);
+    } catch (e) {
+      if (e.name === 'SecurityError') {
+        throw new Error('Granite not yet accessible (cross-origin frame); retrying...');
+      }
+      throw e;
+    }
   });
 };
 
 const preventClickJacking = () => {
   cy.window().then(win => {
-    // only if granite is defined, override the API
-    if (win.Granite) {
-      win.Granite.HTTP.handleLoginRedirect = function () {
-        if (!loginRedirected) {
-          loginRedirected = true;
-          //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
-          // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
-          var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-          l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
-        }
-      };
+    try {
+      if (win.Granite && win.Granite.HTTP) {
+        win.Granite.HTTP.handleLoginRedirect = function () {
+          if (!loginRedirected) {
+            loginRedirected = true;
+            var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
+            l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
+          }
+        };
+      }
+    } catch (e) {
+      if (e.name !== 'SecurityError') {
+        throw e;
+      }
     }
   });
 };
