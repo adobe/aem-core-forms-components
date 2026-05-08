@@ -23,6 +23,7 @@
     cq:layout="editbar">
     <cq:listeners
         jcr:primaryType="cq:EditListenersConfig"
+        afteredit="REFRESH_PARENT"
         afterchildinsert="function(editable){Granite.author.responsive.EditableActions.REFRESH.execute(editable)}"
         afterchilddelete="function(editable){Granite.author.responsive.EditableActions.REFRESH.execute(editable)}"/>
     <cq:actionConfigs jcr:primaryType="nt:unstructured">
