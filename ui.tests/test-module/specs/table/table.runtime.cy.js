@@ -20,7 +20,7 @@ describe('Form Runtime with Table - Basic Tests', () => {
     let formContainer = null;
 
     beforeEach(() => {
-        cy.previewFormWithPanel(pagePath).then(p => {
+        cy.previewForm(pagePath).then(p => {
             formContainer = p;
         });
     });
