@@ -52,7 +52,10 @@ var formsConstants = {
                 "termsandconditions": "/apps/forms-components-examples/components/form/termsandconditions",
                 "submitButton": "/apps/forms-components-examples/components/form/actions/submit",
                 "review": "/apps/forms-components-examples/components/form/review",
-                "scribble": "/apps/forms-components-examples/components/form/scribble"
+                "scribble": "/apps/forms-components-examples/components/form/scribble",
+                "table": "/apps/forms-components-examples/components/form/table",
+                "tablerow": "/apps/forms-components-examples/components/form/tablerow",
+                "tableheader": "/apps/forms-components-examples/components/form/tableheader"
             }
         },
         resourceType : {
