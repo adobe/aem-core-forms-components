@@ -21,7 +21,7 @@ describe('Form Runtime with Table - Repeatability Tests', () => {
     let formContainer = null;
 
     beforeEach(() => {
-        cy.previewFormWithPanel(pagePath).then(p => {
+        cy.previewForm(pagePath).then(p => {
             formContainer = p;
         });
     });
