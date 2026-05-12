@@ -16,7 +16,7 @@
             <table
                 jcr:primaryType="nt:unstructured"
                 jcr:title="Table"
-                sling:resourceType="forms-components-examples/components/form/table"
+                sling:resourceType="core/fd/components/form/table/v1/table"
                 fieldType="panel"
                 name="table"
                 visible="{Boolean}true"
@@ -25,19 +25,19 @@
                 <header
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Header Row"
-                    sling:resourceType="forms-components-examples/components/form/tableheader"
+                    sling:resourceType="core/fd/components/form/tableheader/v1/tableheader"
                     fieldType="panel">
                     <column1
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Name"
-                        sling:resourceType="forms-components-examples/components/form/text"
+                        sling:resourceType="core/fd/components/form/text/v1/text"
                         fieldType="plain-text"
                         name="column1"
                         value="Name"/>
                     <column2
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Age"
-                        sling:resourceType="forms-components-examples/components/form/text"
+                        sling:resourceType="core/fd/components/form/text/v1/text"
                         fieldType="plain-text"
                         name="column2"
                         value="Age"/>
@@ -46,20 +46,20 @@
                 <row1
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Row 1"
-                    sling:resourceType="forms-components-examples/components/form/tablerow"
+                    sling:resourceType="core/fd/components/form/tablerow/v1/tablerow"
                     fieldType="panel"
                     name="row1"
                     repeatable="{Boolean}false">
                     <cell1
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Name Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
                         fieldType="text-input"
                         name="nameInput1"/>
                     <cell2
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Age Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
                         fieldType="text-input"
                         name="ageInput1"/>
                 </row1>
@@ -67,7 +67,7 @@
                 <row2
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Row 2"
-                    sling:resourceType="forms-components-examples/components/form/tablerow"
+                    sling:resourceType="core/fd/components/form/tablerow/v1/tablerow"
                     fieldType="panel"
                     name="row2"
                     repeatable="{Boolean}true"
@@ -76,13 +76,13 @@
                     <cell1
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Name Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
                         fieldType="text-input"
                         name="nameInput2"/>
                     <cell2
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Age Input"
-                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
                         fieldType="text-input"
                         name="ageInput2"/>
                 </row2>
