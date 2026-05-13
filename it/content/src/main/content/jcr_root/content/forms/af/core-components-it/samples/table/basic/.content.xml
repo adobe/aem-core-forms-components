@@ -20,7 +20,8 @@
                 fieldType="panel"
                 name="table"
                 visible="{Boolean}true"
-                enabled="{Boolean}true">
+                enabled="{Boolean}true"
+                hideTitle="{Boolean}false">
                 <!-- Header Row -->
                 <header
                     jcr:primaryType="nt:unstructured"
