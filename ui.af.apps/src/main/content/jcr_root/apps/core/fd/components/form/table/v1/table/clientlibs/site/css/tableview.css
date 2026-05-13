@@ -1,0 +1,113 @@
+/*******************************************************************************
+ * Copyright 2024 Adobe
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+
+.cmp-adaptiveform-table {
+    margin: 1rem 0;
+}
+
+.cmp-adaptiveform-table__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.cmp-adaptiveform-table__description {
+    font-size: 0.875rem;
+    color: #6B6B6B;
+    margin-bottom: 1rem;
+}
+
+/*
+ * Widget: explicit display:table covers BOTH the edit-mode div wrapper AND the
+ * publish-mode <table> element (which already has display:table by default).
+ */
+.cmp-adaptiveform-table__widget {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #DDDDDD;
+}
+
+/* These are no-ops on real <thead>/<tbody> but required for the edit-mode divs. */
+.cmp-adaptiveform-table__head {
+    display: table-header-group;
+}
+
+.cmp-adaptiveform-table__body {
+    display: table-row-group;
+}
+
+/* No-ops on real <tr> but required for edit-mode decoration divs. */
+.cmp-adaptiveform-tableheader {
+    display: table-row;
+}
+
+.cmp-adaptiveform-tablerow {
+    display: table-row;
+}
+
+/*
+ * Row hover: target the CELLS directly so it works reliably in both paths:
+ *  - Edit mode (divs):  div.tablerow:hover → div.tablecell children
+ *  - Publish mode (<tr>/<td>): tr:hover → td children (needed because in CSS table
+ *    painting order the <td> background paints on top of the <tr> background, so
+ *    setting it on the <td> directly is the only guaranteed approach).
+ */
+.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow:hover > .cmp-adaptiveform-tablecell {
+    background-color: #FAFAFA;
+}
+
+/* Individual cell hover: slightly stronger tint + subtle inset ring. */
+.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow > .cmp-adaptiveform-tablecell:hover {
+    background-color: #F0F0F0;
+}
+
+/* No-ops on real <th>/<td> but required for edit-mode cell divs. */
+.cmp-adaptiveform-tablecell,
+.cmp-adaptiveform-tablehead {
+    display: table-cell;
+    padding: 0.75rem;
+    border: 1px solid #DDDDDD;
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Header cells base styling */
+.cmp-adaptiveform-table__head .cmp-adaptiveform-tablehead {
+    background-color: #F5F5F5;
+    font-weight: 600;
+}
+
+/* Header row hover */
+.cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader:hover > .cmp-adaptiveform-tablehead {
+    background-color: #EBEBEB;
+}
+
+.cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader > .cmp-adaptiveform-tablehead:hover {
+    background-color: #E0E0E0;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .cmp-adaptiveform-table__widget {
+        font-size: 0.875rem;
+    }
+    
+    .cmp-adaptiveform-tablecell,
+    .cmp-adaptiveform-tablehead {
+        padding: 0.5rem;
+    }
+}

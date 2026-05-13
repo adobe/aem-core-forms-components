@@ -1,0 +1,60 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.row="com.adobe.cq.forms.core.components.models.form.Panel"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
+<!--/* EDIT MODE: hand-rendered <tr> with Granite editable markers so the overlay
+     can bind to the real row instead of foster-parenting to the <table>. */-->
+<sly data-sly-test="${wcmmode.edit}">
+    <tr class="cmp-adaptiveform-tablerow cq-Editable-dom cq-Editable-dom--container"
+        data-cq-data-path="${resource.path}">
+        <sly data-sly-list.cell="${resource.listChildren}">
+            <td class="cmp-adaptiveform-tablecell">
+                <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+            </td>
+        </sly>
+    </tr>
+</sly>
+<!--/* PUBLISH MODE: native tr/td for proper table semantics and accessibility. */-->
+<sly data-sly-test="${!wcmmode.edit}">
+    <tr id="${row.id}"
+        class="cmp-adaptiveform-tablerow cmp-adaptiveform-tablerow__root"
+        data-cmp-is="adaptiveFormTableRow"
+        data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+        data-cmp-visible="${row.visible ? 'true' : 'false'}"
+        data-cmp-enabled="${row.enabled ? 'true' : 'false'}"
+        data-cmp-readonly="${row.readOnly ? 'true' : 'false'}">
+        <sly data-sly-list.cell="${resource.listChildren}">
+            <td class="cmp-adaptiveform-tablecell${row.repeatable && cellList.last ? ' cmp-adaptiveform-tablecell--with-row-controls' : ''}">
+                <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+                <sly data-sly-test="${row.repeatable && cellList.last}">
+                    <div class="cmp-adaptiveform-tablerow__runtime-controls"
+                         role="group">
+                        <button type="button"
+                                class="cmp-adaptiveform-tablerow__add-button"
+                                data-cmp-hook-add-instance="${row.id}"
+                                title="Add row"
+                                aria-label="Add row"></button>
+                        <button type="button"
+                                class="cmp-adaptiveform-tablerow__remove-button"
+                                data-cmp-hook-remove-instance="${row.id}"
+                                title="Remove row"
+                                aria-label="Remove row"></button>
+                    </div>
+                </sly>
+            </td>
+        </sly>
+    </tr>
+</sly>
