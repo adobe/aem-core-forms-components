@@ -79,6 +79,14 @@ describe('Button - Authoring', function () {
         } else {
             dropButtonInContainer();
         }
+        // Guard against OverlayWrapper.is-hidden race: if the canvas is still
+        // redrawing or a prior test left the layer in Preview, re-activate Edit.
+        cy.get('#OverlayWrapper').then($wrapper => {
+            if ($wrapper.hasClass('is-hidden')) {
+                cy.selectLayer("Edit");
+            }
+        });
+        cy.get('#OverlayWrapper').should('not.have.class', 'is-hidden');
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).then(() => {
             cy.invokeEditableAction("[data-action='EDIT']").then(() => {
                 getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {

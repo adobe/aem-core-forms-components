@@ -288,29 +288,24 @@ Cypress.Commands.add("selectLayer", (layer) => {
 
 // cypress command to open editable toolbar
 Cypress.Commands.add("openEditableToolbar", (selector) => {
-  cy.get(selector) // adding assertion does implicit retry
+  cy.get(selector)
   .invoke('attr', 'data-path')
   .then(($path) => {
     const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
     cy.get("body").then($body => {
       if ($body.find(path).length === 0) {
-        //evaluates as true if toolbar doesnt exists at all
-        //you get here only if toolbar is visible
-        cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
-        // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-        cy.get(path).should('be.visible');
+        cy.get(selector).click({force: true});
       } else {
         cy.get(path).then($header => {
           if (!$header.is(':visible')) {
             cy.get(selector).first().click({force: true});
-            cy.get(path).should('be.visible');
           } else {
-            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
+            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0);
             cy.get(selector).click({force: true});
-            cy.get(path).should('be.visible');
           }
         });
       }
+      cy.get(path, { timeout: 15000 }).should('be.visible');
     });
   })
 });
@@ -550,7 +545,10 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
   // click the delete action
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
-  // check if delete dialog is seen and click on yes
+  // Wait for the Coral alert dialog to fully open before clicking its footer button.
+  // Without this, the .last footer-button selector can be queried before the dialog's
+  // footer has populated, causing the "but never found it" timeout.
+  cy.get("coral-dialog.is-open[role='alertdialog']", { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
@@ -570,7 +568,10 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
   // click the delete action
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
-  // check if delete dialog is seen and click on yes
+  // Wait for the Coral alert dialog to fully open before clicking its footer button.
+  // Without this, the .last footer-button selector can be queried before the dialog's
+  // footer has populated, causing the "but never found it" timeout.
+  cy.get("coral-dialog.is-open[role='alertdialog']", { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
