@@ -152,41 +152,25 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
 
 let loginRedirected = false;
 const waitForEditorToInitialize = () => {
-  cy.window().then((win) => {
-    // keeps rechecking "editables"
-    return new Cypress.Promise((resolve, reject) => {
-      const timeoutDuration = 60000;
-      const startTime = Date.now();
-      const isReady = () => {
-        // temporary added this to check if editor is loaded
-        if (win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) {
-          return resolve()
-        }
-        const currentTime = Date.now();
-        if (currentTime - startTime >= timeoutDuration) {
-          // Reject the promise if the timeout has occurred
-          return reject(new Error('Editor initialization timed out'));
-        }
-        setTimeout(isReady, 0)
-      };
-      isReady()
-    })
-  });
+  cy.window().its('Granite.author.editables', { timeout: 120000 }).should('have.length.greaterThan', 0);
 };
 
 const preventClickJacking = () => {
   cy.window().then(win => {
-    // only if granite is defined, override the API
-    if (win.Granite) {
-      win.Granite.HTTP.handleLoginRedirect = function () {
-        if (!loginRedirected) {
-          loginRedirected = true;
-          //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
-          // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
-          var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-          l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
-        }
-      };
+    try {
+      if (win.Granite && win.Granite.HTTP) {
+        win.Granite.HTTP.handleLoginRedirect = function () {
+          if (!loginRedirected) {
+            loginRedirected = true;
+            var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
+            l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
+          }
+        };
+      }
+    } catch (e) {
+      if (e.name !== 'SecurityError') {
+        throw e;
+      }
     }
   });
 };
@@ -288,6 +272,18 @@ Cypress.Commands.add("selectLayer", (layer) => {
 
 // cypress command to open editable toolbar
 Cypress.Commands.add("openEditableToolbar", (selector) => {
+  // Guard against OverlayWrapper.is-hidden: if the canvas is in Preview mode
+  // or mid-redraw, force the Edit layer so overlay clicks actually register.
+  // Without this, clicks land on a display:none parent and the toolbar never
+  // wires up, producing "not visible because parent OverlayWrapper.is-hidden".
+  cy.get('body').then($body => {
+    const $wrapper = $body.find('#OverlayWrapper');
+    if ($wrapper.length && $wrapper.hasClass('is-hidden')) {
+      cy.selectLayer("Edit");
+    }
+  });
+  cy.get('#OverlayWrapper').should('not.have.class', 'is-hidden');
+
   cy.get(selector)
   .invoke('attr', 'data-path')
   .then(($path) => {
