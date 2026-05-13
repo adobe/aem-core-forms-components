@@ -294,6 +294,10 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
       } else {
         cy.get(path).then($header => {
           if (!$header.is(':visible')) {
+            // Toolbar exists but is hidden — likely a stale toolbar from a previous
+            // selection. Click body first to fully deselect, then click the overlay
+            // to trigger a fresh selection + toolbar render.
+            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0);
             cy.get(selector).first().click({force: true});
           } else {
             cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0);
@@ -563,7 +567,7 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
   // click the delete action
-  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+  cy.get(siteSelectors.editableToolbar.actions.delete + ":visible").should("be.visible").click({force: true});
   // Wait for the Coral alert dialog to fully open before clicking its footer button.
   // Without this, the .last footer-button selector can be queried before the dialog's
   // footer has populated, causing the "but never found it" timeout.
