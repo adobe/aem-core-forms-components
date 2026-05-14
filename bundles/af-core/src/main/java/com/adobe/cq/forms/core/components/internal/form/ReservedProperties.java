@@ -176,6 +176,16 @@ public final class ReservedProperties {
 
     public static final String FD_DRAFT_ID = "fd:draftId";
 
+    // DateInput component-specific properties
+    public static final String PN_PLACEHOLDER_DAY = "placeholderDay";
+    public static final String PN_PLACEHOLDER_MONTH = "placeholderMonth";
+    public static final String PN_PLACEHOLDER_YEAR = "placeholderYear";
+    public static final String PN_DATE_DISPLAY_FORMAT = "dateDisplayFormat";
+    public static final String PN_TITLE_DAY = "titleDay";
+    public static final String PN_TITLE_MONTH = "titleMonth";
+    public static final String PN_TITLE_YEAR = "titleYear";
+    public static final String PN_HIDE_TITLE_DATE = "hideTitleDate";
+
     // Begin: Form submission related properties
     public static final String FD_SUBMIT_PROPERTIES = "fd:submit";
     public static final String PN_SUBMIT_ACTION_TYPE = "actionType";
