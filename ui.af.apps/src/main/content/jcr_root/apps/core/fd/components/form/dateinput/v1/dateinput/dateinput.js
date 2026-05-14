@@ -14,11 +14,18 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 use(function () {
+    var clientlibsArr = ['core.forms.components.base.v1.editor'];
+    var labelPath = 'core/fd/components/af-commons/v1/fieldTemplates/label.html';
+    var shortDescriptionPath = "core/fd/components/af-commons/v1/fieldTemplates/shortDescription.html";
+    var longDescriptionPath = "core/fd/components/af-commons/v1/fieldTemplates/longDescription.html";
+    var questionMarkPath = "core/fd/components/af-commons/v1/fieldTemplates/questionMark.html"
+    var errorMessagePath = "core/fd/components/af-commons/v1/fieldTemplates/errorMessage.html";
     return {
-        labelPath: 'core/fd/components/af-commons/v1/fieldTemplates/label.html',
-        shortDescriptionPath: 'core/fd/components/af-commons/v1/fieldTemplates/shortDescription.html',
-        longDescriptionPath: 'core/fd/components/af-commons/v1/fieldTemplates/longDescription.html',
-        questionMarkPath: 'core/fd/components/af-commons/v1/fieldTemplates/questionMark.html',
-        errorMessagePath: 'core/fd/components/af-commons/v1/fieldTemplates/errorMessage.html'
-    };
+        labelPath: labelPath,
+        shortDescriptionPath: shortDescriptionPath,
+        longDescriptionPath: longDescriptionPath,
+        questionMarkPath: questionMarkPath,
+        errorMessagePath: errorMessagePath,
+        clientlibs: clientlibsArr
+    }
 });

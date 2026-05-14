@@ -31,7 +31,6 @@
      data-cmp-readonly="${dateInput.readOnly ? 'true' : 'false'}"
      data-cmp-date-display-format="${dateInput.dateDisplayFormat ? dateInput.dateDisplayFormat : 'date{D/M/YYYY}'}"
      id="${dateInput.id}"
-     data-cmp-data-layer="${dateInput.data.json}"
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
      data-sly-test.widgetId="${'{0}-{1}' @ format=[dateInput.id, 'widget']}">
 
@@ -122,12 +121,11 @@
                class="cmp-adaptiveform-dateinput__widget--combined"
                name="${dateInput.name}"
                value="${dateInput.default ? dateInput.default : ''}"/>
-    </div>
-
-    <div data-sly-call="${shortDescription.shortDescription @ componentId=dateInput.id,
+        <div data-sly-call="${shortDescription.shortDescription @componentId=datePicker.id,
          shortDescriptionVisible=dateInput.tooltipVisible,
          shortDescription=dateInput.tooltip,
-         bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap></div>
+         bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap>
+    </div>
     <div data-sly-call="${longDescription.longDescription @ componentId=dateInput.id,
          longDescription=dateInput.description,
          bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap></div>

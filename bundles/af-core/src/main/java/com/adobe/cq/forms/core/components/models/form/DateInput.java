@@ -17,8 +17,6 @@ package com.adobe.cq.forms.core.components.models.form;
 
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
@@ -30,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * @since com.adobe.cq.forms.core.components.models.form 5.9.0
  */
 @ConsumerType
-public interface DateInput extends Field, DateConstraint {
+public interface DateInput extends DatePicker {
 
     /**
      * Returns the placeholder text for the day input box.
@@ -113,14 +111,4 @@ public interface DateInput extends Field, DateConstraint {
      */
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     boolean isHideTitleDate();
-
-    /**
-     * @see Field#getDefault()
-     * @since com.adobe.cq.forms.core.components.models.form 5.9.0
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Base.DATE_FORMATTER, timezone = "UTC")
-    @Override
-    default Object[] getDefault() {
-        return null;
-    }
 }
