@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2024 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+    xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Adaptive Form Signature Step Component"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    helpPath="https://www.adobe.com/go/aem_af_cmp_signaturestep_v1"
+    trackingFeature="core-components:adaptiveform-signaturestep:v1">
+  <content
+      jcr:primaryType="nt:unstructured"
+      sling:resourceType="granite/ui/components/coral/foundation/container">
+    <items jcr:primaryType="nt:unstructured">
+      <tabs
+          jcr:primaryType="nt:unstructured"
+          sling:resourceType="granite/ui/components/coral/foundation/tabs"
+          maximized="{Boolean}true">
+        <items jcr:primaryType="nt:unstructured">
+          <basic
+              jcr:primaryType="nt:unstructured"
+              jcr:title="Basic"
+              sling:resourceType="granite/ui/components/coral/foundation/container">
+            <items jcr:primaryType="nt:unstructured">
+              <columns
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                  margin="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                  <column
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <items jcr:primaryType="nt:unstructured">
+                      <name
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                          fieldLabel="Name"
+                          name="./name"
+                          required="{Boolean}true">
+                        <granite:data
+                            jcr:primaryType="nt:unstructured"
+                            node-name-validation=""/>
+                      </name>
+                      <title
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                          fieldLabel="Title"
+                          name="./jcr:title"/>
+                      <signingService
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                          fieldLabel="Signing Service"
+                          fieldDescription="Service to use for collecting the signature."
+                          name="./signingService">
+                        <items jcr:primaryType="nt:unstructured">
+                          <echosign
+                              jcr:primaryType="nt:unstructured"
+                              text="Adobe Sign"
+                              value="echosign"
+                              selected="{Boolean}true"/>
+                          <scribble
+                              jcr:primaryType="nt:unstructured"
+                              text="Scribble Signature"
+                              value="scribble"/>
+                        </items>
+                      </signingService>
+                      <cloudServiceConfig
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                          fieldLabel="Adobe Sign Cloud Configuration"
+                          fieldDescription="Select the Adobe Sign cloud service configuration."
+                          name="./cq:cloudserviceconfigs"
+                          emptyText="Select configuration">
+                        <datasource
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                            rootPath="/etc/cloudservices/echosign"/>
+                      </cloudServiceConfig>
+                      <displayMsg
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                          fieldLabel="Loading Message"
+                          fieldDescription="Message shown while the document is loading."
+                          name="./displayMsg"/>
+                      <targetVersion
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                          fieldLabel="Target Version"
+                          fieldDescription="Adobe Sign target version (e.g. 1.1 for multi-user signing)."
+                          name="./fd:targetVersion"/>
+                    </items>
+                  </column>
+                </items>
+              </columns>
+            </items>
+          </basic>
+        </items>
+      </tabs>
+    </items>
+  </content>
+</jcr:root>

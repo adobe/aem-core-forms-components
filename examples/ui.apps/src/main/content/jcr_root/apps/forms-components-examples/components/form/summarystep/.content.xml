@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+  jcr:primaryType="cq:Component"
+  jcr:title="Adaptive Form Summary Step"
+  jcr:description="Displays a summary message at the end of a multi-step form."
+  sling:resourceSuperType="core/fd/components/form/summarystep/v1/summarystep"
+  componentGroup="Core Components Examples - Adaptive Form"/>

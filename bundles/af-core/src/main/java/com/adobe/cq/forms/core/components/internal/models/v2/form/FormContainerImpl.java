@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -88,6 +89,30 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_DATA_URL = "fd:dataUrl";
     private static final String FD_VIEW_PRINT_PATH = "fd:view/print";
     private static final String EXCLUDE_FROM_DOR_IF_HIDDEN = "excludeFromDoRIfHidden";
+    private static final String PN_USE_SIGNED_PDF = "_useSignedPdf";
+    private static final String PN_SIGNER_INFO = "signerInfo";
+    private static final String PN_FIRST_SIGNER_FORM_FILLER = "firstSignerFormFiller";
+    private static final String PN_CLOUD_SERVICE_PATH = "cloudServicePath";
+    private static final String PN_SIGNING_ORDER_TYPE = "signingOrderType";
+    private static final String PN_EXPIRATION_DAYS = "expirationDays";
+    private static final String PN_SIGNERS = "signers";
+    private static final String PN_SIGNER_TITLE = "signerTitle";
+    private static final String PN_IS_FORM_FILLER = "isFormFiller";
+    private static final String PN_SIGNER_EMAIL_TYPE = "signerEmailType";
+    private static final String PN_SIGNER_EMAIL_REF = "signerEmailRef";
+    private static final String PN_SIGNER_EMAIL = "signerEmail";
+    private static final String PN_AUTHENTICATION_METHOD = "authenticationMethod";
+    private static final String PN_COUNTRY_CODE_SOURCE = "countryCodeSource";
+    private static final String PN_COUNTRY_CODE = "countryCode";
+    private static final String PN_PHONE_SOURCE = "phoneSource";
+    private static final String PN_PHONE = "phone";
+    private static final String PN_SIGNATURE_TYPE = "signatureType";
+    private static final String FD_USE_SIGNED_PDF = "fd:useSignedPdf";
+    private static final String FD_IS_FORM_FILLER_FIRST_SIGNER = "fd:isFormFillerFirstSigner";
+    private static final String FD_SIGNING_CLOUD_SERVICE = "fd:signingCloudService";
+    private static final String FD_SIGNING_ORDER_TYPE = "fd:signingOrderType";
+    private static final String FD_EXPIRATION_DAYS = "fd:expirationDays";
+    private static final String FD_SIGNERS = "fd:signers";
 
     /** Constant representing email submit action type */
     private static final String SS_EMAIL = "email";
@@ -159,6 +184,16 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_USE_SIGNED_PDF)
+    @Default(booleanValues = false)
+    private boolean useSignedPdf;
+
+    private boolean formFillerFirstSigner = false;
+    private String signingCloudService = null;
+    private String signingOrderType = "sequential";
+    private int expirationDays = 1;
+    private List<Map<String, Object>> signers = new ArrayList<>();
+
     @Inject
     private ResourceResolver resourceResolver;
 
@@ -195,6 +230,52 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             ValueMap vm = viewPrintResource.getValueMap();
             if (vm.containsKey(EXCLUDE_FROM_DOR_IF_HIDDEN)) {
                 excludeFromDoRIfHidden = vm.get(EXCLUDE_FROM_DOR_IF_HIDDEN, Boolean.class);
+            }
+        }
+    }
+
+    @PostConstruct
+    private void initSignerInfo() {
+        Resource signerInfoResource = resource.getChild(PN_SIGNER_INFO);
+        if (signerInfoResource != null) {
+            ValueMap vm = signerInfoResource.getValueMap();
+            formFillerFirstSigner = vm.get(PN_FIRST_SIGNER_FORM_FILLER, false);
+            signingCloudService = vm.get(PN_CLOUD_SERVICE_PATH, String.class);
+            signingOrderType = vm.get(PN_SIGNING_ORDER_TYPE, "sequential");
+            expirationDays = vm.get(PN_EXPIRATION_DAYS, 1);
+            Resource signersResource = signerInfoResource.getChild(PN_SIGNERS);
+            if (signersResource != null) {
+                for (Resource signerItem : signersResource.getChildren()) {
+                    ValueMap signerVm = signerItem.getValueMap();
+                    Map<String, Object> signerMap = new LinkedHashMap<>();
+
+                    String title = signerVm.get(PN_SIGNER_TITLE, String.class);
+                    String isFormFillerVal = signerVm.get(PN_IS_FORM_FILLER, "true");
+                    String emailType = signerVm.get(PN_SIGNER_EMAIL_TYPE, "fromForm");
+                    String emailRef = signerVm.get(PN_SIGNER_EMAIL_REF, String.class);
+                    String signerEmail = signerVm.get(PN_SIGNER_EMAIL, String.class);
+                    String authMethod = signerVm.get(PN_AUTHENTICATION_METHOD, "NONE");
+                    String countryCodeSource = signerVm.get(PN_COUNTRY_CODE_SOURCE, "form");
+                    String countryCode = signerVm.get(PN_COUNTRY_CODE, String.class);
+                    String phoneSource = signerVm.get(PN_PHONE_SOURCE, "form");
+                    String phone = signerVm.get(PN_PHONE, String.class);
+                    String sigType = signerVm.get(PN_SIGNATURE_TYPE, "ESIGN");
+
+                    if (title != null) signerMap.put(PN_SIGNER_TITLE, title);
+                    signerMap.put(PN_IS_FORM_FILLER, Boolean.parseBoolean(isFormFillerVal));
+                    signerMap.put(PN_SIGNER_EMAIL_TYPE, emailType);
+                    if (emailRef != null) signerMap.put(PN_SIGNER_EMAIL_REF, emailRef);
+                    if (signerEmail != null) signerMap.put(PN_SIGNER_EMAIL, signerEmail);
+                    signerMap.put(PN_AUTHENTICATION_METHOD, authMethod);
+                    if ("PHONE".equals(authMethod)) {
+                        signerMap.put(PN_COUNTRY_CODE_SOURCE, countryCodeSource);
+                        if (countryCode != null) signerMap.put(PN_COUNTRY_CODE, countryCode);
+                        signerMap.put(PN_PHONE_SOURCE, phoneSource);
+                        if (phone != null) signerMap.put(PN_PHONE, phone);
+                    }
+                    signerMap.put(PN_SIGNATURE_TYPE, sigType);
+                    signers.add(signerMap);
+                }
             }
         }
     }
@@ -420,6 +501,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (submitProperties != null && !submitProperties.isEmpty()) {
             properties.put(ReservedProperties.FD_SUBMIT_PROPERTIES, submitProperties);
         }
+        if (isAdobeSignEnabled()) {
+            properties.put(FD_USE_SIGNED_PDF, true);
+            properties.put(FD_IS_FORM_FILLER_FIRST_SIGNER, isFormFillerFirstSigner());
+            if (signingCloudService != null) {
+                properties.put(FD_SIGNING_CLOUD_SERVICE, signingCloudService);
+            }
+            properties.put(FD_SIGNING_ORDER_TYPE, signingOrderType);
+            properties.put(FD_EXPIRATION_DAYS, expirationDays);
+            if (!signers.isEmpty()) {
+                properties.put(FD_SIGNERS, signers);
+            }
+        }
         return properties;
     }
 
@@ -486,6 +579,18 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public AutoSaveConfiguration getAutoSaveConfig() {
         return autoSaveConfig;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAdobeSignEnabled() {
+        return useSignedPdf;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isFormFillerFirstSigner() {
+        return formFillerFirstSigner;
     }
 
     private Map<String, Object> getSubmitProperties() {

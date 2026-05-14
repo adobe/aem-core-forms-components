@@ -1,0 +1,22 @@
+{
+  "signaturestep": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Signature Step",
+    "id": "signaturestep-test",
+    "name": "signaturestep1",
+    "fieldType": "plain-text",
+    "signingService": "echosign",
+    "displayMsg": "Please sign the document",
+    "cq:cloudserviceconfigs": "/etc/cloudservices/echosign/myConfig",
+    "fd:targetVersion": "1.0",
+    "sling:resourceType": "core/fd/components/form/signaturestep/v1/signaturestep"
+  },
+  "signaturestep-defaults": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Signature Step Defaults",
+    "id": "signaturestep-defaults-test",
+    "name": "signaturestepDefaults",
+    "fieldType": "plain-text",
+    "sling:resourceType": "core/fd/components/form/signaturestep/v1/signaturestep"
+  }
+}
