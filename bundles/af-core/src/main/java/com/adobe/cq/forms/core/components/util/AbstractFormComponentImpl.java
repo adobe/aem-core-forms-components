@@ -315,6 +315,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
     /**
+     * Key under which reviewer annotations (cq:annotations) are exposed in the
+     * component's serialized properties map, parallel to fd:dor / fd:path.
+     */
+    public static final String CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER = "cq:annotations";
+
+    /**
      * Predicate to check if a map entry is non empty
      * return true if and only if
      * 1) the value is not of type string and non empty or
@@ -336,6 +342,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         if (!getDorProperties().isEmpty()) {
             properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+        }
+        Map<String, Object> annotations = getCqAnnotations();
+        if (annotations != null && !annotations.isEmpty()) {
+            properties.put(CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER, annotations);
         }
         properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
         if (isAuthorMode(request) || FormConstants.CHANNEL_PRINT.equals(this.channel)) {
@@ -738,6 +748,53 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             }
         }
         return null;
+    }
+
+    /**
+     * Returns the reviewer annotations for this component, read from the
+     * {@code cq:annotations} child resource on the component node (a sibling
+     * of {@code fd:dorContainer}). Each annotation node's properties are
+     * serialized into a per-annotation map keyed by node name; the result is
+     * placed parallel to {@code fd:dor} under the component's properties.
+     *
+     * <p>Scoped to IC print forms only (same channel gate as
+     * {@link #getDorContainer()}); returns null for v2 Adaptive Forms and
+     * the IC web channel.
+     *
+     * @return ordered map keyed by annotation node name with color, text, x,
+     *     y, optional state/resolvedBy/resolvedAt and JCR audit fields; or
+     *     null when the channel is not print, the resource is missing, or no
+     *     cq:annotations child exists. Returning null lets callers omit the
+     *     property and keeps the output non-breaking for forms without
+     *     annotations.
+     */
+    @JsonIgnore
+    public Map<String, Object> getCqAnnotations() {
+        if (!FormConstants.CHANNEL_PRINT.equals(this.channel) || resource == null) {
+            return null;
+        }
+        Resource annotationsResource = resource.getChild("cq:annotations");
+        if (annotationsResource == null) {
+            return null;
+        }
+        Map<String, Object> result = new LinkedHashMap<>();
+        for (Resource child : annotationsResource.getChildren()) {
+            ValueMap vm = child.getValueMap();
+            Map<String, Object> ann = new LinkedHashMap<>();
+            ann.put("color", vm.get("color", String.class));
+            ann.put("text", vm.get("text", String.class));
+            ann.put("x", vm.get("x", Long.class));
+            ann.put("y", vm.get("y", Long.class));
+            ann.put("state", vm.get("state", String.class));
+            ann.put("resolvedBy", vm.get("resolvedBy", String.class));
+            ann.put("resolvedAt", vm.get("resolvedAt", String.class));
+            ann.put("jcr:created", vm.get("jcr:created", String.class));
+            ann.put("jcr:createdBy", vm.get("jcr:createdBy", String.class));
+            // Drop nulls so the per-annotation map matches the JCR-present shape exactly.
+            ann.values().removeIf(java.util.Objects::isNull);
+            result.put(child.getName(), ann);
+        }
+        return result.isEmpty() ? null : result;
     }
 
 }
