@@ -653,6 +653,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             .stream()
             .filter(entry -> isAllowedType(entry.getValue())
                 && !reservedProperties.contains(entry.getKey())
+                && !CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER.equals(entry.getKey())
                 && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         nodeBasedCustomProperties.forEach(customProperties::putIfAbsent);
