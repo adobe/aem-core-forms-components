@@ -1,0 +1,17 @@
+{
+  "table": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/table/v1/table",
+    "name": "myTable",
+    "jcr:title": "My Table",
+    "fieldType": "panel"
+  },
+  "table-with-column-width": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/table/v1/table",
+    "name": "myTableWithWidths",
+    "jcr:title": "My Table With Column Widths",
+    "fieldType": "panel",
+    "columnWidth": "1,2,1"
+  }
+}
