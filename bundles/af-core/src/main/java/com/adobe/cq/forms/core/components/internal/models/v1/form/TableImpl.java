@@ -17,7 +17,9 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -27,6 +29,7 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -83,6 +86,25 @@ public class TableImpl extends PanelImpl {
      * One entry per column for {@code <col style="...">}: {@code width: N%} (no HTL string concatenation).
      * For example, proportional {@code "1,1,4"} becomes {@code width: 16%}, {@code width: 16%}, {@code width: 66%}.
      */
+    @Override
+    @NotNull
+    public String getExportedType() {
+        return ReservedProperties.VT_TABLE;
+    }
+
+    @Override
+    @JsonIgnore
+    @NotNull
+    public Map<String, Object> getDorProperties() {
+        Map<String, Object> props = new LinkedHashMap<>(super.getDorProperties());
+        if (columnWidth != null && !columnWidth.isEmpty()) {
+            // Pass authored proportional widths into fd:dor so DoRTableElement can compute
+            // proportional XFA column widths (e.g. "1,2,1" → relative pixel widths).
+            props.put(ReservedProperties.PN_DOR_COLUMN_WIDTHS, columnWidth);
+        }
+        return props;
+    }
+
     @JsonIgnore
     public List<String> getColumnWidthColStyles() {
         if (columnWidth == null || columnWidth.isEmpty()) {

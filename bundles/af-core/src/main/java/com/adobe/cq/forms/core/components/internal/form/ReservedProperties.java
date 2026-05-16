@@ -179,8 +179,16 @@ public final class ReservedProperties {
     public static final String PN_CQ_ANNOTATIONS = "cq:annotations";
     public static final String PN_COLUMN_WIDTH = "columnWidth";
 
+    /** Comma-separated proportional column widths passed into fd:dor for DOR table rendering (matches GuideTableElement key). */
+    public static final String PN_DOR_COLUMN_WIDTHS = "columnWidth";
+
     /** When true, adaptive form table columns can be sorted at runtime (publish). */
     public static final String PN_ENABLE_SORTING = "enableSorting";
+
+    /** fd:viewType values for table sub-components — used as :type in exported JSON and matched in AF2→AF1 DOR transformer. */
+    public static final String VT_TABLE = "table";
+    public static final String VT_TABLE_ROW = "table-row";
+    public static final String VT_TABLE_HEADER = "table-header";
 
     // Begin: Form submission related properties
     public static final String FD_SUBMIT_PROPERTIES = "fd:submit";
