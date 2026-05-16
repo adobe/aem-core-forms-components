@@ -17,6 +17,7 @@
 package com.adobe.cq.forms.core.components.util;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.models.v1.form.VariableBindingImpl;
+import com.adobe.cq.forms.core.components.models.form.VariableBinding;
 import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.Page;
@@ -287,5 +290,125 @@ public class AbstractFormComponentImplTest {
         Mockito.doReturn(associateResource).when(resource).getChild("fd:associate");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         assertNull(properties.get("fd:associate"));
+    }
+
+    @Test
+    public void testVariablePropertyOnPrintChannel() {
+        Resource resource = newBaseMockResource();
+        AbstractFormComponentImpl abstractFormComponentImpl = newPrintComponent(resource);
+
+        Resource variableResource = Mockito.mock(Resource.class);
+        Mockito.doReturn(variableResource).when(resource).getChild("fd:variable");
+        VariableBinding binding = newBinding(null, "icfragment",
+            "/content/forms/af/ford-features/document-text-fragment",
+            "bb625063-fb52-4f81-8229-07fea6d02c6f");
+        Mockito.doReturn(binding).when(variableResource).adaptTo(VariableBinding.class);
+
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> variable = (Map<String, Object>) properties.get("fd:variable");
+        assertNotNull(variable);
+        assertEquals("icfragment", variable.get("bindType"));
+        assertEquals("/content/forms/af/ford-features/document-text-fragment", variable.get("bindRef"));
+        assertEquals("bb625063-fb52-4f81-8229-07fea6d02c6f", variable.get("bindId"));
+        // path is null on the singular case and must be elided by @JsonInclude(NON_NULL)
+        assertFalse(variable.containsKey("path"));
+    }
+
+    @Test
+    public void testVariablePropertySkippedOnNonPrintChannel() {
+        Resource resource = Mockito.mock(Resource.class);
+        Mockito.lenient().doReturn(new MockValueMap(resource)).when(resource).getValueMap();
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
+        // intentionally no channel set — defaults are not print
+
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:variable"));
+        assertNull(properties.get("fd:variables"));
+        // verify the child was never even fetched when not on print channel
+        Mockito.verify(resource, Mockito.never()).getChild("fd:variable");
+        Mockito.verify(resource, Mockito.never()).getChild("fd:variables");
+    }
+
+    @Test
+    public void testVariablesPropertyOnPrintChannel() {
+        Resource resource = newBaseMockResource();
+        AbstractFormComponentImpl abstractFormComponentImpl = newPrintComponent(resource);
+
+        Resource variablesResource = Mockito.mock(Resource.class);
+        Mockito.doReturn(variablesResource).when(resource).getChild("fd:variables");
+
+        Resource icEntry = Mockito.mock(Resource.class);
+        Mockito.doReturn("variable_mp1fl2kv8zv43ayhj2h").when(icEntry).getName();
+        Mockito.doReturn(newBinding("variable_mp1fl2kv8zv43ayhj2h", "icfragment",
+            "/content/forms/af/ford-features/document-text-fragment",
+            "bb625063-fb52-4f81-8229-07fea6d02c6f")).when(icEntry).adaptTo(VariableBinding.class);
+
+        Resource fdmEntry = Mockito.mock(Resource.class);
+        Mockito.doReturn("variable_ab1fl2kv8zv43ayhj2h").when(fdmEntry).getName();
+        Mockito.doReturn(newBinding("variable_ab1fl2kv8zv43ayhj2h", "fdm",
+            "$.InvoiceResponse.InvoiceLevel", null)).when(fdmEntry).adaptTo(VariableBinding.class);
+
+        Mockito.doReturn(Arrays.asList(icEntry, fdmEntry)).when(variablesResource).getChildren();
+
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> variables = (Map<String, Object>) properties.get("fd:variables");
+        assertNotNull(variables);
+        assertEquals(2, variables.size());
+
+        Map<String, Object> ic = (Map<String, Object>) variables.get("variable_mp1fl2kv8zv43ayhj2h");
+        assertNotNull(ic);
+        assertEquals("variable_mp1fl2kv8zv43ayhj2h", ic.get("path"));
+        assertEquals("icfragment", ic.get("bindType"));
+        assertEquals("/content/forms/af/ford-features/document-text-fragment", ic.get("bindRef"));
+        assertEquals("bb625063-fb52-4f81-8229-07fea6d02c6f", ic.get("bindId"));
+
+        Map<String, Object> fdm = (Map<String, Object>) variables.get("variable_ab1fl2kv8zv43ayhj2h");
+        assertNotNull(fdm);
+        assertEquals("variable_ab1fl2kv8zv43ayhj2h", fdm.get("path"));
+        assertEquals("fdm", fdm.get("bindType"));
+        assertEquals("$.InvoiceResponse.InvoiceLevel", fdm.get("bindRef"));
+        assertFalse(fdm.containsKey("bindId"), "fdm entries must elide bindId");
+    }
+
+    @Test
+    public void testVariablesPropertyAbsentWhenNoNode() {
+        Resource resource = newBaseMockResource();
+        AbstractFormComponentImpl abstractFormComponentImpl = newPrintComponent(resource);
+        Mockito.doReturn(null).when(resource).getChild("fd:variables");
+
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:variables"));
+    }
+
+    private Resource newBaseMockResource() {
+        Resource resource = Mockito.mock(Resource.class);
+        ValueMap valueMap = new MockValueMap(resource);
+        Mockito.doReturn(valueMap).when(resource).getValueMap();
+        // Strict-stubbing-safe defaults for every getChild lookup that getProperties() performs
+        // on the print channel. Individual tests override these by calling doReturn(...) again
+        // for the specific key they care about.
+        Mockito.lenient().doReturn(null).when(resource).getChild("fd:rules");
+        Mockito.lenient().doReturn(null).when(resource).getChild("fd:dorContainer");
+        Mockito.lenient().doReturn(null).when(resource).getChild("fd:associate");
+        Mockito.lenient().doReturn(null).when(resource).getChild("fd:variable");
+        Mockito.lenient().doReturn(null).when(resource).getChild("fd:variables");
+        return resource;
+    }
+
+    private AbstractFormComponentImpl newPrintComponent(Resource resource) {
+        AbstractFormComponentImpl impl = new AbstractFormComponentImpl();
+        Utils.setInternalState(impl, "resource", resource);
+        Utils.setInternalState(impl, "channel", "print");
+        return impl;
+    }
+
+    private VariableBinding newBinding(String path, String bindType, String bindRef, String bindId) {
+        VariableBindingImpl binding = new VariableBindingImpl();
+        Utils.setInternalState(binding, "path", path);
+        Utils.setInternalState(binding, "bindType", bindType);
+        Utils.setInternalState(binding, "bindRef", bindRef);
+        Utils.setInternalState(binding, "bindId", bindId);
+        return binding;
     }
 }

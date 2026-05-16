@@ -61,6 +61,7 @@ import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.Label;
+import com.adobe.cq.forms.core.components.models.form.VariableBinding;
 import com.adobe.cq.forms.core.components.models.form.print.associate.AssociateProperties;
 import com.adobe.cq.forms.core.components.models.form.print.dorapi.DorContainer;
 import com.adobe.cq.wcm.core.components.models.Component;
@@ -309,6 +310,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public static final String CUSTOM_ASSOCIATE_PROPERTY_WRAPPER = "fd:associate";
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
     public static final String CUSTOM_DOR_CONTAINER_WRAPPER = "dorContainer";
+    public static final String CUSTOM_VARIABLE_PROPERTY_WRAPPER = "fd:variable";
+    public static final String CUSTOM_VARIABLES_PROPERTY_WRAPPER = "fd:variables";
     // used for DOR and SPA editor to work
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
@@ -351,6 +354,14 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         Map<String, Object> associateProperties = getAssociateProperties();
         if (!associateProperties.isEmpty()) {
             properties.put(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER, associateProperties);
+        }
+        Map<String, Object> variableProperty = getVariableProperty();
+        if (!variableProperty.isEmpty()) {
+            properties.put(CUSTOM_VARIABLE_PROPERTY_WRAPPER, variableProperty);
+        }
+        Map<String, Object> variablesProperty = getVariablesProperty();
+        if (!variablesProperty.isEmpty()) {
+            properties.put(CUSTOM_VARIABLES_PROPERTY_WRAPPER, variablesProperty);
         }
         return properties;
     }
@@ -673,6 +684,46 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                 } catch (Exception e) {
                     logger.warn("Unable to adapt associate properties", e);
                 }
+            }
+        }
+        return Collections.emptyMap();
+    }
+
+    private Map<String, Object> getVariableProperty() {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel) && resource != null) {
+            Resource variableResource = resource.getChild(CUSTOM_VARIABLE_PROPERTY_WRAPPER);
+            if (variableResource != null) {
+                try {
+                    VariableBinding binding = variableResource.adaptTo(VariableBinding.class);
+                    if (binding != null) {
+                        return new ObjectMapper().convertValue(binding, new TypeReference<Map<String, Object>>() {});
+                    }
+                } catch (Exception e) {
+                    logger.warn("Unable to adapt fd:variable", e);
+                }
+            }
+        }
+        return Collections.emptyMap();
+    }
+
+    private Map<String, Object> getVariablesProperty() {
+        if (FormConstants.CHANNEL_PRINT.equals(this.channel) && resource != null) {
+            Resource variablesResource = resource.getChild(CUSTOM_VARIABLES_PROPERTY_WRAPPER);
+            if (variablesResource != null) {
+                Map<String, Object> result = new LinkedHashMap<>();
+                ObjectMapper mapper = new ObjectMapper();
+                for (Resource child : variablesResource.getChildren()) {
+                    try {
+                        VariableBinding binding = child.adaptTo(VariableBinding.class);
+                        if (binding != null) {
+                            result.put(child.getName(),
+                                mapper.convertValue(binding, new TypeReference<Map<String, Object>>() {}));
+                        }
+                    } catch (Exception e) {
+                        logger.warn("Unable to adapt fd:variables entry {}", child.getPath(), e);
+                    }
+                }
+                return result;
             }
         }
         return Collections.emptyMap();
