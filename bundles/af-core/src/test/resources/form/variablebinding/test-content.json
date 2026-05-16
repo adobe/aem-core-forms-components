@@ -1,0 +1,21 @@
+{
+  "fragmentVariable": {
+    "jcr:primaryType": "nt:unstructured",
+    "bindType": "icfragment",
+    "bindRef": "/content/forms/af/ford-features/document-text-fragment",
+    "bindId": "bb625063-fb52-4f81-8229-07fea6d02c6f"
+  },
+  "fdmEntry": {
+    "jcr:primaryType": "nt:unstructured",
+    "path": "variable_ab1fl2kv8zv43ayhj2h",
+    "bindType": "fdm",
+    "bindRef": "$.InvoiceResponse.InvoiceLevel"
+  },
+  "icfragmentEntry": {
+    "jcr:primaryType": "nt:unstructured",
+    "path": "panel_123456/variable_mp1fl2kv8zv43ayhj2h",
+    "bindType": "icfragment",
+    "bindRef": "/content/forms/af/ford-features/document-text-fragment",
+    "bindId": "bb625063-fb52-4f81-8229-07fea6d02c6f"
+  }
+}
