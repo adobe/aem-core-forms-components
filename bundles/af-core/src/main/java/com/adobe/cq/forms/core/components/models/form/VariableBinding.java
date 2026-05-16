@@ -21,7 +21,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
- * Interface describing the binding of a variable (floating field). 
+ * Interface describing the binding of a variable (floating field).
  * Used by two component-level properties:
  *
  * <ul>
