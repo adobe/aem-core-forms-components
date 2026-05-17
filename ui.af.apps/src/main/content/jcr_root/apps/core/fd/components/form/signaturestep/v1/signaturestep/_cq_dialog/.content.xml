@@ -22,21 +22,30 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Adaptive Form Signature Step Component"
     sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[core.forms.components.signaturestep.v1.editor]"
     helpPath="https://www.adobe.com/go/aem_af_cmp_signaturestep_v1"
     trackingFeature="core-components:adaptiveform-signaturestep:v1">
   <content
+      granite:class="cmp-adaptiveform-signaturestep__editdialog"
       jcr:primaryType="nt:unstructured"
       sling:resourceType="granite/ui/components/coral/foundation/container">
     <items jcr:primaryType="nt:unstructured">
+      <accordion
+          jcr:primaryType="nt:unstructured"
+          sling:resourceType="granite/ui/components/coral/foundation/accordion"
+          sling:hideResource="true"/>
       <tabs
           jcr:primaryType="nt:unstructured"
           sling:resourceType="granite/ui/components/coral/foundation/tabs"
+          granite:class="cmp-adaptiveform-base__editdialogbasic"
           maximized="{Boolean}true">
-        <items jcr:primaryType="nt:unstructured">
+        <items jcr:primaryType="nt:unstructured"
+            sling:hideChildren="[validation,patterns]">
           <basic
               jcr:primaryType="nt:unstructured"
               jcr:title="Basic"
-              sling:resourceType="granite/ui/components/coral/foundation/container">
+              sling:resourceType="granite/ui/components/coral/foundation/container"
+              margin="{Boolean}true">
             <items jcr:primaryType="nt:unstructured">
               <columns
                   jcr:primaryType="nt:unstructured"
@@ -49,19 +58,24 @@
                     <items jcr:primaryType="nt:unstructured">
                       <name
                           jcr:primaryType="nt:unstructured"
-                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                          fieldLabel="Name"
-                          name="./name"
-                          required="{Boolean}true">
-                        <granite:data
-                            jcr:primaryType="nt:unstructured"
-                            node-name-validation=""/>
-                      </name>
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/name"/>
                       <title
                           jcr:primaryType="nt:unstructured"
-                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                          fieldLabel="Title"
-                          name="./jcr:title"/>
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/title"/>
+                      <richTextTitle
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/richTextTitle"/>
+                      <isTitleRichText
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/isTitleRichText"/>
+                      <hideTitle
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/hideTitle"/>
                       <signingService
                           jcr:primaryType="nt:unstructured"
                           sling:resourceType="granite/ui/components/coral/foundation/form/select"
@@ -105,12 +119,56 @@
                           fieldLabel="Target Version"
                           fieldDescription="Adobe Sign target version (e.g. 1.1 for multi-user signing)."
                           name="./fd:targetVersion"/>
+                      <bindref
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/bindref"/>
+                      <visible
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/visible"/>
+                      <visible-typehint
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/visible-typehint"/>
+                      <enabled
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/enabled"/>
+                      <enabled-typehint
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/enabled-typehint"/>
+                      <readonly
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/readonly"/>
+                      <readonly-typehint
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="granite/ui/components/coral/foundation/include"
+                          path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/basic/items/columns/items/column/items/readonly-typehint"/>
                     </items>
                   </column>
                 </items>
               </columns>
             </items>
           </basic>
+          <help
+              jcr:primaryType="nt:unstructured"
+              sling:resourceType="granite/ui/components/coral/foundation/include"
+              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/help"/>
+          <accessibility
+              jcr:primaryType="nt:unstructured"
+              sling:resourceType="granite/ui/components/coral/foundation/include"
+              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/accessibility"/>
+          <dor
+              jcr:primaryType="nt:unstructured"
+              sling:resourceType="granite/ui/components/coral/foundation/include"
+              path="core/fd/components/form/base/v1/base/cq:dialog/content/items/tabs/items/dor"/>
+          <advanced
+              jcr:primaryType="nt:unstructured"
+              sling:resourceType="granite/ui/components/coral/foundation/include"
+              path="/mnt/overlay/fd/af/authoring/dialog/customProperties/cq:dialog/advanced"/>
         </items>
       </tabs>
     </items>
