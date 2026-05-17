@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Default;
@@ -37,20 +38,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { Text.class,
         ComponentExporter.class },
-    resourceType = { FormConstants.RT_FD_FORM_TEXT_DRAW_V1 })
+    resourceType = {
+        FormConstants.RT_FD_FORM_TEXT_DRAW_V1,
+        FormConstants.RT_FD_FORM_ADOBE_SIGN_BLOCK_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TextImpl extends AbstractFormComponentImpl implements Text {
+
+    private static final String PN_LEGACY_VALUE = "_value";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TEXT_IS_RICH)
     @Default(booleanValues = false)
     private boolean textIsRich;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_LEGACY_VALUE)
+    private String legacyValue;
 
     @SlingObject
     private Resource resource;
 
     @Override
     public String getValue() {
-        return translate("value", value);
+        String resolvedValue = translate("value", value);
+        if (StringUtils.isBlank(resolvedValue) && StringUtils.isNotBlank(legacyValue)) {
+            return legacyValue;
+        }
+        return resolvedValue;
     }
 
     @Override

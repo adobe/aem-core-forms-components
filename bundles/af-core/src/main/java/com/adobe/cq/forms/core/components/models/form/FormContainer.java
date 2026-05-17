@@ -402,4 +402,28 @@ public interface FormContainer extends Container {
         return null;
     }
 
+    /**
+     * Returns whether Adobe Sign (echosign) is enabled for this form.
+     * Reads the {@code _useSignedPdf} JCR property on the form container node.
+     *
+     * @return {@code true} if Adobe Sign is enabled, {@code false} otherwise
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.5
+     */
+    @JsonIgnore
+    default boolean isAdobeSignEnabled() {
+        return false;
+    }
+
+    /**
+     * Returns whether the form filler is the first signer in the Adobe Sign workflow.
+     * Reads the {@code firstSignerFormFiller} property from the {@code signerInfo} child resource.
+     *
+     * @return {@code true} if the form filler is the first signer, {@code false} otherwise
+     * @since com.adobe.cq.forms.core.components.models.form 5.12.5
+     */
+    @JsonIgnore
+    default boolean isFormFillerFirstSigner() {
+        return false;
+    }
+
 }

@@ -117,6 +117,8 @@ public class FormContainerImplTest {
     private static final String SS_SPREADSHEET = "spreadsheet";
 
     private static final String PATH_FORM_EXCLUDE_FROM_DOR_IF_HIDDEN = "/content/forms/af/demo/jcr:content/formcontainerv2-excludeFromDoRIfHidden";
+    private static final String PATH_FORM_WITH_ADOBE_SIGN = CONTENT_ROOT + "/formcontainerv2WithAdobeSign";
+    private static final String PATH_FORM_WITH_ADOBE_SIGN_NO_FIRST_SIGNER = CONTENT_ROOT + "/formcontainerv2WithAdobeSignNoFirstSigner";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -916,5 +918,54 @@ public class FormContainerImplTest {
         // Test setting null language
         formContainer.setLang(null);
         assertEquals(formContainer.getLang(), "en");
+    }
+
+    @Test
+    void testIsAdobeSignEnabled() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_ADOBE_SIGN, FormContainer.class, context);
+        assertTrue(formContainer.isAdobeSignEnabled());
+    }
+
+    @Test
+    void testIsAdobeSignEnabledDefault() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertFalse(formContainer.isAdobeSignEnabled());
+    }
+
+    @Test
+    void testIsFormFillerFirstSigner() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_ADOBE_SIGN, FormContainer.class, context);
+        assertTrue(formContainer.isFormFillerFirstSigner());
+    }
+
+    @Test
+    void testIsFormFillerFirstSignerDefault() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertFalse(formContainer.isFormFillerFirstSigner());
+    }
+
+    @Test
+    void testIsFormFillerFirstSignerWhenFalse() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_ADOBE_SIGN_NO_FIRST_SIGNER, FormContainer.class, context);
+        assertTrue(formContainer.isAdobeSignEnabled());
+        assertFalse(formContainer.isFormFillerFirstSigner());
+    }
+
+    @Test
+    void testGetPropertiesWithAdobeSign() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_ADOBE_SIGN, FormContainer.class, context);
+        Map<String, Object> properties = formContainer.getProperties();
+        assertNotNull(properties);
+        assertTrue((Boolean) properties.get("fd:useSignedPdf"));
+        assertTrue((Boolean) properties.get("fd:isFormFillerFirstSigner"));
+    }
+
+    @Test
+    void testGetPropertiesWithoutAdobeSign() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        Map<String, Object> properties = formContainer.getProperties();
+        assertNotNull(properties);
+        assertFalse(properties.containsKey("fd:useSignedPdf"));
+        assertFalse(properties.containsKey("fd:isFormFillerFirstSigner"));
     }
 }

@@ -146,4 +146,13 @@ public final class FormConstants {
     /** The resource type for date time input field v1 */
     public static final String RT_FD_FORM_DATETIME_V1 = RT_FD_FORM_PREFIX + "datetime/v1/datetime";
 
+    /** The resource type for signature step v1 */
+    public static final String RT_FD_FORM_SIGNATURE_STEP_V1 = RT_FD_FORM_PREFIX + "signaturestep/v1/signaturestep";
+
+    /** The resource type for summary step v1 */
+    public static final String RT_FD_FORM_SUMMARY_STEP_V1 = RT_FD_FORM_PREFIX + "summarystep/v1/summarystep";
+
+    /** The resource type for Adobe Sign block v1 */
+    public static final String RT_FD_FORM_ADOBE_SIGN_BLOCK_V1 = RT_FD_FORM_PREFIX + "adobesignblock/v1/adobesignblock";
+
 }

@@ -82,7 +82,13 @@
                 }
             }
 
-            comData["sling:resourceType"] = config.resourceType;
+            const resourceType = window.CQ.FormsCoreComponents.editorhooks.toCoreSigningResourceType
+                ? window.CQ.FormsCoreComponents.editorhooks.toCoreSigningResourceType(config.resourceType)
+                : config.resourceType;
+            comData["sling:resourceType"] = resourceType;
+            if (window.CQ.FormsCoreComponents.editorhooks.remapSigningContentPayload) {
+                window.CQ.FormsCoreComponents.editorhooks.remapSigningContentPayload(comData);
+            }
             updatedProps = {...comData, ...updatedProps};
             this.setParam(":content", JSON.stringify(updatedProps));    // write component properties
         }
