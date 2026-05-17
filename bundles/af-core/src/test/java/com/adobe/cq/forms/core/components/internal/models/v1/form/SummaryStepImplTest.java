@@ -78,7 +78,7 @@ public class SummaryStepImplTest {
     @Test
     void testIsAutoSubmitDefault() {
         SummaryStep summaryStep = Utils.getComponentUnderTest(PATH_SUMMARY_STEP_DEFAULTS, SummaryStepImpl.class, context);
-        assertFalse(summaryStep.isAutoSubmit());
+        assertTrue(summaryStep.isAutoSubmit());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class SummaryStepImplTest {
         Map<String, Object> properties = summaryStep.getProperties();
         assertNotNull(properties);
         assertFalse(properties.containsKey("fd:displayMsg"));
-        assertEquals(false, properties.get("fd:autoSubmit"));
+        assertEquals(true, properties.get("fd:autoSubmit"));
     }
 
     @Test

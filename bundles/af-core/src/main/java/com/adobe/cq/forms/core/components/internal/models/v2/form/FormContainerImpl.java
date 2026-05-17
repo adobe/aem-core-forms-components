@@ -92,9 +92,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String PN_USE_SIGNED_PDF = "_useSignedPdf";
     private static final String PN_SIGNER_INFO = "signerInfo";
     private static final String PN_FIRST_SIGNER_FORM_FILLER = "firstSignerFormFiller";
-    private static final String PN_CLOUD_SERVICE_PATH = "cloudServicePath";
-    private static final String PN_SIGNING_ORDER_TYPE = "signingOrderType";
-    private static final String PN_EXPIRATION_DAYS = "expirationDays";
+    private static final String PN_SIGN_CONFIG_PATH = "signConfigPath";
+    private static final String PN_WORKFLOW_TYPE = "workflowType";
+    private static final String PN_DAYS_UNTIL_SIGNING_DEADLINE = "daysUntilSigningDeadline";
     private static final String PN_SIGNERS = "signers";
     private static final String PN_SIGNER_TITLE = "signerTitle";
     private static final String PN_IS_FORM_FILLER = "isFormFiller";
@@ -110,8 +110,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_USE_SIGNED_PDF = "fd:useSignedPdf";
     private static final String FD_IS_FORM_FILLER_FIRST_SIGNER = "fd:isFormFillerFirstSigner";
     private static final String FD_SIGNING_CLOUD_SERVICE = "fd:signingCloudService";
-    private static final String FD_SIGNING_ORDER_TYPE = "fd:signingOrderType";
-    private static final String FD_EXPIRATION_DAYS = "fd:expirationDays";
+    private static final String FD_WORKFLOW_TYPE = "fd:workflowType";
+    private static final String FD_DAYS_UNTIL_SIGNING_DEADLINE = "fd:daysUntilSigningDeadline";
     private static final String FD_SIGNERS = "fd:signers";
 
     /** Constant representing email submit action type */
@@ -190,8 +190,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     private boolean formFillerFirstSigner = false;
     private String signingCloudService = null;
-    private String signingOrderType = "sequential";
-    private int expirationDays = 1;
+    private String workflowType = "SEQUENTIAL";
+    private int daysUntilSigningDeadline = 1;
     private List<Map<String, Object>> signers = new ArrayList<>();
 
     @Inject
@@ -240,9 +240,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (signerInfoResource != null) {
             ValueMap vm = signerInfoResource.getValueMap();
             formFillerFirstSigner = vm.get(PN_FIRST_SIGNER_FORM_FILLER, false);
-            signingCloudService = vm.get(PN_CLOUD_SERVICE_PATH, String.class);
-            signingOrderType = vm.get(PN_SIGNING_ORDER_TYPE, "sequential");
-            expirationDays = vm.get(PN_EXPIRATION_DAYS, 1);
+            signingCloudService = vm.get(PN_SIGN_CONFIG_PATH, String.class);
+            workflowType = vm.get(PN_WORKFLOW_TYPE, "SEQUENTIAL");
+            daysUntilSigningDeadline = vm.get(PN_DAYS_UNTIL_SIGNING_DEADLINE, 1);
             Resource signersResource = signerInfoResource.getChild(PN_SIGNERS);
             if (signersResource != null) {
                 for (Resource signerItem : signersResource.getChildren()) {
@@ -507,8 +507,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             if (signingCloudService != null) {
                 properties.put(FD_SIGNING_CLOUD_SERVICE, signingCloudService);
             }
-            properties.put(FD_SIGNING_ORDER_TYPE, signingOrderType);
-            properties.put(FD_EXPIRATION_DAYS, expirationDays);
+            properties.put(FD_WORKFLOW_TYPE, workflowType);
+            properties.put(FD_DAYS_UNTIL_SIGNING_DEADLINE, daysUntilSigningDeadline);
             if (!signers.isEmpty()) {
                 properties.put(FD_SIGNERS, signers);
             }

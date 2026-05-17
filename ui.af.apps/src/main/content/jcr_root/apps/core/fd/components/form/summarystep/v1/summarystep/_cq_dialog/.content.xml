@@ -65,7 +65,7 @@
                       <displayMsg
                           jcr:primaryType="nt:unstructured"
                           sling:resourceType="granite/ui/components/coral/foundation/form/richtext"
-                          fieldLabel="Display Message"
+                          fieldLabel="Summary Message"
                           fieldDescription="Message shown to the user after form completion."
                           name="./displayMsg"
                           useFixedInlineToolbar="{Boolean}true"/>
@@ -74,7 +74,7 @@
                           sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                           fieldLabel="Auto Submit"
                           name="./autoSubmit"
-                          text="Auto-submit the form when this step is reached"
+                          text="Auto submit"
                           uncheckedValue="false"
                           value="true"/>
                     </items>

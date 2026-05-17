@@ -80,7 +80,7 @@
                               value="scribble"/>
                         </items>
                       </signingService>
-                      <cloudServiceConfig
+                      <configuration
                           jcr:primaryType="nt:unstructured"
                           sling:resourceType="granite/ui/components/coral/foundation/form/select"
                           fieldLabel="Adobe Sign Cloud Configuration"
@@ -90,12 +90,13 @@
                         <datasource
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
-                            rootPath="/etc/cloudservices/echosign"/>
-                      </cloudServiceConfig>
+                            rootPath="/etc/cloudservices/echosign"
+                            type="esignCloudServiceConfiguration"/>
+                      </configuration>
                       <displayMsg
                           jcr:primaryType="nt:unstructured"
-                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                          fieldLabel="Loading Message"
+                          sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                          fieldLabel="Template Message"
                           fieldDescription="Message shown while the document is loading."
                           name="./displayMsg"/>
                       <targetVersion

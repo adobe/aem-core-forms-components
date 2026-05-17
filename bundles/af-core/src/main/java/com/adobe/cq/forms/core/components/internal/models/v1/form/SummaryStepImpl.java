@@ -51,7 +51,7 @@ public class SummaryStepImpl extends AbstractBaseImpl implements SummaryStep {
     private String displayMsg;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PROP_AUTO_SUBMIT)
-    @Default(booleanValues = false)
+    @Default(booleanValues = true)
     private boolean autoSubmit;
 
     @Override
