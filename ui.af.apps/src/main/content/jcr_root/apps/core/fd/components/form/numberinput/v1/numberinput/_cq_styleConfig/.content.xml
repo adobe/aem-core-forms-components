@@ -31,25 +31,25 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
                                         id="af2_numberinputlabel"
-                                        cssSelector=".cmp-adaptiveform-numberinput__label"
+                                        cssSelector=".cmp-adaptiveform-numberinput__label-container .cmp-adaptiveform-numberinput__label"
                                         longTitle="Number Input Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-numberinput__label:hover"/>
+                                                cssSelector=".cmp-adaptiveform-numberinput__label-container .cmp-adaptiveform-numberinput__label:hover"/>
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-numberinput__label:focus"/>
+                                                cssSelector=".cmp-adaptiveform-numberinput__label-container .cmp-adaptiveform-numberinput__label:focus"/>
                                     </states>
                                 </numberinputLabel>
                                 <numberinputHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
                                         id="af2_numberinputhelpicon"
-                                        cssSelector=".cmp-adaptiveform-numberinput__questionmark"
+                                        cssSelector=".cmp-adaptiveform-numberinput__label-container .cmp-adaptiveform-numberinput__questionmark"
                                         longTitle="Number Input Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
@@ -57,15 +57,15 @@
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-numberinput__questionmark:focus"/>
+                                                cssSelector=".cmp-adaptiveform-numberinput__label-container .cmp-adaptiveform-numberinput__questionmark:focus"/>
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-numberinput__questionmark:hover"/>
+                                                cssSelector=".cmp-adaptiveform-numberinput__label-container .cmp-adaptiveform-numberinput__questionmark:hover"/>
                                         <disabled
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Disabled"
-                                                cssSelector=".cmp-adaptiveform-numberinput__questionmark:disabled"/>
+                                                cssSelector=".cmp-adaptiveform-numberinput__label-container .cmp-adaptiveform-numberinput__questionmark:disabled"/>
                                     </states>
                                 </numberinputHelpIcon>
                             </items>
@@ -73,15 +73,15 @@
                                 <disabled
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Disabled"
-                                        cssSelector="cmp-adaptiveform-numberinput__label-container:disabled"/>
+                                        cssSelector=".cmp-adaptiveform-numberinput__label-container:disabled"/>
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector="cmp-adaptiveform-numberinput__label-container:hover"/>
+                                        cssSelector=".cmp-adaptiveform-numberinput__label-container:hover"/>
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector="cmp-adaptiveform-numberinput__label-container:focus"/>
+                                        cssSelector=".cmp-adaptiveform-numberinput__label-container:focus"/>
                             </states>
                         </numberinputLabelContainer>
                         <numberinputWidgetAndText
@@ -126,6 +126,15 @@
                                 cssSelector=".cmp-adaptiveform-numberinput__longdescription"
                                 longTitle="Number Input Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_numberinputdescriptionlongparagraph"
+                                cssSelector=".cmp-adaptiveform-numberinput__longdescription p"
+                                longTitle="Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"

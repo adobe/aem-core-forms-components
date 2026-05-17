@@ -85,6 +85,9 @@
                         <datePickerWidgetAndText
                             jcr:primaryType="nt:unstructured"
                             target="/mnt/override/libs/core/fd/components/form/datepicker/v1/datepicker/cq:styleConfig/items/field/items/widgetAndText"/>
+                        <dateTimeWidgetAndText
+                            jcr:primaryType="nt:unstructured"
+                            target="/mnt/override/libs/core/fd/components/form/datetime/v1/datetime/cq:styleConfig/items/field/items/widgetAndText"/>
                         <checkBoxWidgetAndText
                             jcr:primaryType="nt:unstructured"
                             target="/mnt/override/libs/core/fd/components/form/checkbox/v1/checkbox/cq:styleConfig/items/field/items/widgetAndText"/>
@@ -99,7 +102,7 @@
                             target="/mnt/override/libs/core/fd/components/form/switch/v1/switch/cq:styleConfig/items/field/items/widgetAndText"/>
                         <fileUploadButton
                             jcr:primaryType="nt:unstructured"
-                            target="/mnt/override/libs/core/fd/components/form/fileinput/v3/fileinput/cq:styleConfig/items/field/items/widgetAndText"/>
+                            target="/mnt/override/libs/core/fd/components/form/fileinput/v4/fileinput/cq:styleConfig/items/field/items/widgetAndText"/>
                         <tncWidgetAndText
                             jcr:primaryType="nt:unstructured"
                             target="/mnt/override/libs/core/fd/components/form/termsandconditions/v1/termsandconditions/cq:styleConfig/items/field/items/widgetAndText"/>
@@ -131,9 +134,29 @@
                     target="/mnt/override/libs/core/fd/components/form/base/v1/base/cq:styleConfig/items/field/items/errorMessage"/>
             </items>
         </base>
+        <review
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Review"
+            id="af2_review"
+            cssSelector=".cmp-adaptiveform-review"
+            longTitle="Review"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+            target="/mnt/override/libs/core/fd/components/form/review/v1/review/cq:styleConfig/items/field/items/widgetAndText"/>
+        <scribble
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Scribble"
+            id="af2_scribble"
+            cssSelector=".cmp-adaptiveform-scribble"
+            longTitle="Scribble"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+            target="/mnt/override/libs/core/fd/components/form/scribble/v1/scribble/cq:styleConfig/items/field/items/widgetAndText"/>
         <button
             jcr:primaryType="nt:unstructured"
-            jcr:title="Button">
+            jcr:title="Button"
+            id="af2_button"
+            cssSelector=".cmp-adaptiveform-button"
+            longTitle="Button"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <allButton
                     jcr:primaryType="nt:unstructured"
@@ -148,7 +171,11 @@
         </button>
         <panel
             jcr:primaryType="nt:unstructured"
-            jcr:title="Panel">
+            jcr:title="Panel"
+            id="af2_panel"
+            cssSelector=".cmp-adaptiveform-panel"
+            longTitle="Panel"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
                 <responsivePanel
                     jcr:primaryType="nt:unstructured"
@@ -169,12 +196,35 @@
         </panel>
         <Image
             jcr:primaryType="nt:unstructured"
-            target="/mnt/override/libs/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image"/>
+            jcr:title="Image"
+            id="af2_image"
+            cssSelector=".cmp-adaptiveform-image"
+            longTitle="Image"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <imageRoot
+                    jcr:primaryType="nt:unstructured"
+                    target="/mnt/override/libs/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image/items/imageRoot"/>
+                <image
+                    jcr:primaryType="nt:unstructured"
+                    target="/mnt/override/libs/core/fd/components/form/image/v1/image/cq:styleConfig/items/Image/items/image"/>
+            </items>
+        </Image>
         <hcaptcha
             jcr:primaryType="nt:unstructured"
+            jcr:title="HCaptcha"
+            id="af2_hcaptcha"
+            cssSelector=".cmp-adaptiveform-hcaptcha"
+            longTitle="HCaptcha"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
             target="/mnt/override/libs/core/fd/components/form/hcaptcha/v1/hcaptcha/cq:styleConfig/items/field/items/captcha"/>
         <recaptcha
-                jcr:primaryType="nt:unstructured"
-                target="/mnt/override/libs/core/fd/components/form/recaptcha/v1/recaptcha/cq:styleConfig/items/field/items/captcha"/>
+            jcr:primaryType="nt:unstructured"
+            jcr:title="reCaptcha"
+            id="af2_recaptcha"
+            cssSelector=".cmp-adaptiveform-recaptcha"
+            longTitle="reCaptcha"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+            target="/mnt/override/libs/core/fd/components/form/recaptcha/v1/recaptcha/cq:styleConfig/items/field/items/captcha"/>
     </items>
 </jcr:root>

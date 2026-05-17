@@ -31,25 +31,25 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
                                         id="af2_datepickerlabel"
-                                        cssSelector=".cmp-adaptiveform-datepicker__label"
+                                        cssSelector=".cmp-adaptiveform-datepicker__label-container .cmp-adaptiveform-datepicker__label"
                                         longTitle="Datepicker Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-datepicker__label:hover"/>
+                                                cssSelector=".cmp-adaptiveform-datepicker__label-container .cmp-adaptiveform-datepicker__label:hover"/>
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-datepicker__label:focus"/>
+                                                cssSelector=".cmp-adaptiveform-datepicker__label-container .cmp-adaptiveform-datepicker__label:focus"/>
                                     </states>
                                 </datepickerLabel>
                                 <datepickerHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
                                         id="af2_datepickerhelpicon"
-                                        cssSelector=".cmp-adaptiveform-datepicker__questionmark"
+                                        cssSelector=".cmp-adaptiveform-datepicker__label-container .cmp-adaptiveform-datepicker__questionmark"
                                         longTitle="Datepicker Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
@@ -57,15 +57,15 @@
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-datepicker__questionmark:focus"/>
+                                                cssSelector=".cmp-adaptiveform-datepicker__label-container .cmp-adaptiveform-datepicker__questionmark:focus"/>
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-datepicker__questionmark:hover"/>
+                                                cssSelector=".cmp-adaptiveform-datepicker__label-container .cmp-adaptiveform-datepicker__questionmark:hover"/>
                                         <disabled
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Disabled"
-                                                cssSelector=".cmp-adaptiveform-datepicker__questionmark:disabled"/>
+                                                cssSelector=".cmp-adaptiveform-datepicker__label-container .cmp-adaptiveform-datepicker__questionmark:disabled"/>
                                     </states>
                                 </datepickerHelpIcon>
                             </items>
@@ -73,15 +73,15 @@
                                 <disabled
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Disabled"
-                                        cssSelector="cmp-adaptiveform-datepicker__label-container:disabled"/>
+                                        cssSelector=".cmp-adaptiveform-datepicker__label-container:disabled"/>
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector="cmp-adaptiveform-datepicker__label-container:hover"/>
+                                        cssSelector=".cmp-adaptiveform-datepicker__label-container:hover"/>
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector="cmp-adaptiveform-datepicker__label-container:focus"/>
+                                        cssSelector=".cmp-adaptiveform-datepicker__label-container:focus"/>
                             </states>
                         </datepickerLabelContainer>
                         <datepickerWidgetAndText
@@ -126,6 +126,15 @@
                                 cssSelector=".cmp-adaptiveform-datepicker__longdescription"
                                 longTitle="Datepicker Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_datepickerdescriptionlongparagraph"
+                                cssSelector=".cmp-adaptiveform-datepicker__longdescription p"
+                                longTitle="Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"
