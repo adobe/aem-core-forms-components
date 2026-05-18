@@ -129,7 +129,7 @@ describe.only('Page - Authoring', function () {
         dropTabsInContainer();
         dropPanelInVerticalTabComponent(tabsPath);
         dropPanelInVerticalTabComponent(tabsPath);
-        cy.reload();
+        cy.openSiteAuthoring(pagePath);
         cy.getContentIFrameBody().find('.cmp-verticaltabs__tabpanel').should('have.length', 2);
         cy.getContentIFrameBody().find('.cmp-verticaltabs__tabpanel').eq(0).should('be.visible');
         cy.getContentIFrameBody().find('.cmp-verticaltabs__tabpanel').eq(1).should('not.be.visible');

@@ -84,11 +84,10 @@ describe('Button - Authoring', function () {
             if ($wrapper.length && $wrapper.hasClass('is-hidden')) {
                 if ($body.find('#selectlayer-popover [data-layer="Preview"]').length > 0) {
                     cy.selectLayer("Preview");
+                    cy.selectLayer("Edit");
                 }
-                cy.selectLayer("Edit");
             }
         });
-        cy.get('#OverlayWrapper').should('not.have.class', 'is-hidden');
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).then(() => {
             cy.invokeEditableAction("[data-action='EDIT']").then(() => {
                 getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {

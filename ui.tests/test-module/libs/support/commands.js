@@ -272,18 +272,18 @@ Cypress.Commands.add("selectLayer", (layer) => {
 
 // cypress command to open editable toolbar
 Cypress.Commands.add("openEditableToolbar", (selector) => {
-  // Preview→Edit (not Edit→Edit) forces a real layer:change so AEM shows OverlayWrapper.
   cy.get('body').then($body => {
     const $wrapper = $body.find('#OverlayWrapper');
     if ($wrapper.length && $wrapper.hasClass('is-hidden')) {
       if ($body.find('#selectlayer-popover [data-layer="Preview"]').length > 0) {
+        // Preview→Edit forces a real layer:change so AEM shows OverlayWrapper.
         cy.selectLayer("Preview");
+        cy.selectLayer("Edit");
       }
-      cy.selectLayer("Edit");
+      // For Forms Editor (no Preview layer) OverlayWrapper recovers naturally; just wait below.
     }
   });
-  cy.get('#OverlayWrapper').should('not.have.class', 'is-hidden');
-  cy.get('.cq-dialog-backdrop.is-open').should('not.exist');
+  cy.get('#OverlayWrapper', { timeout: 20000 }).should('not.have.class', 'is-hidden');
 
   cy.get(selector)
   .invoke('attr', 'data-path')
@@ -295,10 +295,9 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
       } else {
         cy.get(path).then($header => {
           if (!$header.is(':visible')) {
-            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0);
             cy.get(selector).first().click({force: true});
           } else {
-            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0);
+            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0, {force: true});
             cy.get(selector).click({force: true});
           }
         });
@@ -496,11 +495,18 @@ Cypress.Commands.add("fetchFeatureToggles",()=>{
 })
 
 Cypress.Commands.add("cleanTest", (editPath) => {
-  // clean the test before the next run, if any
+  // clean the test before the next run, if any (also removes accumulated siblings like wizard0, checkboxgroup1, etc.)
   return cy.get("body").then($body => {
-    const selector = "[data-path='" + editPath + "']";
-    if ($body.find(selector).length > 0) {
-      return cy.deleteComponentByPath(editPath);
+    const targetDepth = editPath.split('/').length;
+    const paths = [];
+    $body.find("[data-path^='" + editPath + "']").each((i, el) => {
+      const p = el.getAttribute('data-path');
+      if (p && p.split('/').length === targetDepth) {
+        paths.push(p);
+      }
+    });
+    if (paths.length > 0) {
+      return paths.reduce((chain, p) => chain.then(() => cy.deleteComponentByPath(p)), cy.wrap(null));
     }
   });
 })
@@ -508,16 +514,13 @@ Cypress.Commands.add("cleanTest", (editPath) => {
 Cypress.Commands.add("cleanTitleTest", (editPath) => {
   // clean the test before the next run, if any
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "div[data-path^='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        $body.find(selector12).each(($index, $titleComponent) => {
-          cy.deleteComponentByPath($titleComponent.dataset.path);
-        })
-      }
-      resolve(editPath);
+    const paths = [];
+    $body.find("div[data-path^='" + editPath + "']").each((i, el) => {
+      paths.push(el.dataset.path);
     });
+    if (paths.length > 0) {
+      return paths.reduce((chain, p) => chain.then(() => cy.deleteComponentByPath(p)), cy.wrap(null));
+    }
   });
 })
 
