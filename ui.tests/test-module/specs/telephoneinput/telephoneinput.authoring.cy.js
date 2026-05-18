@@ -115,10 +115,10 @@ describe('Page - Authoring', function () {
       cy.get(bemDesignDialog).contains('Validation patterns').click();
       // cy.get('[role="tablist"][orientation="horizontal"] [role="tab"]').eq(2).click();
       cy.get('[name="./allowedFormat3"]').eq(0).click();
-      cy.get('[data-granite-coral-multifield-name="./allowedCustomFormats"] button').eq(0).click();
+      cy.get('[data-granite-coral-multifield-name="./allowedCustomFormats"] button').last().click();
       cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').should('exist').then(() => {
-        cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().type(customKey);
-        cy.get('[name="./allowedCustomFormats/item0/customFormatValue"]').focus().type(customValue);
+        cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().clear().type(customKey);
+        cy.get('[name="./allowedCustomFormats/item0/customFormatValue"]').focus().clear().type(customValue);
         cy.get(submitBtnSelector).click();
       }).then(() => {
         cy.openSiteAuthoring(authoringPagePath);

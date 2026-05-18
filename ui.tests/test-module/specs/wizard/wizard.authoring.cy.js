@@ -218,7 +218,7 @@ describe('Page - Authoring', function () {
                 dropWizardInContainer();
                 addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
                 addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
-                cy.reload()
+                cy.openSiteAuthoring(pagePath);
                 cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').should('have.length', 2);
                 cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').eq(0).should('be.visible');
                 cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').eq(1).should('not.be.visible');
