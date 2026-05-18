@@ -295,6 +295,8 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
       } else {
         cy.get(path).then($header => {
           if (!$header.is(':visible')) {
+            cy.get('body').click(0, 0);
+            cy.get('#OverlayWrapper', { timeout: 10000 }).should('not.have.class', 'is-hidden');
             cy.get(selector).first().click({force: true});
           } else {
             cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0, {force: true});
@@ -496,15 +498,17 @@ Cypress.Commands.add("fetchFeatureToggles",()=>{
 
 Cypress.Commands.add("cleanTest", (editPath) => {
   // clean the test before the next run, if any (also removes accumulated siblings like wizard0, checkboxgroup1, etc.)
+  // uses .cq-Overlay--component to avoid matching toolbar buttons which also carry data-path attributes
   return cy.get("body").then($body => {
     const targetDepth = editPath.split('/').length;
-    const paths = [];
-    $body.find("[data-path^='" + editPath + "']").each((i, el) => {
+    const pathSet = new Set();
+    $body.find(".cq-Overlay--component[data-path^='" + editPath + "']").each((i, el) => {
       const p = el.getAttribute('data-path');
       if (p && p.split('/').length === targetDepth) {
-        paths.push(p);
+        pathSet.add(p);
       }
     });
+    const paths = Array.from(pathSet);
     if (paths.length > 0) {
       return paths.reduce((chain, p) => chain.then(() => cy.deleteComponentByPath(p)), cy.wrap(null));
     }

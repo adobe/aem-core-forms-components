@@ -353,6 +353,7 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.openAuthoring(formPath);
             cy.selectLayer("Edit");
             cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+            cy.cleanTest(textinputEditPath);
 
             cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
                 "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
