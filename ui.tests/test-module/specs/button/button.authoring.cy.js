@@ -79,10 +79,9 @@ describe('Button - Authoring', function () {
         } else {
             dropButtonInContainer();
         }
-        // Guard against OverlayWrapper.is-hidden race: if the canvas is still
-        // redrawing or a prior test left the layer in Preview, re-activate Edit.
         cy.get('#OverlayWrapper').then($wrapper => {
             if ($wrapper.hasClass('is-hidden')) {
+                cy.selectLayer("Preview");
                 cy.selectLayer("Edit");
             }
         });

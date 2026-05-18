@@ -268,21 +268,23 @@ Cypress.Commands.add("selectLayer", (layer) => {
   cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').should('be.visible');
   cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').click({force: true});
   cy.get(siteSelectors.selectLayer.current + '[data-layer="' + layer + '"].is-selected');
+  if (layer === 'Edit') {
+    cy.get('#OverlayWrapper').should('not.have.class', 'is-hidden');
+  }
 });
 
 // cypress command to open editable toolbar
 Cypress.Commands.add("openEditableToolbar", (selector) => {
-  // Guard against OverlayWrapper.is-hidden: if the canvas is in Preview mode
-  // or mid-redraw, force the Edit layer so overlay clicks actually register.
-  // Without this, clicks land on a display:none parent and the toolbar never
-  // wires up, producing "not visible because parent OverlayWrapper.is-hidden".
+  // Preview→Edit (not Edit→Edit) forces a real layer:change so AEM shows OverlayWrapper.
   cy.get('body').then($body => {
     const $wrapper = $body.find('#OverlayWrapper');
     if ($wrapper.length && $wrapper.hasClass('is-hidden')) {
+      cy.selectLayer("Preview");
       cy.selectLayer("Edit");
     }
   });
   cy.get('#OverlayWrapper').should('not.have.class', 'is-hidden');
+  cy.get('.cq-dialog-backdrop.is-open').should('not.exist');
 
   cy.get(selector)
   .invoke('attr', 'data-path')
@@ -294,9 +296,6 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
       } else {
         cy.get(path).then($header => {
           if (!$header.is(':visible')) {
-            // Toolbar exists but is hidden — likely a stale toolbar from a previous
-            // selection. Click body first to fully deselect, then click the overlay
-            // to trigger a fresh selection + toolbar render.
             cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0);
             cy.get(selector).first().click({force: true});
           } else {
@@ -500,14 +499,10 @@ Cypress.Commands.add("fetchFeatureToggles",()=>{
 Cypress.Commands.add("cleanTest", (editPath) => {
   // clean the test before the next run, if any
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "[data-path='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        cy.deleteComponentByPath(editPath);
-      }
-      resolve(editPath);
-    });
+    const selector = "[data-path='" + editPath + "']";
+    if ($body.find(selector).length > 0) {
+      return cy.deleteComponentByPath(editPath);
+    }
   });
 })
 
@@ -545,9 +540,7 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
   // click the delete action
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
-  // Wait for the Coral alert dialog to fully open before clicking its footer button.
-  // Without this, the .last footer-button selector can be queried before the dialog's
-  // footer has populated, causing the "but never found it" timeout.
+  // check if delete dialog is seen and click on yes
   cy.get("coral-dialog.is-open[role='alertdialog']", { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
@@ -568,9 +561,7 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
   // click the delete action
   cy.get(siteSelectors.editableToolbar.actions.delete + ":visible").should("be.visible").click({force: true});
-  // Wait for the Coral alert dialog to fully open before clicking its footer button.
-  // Without this, the .last footer-button selector can be queried before the dialog's
-  // footer has populated, causing the "but never found it" timeout.
+  // check if delete dialog is seen and click on yes
   cy.get("coral-dialog.is-open[role='alertdialog']", { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
