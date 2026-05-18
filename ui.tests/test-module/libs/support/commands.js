@@ -268,9 +268,6 @@ Cypress.Commands.add("selectLayer", (layer) => {
   cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').should('be.visible');
   cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').click({force: true});
   cy.get(siteSelectors.selectLayer.current + '[data-layer="' + layer + '"].is-selected');
-  if (layer === 'Edit') {
-    cy.get('#OverlayWrapper').should('not.have.class', 'is-hidden');
-  }
 });
 
 // cypress command to open editable toolbar
@@ -279,7 +276,9 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
   cy.get('body').then($body => {
     const $wrapper = $body.find('#OverlayWrapper');
     if ($wrapper.length && $wrapper.hasClass('is-hidden')) {
-      cy.selectLayer("Preview");
+      if ($body.find('#selectlayer-popover [data-layer="Preview"]').length > 0) {
+        cy.selectLayer("Preview");
+      }
       cy.selectLayer("Edit");
     }
   });

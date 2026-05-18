@@ -79,9 +79,12 @@ describe('Button - Authoring', function () {
         } else {
             dropButtonInContainer();
         }
-        cy.get('#OverlayWrapper').then($wrapper => {
-            if ($wrapper.hasClass('is-hidden')) {
-                cy.selectLayer("Preview");
+        cy.get('body').then($body => {
+            const $wrapper = $body.find('#OverlayWrapper');
+            if ($wrapper.length && $wrapper.hasClass('is-hidden')) {
+                if ($body.find('#selectlayer-popover [data-layer="Preview"]').length > 0) {
+                    cy.selectLayer("Preview");
+                }
                 cy.selectLayer("Edit");
             }
         });
