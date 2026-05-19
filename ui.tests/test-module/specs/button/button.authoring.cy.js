@@ -79,6 +79,7 @@ describe('Button - Authoring', function () {
         } else {
             dropButtonInContainer();
         }
+        cy.selectLayer("Edit");
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector).then(() => {
             cy.invokeEditableAction("[data-action='EDIT']").then(() => {
                 getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {
