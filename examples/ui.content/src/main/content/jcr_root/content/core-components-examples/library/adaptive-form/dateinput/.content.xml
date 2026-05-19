@@ -8,6 +8,9 @@
     <jcr:content
         jcr:primaryType="cq:PageContent"
         jcr:title="Date Input"
+        jcr:description="Date Input"
+        cq:tags="[]"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
         sling:resourceType="forms-components-examples/components/page">
         <root
             jcr:primaryType="nt:unstructured"
@@ -27,18 +30,22 @@
                             sling:resourceType="forms-components-examples/components/form/container"
                             fd:version="2.1"
                             fieldType="form">
-                            <dateinput_demo
+                            <container
                                 jcr:primaryType="nt:unstructured"
-                                sling:resourceType="forms-components-examples/components/form/dateinput"
-                                jcr:title="Date Input"
-                                fieldType="date-input"
-                                name="dateinput1"
-                                placeholderDay="DD"
-                                placeholderMonth="MM"
-                                placeholderYear="YYYY"
-                                dateDisplayFormat="date{D/M/YYYY}"
-                                visible="{Boolean}true"
-                                enabled="{Boolean}true"/>
+                                sling:resourceType="forms-components-examples/components/demo/component">
+                                <dateinput_demo
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="forms-components-examples/components/form/dateinput"
+                                    jcr:title="Date Input"
+                                    fieldType="date-input"
+                                    name="dateinput1"
+                                    placeholderDay="DD"
+                                    placeholderMonth="MM"
+                                    placeholderYear="YYYY"
+                                    dateDisplayFormat="date{D/M/YYYY}"
+                                    visible="{Boolean}true"
+                                    enabled="{Boolean}true"/>
+                            </container>
                         </guideContainer>
                     </component>
                 </demo>

@@ -44,22 +44,13 @@
 
 }
 
-.cmp-adaptiveform-dateinput__titleplaceholder {
-    height:65px;
-    display:block;
+.cmp-adaptiveform-dateinput__widget-container {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
 }
 
-.cmp-adaptiveform-dateinput__label {
-    height:65px;
-    display:block;
-}
-
-.cmp-adaptiveform-dateinput__title {
-    width:45%;
-}
-
-.cmp-adaptiveform-dateinput__placeholder {
-    position:relative;
-    margin-left:1rem;
-    width:45%;
+.cmp-adaptiveform-dateinput__field-wrapper {
+    display: flex;
+    flex-direction: column;
 }

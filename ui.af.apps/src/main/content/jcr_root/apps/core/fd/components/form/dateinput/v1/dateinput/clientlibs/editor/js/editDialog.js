@@ -17,17 +17,10 @@
     "use strict";
 
     var EDIT_DIALOG = ".cmp-adaptiveform-dateinput__editdialog",
-        DATE_INPUT_LANG = EDIT_DIALOG + " .cmp-adaptiveform-dateinput__lang",
-        DATE_INPUT_LANGDISPLAYVALUE = EDIT_DIALOG + " .cmp-adaptiveform-dateinput__langdisplayvalue",
         DATE_INPUT_DEFAULTDATE = EDIT_DIALOG + " .cmp-adaptiveform-dateinput__defaultdate",
         DATE_INPUT_MINDATE = EDIT_DIALOG + " .cmp-adaptiveform-dateinput__mindate",
         DATE_INPUT_MAXDATE = EDIT_DIALOG + " .cmp-adaptiveform-dateinput__maxdate",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
-
-    function handleLang(dialog){
-        Utils.handlePatternDropDown(dialog,DATE_INPUT_LANGDISPLAYVALUE,DATE_INPUT_LANG);
-        Utils.handlePatternFormat(dialog,DATE_INPUT_LANGDISPLAYVALUE,DATE_INPUT_LANG);
-    }
 
     function handleDatePlaceholders(dialog){
         var defaultDateInput = dialog.find(DATE_INPUT_DEFAULTDATE + " input")[0],
@@ -48,6 +41,6 @@
         maxDateTooltip.innerHTML = fieldDescription;
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleLang,handleDatePlaceholders);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDatePlaceholders);
 
 })(jQuery);

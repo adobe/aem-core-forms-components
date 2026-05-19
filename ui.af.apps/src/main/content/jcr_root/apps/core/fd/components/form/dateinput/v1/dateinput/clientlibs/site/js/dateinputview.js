@@ -27,15 +27,12 @@
         var DEFAULT = { order: ["D", "M", "Y"], separator: "/" };
         if (!fmt) return DEFAULT;
 
-        // Strip the outer  date{...}  wrapper
         var inner = fmt.replace(/^date\{(.+)\}$/i, "$1");
-        if (inner === fmt) return DEFAULT;  // no match — not an XFA format
+        if (inner === fmt) return DEFAULT;
 
-        // Extract separator: first non-alphanumeric character
         var sepMatch = inner.match(/[^a-zA-Z0-9]/);
         var separator = sepMatch ? sepMatch[0] : "/";
 
-        // Determine order of D, M, Y by their first occurrence in the inner string
         var tokens = ["D", "M", "Y"].map(function (t) {
             var idx = inner.search(new RegExp(t, "i"));
             return { token: t, idx: idx };
@@ -46,20 +43,64 @@
         return { order: order, separator: separator };
     }
 
-    /** Per-field regex validators matching foundation GuideDateInput behaviour. */
+    /**
+     * Returns the number of days in the given month (1-based) of the given year.
+     * Relies on Date rolling: new Date(year, month, 0) = last day of (month-1).
+     * Correctly handles leap years for February.
+     */
+    function daysInMonth(month, year) {
+        return new Date(year, month, 0).getDate();
+    }
+
+    /**
+     * Validates the logical correctness of the complete date (cross-field).
+     * Mirrors the foundation GuideDateInput._isValidDate() check.
+     * Returns true when any field is empty (partial entry is deferred) or
+     * when the assembled date is a real calendar date.
+     */
+    function isValidFullDate(d, m, y) {
+        if (!d || !m || !y) return true; // partial — defer validation
+        var day   = parseInt(d, 10);
+        var month = parseInt(m, 10);
+        var year  = parseInt(y, 10);
+        if (isNaN(day) || isNaN(month) || isNaN(year)) return false;
+        if (month < 1 || month > 12) return false;
+        if (year < 1000 || year > 9999) return false;
+        return day >= 1 && day <= daysInMonth(month, year);
+    }
+
+    /**
+     * Per-field regex validators matching foundation GuideDateInput combFieldControls.
+     * D: 1–31, M: 1–12, Y: exactly 4 digits.
+     */
     var VALIDATORS = {
         D: /^(?:0?[1-9]|1[0-9]|2[0-9]|3[01])$/,
         M: /^(?:0?[1-9]|1[012])$/,
         Y: /^[0-9]{4}$/
     };
 
-    /** Maximum number of digits accepted per sub-field. */
+    /** Maximum digit count accepted per sub-field. */
     var MAX_LEN = { D: 2, M: 2, Y: 4 };
 
     /**
-     * Key codes allowed through the digit-only keydown gate:
+     * Returns true when the single digit typed as the first character of a
+     * sub-field cannot possibly start any valid 2-digit value for that field.
+     * Mirrors the foundation comb-widget behaviour that prevents over-range input.
+     *
+     *   Day   — first digit > 3 means 4x–9x which are all > 31.
+     *   Month — first digit > 1 means 2x–9x which are all > 12.
+     */
+    function shouldAutoAdvanceEarly(token, singleDigit) {
+        var d = parseInt(singleDigit, 10);
+        if (token === "D") return d > 3;
+        if (token === "M") return d > 1;
+        return false;
+    }
+
+    /**
+     * Key codes always allowed through the digit-only keydown gate:
      * Backspace(8), Tab(9), Escape(27), Delete(46), Home(35), End(36),
-     * Left(37), Up(38), Right(39), Down(40), numpad 0-9 (96-105), digit 0-9 (48-57).
+     * Left(37), Up(38), Right(39), Down(40).
      */
     var ALLOWED_KEYS = [8, 9, 27, 46, 35, 36, 37, 38, 39, 40];
 
@@ -69,7 +110,6 @@
 
     function isAllowedKey(e) {
         if (ALLOWED_KEYS.indexOf(e.keyCode) !== -1) return true;
-        // Allow Ctrl/Cmd + A, C, V, X
         if ((e.ctrlKey || e.metaKey) && [65, 67, 86, 88].indexOf(e.keyCode) !== -1) return true;
         return isDigitKey(e);
     }
@@ -101,7 +141,6 @@
             super(params);
         }
 
-        /** Returns the hidden combined ISO value input used by the base class. */
         getWidget() {
             return this.element.querySelector(DateInput.selectors.widget);
         }
@@ -130,13 +169,27 @@
             return this.element.querySelector(DateInput.selectors["widget" + ({ D: "Day", M: "Month", Y: "Year" }[token])]);
         }
 
+        /**
+         * Returns the maximum valid day for the month currently entered in the M field.
+         * Falls back to 31 when month is empty or invalid (global max, no restriction).
+         * Uses year 2000 (a leap year) when the Y field is incomplete so that February
+         * allows 29 until the year is confirmed — the conservative permissive choice.
+         */
+        #getMaxDayForCurrentMonth() {
+            var mVal = this.#getInputByToken("M").value.trim();
+            if (!mVal || !VALIDATORS.M.test(mVal)) return 31;
+            var yVal = this.#getInputByToken("Y").value.trim();
+            var year = (yVal && VALIDATORS.Y.test(yVal)) ? parseInt(yVal, 10) : 2000;
+            return daysInMonth(parseInt(mVal, 10), year);
+        }
+
         #getWrapperByToken(token) {
             return this.element.querySelector(DateInput.selectors["wrapper" + ({ D: "Day", M: "Month", Y: "Year" }[token])]);
         }
 
         /**
          * Reorders the three field-wrapper divs inside the container to match
-         * the order derived from dateDisplayFormat (e.g. D→M→Y or M→D→Y).
+         * the field order derived from dateDisplayFormat (e.g. D→M→Y or M→D→Y).
          */
         #applyFieldOrder(order) {
             var container = this.element.querySelector(DateInput.selectors.container);
@@ -158,6 +211,7 @@
 
         /**
          * Splits an ISO YYYY-MM-DD value and populates the three sub-inputs.
+         * Strips leading zeros from M and D for display (matching foundation behaviour).
          */
         #splitISOValue(isoValue) {
             if (!isoValue) {
@@ -170,40 +224,100 @@
             this.#getInputByToken("D").value = parts[2] ? String(parseInt(parts[2], 10)) : "";
         }
 
-        /** Allows only digit keys and navigation keys through. */
-        #onKeyDown(e) {
+        /**
+         * Allows only digit keys and navigation keys through (keydown gate).
+         *
+         * For M: prevents a second digit that would produce a month > 12.
+         * For D: prevents a second digit that would produce:
+         *   (a) a day > 31 (global cap), or
+         *   (b) a day > the current month's actual number of days
+         *       e.g. "1" already typed in November (30 days) → blocks "1" (31 > 30).
+         */
+        #onKeyDown(e, token) {
             if (!isAllowedKey(e)) {
+                e.preventDefault();
+                return;
+            }
+            if (!isDigitKey(e)) return;
+            if (token !== "D" && token !== "M") return;
+
+            var input = this.#getInputByToken(token);
+            var current = input.value.replace(/\D/g, "");
+            if (current.length !== 1) return; // only gate the second digit
+
+            var newDigit = (e.key && /^\d$/.test(e.key))
+                ? e.key
+                : String(e.keyCode >= 96 ? e.keyCode - 96 : e.keyCode - 48);
+            var candidate = current + newDigit;
+
+            // Global range check (D: 1–31, M: 1–12)
+            if (!VALIDATORS[token].test(candidate)) {
+                e.preventDefault();
+                return;
+            }
+            // Month-aware max check for day field
+            if (token === "D" && parseInt(candidate, 10) > this.#getMaxDayForCurrentMonth()) {
                 e.preventDefault();
             }
         }
 
         /**
          * Fires after every character typed.
-         * Strips non-digit characters, enforces maxLength, then auto-advances
-         * focus to the next sub-field when the field reaches its max length.
+         *
+         * 1. Strips non-digit characters (defensive — handles paste).
+         * 2. Enforces per-field maxLen.
+         * 3. Smart auto-advance: if the single digit typed cannot start any valid
+         *    2-digit value for this field (e.g. "5" in month → 5x > 12), focus moves
+         *    to the next sub-field immediately. Matches foundation comb-widget behaviour.
+         * 4. Standard auto-advance when the field reaches maxLen.
          */
         #onInput(token, nextToken) {
             var input = this.#getInputByToken(token);
-            // Strip non-digit characters that can slip through (e.g. paste)
             var digits = input.value.replace(/\D/g, "");
             var maxLen = MAX_LEN[token];
             if (digits.length > maxLen) {
                 digits = digits.slice(0, maxLen);
             }
+            // Paste / mobile safety net for D and M: strip back to first digit when
+            // (a) global range is violated, or (b) day exceeds the current month's max.
+            if ((token === "D" || token === "M") && digits.length === 2) {
+                if (!VALIDATORS[token].test(digits)) {
+                    digits = digits.slice(0, 1);
+                } else if (token === "D" && parseInt(digits, 10) > this.#getMaxDayForCurrentMonth()) {
+                    digits = digits.slice(0, 1);
+                }
+            }
             input.value = digits;
 
             this.#syncCombinedValue();
 
-            // Auto-advance to next sub-field once this one is full
-            if (digits.length === maxLen && nextToken) {
-                var nextInput = this.#getInputByToken(nextToken);
-                if (nextInput) nextInput.focus();
+            if (!nextToken) return;
+
+            // Smart advance: first digit cannot start any valid 2-digit value.
+            // For D: also considers the current month's max (e.g. "3" in February → 3x ≥ 30 > 29).
+            var earlyAdvance = shouldAutoAdvanceEarly(token, digits);
+            if (!earlyAdvance && digits.length === 1 && token === "D") {
+                var maxDay = this.#getMaxDayForCurrentMonth();
+                // Smallest possible 2-digit value starting with this digit is digit*10
+                if (parseInt(digits, 10) * 10 > maxDay) {
+                    earlyAdvance = true;
+                }
+            }
+            if (digits.length === 1 && earlyAdvance) {
+                this.#getInputByToken(nextToken).focus();
+                return;
+            }
+
+            // Standard advance: field is full
+            if (digits.length === maxLen) {
+                this.#getInputByToken(nextToken).focus();
             }
         }
 
         /**
-         * Validates a single sub-input against its regex and marks aria-invalid.
-         * Returns true when the value is empty (permitted) or matches the regex.
+         * Validates a single sub-field against its per-field regex.
+         * Sets aria-invalid on the input when invalid.
+         * Matches foundation GuideDateInput._isCombFieldValid() logic.
          */
         #validateSubField(token) {
             var input = this.#getInputByToken(token);
@@ -217,18 +331,47 @@
             return valid;
         }
 
-        /** Returns true only when all three non-empty sub-fields pass their regex. */
-        #allSubFieldsValid() {
-            return ["D", "M", "Y"].every((t) => {
-                var val = this.#getInputByToken(t).value.trim();
-                return val === "" || VALIDATORS[t].test(val);
-            });
+        /**
+         * Cross-field validation: checks that the assembled date is a real calendar
+         * date. Mirrors foundation GuideDateInput._isValidDate() which uses
+         * xfalib PictureFmt.parseDate under the hood.
+         *
+         * When all three fields are filled and the date is impossible (e.g. April 31,
+         * Feb 30, Feb 29 in a non-leap year) marks the day field as aria-invalid and
+         * returns false so the combined value is not committed.
+         */
+        #validateFullDate() {
+            var d = this.#getInputByToken("D").value.trim();
+            var m = this.#getInputByToken("M").value.trim();
+            var y = this.#getInputByToken("Y").value.trim();
+
+            if (!d || !m || !y) return true; // partial — not yet fully entered
+
+            var valid = isValidFullDate(d, m, y);
+            var dayInput = this.#getInputByToken("D");
+            if (!valid) {
+                dayInput.setAttribute("aria-invalid", "true");
+            } else {
+                // Only clear aria-invalid on day if the per-field check also passes
+                if (VALIDATORS.D.test(d)) {
+                    dayInput.removeAttribute("aria-invalid");
+                }
+            }
+            return valid;
         }
 
-        /** Rebuilds the ISO value and pushes it to the combined input and the model. */
+        /**
+         * Rebuilds the ISO value from the three sub-inputs and pushes it to both
+         * the hidden combined input and the AF model.
+         *
+         * The combined value is only written when the full date passes cross-field
+         * validation — matching GuideDateInput.getCommitValue() which returns "" for
+         * an invalid parsed date.
+         */
         #syncCombinedValue() {
-            var iso = this.#buildISOValue();
             var combined = this.getWidget();
+            var fullValid = this.#validateFullDate();
+            var iso = fullValid ? this.#buildISOValue() : "";
             if (combined) combined.value = iso;
             this.setModelValue(iso || "");
         }
@@ -244,20 +387,21 @@
                 this.#splitISOValue(model.value);
             }
 
-            // Wire up event handlers in field order so auto-advance works correctly
             parsed.order.forEach((token, idx) => {
                 var input = this.#getInputByToken(token);
                 if (!input) return;
                 var nextToken = parsed.order[idx + 1] || null;
 
-                input.addEventListener("keydown", (e) => this.#onKeyDown(e));
+                input.addEventListener("keydown", (e) => this.#onKeyDown(e, token));
                 input.addEventListener("input", () => this.#onInput(token, nextToken));
                 input.addEventListener("focus", () => {
                     this.setActive();
                     this.triggerEnter();
                 });
                 input.addEventListener("blur", () => {
+                    // Per-field range check first, then cross-field calendar check
                     this.#validateSubField(token);
+                    this.#validateFullDate();
                     this.#syncCombinedValue();
                     this.setInactive();
                     this.triggerExit();

@@ -120,12 +120,13 @@
                id="${widgetId}"
                class="cmp-adaptiveform-dateinput__widget--combined"
                name="${dateInput.name}"
-               value="${dateInput.default ? dateInput.default : ''}"/>
-        <div data-sly-call="${shortDescription.shortDescription @componentId=datePicker.id,
+               value="${dateInput.default ? dateInput.default : ''}"
+               data-cmp-data-layer="${dateInput.data.json}"/>
+    </div>
+    <div data-sly-call="${shortDescription.shortDescription @ componentId=dateInput.id,
          shortDescriptionVisible=dateInput.tooltipVisible,
          shortDescription=dateInput.tooltip,
-         bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap>
-    </div>
+         bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap></div>
     <div data-sly-call="${longDescription.longDescription @ componentId=dateInput.id,
          longDescription=dateInput.description,
          bemBlock='cmp-adaptiveform-dateinput'}" data-sly-unwrap></div>
