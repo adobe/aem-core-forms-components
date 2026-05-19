@@ -24,10 +24,44 @@
     margin-bottom: 0.5rem;
 }
 
-.cmp-adaptiveform-table__description {
+.cmp-adaptiveform-table__help-container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.cmp-adaptiveform-table__questionmark {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 9px;
+    background: url(./resources/images/question.svg) center center / cover no-repeat,#969696;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+}
+
+.cmp-adaptiveform-table__help-container .cmp-adaptiveform-table__questionmark {
+    position: unset;
+    right: unset;
+}
+
+.cmp-adaptiveform-table__shortdescription {
     font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.cmp-adaptiveform-table__longdescription {
     color: #6B6B6B;
-    margin-bottom: 1rem;
+    background-color: #F5F5F5;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.cmp-adaptiveform-table__longdescription p {
+    margin: 0;
+    padding: 0;
 }
 
 /*

@@ -23,7 +23,10 @@
         static bemBlock = 'cmp-adaptiveform-table';
         static selectors = {
             self: "[data-" + this.NS + '-is="' + this.IS + '"]',
-            widget: `.${Table.bemBlock}__widget`
+            widget: `.${Table.bemBlock}__widget`,
+            description: `.${Table.bemBlock}__longdescription`,
+            qm: `.${Table.bemBlock}__questionmark`,
+            tooltipDiv: `.${Table.bemBlock}__shortdescription`
         };
 
         constructor(params) {
@@ -40,7 +43,7 @@
         }
 
         getDescription() {
-            return this.element.querySelector(`.${Table.bemBlock}__description`);
+            return this.element.querySelector(Table.selectors.description);
         }
 
         getLabel() {
@@ -52,11 +55,11 @@
         }
 
         getTooltipDiv() {
-            return null;
+            return this.element.querySelector(Table.selectors.tooltipDiv);
         }
 
         getQuestionMarkDiv() {
-            return null;
+            return this.element.querySelector(Table.selectors.qm);
         }
 
         setFocus(id) {
