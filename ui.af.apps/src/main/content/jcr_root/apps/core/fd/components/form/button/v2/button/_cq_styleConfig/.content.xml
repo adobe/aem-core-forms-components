@@ -3,6 +3,13 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Button">
     <items jcr:primaryType="nt:unstructured">
+        <buttonRoot
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Button Container"
+            id="af2_buttonroot"
+            cssSelector=".cmp-adaptiveform-button"
+            longTitle="Button Container"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
         <button
             jcr:primaryType="nt:unstructured"
             jcr:title="All Buttons"
@@ -52,6 +59,15 @@
                         cssSelector=".cmp-adaptiveform-button__longdescription"
                         longTitle="Button Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_buttondescriptionlongparagraph"
+                                cssSelector=".cmp-adaptiveform-button__longdescription p"
+                                longTitle="Button Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -70,6 +86,27 @@
                         cssSelector=".cmp-adaptiveform-button__help-container"
                         longTitle="Button Help Container"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <buttonHelpIcon
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Help Icon"
+                                id="af2_buttonhelpicon"
+                                cssSelector=".cmp-adaptiveform-button__help-container .cmp-adaptiveform-button__questionmark"
+                                longTitle="Button Help Icon"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                secondarySelectors="af2_guideContainer:af2_helpicon">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-button__help-container .cmp-adaptiveform-button__questionmark:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-button__help-container .cmp-adaptiveform-button__questionmark:hover"/>
+                            </states>
+                        </buttonHelpIcon>
+                    </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -81,25 +118,6 @@
                                 cssSelector=".cmp-adaptiveform-button__help-container:hover"/>
                     </states>
                 </buttonHelpContainer>
-                <buttonHelpIcon
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Help Icon"
-                        id="af2_buttonhelpicon"
-                        cssSelector=".cmp-adaptiveform-button__questionmark"
-                        longTitle="Button Help Icon"
-                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
-                        secondarySelectors="af2_guideContainer:af2_helpicon">
-                    <states jcr:primaryType="nt:unstructured">
-                        <focus
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Focus"
-                                cssSelector=".cmp-adaptiveform-button__questionmark:focus"/>
-                        <hover
-                                jcr:primaryType="nt:unstructured"
-                                jcr:title="Hover"
-                                cssSelector=".cmp-adaptiveform-button__questionmark:hover"/>
-                    </states>
-                </buttonHelpIcon>
             </items>
             <states jcr:primaryType="nt:unstructured">
                 <focus
@@ -118,6 +136,10 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Hover"
                         cssSelector=".cmp-adaptiveform-button__widget:hover"/>
+                <componentDisabled
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Component Disabled"
+                        cssSelector="[data-cmp-enabled]:not([data-cmp-enabled=true]) .cmp-adaptiveform-button__widget"/>
                 <error
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Error"

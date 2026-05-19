@@ -23,25 +23,25 @@
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label"
                                 id="af2_panellabel"
-                                cssSelector=".cmp-container__label"
+                                cssSelector=".cmp-container__label-container .cmp-container__label"
                                 longTitle="Panel Label"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector=".cmp-container__label:hover"/>
+                                        cssSelector=".cmp-container__label-container .cmp-container__label:hover"/>
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector=".cmp-container__label:focus"/>
+                                        cssSelector=".cmp-container__label-container .cmp-container__label:focus"/>
                             </states>
                         </panelLabel>
                         <panelHelpIcon
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Help Icon"
                                 id="af2_panelhelpicon"
-                                cssSelector=".cmp-container__questionmark"
+                                cssSelector=".cmp-container__label-container .cmp-container__questionmark"
                                 longTitle="Panel Help Icon"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_helpicon">
@@ -49,15 +49,15 @@
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector=".cmp-container__questionmark:focus"/>
+                                        cssSelector=".cmp-container__label-container .cmp-container__questionmark:focus"/>
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector=".cmp-container__questionmark:hover"/>
+                                        cssSelector=".cmp-container__label-container .cmp-container__questionmark:hover"/>
                                 <disabled
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Disabled"
-                                        cssSelector=".cmp-container__questionmark:disabled"/>
+                                        cssSelector=".cmp-container__label-container .cmp-container__questionmark:disabled"/>
                             </states>
                         </panelHelpIcon>
                     </items>
@@ -91,6 +91,15 @@
                         cssSelector=".cmp-container__longdescription"
                         longTitle="Panel Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_paneldescriptionlongparagraph"
+                                cssSelector=".cmp-container__longdescription p"
+                                longTitle="Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"

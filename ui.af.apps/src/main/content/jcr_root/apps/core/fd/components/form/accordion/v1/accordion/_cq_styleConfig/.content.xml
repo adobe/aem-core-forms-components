@@ -23,25 +23,25 @@
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label"
                                 id="af2_accordionlabel"
-                                cssSelector=".cmp-accordion__label"
+                                cssSelector=".cmp-accordion__label-container .cmp-accordion__label"
                                 longTitle="Accordion Label"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector=".cmp-accordion__label:hover"/>
+                                        cssSelector=".cmp-accordion__label-container .cmp-accordion__label:hover"/>
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector=".cmp-accordion__label:focus"/>
+                                        cssSelector=".cmp-accordion__label-container .cmp-accordion__label:focus"/>
                             </states>
                         </accordionLabel>
                         <accordionHelpIcon
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Help Icon"
                                 id="af2_accordionhelpicon"
-                                cssSelector=".cmp-accordion__questionmark"
+                                cssSelector=".cmp-accordion__label-container .cmp-accordion__questionmark"
                                 longTitle="Accordion Help Icon"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_helpicon">
@@ -49,15 +49,15 @@
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector=".cmp-accordion__questionmark:focus"/>
+                                        cssSelector=".cmp-accordion__label-container .cmp-accordion__questionmark:focus"/>
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector=".cmp-accordion__questionmark:hover"/>
+                                        cssSelector=".cmp-accordion__label-container .cmp-accordion__questionmark:hover"/>
                                 <disabled
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Disabled"
-                                        cssSelector=".cmp-accordion__questionmark:disabled"/>
+                                        cssSelector=".cmp-accordion__label-container .cmp-accordion__questionmark:disabled"/>
                             </states>
                         </accordionHelpIcon>
                     </items>
@@ -91,6 +91,15 @@
                         cssSelector=".cmp-accordion__longdescription"
                         longTitle="Accordion Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_accordiondescriptionlongparagraph"
+                                cssSelector=".cmp-accordion__longdescription p"
+                                longTitle="Accordion Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -170,6 +179,14 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
                                                 cssSelector=".cmp-accordion__icon:hover"/>
+                                        <rtl
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="RTL"
+                                                cssSelector="[dir=&quot;rtl&quot;] .cmp-accordion__icon"/>
+                                        <expanded
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Expanded"
+                                                cssSelector=".cmp-accordion__button.cmp-accordion__button--expanded .cmp-accordion__icon"/>
                                     </states>
                                 </accordionHeaderIcon>
                             </items>
@@ -200,6 +217,10 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
                                         cssSelector=".cmp-accordion__panel:hover"/>
+                                <hidden
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hidden"
+                                        cssSelector=".cmp-accordion__panel--hidden"/>
                             </states>
                         </accordionPanelWidget>
                     </items>
@@ -214,6 +235,30 @@
                                 cssSelector=".cmp-accordion__item:hover"/>
                     </states>
                 </accordionPanelItem>
+                <accordionRepeatableButtons
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Repeatable Buttons"
+                        id="af2_accordionrepeatablebuttons"
+                        cssSelector=".cmp-accordion__repeatable-buttons"
+                        longTitle="Accordion Repeatable Buttons"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <accordionAddButton
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Add Button"
+                                id="af2_accordionaddbutton"
+                                cssSelector=".cmp-accordion__add-button"
+                                longTitle="Accordion Add Button"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <accordionRemoveButton
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Remove Button"
+                                id="af2_accordionremovebutton"
+                                cssSelector=".cmp-accordion__remove-button"
+                                longTitle="Accordion Remove Button"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
+                </accordionRepeatableButtons>
             </items>
         </accordionPanel>
     </items>

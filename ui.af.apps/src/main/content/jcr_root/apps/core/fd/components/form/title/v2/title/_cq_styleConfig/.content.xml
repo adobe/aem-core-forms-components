@@ -3,6 +3,13 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="FormTitle">
     <items jcr:primaryType="nt:unstructured">
+        <formTitleText
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Title Text"
+            id="af2_formtitletext"
+            cssSelector=".cmp-title__text"
+            longTitle="Form Title Text"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
         <formTitle
             jcr:primaryType="nt:unstructured"
             jcr:title="Title"

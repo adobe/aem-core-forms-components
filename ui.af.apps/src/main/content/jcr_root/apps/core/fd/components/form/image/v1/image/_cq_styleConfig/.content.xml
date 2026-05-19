@@ -3,6 +3,13 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="image">
     <items jcr:primaryType="nt:unstructured">
+        <imageRoot
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Image Container"
+            id="af2_imageroot"
+            cssSelector=".cmp-image"
+            longTitle="Image Container"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
         <Image
             jcr:primaryType="nt:unstructured"
             jcr:title="Image"
