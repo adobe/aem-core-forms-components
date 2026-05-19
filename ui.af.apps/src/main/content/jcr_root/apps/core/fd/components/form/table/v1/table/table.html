@@ -14,6 +14,10 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <sly data-sly-use.table="com.adobe.cq.forms.core.components.models.form.Panel"
+     data-sly-use.renderer="${'table.js'}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
 
 <div class="cmp-adaptiveform-table cmp-container"
@@ -26,10 +30,11 @@
     <sly data-sly-test="${table.label.visible != false}">
         <div class="cmp-adaptiveform-table__title cmp-container__label">${table.label.value @ context='html'}</div>
     </sly>
-    
-    <sly data-sly-test="${table.description}">
-        <div class="cmp-adaptiveform-table__description cmp-container__longdescription">${table.description @ context='html'}</div>
-    </sly>
+    <div class="cmp-adaptiveform-table__help-container">
+        <div data-sly-call="${questionMark.questionMark @componentId=table.id, longDescription=table.description, bemBlock='cmp-adaptiveform-table'}" data-sly-unwrap></div>
+    </div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=table.id, shortDescriptionVisible=table.tooltipVisible, shortDescription=table.tooltip, bemBlock='cmp-adaptiveform-table'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=table.id, longDescription=table.description, bemBlock='cmp-adaptiveform-table'}" data-sly-unwrap></div>
 
     <!--/* EDIT MODE: children render their own <tr> so we can stamp data-cq-data-path on it. */-->
     <sly data-sly-test="${wcmmode.edit}">
