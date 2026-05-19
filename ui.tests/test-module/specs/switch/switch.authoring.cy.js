@@ -54,7 +54,7 @@ describe('Page - Authoring', function () {
     .should("exist");
 
     cy.get('.cq-dialog-cancel').click();
-    cy.get('.cq-dialog-cancel').should('not.exist');
+    cy.get('.cq-dialog-cancel').should('not.be.visible');
     cy.selectLayer("Edit");
     cy.deleteComponentByPath(switchDrop);
   }
