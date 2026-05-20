@@ -1,100 +1,79 @@
-# Adaptive Form Table (v1)
+<!--
+Copyright 2026 Adobe
 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+Adaptive Form Table (v1)
+====
 Adaptive Form Table component written in HTL that allows authors to capture data in a tabular format with rows and columns.
 
 ## Features
 
-* **Container Component**: Can contain other form components in cells
-* **Flexible Structure**: Supports header rows and multiple data rows
-* **Configurable**: Authors can configure column widths, sorting, and styling
-* **Accessible**: Proper ARIA roles and semantic HTML structure
-* **Responsive**: Mobile-friendly table display
+* Ability to contain `tableheader` and `tablerow` child components
+* Configurable column widths via comma-separated proportions
+* Optional column sorting
+* Short description / long description / question mark help pattern
+* Visible and enabled state binding for rules engine
 
-## Component Structure
+### Use Object
+The Adaptive Form Table component uses the `com.adobe.cq.forms.core.components.models.form.Panel` Sling Model for its Use-object.
 
+### Edit Dialog Properties
+The following properties are written to JCR for this component and are expected to be available as `Resource` properties:
+
+1. `./jcr:title` - defines the label to use for this component
+2. `./hideTitle` - if set to `true`, the label of this component will be hidden
+3. `./name` - defines the name of the field, which will be submitted with the form data
+4. `./description` - defines a help message rendered below the table title
+
+<!-- upcoming features  -->
+<!-- 5. `./columnWidth` - defines proportional column widths as comma-separated values (e.g., `1,2,1`)
+6. `./enableSorting` - if set to `true`, enables column sorting on the rendered table -->
+
+## Client Libraries
+The component provides a `core.forms.components.table.v1.runtime` client library category that contains the JavaScript runtime for the component.
+It should be added to a relevant site client library using the `embed` property.
+
+It also provides a `core.forms.components.table.v1.editor` editor client library category that includes
+JavaScript handling for authoring interactions. It is already included by its edit dialog.
+
+## BEM Description
 ```
-table/
-├── .content.xml                # Component definition
-├── _cq_dialog/                 # Author dialog
-├── _cq_template/               # Initial structure (2x2 table)
-├── _cq_editConfig.xml          # Edit configuration
-├── table.html                  # HTL rendering template
-├── clientlibs/                 # Client libraries
-│   ├── editor/                 # Author mode CSS/JS
-│   └── site/                   # Runtime CSS/JS
-└── README.md                   # This file
-```
-
-## Usage
-
-### For Authors
-
-1. Drag the "Adaptive Form Table (v1)" component onto the page
-2. The component creates a default 2-column table with 1 header row and 1 data row
-3. Configure the table properties in the dialog:
-   - **Name**: Unique identifier
-   - **Title**: Display title
-   - **Description**: Help text
-   - **Column Width**: Comma-separated proportions (e.g., "1,2,3")
-   - **Enable Sorting**: Allow column sorting
-
-### For Developers
-
-#### HTL Template Structure
-
-The component renders as follows:
-```html
-<div class="cmp-adaptiveform-table">
-  <table>
-    <thead>
-      <tr> <!-- tableheader component -->
-        <th>Column 1</th>
-        <th>Column 2</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr> <!-- tablerow component -->
-        <td>Cell content</td>
-        <td>Cell content</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+BLOCK cmp-adaptiveform-table
+    ELEMENT cmp-adaptiveform-table__title
+    ELEMENT cmp-adaptiveform-table__help-container
+    ELEMENT cmp-adaptiveform-table__shortdescription
+    ELEMENT cmp-adaptiveform-table__longdescription
+    ELEMENT cmp-adaptiveform-table__questionmark
+    ELEMENT cmp-adaptiveform-table__widget
+    ELEMENT cmp-adaptiveform-table__head
+    ELEMENT cmp-adaptiveform-table__body
 ```
 
-#### Child Components
+## JavaScript Data Attribute Bindings
 
-- **tableheader**: Renders header row with `<th>` elements
-- **tablerow**: Renders data row with `<td>` elements
+Apply a `data-cmp-is="adaptiveFormTable"` attribute to the `cmp-adaptiveform-table` block to enable initialization of the JavaScript component.
 
-## Current Implementation (Frontend-First)
+The following attributes are required for initialization:
+1. `data-cmp-is="adaptiveFormTable"`
+2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
-This is Phase 1 implementation focusing on:
-- ✅ Component structure and authoring
-- ✅ HTL templates for rendering
-- ✅ Basic CSS styling
-- ✅ Edit configuration for drag-drop
+The following are optional attributes that can be added to the component:
+1. `data-cmp-visible` having a boolean value to indicate whether the component is currently visible or not
+2. `data-cmp-enabled` having a boolean value to indicate whether the component is currently enabled or not
 
-## Future Enhancements (Phase 2 - Backend)
-
-- [ ] Sling Model for business logic
-- [ ] Dynamic column calculation
-- [ ] Sorting implementation
-- [ ] Repeatable rows (add/remove)
-- [ ] JSON export for headless forms
-- [ ] Advanced accessibility features
-- [ ] Mobile layout options
-
-## Technical Information
-
-* **Component Group**: `.core-adaptiveform`
-* **Super Type**: `core/fd/components/form/base/v1/base`
-* **Client Library Categories**: 
-  - `core.forms.components.table.v1` (site)
-  - `core.forms.components.table.v1.editor` (author)
-
-## Version Information
-
-* **Version**: 1.0.0
-* **Since**: 2024
-* **Implemented by**: Phase 1 - Frontend First approach
+## Information
+* **Vendor**: Adobe
+* **Version**: v1
+* **Compatibility**: Cloud
+* **Status**: production-ready
