@@ -57,6 +57,7 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_INVALID_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentinvalid";
     private static final String PATH_COMPONENT_WITH_NO_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentnone";
     private static final String PATH_COMPONENT_WITH_RULES = CONTENT_ROOT + "/textinputWithPrintRule";
+    private static final String PATH_COMPONENT_WITH_PRINT_ANNOTATIONS = CONTENT_ROOT + "/textinputWithPrintAnnotations";
     private static final String AF_PATH = "/content/forms/af/testAf";
     private static final String PAGE_PATH = "/content/testPage";
 
@@ -271,6 +272,27 @@ public class AbstractFormComponentImplTest {
         assertNotNull(rulesProperties);
         Object formReadyRule = ((Map<String, Object>) rulesProperties).get("fd:formReady");
         assertNotNull(formReadyRule);
+    }
+
+    @Test
+    public void testPrintChannelAnnotationsExcludedInPublishMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("cq:annotations"),
+            "cq:annotations should not appear in runtime/publish CRISPR payload");
+    }
+
+    @Test
+    public void testPrintChannelAnnotationsIncludedInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations, "cq:annotations should appear in authoring CRISPR payload for print channel");
+        Map<String, Object> annotation = (Map<String, Object>) annotations.get("annotation-1");
+        assertNotNull(annotation);
+        assertEquals("review note", annotation.get("text"));
     }
 
     @Test

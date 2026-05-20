@@ -65,5 +65,22 @@
       "jcr:primaryType": "nt:unstructured",
       "fd:formReady": ["form Ready"]
     }
+  },
+  "textinputWithPrintAnnotations": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "nameWithAnnotations",
+    "sling:resourceType": "forms-components-examples/components/form/textinput",
+    "fieldType": "text-input",
+    "fd:channel": "print",
+    "cq:annotations": {
+      "jcr:primaryType": "nt:unstructured",
+      "annotation-1": {
+        "jcr:primaryType": "nt:unstructured",
+        "color": "yellow",
+        "text": "review note",
+        "x": 11,
+        "y": 22
+      }
+    }
   }
 }

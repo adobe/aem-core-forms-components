@@ -758,20 +758,20 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * serialized into a per-annotation map keyed by node name; the result is
      * placed parallel to {@code fd:dor} under the component's properties.
      *
-     * <p>Scoped to IC print forms only (same channel gate as
-     * {@link #getDorContainer()}); returns null for v2 Adaptive Forms and
-     * the IC web channel.
+     * <p>Scoped to authoring/review IC print forms only; runtime/publish
+     * requests must not depend on this authoring payload. Same print-channel
+     * gate as {@link #getDorContainer()}, plus author mode check.
      *
      * @return ordered map keyed by annotation node name with color, text, x,
      *     y, optional state/resolvedBy/resolvedAt and JCR audit fields; or
-     *     null when the channel is not print, the resource is missing, or no
-     *     cq:annotations child exists. Returning null lets callers omit the
-     *     property and keeps the output non-breaking for forms without
-     *     annotations.
+     *     null when not in author mode, the channel is not print, the resource
+     *     is missing, or no cq:annotations child exists. Returning null lets
+     *     callers omit the property and keeps the output non-breaking for
+     *     forms without annotations.
      */
     @JsonIgnore
     public Map<String, Object> getCqAnnotations() {
-        if (!FormConstants.CHANNEL_PRINT.equals(this.channel) || resource == null) {
+        if (!FormConstants.CHANNEL_PRINT.equals(this.channel) || !isAuthorMode(request) || resource == null) {
             return null;
         }
         Resource annotationsResource = resource.getChild("cq:annotations");
