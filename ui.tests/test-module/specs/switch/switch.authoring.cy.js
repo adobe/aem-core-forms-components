@@ -53,8 +53,7 @@ describe('Page - Authoring', function () {
     cy.get("[name='./name']")
     .should("exist");
 
-    cy.get('.cq-dialog-cancel:not(.cq-dialog-header-action)').should('be.visible').click({force: true});
-    cy.get('.cq-dialog-cancel').should('not.exist');
+    cy.get('.cq-dialog-cancel').click();
     cy.selectLayer("Edit");
     cy.deleteComponentByPath(switchDrop);
   }
