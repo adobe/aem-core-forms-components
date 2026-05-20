@@ -234,6 +234,7 @@ describe('Page - Authoring', function () {
                     cy.get(`[data-id="${panelPath}`).click().then(() => {
                         cy.get(`[data-path="${panelPath}"]`).should('be.visible');
                         cy.get('body').click(0, 0);
+                        cy.selectLayer("Edit");
                         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerTabItemSelector);
                         cy.deleteComponentByPath(tabsPath);
                     })
