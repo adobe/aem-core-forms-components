@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2024 Adobe
+ * Copyright 2026 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -109,8 +109,6 @@
             const widget = this.getWidget();
             if (widget) {
                 widget.innerHTML = sanitizedValue;
-            } else if (this.element) {
-                this.element.innerHTML = sanitizedValue;
             }
         }
     }

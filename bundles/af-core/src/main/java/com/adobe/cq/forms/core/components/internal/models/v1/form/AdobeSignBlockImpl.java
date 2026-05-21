@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2024 Adobe
+ ~ Copyright 2026 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Text;
 import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
@@ -51,6 +52,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { Text.class,
+        Base.class,
         ComponentExporter.class },
     resourceType = { FormConstants.RT_FD_FORM_ADOBE_SIGN_BLOCK_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)

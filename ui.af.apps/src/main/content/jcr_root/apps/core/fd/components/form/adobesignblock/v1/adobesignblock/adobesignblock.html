@@ -1,5 +1,5 @@
 <!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2024 Adobe
+  ~ Copyright 2026 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
 <div data-sly-use.textModel="com.adobe.cq.forms.core.components.models.form.Text"
+     data-sly-use.baseModel="com.adobe.cq.forms.core.components.models.form.Base"
      data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
      data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
      data-sly-use.labelTemplate="core/fd/components/af-commons/v1/fieldTemplates/label.html"
@@ -26,14 +27,16 @@
     <div class="cmp-adaptiveform-adobesignblock__label-container">
         <div data-sly-call="${labelTemplate.label @
                  componentId=textModel.id,
-                 labelValue=resource.properties['jcr:title'],
-                 labelVisible=(resource.properties['hideTitle'] != 'true'),
+                 labelValue=baseModel.label.value,
+                 labelVisible=baseModel.label.visible,
+                 labelRichText=baseModel.label.richText,
                  bemBlock='cmp-adaptiveform-adobesignblock'}"
              data-sly-unwrap></div>
     </div>
-    <div data-sly-test.richContent="${textModel.value}"
-         class="cmp-adaptiveform-adobesignblock__value">
-        <div data-sly-unwrap="${textModel.isRichText}">${richContent @ context = textModel.isRichText ? 'html' : 'text'}</div>
+    <div class="cmp-adaptiveform-adobesignblock__value">
+        <sly data-sly-test.richContent="${textModel.value}">
+            <div data-sly-unwrap="${textModel.isRichText}">${richContent @ context = textModel.isRichText ? 'html' : 'text'}</div>
+        </sly>
     </div>
 </div>
 <sly data-sly-call="${templates.placeholder @ isEmpty = !richContent, classAppend='cmp-adaptiveform-adobesignblock'}"></sly>
