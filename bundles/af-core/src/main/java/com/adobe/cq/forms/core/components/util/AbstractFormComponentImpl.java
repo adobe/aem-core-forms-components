@@ -137,6 +137,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * Returns dorBindRef of the form field
      *
      * @return dorBindRef of the field
+     * 
      * @since com.adobe.cq.forms.core.components.util 4.0.0
      */
     @JsonIgnore
@@ -226,6 +227,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * Returns the name of the form field
      *
      * @return name of the form field
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
@@ -245,6 +247,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * Returns the view type
      *
      * @return the view type
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
@@ -263,6 +266,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * Returns {@code true} if form field should be visible, otherwise {@code false}.
      *
      * @return {@code true} if form field should be visible, otherwise {@code false}
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
@@ -294,7 +298,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             // TODO: for some reason sling model wrapper request (through model.json) is giving incorrect wcmmode
             // we anyways dont need to rely on wcmmode while fetching form definition.
             if (!matches) {
-                editMode = WCMMode.fromRequest(request) == WCMMode.EDIT || WCMMode.fromRequest(request) == WCMMode.DESIGN;
+                editMode = WCMMode.fromRequest(request) == WCMMode.EDIT
+                        || WCMMode.fromRequest(request) == WCMMode.DESIGN;
             }
         }
         return editMode;
@@ -315,20 +320,18 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
     /**
-     * Key under which reviewer annotations (cq:annotations) are exposed in the
-     * component's serialized properties map, parallel to fd:dor / fd:path.
+     * Key under which reviewer annotations (cq:annotations) are exposed in the component's serialized properties map,
+     * parallel to fd:dor / fd:path.
      */
     public static final String CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER = "cq:annotations";
 
     /**
-     * Predicate to check if a map entry is non empty
-     * return true if and only if
-     * 1) the value is not of type string and non empty or
-     * 2) the value is of type string[] and has more than 1 elements
+     * Predicate to check if a map entry is non empty return true if and only if 1) the value is not of type string and
+     * non empty or 2) the value is of type string[] and has more than 1 elements
      */
-    private final Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String && ((String) obj
-        .getValue()).length() > 0)
-        || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
+    private final Predicate<Map.Entry<String, Object>> isEntryNonEmpty = obj -> (obj.getValue() instanceof String
+            && ((String) obj.getValue()).length() > 0)
+            || (obj.getValue() instanceof String[] && ((String[]) obj.getValue()).length > 0);
 
     @Override
     public @NotNull Map<String, Object> getProperties() {
@@ -372,20 +375,21 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     /**
-     * Returns rules (visible, required, etc.) for the given resource. Used when exporting
-     * fragment components so that rules configured on the referenced fragment are
-     * included in the stitched output as root-level "rules" (parallel to "events").
+     * Returns rules (visible, required, etc.) for the given resource. Used when exporting fragment components so that
+     * rules configured on the referenced fragment are included in the stitched output as root-level "rules" (parallel
+     * to "events").
      *
-     * @param resource the resource that may have an fd:rules child
+     * @param resource
+     *            the resource that may have an fd:rules child
+     * 
      * @return map of rule name to expression, never null
      */
     protected final Map<String, String> getRulesForResource(Resource resource) {
-        String[] VALID_RULES = new String[] { "description", "enabled", "enum", "enumNames",
-            "exclusiveMaximum", "exclusiveMinimum", "label", "maximum", "minimum",
-            "readOnly", "required", "value", "visible" };
+        String[] VALID_RULES = new String[] { "description", "enabled", "enum", "enumNames", "exclusiveMaximum",
+                "exclusiveMinimum", "label", "maximum", "minimum", "readOnly", "required", "value", "visible" };
 
-        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj
-            .getKey()));
+        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES)
+                .anyMatch(validKey -> validKey.equals(obj.getKey()));
 
         Predicate<Map.Entry<String, Object>> isRuleValid = isEntryNonEmpty.and(isRuleNameValid);
 
@@ -395,11 +399,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         Resource ruleNode = resource.getChild("fd:rules");
         if (ruleNode != null) {
             ValueMap ruleNodeProps = ruleNode.getValueMap();
-            return ruleNodeProps.entrySet()
-                .stream()
-                .filter(isRuleValid)
-                .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (String) entry.getValue()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            return ruleNodeProps.entrySet().stream().filter(isRuleValid)
+                    .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (String) entry.getValue()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
         return Collections.emptyMap();
     }
@@ -410,11 +412,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     /**
-     * Returns rules properties (fd:rules) for the given resource. Used when exporting
-     * fragment components so that rules configured on the referenced fragment are
-     * included in the stitched output.
+     * Returns rules properties (fd:rules) for the given resource. Used when exporting fragment components so that rules
+     * configured on the referenced fragment are included in the stitched output.
      *
-     * @param resource the resource that may have an fd:rules child
+     * @param resource
+     *            the resource that may have an fd:rules child
+     * 
      * @return map of rules properties, never null
      */
     protected final Map<String, Object> getRulesPropertiesForResource(Resource resource) {
@@ -441,8 +444,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
     }
 
-    private void populateAdditionalRulesProperties(@NotNull Resource ruleNode, Map<String, Object> customRulesProperties) {
-        String[] RULES = { "fd:formReady", "fd:layoutReady", "fd:docReady", "fd:calc", "fd:init", "fd:validate", "fd:indexChange" };
+    private void populateAdditionalRulesProperties(@NotNull Resource ruleNode,
+            Map<String, Object> customRulesProperties) {
+        String[] RULES = { "fd:formReady", "fd:layoutReady", "fd:docReady", "fd:calc", "fd:init", "fd:validate",
+                "fd:indexChange" };
         ValueMap props = ruleNode.adaptTo(ValueMap.class);
         if (props != null) {
             Arrays.stream(RULES).forEach(rule -> addRuleProperty(props, customRulesProperties, rule));
@@ -458,6 +463,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * If atleast one rule is invalid then status of rule for component is considered as invalid
      *
      * @param rulesResource
+     * 
      * @return
      */
     private String getRulesStatus(Resource rulesResource) {
@@ -478,20 +484,21 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     /**
-     * Sanitizes the event entry by
-     * * removing invalid event names,
-     * * removing events where the handler is not of type string or string[]
-     * * converts all the event handlers into string[] for easy consumption
-     * * updates custom event key (as we cannot save custom:eventName in JCR)
+     * Sanitizes the event entry by * removing invalid event names, * removing events where the handler is not of type
+     * string or string[] * converts all the event handlers into string[] for easy consumption * updates custom event
+     * key (as we cannot save custom:eventName in JCR)
      *
-     * @param entry the event entry to manipulate
+     * @param entry
+     *            the event entry to manipulate
+     * 
      * @return the updated event entry
      */
     private Stream<Map.Entry<String, String[]>> sanitizeEvent(Map.Entry<String, Object> entry) {
-        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change", "submitSuccess", "submitError" };
+        String[] VALID_EVENTS = new String[] { "click", "submit", "initialize", "load", "change", "submitSuccess",
+                "submitError" };
 
-        Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_") ||
-            Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
+        Predicate<Map.Entry<String, Object>> isEventNameValid = obj -> obj.getKey().startsWith("custom_")
+                || Arrays.stream(VALID_EVENTS).anyMatch(validKey -> validKey.equals(obj.getKey()));
         Predicate<Map.Entry<String, Object>> isEventValid = isEntryNonEmpty.and(isEventNameValid);
 
         Stream<Map.Entry<String, String[]>> updatedEntry;
@@ -527,11 +534,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     /**
-     * Returns events (fd:events) for the given resource. Used when exporting
-     * fragment components so that events configured on the referenced fragment are
-     * included in the stitched output.
+     * Returns events (fd:events) for the given resource. Used when exporting fragment components so that events
+     * configured on the referenced fragment are included in the stitched output.
      *
-     * @param resource the resource that may have an fd:events child
+     * @param resource
+     *            the resource that may have an fd:events child
+     * 
      * @return map of event name to handler expressions, never null
      */
     protected final Map<String, String[]> getEventsForResource(Resource resource) {
@@ -543,15 +551,15 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                 eventSet.addAll(eventNodeProps.entrySet());
             }
         }
-        return eventSet.stream()
-            .flatMap(this::sanitizeEvent)
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return eventSet.stream().flatMap(this::sanitizeEvent)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     /**
      * Returns the reference to the data model
      *
      * @return reference to the data model
+     * 
      * @since com.adobe.cq.forms.core.components.models.form 0.0.1
      */
     @Override
@@ -566,6 +574,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * Returns getPath of the form field
      *
      * @return getPath of the field
+     * 
      * @since com.adobe.cq.forms.core.components.util 3.1.0
      */
     @Override
@@ -600,9 +609,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (componentData == null) {
             if (this.dataLayerEnabled == null) {
                 if (this.getCurrentPage() != null) {
-                    // Check at page level to allow components embedded via containers in editable templates to inherit the setting
-                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils.isDataLayerEnabled(this.getCurrentPage()
-                        .getContentResource());
+                    // Check at page level to allow components embedded via containers in editable templates to inherit
+                    // the setting
+                    this.dataLayerEnabled = com.adobe.cq.wcm.core.components.util.ComponentUtils
+                            .isDataLayerEnabled(this.getCurrentPage().getContentResource());
                 } else {
                     this.dataLayerEnabled = ComponentUtils.isDataLayerEnabled(this.resource);
                 }
@@ -616,8 +626,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     private static class DataRefSerializer extends JsonSerializer<String> {
         @Override
-        public void serialize(String s, JsonGenerator jsonGenerator,
-            SerializerProvider serializerProvider) throws IOException {
+        public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+                throws IOException {
             if (NULL_DATA_REF.equals(s)) {
                 jsonGenerator.writeString((String) null);
             } else {
@@ -632,13 +642,15 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     private boolean isAllowedType(Object value) {
-        return value instanceof String || value instanceof String[] || value instanceof Boolean || value instanceof Boolean[]
-            || value instanceof Calendar || value instanceof Calendar[] || value instanceof BigDecimal
-            || value instanceof BigDecimal[] || value instanceof Long || value instanceof Long[];
+        return value instanceof String || value instanceof String[] || value instanceof Boolean
+                || value instanceof Boolean[] || value instanceof Calendar || value instanceof Calendar[]
+                || value instanceof BigDecimal || value instanceof BigDecimal[] || value instanceof Long
+                || value instanceof Long[];
     }
 
     /**
-     * Fetches all the custom properties associated with a given component's instance (including additional custom properties)
+     * Fetches all the custom properties associated with a given component's instance (including additional custom
+     * properties)
      *
      * @return {@code Map<String, String>} returns all custom property key value pairs associated with the resource
      */
@@ -649,18 +661,15 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         Set<String> reservedProperties = ReservedProperties.getReservedProperties();
 
         ValueMap resourceMap = resource.getValueMap();
-        Map<String, Object> nodeBasedCustomProperties = resourceMap.entrySet()
-            .stream()
-            .filter(entry -> isAllowedType(entry.getValue())
-                && !reservedProperties.contains(entry.getKey())
-                && !CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER.equals(entry.getKey())
-                && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        Map<String, Object> nodeBasedCustomProperties = resourceMap.entrySet().stream()
+                .filter(entry -> isAllowedType(entry.getValue()) && !reservedProperties.contains(entry.getKey())
+                        && !CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER.equals(entry.getKey())
+                        && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         nodeBasedCustomProperties.forEach(customProperties::putIfAbsent);
         try {
             templateBasedCustomProperties = Optional.ofNullable(this.resource.adaptTo(CustomPropertyInfo.class))
-                .map(CustomPropertyInfo::getProperties)
-                .orElse(Collections.emptyMap());
+                    .map(CustomPropertyInfo::getProperties).orElse(Collections.emptyMap());
         } catch (NoClassDefFoundError e) {
             logger.info("CustomPropertyInfo class not found. This feature is available in the latest Forms addon.");
             templateBasedCustomProperties = Collections.emptyMap();
@@ -676,10 +685,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             Resource associatePropertiesResource = resource.getChild(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER);
             if (associatePropertiesResource != null) {
                 try {
-                    AssociateProperties associateProperties = associatePropertiesResource.adaptTo(AssociateProperties.class);
+                    AssociateProperties associateProperties = associatePropertiesResource
+                            .adaptTo(AssociateProperties.class);
                     ObjectMapper objectMapper = new ObjectMapper();
                     if (associateProperties != null) {
-                        return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {});
+                        return objectMapper.convertValue(associateProperties, new TypeReference<Map<String, Object>>() {
+                        });
                     }
                 } catch (Exception e) {
                     logger.warn("Unable to adapt associate properties", e);
@@ -744,7 +755,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
                 DorContainer dorContainer = dorContainerResource.adaptTo(DorContainer.class);
                 ObjectMapper objectMapper = new ObjectMapper();
                 if (dorContainer != null) {
-                    return objectMapper.convertValue(dorContainer, new TypeReference<Map<String, Object>>() {});
+                    return objectMapper.convertValue(dorContainer, new TypeReference<Map<String, Object>>() {
+                    });
                 }
             }
         }
@@ -752,22 +764,19 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     /**
-     * Returns the reviewer annotations for this component, read from the
-     * {@code cq:annotations} child resource on the component node (a sibling
-     * of {@code fd:dorContainer}). Each annotation node's properties are
-     * serialized into a per-annotation map keyed by node name; the result is
-     * placed parallel to {@code fd:dor} under the component's properties.
+     * Returns the reviewer annotations for this component, read from the {@code cq:annotations} child resource on the
+     * component node (a sibling of {@code fd:dorContainer}). Each annotation node's properties are serialized into a
+     * per-annotation map keyed by node name; the result is placed parallel to {@code fd:dor} under the component's
+     * properties.
      *
-     * <p>Scoped to authoring/review IC print forms only; runtime/publish
-     * requests must not depend on this authoring payload. Same print-channel
-     * gate as {@link #getDorContainer()}, plus author mode check.
+     * <p>
+     * Scoped to authoring/review IC print forms only; runtime/publish requests must not depend on this authoring
+     * payload. Same print-channel gate as {@link #getDorContainer()}, plus author mode check.
      *
-     * @return ordered map keyed by annotation node name with color, text, x,
-     *     y, optional state/resolvedBy/resolvedAt and JCR audit fields; or
-     *     null when not in author mode, the channel is not print, the resource
-     *     is missing, or no cq:annotations child exists. Returning null lets
-     *     callers omit the property and keeps the output non-breaking for
-     *     forms without annotations.
+     * @return ordered map keyed by annotation node name with color, text, x, y, optional state/resolvedBy/resolvedAt
+     *         and JCR audit fields; or null when not in author mode, the channel is not print, the resource is missing,
+     *         or no cq:annotations child exists. Returning null lets callers omit the property and keeps the output
+     *         non-breaking for forms without annotations.
      */
     @JsonIgnore
     public Map<String, Object> getCqAnnotations() {
