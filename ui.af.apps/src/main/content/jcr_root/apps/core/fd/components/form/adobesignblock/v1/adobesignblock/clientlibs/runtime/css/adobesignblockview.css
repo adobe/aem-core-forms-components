@@ -14,12 +14,52 @@
  * limitations under the License.
  ******************************************************************************/
 
-.cmp-adaptiveform-adobesignblock { }
+/* Adobe Sign placeholder spans — parity with foundation adobesign/common styles */
 
-.cmp-adaptiveform-adobesignblock__label-container { }
+.cmp-adaptiveform-adobesignblock__value [data-adobesigntype]::selection {
+    color: rgba(0, 0, 0, 0);
+}
 
-.cmp-adaptiveform-adobesignblock__label { }
+.cmp-adaptiveform-adobesignblock__value [data-adobesigntype]::-moz-selection {
+    color: rgba(0, 0, 0, 0);
+}
 
-.cmp-adaptiveform-adobesignblock__value { }
+.cmp-adaptiveform-adobesignblock__value [data-adobesigntype] {
+    width: 6rem;
+    display: inline-block;
+    color: rgba(0, 0, 0, 0);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.3);
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    vertical-align: bottom;
+    min-height: 1em;
+}
 
-.cmp-adaptiveform-adobesignblock__value [data-adobesigntype] { }
+.cmp-adaptiveform-adobesignblock__value [data-adobesigntype='radio'],
+.cmp-adaptiveform-adobesignblock__value [data-adobesigntype='checkbox'] {
+    border-bottom-width: 0;
+    background-repeat: no-repeat;
+    background-position: left center;
+    width: 3rem;
+    min-width: 3rem;
+    min-height: 10px;
+}
+
+.cmp-adaptiveform-adobesignblock__value [data-adobesigntype='radio'] {
+    background-image: url(../resources/images/radiobutton.svg);
+}
+
+.cmp-adaptiveform-adobesignblock__value [data-adobesigntype='checkbox'] {
+    background-image: url(../resources/images/checkbox.svg);
+}
+
+.cmp-adaptiveform-adobesignblock__value [data-adobesigntype='dropdown'] {
+    background-image: url(../resources/images/dropdown_chevron.svg);
+    background-repeat: no-repeat;
+    background-position: right center;
+}
