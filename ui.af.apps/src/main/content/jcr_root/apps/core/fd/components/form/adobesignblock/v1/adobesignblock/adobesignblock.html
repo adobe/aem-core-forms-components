@@ -33,7 +33,8 @@
                  bemBlock='cmp-adaptiveform-adobesignblock'}"
              data-sly-unwrap></div>
     </div>
-    <div class="cmp-adaptiveform-adobesignblock__value">
+    <div class="cmp-adaptiveform-adobesignblock__value"
+         data-richtext="${textModel.isRichText ? 'true' : ''}">
         <sly data-sly-test.richContent="${textModel.value}">
             <div data-sly-unwrap="${textModel.isRichText}">${richContent @ context = textModel.isRichText ? 'html' : 'text'}</div>
         </sly>

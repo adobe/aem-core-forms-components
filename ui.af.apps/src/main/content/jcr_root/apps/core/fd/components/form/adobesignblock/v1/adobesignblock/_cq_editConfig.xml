@@ -16,7 +16,8 @@
             jcr:primaryType="nt:unstructured"
             hideLabel="{Boolean}true"
             name="./value"
-            textPropertyName="./value">
+            textPropertyName="./value"
+            editElementQuery=".cmp-adaptiveform-adobesignblock__value">
             <rtePlugins jcr:primaryType="nt:unstructured">
                 <adobesignplugin
                     jcr:primaryType="nt:unstructured"

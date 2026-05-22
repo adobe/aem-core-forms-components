@@ -31,7 +31,7 @@
           jcr:primaryType="nt:unstructured"
           jcr:title="Adobe Sign Block"
           sling:resourceType="cq/gui/components/authoring/dialog"
-          extraClientlibs="[core.forms.components.base.v1.editor]"
+          extraClientlibs="[core.forms.components.adobesignblock.v1.editor]"
           helpPath="https://www.adobe.com/go/aem_af_cmp_adobesignblock_v1"
           trackingFeature="core-components:adaptiveform-adobesignblock:v1">
     <content
