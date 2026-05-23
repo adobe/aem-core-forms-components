@@ -75,6 +75,8 @@ import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
     adapters = { FormContainer.class, ContainerExporter.class, ComponentExporter.class },
@@ -560,6 +562,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Override
     @JsonIgnore
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "signers is already Collections.unmodifiableList")
     public List<SignerInfo> getSigners() {
         return signers;
     }

@@ -21,6 +21,8 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.Nullable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import com.adobe.cq.forms.core.components.models.form.SignerInfo;
 
 @Model(
@@ -103,8 +105,9 @@ public class SignerInfoImpl implements SignerInfo {
 
     @Override
     @Nullable
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public String[] getEmailAutocomplete() {
-        return emailAutocomplete;
+        return emailAutocomplete != null ? emailAutocomplete.clone() : null;
     }
 
     @Override
@@ -127,8 +130,9 @@ public class SignerInfoImpl implements SignerInfo {
 
     @Override
     @Nullable
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public String[] getCountryCodeAutocomplete() {
-        return countryCodeAutocomplete;
+        return countryCodeAutocomplete != null ? countryCodeAutocomplete.clone() : null;
     }
 
     @Override
@@ -145,20 +149,23 @@ public class SignerInfoImpl implements SignerInfo {
 
     @Override
     @Nullable
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public String[] getPhoneAutocomplete() {
-        return phoneAutocomplete;
+        return phoneAutocomplete != null ? phoneAutocomplete.clone() : null;
     }
 
     @Override
     @Nullable
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public String[] getSignFieldBlocks() {
-        return signFieldBlocks;
+        return signFieldBlocks != null ? signFieldBlocks.clone() : null;
     }
 
     @Override
     @Nullable
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public String[] getSignerAfFieldsBlock() {
-        return signerAfFieldsBlock;
+        return signerAfFieldsBlock != null ? signerAfFieldsBlock.clone() : null;
     }
 
     @Override
