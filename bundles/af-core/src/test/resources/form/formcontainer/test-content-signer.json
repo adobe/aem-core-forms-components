@@ -1,0 +1,14 @@
+{
+  "jcr:primaryType": "nt:unstructured",
+  "signerTitle": "Lead Signer",
+  "emailSource": "typed",
+  "email": "lead@example.com",
+  "securityOption": "PHONE",
+  "countryCodeSource": "typed",
+  "countryCode": "+1",
+  "phoneSource": "typed",
+  "phone": "9876543210",
+  "signFieldBlocks": ["block1", "block2"],
+  "signerAfFieldsBlock": ["emailField"],
+  "signerNumber": 1
+}

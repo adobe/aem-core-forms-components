@@ -15,7 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v2.form;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +35,12 @@ import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.*;
+import org.apache.sling.models.annotations.injectorspecific.ChildResource;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
+import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -57,6 +64,7 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.models.form.SignerInfo;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.util.AbstractContainerImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
@@ -158,6 +166,20 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     @Self(injectionStrategy = InjectionStrategy.OPTIONAL)
     private AutoSaveConfiguration autoSaveConfig;
+
+    /** Electronic Signature — container-level enable flag */
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "_useSignedPdf")
+    private boolean useAdobeSign;
+
+    /** Electronic Signature — signerInfo child node (contains cloud config, workflow, signers) */
+    @ChildResource(injectionStrategy = InjectionStrategy.OPTIONAL, name = "signerInfo")
+    @Nullable
+    private Resource signerInfoResource;
+
+    private String signConfigPath;
+    private String signingWorkflowType;
+    private boolean firstSignerFormFiller;
+    private List<SignerInfo> signers = Collections.emptyList();
 
     @Inject
     private ResourceResolver resourceResolver;
@@ -486,6 +508,60 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public AutoSaveConfiguration getAutoSaveConfig() {
         return autoSaveConfig;
+    }
+
+    @PostConstruct
+    private void initSigningConfig() {
+        if (signerInfoResource != null) {
+            ValueMap vm = signerInfoResource.getValueMap();
+            signConfigPath = vm.get("signConfigPath", String.class);
+            signingWorkflowType = vm.get("workflowType", String.class);
+            firstSignerFormFiller = vm.get("firstSignerFormFiller", false);
+            // Signer items are stored as children of signerInfo/signer (multifield)
+            Resource signerContainer = signerInfoResource.getChild("signer");
+            if (signerContainer != null) {
+                List<SignerInfo> signerList = new ArrayList<>();
+                for (Resource child : signerContainer.getChildren()) {
+                    SignerInfo signer = child.adaptTo(SignerInfo.class);
+                    if (signer != null) {
+                        signerList.add(signer);
+                    }
+                }
+                signers = Collections.unmodifiableList(signerList);
+            }
+        }
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isUseAdobeSign() {
+        return useAdobeSign;
+    }
+
+    @Override
+    @Nullable
+    @JsonIgnore
+    public String getSignConfigPath() {
+        return signConfigPath;
+    }
+
+    @Override
+    @Nullable
+    @JsonIgnore
+    public String getSigningWorkflowType() {
+        return signingWorkflowType;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isFirstSignerFormFiller() {
+        return firstSignerFormFiller;
+    }
+
+    @Override
+    @JsonIgnore
+    public List<SignerInfo> getSigners() {
+        return signers;
     }
 
     private Map<String, Object> getSubmitProperties() {

@@ -18,7 +18,7 @@
   jcr:primaryType="nt:unstructured"
   jcr:title="Adaptive Form Container"
   sling:resourceType="cq/gui/components/authoring/dialog"
-  extraClientlibs="[core.forms.components.container.v1.editor]"
+  extraClientlibs="[core.forms.components.container.v1.editor,core.forms.components.container.v2.editor]"
   helpPath="https://www.adobe.com/go/aem_af_cmp_container_v2"
   trackingFeature="core-components:adaptiveform-container:v2">
     <content
@@ -359,6 +359,268 @@
                             </columns>
                         </items>
                     </submitActions>
+                    <electronicSignature
+                      jcr:primaryType="nt:unstructured"
+                      jcr:title="Electronic Signature"
+                      sling:resourceType="granite/ui/components/coral/foundation/container"
+                      granite:class="cmp-adaptiveform-container__esign-tab">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                              jcr:primaryType="nt:unstructured"
+                              sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <enableAdobeSign
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                      granite:class="cmp-adaptiveform-container__esign-enable"
+                                      fieldDescription="Enable Adobe Sign for this form."
+                                      name="./_useSignedPdf"
+                                      text="Enable Adobe Sign"
+                                      value="{Boolean}true"/>
+                                    <signingConfigContainer
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/container"
+                                      granite:class="cmp-adaptiveform-container__esign-config">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <signConfigPath
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                              fieldDescription="Select the Adobe Sign cloud service configuration."
+                                              fieldLabel="Adobe Sign cloud configuration"
+                                              name="./signerInfo/signConfigPath"
+                                              emptyText="Select">
+                                                <datasource
+                                                  jcr:primaryType="nt:unstructured"
+                                                  sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                                                  type="echosign"/>
+                                            </signConfigPath>
+                                            <workflowType
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
+                                              fieldDescription="Choose the order in which signers will receive and sign the document."
+                                              fieldLabel="Signers can sign"
+                                              name="./signerInfo/workflowType">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <sequential
+                                                      jcr:primaryType="nt:unstructured"
+                                                      text="In Sequential Order"
+                                                      value="SEQUENTIAL"
+                                                      checked="{Boolean}true"/>
+                                                    <parallel
+                                                      jcr:primaryType="nt:unstructured"
+                                                      text="Simultaneously"
+                                                      value="PARALLEL"/>
+                                                </items>
+                                            </workflowType>
+                                            <firstSignerFormFiller
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                              fieldDescription="When selected, the person filling the form is also the first signer."
+                                              name="./signerInfo/firstSignerFormFiller"
+                                              text="Form filler is also first signer"
+                                              value="{Boolean}true"/>
+                                            <signerMultifield
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                              composite="{Boolean}true"
+                                              fieldDescription="Configure the list of signers for this form."
+                                              fieldLabel="Recipients"
+                                              name="./signerInfo/signer">
+                                                <field
+                                                  jcr:primaryType="nt:unstructured"
+                                                  sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                  granite:class="cmp-adaptiveform-container__signer-item">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <signerTitle
+                                                          jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                          fieldDescription="Display name for this signer."
+                                                          fieldLabel="Signer Title"
+                                                          name="./signerTitle"/>
+                                                        <emailSource
+                                                          jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                          fieldDescription="Choose how the signer's email address is provided."
+                                                          fieldLabel="Signer's Email Address"
+                                                          granite:class="cmp-adaptiveform-container__signer-emailsource"
+                                                          name="./emailSource"
+                                                          emptyText="Select">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <form
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  text="From Form Field"
+                                                                  value="form"/>
+                                                                <userProfile
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  text="From User Profile"
+                                                                  value="userProfile"/>
+                                                                <typed
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  text="Typed by Signer"
+                                                                  value="typed"/>
+                                                            </items>
+                                                        </emailSource>
+                                                        <emailAutocomplete
+                                                          jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                          fieldDescription="Select the form field that contains the signer's email address."
+                                                          fieldLabel="Email form field"
+                                                          granite:class="cmp-adaptiveform-container__signer-emailautocomplete"
+                                                          multiple="{Boolean}true"
+                                                          name="./emailAutocomplete">
+                                                            <datasource
+                                                              jcr:primaryType="nt:unstructured"
+                                                              sling:resourceType="core/fd/components/form/container/v2/container/datasource/adobesignfields"/>
+                                                        </emailAutocomplete>
+                                                        <email
+                                                          jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                          fieldDescription="Enter the signer's email address."
+                                                          fieldLabel="Email address"
+                                                          granite:class="cmp-adaptiveform-container__signer-email"
+                                                          name="./email"
+                                                          validation="email"/>
+                                                        <securityOption
+                                                          jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                          fieldDescription="Choose the authentication method for the signer."
+                                                          fieldLabel="Signer Authentication"
+                                                          granite:class="cmp-adaptiveform-container__signer-securityoption"
+                                                          name="./securityOption"
+                                                          emptyText="Select">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <none
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  text="None"
+                                                                  value="NONE"/>
+                                                                <phone
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  text="Phone Verification"
+                                                                  value="PHONE"/>
+                                                                <kba
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  text="Knowledge Based Authentication"
+                                                                  value="KBA"/>
+                                                                <webIdentity
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  text="Social Identity"
+                                                                  value="WEB_IDENTITY"/>
+                                                            </items>
+                                                        </securityOption>
+                                                        <phoneContainer
+                                                          jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                          granite:class="cmp-adaptiveform-container__signer-phonecontainer">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <countryCodeSource
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                  fieldDescription="Choose how the country code is provided."
+                                                                  fieldLabel="Country Code Source"
+                                                                  granite:class="cmp-adaptiveform-container__signer-countrycodesource"
+                                                                  name="./countryCodeSource"
+                                                                  emptyText="Select">
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <form
+                                                                          jcr:primaryType="nt:unstructured"
+                                                                          text="From Form Field"
+                                                                          value="form"/>
+                                                                        <typed
+                                                                          jcr:primaryType="nt:unstructured"
+                                                                          text="Manually"
+                                                                          value="typed"/>
+                                                                    </items>
+                                                                </countryCodeSource>
+                                                                <countryCodeAutocomplete
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                  fieldDescription="Select the form field that contains the country code."
+                                                                  fieldLabel="Country Code form field"
+                                                                  granite:class="cmp-adaptiveform-container__signer-countrycodeautocomplete"
+                                                                  multiple="{Boolean}true"
+                                                                  name="./countryCodeAutocomplete">
+                                                                    <datasource
+                                                                      jcr:primaryType="nt:unstructured"
+                                                                      sling:resourceType="core/fd/components/form/container/v2/container/datasource/adobesignfields"/>
+                                                                </countryCodeAutocomplete>
+                                                                <countryCode
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                  fieldDescription="Enter the country code (e.g. +1 for USA)."
+                                                                  fieldLabel="Country Code"
+                                                                  granite:class="cmp-adaptiveform-container__signer-countrycode"
+                                                                  name="./countryCode"/>
+                                                                <phoneSource
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                  fieldDescription="Choose how the phone number is provided."
+                                                                  fieldLabel="Phone Number Source"
+                                                                  granite:class="cmp-adaptiveform-container__signer-phonesource"
+                                                                  name="./phoneSource"
+                                                                  emptyText="Select">
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <form
+                                                                          jcr:primaryType="nt:unstructured"
+                                                                          text="From Form Field"
+                                                                          value="form"/>
+                                                                        <typed
+                                                                          jcr:primaryType="nt:unstructured"
+                                                                          text="Manually"
+                                                                          value="typed"/>
+                                                                    </items>
+                                                                </phoneSource>
+                                                                <phoneAutocomplete
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                  fieldDescription="Select the form field that contains the phone number."
+                                                                  fieldLabel="Phone Number form field"
+                                                                  granite:class="cmp-adaptiveform-container__signer-phoneautocomplete"
+                                                                  multiple="{Boolean}true"
+                                                                  name="./phoneAutocomplete">
+                                                                    <datasource
+                                                                      jcr:primaryType="nt:unstructured"
+                                                                      sling:resourceType="core/fd/components/form/container/v2/container/datasource/adobesignfields"/>
+                                                                </phoneAutocomplete>
+                                                                <phone
+                                                                  jcr:primaryType="nt:unstructured"
+                                                                  sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                  fieldDescription="Enter the signer's phone number."
+                                                                  fieldLabel="Phone Number"
+                                                                  granite:class="cmp-adaptiveform-container__signer-phone"
+                                                                  name="./phone"/>
+                                                            </items>
+                                                        </phoneContainer>
+                                                        <signFieldBlocks
+                                                          jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                          fieldDescription="Select which Adobe Sign blocks this signer should fill or sign."
+                                                          fieldLabel="Adobe Sign fields to fill or sign"
+                                                          multiple="{Boolean}true"
+                                                          name="./signFieldBlocks">
+                                                            <datasource
+                                                              jcr:primaryType="nt:unstructured"
+                                                              sling:resourceType="core/fd/components/form/container/v2/container/datasource/adobesignfields"/>
+                                                        </signFieldBlocks>
+                                                        <signerAfFieldsBlock
+                                                          jcr:primaryType="nt:unstructured"
+                                                          sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                          fieldDescription="Select Adaptive Form fields assigned to this signer."
+                                                          fieldLabel="Signer Assigned Adaptive Form Fields"
+                                                          multiple="{Boolean}true"
+                                                          name="./signerAfFieldsBlock">
+                                                            <datasource
+                                                              jcr:primaryType="nt:unstructured"
+                                                              sling:resourceType="core/fd/components/form/container/v2/container/datasource/adobesignfields"/>
+                                                        </signerAfFieldsBlock>
+                                                    </items>
+                                                </field>
+                                            </signerMultifield>
+                                        </items>
+                                    </signingConfigContainer>
+                                </items>
+                            </columns>
+                        </items>
+                    </electronicSignature>
                     <advanced
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/include"

@@ -76,5 +76,36 @@
     "thankyouPage": "/a/b/c",
     "thankyouMessage": "message",
     "id": "L2NvbnRlbnQvZm9ybXMvYWYvYWYy"
+  },
+  "formcontainerv2WithAdobeSign": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/container/v2/container",
+    "thankyouPage": "/a/b/c",
+    "thankyouMessage": "message",
+    "fieldType": "form",
+    "_useSignedPdf": true,
+    "signerInfo": {
+      "jcr:primaryType": "nt:unstructured",
+      "signConfigPath": "/etc/cloudservices/echosign/testconfig",
+      "workflowType": "SEQUENTIAL",
+      "firstSignerFormFiller": true,
+      "signer": {
+        "jcr:primaryType": "nt:unstructured",
+        "item0": {
+          "jcr:primaryType": "nt:unstructured",
+          "signerTitle": "Test Signer",
+          "emailSource": "typed",
+          "email": "signer@example.com",
+          "securityOption": "PHONE",
+          "countryCodeSource": "typed",
+          "countryCode": "+1",
+          "phoneSource": "typed",
+          "phone": "1234567890",
+          "signFieldBlocks": ["adobesignblock1"],
+          "signerAfFieldsBlock": ["textField1"],
+          "signerNumber": 1
+        }
+      }
+    }
   }
 }

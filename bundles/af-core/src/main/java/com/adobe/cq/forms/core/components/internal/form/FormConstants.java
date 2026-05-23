@@ -146,4 +146,8 @@ public final class FormConstants {
     /** The resource type for date time input field v1 */
     public static final String RT_FD_FORM_DATETIME_V1 = RT_FD_FORM_PREFIX + "datetime/v1/datetime";
 
+    /** The resource type for the Adobe Sign fields datasource (Electronic Signature tab) */
+    public static final String RT_FD_FORM_ADOBESIGN_FIELDS_DATASOURCE_V1 = RT_FD_FORM_PREFIX
+        + "container/v2/container/datasource/adobesignfields";
+
 }
