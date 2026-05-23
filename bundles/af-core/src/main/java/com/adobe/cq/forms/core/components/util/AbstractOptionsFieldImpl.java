@@ -148,7 +148,7 @@ public abstract class AbstractOptionsFieldImpl extends AbstractFieldImpl impleme
 
         Label label = getLabel();
         String labelValue = (label != null && label.getValue() != null) ? label.getValue() : "";
-        boolean hasRichTextLabel = label != null && label.isRichText() != null && label.isRichText();
+        boolean hasRichTextLabel = label != null && Boolean.TRUE.equals(label.isRichText());
 
         // Strip HTML from label once if needed
         String cleanLabel = hasRichTextLabel ? labelValue.replaceAll("<[^>]*>", "") : labelValue;

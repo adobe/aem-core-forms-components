@@ -70,10 +70,10 @@ public class AdobeSignFieldsDataSourceServlet extends AbstractDataSourceServlet 
     @Override
     protected void doGet(@NotNull SlingHttpServletRequest request, @NotNull SlingHttpServletResponse response) {
         ResourceResolver resourceResolver = request.getResourceResolver();
-        String componentInstancePath = request.getRequestPathInfo().getSuffix();
+        String componentInstancePath = DatasourceComponentPathResolver.resolve(request);
         List<Resource> resources = new ArrayList<>();
 
-        if (resourceResolver != null && componentInstancePath != null) {
+        if (componentInstancePath != null) {
             Resource componentInstance = resourceResolver.getResource(componentInstancePath);
             Resource formInstance = ComponentUtils.getFormContainer(componentInstance);
             if (formInstance != null) {
@@ -96,7 +96,6 @@ public class AdobeSignFieldsDataSourceServlet extends AbstractDataSourceServlet 
                 String title = child.getValueMap().get("name", name);
                 result.add(createDropdownEntry(resourceResolver, title, name));
             }
-            // Recurse into containers
             if (child.hasChildren()) {
                 collectAdobeSignBlocks(child, result, resourceResolver);
             }
