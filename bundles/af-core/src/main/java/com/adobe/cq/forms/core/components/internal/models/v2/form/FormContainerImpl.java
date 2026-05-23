@@ -74,7 +74,6 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @Model(

@@ -21,9 +21,8 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.Nullable;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import com.adobe.cq.forms.core.components.models.form.SignerInfo;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @Model(
     adaptables = { Resource.class },
