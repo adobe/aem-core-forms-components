@@ -81,6 +81,9 @@ public class SignerInfoImpl implements SignerInfo {
     @Nullable
     private String[] signerAfFieldsBlock;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "firstSignerFormFiller")
+    private boolean firstSignerFormFiller = false;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "signerNumber")
     private int signerNumber = 1;
 
@@ -165,6 +168,11 @@ public class SignerInfoImpl implements SignerInfo {
     @SuppressFBWarnings("EI_EXPOSE_REP")
     public String[] getSignerAfFieldsBlock() {
         return signerAfFieldsBlock != null ? signerAfFieldsBlock.clone() : null;
+    }
+
+    @Override
+    public boolean isFirstSignerFormFiller() {
+        return firstSignerFormFiller;
     }
 
     @Override

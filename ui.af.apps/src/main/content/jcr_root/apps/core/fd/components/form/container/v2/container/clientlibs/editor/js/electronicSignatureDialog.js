@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2024 Adobe
+ * Copyright 2026 Adobe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,10 @@
         esignTab: ".cmp-adaptiveform-container__esign-tab",
         enableCheckbox: ".cmp-adaptiveform-container__esign-enable",
         signingConfig: ".cmp-adaptiveform-container__esign-config",
+        signerMultifield: "coral-multifield[name='./signerInfo/signer']",
         signerItem: ".cmp-adaptiveform-container__signer-item",
+        firstSignerRadiogroup: ".cmp-adaptiveform-container__signer-firstsigner",
+        signConfigPath: "coral-select[name='./signerInfo/signConfigPath']",
         emailSource: ".cmp-adaptiveform-container__signer-emailsource",
         emailAutocomplete: ".cmp-adaptiveform-container__signer-emailautocomplete",
         email: ".cmp-adaptiveform-container__signer-email",
@@ -34,9 +37,6 @@
         phone: ".cmp-adaptiveform-container__signer-phone"
     };
 
-    /**
-     * Returns the native checked state of a Coral.Checkbox or checkbox input.
-     */
     function isChecked(el) {
         var checkbox = el instanceof $ ? el[0] : el;
         if (checkbox && checkbox.tagName && checkbox.tagName.toLowerCase() === "coral-checkbox") {
@@ -46,40 +46,80 @@
     }
 
     /**
-     * Show or hide an element (wrapper approach compatible with Coral UI).
+     * Returns the selected value from a coral-select, whether $el is the
+     * coral-select itself or a containing wrapper (granite:class on wrapper).
+     */
+    function getSelectValue($el) {
+        var coralSelect = $el.is("coral-select") ? $el[0] : $el.find("coral-select")[0];
+        return coralSelect ? (coralSelect.value || "") : "";
+    }
+
+    /**
+     * Show or hide a field wrapper or plain container.
+     * Caps the closest(".coral-Form-fieldwrapper") search at the signer-item
+     * boundary so the multifield itself is never accidentally hidden.
      */
     function setVisible($el, visible) {
-        $el.closest(".coral-Form-fieldwrapper, .coral-Form-field, [data-granite-ui-component-id]")
-            .addBack()
-            .toggle(visible);
+        var $signerItem = $el.closest(SELECTORS.signerItem);
+        var $candidate = $el.closest(".coral-Form-fieldwrapper");
+        var useWrapper = $candidate.length && (
+            !$signerItem.length || $.contains($signerItem[0], $candidate[0])
+        );
+        (useWrapper ? $candidate : $el).toggle(visible);
     }
 
-    /**
-     * Toggles the main signing config section based on the enable checkbox.
-     */
     function toggleSigningConfig(dialog) {
         var $dialog = $(dialog);
-        var $enable = $dialog.find(SELECTORS.enableCheckbox);
-        var enabled = isChecked($enable);
+        var enabled = isChecked($dialog.find(SELECTORS.enableCheckbox));
         $dialog.find(SELECTORS.signingConfig).toggle(enabled);
+        if (enabled) {
+            ensureDefaultSigner(dialog);
+        }
     }
 
     /**
-     * Applies email source visibility rules within a signer item.
+     * Adds one signer item if the multifield is empty.
+     * Called whenever Adobe Sign is enabled (dialog open or checkbox checked).
      */
+    function ensureDefaultSigner(dialog) {
+        var $mf = $(dialog).find(SELECTORS.signerMultifield);
+        if (!$mf.length) return;
+        Coral.commons.ready($mf[0], function() {
+            if ($mf[0].items.length === 0) {
+                var addBtn = $mf[0].querySelector("[coral-multifield-add]");
+                if (addBtn) addBtn.click();
+            }
+        });
+    }
+
+    /**
+     * Enables the "Is form filler first signer?" radiogroup on the first signer item;
+     * locks it to "No" and disables it on all subsequent items.
+     */
+    function updateFirstSignerState(dialog) {
+        $(dialog).find(SELECTORS.signerMultifield)
+            .find("coral-multifield-item")
+            .each(function(index) {
+                var $item = $(this).find(SELECTORS.signerItem);
+                var rg = $item.find(SELECTORS.firstSignerRadiogroup)[0];
+                if (!rg) return;
+                if (index === 0) {
+                    rg.disabled = false;
+                } else {
+                    rg.value = "false";
+                    rg.disabled = true;
+                }
+            });
+    }
+
     function applyEmailSourceRules($item) {
-        var $source = $item.find(SELECTORS.emailSource);
-        var val = $source.length ? $source[0].value : "";
+        var val = getSelectValue($item.find(SELECTORS.emailSource));
         setVisible($item.find(SELECTORS.emailAutocomplete), val === "form");
         setVisible($item.find(SELECTORS.email), val === "typed");
     }
 
-    /**
-     * Applies security option visibility rules within a signer item.
-     */
     function applySecurityOptionRules($item) {
-        var $option = $item.find(SELECTORS.securityOption);
-        var val = $option.length ? $option[0].value : "";
+        var val = getSelectValue($item.find(SELECTORS.securityOption));
         var isPhone = val === "PHONE";
         setVisible($item.find(SELECTORS.phoneContainer), isPhone);
         if (isPhone) {
@@ -88,29 +128,18 @@
         }
     }
 
-    /**
-     * Applies country code source visibility rules within a signer item.
-     */
     function applyCountryCodeSourceRules($item) {
-        var $source = $item.find(SELECTORS.countryCodeSource);
-        var val = $source.length ? $source[0].value : "";
+        var val = getSelectValue($item.find(SELECTORS.countryCodeSource));
         setVisible($item.find(SELECTORS.countryCodeAutocomplete), val === "form");
         setVisible($item.find(SELECTORS.countryCode), val === "typed");
     }
 
-    /**
-     * Applies phone source visibility rules within a signer item.
-     */
     function applyPhoneSourceRules($item) {
-        var $source = $item.find(SELECTORS.phoneSource);
-        var val = $source.length ? $source[0].value : "";
+        var val = getSelectValue($item.find(SELECTORS.phoneSource));
         setVisible($item.find(SELECTORS.phoneAutocomplete), val === "form");
         setVisible($item.find(SELECTORS.phone), val === "typed");
     }
 
-    /**
-     * Initialises conditional visibility for all signer items currently in the DOM.
-     */
     function initAllSignerItems(dialog) {
         $(dialog).find(SELECTORS.signerItem).each(function() {
             applyEmailSourceRules($(this));
@@ -118,77 +147,101 @@
         });
     }
 
-    /**
-     * Wires change listeners for a single signer item using event delegation
-     * on its nearest stable ancestor (the multifield).
-     */
     function wireSignerItemListeners(dialog) {
         var $dialog = $(dialog);
 
-        // Email source change
         $dialog.on("change", SELECTORS.emailSource, function(e) {
-            var $item = $(e.target).closest(SELECTORS.signerItem);
-            applyEmailSourceRules($item);
+            applyEmailSourceRules($(e.target).closest(SELECTORS.signerItem));
         });
-
-        // Security option change
         $dialog.on("change", SELECTORS.securityOption, function(e) {
-            var $item = $(e.target).closest(SELECTORS.signerItem);
-            applySecurityOptionRules($item);
+            applySecurityOptionRules($(e.target).closest(SELECTORS.signerItem));
         });
-
-        // Country code source change
         $dialog.on("change", SELECTORS.countryCodeSource, function(e) {
-            var $item = $(e.target).closest(SELECTORS.signerItem);
-            applyCountryCodeSourceRules($item);
+            applyCountryCodeSourceRules($(e.target).closest(SELECTORS.signerItem));
         });
-
-        // Phone source change
         $dialog.on("change", SELECTORS.phoneSource, function(e) {
-            var $item = $(e.target).closest(SELECTORS.signerItem);
-            applyPhoneSourceRules($item);
+            applyPhoneSourceRules($(e.target).closest(SELECTORS.signerItem));
         });
     }
 
-    /**
-     * Re-initialise conditional visibility when a new signer item is added via
-     * the multifield "Add" button.
-     */
-    function wireMultifieldAddListener(dialog) {
+    function wireMultifieldListeners(dialog) {
         var $dialog = $(dialog);
-        $dialog.on("coral-collection:add", "coral-multifield", function(e) {
+
+        $dialog.on("coral-collection:add", SELECTORS.signerMultifield, function(e) {
             var $newItem = $(e.detail.item).find(SELECTORS.signerItem);
             if ($newItem.length) {
                 applyEmailSourceRules($newItem);
                 applySecurityOptionRules($newItem);
             }
+            updateFirstSignerState(dialog);
+        });
+
+        $dialog.on("coral-collection:remove", SELECTORS.signerMultifield, function() {
+            updateFirstSignerState(dialog);
         });
     }
 
     /**
-     * Entry point — called once the dialog is ready.
+     * Validates required signing config fields when Adobe Sign is enabled.
+     * Returns true if valid.
      */
+    function validateSigningConfig(dialog) {
+        if (!isChecked($(dialog).find(SELECTORS.enableCheckbox))) {
+            return true;
+        }
+        var $configSelect = $(dialog).find(SELECTORS.signConfigPath);
+        if (!$configSelect.length || !getSelectValue($configSelect)) {
+            markFieldInvalid($configSelect, "Adobe Sign cloud configuration is required.");
+            return false;
+        }
+        clearFieldInvalid($configSelect);
+        return true;
+    }
+
+    function markFieldInvalid($coralSelect, message) {
+        var el = $coralSelect[0];
+        if (!el) return;
+        el.invalid = true;
+        var $wrapper = $coralSelect.closest(".coral-Form-fieldwrapper");
+        $wrapper.find(".cmp-esign-field-error").remove();
+        $wrapper.append('<span class="cmp-esign-field-error coral-Form-errorlabel">' + message + "</span>");
+    }
+
+    function clearFieldInvalid($coralSelect) {
+        var el = $coralSelect[0];
+        if (el) el.invalid = false;
+        $coralSelect.closest(".coral-Form-fieldwrapper").find(".cmp-esign-field-error").remove();
+    }
+
+    function wireSubmitValidation(dialog) {
+        channel.on("cq-dialog-submit.esign", function(e) {
+            if (!$(dialog).is(":visible")) return;
+            if (!validateSigningConfig(dialog)) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+            }
+        });
+    }
+
     function initElectronicSignatureDialog(dialog) {
         var $dialog = $(dialog);
         if (!$dialog.find(SELECTORS.esignTab).length) {
             return;
         }
 
-        // Initial state
         toggleSigningConfig(dialog);
         initAllSignerItems(dialog);
+        updateFirstSignerState(dialog);
 
-        // Enable / disable signing config section
         $dialog.on("change", SELECTORS.enableCheckbox, function() {
             toggleSigningConfig(dialog);
         });
 
-        // Per-signer conditional fields
         wireSignerItemListeners(dialog);
-        wireMultifieldAddListener(dialog);
+        wireMultifieldListeners(dialog);
+        wireSubmitValidation(dialog);
     }
 
-    // Hook into the dialog ready event
     channel.on("dialog-ready", function() {
         var dialog = $(".cq-dialog")[0];
         if (dialog) {

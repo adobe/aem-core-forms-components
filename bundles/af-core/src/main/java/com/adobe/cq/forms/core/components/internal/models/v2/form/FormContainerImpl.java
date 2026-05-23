@@ -517,7 +517,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             ValueMap vm = signerInfoResource.getValueMap();
             signConfigPath = vm.get("signConfigPath", String.class);
             signingWorkflowType = vm.get("workflowType", String.class);
-            firstSignerFormFiller = vm.get("firstSignerFormFiller", false);
+            // firstSignerFormFiller is now stored per-signer inside the multifield items
             // Signer items are stored as children of signerInfo/signer (multifield)
             Resource signerContainer = signerInfoResource.getChild("signer");
             if (signerContainer != null) {
@@ -556,7 +556,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     @JsonIgnore
     public boolean isFirstSignerFormFiller() {
-        return firstSignerFormFiller;
+        return !signers.isEmpty() && signers.get(0).isFirstSignerFormFiller();
     }
 
     @Override

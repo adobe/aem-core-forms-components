@@ -88,11 +88,11 @@
       "jcr:primaryType": "nt:unstructured",
       "signConfigPath": "/etc/cloudservices/echosign/testconfig",
       "workflowType": "SEQUENTIAL",
-      "firstSignerFormFiller": true,
       "signer": {
         "jcr:primaryType": "nt:unstructured",
         "item0": {
           "jcr:primaryType": "nt:unstructured",
+          "firstSignerFormFiller": true,
           "signerTitle": "Test Signer",
           "emailSource": "typed",
           "email": "signer@example.com",

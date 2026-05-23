@@ -161,6 +161,16 @@ public interface SignerInfo {
     }
 
     /**
+     * Returns whether this signer is the form filler (only meaningful for the first signer).
+     *
+     * @return {@code true} if the form filler is also this signer
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    default boolean isFirstSignerFormFiller() {
+        return false;
+    }
+
+    /**
      * Returns the unique signer number (1-based index within the signer list).
      *
      * @since com.adobe.cq.forms.core.components.models.form 5.13.0

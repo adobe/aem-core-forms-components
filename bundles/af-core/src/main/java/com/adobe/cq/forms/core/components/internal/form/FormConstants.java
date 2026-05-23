@@ -150,4 +150,8 @@ public final class FormConstants {
     public static final String RT_FD_FORM_ADOBESIGN_FIELDS_DATASOURCE_V1 = RT_FD_FORM_PREFIX
         + "container/v2/container/datasource/adobesignfields";
 
+    /** The resource type for the generic form-fields datasource (email/phone/countrycode autocomplete) */
+    public static final String RT_FD_FORM_FIELDS_DATASOURCE_V1 = RT_FD_FORM_PREFIX
+        + "container/v2/container/datasource/formfields";
+
 }
