@@ -222,7 +222,10 @@ describe('Page - Authoring', function () {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click({force: true});
-            cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']").eq(0).scrollIntoView().click({force: true}).clear().type("Select 1");
+            cy.get("div[name='richTextEnumNames']").then(($el) => {
+                $el[0].scrollIntoView();
+            });
+            cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']").eq(0).focus().clear().type("Select 1");
             cy.get('.cq-dialog-submit').click({ force: true });
 
             cy.selectLayer("Edit");
