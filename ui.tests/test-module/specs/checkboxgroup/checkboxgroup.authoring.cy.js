@@ -221,6 +221,7 @@ describe('Page - Authoring', function () {
             dropCheckBoxGroupInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("div[name='richTextEnumNames']").should('not.be.visible');
             cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click({force: true});
             cy.get("div[name='richTextEnumNames']").then(($el) => {
                 $el[0].scrollIntoView();

@@ -114,7 +114,8 @@ describe('Page - Authoring', function () {
       cy.get(telephoneInputPolicy).click({force: true});
       cy.get(bemDesignDialog).contains('Validation patterns').click();
       // cy.get('[role="tablist"][orientation="horizontal"] [role="tab"]').eq(2).click();
-      cy.get('[name="./allowedFormat3"]').eq(0).click({force: true});
+      cy.get('[name="./allowedFormat3"]').eq(0).check({force: true});
+      cy.get('[data-granite-coral-multifield-name="./allowedCustomFormats"]').should('be.visible');
       cy.get('[data-granite-coral-multifield-name="./allowedCustomFormats"] button').eq(0).click({force: true});
       cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').should('exist').then(() => {
         cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().type(customKey);
