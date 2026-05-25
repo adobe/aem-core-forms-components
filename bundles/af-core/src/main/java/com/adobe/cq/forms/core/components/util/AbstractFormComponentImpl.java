@@ -787,22 +787,16 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (annotationsResource == null) {
             return null;
         }
+        // Structural-only JCR properties that carry no annotation data.
+        Set<String> excluded = new java.util.HashSet<>(Arrays.asList("jcr:primaryType", "jcr:mixinTypes"));
         Map<String, Object> result = new LinkedHashMap<>();
         for (Resource child : annotationsResource.getChildren()) {
             ValueMap vm = child.getValueMap();
-            Map<String, Object> ann = new LinkedHashMap<>();
-            ann.put("color", vm.get("color", String.class));
-            ann.put("text", vm.get("text", String.class));
-            ann.put("x", vm.get("x", Long.class));
-            ann.put("y", vm.get("y", Long.class));
-            ann.put("state", vm.get("state", String.class));
-            ann.put("resolvedBy", vm.get("resolvedBy", String.class));
-            ann.put("resolvedAt", vm.get("resolvedAt", String.class));
-            ann.put("jcr:created", vm.get("jcr:created", String.class));
-            ann.put("jcr:createdBy", vm.get("jcr:createdBy", String.class));
-            // Drop nulls so the per-annotation map matches the JCR-present shape exactly.
-            ann.values().removeIf(java.util.Objects::isNull);
-            result.put(child.getName(), ann);
+            Map<String, Object> ann = vm.entrySet().stream()
+                    .filter(e -> !excluded.contains(e.getKey()) && isAllowedType(e.getValue()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                            (a, b) -> a, LinkedHashMap::new));
+            if (!ann.isEmpty()) result.put(child.getName(), ann);
         }
         return result.isEmpty() ? null : result;
     }
