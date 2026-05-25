@@ -759,16 +759,26 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      *
      * <p>
      * Scoped to authoring/review IC print forms only; runtime/publish requests must not depend on this authoring
-     * payload. Same print-channel gate as {@link #getDorContainer()}, plus author mode check.
+     * payload. Same print-channel gate as {@link #getDorContainer()}, plus an explicit publish-view denylist via
+     * {@link FormConstants#REQ_ATTR_PUBLISH_VIEW} so the runtime publish path never receives this data.
      *
-     * @return ordered map keyed by annotation node name with color, text, x, y, optional state/resolvedBy/resolvedAt
-     *         and JCR audit fields; or null when not in author mode, the channel is not print, the resource is missing,
-     *         or no cq:annotations child exists. Returning null lets callers omit the property and keeps the output
-     *         non-breaking for forms without annotations.
+     * @return ordered map keyed by annotation node name with the annotation's properties (text, x, y, state,
+     *         reviewedBy, reviewedAt, resolvedBy, resolvedAt, ...); or null when the channel is not print, the
+     *         resource is missing, the request is in publish view, or no cq:annotations child exists. Returning
+     *         null lets callers omit the property and keeps the output non-breaking for forms without annotations.
      */
     @JsonIgnore
     public Map<String, Object> getCqAnnotations() {
-        if (!FormConstants.CHANNEL_PRINT.equals(this.channel) || !isAuthorMode(request) || resource == null) {
+        // Gate matches getDorContainer() (print channel + resource present) plus an explicit
+        // publish-view denylist. The previous isAuthorMode(request) check relied on WCMMode,
+        // but the IC REST GET (CommunicationReadProcessor → FormModelReader) resolves the Sling
+        // Model with a wrapped request that doesn't carry WCMMode, so the gate always failed
+        // and cq:annotations never reached the response. See the pre-existing TODO above about
+        // sling-model-wrapper requests having incorrect WCMMode for the same reason.
+        if (!FormConstants.CHANNEL_PRINT.equals(this.channel) || resource == null) {
+            return null;
+        }
+        if (request != null && Boolean.TRUE.equals(request.getAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW))) {
             return null;
         }
         Resource annotationsResource = resource.getChild("cq:annotations");
