@@ -1,0 +1,43 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<div data-sly-use.textModel="com.adobe.cq.forms.core.components.models.form.Text"
+     data-sly-use.baseModel="com.adobe.cq.forms.core.components.models.form.Base"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
+     data-sly-use.labelTemplate="core/fd/components/af-commons/v1/fieldTemplates/label.html"
+     data-cmp-is="adaptiveFormAdobeSignBlock"
+     id="${textModel.id}"
+     data-cmp-data-layer="${textModel.data.json}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-cmp-visible="${textModel.visible ? 'true' : 'false'}"
+     class="cmp-adaptiveform-adobesignblock ${resource.properties['styleClass']}">
+    <div class="cmp-adaptiveform-adobesignblock__label-container">
+        <div data-sly-call="${labelTemplate.label @
+                 componentId=textModel.id,
+                 labelValue=baseModel.label.value,
+                 labelVisible=baseModel.label.visible,
+                 labelRichText=baseModel.label.richText,
+                 bemBlock='cmp-adaptiveform-adobesignblock'}"
+             data-sly-unwrap></div>
+    </div>
+    <div class="cmp-adaptiveform-adobesignblock__value"
+         data-richtext="${textModel.isRichText ? 'true' : ''}">
+        <sly data-sly-test.richContent="${textModel.value}">
+            <div data-sly-unwrap="${textModel.isRichText}">${richContent @ context = textModel.isRichText ? 'html' : 'text'}</div>
+        </sly>
+    </div>
+</div>
+<sly data-sly-call="${templates.placeholder @ isEmpty = !richContent, classAppend='cmp-adaptiveform-adobesignblock'}"></sly>
