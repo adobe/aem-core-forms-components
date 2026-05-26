@@ -1,0 +1,89 @@
+{
+  "emailFieldDatasource": {
+    "jcr:primaryType": "nt:unstructured",
+    "datasource": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/container/v2/container/datasource/formfields",
+      "filter": "email"
+    }
+  },
+  "phoneFieldDatasource": {
+    "jcr:primaryType": "nt:unstructured",
+    "datasource": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/container/v2/container/datasource/formfields",
+      "filter": "phone"
+    }
+  },
+  "countryCodeFieldDatasource": {
+    "jcr:primaryType": "nt:unstructured",
+    "datasource": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/container/v2/container/datasource/formfields",
+      "filter": "countryCode"
+    }
+  },
+  "formcontainerWithResponsiveGrid": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/container/v2/container",
+    "fieldType": "form",
+    "responsivegrid": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "wcm/foundation/components/responsivegrid",
+      "emailinput": {
+        "jcr:primaryType": "nt:unstructured",
+        "sling:resourceType": "core/fd/components/form/emailinput/v1/emailinput",
+        "name": "gridEmail",
+        "jcr:title": "Grid Email",
+        "fieldType": "email"
+      }
+    }
+  },
+  "formcontainerWithFields": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/container/v2/container",
+    "fieldType": "form",
+    "textinput": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/textinput/v1/textinput",
+      "name": "emailText",
+      "jcr:title": "Email Text",
+      "fieldType": "text-input"
+    },
+    "emailinput": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/emailinput/v1/emailinput",
+      "name": "signerEmail",
+      "jcr:title": "Signer Email",
+      "fieldType": "email"
+    },
+    "telephoneinput": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/telephoneinput/v1/telephoneinput",
+      "name": "signerPhone",
+      "jcr:title": "Signer Phone",
+      "fieldType": "tel"
+    },
+    "numberinput": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/numberinput/v1/numberinput",
+      "name": "countryCode",
+      "jcr:title": "Country Code",
+      "fieldType": "number-input"
+    },
+    "checkbox": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/checkbox/v1/checkbox",
+      "name": "agree",
+      "jcr:title": "Agree",
+      "fieldType": "checkbox"
+    },
+    "datepicker": {
+      "jcr:primaryType": "nt:unstructured",
+      "sling:resourceType": "core/fd/components/form/datepicker/v1/datepicker",
+      "name": "dob",
+      "jcr:title": "Date of Birth",
+      "fieldType": "date-input"
+    }
+  }
+}

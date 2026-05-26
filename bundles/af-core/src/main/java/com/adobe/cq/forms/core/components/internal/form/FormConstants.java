@@ -127,10 +127,12 @@ public final class FormConstants {
     /** The resource type for fragment v1 */
     public static final String RT_FD_FORM_FRAGMENT_V1 = RT_FD_FORM_PREFIX + "fragment/v1/fragment";
 
-    public static final String RT_FD_FRAGMENT_CONTAINER_V1 = RT_FD_FORM_PREFIX + "fragmentcontainer/v1/fragmentcontainer";
+    public static final String RT_FD_FRAGMENT_CONTAINER_V1 = RT_FD_FORM_PREFIX
+            + "fragmentcontainer/v1/fragmentcontainer";
 
     /** The resource type for terms and conditions v1 */
-    public static final String RT_FD_FORM_TERMS_AND_CONDITIONS_V1 = RT_FD_FORM_PREFIX + "termsandconditions/v1/termsandconditions";
+    public static final String RT_FD_FORM_TERMS_AND_CONDITIONS_V1 = RT_FD_FORM_PREFIX
+            + "termsandconditions/v1/termsandconditions";
 
     public static final String FORM_FIELD_TYPE = "form";
 
@@ -163,4 +165,13 @@ public final class FormConstants {
 
     /** The resource type for image choice v1 */
     public static final String RT_FD_FORM_IMAGE_CHOICE_V1 = RT_FD_FORM_PREFIX + "imagechoice/v1/imagechoice";
+
+    /** The resource type for the Adobe Sign fields datasource (Electronic Signature tab) */
+    public static final String RT_FD_FORM_ADOBESIGN_FIELDS_DATASOURCE_V1 = RT_FD_FORM_PREFIX
+            + "container/v2/container/datasource/adobesignfields";
+
+    /** The resource type for the generic form-fields datasource (email/phone/countrycode autocomplete) */
+    public static final String RT_FD_FORM_FIELDS_DATASOURCE_V1 = RT_FD_FORM_PREFIX
+            + "container/v2/container/datasource/formfields";
+
 }

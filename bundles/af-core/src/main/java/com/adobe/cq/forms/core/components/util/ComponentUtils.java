@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.util;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -381,7 +382,7 @@ public class ComponentUtils {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             logger.error("Error while fetching supported submit actions", e);
         }
         CacheManager.putInCache(CacheManager.SUPPORTED_SUBMIT_ACTIONS_CACHE_KEY, supportedSubmitActions);

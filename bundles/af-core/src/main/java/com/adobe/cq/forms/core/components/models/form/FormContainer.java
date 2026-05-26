@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.models.form;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -394,6 +395,64 @@ public interface FormContainer extends Container {
     @JsonIgnore
     default AutoSaveConfiguration getAutoSaveConfig() {
         return null;
+    }
+
+    /**
+     * Returns whether Adobe Sign Electronic Signature is enabled for this form.
+     *
+     * @return {@code true} if Adobe Sign is enabled
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    @JsonIgnore
+    default boolean isUseAdobeSign() {
+        return false;
+    }
+
+    /**
+     * Returns the path to the Adobe Sign cloud service configuration.
+     *
+     * @return cloud configuration path, or {@code null} if not configured
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    @Nullable
+    @JsonIgnore
+    default String getSignConfigPath() {
+        return null;
+    }
+
+    /**
+     * Returns the Adobe Sign workflow type.
+     * Possible values: {@code SEQUENTIAL}, {@code PARALLEL}.
+     *
+     * @return workflow type, or {@code null} if not configured
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    @Nullable
+    @JsonIgnore
+    default String getSigningWorkflowType() {
+        return null;
+    }
+
+    /**
+     * Returns whether the first signer is the form filler.
+     *
+     * @return {@code true} if the first signer fills the form
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    @JsonIgnore
+    default boolean isFirstSignerFormFiller() {
+        return false;
+    }
+
+    /**
+     * Returns the list of signer configurations for this form.
+     *
+     * @return list of {@link SignerInfo} objects, never {@code null}
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    @JsonIgnore
+    default List<SignerInfo> getSigners() {
+        return Collections.emptyList();
     }
 
 }
