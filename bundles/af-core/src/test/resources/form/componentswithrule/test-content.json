@@ -76,10 +76,23 @@
       "jcr:primaryType": "nt:unstructured",
       "annotation-1": {
         "jcr:primaryType": "nt:unstructured",
-        "color": "yellow",
         "text": "review note",
         "x": 11,
-        "y": 22
+        "y": 22,
+        "state": "open",
+        "reviewedBy": "icreviewer",
+        "reviewedAt": "2026-05-25T17:40:04.204Z"
+      },
+      "annotation-2": {
+        "jcr:primaryType": "nt:unstructured",
+        "text": "second review note",
+        "x": 100,
+        "y": 200,
+        "state": "resolved",
+        "reviewedBy": "icreviewer",
+        "reviewedAt": "2026-05-25T17:41:00.000Z",
+        "resolvedBy": "admin",
+        "resolvedAt": "2026-05-25T18:00:00.000Z"
       }
     }
   }

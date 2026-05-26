@@ -278,9 +278,20 @@ public class AbstractFormComponentImplTest {
     public void testPrintChannelAnnotationsExcludedInPublishMode() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        context.request().setAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW, Boolean.TRUE);
+        Utils.setInternalState(abstractFormComponentImpl, "request", context.request());
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        assertNull(properties.get("cq:annotations"),
-            "cq:annotations should not appear in runtime/publish CRISPR payload");
+        assertNull(properties.get("cq:annotations"));
+    }
+
+    @Test
+    public void testPrintChannelAnnotationsIncludedForRestGetWithoutWcmMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Utils.setInternalState(abstractFormComponentImpl, "request", context.request());
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations);
     }
 
     @Test
@@ -289,10 +300,48 @@ public class AbstractFormComponentImplTest {
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
-        assertNotNull(annotations, "cq:annotations should appear in authoring CRISPR payload for print channel");
+        assertNotNull(annotations);
         Map<String, Object> annotation = (Map<String, Object>) annotations.get("annotation-1");
         assertNotNull(annotation);
         assertEquals("review note", annotation.get("text"));
+        assertEquals(11L, annotation.get("x"));
+        assertEquals(22L, annotation.get("y"));
+        assertEquals("open", annotation.get("state"));
+        assertEquals("icreviewer", annotation.get("reviewedBy"));
+        assertTrue(annotation.get("reviewedAt") instanceof java.util.Calendar);
+    }
+
+    @Test
+    public void testAnnotationPropertiesPassThrough() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations);
+        Map<String, Object> annotation = (Map<String, Object>) annotations.get("annotation-1");
+        assertNotNull(annotation);
+        assertEquals("nt:unstructured", annotation.get("jcr:primaryType"));
+        assertEquals("review note", annotation.get("text"));
+        assertEquals(11L, annotation.get("x"));
+        assertEquals(22L, annotation.get("y"));
+    }
+
+    @Test
+    public void testMultipleAnnotationsInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations);
+        assertEquals(2, annotations.size());
+        assertNotNull(annotations.get("annotation-1"));
+        assertNotNull(annotations.get("annotation-2"));
+        Map<String, Object> annotation2 = (Map<String, Object>) annotations.get("annotation-2");
+        assertEquals("second review note", annotation2.get("text"));
+        assertEquals("resolved", annotation2.get("state"));
+        assertEquals("icreviewer", annotation2.get("reviewedBy"));
+        assertEquals("admin", annotation2.get("resolvedBy"));
+        assertTrue(annotation2.get("resolvedAt") instanceof java.util.Calendar);
     }
 
     @Test
@@ -305,6 +354,7 @@ public class AbstractFormComponentImplTest {
         ValueMap valueMap = new MockValueMap(resource);
         Mockito.doReturn(valueMap).when(resource).getValueMap();
         Mockito.doReturn(null).when(resource).getChild("fd:dorContainer");
+        Mockito.doReturn(null).when(resource).getChild("cq:annotations");
         Resource associateResource = Mockito.mock(Resource.class);
         Mockito.doReturn(associateResource).when(resource).getChild("fd:associate");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();

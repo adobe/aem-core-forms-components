@@ -785,13 +785,11 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (annotationsResource == null) {
             return null;
         }
-        // Structural-only JCR properties that carry no annotation data.
-        Set<String> excluded = new HashSet<>(Arrays.asList("jcr:primaryType", "jcr:mixinTypes"));
         Map<String, Object> result = new LinkedHashMap<>();
         for (Resource child : annotationsResource.getChildren()) {
             ValueMap vm = child.getValueMap();
             Map<String, Object> ann = vm.entrySet().stream()
-                .filter(e -> !excluded.contains(e.getKey()) && isAllowedType(e.getValue()))
+                .filter(e -> isAllowedType(e.getValue()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
             if (!ann.isEmpty()) {
                 result.put(child.getName(), ann);
