@@ -60,6 +60,7 @@ import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormMetaData;
+import com.adobe.cq.forms.core.components.models.form.SignerInfo;
 import com.adobe.cq.forms.core.components.models.form.TextInput;
 import com.adobe.cq.forms.core.components.models.form.ThankYouOption;
 import com.adobe.cq.forms.core.components.views.Views;
@@ -109,6 +110,7 @@ public class FormContainerImplTest {
     private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
     private static final String PATH_FORM_1_WITHOUT_REDIRECT = CONTENT_ROOT + "/formcontainerv2WithoutRedirect";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
+    private static final String PATH_FORM_WITH_ADOBE_SIGN = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithAdobeSign";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
     private static final String PATH_FORM_WITH_SPEC = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2withspecversion";
     private static final String LIB_FORM_CONTAINER = "/libs/core/fd/components/form/container/v2/container";
@@ -931,4 +933,50 @@ public class FormContainerImplTest {
         formContainer.setLang(null);
         assertEquals(formContainer.getLang(), "en");
     }
+
+    @Test
+    void testAdobeSignDisabledByDefault() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITHOUT_PREFILL, FormContainer.class, context);
+        assertFalse(formContainer.isUseAdobeSign());
+        assertNull(formContainer.getSignConfigPath());
+        assertNull(formContainer.getSigningWorkflowType());
+        assertFalse(formContainer.isFirstSignerFormFiller());
+        assertNotNull(formContainer.getSigners());
+        assertTrue(formContainer.getSigners().isEmpty());
+    }
+
+    @Test
+    void testAdobeSignEnabled() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_ADOBE_SIGN, FormContainer.class, context);
+        assertTrue(formContainer.isUseAdobeSign());
+        assertEquals("/etc/cloudservices/echosign/testconfig", formContainer.getSignConfigPath());
+        assertEquals("SEQUENTIAL", formContainer.getSigningWorkflowType());
+        assertTrue(formContainer.isFirstSignerFormFiller());
+    }
+
+    @Test
+    void testAdobeSignSigners() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_ADOBE_SIGN, FormContainer.class, context);
+        List<SignerInfo> signers = formContainer.getSigners();
+        assertNotNull(signers);
+        assertEquals(1, signers.size());
+
+        SignerInfo signer = signers.get(0);
+        assertEquals("Test Signer", signer.getSignerTitle());
+        assertEquals("typed", signer.getEmailSource());
+        assertEquals("signer@example.com", signer.getEmail());
+        assertEquals("PHONE", signer.getSecurityOption());
+        assertEquals("typed", signer.getCountryCodeSource());
+        assertEquals("+1", signer.getCountryCode());
+        assertEquals("typed", signer.getPhoneSource());
+        assertEquals("1234567890", signer.getPhone());
+        assertNotNull(signer.getSignFieldBlocks());
+        assertEquals(1, signer.getSignFieldBlocks().length);
+        assertEquals("adobesignblock1", signer.getSignFieldBlocks()[0]);
+        assertNotNull(signer.getSignerAfFieldsBlock());
+        assertEquals(1, signer.getSignerAfFieldsBlock().length);
+        assertEquals("textField1", signer.getSignerAfFieldsBlock()[0]);
+        assertEquals(1, signer.getSignerNumber());
+    }
+
 }
