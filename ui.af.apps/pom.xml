@@ -176,6 +176,9 @@
                         <exclude>**/node_modules/**</exclude>
                         <!-- Ignore generated datalayer clientlib -->
                         <exclude>**/core.wcm.components.commons.datalayer.v1/**</exclude>
+                        <!-- Ignore auto-generated runtime clientlibs (see .gitignore) -->
+                        <exclude>**/core-forms-components-runtime-base/**</exclude>
+                        <exclude>**/core-forms-components-runtime-base-xfa/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
