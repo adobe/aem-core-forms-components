@@ -15,7 +15,6 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.form;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
@@ -172,9 +171,11 @@ public class FormStructureParserImpl implements FormStructureParser {
             objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
             objectWriter.writeValue(writer, formContainer);
             result = writer.toString();
-            double sizeKb = result.getBytes(StandardCharsets.UTF_8).length / 1024.0;
-            logger.info("Form definition JSON size: {} KB, form path: {}", sizeKb, resource.getPath());
-        } catch (IOException e) {
+            if (result != null) {
+                double sizeKb = result.getBytes(StandardCharsets.UTF_8).length / 1024.0;
+                logger.info("Form definition JSON size: {} KB, form path: {}", sizeKb, resource.getPath());
+            }
+        } catch (Exception e) {
             logger.error("Unable to generate json from resource", e);
         }
         return result;
