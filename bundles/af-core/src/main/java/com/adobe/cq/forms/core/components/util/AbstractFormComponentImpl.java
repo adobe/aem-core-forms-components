@@ -314,10 +314,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
-    /**
-     * Key under which reviewer annotations (cq:annotations) are exposed in the component's serialized properties map,
-     * parallel to fd:dor / fd:path.
-     */
     public static final String CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER = "cq:annotations";
 
     /**
@@ -752,33 +748,13 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     /**
-     * Returns the reviewer annotations for this component, read from the {@code cq:annotations} child resource on the
-     * component node (a sibling of {@code fd:dorContainer}). Each annotation node's properties are serialized into a
-     * per-annotation map keyed by node name; the result is placed parallel to {@code fd:dor} under the component's
-     * properties.
-     *
-     * <p>
-     * Scoped to authoring/review IC print forms only; runtime/publish requests must not depend on this authoring
-     * payload. Same print-channel gate as {@link #getDorContainer()}, plus an explicit publish-view denylist via
-     * {@link FormConstants#REQ_ATTR_PUBLISH_VIEW} so the runtime publish path never receives this data.
-     *
-     * @return ordered map keyed by annotation node name with the annotation's properties (text, x, y, state,
-     *         reviewedBy, reviewedAt, resolvedBy, resolvedAt, ...); or null when the channel is not print, the
-     *         resource is missing, the request is in publish view, or no cq:annotations child exists. Returning
-     *         null lets callers omit the property and keeps the output non-breaking for forms without annotations.
+     * Returns the reviewer annotations stored under the component's {@code cq:annotations} child resource,
+     * keyed by annotation node name. Scoped to the print channel; returns null when no annotations exist
+     * so callers can omit the property.
      */
     @JsonIgnore
     public Map<String, Object> getCqAnnotations() {
-        // Gate matches getDorContainer() (print channel + resource present) plus an explicit
-        // publish-view denylist. The previous isAuthorMode(request) check relied on WCMMode,
-        // but the IC REST GET (CommunicationReadProcessor → FormModelReader) resolves the Sling
-        // Model with a wrapped request that doesn't carry WCMMode, so the gate always failed
-        // and cq:annotations never reached the response. See the pre-existing TODO above about
-        // sling-model-wrapper requests having incorrect WCMMode for the same reason.
         if (!FormConstants.CHANNEL_PRINT.equals(this.channel) || resource == null) {
-            return null;
-        }
-        if (request != null && Boolean.TRUE.equals(request.getAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW))) {
             return null;
         }
         Resource annotationsResource = resource.getChild("cq:annotations");

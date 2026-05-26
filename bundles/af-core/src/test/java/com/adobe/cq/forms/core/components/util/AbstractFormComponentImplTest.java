@@ -58,6 +58,7 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_NO_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentnone";
     private static final String PATH_COMPONENT_WITH_RULES = CONTENT_ROOT + "/textinputWithPrintRule";
     private static final String PATH_COMPONENT_WITH_PRINT_ANNOTATIONS = CONTENT_ROOT + "/textinputWithPrintAnnotations";
+    private static final String PATH_COMPONENT_WITH_EMPTY_ANNOTATIONS_NODE = CONTENT_ROOT + "/textinputWithEmptyAnnotationsNode";
     private static final String AF_PATH = "/content/forms/af/testAf";
     private static final String PAGE_PATH = "/content/testPage";
 
@@ -275,28 +276,15 @@ public class AbstractFormComponentImplTest {
     }
 
     @Test
-    public void testPrintChannelAnnotationsExcludedInPublishMode() {
+    public void testAnnotationsExcludedForNonPrintChannel() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
-        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
-        context.request().setAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW, Boolean.TRUE);
-        Utils.setInternalState(abstractFormComponentImpl, "request", context.request());
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         assertNull(properties.get("cq:annotations"));
     }
 
     @Test
-    public void testPrintChannelAnnotationsIncludedForRestGetWithoutWcmMode() {
+    public void testPrintChannelAnnotationsIncluded() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
-        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
-        Utils.setInternalState(abstractFormComponentImpl, "request", context.request());
-        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
-        assertNotNull(annotations);
-    }
-
-    @Test
-    public void testPrintChannelAnnotationsIncludedInAuthorMode() {
-        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
@@ -313,7 +301,7 @@ public class AbstractFormComponentImplTest {
 
     @Test
     public void testAnnotationPropertiesPassThrough() {
-        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
@@ -327,8 +315,45 @@ public class AbstractFormComponentImplTest {
     }
 
     @Test
-    public void testMultipleAnnotationsInAuthorMode() {
-        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+    public void testAnnotationsNullWhenResourceIsNull() {
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        assertNull(abstractFormComponentImpl.getCqAnnotations());
+    }
+
+    @Test
+    public void testAnnotationsNullWhenAnnotationsNodeIsEmpty() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_EMPTY_ANNOTATIONS_NODE);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        assertNull(abstractFormComponentImpl.getCqAnnotations());
+    }
+
+    @Test
+    public void testAnnotationsNullWhenChildHasOnlyDisallowedPropertyTypes() {
+        // Hit the `ann.isEmpty()` branch: every entry in the child's ValueMap
+        // fails isAllowedType — here an Integer (only Long/Long[] is allowed) —
+        // so the filtered map is empty and with all children empty the result
+        // is null.
+        Resource resource = Mockito.mock(Resource.class);
+        Resource annotationsResource = Mockito.mock(Resource.class);
+        Resource child = Mockito.mock(Resource.class);
+        ValueMap childVm = Mockito.mock(ValueMap.class);
+        Mockito.doReturn(java.util.Collections.singleton(
+            new java.util.AbstractMap.SimpleEntry<String, Object>("x", Integer.valueOf(42)))
+        ).when(childVm).entrySet();
+        Mockito.doReturn(annotationsResource).when(resource).getChild("cq:annotations");
+        Mockito.doReturn(java.util.Collections.singletonList(child)).when(annotationsResource).getChildren();
+        Mockito.doReturn(childVm).when(child).getValueMap();
+
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        assertNull(abstractFormComponentImpl.getCqAnnotations());
+    }
+
+    @Test
+    public void testMultipleAnnotations() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
         Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");

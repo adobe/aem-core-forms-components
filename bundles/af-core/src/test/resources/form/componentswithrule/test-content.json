@@ -66,6 +66,16 @@
       "fd:formReady": ["form Ready"]
     }
   },
+  "textinputWithEmptyAnnotationsNode": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "nameWithEmptyAnnotationsNode",
+    "sling:resourceType": "forms-components-examples/components/form/textinput",
+    "fieldType": "text-input",
+    "fd:channel": "print",
+    "cq:annotations": {
+      "jcr:primaryType": "nt:unstructured"
+    }
+  },
   "textinputWithPrintAnnotations": {
     "jcr:primaryType": "nt:unstructured",
     "name": "nameWithAnnotations",
