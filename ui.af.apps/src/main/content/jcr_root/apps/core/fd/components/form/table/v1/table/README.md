@@ -20,8 +20,9 @@ Adaptive Form Table component written in HTL that allows authors to capture data
 ## Features
 
 * Ability to contain `tableheader` and `tablerow` child components
-* Configurable column widths via comma-separated proportions
-* Optional column sorting
+* Configurable proportional column widths via comma-separated values
+* Optional column sorting with ascending/descending toggle (per-column sort can be individually disabled)
+* Document of Record (DoR) support — table structure and column widths exported for XFA-based DoR rendering
 * Short description / long description / question mark help pattern
 * Visible and enabled state binding for rules engine
 
@@ -35,10 +36,8 @@ The following properties are written to JCR for this component and are expected 
 2. `./hideTitle` - if set to `true`, the label of this component will be hidden
 3. `./name` - defines the name of the field, which will be submitted with the form data
 4. `./description` - defines a help message rendered below the table title
-
-<!-- upcoming features  -->
-<!-- 5. `./columnWidth` - defines proportional column widths as comma-separated values (e.g., `1,2,1`)
-6. `./enableSorting` - if set to `true`, enables column sorting on the rendered table -->
+5. `./columnWidth` - comma-separated proportional column widths (e.g. `1,2,1`); sets `table-layout: fixed` and injects a `<colgroup>` with percentage widths; also forwarded into `fd:dor` for DoR column sizing
+6. `./enableSorting` - if set to `true`, renders sort buttons on all header cells that do not have `./disableSorting` set
 
 ## Client Libraries
 The component provides a `core.forms.components.table.v1.runtime` client library category that contains the JavaScript runtime for the component.
@@ -69,8 +68,9 @@ The following attributes are required for initialization:
 2. `data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"`
 
 The following are optional attributes that can be added to the component:
-1. `data-cmp-visible` having a boolean value to indicate whether the component is currently visible or not
-2. `data-cmp-enabled` having a boolean value to indicate whether the component is currently enabled or not
+1. `data-cmp-visible` - boolean indicating whether the component is currently visible
+2. `data-cmp-enabled` - boolean indicating whether the component is currently enabled
+3. `data-cmp-sorting-enabled` - set to `"true"` when `./enableSorting` is authored; controls sort button rendering in `tableheader.html`
 
 ## Information
 * **Vendor**: Adobe
