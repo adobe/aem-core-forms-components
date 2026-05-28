@@ -580,15 +580,14 @@
     }
 
     /**
-     * True when the editable is Adaptive Form Text (draw) used inside a core table header column.
+     * True when the editable is inside a core table header column (any component type).
+     * Matches the body-cell symmetry: actions are based on DOM context, not resource type,
+     * so example-layer wrappers (forms-components-examples/components/form/text) work too.
      * @param {Granite.author.Editable} editable
      * @returns {boolean}
      */
     window.CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell = function (editable) {
         if (!editable || typeof editable.type !== "string") {
-            return false;
-        }
-        if (editable.type !== RESOURCE_TYPE_TEXT_DRAW) {
             return false;
         }
         return $(getEditableDom(editable)).closest(".cmp-adaptiveform-table__head").length > 0;
@@ -1061,6 +1060,237 @@
         }).fail(function () {
             author.ui.helpers.notify({
                 content: Granite.I18n.get("Failed to split header cell."),
+                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+            });
+        });
+    };
+
+    // ─── Body-row cell merge / split ────────────────────────────────────────────
+
+    var MERGE_ROW_CELLS_DIALOG_ID = "core-forms-merge-row-cells-dialog";
+    var SPLIT_ROW_CELL_DIALOG_ID = "core-forms-split-row-cell-dialog";
+
+    /**
+     * Returns the body-row cell colspan from .cmp-adaptiveform-tablecell
+     * (native colspan attribute set in edit mode via data-sly-attribute).
+     * @param {Granite.author.Editable} editable
+     * @returns {number}
+     */
+    function getRowCellColspan(editable) {
+        var $td = $(getEditableDom(editable)).closest(".cmp-adaptiveform-tablecell");
+        var cs = parseInt($td.attr("colspan"), 10);
+        return isNaN(cs) || cs < 1 ? 1 : cs;
+    }
+
+    /**
+     * True when the editable is Adaptive Form Text-Input (or any field) inside a
+     * body table-row cell (not a header cell).
+     * @param {Granite.author.Editable} editable
+     * @returns {boolean}
+     */
+    window.CQ.FormsCoreComponents.editorhooks.isCoreTableRowCell = function (editable) {
+        if (!editable || typeof editable.type !== "string") {
+            return false;
+        }
+        var $dom = $(getEditableDom(editable));
+        return $dom.closest(".cmp-adaptiveform-table__body").length > 0
+            && $dom.closest(".cmp-adaptiveform-tablecell").length > 0;
+    };
+
+    function getTableEditableFromRowCellChild(editable) {
+        var rowEditable = Granite.author.editables.getParent(editable);
+        if (!rowEditable) {
+            return null;
+        }
+        return Granite.author.editables.getParent(rowEditable);
+    }
+
+    /**
+     * True when the body-row cell has a colspan > 1 (has been merged).
+     * @param {Granite.author.Editable} editable
+     * @returns {boolean}
+     */
+    window.CQ.FormsCoreComponents.editorhooks.isMergedRowCell = function (editable) {
+        if (!window.CQ.FormsCoreComponents.editorhooks.isCoreTableRowCell(editable)) {
+            return false;
+        }
+        return getRowCellColspan(editable) > 1;
+    };
+
+    /**
+     * Merges 2+ consecutive, same-row selected body cells into one by:
+     * - summing their colspan values
+     * - deleting all but the first (DOM-order) cell
+     * - posting the total colspan to the first cell
+     * @param {Granite.author.Editable} editable
+     */
+    window.CQ.FormsCoreComponents.editorhooks.mergeTableRowCells = function (editable) {
+        var currentSelectionItems = Granite.author.selection.getAllSelected();
+        var selectedCount = currentSelectionItems ? currentSelectionItems.length : 0;
+
+        function showError(message) {
+            $("#" + MERGE_ROW_CELLS_DIALOG_ID).remove();
+            var dialog = new Coral.Dialog().set({
+                id: MERGE_ROW_CELLS_DIALOG_ID,
+                header: { innerHTML: Granite.I18n.get("Invalid Selection") },
+                content: { innerHTML: Granite.I18n.get(message) },
+                footer: {
+                    innerHTML: '<button is="coral-button" variant="primary" coral-close>' + Granite.I18n.get("Ok") + '</button>'
+                },
+                closable: "on",
+                variant: "error"
+            });
+            document.body.appendChild(dialog);
+            dialog.show();
+        }
+
+        if (!currentSelectionItems || selectedCount < 2) {
+            showError("Select two or more row cells to merge.");
+            return;
+        }
+
+        var allRowCells = currentSelectionItems.every(function (item) {
+            return window.CQ.FormsCoreComponents.editorhooks.isCoreTableRowCell(item);
+        });
+        if (!allRowCells) {
+            showError("All selected cells must be table row cells.");
+            return;
+        }
+
+        var firstParentPath = currentSelectionItems[0].getParentPath();
+        var allSameRow = currentSelectionItems.every(function (item) {
+            return item.getParentPath() === firstParentPath;
+        });
+        if (!allSameRow) {
+            showError("All selected cells must be in the same row.");
+            return;
+        }
+
+        var $row = $(getEditableDom(currentSelectionItems[0]))
+            .closest(".cmp-adaptiveform-tablerow");
+        var $allCells = $row.find(".cmp-adaptiveform-tablecell");
+
+        var indices = currentSelectionItems.map(function (item) {
+            return $allCells.index($(getEditableDom(item)).closest(".cmp-adaptiveform-tablecell"));
+        }).sort(function (a, b) { return a - b; });
+
+        var isConsecutive = indices.every(function (idx, i) {
+            return i === 0 || idx === indices[i - 1] + 1;
+        });
+        if (!isConsecutive) {
+            showError("Select consecutive cells in the same row to merge.");
+            return;
+        }
+
+        var sortedItems = currentSelectionItems.slice().sort(function (a, b) {
+            var aIdx = $allCells.index($(getEditableDom(a)).closest(".cmp-adaptiveform-tablecell"));
+            var bIdx = $allCells.index($(getEditableDom(b)).closest(".cmp-adaptiveform-tablecell"));
+            return aIdx - bIdx;
+        });
+
+        var firstItem = sortedItems[0];
+        var firstCellPath = firstItem.path;
+        var totalColspan = 0;
+        sortedItems.forEach(function (item) {
+            totalColspan += getRowCellColspan(item);
+        });
+
+        var deleteParams = getDeleteParams();
+        var chain = $.when();
+
+        sortedItems.slice(1).forEach(function (item) {
+            var itemPath = item.path;
+            chain = chain.then(function () {
+                return $.ajax({
+                    url: Granite.HTTP.externalize(itemPath),
+                    type: "POST",
+                    data: deleteParams
+                });
+            });
+        });
+
+        chain.then(function () {
+            return $.ajax({
+                url: Granite.HTTP.externalize(firstCellPath),
+                type: "POST",
+                data: { "_charset_": "UTF-8", "colspan": String(totalColspan) }
+            });
+        }).done(function () {
+            var tableEditable = getTableEditableFromRowCellChild(firstItem);
+            if (tableEditable) {
+                tableEditable.refresh();
+            }
+        }).fail(function () {
+            author.ui.helpers.notify({
+                content: Granite.I18n.get("Failed to merge row cells."),
+                type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
+            });
+        });
+    };
+
+    /**
+     * Splits a merged body row cell (colspan > 1) back into individual cells by:
+     * - removing the colspan property from the current cell
+     * - inserting (colspan - 1) new text-input cells immediately after it
+     * @param {Granite.author.Editable} editable
+     */
+    window.CQ.FormsCoreComponents.editorhooks.splitTableRowCell = function (editable) {
+        var colSpan = getRowCellColspan(editable);
+
+        if (colSpan <= 1) {
+            $("#" + SPLIT_ROW_CELL_DIALOG_ID).remove();
+            var dialog = new Coral.Dialog().set({
+                id: SPLIT_ROW_CELL_DIALOG_ID,
+                header: { innerHTML: Granite.I18n.get("Invalid Selection") },
+                content: { innerHTML: Granite.I18n.get("Select a merged cell to split.") },
+                footer: {
+                    innerHTML: '<button is="coral-button" variant="primary" coral-close>' + Granite.I18n.get("Ok") + '</button>'
+                },
+                closable: "on",
+                variant: "error"
+            });
+            document.body.appendChild(dialog);
+            dialog.show();
+            return;
+        }
+
+        var cellPath = editable.path;
+        var rowPath = editable.getParentPath();
+        var cellName = cellPath.substring(cellPath.lastIndexOf("/") + 1);
+        var tableEditable = getTableEditableFromRowCellChild(editable);
+        var numNewCells = colSpan - 1;
+
+        var uid = Date.now();
+        var cellsToCreate = [];
+        for (var i = 0; i < numNewCells; i++) {
+            var newName = "cell_" + uid + "_" + i;
+            cellsToCreate.push({
+                name: newName,
+                path: rowPath + "/" + newName,
+                content: buildBodyTextInputJson()
+            });
+        }
+
+        $.ajax({
+            url: Granite.HTTP.externalize(cellPath),
+            type: "POST",
+            data: { "_charset_": "UTF-8", "colspan@Delete": "true" }
+        }).then(function () {
+            var chain = $.when();
+            cellsToCreate.forEach(function (cell, i) {
+                var orderAfter = i === 0 ? cellName : cellsToCreate[i - 1].name;
+                chain = chain.then(function () {
+                    return postImportAndOrderAfter(cell.path, cell.content, orderAfter);
+                });
+            });
+            return chain;
+        }).done(function () {
+            if (tableEditable) {
+                tableEditable.refresh();
+            }
+        }).fail(function () {
+            author.ui.helpers.notify({
+                content: Granite.I18n.get("Failed to split row cell."),
                 type: author.ui.helpers.NOTIFICATION_TYPES.ERROR
             });
         });

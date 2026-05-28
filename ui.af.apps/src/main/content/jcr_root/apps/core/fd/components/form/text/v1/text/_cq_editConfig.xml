@@ -164,7 +164,7 @@
                 hidden="{Boolean}true"
                 icon="tableColumnRemove"
                 text="Delete Column"/>
-        <mergeheadercells
+        <!-- <mergeheadercells
                 jcr:primaryType="nt:unstructured"
                 condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable); }"
                 handler="CQ.FormsCoreComponents.editorhooks.mergeTableHeaderCells"
@@ -175,6 +175,20 @@
                 jcr:primaryType="nt:unstructured"
                 condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isMergedHeaderCell(editable); }"
                 handler="CQ.FormsCoreComponents.editorhooks.splitTableHeaderCell"
+                hidden="{Boolean}true"
+                icon="tableCellsSplit"
+                text="Split Cell"/> -->
+        <mergerowcells
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableRowCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.mergeTableRowCells"
+                hidden="{Boolean}true"
+                icon="tableMergeCells"
+                text="Merge Cells"/>
+        <splitrowcell
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isMergedRowCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.splitTableRowCell"
                 hidden="{Boolean}true"
                 icon="tableCellsSplit"
                 text="Split Cell"/>

@@ -21,7 +21,8 @@
     <tr class="cmp-adaptiveform-tablerow cq-Editable-dom cq-Editable-dom--container"
         data-cq-data-path="${resource.path}">
         <sly data-sly-list.cell="${resource.listChildren}">
-            <td class="cmp-adaptiveform-tablecell">
+            <td class="cmp-adaptiveform-tablecell"
+                data-sly-attribute.colspan="${cell.valueMap.colspan}">
                 <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
             </td>
         </sly>
@@ -37,7 +38,8 @@
         data-cmp-enabled="${row.enabled ? 'true' : 'false'}"
         data-cmp-readonly="${row.readOnly ? 'true' : 'false'}">
         <sly data-sly-list.cell="${resource.listChildren}">
-            <td class="cmp-adaptiveform-tablecell${row.repeatable && cellList.last ? ' cmp-adaptiveform-tablecell--with-row-controls' : ''}">
+            <td class="cmp-adaptiveform-tablecell${row.repeatable && cellList.last ? ' cmp-adaptiveform-tablecell--with-row-controls' : ''}"
+                data-sly-attribute.colspan="${cell.valueMap.colspan}">
                 <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
                 <sly data-sly-test="${row.repeatable && cellList.last}">
                     <div class="cmp-adaptiveform-tablerow__runtime-controls"
