@@ -76,12 +76,16 @@
       "jcr:primaryType": "nt:unstructured",
       "annotation-1": {
         "jcr:primaryType": "nt:unstructured",
+        "jcr:createdBy": "admin",
+        "sling:resourceType": "cq/annotations",
         "text": "review note",
         "x": 11,
         "y": 22,
         "state": "open",
         "reviewedBy": "icreviewer",
-        "reviewedAt": "2026-05-25T17:40:04.204Z"
+        "reviewedAt": "2026-05-25T17:40:04.204Z",
+        "resolved": false,
+        "tags": ["urgent", "review"]
       },
       "annotation-2": {
         "jcr:primaryType": "nt:unstructured",
@@ -93,6 +97,20 @@
         "reviewedAt": "2026-05-25T17:41:00.000Z",
         "resolvedBy": "admin",
         "resolvedAt": "2026-05-25T18:00:00.000Z"
+      }
+    }
+  },
+  "textinputWithEmptyAnnotations": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "nameWithEmptyAnnotations",
+    "sling:resourceType": "forms-components-examples/components/form/textinput",
+    "fieldType": "text-input",
+    "fd:channel": "print",
+    "cq:annotations": {
+      "jcr:primaryType": "nt:unstructured",
+      "annotation-only-jcr": {
+        "jcr:primaryType": "nt:unstructured",
+        "jcr:createdBy": "admin"
       }
     }
   }

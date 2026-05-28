@@ -340,7 +340,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
         Map<String, Object> annotations = getCqAnnotations();
-        if (annotations != null && !annotations.isEmpty()) {
+        if (annotations != null) {
             properties.put(CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER, annotations);
         }
         properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
@@ -649,7 +649,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             .stream()
             .filter(entry -> isAllowedType(entry.getValue())
                 && !reservedProperties.contains(entry.getKey())
-                && !CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER.equals(entry.getKey())
                 && excludedPrefixes.stream().noneMatch(prefix -> entry.getKey().startsWith(prefix)))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         nodeBasedCustomProperties.forEach(customProperties::putIfAbsent);
@@ -753,11 +752,11 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      * so callers can omit the property.
      */
     @JsonIgnore
-    public Map<String, Object> getCqAnnotations() {
+    private Map<String, Object> getCqAnnotations() {
         if (!FormConstants.CHANNEL_PRINT.equals(this.channel) || resource == null) {
             return null;
         }
-        Resource annotationsResource = resource.getChild("cq:annotations");
+        Resource annotationsResource = resource.getChild(CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER);
         if (annotationsResource == null) {
             return null;
         }
@@ -765,7 +764,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         for (Resource child : annotationsResource.getChildren()) {
             ValueMap vm = child.getValueMap();
             Map<String, Object> ann = vm.entrySet().stream()
-                .filter(e -> isAllowedType(e.getValue()))
+                .filter(e -> isAllowedType(e.getValue())
+                    && !e.getKey().startsWith("jcr:")
+                    && !e.getKey().startsWith("sling:"))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
             if (!ann.isEmpty()) {
                 result.put(child.getName(), ann);
