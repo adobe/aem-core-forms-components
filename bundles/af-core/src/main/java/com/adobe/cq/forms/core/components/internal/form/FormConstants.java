@@ -174,4 +174,8 @@ public final class FormConstants {
     public static final String RT_FD_FORM_FIELDS_DATASOURCE_V1 = RT_FD_FORM_PREFIX
             + "container/v2/container/datasource/formfields";
 
+    /** The resource type for the Adobe Sign cloud configuration datasource (Electronic Signature tab) */
+    public static final String RT_FD_FORM_ADOBESIGN_CLOUDCONFIG_DATASOURCE_V1 = RT_FD_FORM_PREFIX
+            + "container/v2/container/datasource/adobesigncloudconfig";
+
 }
