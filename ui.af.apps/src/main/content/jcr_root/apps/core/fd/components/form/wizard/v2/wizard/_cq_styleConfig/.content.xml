@@ -11,6 +11,13 @@
             longTitle="Wizard Panel Container"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
             <items jcr:primaryType="nt:unstructured">
+                <wizardRoot
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Wizard Root"
+                        id="af2_wizardroot"
+                        cssSelector=".cmp-adaptiveform-wizard"
+                        longTitle="Wizard Root"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
                 <wizardLabelContainer
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Label Container"
@@ -23,25 +30,25 @@
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Label"
                                 id="af2_wizardlabel"
-                                cssSelector=".cmp-adaptiveform-wizard__label"
+                                cssSelector=".cmp-adaptiveform-wizard__label-container .cmp-adaptiveform-wizard__label"
                                 longTitle="Wizard Label"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                             <states jcr:primaryType="nt:unstructured">
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector=".cmp-adaptiveform-wizard__label:hover"/>
+                                        cssSelector=".cmp-adaptiveform-wizard__label-container .cmp-adaptiveform-wizard__label:hover"/>
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector=".cmp-adaptiveform-wizard__label:focus"/>
+                                        cssSelector=".cmp-adaptiveform-wizard__label-container .cmp-adaptiveform-wizard__label:focus"/>
                             </states>
                         </wizardLabel>
                         <wizardHelpIcon
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Help Icon"
                                 id="af2_wizardhelpicon"
-                                cssSelector=".cmp-adaptiveform-wizard__questionmark"
+                                cssSelector=".cmp-adaptiveform-wizard__label-container .cmp-adaptiveform-wizard__questionmark"
                                 longTitle="Wizard Help Icon"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                 secondarySelectors="af2_guideContainer:af2_helpicon">
@@ -49,15 +56,15 @@
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector=".cmp-adaptiveform-wizard__questionmark:focus"/>
+                                        cssSelector=".cmp-adaptiveform-wizard__label-container .cmp-adaptiveform-wizard__questionmark:focus"/>
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector=".cmp-adaptiveform-wizard__questionmark:hover"/>
+                                        cssSelector=".cmp-adaptiveform-wizard__label-container .cmp-adaptiveform-wizard__questionmark:hover"/>
                                 <disabled
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Disabled"
-                                        cssSelector=".cmp-adaptiveform-wizard__questionmark:disabled"/>
+                                        cssSelector=".cmp-adaptiveform-wizard__label-container .cmp-adaptiveform-wizard__questionmark:disabled"/>
                             </states>
                         </wizardHelpIcon>
                     </items>
@@ -91,6 +98,15 @@
                         cssSelector=".cmp-adaptiveform-wizard__longdescription"
                         longTitle="Wizard Long Description"
                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_wizarddescriptionlongparagraph"
+                                cssSelector=".cmp-adaptiveform-wizard__longdescription p"
+                                longTitle="Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                     <states jcr:primaryType="nt:unstructured">
                         <focus
                                 jcr:primaryType="nt:unstructured"
@@ -110,6 +126,61 @@
                     longTitle="Wizard Widget"
                     propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                     <items jcr:primaryType="nt:unstructured">
+                        <wizardWidgetV2Compound
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Widget (V2 Compound)"
+                                id="af2_wizardwidgetv2compound"
+                                cssSelector=".cmp-adaptiveform-wizard__widget--v2.cmp-adaptiveform-wizard__widget"
+                                longTitle="Wizard Widget V2 Compound"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <wizardWizardPanel
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Wizard Panel"
+                                id="af2_wizardwizardpanel"
+                                cssSelector=".cmp-adaptiveform-wizard__wizardpanel"
+                                longTitle="Wizard Content Panel"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <v2Compound
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="V2 Compound"
+                                        cssSelector=".cmp-adaptiveform-wizard__wizardpanel--v2.cmp-adaptiveform-wizard__wizardpanel"/>
+                            </states>
+                        </wizardWizardPanel>
+                        <wizardTabList
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Tab List"
+                                id="af2_wizardtablist"
+                                cssSelector=".cmp-adaptiveform-wizard__tabList"
+                                longTitle="Wizard Tab List"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <tablistMarkerDefault
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Marker"
+                                        cssSelector=".cmp-adaptiveform-wizard__tabList &gt; li::before"/>
+                                <tablistMarkerActive
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Marker (Active)"
+                                        cssSelector=".cmp-adaptiveform-wizard__tabList &gt; li.cmp-adaptiveform-wizard__tab--active::before"/>
+                                <tablistMarkerStepped
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Marker (Stepped)"
+                                        cssSelector=".cmp-adaptiveform-wizard__tabList &gt; li.cmp-adaptiveform-wizard__tab--stepped::before"/>
+                                <tablistMarkerActiveStepped
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Marker (Active Stepped)"
+                                        cssSelector=".cmp-adaptiveform-wizard__tabList &gt; li.cmp-adaptiveform-wizard__tab--active.cmp-adaptiveform-wizard__tab--stepped::before"/>
+                                <tablistItemStepped
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Item (Stepped)"
+                                        cssSelector=".cmp-adaptiveform-wizard__tabList &gt; li.cmp-adaptiveform-wizard__tab--stepped"/>
+                                <tablistItem
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Tab List Item"
+                                        cssSelector=".cmp-adaptiveform-wizard__tabList &gt; li"/>
+                            </states>
+                        </wizardTabList>
                         <wizardPanelNavigationGroup
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Wizard Navigation Group"
@@ -130,10 +201,26 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Active"
                                                 cssSelector=".cmp-adaptiveform-wizard__tab:active"/>
+                                        <activeBem
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Active (BEM)"
+                                                cssSelector=".cmp-adaptiveform-wizard__tab--active"/>
+                                        <scopedTab
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Tab (Scoped)"
+                                                cssSelector=".cmp-adaptiveform-wizard .cmp-adaptiveform-wizard__tab"/>
+                                        <scopedActive
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Active Tab (Scoped)"
+                                                cssSelector=".cmp-adaptiveform-wizard .cmp-adaptiveform-wizard__tab--active"/>
                                         <stepped
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Visited"
                                                 cssSelector=".cmp-adaptiveform-wizard__tab.stepped"/>
+                                        <steppedBem
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Visited (BEM)"
+                                                cssSelector=".cmp-adaptiveform-wizard__tab--stepped"/>
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
@@ -168,6 +255,14 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
                                         cssSelector=".cmp-adaptiveform-wizard__nav--next:hover"/>
+                                    <rtl
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="RTL"
+                                        cssSelector="[dir=&quot;rtl&quot;] .cmp-adaptiveform-wizard__nav--next"/>
+                                    <rtlHover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="RTL Hover"
+                                        cssSelector="[dir=&quot;rtl&quot;] .cmp-adaptiveform-wizard__nav--next:hover"/>
                                 </states>
                                 </panelNextScroll>
                                 <panelPreviousScroll
@@ -182,8 +277,30 @@
                                             jcr:primaryType="nt:unstructured"
                                             jcr:title="Hover"
                                             cssSelector=".cmp-adaptiveform-wizard__nav--previous:hover"/>
+                                        <rtl
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="RTL"
+                                            cssSelector="[dir=&quot;rtl&quot;] .cmp-adaptiveform-wizard__nav--previous"/>
+                                        <rtlHover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="RTL Hover"
+                                            cssSelector="[dir=&quot;rtl&quot;] .cmp-adaptiveform-wizard__nav--previous:hover"/>
                                     </states>
                                 </panelPreviousScroll>
+                                <wizardNav
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Navigation"
+                                        id="af2_wizardnav"
+                                        cssSelector=".cmp-adaptiveform-wizard__nav"
+                                        longTitle="Wizard Navigation"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <rtl
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="RTL"
+                                            cssSelector="[dir=&quot;rtl&quot;] .cmp-adaptiveform-wizard__nav"/>
+                                    </states>
+                                </wizardNav>
                             </items>
                         </wizardPanelScrollers>
                     </items>

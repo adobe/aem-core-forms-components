@@ -30,25 +30,25 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
                                         id="af2_checkboxgrouplabel"
-                                        cssSelector=".cmp-adaptiveform-checkboxgroup__label"
+                                        cssSelector=".cmp-adaptiveform-checkboxgroup__label-container .cmp-adaptiveform-checkboxgroup__label"
                                         longTitle="Checkbox Group Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                             jcr:primaryType="nt:unstructured"
                                             jcr:title="Hover"
-                                            cssSelector=".cmp-adaptiveform-checkboxgroup__label:hover"/>
+                                            cssSelector=".cmp-adaptiveform-checkboxgroup__label-container .cmp-adaptiveform-checkboxgroup__label:hover"/>
                                         <focus
                                             jcr:primaryType="nt:unstructured"
                                             jcr:title="Focus"
-                                            cssSelector=".cmp-adaptiveform-checkboxgroup__label:focus"/>
+                                            cssSelector=".cmp-adaptiveform-checkboxgroup__label-container .cmp-adaptiveform-checkboxgroup__label:focus"/>
                                     </states>
                                 </checkBoxGroupLabel>
                                 <checkBoxGroupHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
                                         id="af2_checkboxgrouphelpicon"
-                                        cssSelector=".cmp-adaptiveform-checkboxgroup__questionmark"
+                                        cssSelector=".cmp-adaptiveform-checkboxgroup__label-container .cmp-adaptiveform-checkboxgroup__questionmark"
                                         longTitle="Checkbox Group Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
@@ -56,15 +56,15 @@
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup__questionmark:focus"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__label-container .cmp-adaptiveform-checkboxgroup__questionmark:focus"/>
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup__questionmark:hover"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__label-container .cmp-adaptiveform-checkboxgroup__questionmark:hover"/>
                                         <disabled
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Disabled"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup__questionmark:disabled"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__label-container .cmp-adaptiveform-checkboxgroup__questionmark:disabled"/>
                                     </states>
                                 </checkBoxGroupHelpIcon>
                             </items>
@@ -216,69 +216,69 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Checkbox Item"
                                         id="af2_checkboxgroupitemhorizontal"
-                                        cssSelector=".cmp-adaptiveform-checkboxgroup-item"
-                                        longTitle="Checkbox Group Item"
+                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup-item"
+                                        longTitle="Checkbox Group Horizontal Layout Item"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
                                         <checkBoxGroupItemLabelContainerHorizontal
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Checkbox Item Label Container"
                                                 id="af2_checkboxgroupitemlabelcontainerhorizontal"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option-label"
-                                                longTitle="Checkbox Group Item Label Container"
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option-label"
+                                                longTitle="Checkbox Group Item Label Container (Horizontal)"
                                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <checkBoxGroupItemLabelHorizontal
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Label"
                                                         id="af2_checkboxgroupitemlabelhorizontal"
-                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__option-label span"
-                                                        longTitle="Checkbox Group Item Label"
+                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option-label span"
+                                                        longTitle="Checkbox Group Item Label (Horizontal)"
                                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <hover
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Hover"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option-label span:hover"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option-label span:hover"/>
                                                         <focus
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Focus"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option-label span:focus"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option-label span:focus"/>
                                                         <checked
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Selected"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option-label input[type='checkbox']:checked + span"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option-label input[type='checkbox']:checked + span"/>
                                                         <mandatory
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Mandatory"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup[data-cmp-required='true'] .cmp-adaptiveform-checkboxgroup__option-label span"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup[data-cmp-required='true'] .cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option-label span"/>
                                                     </states>
                                                 </checkBoxGroupItemLabelHorizontal>
                                                 <checkBoxWidgetAndTextHorizontal
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Checkbox"
                                                         id="af2_checkboxgroupwidgetandtexthorizontal"
-                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget"
-                                                        longTitle="Checkbox Group Item Widget"
+                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option__widget"
+                                                        longTitle="Checkbox Group Item Widget (Horizontal)"
                                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                                         secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <focus
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Focus"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget:focus"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option__widget:focus"/>
                                                         <disabled
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Disabled"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
                                                         <hover
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Hover"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget:hover"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option__widget:hover"/>
                                                         <checked
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Selected"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget:checked"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option__widget:checked"/>
                                                     </states>
                                                 </checkBoxWidgetAndTextHorizontal>
                                             </items>
@@ -286,11 +286,11 @@
                                                 <hover
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Hover"
-                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__option-label:hover"/>
+                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option-label:hover"/>
                                                 <focus
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Focus"
-                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__option-label:focus"/>
+                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup__option-label:focus"/>
                                             </states>
                                         </checkBoxGroupItemLabelContainerHorizontal>
                                     </items>
@@ -298,19 +298,19 @@
                                         <disabled
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Disabled"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup-item .cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup-item .cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup-item:hover"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup-item:hover"/>
                                         <checked
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Selected"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup-item .cmp-adaptiveform-checkboxgroup__option__widget:checked"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup-item .cmp-adaptiveform-checkboxgroup__option__widget:checked"/>
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup-item:focus"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.HORIZONTAL .cmp-adaptiveform-checkboxgroup-item:focus"/>
                                     </states>
                                 </checkBoxGroupItemHorizontal>
                             </items>
@@ -337,69 +337,69 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Checkbox Item"
                                         id="af2_checkboxgroupitemvertical"
-                                        cssSelector=".cmp-adaptiveform-checkboxgroup-item"
-                                        longTitle="Checkbox Group Item"
+                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup-item"
+                                        longTitle="Checkbox Group Vertical Layout Item"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <items jcr:primaryType="nt:unstructured">
                                         <checkBoxGroupItemLabelContainerVertical
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Checkbox Item Label Container"
                                                 id="af2_checkboxgroupitemlabelcontainervertical"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option-label"
-                                                longTitle="Checkbox Group Item Label Container"
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option-label"
+                                                longTitle="Checkbox Group Item Label Container (Vertical)"
                                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                             <items jcr:primaryType="nt:unstructured">
                                                 <checkBoxGroupItemLabelVertical
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Label"
                                                         id="af2_checkboxgroupitemlabelvertical"
-                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__option-label span"
-                                                        longTitle="Checkbox Group Item Label"
+                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option-label span"
+                                                        longTitle="Checkbox Group Item Label (Vertical)"
                                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <hover
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Hover"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option-label span:hover"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option-label span:hover"/>
                                                         <focus
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Focus"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option-label span:focus"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option-label span:focus"/>
                                                         <checked
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Selected"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option-label input[type='checkbox']:checked + span"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option-label input[type='checkbox']:checked + span"/>
                                                         <mandatory
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Mandatory"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup[data-cmp-required='true'] .cmp-adaptiveform-checkboxgroup__option-label span"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup[data-cmp-required='true'] .cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option-label span"/>
                                                     </states>
                                                 </checkBoxGroupItemLabelVertical>
                                                 <checkBoxWidgetAndTextVertical
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Checkbox"
                                                         id="af2_checkboxgroupwidgetandtextvertical"
-                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget"
-                                                        longTitle="Checkbox Group Item Widget"
+                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option__widget"
+                                                        longTitle="Checkbox Group Item Widget (Vertical)"
                                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                                         secondarySelectors="af2_guideContainer:af2_widgetAndText">
                                                     <states jcr:primaryType="nt:unstructured">
                                                         <focus
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Focus"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget:focus"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option__widget:focus"/>
                                                         <disabled
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Disabled"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
                                                         <hover
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Hover"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget:hover"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option__widget:hover"/>
                                                         <checked
                                                                 jcr:primaryType="nt:unstructured"
                                                                 jcr:title="Selected"
-                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__option__widget:checked"/>
+                                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option__widget:checked"/>
                                                     </states>
                                                 </checkBoxWidgetAndTextVertical>
                                             </items>
@@ -407,11 +407,11 @@
                                                 <hover
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Hover"
-                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__option-label:hover"/>
+                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option-label:hover"/>
                                                 <focus
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Focus"
-                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__option-label:focus"/>
+                                                        cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup__option-label:focus"/>
                                             </states>
                                         </checkBoxGroupItemLabelContainerVertical>
                                     </items>
@@ -419,19 +419,19 @@
                                         <disabled
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Disabled"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup-item .cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup-item .cmp-adaptiveform-checkboxgroup__option__widget:disabled"/>
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup-item:hover"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup-item:hover"/>
                                         <checked
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Selected"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup-item .cmp-adaptiveform-checkboxgroup__option__widget:checked"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup-item .cmp-adaptiveform-checkboxgroup__option__widget:checked"/>
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-checkboxgroup-item:focus"/>
+                                                cssSelector=".cmp-adaptiveform-checkboxgroup__widget.VERTICAL .cmp-adaptiveform-checkboxgroup-item:focus"/>
                                     </states>
                                 </checkBoxGroupItemVertical>
                             </items>
@@ -461,6 +461,15 @@
                                 cssSelector=".cmp-adaptiveform-checkboxgroup__longdescription"
                                 longTitle="Checkbox Group Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_checkboxgroupdescriptionlongparagraph"
+                                cssSelector=".cmp-adaptiveform-checkboxgroup__longdescription p"
+                                longTitle="Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                         jcr:primaryType="nt:unstructured"

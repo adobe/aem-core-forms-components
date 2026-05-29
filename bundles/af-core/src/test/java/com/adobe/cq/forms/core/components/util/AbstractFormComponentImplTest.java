@@ -57,6 +57,8 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_INVALID_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentinvalid";
     private static final String PATH_COMPONENT_WITH_NO_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentnone";
     private static final String PATH_COMPONENT_WITH_RULES = CONTENT_ROOT + "/textinputWithPrintRule";
+    private static final String PATH_COMPONENT_WITH_PRINT_ANNOTATIONS = CONTENT_ROOT + "/textinputWithPrintAnnotations";
+    private static final String PATH_COMPONENT_WITH_EMPTY_ANNOTATIONS = CONTENT_ROOT + "/textinputWithEmptyAnnotations";
     private static final String AF_PATH = "/content/forms/af/testAf";
     private static final String PAGE_PATH = "/content/testPage";
 
@@ -274,6 +276,124 @@ public class AbstractFormComponentImplTest {
     }
 
     @Test
+    public void testPrintChannelAnnotationsExcludedForWebChannel() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "web");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("cq:annotations"),
+            "cq:annotations should not appear for non-print channel");
+    }
+
+    @Test
+    public void testPrintChannelAnnotationsIncluded() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations, "cq:annotations should appear for print channel");
+        Map<String, Object> annotation = (Map<String, Object>) annotations.get("annotation-1");
+        assertNotNull(annotation);
+        assertEquals("review note", annotation.get("text"));
+    }
+
+    @Test
+    public void testAnnotationPropertiesIncludeAllowedTypes() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations);
+        Map<String, Object> annotation = (Map<String, Object>) annotations.get("annotation-1");
+        assertNotNull(annotation);
+        // String and Long
+        assertEquals("review note", annotation.get("text"));
+        assertEquals(11L, annotation.get("x"));
+        assertEquals(22L, annotation.get("y"));
+        // Boolean
+        assertEquals(Boolean.FALSE, annotation.get("resolved"));
+        // String[]
+        Object tags = annotation.get("tags");
+        assertNotNull(tags);
+        assertTrue(tags instanceof String[], "tags should be exported as String[]");
+        assertEquals(2, ((String[]) tags).length);
+    }
+
+    @Test
+    public void testAnnotationPropertiesExcludeJcrAndSlingPrefixes() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations);
+        Map<String, Object> annotation = (Map<String, Object>) annotations.get("annotation-1");
+        assertNotNull(annotation);
+        assertNull(annotation.get("jcr:primaryType"), "jcr:primaryType must not leak into annotation output");
+        assertNull(annotation.get("jcr:createdBy"), "jcr:createdBy must not leak into annotation output");
+        assertNull(annotation.get("sling:resourceType"), "sling:* must not leak into annotation output");
+    }
+
+    @Test
+    public void testNoAnnotationsResource() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_NO_RULE);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("cq:annotations"),
+            "cq:annotations should not appear when no annotations resource exists");
+    }
+
+    @Test
+    public void testAnnotationsAllChildEntriesFilteredOut() {
+        // Child node contains only jcr:/sling: properties -> filtered map is empty,
+        // child is skipped, and overall annotations map ends up empty -> getProperties
+        // omits cq:annotations entirely. Covers the `!ann.isEmpty()` false branch and
+        // the `result.isEmpty() ? null` true branch in getCqAnnotations().
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_EMPTY_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("cq:annotations"),
+            "cq:annotations should be omitted when every child has only jcr:/sling: properties");
+    }
+
+    @Test
+    public void testAnnotationsWithNullResourceAndPrintChannel() {
+        // channel=print but resource never set: must short-circuit and return null,
+        // not NPE. Covers the `resource == null` branch in getCqAnnotations().
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Method getCqAnnotations = Utils.getPrivateMethod(AbstractFormComponentImpl.class, "getCqAnnotations");
+        try {
+            Object result = getCqAnnotations.invoke(abstractFormComponentImpl);
+            assertNull(result, "getCqAnnotations should return null when resource is null");
+        } catch (Exception e) {
+            fail("getCqAnnotations should not throw when resource is null: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAnnotationsAbsentInDefaultWebChannel() {
+        // No channel set (defaults to non-print): annotations must not appear.
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("cq:annotations"),
+            "cq:annotations should not appear when channel is not print");
+    }
+
+    @Test
+    public void testMultipleAnnotations() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations);
+        assertEquals(2, annotations.size(), "Should have 2 annotations");
+        assertNotNull(annotations.get("annotation-1"));
+        assertNotNull(annotations.get("annotation-2"));
+        Map<String, Object> annotation2 = (Map<String, Object>) annotations.get("annotation-2");
+        assertEquals("second review note", annotation2.get("text"));
+        assertEquals("resolved", annotation2.get("state"));
+    }
+
+    @Test
     public void testAssociateProperties() {
         Resource resource = Mockito.mock(Resource.class);
         AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
@@ -283,6 +403,7 @@ public class AbstractFormComponentImplTest {
         ValueMap valueMap = new MockValueMap(resource);
         Mockito.doReturn(valueMap).when(resource).getValueMap();
         Mockito.doReturn(null).when(resource).getChild("fd:dorContainer");
+        Mockito.doReturn(null).when(resource).getChild("cq:annotations");
         Resource associateResource = Mockito.mock(Resource.class);
         Mockito.doReturn(associateResource).when(resource).getChild("fd:associate");
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();

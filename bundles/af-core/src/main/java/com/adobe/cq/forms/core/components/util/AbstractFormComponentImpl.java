@@ -314,6 +314,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
+    public static final String CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER = "cq:annotations";
+
     /**
      * Predicate to check if a map entry is non empty
      * return true if and only if
@@ -336,6 +338,10 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         }
         if (!getDorProperties().isEmpty()) {
             properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+        }
+        Map<String, Object> annotations = getCqAnnotations();
+        if (annotations != null) {
+            properties.put(CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER, annotations);
         }
         properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
         if (isAuthorMode(request) || FormConstants.CHANNEL_PRINT.equals(this.channel)) {
@@ -738,6 +744,35 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             }
         }
         return null;
+    }
+
+    /**
+     * Returns the reviewer annotations stored under the component's {@code cq:annotations} child resource,
+     * keyed by annotation node name. Scoped to the print channel; returns null when no annotations exist
+     * so callers can omit the property.
+     */
+    @JsonIgnore
+    private Map<String, Object> getCqAnnotations() {
+        if (!FormConstants.CHANNEL_PRINT.equals(this.channel) || resource == null) {
+            return null;
+        }
+        Resource annotationsResource = resource.getChild(CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER);
+        if (annotationsResource == null) {
+            return null;
+        }
+        Map<String, Object> result = new LinkedHashMap<>();
+        for (Resource child : annotationsResource.getChildren()) {
+            ValueMap vm = child.getValueMap();
+            Map<String, Object> ann = vm.entrySet().stream()
+                .filter(e -> isAllowedType(e.getValue())
+                    && !e.getKey().startsWith("jcr:")
+                    && !e.getKey().startsWith("sling:"))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
+            if (!ann.isEmpty()) {
+                result.put(child.getName(), ann);
+            }
+        }
+        return result.isEmpty() ? null : result;
     }
 
 }
