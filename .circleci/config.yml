@@ -447,14 +447,14 @@ workflows:
               only: /.*/
           requires:
             - build-java-11
-      - jsdocs-deploy:
-          requires:
-            - build-java-11
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+.*/
+#      - jsdocs-deploy:
+#          requires:
+#            - build-java-11
+#          filters:
+#            branches:
+#              ignore: /.*/
+#            tags:
+#              only: /^core-forms-components-reactor-\d+\.\d+\.\d+.*/
 #      - cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
 #          filters:
 ##            branches:
@@ -466,7 +466,7 @@ workflows:
       - release:
           requires:
             - build-java-11
-            - jsdocs-deploy
+#            - jsdocs-deploy
 #            - cypress-chrome-cloudready-with-latest-addon-and-old-core-components
           filters:
             branches:
