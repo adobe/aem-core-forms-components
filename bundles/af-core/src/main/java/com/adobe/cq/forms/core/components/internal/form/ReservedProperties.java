@@ -185,6 +185,7 @@ public final class ReservedProperties {
     public static final String PN_TITLE_MONTH = "titleMonth";
     public static final String PN_TITLE_YEAR = "titleYear";
     public static final String PN_HIDE_TITLE_DATE = "hideTitleDate";
+    public static final String PN_CQ_ANNOTATIONS = "cq:annotations";
 
     // Begin: Form submission related properties
     public static final String FD_SUBMIT_PROPERTIES = "fd:submit";

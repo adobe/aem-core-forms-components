@@ -31,25 +31,25 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Label"
                                         id="af2_fileinputlabel"
-                                        cssSelector=".cmp-adaptiveform-fileinput__label"
+                                        cssSelector=".cmp-adaptiveform-fileinput__label-container .cmp-adaptiveform-fileinput__label"
                                         longTitle="File Input Label"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
                                     <states jcr:primaryType="nt:unstructured">
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-fileinput__label:hover"/>
+                                                cssSelector=".cmp-adaptiveform-fileinput__label-container .cmp-adaptiveform-fileinput__label:hover"/>
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-fileinput__label:focus"/>
+                                                cssSelector=".cmp-adaptiveform-fileinput__label-container .cmp-adaptiveform-fileinput__label:focus"/>
                                     </states>
                                 </fileinputLabel>
                                 <fileinputHelpIcon
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Help Icon"
                                         id="af2_fileinputhelpicon"
-                                        cssSelector=".cmp-adaptiveform-fileinput__questionmark"
+                                        cssSelector=".cmp-adaptiveform-fileinput__label-container .cmp-adaptiveform-fileinput__questionmark"
                                         longTitle="File Input Help Icon"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
                                         secondarySelectors="af2_guideContainer:af2_helpicon">
@@ -57,15 +57,15 @@
                                         <focus
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Focus"
-                                                cssSelector=".cmp-adaptiveform-fileinput__questionmark:focus"/>
+                                                cssSelector=".cmp-adaptiveform-fileinput__label-container .cmp-adaptiveform-fileinput__questionmark:focus"/>
                                         <hover
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Hover"
-                                                cssSelector=".cmp-adaptiveform-fileinput__questionmark:hover"/>
+                                                cssSelector=".cmp-adaptiveform-fileinput__label-container .cmp-adaptiveform-fileinput__questionmark:hover"/>
                                         <disabled
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Disabled"
-                                                cssSelector=".cmp-adaptiveform-fileinput__questionmark:disabled"/>
+                                                cssSelector=".cmp-adaptiveform-fileinput__label-container .cmp-adaptiveform-fileinput__questionmark:disabled"/>
                                     </states>
                                 </fileinputHelpIcon>
                             </items>
@@ -73,15 +73,15 @@
                                 <disabled
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Disabled"
-                                        cssSelector="cmp-adaptiveform-fileinput__label-container:disabled"/>
+                                        cssSelector=".cmp-adaptiveform-fileinput__label-container:disabled"/>
                                 <hover
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Hover"
-                                        cssSelector="cmp-adaptiveform-fileinput__label-container:hover"/>
+                                        cssSelector=".cmp-adaptiveform-fileinput__label-container:hover"/>
                                 <focus
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Focus"
-                                        cssSelector="cmp-adaptiveform-fileinput__label-container:focus"/>
+                                        cssSelector=".cmp-adaptiveform-fileinput__label-container:focus"/>
                             </states>
                         </fileinputLabelContainer>
                         <fileinputWidgetAndText
@@ -213,6 +213,38 @@
                                         cssSelector=".cmp-adaptiveform-fileinput__container:required"/>
                             </states>
                         </fileinputWidgetAndText>
+                        <fileinputFileList
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="File List"
+                                id="af2_fileinputfilelist"
+                                cssSelector=".cmp-adaptiveform-fileinput__filelist"
+                                longTitle="File Input File List"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <fileinputFileItem
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="File Item"
+                                        id="af2_fileinputfileitem"
+                                        cssSelector=".cmp-adaptiveform-fileinput__fileitem"
+                                        longTitle="File Input File Item"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </fileinputFileItem>
+                                <fileinputFileName
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="File Name"
+                                        id="af2_fileinputfilename"
+                                        cssSelector=".cmp-adaptiveform-fileinput__filename"
+                                        longTitle="File Input File Name"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                <fileinputFileDelete
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="File Delete"
+                                        id="af2_fileinputfiledelete"
+                                        cssSelector=".cmp-adaptiveform-fileinput__filedelete"
+                                        longTitle="File Input File Delete"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                            </items>
+                        </fileinputFileList>
                         <fileinputDescriptionShort
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Short Description"
@@ -228,6 +260,15 @@
                                 cssSelector=".cmp-adaptiveform-fileinput__longdescription"
                                 longTitle="File Input Long Description"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_fileinputdescriptionlongparagraph"
+                                cssSelector=".cmp-adaptiveform-fileinput__longdescription p"
+                                longTitle="Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
                             <states jcr:primaryType="nt:unstructured">
                                 <focus
                                     jcr:primaryType="nt:unstructured"
