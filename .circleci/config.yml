@@ -351,7 +351,7 @@ jobs:
           name: Update VERSIONS.md and README.md with the new released version
           command: |
             echo "CIRCLE_TAG: $CIRCLE_TAG"
-            RELEASE_BRANCH=$(git branch --contains ${CIRCLE_TAG} | awk 'FNR==2 {print $1}')
+            RELEASE_BRANCH=$(git branch -r --contains ${CIRCLE_TAG} | grep -v HEAD | sed 's|origin/||' | head -n 1 | xargs)
 
             # Debugging output
             echo "RELEASE_BRANCH: $RELEASE_BRANCH"
