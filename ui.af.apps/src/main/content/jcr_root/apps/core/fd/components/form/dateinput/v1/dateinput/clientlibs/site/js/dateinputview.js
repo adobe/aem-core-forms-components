@@ -373,6 +373,10 @@
             var fullValid = this.#validateFullDate();
             var iso = fullValid ? this.#buildISOValue() : "";
             if (combined) combined.value = iso;
+            // Keep the --filled/--empty BEM modifier in sync on user input: a UIChange
+            // dispatched via setModelValue is not echoed back to this field's
+            // updateValue(), so updateEmptyStatus() must be invoked here explicitly.
+            this.updateEmptyStatus();
             this.setModelValue(iso || "");
         }
 
@@ -410,12 +414,25 @@
         }
 
         updateValue(modelValue) {
-            this.#splitISOValue(modelValue);
+            // Don't rewrite the sub-inputs while the user is mid-edit in one of them:
+            // model notifications (incl. those triggered by focus/enter and the field's
+            // own value sync) would otherwise clobber the digits being typed. The
+            // sub-inputs are already the source of truth while focused; only repopulate
+            // them on external/programmatic changes.
+            var active = document.activeElement;
+            var editing = active != null && ["D", "M", "Y"].some((t) => active === this.#getInputByToken(t));
+            if (!editing) {
+                this.#splitISOValue(modelValue);
+            }
             var combined = this.getWidget();
             if (combined) combined.value = modelValue || "";
+            this.updateEmptyStatus();
         }
 
-        updateEnabled(enabled) {
+        updateEnabled(enabled, state) {
+            // Let the base keep the root element's data-cmp-enabled attribute (and the
+            // hidden combined input) in sync, then propagate to the three sub-inputs.
+            super.updateEnabled(enabled, state);
             ["D", "M", "Y"].forEach((token) => {
                 var input = this.#getInputByToken(token);
                 if (!input) return;
@@ -427,7 +444,9 @@
             });
         }
 
-        updateReadOnly(readOnly) {
+        updateReadOnly(readOnly, state) {
+            // Base keeps the root element's data-cmp-readonly attribute in sync.
+            super.updateReadOnly(readOnly, state);
             ["D", "M", "Y"].forEach((token) => {
                 var input = this.#getInputByToken(token);
                 if (!input) return;
@@ -441,7 +460,11 @@
             });
         }
 
-        updateValidity(validity) {
+        updateValidity(validity, state) {
+            // Base renders the error message, sets data-cmp-valid on the root and
+            // aria-invalid on the combined widget; then mirror aria-invalid onto the
+            // three visible sub-inputs for accessibility.
+            super.updateValidity(validity, state);
             ["D", "M", "Y"].forEach((token) => {
                 var input = this.#getInputByToken(token);
                 if (!input) return;

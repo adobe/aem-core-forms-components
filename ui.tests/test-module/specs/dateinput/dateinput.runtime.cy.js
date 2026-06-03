@@ -67,11 +67,12 @@ describe("Form Runtime with Date Input", () => {
             .should('eq', state.enabled.toString());
 
         return cy.get(`#${id}`).within(() => {
-            cy.get('*').should(passVisibleCheck);
-            // Sub-inputs carry disabled/readonly state
-            cy.get(selectors.widgetDay)
-                .should(passDisabledAttributeCheck, 'disabled')
-                .should(passReadOnlyAttributeCheck, 'readonly');
+            cy.get('*:not([type=hidden])').should(passVisibleCheck);
+            // Sub-inputs carry disabled/readonly state. Use separate queries: chaining
+            // two attr assertions fails because `(not.)have.attr` yields the attribute
+            // value (undefined when absent) as the subject for the next assertion.
+            cy.get(selectors.widgetDay).should(passDisabledAttributeCheck, 'disabled');
+            cy.get(selectors.widgetDay).should(passReadOnlyAttributeCheck, 'readonly');
             // Hidden combined input carries the ISO date value
             cy.get(selectors.widgetCombined).should('have.value', value);
         });
