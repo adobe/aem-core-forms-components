@@ -1,5 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Copyright 2024 Adobe
+ ~ Copyright 2026 Adobe
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
  ~ you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,8 +36,10 @@ import com.day.cq.wcm.msm.api.MSMNameConstants;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class TableImplTest {
@@ -45,6 +48,13 @@ public class TableImplTest {
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_TABLE = CONTENT_ROOT + "/table";
     private static final String PATH_TABLE_WITH_COLUMN_WIDTH = CONTENT_ROOT + "/table-with-column-width";
+    private static final String PATH_TABLE_WITH_SORTING = CONTENT_ROOT + "/table-with-sorting";
+    private static final String PATH_TABLE_WITH_EQUAL_WIDTHS = CONTENT_ROOT + "/table-with-equal-widths";
+    private static final String PATH_TABLE_WITH_INVALID_WIDTH = CONTENT_ROOT + "/table-with-invalid-width";
+    private static final String PATH_TABLE_WITH_NEGATIVE_WIDTH = CONTENT_ROOT + "/table-with-negative-width";
+    private static final String PATH_TABLE_WITH_ZERO_WIDTHS = CONTENT_ROOT + "/table-with-zero-widths";
+    private static final String PATH_TABLEHEADER = CONTENT_ROOT + "/tableheader";
+    private static final String PATH_TABLEROW = CONTENT_ROOT + "/tablerow";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -79,15 +89,104 @@ public class TableImplTest {
     void testGetDorProperties_noColumnWidthWhenNotAuthored() throws Exception {
         Panel table = Utils.getComponentUnderTest(PATH_TABLE, Panel.class, context);
         Map<String, Object> dorProps = table.getDorProperties();
-        assertNull("columnWidth must be absent when no columnWidth is authored",
-            dorProps.get("columnWidth"));
+        assertNull(dorProps.get("columnWidth"),
+            "columnWidth must be absent when no columnWidth is authored");
     }
 
     @Test
     void testGetDorProperties_columnWidthPassedThroughWhenAuthored() throws Exception {
         Panel table = Utils.getComponentUnderTest(PATH_TABLE_WITH_COLUMN_WIDTH, Panel.class, context);
         Map<String, Object> dorProps = table.getDorProperties();
-        assertEquals("columnWidth must carry the authored proportional value",
-            "1,2,1", dorProps.get("columnWidth"));
+        assertEquals("1,2,1", dorProps.get("columnWidth"),
+            "columnWidth must carry the authored proportional value");
+    }
+
+    @Test
+    void testExportedType_table() throws Exception {
+        Panel table = Utils.getComponentUnderTest(PATH_TABLE, Panel.class, context);
+        assertEquals("table", table.getExportedType());
+    }
+
+    @Test
+    void testExportedType_tableHeader() throws Exception {
+        Panel header = Utils.getComponentUnderTest(PATH_TABLEHEADER, Panel.class, context);
+        assertEquals("table-header", header.getExportedType());
+    }
+
+    @Test
+    void testExportedType_tableRow() throws Exception {
+        Panel row = Utils.getComponentUnderTest(PATH_TABLEROW, Panel.class, context);
+        assertEquals("table-row", row.getExportedType());
+    }
+
+    @Test
+    void testIsEnableSorting_falseWhenNotAuthored() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE, Panel.class, context);
+        assertFalse(table.isEnableSorting(), "enableSorting must be false when not authored");
+    }
+
+    @Test
+    void testIsEnableSorting_trueWhenAuthored() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE_WITH_SORTING, Panel.class, context);
+        assertTrue(table.isEnableSorting(), "enableSorting must be true when authored");
+    }
+
+    @Test
+    void testGetColumnWidthColStyles_emptyWhenNotAuthored() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE, Panel.class, context);
+        assertTrue(table.getColumnWidthColStyles().isEmpty());
+        assertFalse(table.isColumnWidthsConfigured());
+    }
+
+    @Test
+    void testGetColumnWidthColStyles_sumsTo100() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE_WITH_EQUAL_WIDTHS, Panel.class, context);
+        List<String> styles = table.getColumnWidthColStyles();
+        assertEquals(3, styles.size());
+        int total = styles.stream()
+            .mapToInt(s -> Integer.parseInt(s.replace("width: ", "").replace("%", "").trim()))
+            .sum();
+        assertEquals(100, total, "column widths must sum to 100%");
+        assertTrue(table.isColumnWidthsConfigured());
+    }
+
+    @Test
+    void testGetColumnWidthColStyles_proportionalWidths() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE_WITH_COLUMN_WIDTH, Panel.class, context);
+        List<String> styles = table.getColumnWidthColStyles();
+        assertEquals(3, styles.size());
+        int total = styles.stream()
+            .mapToInt(s -> Integer.parseInt(s.replace("width: ", "").replace("%", "").trim()))
+            .sum();
+        assertEquals(100, total, "proportional widths must sum to 100%");
+    }
+
+    @Test
+    void testGetColumnWidthColStyles_invalidValueTreatedAs1() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE_WITH_INVALID_WIDTH, Panel.class, context);
+        List<String> styles = table.getColumnWidthColStyles();
+        assertEquals(2, styles.size(), "invalid token should be treated as 1");
+        int total = styles.stream()
+            .mapToInt(s -> Integer.parseInt(s.replace("width: ", "").replace("%", "").trim()))
+            .sum();
+        assertEquals(100, total, "widths must sum to 100% even with invalid token");
+    }
+
+    @Test
+    void testGetColumnWidthColStyles_negativeValueTreatedAs0() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE_WITH_NEGATIVE_WIDTH, Panel.class, context);
+        List<String> styles = table.getColumnWidthColStyles();
+        assertEquals(3, styles.size(), "negative value should be clamped to 0");
+        int total = styles.stream()
+            .mapToInt(s -> Integer.parseInt(s.replace("width: ", "").replace("%", "").trim()))
+            .sum();
+        assertEquals(100, total, "widths must sum to 100% even with negative token");
+    }
+
+    @Test
+    void testGetColumnWidthColStyles_allZeroReturnsEmpty() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE_WITH_ZERO_WIDTHS, Panel.class, context);
+        assertTrue(table.getColumnWidthColStyles().isEmpty(), "all-zero widths must return empty list");
+        assertFalse(table.isColumnWidthsConfigured());
     }
 }

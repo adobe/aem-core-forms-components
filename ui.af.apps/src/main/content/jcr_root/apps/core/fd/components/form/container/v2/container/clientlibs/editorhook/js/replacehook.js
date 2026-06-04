@@ -255,4 +255,3 @@
     }
 
 })(window, Granite.author, Coral, jQuery(document));
-    

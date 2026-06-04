@@ -177,9 +177,11 @@ public final class ReservedProperties {
     public static final String FD_DRAFT_ID = "fd:draftId";
 
     public static final String PN_CQ_ANNOTATIONS = "cq:annotations";
-    public static final String PN_COLUMN_WIDTH = "columnWidth";
 
-    /** Comma-separated proportional column widths passed into fd:dor for DOR table rendering (matches GuideTableElement key). */
+    /**
+     * Comma-separated proportional column widths JCR property, also passed into fd:dor for DOR table rendering (matches
+     * GuideTableElement key).
+     */
     public static final String PN_DOR_COLUMN_WIDTHS = "columnWidth";
 
     /** When true, adaptive form table columns can be sorted at runtime (publish). */
