@@ -145,7 +145,7 @@
                 tbody.appendChild(htmlElement);
             } else if (instanceIndex === 0) {
                 const firstChild = children[0];
-                if (firstChild && firstChild.element) {
+                if (firstChild && firstChild.element && firstChild.element.isConnected) {
                     tbody.insertBefore(htmlElement, firstChild.element);
                 } else {
                     tbody.insertBefore(htmlElement, tbody.firstElementChild);
@@ -159,7 +159,7 @@
                     const items = instanceManager._model.items || [];
                     const prevModel = items.find(m => m.index === prevIndex);
                     if (prevModel) {
-                        const prevElement = tbody.querySelector(`#${prevModel.id}`);
+                        const prevElement = document.getElementById(prevModel.id);
                         if (prevElement) {
                             prevElement.after(htmlElement);
                         } else {
@@ -213,8 +213,8 @@
             const model = instanceManager._model;
             const items = model.items || [];
             const activeIds = new Set(items.map((item) => item.id));
-            const minOccur = model.minOccur;
-            const maxOccur = model.maxOccur;
+            const minOccur = (typeof model.minOccur === 'number' && model.minOccur >= 0) ? model.minOccur : 0;
+            const maxOccur = (typeof model.maxOccur === 'number' && model.maxOccur >= 0) ? model.maxOccur : -1;
             const dataVisible = FormView.Constants.DATA_ATTRIBUTE_VISIBLE;
             instanceManager.children.forEach((childView) => {
                 if (!activeIds.has(childView.id)) {
@@ -230,7 +230,7 @@
                     addBtn.setAttribute(dataVisible, !(items.length === maxOccur && maxOccur !== -1));
                 }
                 if (removeBtn) {
-                    removeBtn.setAttribute(dataVisible, items.length > minOccur && minOccur !== -1);
+                    removeBtn.setAttribute(dataVisible, items.length > minOccur);
                 }
             });
         }
