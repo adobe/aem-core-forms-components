@@ -21,6 +21,7 @@
     window.CQ.FormsCoreComponents.editorhooks = window.CQ.FormsCoreComponents.editorhooks || {};
 
     var RESOURCE_TYPE_TABLEROW = "core/fd/components/form/tablerow/v1/tablerow";
+    var RESOURCE_TYPE_TABLEHEADER = "core/fd/components/form/tableheader/v1/tableheader";
     var RESOURCE_TYPE_TEXTINPUT = "core/fd/components/form/textinput/v1/textinput";
     var RESOURCE_TYPE_TEXT_DRAW = "core/fd/components/form/text/v1/text";
     var DELETE_ROW_DIALOG_ID = "core-forms-delete-table-row-dialog";
@@ -975,7 +976,7 @@
         });
 
         // Set the accumulated colspan on the surviving first cell
-        chain.then(function () {
+        chain = chain.then(function () {
             return $.ajax({
                 url: Granite.HTTP.externalize(firstCellPath),
                 type: "POST",
