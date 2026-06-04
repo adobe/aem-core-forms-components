@@ -47,7 +47,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class TableImpl extends PanelImpl {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_COLUMN_WIDTH)
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_COLUMN_WIDTHS)
     @Nullable
     protected String columnWidth;
 
@@ -82,10 +82,6 @@ public class TableImpl extends PanelImpl {
         return !getColumnWidthColStyles().isEmpty();
     }
 
-    /**
-     * One entry per column for {@code <col style="...">}: {@code width: N%} (no HTL string concatenation).
-     * For example, proportional {@code "1,1,4"} becomes {@code width: 16%}, {@code width: 16%}, {@code width: 66%}.
-     */
     @Override
     @NotNull
     public String getExportedType() {
@@ -105,6 +101,11 @@ public class TableImpl extends PanelImpl {
         return props;
     }
 
+    /**
+     * One entry per column for {@code <col style="...">}: {@code width: N%} (no HTL string concatenation).
+     * For example, proportional {@code "1,1,4"} becomes {@code width: 16%}, {@code width: 16%}, {@code width: 66%}.
+     * Negative or non-numeric values are treated as 1. The last column absorbs any rounding remainder so widths sum to 100%.
+     */
     @JsonIgnore
     public List<String> getColumnWidthColStyles() {
         if (columnWidth == null || columnWidth.isEmpty()) {
@@ -119,14 +120,21 @@ public class TableImpl extends PanelImpl {
             } catch (NumberFormatException e) {
                 values[i] = 1;
             }
+            if (values[i] < 0) {
+                values[i] = 0;
+            }
             sum += values[i];
         }
         if (sum == 0) {
             return Collections.emptyList();
         }
         List<String> result = new ArrayList<>();
-        for (int v : values) {
-            int pct = (int) Math.floor((v * 100.0) / sum);
+        int allocated = 0;
+        for (int i = 0; i < values.length; i++) {
+            int pct = (i == values.length - 1)
+                ? (100 - allocated)
+                : (int) Math.floor((values[i] * 100.0) / sum);
+            allocated += pct;
             result.add("width: " + pct + "%");
         }
         return result;
