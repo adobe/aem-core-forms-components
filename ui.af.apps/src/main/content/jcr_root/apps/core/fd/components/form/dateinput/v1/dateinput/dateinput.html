@@ -53,19 +53,18 @@
     -->
     <div class="cmp-adaptiveform-dateinput__widget-container"
          role="group"
-         aria-labelledby="${dateInput.id}__label">
+         aria-label="${dateInput.label.value}">
 
         <!-- Day wrapper -->
         <div class="cmp-adaptiveform-dateinput__field-wrapper cmp-adaptiveform-dateinput__field-wrapper--day">
             <label class="${dateInput.hideTitleDate ? 'cmp-adaptiveform-dateinput__field-label cmp-adaptiveform-dateinput__field-label--hidden' : 'cmp-adaptiveform-dateinput__field-label'}"
                    for="${'{0}-{1}' @ format=[dateInput.id, 'widget-day']}">
-                ${dateInput.titleDay ? dateInput.titleDay : 'Day'}
+                ${dateInput.titleDay ? dateInput.titleDay : 'Day' @ i18n}
             </label>
             <input type="text"
                    inputmode="numeric"
                    id="${'{0}-{1}' @ format=[dateInput.id, 'widget-day']}"
                    class="cmp-adaptiveform-dateinput__widget cmp-adaptiveform-dateinput__widget--day"
-                   name="${'{0}-{1}' @ format=[dateInput.name, 'day']}"
                    maxlength="2"
                    pattern="[0-9]*"
                    disabled="${!dateInput.enabled}"
@@ -79,13 +78,12 @@
         <div class="cmp-adaptiveform-dateinput__field-wrapper cmp-adaptiveform-dateinput__field-wrapper--month">
             <label class="${dateInput.hideTitleDate ? 'cmp-adaptiveform-dateinput__field-label cmp-adaptiveform-dateinput__field-label--hidden' : 'cmp-adaptiveform-dateinput__field-label'}"
                    for="${'{0}-{1}' @ format=[dateInput.id, 'widget-month']}">
-                ${dateInput.titleMonth ? dateInput.titleMonth : 'Month'}
+                ${dateInput.titleMonth ? dateInput.titleMonth : 'Month' @ i18n}
             </label>
             <input type="text"
                    inputmode="numeric"
                    id="${'{0}-{1}' @ format=[dateInput.id, 'widget-month']}"
                    class="cmp-adaptiveform-dateinput__widget cmp-adaptiveform-dateinput__widget--month"
-                   name="${'{0}-{1}' @ format=[dateInput.name, 'month']}"
                    maxlength="2"
                    pattern="[0-9]*"
                    disabled="${!dateInput.enabled}"
@@ -99,13 +97,12 @@
         <div class="cmp-adaptiveform-dateinput__field-wrapper cmp-adaptiveform-dateinput__field-wrapper--year">
             <label class="${dateInput.hideTitleDate ? 'cmp-adaptiveform-dateinput__field-label cmp-adaptiveform-dateinput__field-label--hidden' : 'cmp-adaptiveform-dateinput__field-label'}"
                    for="${'{0}-{1}' @ format=[dateInput.id, 'widget-year']}">
-                ${dateInput.titleYear ? dateInput.titleYear : 'Year'}
+                ${dateInput.titleYear ? dateInput.titleYear : 'Year' @ i18n}
             </label>
             <input type="text"
                    inputmode="numeric"
                    id="${'{0}-{1}' @ format=[dateInput.id, 'widget-year']}"
                    class="cmp-adaptiveform-dateinput__widget cmp-adaptiveform-dateinput__widget--year"
-                   name="${'{0}-{1}' @ format=[dateInput.name, 'year']}"
                    maxlength="4"
                    pattern="[0-9]*"
                    disabled="${!dateInput.enabled}"

@@ -54,3 +54,20 @@
     display: flex;
     flex-direction: column;
 }
+
+/*
+ * hideTitleDate hides the per-field (Day/Month/Year) labels visually while keeping
+ * them in the accessibility tree (and for-associated with their inputs), so screen
+ * readers still announce them. This is the standard visually-hidden pattern.
+ */
+.cmp-adaptiveform-dateinput__field-label--hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

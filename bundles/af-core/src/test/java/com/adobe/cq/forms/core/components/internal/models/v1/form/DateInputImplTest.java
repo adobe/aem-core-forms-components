@@ -15,12 +15,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.models.form.ConstraintType;
 import com.adobe.cq.forms.core.components.models.form.DateInput;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
@@ -134,6 +137,20 @@ public class DateInputImplTest {
     void testIsHideTitleDateDefault() {
         DateInput dateInput = Utils.getComponentUnderTest(PATH_DATE_INPUT, DateInput.class, context);
         assertFalse(dateInput.isHideTitleDate());
+    }
+
+    @Test
+    void testIsHideTitleDateTrue() {
+        DateInput dateInput = Utils.getComponentUnderTest(PATH_DATE_INPUT_CUSTOMIZED, DateInput.class, context);
+        assertTrue(dateInput.isHideTitleDate());
+    }
+
+    @Test
+    void testGetConstraintMessages() {
+        DateInput dateInput = Utils.getComponentUnderTest(PATH_DATE_INPUT_MESSAGE, DateInput.class, context);
+        Map<ConstraintType, String> messages = dateInput.getConstraintMessages();
+        assertEquals("Date must be after 4th Feb 2022", messages.get(ConstraintType.MINIMUM));
+        assertEquals("Date must be before 9th Feb 2022", messages.get(ConstraintType.MAXIMUM));
     }
 
     @Test

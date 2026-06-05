@@ -106,8 +106,14 @@ public interface DateInput extends DatePicker {
 
     /**
      * Returns whether the per-sub-field labels (day/month/year titles) are hidden.
+     * <p>
+     * When {@code true} the labels are hidden <em>visually only</em> (via the
+     * {@code --hidden} BEM modifier, which applies the standard visually-hidden CSS
+     * pattern). The {@code <label>} elements remain in the DOM and {@code for}-associated
+     * with their inputs, so assistive technologies still announce "Day", "Month" and
+     * "Year". This keeps the split widget accessible while removing visual clutter.
      *
-     * @return {@code true} if labels are hidden, {@code false} otherwise
+     * @return {@code true} if labels are visually hidden, {@code false} otherwise
      * @since com.adobe.cq.forms.core.components.models.form 5.9.0
      */
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)

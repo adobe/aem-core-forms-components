@@ -23,6 +23,9 @@
      * Returns: { order: ['D','M','Y'] | ['M','D','Y'] | ['Y','M','D'] | ..., separator: '/' }
      * Falls back to DMY order with '/' separator for unrecognised formats.
      */
+    // Precompiled token matchers, hoisted so they are not rebuilt on every parse call.
+    var TOKEN_PATTERNS = { D: /D/i, M: /M/i, Y: /Y/i };
+
     function parseDateDisplayFormat(fmt) {
         var DEFAULT = { order: ["D", "M", "Y"], separator: "/" };
         if (!fmt) return DEFAULT;
@@ -34,7 +37,7 @@
         var separator = sepMatch ? sepMatch[0] : "/";
 
         var tokens = ["D", "M", "Y"].map(function (t) {
-            var idx = inner.search(new RegExp(t, "i"));
+            var idx = inner.search(TOKEN_PATTERNS[t]);
             return { token: t, idx: idx };
         });
         tokens.sort(function (a, b) { return a.idx - b.idx; });

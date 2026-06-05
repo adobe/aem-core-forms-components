@@ -29,16 +29,19 @@
             defaultDateTooltip = dialog.find(DATE_INPUT_DEFAULTDATE + " coral-tooltip")[0],
             minDateTooltip = dialog.find(DATE_INPUT_MINDATE + " coral-tooltip")[0],
             maxDateTooltip = dialog.find(DATE_INPUT_MAXDATE + " coral-tooltip")[0],
-            emptyText = Granite.I18n.get('YYYY-MM-DD', null, 'placeholder text to retain format across locale'),
-            fieldDescription = Granite.I18n.get('Please enter the date in the required format "yyyy-mm-dd".', null, 'placeholder text to retain format across locale');
+            // The ISO format hint is locale-neutral and must never be translated, so it is a
+            // plain constant rather than a Granite.I18n.get() lookup.
+            emptyText = 'YYYY-MM-DD',
+            fieldDescription = Granite.I18n.get('Please enter the date in the required format "yyyy-mm-dd".');
 
         defaultDateInput.placeholder = emptyText;
         defaultDateInput.setAttribute('aria-label', emptyText);
         minDateInput.placeholder = emptyText;
         maxDateInput.placeholder = emptyText;
-        defaultDateTooltip.innerHTML = fieldDescription;
-        minDateTooltip.innerHTML = fieldDescription;
-        maxDateTooltip.innerHTML = fieldDescription;
+        // Use textContent (not innerHTML) so the description is never interpreted as markup.
+        defaultDateTooltip.textContent = fieldDescription;
+        minDateTooltip.textContent = fieldDescription;
+        maxDateTooltip.textContent = fieldDescription;
     }
 
     Utils.initializeEditDialog(EDIT_DIALOG)(handleDatePlaceholders);

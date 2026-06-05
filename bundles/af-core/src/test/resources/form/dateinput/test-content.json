@@ -23,7 +23,7 @@
     "titleDay": "Day",
     "titleMonth": "Month",
     "titleYear": "Year",
-    "hideTitleDate": false,
+    "hideTitleDate": true,
     "displayFormat": "DD/MM/YYYY",
     "editFormat": "YYYY-MM-DD",
     "minimumDate": "Fri Feb 04 2022 05:30:00 GMT+0530",
