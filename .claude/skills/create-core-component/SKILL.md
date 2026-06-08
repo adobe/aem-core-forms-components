@@ -33,8 +33,6 @@ Before generating any code or reading any reference files, collect all of the fo
 7. **Java backend** — does this component need a custom Sling Model, or can it reuse an existing Core model via `sling:resourceSuperType`? (Reuse is appropriate when the component only adds JS behavior on top of an existing field type; custom Java is required for new authored properties exposed in HTL or JSON)
 8. **FormContainer-level properties** — does this component need any configuration authored on the parent form container rather than on the component instance itself? (e.g., a signing service path set once for the whole form) If yes: what properties, and what tab name should they appear under in the form container dialog?
 
-> **Adobe Sign note:** If this component involves document signing, agreement creation, or signature workflow, do not re-implement OAuth, agreement APIs, or cloud config management — that layer already exists in `integration-adobesign`. Read `references/adobesign-integration.md` before Phase 3.
-
 ### Phase 2: Derive Naming Conventions
 
 From the component name, derive all naming variants. For example, given `ImageChoice`:
@@ -193,7 +191,6 @@ cd bundles/af-core && mvn test -pl . -Dtest={ComponentName}ImplTest 2>&1 | tail 
 - `references/editor-clientlib.md` — JS-driven conditional field visibility in author dialogs
 - `references/composite-multifield.md` — Composite multifield patterns for repeatable dialog items
 - `references/datasource-servlet.md` — Dynamic JCR-sourced options for Granite UI selects
-- `references/adobesign-integration.md` — Adobe Sign OSGi services, cloud config, RTE wiring (read only for Adobe Sign components)
 - `scripts/validate_component.py` — Automated validator (90+ checks) — run after generating all files
 
 ## Critical Rules

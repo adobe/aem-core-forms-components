@@ -29,8 +29,6 @@ Before loading any data, collect the following upfront. Ask in a single message 
 - **Target repository and component group** — which repo (`aem-core-forms-components`, or a project overlay) and what `componentGroup` for the author toolbar
 - **FormContainer-level properties** — does the component need any configuration authored on the parent form container rather than on the component instance itself? If yes: what properties and what tab name?
 
-> **Adobe Sign note:** If the component being migrated involves document signing or e-signature workflows, read `../create-core-component/references/adobesign-integration.md` before Phase 6.
-
 #### Known Components (data embedded in skill)
 
 If the component matches one listed below, all property, dialog, and rendering data is available in `references/known-components.md` — no external repository access is needed.
@@ -307,7 +305,6 @@ Present this report to the user for review.
 - `references/property-mapping.md` — Foundation → Core type/property/pattern mapping tables (includes renamed, dropped with Core equivalents, and per-review properties)
 - `references/migration-checklist.md` — Post-migration verification checklist
 - `references/code-patterns.md` — Code-level before/after translation: JSP→HTL, Foundation Java→Sling Model, jQuery→DOM, dialog XML
-- `../create-core-component/references/adobesign-integration.md` — Adobe Sign OSGi services, cloud config, RTE wiring (read only when migrating an Adobe Sign component)
 
 ## Critical Rules
 

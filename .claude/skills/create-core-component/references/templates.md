@@ -1124,4 +1124,4 @@ For components that use HTL template 7c and support inplace editing of the `__va
 </jcr:root>
 ```
 
-For components needing a custom RTE plugin (e.g., Adobe Sign), add the plugin entry to `rtePlugins` and insert the plugin command before `fullscreen#start` in the `toolbar` string — see `references/adobesign-integration.md` section 9.
+For components needing a custom RTE plugin, add the plugin entry to `rtePlugins` and insert the plugin command before `fullscreen#start` in the `toolbar` string.
