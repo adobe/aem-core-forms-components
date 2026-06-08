@@ -116,6 +116,90 @@ public class {ComponentName}Impl extends {BaseClass} implements {ComponentName} 
 
 ---
 
+## 2b. Sling Model – Display/Text Components
+
+Use this variant instead of template #2 when `sling:resourceSuperType` is `core/fd/components/form/text/v1/text` — i.e., components that render authored HTML content in a `__value` div and show a title label above it (e.g., Adobe Sign Block, text component extensions).
+
+**Path:** `bundles/af-core/src/main/java/com/adobe/cq/forms/core/components/internal/models/v1/form/{ComponentName}Impl.java`
+
+```java
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~ Copyright {currentYear} Adobe
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~     http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+package com.adobe.cq.forms.core.components.internal.models.v1.form;
+
+import com.adobe.cq.export.json.ComponentExporter;
+import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.models.form.Base;
+import com.adobe.cq.forms.core.components.models.form.FieldType;
+import com.adobe.cq.forms.core.components.models.form.Text;
+import com.adobe.cq.forms.core.components.util.AbstractBaseImpl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.Exporter;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { Text.class, Base.class, ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_{COMPONENT_NAME}_V1 })
+@Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME,
+          extensions = ExporterConstants.SLING_MODEL_EXTENSION)
+public class {ComponentName}Impl extends AbstractBaseImpl implements Text {
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL,
+                  name = ReservedProperties.PN_TEXT_IS_RICH)
+    @Default(booleanValues = false)
+    private boolean textIsRich;
+
+    @Override
+    public String getValue() {
+        return translate("value", value);
+    }
+
+    @Override
+    public boolean isRichText() {
+        return textIsRich;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getText() {
+        return getValue();
+    }
+
+    @Override
+    public String getFieldType() {
+        return super.getFieldType(FieldType.PLAIN_TEXT);
+    }
+}
+```
+
+**Rules for this variant:**
+- `adapters` MUST include both `Text.class` and `Base.class` — `Base.class` wires `getLabel()` into the HTL `baseModel.label.*` calls and the exported form JSON `label` object
+- Extend `AbstractBaseImpl`, NOT `TextImpl` — `TextImpl` returns `null` for `getLabel()`
+- Use HTL template 7c for the corresponding HTML template
+
+---
+
 ## 3. FormConstants Entry
 
 Add to `bundles/af-core/src/main/java/com/adobe/cq/forms/core/components/internal/form/FormConstants.java`:
@@ -238,9 +322,47 @@ public class {ComponentName}ImplTest {
 
 ---
 
-## 7. HTL Template
+## 6b. Instance Defaults (`_cq_template.xml`)
 
-**Path:** `ui.af.apps/.../form/{componentname}/v1/{componentname}/{componentname}.html`
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/_cq_template.xml`
+
+Sets the default property values for a newly dropped component instance.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="{componentTitle}"
+    fieldType="{fieldType}"/>
+```
+
+For step components that share `fieldType="plain-text"` but need distinct rendering, add `fd:viewType`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:fd="http://www.adobe.com/aemfd/fd/components/adaptive-form/formmetadata/2.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="{componentTitle}"
+    fieldType="plain-text"
+    fd:viewType="{component-name}"/>
+```
+
+For components that are hidden at runtime but visible in author edit mode (e.g., signing blocks revealed by an external SDK), add:
+
+```xml
+    visible="{Boolean}false"
+```
+
+The `{fieldType}` value must be kebab-case: `text-input`, `number-input`, `plain-text`, etc. See `references/component-anatomy.md` for the full `FieldType` mapping.
+
+---
+
+## 7. HTL Template – Field Components
+
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/{componentname}.html`
+
+Use for components that capture a user value. For step/display components without a widget, use template 7b. For display/text with a title label and rich-text value area, use template 7c.
 
 ```html
 <!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -300,7 +422,7 @@ public class {ComponentName}ImplTest {
            readonly="${{componentname}.readOnly}"
            required="${{componentname}.required}"
            placeholder="${{componentname}.placeHolder}"
-           aria-label="${{componentname}.label.value}"
+           aria-describedby="${{componentname}.id}__errormessage ${{componentname}.id}__longdescription ${{componentname}.id}__shortdescription"
            dir="auto"/>
 
     <!-- Short Description (tooltip) -->
@@ -322,9 +444,116 @@ public class {ComponentName}ImplTest {
 
 ---
 
+## 7b. HTL Template – Step / Display Components
+
+Use for step or display components with no interactive widget. Binds the Impl class directly since step components typically have no separate public interface.
+
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/{componentname}.html`
+
+```html
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright {currentYear} Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.{componentname}="com.adobe.cq.forms.core.components.internal.models.v1.form.{ComponentName}Impl"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"></sly>
+
+<div data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     class="cmp-adaptiveform-{componentname}"
+     data-cmp-is="adaptiveForm{ComponentName}"
+     data-cmp-visible="${{componentname}.visible ? 'true' : 'false'}"
+     id="${{componentname}.id}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+    <!--
+      Step-specific content here.
+      For a step that renders child components:
+        <sly data-sly-resource="${'.' @ resourceType='core/fd/components/form/container/v2/container'}"></sly>
+      For custom rendering (signature iframe, summary text), put HTML here.
+    -->
+    <div class="cmp-adaptiveform-{componentname}__content">
+        <!-- component-specific structure -->
+    </div>
+</div>
+```
+
+---
+
+## 7c. HTL Template – Display/Text with Label and Rich-Text Value
+
+Use when the component renders authored HTML content (`value`) with a title label above it — e.g., Adobe Sign Block or Text component extensions. Requires two Sling Model bindings: `textModel` for content, `baseModel` for the label. Use Sling Model template 2b.
+
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/{componentname}.html`
+
+```html
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright {currentYear} Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<div data-sly-use.textModel="com.adobe.cq.forms.core.components.models.form.Text"
+     data-sly-use.baseModel="com.adobe.cq.forms.core.components.models.form.Base"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
+     data-sly-use.labelTemplate="core/fd/components/af-commons/v1/fieldTemplates/label.html"
+     data-cmp-is="adaptiveForm{ComponentName}"
+     id="${textModel.id}"
+     data-cmp-data-layer="${textModel.data.json}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-cmp-visible="${textModel.visible ? 'true' : 'false'}"
+     class="cmp-adaptiveform-{componentname} ${resource.properties['styleClass']}">
+    <div class="cmp-adaptiveform-{componentname}__label-container">
+        <div data-sly-call="${labelTemplate.label @
+                 componentId=textModel.id,
+                 labelValue=baseModel.label.value,
+                 labelVisible=baseModel.label.visible,
+                 labelRichText=baseModel.label.richText,
+                 bemBlock='cmp-adaptiveform-{componentname}'}"
+             data-sly-unwrap></div>
+    </div>
+    <!--
+      Always render __value unconditionally — JS getWidget() must never return null.
+      Put conditional content inside using <sly data-sly-test>, never on the outer __value div.
+    -->
+    <div class="cmp-adaptiveform-{componentname}__value">
+        <sly data-sly-test.richContent="${textModel.value}">
+            <div data-sly-unwrap="${textModel.isRichText}">${richContent @ context = textModel.isRichText ? 'html' : 'text'}</div>
+        </sly>
+    </div>
+</div>
+<sly data-sly-call="${templates.placeholder @ isEmpty = !richContent, classAppend='cmp-adaptiveform-{componentname}'}"></sly>
+```
+
+**Notes:**
+- Use `baseModel.label.value` (not `resource.properties['jcr:title']`) — it applies i18n translation and correctly reads `hideTitle`
+- `Text` has no `getLabel()` — `Base.class` MUST be in the Sling Model `adapters` array (use template 2b)
+- `styleClass` is the only acceptable `resource.properties` read in this template
+
+---
+
 ## 8. Renderer JS
 
-**Path:** `ui.af.apps/.../form/{componentname}/v1/{componentname}/{componentname}.js`
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/{componentname}.js`
 
 ```javascript
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -347,7 +576,7 @@ use(function () {
 
 ## 9. Author Dialog
 
-**Path:** `ui.af.apps/.../form/{componentname}/v1/{componentname}/_cq_dialog/.content.xml`
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/_cq_dialog/.content.xml`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -418,7 +647,7 @@ use(function () {
 
 ## 10. Site Clientlib Definition
 
-**Path:** `ui.af.apps/.../form/{componentname}/v1/{componentname}/clientlibs/site/.content.xml`
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/clientlibs/site/.content.xml`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -446,7 +675,7 @@ use(function () {
 
 ## 11. Client-Side View Class
 
-**Path:** `ui.af.apps/.../form/{componentname}/v1/{componentname}/clientlibs/site/js/{componentname}view.js`
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/clientlibs/site/js/{componentname}view.js`
 
 ```javascript
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -561,65 +790,197 @@ use(function () {
 
 ---
 
-## 12. LESS Stylesheet
+## 11b. Client-Side View – Step / Container Components
 
-**Path:** `ui.af.apps/.../form/{componentname}/v1/{componentname}/clientlibs/site/css/{componentname}.less`
+Use when the component has no widget and does not capture a value. Extends `FormView.FormContainer` instead of `FormFieldBase`.
 
-```less
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/clientlibs/site/js/{componentname}view.js`
+
+```javascript
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  ~ Copyright {currentYear} Adobe
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~     http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+(function() {
+    "use strict";
 
-.cmp-adaptiveform-{componentname} {
-    &__label {
-        display: block;
-        margin-bottom: 4px;
-    }
+    class {ComponentName}View extends FormView.FormContainer {
+        static NS = FormView.Constants.NS;
+        static IS = "adaptiveForm{ComponentName}";
+        static bemBlock = 'cmp-adaptiveform-{componentname}';
 
-    &__label-container {
-        display: flex;
-        align-items: center;
-    }
+        static selectors = {
+            self: "[data-" + {ComponentName}View.NS + '-is="' + {ComponentName}View.IS + '"]'
+        };
 
-    &__widget {
-        width: 100%;
-        box-sizing: border-box;
-
-        &:focus {
-            outline: 2px solid var(--cmp-adaptiveform-focus-color, #0265DC);
-            outline-offset: 2px;
+        constructor(params) {
+            super(params);
         }
 
-        &[aria-invalid="true"] {
-            border-color: var(--cmp-adaptiveform-error-color, #D7373F);
+        initialize() {
+            super.initialize();
+            // component-specific setup (e.g., load external SDK, observe model state changes)
         }
     }
 
-    &__errormessage {
-        color: var(--cmp-adaptiveform-error-color, #D7373F);
-        font-size: 0.875rem;
-    }
+    FormView.Utils.setupField(({element, formContainer}) => {
+        return new {ComponentName}View({element, formContainer});
+    }, {ComponentName}View.selectors.self);
+})();
+```
 
-    &__questionmark {
-        cursor: pointer;
-        background: none;
-        border: none;
-        padding: 4px;
-    }
+---
 
-    &__shortdescription,
-    &__longdescription {
-        font-size: 0.875rem;
-        color: var(--cmp-adaptiveform-description-color, #6E6E6E);
+## 11c. updateValue and updateLabel Overrides for Rich-Text Components
+
+Add these method overrides to any view class that renders authored HTML inside a `__value` div alongside a `__label-container`. Without the `updateLabel` guard, the form engine calling `updateLabel(null)` on model bind will throw. Without the `updateValue` guard, the default implementation may overwrite the entire element `innerHTML` and destroy the label.
+
+```javascript
+updateValue(value) {
+    const actualValue = typeof value === "undefined" ? "" : value;
+
+    const sanitizedValue = window.DOMPurify ? window.DOMPurify.sanitize(actualValue, {
+        ALLOWED_TAGS: [
+            "b", "strong", "i", "em", "u", "sub", "sup", "small",
+            "blockquote", "ul", "ol", "li", "a", "br", "p", "span",
+            "h1", "h2", "h3", "h4", "h5", "h6"
+        ],
+        ALLOWED_ATTR: [
+            "href", "target", "rel", "class", "id", "style"
+            // add any custom data-* attributes your SDK requires
+        ]
+    }) : actualValue;
+
+    const widget = this.getWidget();
+    if (widget) {
+        widget.innerHTML = sanitizedValue;
+    }
+    // No else fallback — the __value div must always be present in the DOM (see template 7c).
+    // If getWidget() returns null, fix the HTL so __value renders unconditionally.
+}
+
+updateLabel(label) {
+    if (label) {
+        super.updateLabel(label);
     }
 }
 ```
 
 ---
 
+## 12. CSS Stub and Theme SCSS
+
+Styles are split across two repositories — see `references/css-architecture.md` for the full explanation.
+
+### 12a. CSS Stub (in `aem-core-forms-components`)
+
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/clientlibs/site/css/{componentname}.less`
+
+Declares every BEM class the HTL template emits with **empty rules only** — no CSS property values. All visual styling belongs in `aem-forms-theme-canvas`.
+
+```less
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~ Copyright {currentYear} Adobe
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.cmp-adaptiveform-{componentname} { }
+.cmp-adaptiveform-{componentname}__label-container { }
+.cmp-adaptiveform-{componentname}__label { }
+.cmp-adaptiveform-{componentname}__widget { }
+.cmp-adaptiveform-{componentname}__questionmark { }
+.cmp-adaptiveform-{componentname}__shortdescription { }
+.cmp-adaptiveform-{componentname}__longdescription { }
+.cmp-adaptiveform-{componentname}__errormessage { }
+```
+
+Add a rule for every additional BEM element introduced in the HTL template. Do not add any CSS properties here.
+
+### 12b. Theme SCSS (in `aem-forms-theme-canvas`)
+
+**Path:** `aem-forms-theme-canvas/src/components/{componentname}/_{componentname}.scss`
+
+All actual visual styles using design tokens from `src/site/_variables.scss`.
+
+```scss
+// {ComponentName} — Core Adaptive Form Component
+
+.cmp-adaptiveform-{componentname} {
+    display: flex;
+    flex-direction: column;
+    margin: $field-margin;
+    font-family: $font-family;
+    font-size: $font-md;
+    color: $dark-gray;
+}
+
+.cmp-adaptiveform-{componentname}__label-container {
+    display: flex;
+    align-items: center;
+}
+
+.cmp-adaptiveform-{componentname}__label {
+    font-size: $font-sm;
+    color: $dark-gray;
+}
+
+.cmp-adaptiveform-{componentname}__widget {
+    height: $field-height;
+    padding-left: $field-padding-left;
+    border: 1px solid $very-light-gray;
+    border-radius: 4px;
+    font-size: $font-md;
+
+    &:focus {
+        outline: 2px solid $focus-ring-color;
+        outline-offset: 2px;
+    }
+}
+
+/* Validation states — written by JS view via data-cmp-valid attribute */
+.cmp-adaptiveform-{componentname}[data-cmp-valid=false] {
+    .cmp-adaptiveform-{componentname}__widget { border-left: 3px solid $error; }
+}
+
+.cmp-adaptiveform-{componentname}[data-cmp-valid=true] {
+    .cmp-adaptiveform-{componentname}__widget { border-left: 3px solid $success; }
+}
+
+.cmp-adaptiveform-{componentname}__errormessage {
+    font-size: $font-xsm;
+    color: $error;
+}
+
+.cmp-adaptiveform-{componentname}__shortdescription,
+.cmp-adaptiveform-{componentname}__longdescription {
+    font-size: $font-xsm;
+    color: $gray;
+}
+```
+
+After creating the SCSS file, import it in `aem-forms-theme-canvas/src/theme.scss`:
+
+```scss
+@import './components/{componentname}/_{componentname}.scss';
+```
+
+Then build: `npm run build && npm run create-clientlib` from `aem-forms-theme-canvas/`.
+
+---
+
 ## 13. Editor Clientlib
 
-**Path:** `ui.af.apps/.../form/{componentname}/v1/{componentname}/clientlibs/editor/.content.xml`
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/clientlibs/editor/.content.xml`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -702,3 +1063,65 @@ use(function () {
     </jcr:content>
 </jcr:root>
 ```
+
+---
+
+## 16. Edit Config (`_cq_editConfig.xml`)
+
+**Path:** `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{componentname}/v1/{componentname}/_cq_editConfig.xml`
+
+Every form component needs this file to configure the author toolbar. Place it alongside `.content.xml`.
+
+### Standard (all field and step components)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:EditConfig"
+    cq:actions="[-,-,copymove,delete,-,-,-]"
+    cq:dialogMode="floating"
+    cq:layout="editbar"
+    cq:disableTargeting="{Boolean}true"/>
+```
+
+### Extended – Display/Text Components with Inplace Rich-Text Editing
+
+For components that use HTL template 7c and support inplace editing of the `__value` area:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:EditConfig"
+    cq:actions="[-,-,copymove,delete,-,-,-]"
+    cq:dialogMode="floating"
+    cq:layout="editbar"
+    cq:disableTargeting="{Boolean}true">
+    <cq:inplaceEditing
+        jcr:primaryType="cq:InplaceEditingConfig"
+        active="{Boolean}true"
+        editorType="text"
+        editElementQuery=".cmp-adaptiveform-{componentname}__value"
+        name="./value"
+        textPropertyName="./value"
+        hideLabel="{Boolean}true">
+        <config jcr:primaryType="nt:unstructured">
+            <rtePlugins jcr:primaryType="nt:unstructured">
+                <format jcr:primaryType="nt:unstructured" features="bold,italic,underline"/>
+                <fullscreen jcr:primaryType="nt:unstructured" features="*"/>
+                <control jcr:primaryType="nt:unstructured" features="close,save"/>
+            </rtePlugins>
+            <uiSettings jcr:primaryType="nt:unstructured">
+                <cui jcr:primaryType="nt:unstructured">
+                    <inline jcr:primaryType="nt:unstructured"
+                        toolbar="[format#bold,format#italic,format#underline,fullscreen#start,control#close,control#save]"/>
+                </cui>
+            </uiSettings>
+        </config>
+    </cq:inplaceEditing>
+</jcr:root>
+```
+
+For components needing a custom RTE plugin, add the plugin entry to `rtePlugins` and insert the plugin command before `fullscreen#start` in the `toolbar` string.
