@@ -110,9 +110,9 @@ public class DateInputImplTest {
     }
 
     @Test
-    void testGetDateDisplayFormatAbsentWhenDefault() {
+    void testGetDateDisplayFormatDefaultsWhenAbsent() {
         DateInput dateInput = Utils.getComponentUnderTest(PATH_DATE_INPUT, DateInput.class, context);
-        assertNull(dateInput.getDateDisplayFormat());
+        assertEquals("date{D/M/YYYY}", dateInput.getDateDisplayFormat());
     }
 
     @Test

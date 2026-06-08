@@ -39,6 +39,7 @@ import com.adobe.cq.forms.core.components.models.form.DateInput;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Model(
@@ -47,6 +48,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
     resourceType = { FormConstants.RT_FD_FORM_DATE_INPUT_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class DateInputImpl extends AbstractFieldImpl implements DateInput {
+
+    /** Default XFA picture clause applied when {@code dateDisplayFormat} is not authored. */
+    private static final String DEFAULT_DATE_DISPLAY_FORMAT = "date{D/M/YYYY}";
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_EXCLUDE_MINIMUM)
     @Default(booleanValues = false)
@@ -103,6 +107,12 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
         }
     }
 
+    /**
+     * Intentionally shares the {@code date-input} field type with {@code DatePickerImpl}
+     * (the calendar widget). The field type is the data contract — both produce a date
+     * value — while the rendered widget differs. Consumers (rule engine, themes) treat
+     * them uniformly and use the resource type ({@code :type}) as the discriminator.
+     */
     @Override
     public String getFieldType() {
         return super.getFieldType(FieldType.DATE_INPUT);
@@ -130,10 +140,11 @@ public class DateInputImpl extends AbstractFieldImpl implements DateInput {
     }
 
     @Override
-    @Nullable
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnore // widget render-time concern; not part of the (closed-enum) AF JSON model schema
     public String getDateDisplayFormat() {
-        return dateDisplayFormat;
+        // Apply the default in the model (not just in HTL) so Java/HTL consumers always
+        // get a usable picture clause instead of null.
+        return dateDisplayFormat == null ? DEFAULT_DATE_DISPLAY_FORMAT : dateDisplayFormat;
     }
 
     @Override

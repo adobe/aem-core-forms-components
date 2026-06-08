@@ -161,8 +161,9 @@ describe("Form Runtime with Date Input", () => {
         model.value = "2024-03-07";
         cy.get(`#${id}`).within(() => {
             cy.get(selectors.widgetYear).should('have.value', '2024');
-            cy.get(selectors.widgetMonth).should('have.value', '3');
-            cy.get(selectors.widgetDay).should('have.value', '7');
+            // Day and month are zero-padded to two digits when populated from a value
+            cy.get(selectors.widgetMonth).should('have.value', '03');
+            cy.get(selectors.widgetDay).should('have.value', '07');
         });
         cy.expectNoConsoleErrors();
     });

@@ -177,6 +177,9 @@
          * Falls back to 31 when month is empty or invalid (global max, no restriction).
          * Uses year 2000 (a leap year) when the Y field is incomplete so that February
          * allows 29 until the year is confirmed — the conservative permissive choice.
+         * The case this defers (e.g. day=29 + month=2 typed before a non-leap year) is
+         * re-validated when the year field blurs: the blur handler runs #validateFullDate(),
+         * which flips the day field's aria-invalid so the error is announced to AT.
          */
         #getMaxDayForCurrentMonth() {
             var mVal = this.#getInputByToken("M").value.trim();
@@ -214,7 +217,8 @@
 
         /**
          * Splits an ISO YYYY-MM-DD value and populates the three sub-inputs.
-         * Strips leading zeros from M and D for display (matching foundation behaviour).
+         * Day and month are zero-padded to two digits so the loaded value matches the
+         * DD/MM placeholders and the maxlength="2" hint (e.g. "2024-03-05" -> 05 / 03).
          */
         #splitISOValue(isoValue) {
             if (!isoValue) {
@@ -223,8 +227,8 @@
             }
             var parts = String(isoValue).split("-");
             this.#getInputByToken("Y").value = parts[0] || "";
-            this.#getInputByToken("M").value = parts[1] ? String(parseInt(parts[1], 10)) : "";
-            this.#getInputByToken("D").value = parts[2] ? String(parseInt(parts[2], 10)) : "";
+            this.#getInputByToken("M").value = parts[1] ? String(parseInt(parts[1], 10)).padStart(2, "0") : "";
+            this.#getInputByToken("D").value = parts[2] ? String(parseInt(parts[2], 10)).padStart(2, "0") : "";
         }
 
         /**

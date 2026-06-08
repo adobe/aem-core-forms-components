@@ -66,12 +66,16 @@ public interface DateInput extends DatePicker {
      * the field order and separator of the three-box widget.
      * Examples: {@code date{D/M/YYYY}} (DD-MM-YYYY), {@code date{M/D/YYYY}} (MM-DD-YYYY),
      * {@code date{YYYY/M/D}} (YYYY-MM-DD).
+     * <p>
+     * This is distinct from {@link Field#getFormat()} (inherited), which returns the
+     * generic {@code "date"} value type — this method returns the widget's field-order
+     * picture clause.
      *
-     * @return XFA format string, or {@code null} if not set (defaults to {@code date{D/M/YYYY}})
+     * @return the effective XFA picture clause; never {@code null} — defaults to
+     *         {@code date{D/M/YYYY}} when not authored. (Render-time concern; not part
+     *         of the exported AF JSON model schema.)
      * @since com.adobe.cq.forms.core.components.models.form 5.9.0
      */
-    @Nullable
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     String getDateDisplayFormat();
 
     /**
