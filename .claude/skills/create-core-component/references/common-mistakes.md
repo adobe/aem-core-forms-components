@@ -64,11 +64,3 @@ These apply to any component whose author dialog uses composite multifields or J
 5. **Select default not applied when `emptyText` omitted** — When `emptyText` is omitted from a Granite UI `form/select` node, Coral selects the first `<items>` child as the default. The JS `getSelectValue` may return `""` before Coral finishes upgrading. Always treat `val === ""` the same as your intended default value in your conditional logic (e.g., `val === "form" || val === ""`) to guarantee correct initial state regardless of upgrade timing.
 
 ---
-
-## Adobe Sign-Specific Mistakes
-
-These apply only to components that integrate with the Adobe Sign SDK or use `data-adobesigntype` field placeholders.
-
-1. **Edit opens plain text instead of Adobe Sign RTE** — Symptom: Edit shows no Adobe Sign Field button / no Type-Name-Required popover. Fixes: add `data-richtext` on `__value`; extend `toolbaractionhook.js` for `adaptiveFormAdobeSignBlock`; embed `aem.adobesign.rteplugin` on forms v2 editor; verify `integration-adobesign` content package is installed.
-
-2. **Radio/checkbox placeholders show as plain lines** — Symptom: core form shows underscores only; foundation shows radio circle + gray label bar. Cause: a generic `[data-adobesigntype] { border-bottom; font-size: 0 }` rule applied without type-specific SVG overrides. Fix: add type-specific placeholder CSS for `radio`, `checkbox`, `dropdown` in theme SCSS and include the corresponding SVG assets.

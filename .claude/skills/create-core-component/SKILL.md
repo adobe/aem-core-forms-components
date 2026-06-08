@@ -24,12 +24,12 @@ Before generating any code or reading any reference files, collect all of the fo
    - **Simple field** (text-like input that captures a single value) → extends `AbstractFieldImpl` / implements `Field`
    - **Options field** (multiple choices: checkboxes, radios, dropdowns) → extends `AbstractOptionsFieldImpl` / implements `OptionsConstraint`
    - **Container** (holds child components) → extends `AbstractContainerImpl`
-   - **Step / display** (no value capture: wizard panel, signature step, summary) → extends `AbstractBaseImpl`
-   - **Display/text** (renders authored HTML content with a title label: Adobe Sign Block, text extensions) → `sling:resourceSuperType="core/fd/components/form/text/v1/text"`, extends `AbstractBaseImpl`, implements `Text`
+   - **Step / display** (non-input: text, image, separator) → extends `AbstractBaseImpl` / implements `Base`
+   - **Display/text** (renders authored HTML content with a title label) → `sling:resourceSuperType="core/fd/components/form/text/v1/text"`, extends `AbstractBaseImpl`, implements `Text`
 3. **Custom properties** — any JCR properties beyond what the base class provides (name, type, default, purpose for each)
 4. **Widget HTML** — what the interactive element looks like (input type, select, custom div, etc.)
 5. **Constraints** — which constraint interfaces apply (String, Number, Date, Options, File)
-6. **Target repository and component group** — which repo (`aem-core-forms-components`, or a project overlay) and what `componentGroup` for the author toolbar (e.g., `".core-adaptiveform"`, `"Adobe Sign - Adaptive Form"`)
+6. **Target repository and component group** — which repo (`aem-core-forms-components`, or a project overlay) and what `componentGroup` for the author toolbar (e.g., `".core-adaptiveform"`)
 7. **Java backend** — does this component need a custom Sling Model, or can it reuse an existing Core model via `sling:resourceSuperType`? (Reuse is appropriate when the component only adds JS behavior on top of an existing field type; custom Java is required for new authored properties exposed in HTL or JSON)
 8. **FormContainer-level properties** — does this component need any configuration authored on the parent form container rather than on the component instance itself? (e.g., a signing service path set once for the whole form) If yes: what properties, and what tab name should they appear under in the form container dialog?
 
