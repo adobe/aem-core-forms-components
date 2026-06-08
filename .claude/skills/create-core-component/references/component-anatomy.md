@@ -31,22 +31,34 @@ To create a new component `{componentname}` at version v1, the following files a
 | 11 | `{componentname}/v1/{componentname}/clientlibs/site/.content.xml` | Runtime clientlib definition |
 | 12 | `{componentname}/v1/{componentname}/clientlibs/site/js/{componentname}view.js` | Client-side view class |
 | 13 | `{componentname}/v1/{componentname}/clientlibs/site/js.txt` | JS manifest |
-| 14 | `{componentname}/v1/{componentname}/clientlibs/site/css/{componentname}.less` | Styles |
+| 14 | `{componentname}/v1/{componentname}/clientlibs/site/css/{componentname}view.css` | Styles (`.css`; some legacy components use `.less`) |
 | 15 | `{componentname}/v1/{componentname}/clientlibs/site/css.txt` | CSS manifest |
 | 16 | `{componentname}/v1/{componentname}/clientlibs/editor/.content.xml` | Editor clientlib |
+| 17 | `{componentname}/v1/{componentname}/_cq_styleConfig/.content.xml` | Style System config (BEM-aligned style classes) |
+
+> Optional: `_cq_design_dialog/.content.xml` and `_cq_template.xml`. **Do not ship an
+> empty design dialog** (a tab containing only a comment) — omit it until it has real
+> fields.
 
 ### Examples
 
 | # | File | Purpose |
 |---|------|---------|
-| 17 | `examples/ui.apps/.../form/{componentname}/.content.xml` | Example proxy component |
-| 18 | `examples/ui.content/.../adaptive-form/{componentname}/.content.xml` | Example content page |
+| 18 | `examples/ui.apps/.../form/{componentname}/.content.xml` | Example proxy component |
+| 19 | `examples/ui.content/.../adaptive-form/{componentname}/.content.xml` | Example content page (Sites editor target) |
 
-### Integration Tests
+### Tests (Cypress) & wiring — REQUIRED
 
 | # | File | Purpose |
 |---|------|---------|
-| 19 | `it/content/.../samples/{componentname}/{componentname}v1/basic/.content.xml` | IT test content |
+| 20 | `ui.tests/test-module/specs/{componentname}/{componentname}.runtime.cy.js` | Runtime behaviour spec (model↔view, validation, rules) |
+| 21 | `ui.tests/test-module/specs/{componentname}/{componentname}.authoring.cy.js` | Edit-dialog spec (Forms + Sites editors) |
+| 22 | `it/content/.../samples/{componentname}/basic/.content.xml` | IT form the runtime spec loads via `previewForm` |
+| 23 | `ui.tests/test-module/libs/commons/formsConstants.js` (edit) | Add `resourceType.form{componentname}` entry |
+| 24 | `ui.af.apps/.../af-clientlibs/core-forms-components-runtime-all/.content.xml` (edit) | **Embed the runtime clientlib category** — the form runtime loads this aggregate; a missing embed silently breaks Cypress |
+
+See `references/cypress-tests.md`. Skipping any of #20–24 produces a component that
+"works" in unit tests but fails or never loads in the runtime suite.
 
 ---
 
@@ -79,6 +91,11 @@ Choose the appropriate base class:
 - **Options-based field** (checkboxes, radios, selects) -> extend `AbstractOptionsFieldImpl`
 - **Container/panel** -> extend `AbstractContainerImpl`
 - **Non-input component** (button, text, image) -> extend `AbstractBaseImpl`
+- **Composite / split widget** (e.g. day/month/year, multiple visible inputs feeding
+  one value) -> still extend the field base that matches the data type
+  (`AbstractFieldImpl` for date), but render **one hidden combined `<input>`** as the
+  value-bearing widget plus the visible sub-inputs. This category has extra runtime
+  rules — read `references/runtime-view-js.md` before writing the view JS.
 
 ---
 

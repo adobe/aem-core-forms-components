@@ -490,6 +490,100 @@ def validate_component(component_name, repo_root):
 
         check_file_contains(result, test_content, '"fieldType"', "Test content JSON: fieldType property present")
 
+    # ==========================================
+    # SECTION 13: Runtime View JS — override contract
+    # ==========================================
+    print("\n  --- Runtime View JS Contract ---")
+
+    if view_js.exists():
+        js = view_js.read_text()
+        # An overridden update* handler must call super, or it silently drops the base
+        # behaviour (root data-cmp-* attributes, error-message rendering, etc.).
+        for handler in ("updateEnabled", "updateReadOnly", "updateValidity", "updateRequired"):
+            if re.search(rf'\b{handler}\s*\(', js):
+                if re.search(rf'super\.{handler}\s*\(', js):
+                    result.ok(f"View JS: {handler}() override calls super")
+                else:
+                    result.fail(f"View JS: {handler}() overridden but never calls super.{handler}() "
+                                f"— root data-cmp-*/error message will go stale")
+        # An overridden updateValue must end by calling updateEmptyStatus().
+        if re.search(r'\bupdateValue\s*\(', js):
+            if 'updateEmptyStatus' in js:
+                result.ok("View JS: updateValue() override calls updateEmptyStatus()")
+            else:
+                result.fail("View JS: updateValue() overridden without updateEmptyStatus() "
+                            "— --filled/--empty modifier will not update")
+
+    # ==========================================
+    # SECTION 14: Editor clientlib JS safety
+    # ==========================================
+    print("\n  --- Editor Clientlib JS ---")
+
+    editor_js_dir = ui_base / "clientlibs/editor/js"
+    if editor_js_dir.exists():
+        for jsf in sorted(editor_js_dir.glob("*.js")):
+            content = jsf.read_text()
+            if re.search(r'\.innerHTML\s*=', content):
+                result.fail(f"Editor JS ({jsf.name}): assigns innerHTML — use textContent")
+            else:
+                result.ok(f"Editor JS ({jsf.name}): no innerHTML assignment")
+
+    # ==========================================
+    # SECTION 15: BEM modifier classes must have CSS
+    # ==========================================
+    print("\n  --- BEM Modifier Styling ---")
+
+    if htl_path.exists() and style_path is not None and style_path.exists():
+        htl = htl_path.read_text()
+        css = style_path.read_text()
+        modifiers = sorted(set(re.findall(rf'{re.escape(bem_block)}__[a-z0-9-]+--[a-z0-9-]+', htl)))
+        if not modifiers:
+            result.ok("BEM modifiers: none emitted literally in HTL")
+        for mod in modifiers:
+            if mod in css:
+                result.ok(f"BEM modifier: '{mod}' has a CSS rule")
+            else:
+                result.warn(f"BEM modifier: '{mod}' emitted in HTL but has no CSS rule — likely a no-op feature")
+
+    # Empty design dialog (a tab/container with only a comment) is noise — omit it.
+    design_dialog = ui_base / "_cq_design_dialog/.content.xml"
+    if design_dialog.exists():
+        dd = design_dialog.read_text()
+        if re.search(r'<items[^>]*>\s*(<!--.*?-->)?\s*</items>', dd, re.DOTALL):
+            result.warn("Design dialog: contains an empty tab/container — remove it or add real fields")
+
+    # ==========================================
+    # SECTION 16: Cypress specs & test wiring
+    # ==========================================
+    print("\n  --- Cypress Tests & Wiring ---")
+
+    runtime_spec = repo_root / f"ui.tests/test-module/specs/{component_name}/{component_name}.runtime.cy.js"
+    authoring_spec = repo_root / f"ui.tests/test-module/specs/{component_name}/{component_name}.authoring.cy.js"
+    check_file_exists(result, runtime_spec, "Cypress runtime spec")
+    check_file_exists(result, authoring_spec, "Cypress authoring spec")
+
+    forms_constants = repo_root / "ui.tests/test-module/libs/commons/formsConstants.js"
+    if forms_constants.exists() and component_name in forms_constants.read_text():
+        result.ok("formsConstants.js: component entry present")
+    else:
+        result.warn(f"formsConstants.js: no entry referencing '{component_name}'")
+
+    runtime_all = repo_root / "ui.af.apps/src/main/content/jcr_root/apps/core/fd/af-clientlibs/core-forms-components-runtime-all/.content.xml"
+    if runtime_all.exists() and f"core.forms.components.{component_name}.v1.runtime" in runtime_all.read_text():
+        result.ok("runtime-all: component runtime clientlib embedded")
+    else:
+        result.fail(f"runtime-all: 'core.forms.components.{component_name}.v1.runtime' not embedded "
+                    f"— the runtime Cypress suite will silently break")
+
+    if runtime_spec.exists():
+        spec = runtime_spec.read_text()
+        if re.search(r"cy\.get\(\s*['\"]\*['\"]\s*\)", spec):
+            result.warn("Cypress runtime spec: cy.get('*') fails be.visible on hidden inputs "
+                        "— use \"*:not([type=hidden])\"")
+        if re.search(r"have\.attr['\"][^)]*\)\s*\.should\([^)]*have\.attr", spec):
+            result.warn("Cypress runtime spec: chained should('(not.)have.attr') detected "
+                        "— re-query for each assertion (the first yields the attr value)")
+
     # Print final report
     return result.print_report()
 

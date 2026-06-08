@@ -87,14 +87,30 @@ Every component follows this naming pattern:
 
 ## JS View Accessibility Methods
 
-Every view class MUST implement:
+`FormFieldBase` already implements all of these and keeps the root `data-cmp-*`
+attributes, the error message, and the `--filled`/`--empty` modifier in sync.
+**Only override a handler if you need extra behaviour, and when you do, call
+`super.<handler>(value, state)` first** — otherwise you silently drop the base
+behaviour (stale `data-cmp-enabled`, unrendered error message, etc.). See
+`references/runtime-view-js.md` for the full override contract; it is the most
+common source of runtime bugs.
 
-| Method | Purpose |
-|--------|---------|
-| `updateValidity(validity)` | Set `aria-invalid` on widget based on `validity.valid` |
-| `updateReadOnly(readonly)` | Set `aria-readonly` and `disabled` on widget |
-| `updateEnabled(enabled)` | Toggle `disabled` attribute on widget |
-| `setModel(model)` | Register focus/blur listeners for `setActive()`/`setInactive()` |
+| Method | If you override it… |
+|--------|---------------------|
+| `updateValidity(validity, state)` | call `super` (it renders the error message + sets `data-cmp-valid`), then mirror `aria-invalid` onto extra sub-widgets |
+| `updateReadOnly(readOnly, state)` | call `super` (sets `data-cmp-readonly`), then set `aria-readonly`/`readonly` on sub-widgets |
+| `updateEnabled(enabled, state)` | call `super` (sets `data-cmp-enabled`), then toggle `disabled` on sub-widgets |
+| `updateValue(value)` | end with `this.updateEmptyStatus()`; for composite widgets, don't repopulate a focused sub-input |
+| `setModel(model)` | register focus/blur listeners for `setActive()`/`setInactive()` |
+
+## Group label pitfall (`aria-labelledby`)
+
+The shared label template (`af-commons/.../label.html`) renders
+`<label for="${componentId}" class="...__label">` with **no `id`**. So
+`aria-labelledby="${component.id}__label"` (or `${widgetId}__label`) points at a
+non-existent element and gives the group **no accessible name**. For a grouped
+widget (`role="group"`/`role="radiogroup"`) use `aria-label="${component.label.value}"`
+instead, or only reference an `id` you have actually rendered.
 
 ## Testing Accessibility
 
