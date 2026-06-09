@@ -27,8 +27,7 @@ import com.adobe.granite.ui.components.Value;
  */
 final class DatasourceComponentPathResolver {
 
-    private DatasourceComponentPathResolver() {
-    }
+    private DatasourceComponentPathResolver() {}
 
     @Nullable
     static String resolve(@NotNull SlingHttpServletRequest request) {

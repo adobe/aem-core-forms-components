@@ -57,7 +57,9 @@ import com.adobe.granite.ui.components.ds.ValueMapResource;
  * title, image, buttons) are skipped. Intermediate layout nodes (for example responsive grid) are traversed. A
  * {@code filter} property on the dialog datasource node restricts results by {@code fieldType}.
  */
-@Component(service = { Servlet.class }, property = {
+@Component(
+    service = { Servlet.class },
+    property = {
         "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_FIELDS_DATASOURCE_V1, "sling.servlet.methods=GET",
         "sling.servlet.extensions=html" })
 public class FormFieldDataSourceServlet extends AbstractDataSourceServlet {
@@ -65,35 +67,35 @@ public class FormFieldDataSourceServlet extends AbstractDataSourceServlet {
     static final String PN_FILTER = "filter";
 
     private static final Set<String> NON_INPUT_FIELD_TYPES = Collections
-            .unmodifiableSet(new HashSet<>(Arrays.asList(FieldType.FORM.getValue(), FieldType.PANEL.getValue(),
-                    FieldType.BUTTON.getValue(), FieldType.PLAIN_TEXT.getValue())));
+        .unmodifiableSet(new HashSet<>(Arrays.asList(FieldType.FORM.getValue(), FieldType.PANEL.getValue(),
+            FieldType.BUTTON.getValue(), FieldType.PLAIN_TEXT.getValue())));
 
     /**
      * Resource-type fragments that identify container/layout components. These are traversed but not added to the
      * result list.
      */
     private static final Set<String> CONTAINER_RT_FRAGMENTS = new HashSet<>(
-            Arrays.asList("form/container/", "form/panel/", "form/panelcontainer/", "form/accordion/", "form/wizard/",
-                    "form/tabsontop/", "form/verticaltabs/", "form/fragmentcontainer"));
+        Arrays.asList("form/container/", "form/panel/", "form/panelcontainer/", "form/accordion/", "form/wizard/",
+            "form/tabsontop/", "form/verticaltabs/", "form/fragmentcontainer"));
 
     /**
      * Resource-type fragments for non-data components that should be skipped entirely (no result entry, no recursion).
      */
     private static final Set<String> SKIP_RT_FRAGMENTS = new HashSet<>(
-            Arrays.asList("form/text/v", "form/title/", "form/image/", "form/button/", "form/actions/",
-                    "form/adobesignblock", "form/recaptcha", "form/hcaptcha", "form/terms"));
+        Arrays.asList("form/text/v", "form/title/", "form/image/", "form/button/", "form/actions/",
+            "form/adobesignblock", "form/recaptcha", "form/hcaptcha", "form/terms"));
 
     private static final Map<String, Set<String>> FILTER_TO_FIELD_TYPES;
 
     static {
         Map<String, Set<String>> map = new HashMap<>();
         map.put(FieldFilter.EMAIL.getValue(), Collections.unmodifiableSet(
-                new HashSet<>(Arrays.asList(FieldType.TEXT_INPUT.getValue(), FieldType.EMAIL.getValue()))));
+            new HashSet<>(Arrays.asList(FieldType.TEXT_INPUT.getValue(), FieldType.EMAIL.getValue()))));
         map.put(FieldFilter.PHONE.getValue(), Collections.unmodifiableSet(
-                new HashSet<>(Arrays.asList(FieldType.TELEPHONE.getValue(), FieldType.TEXT_INPUT.getValue()))));
+            new HashSet<>(Arrays.asList(FieldType.TELEPHONE.getValue(), FieldType.TEXT_INPUT.getValue()))));
         map.put(FieldFilter.COUNTRY_CODE.getValue(),
-                Collections.unmodifiableSet(new HashSet<>(Arrays.asList(FieldType.TELEPHONE.getValue(),
-                        FieldType.TEXT_INPUT.getValue(), FieldType.NUMBER_INPUT.getValue()))));
+            Collections.unmodifiableSet(new HashSet<>(Arrays.asList(FieldType.TELEPHONE.getValue(),
+                FieldType.TEXT_INPUT.getValue(), FieldType.NUMBER_INPUT.getValue()))));
         FILTER_TO_FIELD_TYPES = Collections.unmodifiableMap(map);
     }
 
@@ -161,7 +163,7 @@ public class FormFieldDataSourceServlet extends AbstractDataSourceServlet {
     }
 
     private void collectFormFields(Resource parent, List<Resource> result, ResourceResolver resolver,
-            FieldFilter fieldFilter) {
+        FieldFilter fieldFilter) {
         for (Resource child : parent.getChildren()) {
             String rt = child.getValueMap().get("sling:resourceType", String.class);
             if (rt != null && rt.startsWith(FormConstants.RT_FD_FORM_PREFIX)) {

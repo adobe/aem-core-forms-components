@@ -91,14 +91,14 @@ class FormFieldDataSourceServletTest {
     @Test
     void testEmailFilterWithResponsiveGrid() {
         List<String> values = getDataSourceValues("/apps/emailFieldDatasource",
-                "/apps/formcontainerWithResponsiveGrid");
+            "/apps/formcontainerWithResponsiveGrid");
         assertEquals(Arrays.asList("gridEmail"), values);
     }
 
     @Test
     void testResolveComponentPathFromContentPathAttribute() {
         when(expressionResolver.resolve(any(), any(), any(), any(MockSlingHttpServletRequest.class)))
-                .then(returnsFirstArg());
+            .then(returnsFirstArg());
         context.currentResource("/apps/emailFieldDatasource");
         MockSlingHttpServletRequest request = context.request();
         request.setAttribute(Value.CONTENTPATH_ATTRIBUTE, FORM_CONTAINER_PATH);
@@ -119,26 +119,26 @@ class FormFieldDataSourceServletTest {
     @Test
     void testResolveFieldTypeFromResourceType() {
         assertEquals("email",
-                servlet.resolveFieldType(
-                        new org.apache.sling.api.wrappers.ValueMapDecorator(java.util.Collections.emptyMap()),
-                        "core/fd/components/form/emailinput/v1/emailinput"));
+            servlet.resolveFieldType(
+                new org.apache.sling.api.wrappers.ValueMapDecorator(java.util.Collections.emptyMap()),
+                "core/fd/components/form/emailinput/v1/emailinput"));
         assertEquals("tel",
-                servlet.resolveFieldType(
-                        new org.apache.sling.api.wrappers.ValueMapDecorator(java.util.Collections.emptyMap()),
-                        "core/fd/components/form/telephoneinput/v1/telephoneinput"));
+            servlet.resolveFieldType(
+                new org.apache.sling.api.wrappers.ValueMapDecorator(java.util.Collections.emptyMap()),
+                "core/fd/components/form/telephoneinput/v1/telephoneinput"));
     }
 
     @Test
     void testMatchesFieldFilterExcludesCheckbox() {
         org.apache.sling.api.wrappers.ValueMapDecorator vm = new org.apache.sling.api.wrappers.ValueMapDecorator(
-                Collections.<String, Object> singletonMap("fieldType", "checkbox"));
+            Collections.<String, Object>singletonMap("fieldType", "checkbox"));
         assertFalse(servlet.matchesFieldFilter(vm, "core/fd/components/form/checkbox/v1/checkbox",
-                FormFieldDataSourceServlet.FieldFilter.EMAIL));
+            FormFieldDataSourceServlet.FieldFilter.EMAIL));
     }
 
     private List<String> getDataSourceValues(String datasourceResourcePath, String formContainerSuffix) {
         when(expressionResolver.resolve(any(), any(), any(), any(MockSlingHttpServletRequest.class)))
-                .then(returnsFirstArg());
+            .then(returnsFirstArg());
         context.currentResource(datasourceResourcePath);
         MockSlingHttpServletRequest request = context.request();
         MockRequestPathInfo requestPathInfo = (MockRequestPathInfo) request.getRequestPathInfo();
@@ -148,7 +148,7 @@ class FormFieldDataSourceServletTest {
         assertNotNull(dataSource);
         List<String> values = new ArrayList<>();
         dataSource.iterator()
-                .forEachRemaining(resource -> values.add(resource.getValueMap().get(PN_VALUE, String.class)));
+            .forEachRemaining(resource -> values.add(resource.getValueMap().get(PN_VALUE, String.class)));
         return values.stream().sorted().collect(Collectors.toList());
     }
 }

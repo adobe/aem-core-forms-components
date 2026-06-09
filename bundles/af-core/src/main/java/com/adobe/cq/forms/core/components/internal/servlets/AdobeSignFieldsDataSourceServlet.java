@@ -45,7 +45,9 @@ import com.adobe.granite.ui.components.ds.ValueMapResource;
  * Datasource servlet that returns Adobe Sign Block component names from the current form, used to populate the
  * "signFieldBlocks" and "signerAfFieldsBlock" dropdowns in the Electronic Signature signer configuration dialog.
  */
-@Component(service = { Servlet.class }, property = {
+@Component(
+    service = { Servlet.class },
+    property = {
         "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_ADOBESIGN_FIELDS_DATASOURCE_V1,
         "sling.servlet.methods=GET", "sling.servlet.extensions=html" })
 public class AdobeSignFieldsDataSourceServlet extends AbstractDataSourceServlet {
@@ -100,7 +102,7 @@ public class AdobeSignFieldsDataSourceServlet extends AbstractDataSourceServlet 
     }
 
     private SyntheticResource createDropdownEntry(ResourceResolver resourceResolver, String displayValue,
-            String dataValue) {
+        String dataValue) {
         Map<String, Object> map = new HashMap<>();
         map.put("text", displayValue);
         map.put("value", dataValue);

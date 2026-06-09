@@ -93,13 +93,13 @@
         if (!mf) {
             return;
         }
+        // NOTE: Do NOT call addBtn.click() here. Clicking the multifield add button
+        // fires foundation-contentloaded on the parent dialog, which re-triggers
+        // DataModel.initialiseDataModel and writes formmodel to #formmodelparameters
+        // a second time, resulting in formmodel=['none','none'] on the DAM asset.
+        // The min=1 validation on the multifield ensures the user adds at least one
+        // signer when Adobe Sign is enabled.
         Coral.commons.ready(mf, function() {
-            if (mf.items.length === 0) {
-                var addBtn = mf.querySelector("[coral-multifield-add]");
-                if (addBtn) {
-                    addBtn.click();
-                }
-            }
             captureFirstSignerMultifieldItem(dialog);
             updateMultifieldItemChrome(dialog);
             updateFirstSignerState(dialog);

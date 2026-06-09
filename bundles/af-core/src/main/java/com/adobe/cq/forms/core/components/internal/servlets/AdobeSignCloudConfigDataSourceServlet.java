@@ -53,7 +53,9 @@ import com.day.cq.wcm.api.PageManager;
  * Configs from the site-specific {@code cq:conf} hierarchy are listed first, followed by configs from
  * {@code /conf/global}. Duplicates (same config path appearing at multiple levels) are suppressed.
  */
-@Component(service = { Servlet.class }, property = {
+@Component(
+    service = { Servlet.class },
+    property = {
         "sling.servlet.resourceTypes=" + FormConstants.RT_FD_FORM_ADOBESIGN_CLOUDCONFIG_DATASOURCE_V1,
         "sling.servlet.methods=GET", "sling.servlet.extensions=html" })
 public class AdobeSignCloudConfigDataSourceServlet extends AbstractDataSourceServlet {
@@ -125,7 +127,7 @@ public class AdobeSignCloudConfigDataSourceServlet extends AbstractDataSourceSer
             seen.add(path);
             Resource jcrContent = config.getChild(JcrConstants.JCR_CONTENT);
             String title = jcrContent != null ? jcrContent.getValueMap().get("jcr:title", config.getName())
-                    : config.getName();
+                : config.getName();
             result.add(createDropdownEntry(resolver, title, path));
         }
     }
