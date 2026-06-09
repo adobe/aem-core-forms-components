@@ -145,7 +145,7 @@
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
                                                     fieldLabel="Maximum file size (MB)"
                                                     name="./maxFileSize"
-                                                    defaultValue="">
+                                                    defaultValue="2">
                                             </fileSizeLimit>
                                             <maxFileSizeMessage
                                                     jcr:primaryType="nt:unstructured"
