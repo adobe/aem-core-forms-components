@@ -78,41 +78,54 @@ Read `references/templates.md` for the full template set. Read `references/compo
    - Label container with label + question mark
    - Widget area (component-specific)
    - Short description, long description, error message sections
+   - Wrap any **hard-coded default UI text** (e.g. fallback sub-labels) with `@ i18n`
+   - **Composite widgets**: put `name` only on the **hidden combined input**, never on the visible sub-inputs (avoids stray submitted params); find sub-inputs in JS by class
+   - Any **BEM modifier class** you emit (e.g. `--hidden`) MUST have a matching CSS rule — a class with no style is a no-op feature
    - **CRITICAL**: Read `references/accessibility-checklist.md` and ensure every applicable item is satisfied
 
 6. **Renderer JS** — Return paths to shared field templates
 
 7. **Dialog XML** — Include base dialog fields via `granite/ui/components/coral/foundation/include`, add component-specific tabs/fields
 
-8. **Site clientlib** — `.content.xml`, `js.txt`, `css.txt`, view JS, LESS styles
+8. **Site clientlib** — `.content.xml`, `js.txt`, `css.txt`, view JS, styles. **Before writing the view JS, read `references/runtime-view-js.md`** — it defines the `FormFieldBase` override contract (`super` calls, `updateEmptyStatus`, composite-widget focus guard).
 
-9. **Editor clientlib** — `.content.xml` with editor category
+9. **Editor clientlib** — `.content.xml` with editor category. In editor JS use `textContent` (never `innerHTML`) and don't wrap locale-neutral format strings in `Granite.I18n.get`.
+
+10. **Register the runtime clientlib** — embed the component's `core.forms.components.{componentname}.v1.runtime` category in `ui.af.apps/.../af-clientlibs/core-forms-components-runtime-all/.content.xml`. Missing this silently breaks the runtime Cypress suite.
 
 #### 3c. Tests
 
-10. **Unit test** — JUnit 5 with `@ExtendWith(AemContextExtension.class)`:
+Unit tests alone are NOT enough — they only cover the Java model. **Cypress specs are
+required** (they catch HTL/view-JS/dialog/sync bugs that unit tests cannot). Read
+`references/cypress-tests.md`.
+
+11. **Unit test** — JUnit 5 with `@ExtendWith(AemContextExtension.class)`:
     - Use `FormsCoreComponentTestContext.newAemContext()`
     - Load `test-content.json` in `@BeforeEach`
     - Test `getFieldType()`, `getName()`, `getLabel()`, visibility, enabled, readOnly
     - Test JSON export with `Utils.testJSONExport()`
-    - Test all custom properties and methods
+    - Test **every** custom getter (incl. absent-when-default), **boolean props in both states**, any overridden `getConstraintMessages()`, and exclusive-constraint nulling
 
-11. **Test content JSON** — Mock JCR nodes with `sling:resourceType` matching the FormConstants value
+12. **Test content JSON** — Mock JCR nodes with `sling:resourceType` matching the FormConstants value
 
-12. **Exporter JSON** — Expected JSON output for export validation
+13. **Exporter JSON** — Expected JSON output for export validation
+
+14. **Cypress runtime spec** — `ui.tests/test-module/specs/{componentname}/{componentname}.runtime.cy.js` (+ IT content under `it/content/.../samples/{componentname}/basic/`, and a `formsConstants.js` entry). Mind the Cypress gotchas in `references/cypress-tests.md` (hidden-input visibility, chained `should('not.have.attr')`).
+
+15. **Cypress authoring spec** — `ui.tests/test-module/specs/{componentname}/{componentname}.authoring.cy.js` (Forms editor + Sites editor dialogs).
 
 #### 3d. Examples & IT Content
 
-13. **Example proxy component** — `.content.xml` with `sling:resourceSuperType` pointing to the component
-14. **Example content page** — Page structure with `guideContainer` and sample component instance
-15. **Register in example index** — Add entry to `examples/ui.content/.../adaptive-form/.content.xml`
+16. **Example proxy component** — `.content.xml` with `sling:resourceSuperType` pointing to the component
+17. **Example content page** — Page structure with `guideContainer` and sample component instance
+18. **Register in example index** — Add entry to `examples/ui.content/.../adaptive-form/.content.xml`
 
 ### Phase 4: Accessibility Verification
 
 After generating all files, read `references/accessibility-checklist.md` and verify:
 
-1. **HTL template** — Every interactive element has `aria-label` or `<label for>`, error div has `aria-live="assertive"`, descriptions have `aria-live="polite"`
-2. **JS view** — `updateValidity()` sets `aria-invalid`, `updateReadOnly()` sets `aria-readonly`, focus/blur handlers call `setActive()`/`setInactive()`
+1. **HTL template** — Every interactive element has `aria-label` or `<label for>`, error div has `aria-live="assertive"`, descriptions have `aria-live="polite"`. For a grouped widget, give the group `aria-label="${component.label.value}"` — **the shared label template emits no `id`, so `aria-labelledby="...__label"` is broken** (see `references/runtime-view-js.md` and the accessibility checklist).
+2. **JS view** — Prefer the inherited `FormFieldBase` handlers. If you override `updateValidity` / `updateEnabled` / `updateReadOnly` / `updateValue`, **call `super.<handler>(value, state)` first** so `data-cmp-*` attributes, the error message, and `--filled`/`--empty` stay in sync; only then add component-specific behaviour. Focus/blur handlers call `setActive()`/`setInactive()`. Read `references/runtime-view-js.md` — this is the #1 source of runtime bugs.
 3. **LESS styles** — `:focus` has visible `outline` with `2px` minimum, error states use color + text
 4. **Keyboard** — All interactive elements have `tabindex` if not natively focusable
 5. **BEM** — All class names follow `cmp-adaptiveform-{componentname}__{element}` convention
@@ -125,8 +138,8 @@ Run the component validator script to check all files, conventions, and accessib
 python3 scripts/validate_component.py {componentname} --repo-root /path/to/aem-core-forms-components
 ```
 
-The validator performs **90+ checks** across 12 categories:
-1. File existence (all 19+ required files)
+The validator performs checks across these categories:
+1. File existence (all required files)
 2. FormConstants registration
 3. Java interface annotations (`@ConsumerType`, copyright, base interface)
 4. Java implementation annotations (`@Model`, `@Exporter`, adaptables, injection strategy)
@@ -138,6 +151,10 @@ The validator performs **90+ checks** across 12 categories:
 10. BEM consistency (all elements present across HTL, JS, CSS, styleConfig)
 11. Example content (namespace declarations, guideContainer, proxy resourceSuperType)
 12. Tests (AemContext, JSON export, fieldType, resourceType)
+13. Runtime view-JS override contract (`super` calls on `update*`, `updateEmptyStatus` in `updateValue`)
+14. Editor clientlib JS safety (no `innerHTML`)
+15. BEM modifier classes emitted in HTL have a matching CSS rule; no empty design dialog
+16. Cypress specs (runtime + authoring), `formsConstants.js` entry, runtime-all embed, and Cypress-gotcha lint
 
 Fix all FAILs before proceeding. WARNs should be reviewed but may be acceptable.
 
@@ -155,12 +172,29 @@ Run tests:
 cd bundles/af-core && mvn test -pl . -Dtest={ComponentName}ImplTest 2>&1 | tail -30
 ```
 
+### Phase 7: Runtime Verification (Cypress)
+
+Unit tests cannot catch HTL/view-JS/sync bugs. Deploy and run the runtime spec
+against a live instance (`localhost:4502`):
+
+```bash
+mvn -pl ui.af.apps clean install -PautoInstallPackage         # redeploy after any view-JS/HTL change
+cd ui.tests/test-module && ./node_modules/.bin/cypress run --browser chrome --headless \
+  --spec "specs/{componentname}/{componentname}.runtime.cy.js"
+```
+
+The runtime spec must be green before the component is considered done — it is the
+only layer that surfaces the override-contract and composite-widget focus bugs
+described in `references/runtime-view-js.md`.
+
 ## Key References
 
-- `references/component-anatomy.md` — Full file checklist, interface/implementation hierarchy, FormConstants pattern
+- `references/component-anatomy.md` — Full file checklist (incl. Cypress + wiring), interface/implementation hierarchy, FormConstants pattern
 - `references/templates.md` — Copy-paste-ready templates for every file type with placeholders
+- `references/runtime-view-js.md` — **The `FormFieldBase` override contract** (super calls, `updateEmptyStatus`, composite widgets) — read before writing any view JS
+- `references/cypress-tests.md` — Required runtime + authoring specs, wiring, and Cypress gotchas
 - `references/accessibility-checklist.md` — WCAG 2.1 AA checklist with AEM-specific ARIA patterns
-- `scripts/validate_component.py` — Automated validator (90+ checks) — run after generating all files
+- `scripts/validate_component.py` — Automated validator — run after generating all files
 
 ## Critical Rules
 
@@ -175,3 +209,9 @@ cd bundles/af-core && mvn test -pl . -Dtest={ComponentName}ImplTest 2>&1 | tail 
 9. **Use `@ValueMapValue` with `InjectionStrategy.OPTIONAL`** — Never use `REQUIRED`; missing properties should use defaults
 10. **Test both `Resource` and `SlingHttpServletRequest` adaptation** — The `@Model` annotation must list both `adaptables`
 11. **Widget ID convention** — Always `{componentId}-widget` via `${'{0}-{1}' @ format=[component.id, 'widget']}`
+12. **Call `super` when overriding `update*` handlers** — `FormFieldBase` keeps the root `data-cmp-*` attributes, the error message, and `--filled`/`--empty` in sync; an override that skips `super` silently breaks them. An overridden `updateValue` must also end with `this.updateEmptyStatus()`. See `references/runtime-view-js.md`.
+13. **Cypress specs are mandatory** — ship `{componentname}.runtime.cy.js` + `{componentname}.authoring.cy.js`, the IT sample content, the `formsConstants.js` entry, and the runtime-all embed. Run the runtime spec green against `localhost:4502` before sign-off.
+14. **No empty styling or dialogs** — every BEM modifier class you emit must have a CSS rule; never ship an empty `_cq_design_dialog` tab.
+15. **Group label uses `aria-label`** — the shared label template emits no `id`, so `aria-labelledby="...__label"` is broken; use `aria-label="${component.label.value}"` for `role="group"` widgets.
+16. **Composite widgets**: only the hidden combined input carries `name`; never repopulate a sub-input the user is actively editing.
+17. **Editor JS safety** — use `textContent` not `innerHTML`; don't wrap locale-neutral format strings (`'YYYY-MM-DD'`) in `Granite.I18n.get`.
