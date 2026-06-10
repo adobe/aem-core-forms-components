@@ -22,6 +22,8 @@
         AUTO_GENERATE_DOR_PANEL = EDIT_DIALOG + " .cmp-adaptiveform-container__dordetails",
         DOR_TEMPLATE_REF_FIELD = EDIT_DIALOG + " .cmp-adaptiveform-container__dortemplateref",
         EXCLUDE_ATTACHMENTS_FROM_DOR_FIELD = EDIT_DIALOG + " .cmp-adaptiveform-container__excludeAttachmentsFromDor",
+        ENABLE_SSV_FIELD = EDIT_DIALOG + " .cmp-adaptiveform-container__enablessv",
+        SSV_CONFIG_FIELD = EDIT_DIALOG + " .cmp-adaptiveform-container__ssvconfig",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     // Constants for DOR selection types
@@ -246,6 +248,22 @@
         }
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleDorTypeSelection, registerDamAssetHandler);
+    function handleSsvVisibility(dialog) {
+        var enableSsvEl = dialog.find(ENABLE_SSV_FIELD)[0];
+        var $ssvConfigField = dialog.find(SSV_CONFIG_FIELD);
+
+        if (!enableSsvEl) {
+            return;
+        }
+
+        // Config select hidden unless checkbox is checked; checkbox is always visible
+        manageElementVisibility(dialog, [$ssvConfigField], enableSsvEl.checked);
+
+        enableSsvEl.addEventListener('change', function() {
+            manageElementVisibility(dialog, [$ssvConfigField], this.checked);
+        });
+    }
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDorTypeSelection, registerDamAssetHandler, handleSsvVisibility);
 
 })(jQuery, Granite);

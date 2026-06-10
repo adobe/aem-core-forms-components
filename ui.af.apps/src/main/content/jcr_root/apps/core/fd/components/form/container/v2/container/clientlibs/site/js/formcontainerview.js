@@ -52,6 +52,7 @@
                     let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(self.getLang(), "InternalFormSubmissionError");
                     const globals = {
                         form: self.getModel().getRuleNode(),
+                        formModel: self.getModel(),
                         event: {
                             type: action.type,
                             payload: action.payload,

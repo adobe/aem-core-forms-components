@@ -372,6 +372,42 @@
                                             </cui>
                                         </uiSettings>
                                     </thankYouMessage>
+                                    <enableServerSideValidation
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                      fieldLabel="Server-Side Validation"
+                                      fieldDescription="Call an Adobe I/O validator endpoint before the submit action runs."
+                                      granite:class="cmp-adaptiveform-container__enablessv"
+                                      name="./enableServerSideValidation"
+                                      text="Enable Server-Side Validation"
+                                      value="true"
+                                      deleteHint="{Boolean}false"/>
+                                    <enableServerSideValidationDeleteHint
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                      name="./enableServerSideValidation@Delete"
+                                      value="true"
+                                      ignoreData="{Boolean}true"/>
+                                    <ssvConfigContainer
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/container"
+                                      granite:class="cmp-adaptiveform-container__ssvconfig"
+                                      granite:hidden="true">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <ssvCloudServicePath
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                              fieldLabel="SSV Configuration"
+                                              emptyText="Select Data Source"
+                                              required="{Boolean}true"
+                                              name="./ssvCloudServicePath">
+                                                <datasource
+                                                  jcr:primaryType="nt:unstructured"
+                                                  sling:resourceType="fd/af/components/commons/datasources/propertyprovider"
+                                                  type="fdmRestDataSourceConfigs"/>
+                                            </ssvCloudServicePath>
+                                        </items>
+                                    </ssvConfigContainer>
                                     <submitActionType
                                       jcr:primaryType="nt:unstructured"
                                       granite:class="cmp-adaptiveform-container__submitaction"
