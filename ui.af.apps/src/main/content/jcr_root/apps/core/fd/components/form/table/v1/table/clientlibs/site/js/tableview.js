@@ -40,6 +40,7 @@
             super.setModel(model);
             queueMicrotask(() => {
                 this.#initColumnSortingIfEnabled();
+                this.#stampMobileLabels();
             });
         }
 
@@ -114,6 +115,47 @@
         }
 
         /**
+         * Mobile card layout (CSS-driven, via @media max-width:768px) stacks each
+         * row into a card and renders the column header as a ::before label sourced
+         * from each cell's data-label attribute. This method is the single point that
+         * stamps that attribute: it reads the header text from each <th> and copies
+         * it onto the matching column index in every body <td>.
+         *
+         * Layout itself is pure CSS — this only supplies the label text. It runs on
+         * init and again after rows are added so dynamically-cloned rows are covered.
+         * It never touches field state, visibility, or DOM structure.
+         *
+         * @param {HTMLElement} [scope] - Optional row element to limit stamping to
+         *        (used after a single row is added); defaults to the whole tbody.
+         */
+        #stampMobileLabels(scope) {
+            const widget = this.element.querySelector(Table.selectors.widget);
+            if (!widget) {
+                return;
+            }
+            const thead = widget.querySelector("thead");
+            const tbody = widget.querySelector("tbody");
+            if (!thead || !tbody) {
+                return;
+            }
+            const headers = Array.from(thead.querySelectorAll("th.cmp-adaptiveform-tablehead"))
+                .map((th) => th.innerText.replace(/\s+/g, " ").trim());
+            if (headers.length === 0) {
+                return;
+            }
+            const rows = scope && scope.matches && scope.matches("tr")
+                ? [scope]
+                : Array.from(tbody.querySelectorAll(":scope > tr"));
+            rows.forEach((row) => {
+                Array.from(row.cells).forEach((cell, index) => {
+                    if (index < headers.length && headers[index]) {
+                        cell.setAttribute("data-label", headers[index]);
+                    }
+                });
+            });
+        }
+
+        /**
          * Get the <tbody> element for row insertion.
          */
         #getTableBody() {
@@ -176,6 +218,9 @@
             // add/remove buttons, causing every dynamically-added row to dispatch
             // the wrong model index when clicked.
             this.#syncTableRowHooks(htmlElement, addedModel.id);
+
+            // Stamp mobile card labels on the freshly added row.
+            this.#stampMobileLabels(htmlElement);
 
             return htmlElement;
         }
