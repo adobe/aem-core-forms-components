@@ -75,12 +75,48 @@ export const customFunctions = {
 
     /**
      * Handles the error response after a form submission.
+     * When the error originates from Server-Side Validation (SSV), field-level errors
+     * are shown inline under each affected field. All other failures fall back to the
+     * default alert behaviour.
      *
-     * @param {string} defaultSubmitErrorMessage - The default error message.
+     * @param {string} defaultSubmitErrorMessage - Localised fallback error message.
      * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
      * @returns {void}
      */
-    defaultSubmitErrorHandler: cf.defaultSubmitErrorHandler,
+    defaultSubmitErrorHandler: function (defaultSubmitErrorMessage, globals) {
+        var payload = globals && globals.event && globals.event.payload;
+        var body = payload && payload.body;
+
+        if (body && body.errorType === 'SSV_VALIDATION_ERROR' &&
+                Array.isArray(body.errors) && body.errors.length > 0) {
+
+            var fieldErrors = body.errors.filter(function (e) { return e.fieldName; });
+            var formErrors  = body.errors.filter(function (e) { return !e.fieldName; });
+
+            // Mark each named field invalid inline.
+            // globals.formModel is the actual FormModel (not the rule-node proxy) so
+            // visit() and markAsInvalid() work without proxy restrictions.
+            var formModel = globals.formModel;
+            fieldErrors.forEach(function (error) {
+                if (formModel && typeof formModel.visit === 'function') {
+                    formModel.visit(function (field) {
+                        if (field.name === error.fieldName) {
+                            field.markAsInvalid(error.message);
+                        }
+                    });
+                }
+            });
+
+            // Show form-level errors (no specific field) as an alert
+            if (formErrors.length > 0) {
+                window.alert(formErrors.map(function (e) { return e.message; }).join('\n'));
+            }
+
+        } else {
+            // Normal submit failure — show the generic localised message
+            cf.defaultSubmitErrorHandler(defaultSubmitErrorMessage, globals);
+        }
+    },
 
     /**
      * Fetches the captcha token for the form.

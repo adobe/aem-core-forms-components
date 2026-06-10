@@ -186,6 +186,8 @@ public final class ReservedProperties {
     public static final String PN_SUBMIT_EMAIL_CC = "cc";
     public static final String PN_SUBMIT_EMAIL_BCC = "bcc";
     public static final String PN_SUBMIT_SPREADSHEETURL = "spreadsheetUrl";
+    public static final String PN_ENABLE_SERVER_SIDE_VALIDATION = "enableServerSideValidation";
+    public static final String PN_SSV_CLOUD_SERVICE_PATH = "ssvCloudServicePath";
     // End: Form submission related properties
     private static final Set<String> reservedProperties = aggregateReservedProperties();
 
