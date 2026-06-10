@@ -70,9 +70,83 @@
 
 .cell-wrapper {}
 
+/*
+ * Mobile card layout (<= 768px).
+ *
+ * Each row is transformed into a self-contained card. The transform is achieved
+ * purely by overriding the CSS table display values to `block` — no DOM mutation,
+ * no field disabling, no JS layout switching. The header row is visually removed
+ * and each cell instead shows its column header via a ::before label sourced from
+ * the data-label attribute stamped by tableview.js (#stampMobileLabels).
+ */
 @media (max-width: 768px) {
-    .cmp-adaptiveform-table__widget {}
-
+    .cmp-adaptiveform-table__widget,
+    .cmp-adaptiveform-table__head,
+    .cmp-adaptiveform-table__body,
+    .cmp-adaptiveform-tableheader,
+    .cmp-adaptiveform-tablerow,
     .cmp-adaptiveform-tablecell,
-    .cmp-adaptiveform-tablehead {}
+    .cmp-adaptiveform-tablehead {
+        display: block;
+        width: auto;
+    }
+
+    /*
+     * Visually hide the header row — labels are surfaced per-cell via ::before.
+     * Kept in the accessibility tree (off-screen, not display:none) so the
+     * semantic header association and any sort controls remain reachable.
+     */
+    .cmp-adaptiveform-table__widget .cmp-adaptiveform-table__head {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    /* Each body row becomes a card. */
+    .cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow {
+        border: 1px solid #DDDDDD;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    /* Cells stack vertically; reserve the left half for the header label. */
+    .cmp-adaptiveform-table__body .cmp-adaptiveform-tablecell {
+        border: none;
+        border-bottom: 1px solid #F0F0F0;
+        position: relative;
+        padding: 0.5rem 0.5rem 0.5rem 45%;
+        text-align: left;
+        min-height: 1.5rem;
+    }
+
+    .cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow > .cmp-adaptiveform-tablecell:last-child {
+        border-bottom: none;
+    }
+
+    /* Header label rendered from the stamped data-label attribute. */
+    .cmp-adaptiveform-table__body .cmp-adaptiveform-tablecell::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0.5rem;
+        top: 0.5rem;
+        width: 40%;
+        padding-right: 0.5rem;
+        font-weight: 600;
+        white-space: normal;
+        overflow-wrap: break-word;
+        box-sizing: border-box;
+    }
+
+    /* Cells with no header text (e.g. the repeatable-controls column) span full width. */
+    .cmp-adaptiveform-table__body .cmp-adaptiveform-tablecell:not([data-label])::before,
+    .cmp-adaptiveform-table__body .cmp-adaptiveform-tablecell[data-label=""]::before {
+        content: none;
+    }
+
+    .cmp-adaptiveform-table__body .cmp-adaptiveform-tablecell:not([data-label]),
+    .cmp-adaptiveform-table__body .cmp-adaptiveform-tablecell[data-label=""] {
+        padding-left: 0.5rem;
+    }
 }
