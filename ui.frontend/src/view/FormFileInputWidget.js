@@ -134,6 +134,10 @@ import FormFileInputWidgetBase from "./FormFileInputWidgetBase";
                         return fileName;
                     });
                     this.fileArr = [...value];
+                } else {
+                    this.values = [];
+                    this.fileArr = [];
+                    this.widget.value = '';
                 }
             }
         }
