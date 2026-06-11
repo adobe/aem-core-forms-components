@@ -100,7 +100,7 @@ export const customFunctions = {
             fieldErrors.forEach(function (error) {
                 if (formModel && typeof formModel.visit === 'function') {
                     formModel.visit(function (field) {
-                        if (field.name === error.fieldName) {
+                        if (field.name === error.fieldName || field.id === error.fieldName) {
                             field.markAsInvalid(error.message);
                         }
                     });
