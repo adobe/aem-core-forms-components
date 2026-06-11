@@ -26,6 +26,8 @@
         DATEPICKER_DEFAULTDATE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__defaultdate",
         DATEPICKER_MINDATE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__mindate",
         DATEPICKER_MAXDATE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__maxdate",
+        DATEPICKER_MIN_FIELD = ".cmp-adaptiveform-datepicker__mindate coral-datepicker",
+        DATEPICKER_MAX_FIELD = ".cmp-adaptiveform-datepicker__maxdate coral-datepicker",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -69,5 +71,30 @@
         maxDateTooltip.innerHTML = fieldDescription;
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleEditPatternDropDown,handleEditFormat,handleLang,handleDatePlaceholders);
+    var DATE_COMPARE = function(a, b) {
+        var da = new Date(a), db = new Date(b);
+        return !isNaN(da) && !isNaN(db) && da > db;
+    };
+
+    Utils.registerMinMaxValidator(
+        DATEPICKER_MIN_FIELD, DATEPICKER_MAX_FIELD,
+        "Minimum date cannot be after maximum date",
+        "Maximum date cannot be before minimum date",
+        DATE_COMPARE
+    );
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(
+        handleDisplayPatternDropDown,
+        handleDisplayFormat,
+        handleEditPatternDropDown,
+        handleEditFormat,
+        handleLang,
+        handleDatePlaceholders,
+        Utils.handleMinMaxValidation(
+            DATEPICKER_MIN_FIELD, DATEPICKER_MAX_FIELD,
+            "Minimum date cannot be after maximum date",
+            "Maximum date cannot be before minimum date",
+            DATE_COMPARE
+        )
+    );
 })(jQuery);
