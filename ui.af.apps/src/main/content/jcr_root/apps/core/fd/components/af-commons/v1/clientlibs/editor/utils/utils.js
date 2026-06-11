@@ -340,18 +340,11 @@
                 var minField = getCoralField(minSelector);
                 var maxField = getCoralField(maxSelector);
                 if (!minField || !maxField) return;
-                var compare = compareFn || function(a, b) { return parseInt(a, 10) > parseInt(b, 10); };
+                var compare = compareFn || INT_COMPARE;
                 function validate() {
-                    var minVal = minField.value, maxVal = maxField.value;
-                    var invalid = !!(minVal && maxVal && compare(minVal, maxVal));
-                    minField.invalid = invalid;
-                    maxField.invalid = invalid;
-                    if (invalid) {
-                        minField.errorMessage = Granite.I18n.getMessage(minMsg);
-                        maxField.errorMessage = Granite.I18n.getMessage(maxMsg);
-                    }
+                    $(minField).trigger("change");
+                    $(maxField).trigger("change");
                 }
-                validate();
                 minField.addEventListener("change", validate);
                 maxField.addEventListener("change", validate);
             };
@@ -369,7 +362,7 @@
          * @param {Function} [compareFn]       Optional (a, b) => boolean. Defaults to numeric comparison.
          */
         static registerMinMaxValidator(minFieldSelector, maxFieldSelector, minMsg, maxMsg, compareFn) {
-            var compare = compareFn || function(a, b) { return parseInt(a, 10) > parseInt(b, 10); };
+            var compare = compareFn || INT_COMPARE;
             $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
                 selector: minFieldSelector + ", " + maxFieldSelector,
                 validate: function(el) {
@@ -389,50 +382,19 @@
         }
     }
 
-    // ─── Central min/max validation registry ────────────────────────────────
-    // Each entry describes one pair of min/max fields in an authoring dialog.
-    // To add validation for a new component, append an entry here — no changes
-    // needed in the component's own editDialog.js.
-    var DATE_COMPARE = function(a, b) { return new Date(a) > new Date(b); };
+    // ─── Shared min/max validation for container components ──────────────────
+    // panelcontainer__minOccur / __maxOccur is shared across accordion, wizard,
+    // tabsontop, verticaltabs, and fragment — none of which have their own
+    // editDialog.js — so registration is centralised here.
+    var INT_COMPARE = function(a, b) { return parseInt(a, 10) > parseInt(b, 10); };
 
     var MIN_MAX_PAIRS = [
-        {
-            minSelector: ".cmp-adaptiveform-textinput__minlength coral-numberinput",
-            maxSelector: ".cmp-adaptiveform-textinput__maxlength coral-numberinput",
-            minMsg: "Minimum length cannot be greater than maximum length",
-            maxMsg: "Maximum length cannot be less than minimum length"
-        },
-        {
-            minSelector: ".cmp-adaptiveform-numberinput__minimum",
-            maxSelector: ".cmp-adaptiveform-numberinput__maximum",
-            minMsg: "Minimum value cannot be greater than maximum value",
-            maxMsg: "Maximum value cannot be less than minimum value"
-        },
-        {
-            minSelector: ".cmp-adaptiveform-fileinput__minimumFiles coral-numberinput",
-            maxSelector: ".cmp-adaptiveform-fileinput__maximumFiles coral-numberinput",
-            minMsg: "Minimum files cannot be greater than maximum files",
-            maxMsg: "Maximum files cannot be less than minimum files"
-        },
-        {
-            minSelector: ".cmp-adaptiveform-datepicker__mindate coral-datepicker",
-            maxSelector: ".cmp-adaptiveform-datepicker__maxdate coral-datepicker",
-            minMsg: "Minimum date cannot be after maximum date",
-            maxMsg: "Maximum date cannot be before minimum date",
-            compareFn: DATE_COMPARE
-        },
-        {
-            minSelector: ".cmp-adaptiveform-datetime__editdialog coral-datepicker[name='./minimumDateTime']",
-            maxSelector: ".cmp-adaptiveform-datetime__editdialog coral-datepicker[name='./maximumDateTime']",
-            minMsg: "Minimum date-time cannot be after maximum date-time",
-            maxMsg: "Maximum date-time cannot be before minimum date-time",
-            compareFn: DATE_COMPARE
-        },
         {
             minSelector: ".cmp-adaptiveform-panelcontainer__minOccur coral-numberinput",
             maxSelector: ".cmp-adaptiveform-panelcontainer__maxOccur coral-numberinput",
             minMsg: "Minimum occurrence cannot be greater than maximum occurrence",
-            maxMsg: "Maximum occurrence cannot be less than minimum occurrence"
+            maxMsg: "Maximum occurrence cannot be less than minimum occurrence",
+            compareFn: INT_COMPARE
         }
     ];
 
@@ -451,17 +413,20 @@
 
     // Auto-wire real-time change listeners whenever any dialog opens.
     channel.on("foundation-contentloaded", function(e) {
-        var dialog = $(e.target);
-        MIN_MAX_PAIRS.forEach(function(pair) {
-            if (dialog.find(pair.minSelector).length && dialog.find(pair.maxSelector).length) {
-                Utils.handleMinMaxValidation(
-                    pair.minSelector,
-                    pair.maxSelector,
-                    pair.minMsg,
-                    pair.maxMsg,
-                    pair.compareFn
-                )(e.target);
-            }
+        if (!$(e.target).find(".cq-dialog-content").length) return;
+        Coral.commons.ready(e.target, function() {
+            var dialog = $(e.target);
+            MIN_MAX_PAIRS.forEach(function(pair) {
+                if (dialog.find(pair.minSelector).length && dialog.find(pair.maxSelector).length) {
+                    Utils.handleMinMaxValidation(
+                        pair.minSelector,
+                        pair.maxSelector,
+                        pair.minMsg,
+                        pair.maxMsg,
+                        pair.compareFn
+                    )(e.target);
+                }
+            });
         });
     });
 

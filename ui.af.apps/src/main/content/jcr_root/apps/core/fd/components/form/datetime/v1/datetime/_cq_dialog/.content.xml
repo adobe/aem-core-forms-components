@@ -77,6 +77,7 @@
                                                     type="datetime"
                                                     emptyText="YYYY-MM-DD HH:mm"
                                                     name="./minimumDateTime"
+                                                    wrapperClass="cmp-adaptiveform-datetime__minimumDateTime"
                                                     valueFormat="YYYY-MM-DD[T]HH:mm:ss.000-00:00"/> <!-- Enforce UTC timezone to be timezone agnostic -->
                                             <minimumMessage
                                                     jcr:primaryType="nt:unstructured"
@@ -93,6 +94,7 @@
                                                     emptyText="YYYY-MM-DD HH:mm"
                                                     type="datetime"
                                                     name="./maximumDateTime"
+                                                    wrapperClass="cmp-adaptiveform-datetime__maximumDateTime"
                                                     valueFormat="YYYY-MM-DD[T]HH:mm:ss.000-00:00"/> <!-- Enforce UTC timezone to be timezone agnostic -->
                                             <maximumMessage
                                                     jcr:primaryType="nt:unstructured"

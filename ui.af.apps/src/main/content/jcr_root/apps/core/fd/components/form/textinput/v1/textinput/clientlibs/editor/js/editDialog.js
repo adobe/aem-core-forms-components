@@ -20,6 +20,8 @@
         TEXTINPUT_ALLOWRICHTEXT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__allowrichtext",
         TEXTINPUT_MAXLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-textinput__maxlength",
         TEXTINPUT_MINLENGTH = EDIT_DIALOG + " .cmp-adaptiveform-textinput__minlength",
+        TEXTINPUT_MIN_FIELD = ".cmp-adaptiveform-textinput__minlength coral-numberinput",
+        TEXTINPUT_MAX_FIELD = ".cmp-adaptiveform-textinput__maxlength coral-numberinput",
         BASE_PLACEHOLDER = EDIT_DIALOG + " .cmp-adaptiveform-base__placeholder",
         TEXTINPUT_VALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__value",
         TEXTINPUT_RICHTEXTVALUE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__richtextvalue",
@@ -76,6 +78,23 @@
         patternComponent.addEventListener("change", updateDisplayValueExpression);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown,handleValidationFormat,handleDisplayPatternDropDown,handleDisplayFormat,handleDisplayValueExpression);
+    Utils.registerMinMaxValidator(
+        TEXTINPUT_MIN_FIELD, TEXTINPUT_MAX_FIELD,
+        "Minimum length cannot be greater than maximum length",
+        "Maximum length cannot be less than minimum length"
+    );
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(
+        handleValidationPatternDropDown,
+        handleValidationFormat,
+        handleDisplayPatternDropDown,
+        handleDisplayFormat,
+        handleDisplayValueExpression,
+        Utils.handleMinMaxValidation(
+            TEXTINPUT_MIN_FIELD, TEXTINPUT_MAX_FIELD,
+            "Minimum length cannot be greater than maximum length",
+            "Maximum length cannot be less than minimum length"
+        )
+    );
 
 })(jQuery);
