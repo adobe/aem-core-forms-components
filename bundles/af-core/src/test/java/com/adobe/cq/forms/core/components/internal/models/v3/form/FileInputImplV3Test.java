@@ -262,7 +262,7 @@ public class FileInputImplV3Test {
     @Test
     void testGetAccept() {
         FileInput fileInput = Utils.getComponentUnderTest(PATH_FILEINPUT_CUSTOMIZED, FileInput.class, context);
-        assertThat(Arrays.asList("audio/*", "video/*", "image/*"), is(fileInput.getAccept()));
+        assertThat(Arrays.asList("audio/*", "video/*", "image/*", ".jpg", ".png"), is(fileInput.getAccept()));
         FileInput fileInputMock = Mockito.mock(FileInput.class);
         Mockito.when(fileInputMock.getAccept()).thenCallRealMethod();
         assertThat(FileInput.DEFAULT_ACCEPT, is(fileInputMock.getAccept()));
