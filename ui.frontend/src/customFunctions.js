@@ -98,12 +98,17 @@ export const customFunctions = {
             // visit() and markAsInvalid() work without proxy restrictions.
             var formModel = globals.formModel;
             fieldErrors.forEach(function (error) {
+                var matched = false;
                 if (formModel && typeof formModel.visit === 'function') {
                     formModel.visit(function (field) {
                         if (field.name === error.fieldName || field.id === error.fieldName) {
                             field.markAsInvalid(error.message);
+                            matched = true;
                         }
                     });
+                }
+                if (!matched) {
+                    console.warn('[SSV] No field found for fieldName "' + error.fieldName + '" — error not shown inline: ' + error.message);
                 }
             });
 

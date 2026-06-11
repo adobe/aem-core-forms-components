@@ -256,11 +256,17 @@
             return;
         }
 
-        // Config select hidden unless checkbox is checked; checkbox is always visible
-        manageElementVisibility(dialog, [$ssvConfigField], enableSsvEl.checked);
+        function updateSsvVisibility(checked) {
+            manageElementVisibility(dialog, [$ssvConfigField], checked);
+            // When hidden: clear value, mark not-required, add @Delete so stale path is removed from JCR.
+            // When shown: restore required, remove @Delete so the selected path is persisted.
+            manageDeleteFields(dialog, ['ssvCloudServicePath'], !checked);
+        }
+
+        updateSsvVisibility(enableSsvEl.checked);
 
         enableSsvEl.addEventListener('change', function() {
-            manageElementVisibility(dialog, [$ssvConfigField], this.checked);
+            updateSsvVisibility(this.checked);
         });
     }
 
