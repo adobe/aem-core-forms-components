@@ -132,6 +132,18 @@ public class TableImplTest {
     }
 
     @Test
+    void testGetColumnWidth_nullWhenNotAuthored() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE, Panel.class, context);
+        assertNull(table.getColumnWidth(), "getColumnWidth must be null when not authored");
+    }
+
+    @Test
+    void testGetColumnWidth_returnedWhenAuthored() throws Exception {
+        TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE_WITH_COLUMN_WIDTH, Panel.class, context);
+        assertEquals("1,2,1", table.getColumnWidth(), "getColumnWidth must return the authored value");
+    }
+
+    @Test
     void testGetColumnWidthColStyles_emptyWhenNotAuthored() throws Exception {
         TableImpl table = (TableImpl) Utils.getComponentUnderTest(PATH_TABLE, Panel.class, context);
         assertTrue(table.getColumnWidthColStyles().isEmpty());
