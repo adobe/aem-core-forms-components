@@ -401,6 +401,12 @@
                             </columns>
                         </items>
                     </submitActions>
+                    <signature
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Electronic Signature"
+                            sling:resourceType="granite/ui/components/coral/foundation/include"
+                            path="fd/af/authoring/content/coreComponentSign/dialogConfig"
+                            resouceType="granite/ui/components/coral/foundation/container"/>
                     <dor
                         granite:class="cmp-adaptiveform-container__dor"
                         jcr:primaryType="nt:unstructured"

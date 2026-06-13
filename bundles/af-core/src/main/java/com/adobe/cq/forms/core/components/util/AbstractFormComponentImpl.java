@@ -41,10 +41,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
-import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
-import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.models.annotations.injectorspecific.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -57,6 +54,7 @@ import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.internal.models.v1.form.SignerInfoImpl;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -128,6 +126,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected Style currentStyle;
+
+    @ChildResource(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fd:signerInfo")
+    private Resource signerInfoResource;
 
     @Nullable
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VIEWTYPE)
@@ -308,6 +309,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_ASSOCIATE_PROPERTY_WRAPPER = "fd:associate";
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    public static final String CUSTOM_SIGNER_PROPERTY_WRAPPER = "fd:signerInfo";
     public static final String CUSTOM_DOR_CONTAINER_WRAPPER = "dorContainer";
     // used for DOR and SPA editor to work
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
@@ -336,8 +338,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (!getCustomLayoutProperties().isEmpty()) {
             properties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
         }
-        if (!getDorProperties().isEmpty()) {
-            properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+        Map<String, Object> dorProperties = getDorProperties();
+        if (!dorProperties.isEmpty()) {
+            properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, dorProperties);
         }
         Map<String, Object> annotations = getCqAnnotations();
         if (annotations != null) {
@@ -358,6 +361,11 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (!associateProperties.isEmpty()) {
             properties.put(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER, associateProperties);
         }
+
+        if (signerInfoResource != null) {
+            properties.put("fd:signerInfo", SignerInfoImpl.getSignerDetails(signerInfoResource));
+        }
+
         return properties;
     }
 
