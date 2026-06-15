@@ -77,12 +77,12 @@ describe('Page - Authoring - Table Row Merge/Split', function () {
                     openRowCellToolbarByIndex(row1JcrPath, 0);
                     cy.invokeEditableAction("[data-action='splitrowcell']");
                     cy.getContentIFrameBody()
-                        .find('.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow').eq(0)
+                        .find('.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow').eq(1)
                         .find('.cmp-adaptiveform-tablecell')
                         .should('have.length', beforeCount + 1);
 
                     cy.getContentIFrameBody()
-                        .find('.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow').eq(0)
+                        .find('.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow').eq(1)
                         .find('.cmp-adaptiveform-tablecell[colspan="2"]')
                         .should('not.exist');
                 });
