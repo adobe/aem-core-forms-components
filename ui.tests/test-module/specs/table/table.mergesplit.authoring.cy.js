@@ -25,9 +25,6 @@ describe('Page - Authoring - Table Row Merge/Split', function () {
     const row2JcrPath = tableJcrPath + "/row2";
 
     const openRowCellToolbarByIndex = (rowPath, index) => {
-        // Wait for the table body to be stable in the content iframe before reading
-        // overlays, so the editable's dom reference is wired up and toolbar condition
-        // functions (e.g. isMergedRowCell) read the correct colspan from the DOM.
         cy.getContentIFrameBody()
             .find('.cmp-adaptiveform-table__body')
             .should('exist');
@@ -42,11 +39,6 @@ describe('Page - Authoring - Table Row Merge/Split', function () {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + selector);
         });
     };
-
-    // -------------------------------------------------------------------------
-    // Initial state: verify the pre-merged cell in row1 is correct
-    // -------------------------------------------------------------------------
-
     context('Verify pre-merged row cell state', function () {
         beforeEach(function () {
             cy.openAuthoring(tableSamplePagePath);
@@ -69,47 +61,36 @@ describe('Page - Authoring - Table Row Merge/Split', function () {
     context('Split row cell in Forms Editor', function () {
 
         beforeEach(function () {
-            // Suppress uncaught exceptions from AEM authoring code (e.g. editable tree
-            // not fully loaded when refresh() runs) so they don't abort the test.
             cy.on('uncaught:exception', () => false);
             cy.openAuthoring(tableSamplePagePath);
         });
 
-        it('splitrowcell on mergedCell (colspan=2) increases the row1 cell count by 1', function () {
-            // Confirm the merged cell is in the DOM — this also gates the toolbar open
-            // so isMergedRowCell sees colspan=2 and shows the splitrowcell action.
+        it('splitrowcell removes colspan and increases the row cell count by 1', function () {
             cy.getContentIFrameBody()
                 .find('.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow').eq(0)
-                .find('.cmp-adaptiveform-tablecell[colspan="2"]')
-                .should('exist');
+                .find('.cmp-adaptiveform-tablecell').then($cells => {
+                    const beforeCount = $cells.length;
+                    cy.getContentIFrameBody()
+                        .find('.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow').eq(0)
+                        .find('.cmp-adaptiveform-tablecell[colspan="2"]')
+                        .should('exist');
+                    openRowCellToolbarByIndex(row1JcrPath, 0);
+                    cy.invokeEditableAction("[data-action='splitrowcell']");
+                    cy.getContentIFrameBody()
+                        .find('.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow').eq(0)
+                        .find('.cmp-adaptiveform-tablecell')
+                        .should('have.length', beforeCount + 1);
 
-            // Open toolbar first — AEM fires selection POSTs during overlay click.
-            // Register the intercept only after the toolbar is open so we don't
-            // accidentally catch one of those AEM-internal POSTs instead of the
-            // colspan@Delete POST that splitTableRowCell fires.
-            openRowCellToolbarByIndex(row1JcrPath, 0);
-
-            // Match only the colspan@Delete POST the editorhook sends — body matcher
-            // ensures no AEM-internal POST to the same path is accidentally captured.
-            const mergedCellPath = row1JcrPath + "/mergedCell";
-            cy.intercept('POST', mergedCellPath).as('splitRowCell');
-
-            cy.invokeEditableAction("[data-action='splitrowcell']");
-            cy.wait('@splitRowCell');
-        });
-
-        it('after splitrowcell, the split cell no longer carries a colspan attribute', function () {
-            cy.getContentIFrameBody()
-                .find('.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow').eq(0)
-                .find('.cmp-adaptiveform-tablecell[colspan="2"]')
-                .should('not.exist');
+                    cy.getContentIFrameBody()
+                        .find('.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow').eq(0)
+                        .find('.cmp-adaptiveform-tablecell[colspan="2"]')
+                        .should('not.exist');
+                });
         });
     });
 
     // -------------------------------------------------------------------------
-    // Merge row cells — validation: single-cell selection must show error dialog.
-    // Full multi-cell merge requires the real Granite multi-select API so we
-    // verify the validation guard fires correctly when only one cell is selected.
+    // Merge row cells — validation guard: single-cell selection shows error dialog.
     // -------------------------------------------------------------------------
 
     context('Merge row cells validation in Forms Editor', function () {
@@ -119,7 +100,6 @@ describe('Page - Authoring - Table Row Merge/Split', function () {
         });
 
         it('invoking mergerowcells with a single cell selected shows the validation error dialog', function () {
-            // row2 has 3 individual (unmerged) cells — select the first one alone
             openRowCellToolbarByIndex(row2JcrPath, 0);
             cy.invokeEditableAction("[data-action='mergerowcells']");
 
