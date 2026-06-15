@@ -137,17 +137,18 @@
 
 .cmp-adaptiveform-table__sort-button {
     flex-shrink: 0;
-    min-width: 2rem;
-    min-height: 2rem;
+    width: 2rem;
+    height: 2rem;
     padding: 0;
     margin: 0;
     border: 1px solid #C8C8C8;
     border-radius: 2px;
     background-color: #FFFFFF;
+    background-image: url(./resources/sort-neutral.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 18px 18px;
     cursor: pointer;
-    position: relative;
-    font-size: 0;
-    line-height: 0;
 }
 
 .cmp-adaptiveform-table__sort-button:hover,
@@ -157,27 +158,12 @@
     outline-offset: 1px;
 }
 
-/* Neutral state: up/down chevrons */
-.cmp-adaptiveform-table__sort-button::before {
-    content: "\2191 \2193";
-    font-size: 0.65rem;
-    letter-spacing: -0.15em;
-    color: #505050;
-    display: block;
-    line-height: 1;
-    padding: 0.15rem 0;
+.cmp-adaptiveform-table__sort-button--asc {
+    background-image: url(./resources/sort-asc.svg);
 }
 
-.cmp-adaptiveform-table__sort-button--asc::before {
-    content: "\2191";
-    font-size: 0.85rem;
-    color: #222222;
-}
-
-.cmp-adaptiveform-table__sort-button--desc::before {
-    content: "\2193";
-    font-size: 0.85rem;
-    color: #222222;
+.cmp-adaptiveform-table__sort-button--desc {
+    background-image: url(./resources/sort-desc.svg);
 }
 
 /* Header row hover */
