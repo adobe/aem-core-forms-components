@@ -380,7 +380,7 @@
                                       granite:class="cmp-adaptiveform-container__enablessv"
                                       name="./enableServerSideValidation"
                                       text="Enable Server-Side Validation"
-                                      value="true"
+                                      value="false"
                                       deleteHint="{Boolean}false"/>
                                     <enableServerSideValidationTypeHint
                                       jcr:primaryType="nt:unstructured"
