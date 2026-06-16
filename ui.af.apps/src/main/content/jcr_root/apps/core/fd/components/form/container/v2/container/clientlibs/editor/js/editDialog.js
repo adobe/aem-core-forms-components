@@ -22,8 +22,6 @@
         AUTO_GENERATE_DOR_PANEL = EDIT_DIALOG + " .cmp-adaptiveform-container__dordetails",
         DOR_TEMPLATE_REF_FIELD = EDIT_DIALOG + " .cmp-adaptiveform-container__dortemplateref",
         EXCLUDE_ATTACHMENTS_FROM_DOR_FIELD = EDIT_DIALOG + " .cmp-adaptiveform-container__excludeAttachmentsFromDor",
-        ENABLE_SSV_FIELD = EDIT_DIALOG + " .cmp-adaptiveform-container__enablessv",
-        SSV_CONFIG_FIELD = EDIT_DIALOG + " .cmp-adaptiveform-container__ssvconfig",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     // Constants for DOR selection types
@@ -248,28 +246,6 @@
         }
     }
 
-    function handleSsvVisibility(dialog) {
-        var enableSsvEl = dialog.find(ENABLE_SSV_FIELD)[0];
-        var $ssvConfigField = dialog.find(SSV_CONFIG_FIELD);
-
-        if (!enableSsvEl) {
-            return;
-        }
-
-        function updateSsvVisibility(checked) {
-            manageElementVisibility(dialog, [$ssvConfigField], checked);
-            // When hidden: clear value, mark not-required, add @Delete so stale path is removed from JCR.
-            // When shown: restore required, remove @Delete so the selected path is persisted.
-            manageDeleteFields(dialog, ['ssvCloudServicePath'], !checked);
-        }
-
-        updateSsvVisibility(enableSsvEl.checked);
-
-        enableSsvEl.addEventListener('change', function() {
-            updateSsvVisibility(this.checked);
-        });
-    }
-
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleDorTypeSelection, registerDamAssetHandler, handleSsvVisibility);
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleDorTypeSelection, registerDamAssetHandler);
 
 })(jQuery, Granite);
