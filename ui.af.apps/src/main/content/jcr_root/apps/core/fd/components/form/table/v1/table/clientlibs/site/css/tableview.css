@@ -14,179 +14,65 @@
  * limitations under the License.
  ******************************************************************************/
 
-.cmp-adaptiveform-table {
-    margin: 1rem 0;
-}
-
-.cmp-adaptiveform-table__title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.cmp-adaptiveform-table__help-container {
-    display: flex;
-    flex-direction: row-reverse;
-}
-
-.cmp-adaptiveform-table__questionmark {
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 9px;
-    background: url(./resources/images/question.svg) center center / cover no-repeat,#969696;
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-}
-
-.cmp-adaptiveform-table__help-container .cmp-adaptiveform-table__questionmark {
-    position: unset;
-    right: unset;
-}
-
-.cmp-adaptiveform-table__shortdescription {
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-}
-
-.cmp-adaptiveform-table__longdescription {
-    color: #6B6B6B;
-    background-color: #F5F5F5;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-    margin-bottom: 5px;
-    padding: 10px;
-}
-
-.cmp-adaptiveform-table__longdescription p {
-    margin: 0;
-    padding: 0;
-}
-
-/*
- * Widget: explicit display:table covers BOTH the edit-mode div wrapper AND the
- * publish-mode <table> element (which already has display:table by default).
+/* All visual styles live in the theme canvas:
+ * aem-forms-theme-canvas/src/components/table/_table.scss
  */
-.cmp-adaptiveform-table__widget {
-    display: table;
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #DDDDDD;
-}
 
-/* These are no-ops on real <thead>/<tbody> but required for the edit-mode divs. */
-.cmp-adaptiveform-table__head {
-    display: table-header-group;
-}
+.cmp-adaptiveform-table {}
 
-.cmp-adaptiveform-table__body {
-    display: table-row-group;
-}
+.cmp-adaptiveform-table__title {}
 
-/* No-ops on real <tr> but required for edit-mode decoration divs. */
-.cmp-adaptiveform-tableheader {
-    display: table-row;
-}
+.cmp-adaptiveform-table__help-container {}
 
-.cmp-adaptiveform-tablerow {
-    display: table-row;
-}
+.cmp-adaptiveform-table__questionmark {}
 
-/*
- * Row hover: target the CELLS directly so it works reliably in both paths:
- *  - Edit mode (divs):  div.tablerow:hover → div.tablecell children
- *  - Publish mode (<tr>/<td>): tr:hover → td children (needed because in CSS table
- *    painting order the <td> background paints on top of the <tr> background, so
- *    setting it on the <td> directly is the only guaranteed approach).
- */
-.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow:hover > .cmp-adaptiveform-tablecell {
-    background-color: #FAFAFA;
-}
+.cmp-adaptiveform-table__help-container .cmp-adaptiveform-table__questionmark {}
 
-/* Individual cell hover: slightly stronger tint + subtle inset ring. */
-.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow > .cmp-adaptiveform-tablecell:hover {
-    background-color: #F0F0F0;
-}
+.cmp-adaptiveform-table__shortdescription {}
 
-/* No-ops on real <th>/<td> but required for edit-mode cell divs. */
+.cmp-adaptiveform-table__longdescription {}
+
+.cmp-adaptiveform-table__longdescription p {}
+
+.cmp-adaptiveform-table__widget {}
+
+.cmp-adaptiveform-table__head {}
+
+.cmp-adaptiveform-table__body {}
+
+.cmp-adaptiveform-tableheader {}
+
+.cmp-adaptiveform-tablerow {}
+
+.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow:hover > .cmp-adaptiveform-tablecell {}
+
+.cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow > .cmp-adaptiveform-tablecell:hover {}
+
 .cmp-adaptiveform-tablecell,
-.cmp-adaptiveform-tablehead {
-    display: table-cell;
-    padding: 0.75rem;
-    border: 1px solid #DDDDDD;
-    text-align: left;
-    vertical-align: top;
-}
+.cmp-adaptiveform-tablehead {}
 
-/* Header cells base styling */
-.cmp-adaptiveform-table__head .cmp-adaptiveform-tablehead {
-    background-color: #F5F5F5;
-    font-weight: 600;
-}
+.cmp-adaptiveform-table__head .cmp-adaptiveform-tablehead {}
 
-/* Column sorting (publish): header layout + sort control */
-.cmp-adaptiveform-table__sort-header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    width: 100%;
-    box-sizing: border-box;
-}
+.cmp-adaptiveform-table__sort-header-inner {}
 
-.cmp-adaptiveform-table__sort-button {
-    flex-shrink: 0;
-    width: 2rem;
-    height: 2rem;
-    padding: 0;
-    margin: 0;
-    border: 1px solid #C8C8C8;
-    border-radius: 2px;
-    background-color: #FFFFFF;
-    background-image: url(./resources/sort-neutral.svg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 18px 18px;
-    cursor: pointer;
-}
+.cmp-adaptiveform-table__sort-button {}
 
 .cmp-adaptiveform-table__sort-button:hover,
-.cmp-adaptiveform-table__sort-button:focus-visible {
-    background-color: #EBEBEB;
-    outline: 2px solid #2680EB;
-    outline-offset: 1px;
-}
+.cmp-adaptiveform-table__sort-button:focus-visible {}
 
-.cmp-adaptiveform-table__sort-button--asc {
-    background-image: url(./resources/sort-asc.svg);
-}
+.cmp-adaptiveform-table__sort-button--asc {}
 
-.cmp-adaptiveform-table__sort-button--desc {
-    background-image: url(./resources/sort-desc.svg);
-}
+.cmp-adaptiveform-table__sort-button--desc {}
 
-/* Header row hover */
-.cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader:hover > .cmp-adaptiveform-tablehead {
-    background-color: #EBEBEB;
-}
+.cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader:hover > .cmp-adaptiveform-tablehead {}
 
-.cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader > .cmp-adaptiveform-tablehead:hover {
-    background-color: #E0E0E0;
-}
+.cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader > .cmp-adaptiveform-tablehead:hover {}
 
-.cell-wrapper{
-    width: 80%;
-}
+.cell-wrapper {}
 
-/* Mobile responsive */
 @media (max-width: 768px) {
-    .cmp-adaptiveform-table__widget {
-        font-size: 0.875rem;
-    }
-    
+    .cmp-adaptiveform-table__widget {}
+
     .cmp-adaptiveform-tablecell,
-    .cmp-adaptiveform-tablehead {
-        padding: 0.5rem;
-    }
+    .cmp-adaptiveform-tablehead {}
 }
