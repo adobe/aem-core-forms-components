@@ -82,7 +82,7 @@ describe('Page/Form Authoring', function () {
         cy.get('.cmp-adaptiveform-container__editdialog').contains('Submission').click({force:true});   
         cy.get(".cmp-adaptiveform-container__submitaction").children('button[is="coral-button"][aria-haspopup="listbox"]').first().click({force: true});
         cy.get('coral-selectlist-item[value="fd/af/components/guidesubmittype/restendpoint"]').should('be.visible').click();
-        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().clear({force: true}).type("invalid-url", {force: true}).blur();
+        cy.get("[name='./restEndpointPostUrl']").scrollIntoView().clear({force: true}).type("invalid-url", {force: true}).trigger('blur');
         cy.get('.coral-Form-errorlabel').should('contain.text', "Please enter the absolute path of the REST endpoint.");
         cy.get("[name='./restEndpointPostUrl']").clear({force: true}).type("http://localhost:4502/some/endpoint", {force: true}); 
         cy.get('.coral-Form-errorlabel').should('not.exist');
@@ -115,7 +115,7 @@ describe('Page/Form Authoring', function () {
         if (cy.af.isLatestAddon() && toggle_array.includes("FT_FORMS-9244")) {
             cy.get("coral-radio[name='./restEndPointSource'][value='config']").first().click();
             cy.get("[name='./restEndpointPostUrl']").scrollIntoView().should("exist").should("not.be.visible");
-            cy.get("[name='./restEndpointConfigPath']").scrollIntoView().should("exist").should("be.visible");
+            cy.get("[name='./restEndpointConfigPath']").first().scrollIntoView().should("exist").should("be.visible");
             cy.get("coral-radio[name='./restEndPointSource'][value='posturl']").first().click();
             cy.get("[name='./restEndpointPostUrl']").should("exist").should("be.visible");
             cy.get("[name='./restEndpointPostUrl']").should("exist").clear().type("http://localhost:4502/some/endpoint");
@@ -131,6 +131,7 @@ describe('Page/Form Authoring', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + formContainerEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']"); // this line is causing frame busting which is causing cypress to fail
         cy.get('.cmp-adaptiveform-container'+'__editdialog').contains('Submission').click({force:true});
+        cy.get("[name='./actionType']").should("exist");
         cy.get("[name='./actionType'] coral-select-item[selected]").first().should(
             "have.text",
             "Submit to REST endpoint"
