@@ -34,6 +34,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.osgi.services.HttpClientBuilderFactory;
+import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.i18n.ResourceBundleProvider;
@@ -639,6 +640,31 @@ public class FormContainerImplTest {
         });
         assertEquals("deps", formContainer.getProperties().get("fd:changeEventBehaviour"));
         assertEquals("customPropValue", formContainer.getProperties().get("customProp"));
+    }
+
+    @Test
+    void testGetChangeEventBehaviourFromNode() throws Exception {
+        Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
+        resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, "deps");
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals("deps", formContainer.getProperties().get(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR));
+    }
+
+    @Test
+    void testNodeChangeEventBehaviourOverridesProvider() throws Exception {
+        Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
+        resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, "node-deps");
+        CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider = Mockito.mock(
+            CoreComponentCustomPropertiesProvider.class);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        Utils.setInternalState(formContainer, "coreComponentCustomPropertiesProvider", coreComponentCustomPropertiesProvider);
+        Mockito.when(coreComponentCustomPropertiesProvider.getProperties()).thenReturn(new HashMap<String, Object>() {
+            {
+                put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, "provider-deps");
+            }
+        });
+        // node value wins over the provider value
+        assertEquals("node-deps", formContainer.getProperties().get(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR));
     }
 
     @Test

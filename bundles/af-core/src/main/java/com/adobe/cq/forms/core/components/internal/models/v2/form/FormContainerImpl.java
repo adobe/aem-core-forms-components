@@ -141,6 +141,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private String roleAttribute;
 
+    @ValueMapValue(name = ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String changeEventBehaviour;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATA)
     @Nullable
     private String data;
@@ -400,6 +404,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             }
         }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
+        // fd:changeEventBehaviour is normally supplied by the CoreComponentCustomPropertiesProvider; when set on the
+        // node it overrides the provider value (consistent with how other node-level custom properties take precedence).
+        if (StringUtils.isNotBlank(changeEventBehaviour)) {
+            properties.put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, changeEventBehaviour);
+        }
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         if (this.autoSaveConfig != null && this.autoSaveConfig.isEnableAutoSave()) {
             properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
