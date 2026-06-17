@@ -49,8 +49,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * the {@code dataRef} JCR property into the JSON model, wiring up the bind-reference backend.</li>
  * </ul>
  */
-@Model(adaptables = { SlingHttpServletRequest.class, Resource.class }, adapters = { Text.class, Base.class,
-        ComponentExporter.class }, resourceType = { FormConstants.RT_FD_FORM_ADOBE_SIGN_BLOCK_V1 })
+@Model(
+    adaptables = { SlingHttpServletRequest.class, Resource.class },
+    adapters = { Text.class, Base.class,
+        ComponentExporter.class },
+    resourceType = { FormConstants.RT_FD_FORM_ADOBE_SIGN_BLOCK_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class AdobeSignBlockImpl extends AbstractBaseImpl implements Text {
 
@@ -79,6 +82,6 @@ public class AdobeSignBlockImpl extends AbstractBaseImpl implements Text {
 
     @Override
     public String getFieldType() {
-        return super.getFieldType(FieldType.PLAIN_TEXT);
+        return FieldType.ADOBE_SIGN_BLOCK.getValue();
     }
 }

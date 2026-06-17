@@ -30,6 +30,7 @@ public enum FieldType {
     DROP_DOWN("drop-down"),
     RADIO_GROUP("radio-group"),
     PLAIN_TEXT("plain-text"),
+    ADOBE_SIGN_BLOCK("adobe-sign-block"),
     CHECKBOX("checkbox"),
     BUTTON("button"),
     PANEL("panel"),
