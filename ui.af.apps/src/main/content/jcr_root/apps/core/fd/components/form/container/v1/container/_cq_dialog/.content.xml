@@ -92,6 +92,7 @@
                                             fieldLabel="Redirect URL/Path"
                                             rootPath="/content"
                                             name="./redirect"
+                                            validation="forms.redirect.absolutepath"
                                             filter="nosystem"/>
                                     <thankYouMessage
                                             jcr:primaryType="nt:unstructured"
