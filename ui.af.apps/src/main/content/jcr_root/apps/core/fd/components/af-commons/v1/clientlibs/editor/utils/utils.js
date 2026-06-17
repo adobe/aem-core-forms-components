@@ -342,9 +342,16 @@
                 if (!minField || !maxField) return;
                 var compare = compareFn || INT_COMPARE;
                 function validate() {
-                    $(minField).trigger("change");
-                    $(maxField).trigger("change");
+                    var minVal = minField.value, maxVal = maxField.value;
+                    var invalid = !!(minVal && maxVal && compare(minVal, maxVal));
+                    minField.invalid = invalid;
+                    maxField.invalid = invalid;
+                    if (invalid) {
+                        minField.errorMessage = Granite.I18n.getMessage(minMsg);
+                        maxField.errorMessage = Granite.I18n.getMessage(maxMsg);
+                    }
                 }
+                validate();
                 minField.addEventListener("change", validate);
                 maxField.addEventListener("change", validate);
             };
@@ -424,7 +431,7 @@
                         pair.minMsg,
                         pair.maxMsg,
                         pair.compareFn
-                    )(e.target);
+                    )(dialog);
                 }
             });
         });
