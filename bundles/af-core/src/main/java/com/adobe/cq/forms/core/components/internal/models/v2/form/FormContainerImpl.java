@@ -40,7 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.common.GuideContainer;
-import com.adobe.aemds.guide.service.CoreComponentCustomPropertiesProvider;
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.aemds.guide.utils.GuideUtils;
@@ -48,6 +47,7 @@ import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
@@ -88,15 +88,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_DATA_URL = "fd:dataUrl";
     private static final String FD_VIEW_PRINT_PATH = "fd:view/print";
     private static final String EXCLUDE_FROM_DOR_IF_HIDDEN = "excludeFromDoRIfHidden";
+    private static final String CHANGE_EVENT_BEHAVIOUR_DEPS = "deps";
 
     /** Constant representing email submit action type */
     private static final String SS_EMAIL = "email";
 
     /** Constant representing spreadsheet submit action type */
     private static final String SS_SPREADSHEET = "spreadsheet";
-
-    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
-    private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
 
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private HttpClientBuilderFactory clientBuilderFactory;
@@ -375,11 +373,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = new LinkedHashMap<>();
-        if (coreComponentCustomPropertiesProvider != null) {
-            Map<String, Object> customProperties = coreComponentCustomPropertiesProvider.getProperties();
-            if (customProperties != null) {
-                properties.putAll(customProperties);
-            }
+        // fd:changeEventBehaviour="deps" lets the runtime allow multiple fields in a single "when" rule.
+        // This was previously injected by the CoreComponentCustomPropertiesProvider addon (which read the
+        // Granite toggle directly); it now lives here, driven by the feature toggle system property. A value
+        // set on the node still overrides this default (applied later, after super.getProperties()).
+        if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN)) {
+            properties.put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, CHANGE_EVENT_BEHAVIOUR_DEPS);
         }
         properties.putAll(super.getProperties());
         if (getSchemaType() != null) {
@@ -404,8 +403,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             }
         }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
-        // fd:changeEventBehaviour is normally supplied by the CoreComponentCustomPropertiesProvider; when set on the
-        // node it overrides the provider value (consistent with how other node-level custom properties take precedence).
+        // A value set on the node overrides the toggle-driven default above (consistent with how other
+        // node-level custom properties take precedence).
         if (StringUtils.isNotBlank(changeEventBehaviour)) {
             properties.put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, changeEventBehaviour);
         }

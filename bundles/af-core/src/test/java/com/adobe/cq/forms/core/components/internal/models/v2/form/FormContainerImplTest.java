@@ -48,12 +48,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import com.adobe.aemds.guide.service.CoreComponentCustomPropertiesProvider;
 import com.adobe.aemds.guide.service.GuideLocalizationService;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.AutoSaveConfiguration;
@@ -620,26 +620,28 @@ public class FormContainerImplTest {
     }
 
     /**
-     * Test to check if the properties are fetched from the CoreComponentCustomPropertiesProvider are part of form container properties or
-     * not
-     * Also, if same properties is set in form container, then it should override the properties from CoreComponentCustomPropertiesProvider
-     * 
-     * @throws Exception
+     * When FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN is enabled, the form container exports
+     * {@code fd:changeEventBehaviour="deps"} on its own (previously injected by the
+     * CoreComponentCustomPropertiesProvider addon).
      */
     @Test
-    void testGetPropertiesForCoreComponentCustomPropertiesProvider() throws Exception {
-        CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider = Mockito.mock(
-            CoreComponentCustomPropertiesProvider.class);
+    void testChangeEventBehaviourFromToggle() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN, "true");
+        try {
+            FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+            assertEquals("deps", formContainer.getProperties().get(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR));
+        } finally {
+            System.clearProperty(FeatureToggleConstants.FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN);
+        }
+    }
+
+    /**
+     * When the toggle is disabled, {@code fd:changeEventBehaviour} is not exported (unless set on the node).
+     */
+    @Test
+    void testChangeEventBehaviourAbsentWhenToggleDisabled() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        Utils.setInternalState(formContainer, "coreComponentCustomPropertiesProvider", coreComponentCustomPropertiesProvider);
-        Mockito.when(coreComponentCustomPropertiesProvider.getProperties()).thenReturn(new HashMap<String, Object>() {
-            {
-                put("fd:changeEventBehaviour", "deps");
-                put("customProp", "customValue");
-            }
-        });
-        assertEquals("deps", formContainer.getProperties().get("fd:changeEventBehaviour"));
-        assertEquals("customPropValue", formContainer.getProperties().get("customProp"));
+        assertNull(formContainer.getProperties().get(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR));
     }
 
     @Test
@@ -651,30 +653,17 @@ public class FormContainerImplTest {
     }
 
     @Test
-    void testNodeChangeEventBehaviourOverridesProvider() throws Exception {
-        Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
-        resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, "node-deps");
-        CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider = Mockito.mock(
-            CoreComponentCustomPropertiesProvider.class);
-        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        Utils.setInternalState(formContainer, "coreComponentCustomPropertiesProvider", coreComponentCustomPropertiesProvider);
-        Mockito.when(coreComponentCustomPropertiesProvider.getProperties()).thenReturn(new HashMap<String, Object>() {
-            {
-                put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, "provider-deps");
-            }
-        });
-        // node value wins over the provider value
-        assertEquals("node-deps", formContainer.getProperties().get(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR));
-    }
-
-    @Test
-    void testGetPropertiesForCoreComponentCustomPropertiesProviderForNull() throws Exception {
-        CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider = Mockito.mock(
-            CoreComponentCustomPropertiesProvider.class);
-        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
-        Utils.setInternalState(formContainer, "coreComponentCustomPropertiesProvider", coreComponentCustomPropertiesProvider);
-        Mockito.when(coreComponentCustomPropertiesProvider.getProperties()).thenReturn(null);
-        assertEquals("customPropValue", formContainer.getProperties().get("customProp"));
+    void testNodeChangeEventBehaviourOverridesToggleDefault() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN, "true");
+        try {
+            Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
+            resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, "node-deps");
+            FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+            // node value wins over the toggle-driven default
+            assertEquals("node-deps", formContainer.getProperties().get(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR));
+        } finally {
+            System.clearProperty(FeatureToggleConstants.FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN);
+        }
     }
 
     @Test
