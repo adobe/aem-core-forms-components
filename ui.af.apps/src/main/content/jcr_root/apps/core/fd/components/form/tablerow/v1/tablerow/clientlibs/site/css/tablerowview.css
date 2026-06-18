@@ -14,57 +14,25 @@
  * limitations under the License.
  ******************************************************************************/
 
-/* Last column: keep fields and add/remove controls in one cell without extra table columns */
-.cmp-adaptiveform-tablecell.cmp-adaptiveform-tablecell--with-row-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 0.5rem 0.75rem;
-    border: 1px solid #DDDDDD; 
-    margin: -1px;
-}
+/* All visual styles live in the theme canvas:
+ * aem-forms-theme-canvas/src/components/table/_table.scss
+ */
 
-.cmp-adaptiveform-tablecell--with-row-controls > div:first-of-type {
-    flex: 1 1 auto;
-    min-width: 0;
-}
+.cmp-adaptiveform-tablecell.cmp-adaptiveform-tablecell--with-row-controls {}
 
-.cmp-adaptiveform-tablerow__runtime-controls {
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    align-self: center;
-    gap: 0.25rem;
-}
+.cmp-adaptiveform-tablecell--with-row-controls > div:first-of-type {}
+
+.cmp-adaptiveform-tablerow__runtime-controls {}
 
 .cmp-adaptiveform-tablerow__add-button,
-.cmp-adaptiveform-tablerow__remove-button {
-    width: 1.5rem;
-    height: 1.5rem;
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 1.25rem 1.25rem;
-    cursor: pointer;
-}
+.cmp-adaptiveform-tablerow__remove-button {}
 
-.cmp-adaptiveform-tablerow__add-button {
-    background-image: url("../resources/images/add-button.svg");
-}
+.cmp-adaptiveform-tablerow__add-button {}
 
-.cmp-adaptiveform-tablerow__remove-button {
-    background-image: url("../resources/images/remove-button.svg");
-}
+.cmp-adaptiveform-tablerow__remove-button {}
 
 .cmp-adaptiveform-tablerow__add-button[data-cmp-visible="false"],
-.cmp-adaptiveform-tablerow__remove-button[data-cmp-visible="false"] {
-    display: none;
-}
+.cmp-adaptiveform-tablerow__remove-button[data-cmp-visible="false"] {}
 
 .cmp-adaptiveform-tablerow__add-button:focus-visible,
-.cmp-adaptiveform-tablerow__remove-button:focus-visible {
-    outline: 2px solid #2680EB;
-    outline-offset: 2px;
-}
+.cmp-adaptiveform-tablerow__remove-button:focus-visible {}
