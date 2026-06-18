@@ -55,16 +55,17 @@ function makeSsvGlobals(errors, formModel) {
 }
 
 function makeFormModel(fields) {
+    const byQn = {};
+    fields.forEach(f => { byQn[f.qualifiedName] = f; });
     return {
-        visit: jest.fn(callback => {
-            fields.forEach(f => callback(f));
-        })
+        resolveQualifiedName: jest.fn(qn => byQn[qn] || null)
     };
 }
 
 function makeField(name) {
     return {
         name: name,
+        qualifiedName: "$form." + name,
         markAsInvalid: jest.fn()
     };
 }
@@ -85,25 +86,26 @@ describe("defaultSubmitErrorHandler", () => {
 
         const globals = makeSsvGlobals(
             [
-                { fieldName: "email", message: "Must be a valid email" },
-                { fieldName: "age",   message: "Must be 18 or older" }
+                { qualifiedName: "$form.email", message: "Must be a valid email" },
+                { qualifiedName: "$form.age",   message: "Must be 18 or older" }
             ],
             formModel
         );
 
         customFunctions.defaultSubmitErrorHandler("Generic error", globals);
 
-        expect(formModel.visit).toHaveBeenCalledTimes(2);
+        expect(formModel.resolveQualifiedName).toHaveBeenCalledWith("$form.email");
+        expect(formModel.resolveQualifiedName).toHaveBeenCalledWith("$form.age");
         expect(emailField.markAsInvalid).toHaveBeenCalledWith("Must be a valid email");
         expect(ageField.markAsInvalid).toHaveBeenCalledWith("Must be 18 or older");
         expect(mockCfDefaultSubmitErrorHandler).not.toHaveBeenCalled();
     });
 
-    test("shows alert for form-level errors (fieldName null)", () => {
+    test("shows alert for form-level errors (qualifiedName absent)", () => {
         const formModel = makeFormModel([]);
 
         const globals = makeSsvGlobals(
-            [{ fieldName: null, message: "Form is incomplete" }],
+            [{ message: "Form is incomplete" }],
             formModel
         );
 
@@ -119,8 +121,8 @@ describe("defaultSubmitErrorHandler", () => {
 
         const globals = makeSsvGlobals(
             [
-                { fieldName: "email", message: "Invalid email" },
-                { fieldName: null,    message: "Please review the form" }
+                { qualifiedName: "$form.email", message: "Invalid email" },
+                { message: "Please review the form" }
             ],
             formModel
         );
@@ -137,8 +139,8 @@ describe("defaultSubmitErrorHandler", () => {
 
         const globals = makeSsvGlobals(
             [
-                { fieldName: null, message: "Error one" },
-                { fieldName: null, message: "Error two" }
+                { message: "Error one" },
+                { message: "Error two" }
             ],
             formModel
         );
@@ -153,8 +155,8 @@ describe("defaultSubmitErrorHandler", () => {
         // Field-level errors should be silently skipped; form-level errors still alerted.
         const globals = makeSsvGlobals(
             [
-                { fieldName: "name", message: "Required" },
-                { fieldName: null,   message: "Form-level issue" }
+                { qualifiedName: "$form.name", message: "Required" },
+                { message: "Form-level issue" }
             ],
             undefined  // no formModel
         );
@@ -215,7 +217,7 @@ describe("defaultSubmitErrorHandler", () => {
 
         // Only email has an error; name should NOT be marked invalid
         const globals = makeSsvGlobals(
-            [{ fieldName: "email", message: "Bad email" }],
+            [{ qualifiedName: "$form.email", message: "Bad email" }],
             formModel
         );
 

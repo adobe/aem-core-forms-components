@@ -90,25 +90,23 @@ export const customFunctions = {
         if (body && body.errorType === 'SSV_VALIDATION_ERROR' &&
                 Array.isArray(body.errors) && body.errors.length > 0) {
 
-            var fieldErrors = body.errors.filter(function (e) { return e.fieldName; });
-            var formErrors  = body.errors.filter(function (e) { return !e.fieldName; });
+            var fieldErrors = body.errors.filter(function (e) { return e.qualifiedName; });
+            var formErrors  = body.errors.filter(function (e) { return !e.qualifiedName; });
 
             // Mark each named field invalid inline.
             // globals.formModel is the actual FormModel (not the rule-node proxy) so
-            // visit() and markAsInvalid() work without proxy restrictions.
+            // resolveQualifiedName() and markAsInvalid() work without proxy restrictions.
+            // qualifiedName (e.g. "$form.panel.email") is the canonical AF form field identifier
+            // and is unique even when multiple panels share the same field name.
             var formModel = globals.formModel;
             fieldErrors.forEach(function (error) {
-                var matched = false;
-                if (formModel && typeof formModel.visit === 'function') {
-                    formModel.visit(function (field) {
-                        if (field.name === error.fieldName || field.id === error.fieldName) {
-                            field.markAsInvalid(error.message);
-                            matched = true;
-                        }
-                    });
-                }
-                if (!matched) {
-                    console.warn('[SSV] No field found for fieldName "' + error.fieldName + '" — error not shown inline: ' + error.message);
+                var field = formModel && typeof formModel.resolveQualifiedName === 'function'
+                    ? formModel.resolveQualifiedName(error.qualifiedName)
+                    : null;
+                if (field) {
+                    field.markAsInvalid(error.message);
+                } else {
+                    console.warn('[SSV] No field found for qualifiedName "' + error.qualifiedName + '" — error not shown inline: ' + error.message);
                 }
             });
 
