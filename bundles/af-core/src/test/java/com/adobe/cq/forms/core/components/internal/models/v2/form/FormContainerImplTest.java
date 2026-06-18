@@ -108,6 +108,7 @@ public class FormContainerImplTest {
 
     private static final String PATH_FORM_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/formcontainerv2-without-fieldtype";
     private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
+    private static final String PATH_FORM_WITH_CHANGE_EVENT = CONTENT_ROOT + "/formcontainerv2ChangeEventBehaviour";
     private static final String PATH_FORM_1_WITHOUT_REDIRECT = CONTENT_ROOT + "/formcontainerv2WithoutRedirect";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
@@ -335,6 +336,13 @@ public class FormContainerImplTest {
     void testJSONExport() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_1));
+    }
+
+    @Test
+    void testJSONExportWithChangeEventBehaviour() throws Exception {
+        context.load().json(BASE + "/test-content-change-event-behaviour.json", PATH_FORM_WITH_CHANGE_EVENT);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_CHANGE_EVENT, FormContainer.class, context);
+        Utils.testJSONExport(formContainer, Utils.getTestExporterJSONPath(BASE, PATH_FORM_WITH_CHANGE_EVENT));
     }
 
     @Test
