@@ -69,20 +69,20 @@ function numberField(name, overrides) {
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
 /**
- * Converts af-core ValidationError[] into the {fieldName, message} array that
+ * Converts af-core ValidationError[] into the {qualifiedName, message} array that
  * the SSV IO action sends in its HTTP 400 response body.
  *
  * ValidationError.fieldName is the field's id (set explicitly in our test models
- * to equal the field name). In a real AEM form the SSV IO action builds this
- * mapping itself by traversing the form model JSON.
+ * to equal the field name). The IO action maps these to qualifiedName by traversing
+ * the form model JSON; here we simulate that by prefixing with "$form.".
  */
 function toSsvErrors(validationErrors) {
     var result = [];
     validationErrors.forEach(function(err) {
-        var fieldName = err.fieldName || null;
+        var qualifiedName = err.fieldName ? ("$form." + err.fieldName) : null;
         var messages = Array.isArray(err.errorMessages) ? err.errorMessages : [];
         messages.forEach(function(msg) {
-            result.push({ fieldName: fieldName, message: msg });
+            result.push({ qualifiedName: qualifiedName, message: msg });
         });
     });
     return result;
@@ -249,11 +249,13 @@ describe("SSV pipeline: af-core validation → markAsInvalid", () => {
         const { messages } = validateFormData(model, data);
         const ssvErrors = toSsvErrors(messages);
 
-        // Build the mock form model the way customFunctions.js uses it
-        const emailField = { name: "email", markAsInvalid: jest.fn() };
-        const ageField   = { name: "age",   markAsInvalid: jest.fn() };
+        // Build the mock form model the way customFunctions.js uses it.
+        // qualifiedName mirrors what AF form JSON emits for a top-level field.
+        const emailField = { name: "email", qualifiedName: "$form.email", markAsInvalid: jest.fn() };
+        const ageField   = { name: "age",   qualifiedName: "$form.age",   markAsInvalid: jest.fn() };
+        const byQn = { "$form.email": emailField, "$form.age": ageField };
         const formModel  = {
-            visit: jest.fn(cb => [emailField, ageField].forEach(cb))
+            resolveQualifiedName: jest.fn(qn => byQn[qn] || null)
         };
 
         const globals = {
@@ -304,9 +306,9 @@ describe("SSV pipeline: af-core validation → markAsInvalid", () => {
         const { messages } = validateFormData(model, data);
         const ssvErrors = toSsvErrors(messages);
 
-        // Each error entry has fieldName and a non-empty message string
+        // Each error entry has qualifiedName and a non-empty message string
         ssvErrors.forEach(err => {
-            expect(err.fieldName).toBe("code");
+            expect(err.qualifiedName).toBe("$form.code");
             expect(typeof err.message).toBe("string");
             expect(err.message.length).toBeGreaterThan(0);
         });
