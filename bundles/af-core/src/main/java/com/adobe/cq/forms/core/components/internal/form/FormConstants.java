@@ -163,4 +163,7 @@ public final class FormConstants {
 
     /** The resource type for image choice v1 */
     public static final String RT_FD_FORM_IMAGE_CHOICE_V1 = RT_FD_FORM_PREFIX + "imagechoice/v1/imagechoice";
+
+    /** The resource type for date input v1 */
+    public static final String RT_FD_FORM_DATE_INPUT_V1 = RT_FD_FORM_PREFIX + "dateinput/v1/dateinput";
 }
