@@ -40,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.common.GuideContainer;
+import com.adobe.aemds.guide.service.CoreComponentCustomPropertiesProvider;
 import com.adobe.aemds.guide.service.GuideSchemaType;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.aemds.guide.utils.GuideUtils;
@@ -95,6 +96,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
     /** Constant representing spreadsheet submit action type */
     private static final String SS_SPREADSHEET = "spreadsheet";
+
+    @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
 
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private HttpClientBuilderFactory clientBuilderFactory;
@@ -373,10 +377,16 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = new LinkedHashMap<>();
+        if (coreComponentCustomPropertiesProvider != null) {
+            Map<String, Object> customProperties = coreComponentCustomPropertiesProvider.getProperties();
+            if (customProperties != null) {
+                properties.putAll(customProperties);
+            }
+        }
         // fd:changeEventBehaviour="deps" lets the runtime allow multiple fields in a single "when" rule.
-        // This was previously injected by the CoreComponentCustomPropertiesProvider addon (which read the
-        // Granite toggle directly); it now lives here, driven by the feature toggle system property. A value
-        // set on the node still overrides this default (applied later, after super.getProperties()).
+        // Besides the CoreComponentCustomPropertiesProvider addon above, the core component also drives this
+        // default from the feature toggle system property (both emit the same "deps" value idempotently). A
+        // value set on the node still overrides this default (applied later, after super.getProperties()).
         if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN)) {
             properties.put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, CHANGE_EVENT_BEHAVIOUR_DEPS);
         }
@@ -403,8 +413,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             }
         }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
-        // A value set on the node overrides the toggle-driven default above (consistent with how other
-        // node-level custom properties take precedence).
+        // A value set on the node always takes precedence and is emitted regardless of the system-level
+        // toggle/provider state above (consistent with how other node-level custom properties win). When the
+        // toggle is disabled the default above is absent, so this simply sets the node-authored value.
         if (StringUtils.isNotBlank(changeEventBehaviour)) {
             properties.put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, changeEventBehaviour);
         }
