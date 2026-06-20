@@ -21,7 +21,9 @@
   "accept": [
     "audio/*",
     "video/*",
-    "image/*"
+    "image/*",
+    ".jpg",
+    ".png"
   ],
   "dataRef": "a.b",
   "events": {
