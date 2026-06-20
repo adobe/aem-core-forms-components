@@ -179,8 +179,6 @@ public final class ReservedProperties {
 
     public static final String PN_CQ_ANNOTATIONS = "cq:annotations";
 
-    public static final String PN_CQ_ANNOTATIONS = "cq:annotations";
-
     // Begin: Form submission related properties
     public static final String FD_SUBMIT_PROPERTIES = "fd:submit";
     public static final String PN_SUBMIT_ACTION_TYPE = "actionType";
