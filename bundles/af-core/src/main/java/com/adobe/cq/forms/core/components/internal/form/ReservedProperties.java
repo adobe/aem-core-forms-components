@@ -175,6 +175,9 @@ public final class ReservedProperties {
     public static final String FD_FILE_ACCEPT_EXTENSIONS = "fd:acceptExtensions";
 
     public static final String FD_DRAFT_ID = "fd:draftId";
+    public static final String FD_CHANGE_EVENT_BEHAVIOUR = "fd:changeEventBehaviour";
+
+    public static final String PN_CQ_ANNOTATIONS = "cq:annotations";
 
     public static final String PN_CQ_ANNOTATIONS = "cq:annotations";
 
