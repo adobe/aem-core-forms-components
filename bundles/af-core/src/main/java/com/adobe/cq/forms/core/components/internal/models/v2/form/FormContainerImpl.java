@@ -48,6 +48,7 @@ import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.internal.models.v1.form.FormMetaDataImpl;
@@ -88,6 +89,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     private static final String FD_DATA_URL = "fd:dataUrl";
     private static final String FD_VIEW_PRINT_PATH = "fd:view/print";
     private static final String EXCLUDE_FROM_DOR_IF_HIDDEN = "excludeFromDoRIfHidden";
+    private static final String CHANGE_EVENT_BEHAVIOUR_DEPS = "deps";
 
     /** Constant representing email submit action type */
     private static final String SS_EMAIL = "email";
@@ -140,6 +142,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @ValueMapValue(name = FD_ROLE_ATTRIBUTE, injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     private String roleAttribute;
+
+    @ValueMapValue(name = ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String changeEventBehaviour;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATA)
     @Nullable
@@ -377,6 +383,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                 properties.putAll(customProperties);
             }
         }
+        // fd:changeEventBehaviour="deps" lets the runtime allow multiple fields in a single "when" rule.
+        // Besides the CoreComponentCustomPropertiesProvider addon above, the core component also drives this
+        // default from the feature toggle system property (both emit the same "deps" value idempotently). A
+        // value set on the node still overrides this default (applied later, after super.getProperties()).
+        if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN)) {
+            properties.put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, CHANGE_EVENT_BEHAVIOUR_DEPS);
+        }
         properties.putAll(super.getProperties());
         if (getSchemaType() != null) {
             properties.put(FD_SCHEMA_TYPE, getSchemaType());
@@ -400,6 +413,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             }
         }
         properties.put(FD_ROLE_ATTRIBUTE, getRoleAttribute());
+        // A value set on the node always takes precedence and is emitted regardless of the system-level
+        // toggle/provider state above (consistent with how other node-level custom properties win). When the
+        // toggle is disabled the default above is absent, so this simply sets the node-authored value.
+        if (StringUtils.isNotBlank(changeEventBehaviour)) {
+            properties.put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, changeEventBehaviour);
+        }
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         if (this.autoSaveConfig != null && this.autoSaveConfig.isEnableAutoSave()) {
             properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
