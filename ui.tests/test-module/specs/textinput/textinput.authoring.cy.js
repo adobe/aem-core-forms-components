@@ -218,15 +218,18 @@ describe('Page - Authoring', function () {
             cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
 
             // Set maxLength = 5, then minLength = 10 (invalid: min > max)
-            cy.get('.cmp-adaptiveform-textinput__maxlength coral-numberinput').clear().type('5').blur();
-            cy.get('.cmp-adaptiveform-textinput__minlength coral-numberinput').clear().type('10').blur();
+            cy.get('.cmp-adaptiveform-textinput__maxlength coral-numberinput').clear().type('5');
+            cy.focused().blur();
+            cy.get('.cmp-adaptiveform-textinput__minlength coral-numberinput').clear().type('10');
+            cy.focused().blur();
 
             // Both fields should be marked invalid
             cy.get('.cmp-adaptiveform-textinput__minlength coral-numberinput').should('have.attr', 'invalid');
             cy.get('.cmp-adaptiveform-textinput__maxlength coral-numberinput').should('have.attr', 'invalid');
 
             // Fix by lowering minLength below maxLength
-            cy.get('.cmp-adaptiveform-textinput__minlength coral-numberinput').clear().type('3').blur();
+            cy.get('.cmp-adaptiveform-textinput__minlength coral-numberinput').clear().type('3');
+            cy.focused().blur();
 
             // Both fields should no longer be invalid
             cy.get('.cmp-adaptiveform-textinput__minlength coral-numberinput').should('not.have.attr', 'invalid');
@@ -243,8 +246,10 @@ describe('Page - Authoring', function () {
             cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
 
             // Set an invalid state: minLength > maxLength
-            cy.get('.cmp-adaptiveform-textinput__maxlength coral-numberinput').clear().type('5').blur();
-            cy.get('.cmp-adaptiveform-textinput__minlength coral-numberinput').clear().type('10').blur();
+            cy.get('.cmp-adaptiveform-textinput__maxlength coral-numberinput').clear().type('5');
+            cy.focused().blur();
+            cy.get('.cmp-adaptiveform-textinput__minlength coral-numberinput').clear().type('10');
+            cy.focused().blur();
 
             // Attempt to save — dialog should remain open
             cy.get('.cq-dialog-submit').click();
