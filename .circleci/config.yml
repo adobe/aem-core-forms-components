@@ -499,7 +499,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+-\w+$/
 #      - cypress-chrome-cloudready-with-latest-addon-and-old-core-components:
 #          filters:
 ##            branches:
@@ -517,4 +517,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^core-forms-components-reactor-\d+\.\d+\.\d+$/
+              only: /^core-forms-components-reactor-\d+\.\d+\.\d+-\w+$/
