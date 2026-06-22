@@ -842,7 +842,9 @@
                     <extensions>true</extensions>
                     <configuration>
                         <serverId>ossrh</serverId>
-                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <nexusUrl>https://ossrh-staging-api.central.sonatype.com</nexusUrl>
+                        <!-- com.adobe.aem namespace on central.sonatype.com -->
+                        <stagingProfileId>5137b56c-3c93-49f3-b900-21d1f6d56b3d</stagingProfileId>
                         <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
                 </plugin>
