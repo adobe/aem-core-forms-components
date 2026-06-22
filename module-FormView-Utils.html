@@ -587,7 +587,8 @@ Ignores &quot;data-cmp-is-<em>&quot; and &quot;data-cmp-hook-</em>&quot; attribu
 
     
     <div class="description">
-        <p>Creates fields from all registered fieldCreators present inside addedElement, for given form container.</p>
+        <p>Creates fields from all registered fieldCreators present inside addedElement, for given form container.
+Also checks if the addedElement itself matches a field selector (querySelectorAll only matches descendants).</p>
     </div>
     
 
@@ -1067,7 +1068,8 @@ Ignores &quot;data-cmp-is-<em>&quot; and &quot;data-cmp-hook-</em>&quot; attribu
 
     
     <div class="description">
-        <p>Update the id inside the given html element.</p>
+        <p>Update the id inside the given html element.
+Also checks if the root element itself has the id (querySelectorAll only matches descendants).</p>
     </div>
     
 
