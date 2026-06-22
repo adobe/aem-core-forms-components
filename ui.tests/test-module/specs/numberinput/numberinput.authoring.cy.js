@@ -139,9 +139,9 @@ describe('Page - Authoring', function () {
             cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click();
 
             // Set maximum = 5, then minimum = 10 (invalid: min > max)
-            cy.get(numberInputBlockBemSelector + '__maximum').clear().type('5');
+            cy.get(numberInputBlockBemSelector + '__maximum').find('input').clear().type('5');
             cy.focused().blur();
-            cy.get(numberInputBlockBemSelector + '__minimum').clear().type('10');
+            cy.get(numberInputBlockBemSelector + '__minimum').find('input').clear().type('10');
             cy.focused().blur();
 
             // Both fields should be marked invalid
@@ -149,7 +149,7 @@ describe('Page - Authoring', function () {
             cy.get(numberInputBlockBemSelector + '__maximum').should('have.attr', 'invalid');
 
             // Fix by lowering minimum below maximum
-            cy.get(numberInputBlockBemSelector + '__minimum').clear().type('3');
+            cy.get(numberInputBlockBemSelector + '__minimum').find('input').clear().type('3');
             cy.focused().blur();
 
             // Both fields should no longer be invalid
@@ -167,9 +167,9 @@ describe('Page - Authoring', function () {
             cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click();
 
             // Set an invalid state: minimum > maximum
-            cy.get(numberInputBlockBemSelector + '__maximum').clear().type('5');
+            cy.get(numberInputBlockBemSelector + '__maximum').find('input').clear().type('5');
             cy.focused().blur();
-            cy.get(numberInputBlockBemSelector + '__minimum').clear().type('10');
+            cy.get(numberInputBlockBemSelector + '__minimum').find('input').clear().type('10');
             cy.focused().blur();
 
             // Attempt to save — dialog should remain open
