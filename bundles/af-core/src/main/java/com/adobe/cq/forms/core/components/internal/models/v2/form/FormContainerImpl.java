@@ -506,7 +506,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
         String actionName = resource.getValueMap().get(ReservedProperties.PN_SUBMIT_ACTION_NAME, String.class);
         if (request == null || ComponentUtils.shouldIncludeSubmitProperties(request)
-                || (StringUtils.isNotBlank(actionName) && (SS_AEP.equals(actionName)))) {
+            || (StringUtils.isNotBlank(actionName) && (SS_AEP.equals(actionName)))) {
             submitProps = new LinkedHashMap<>();
             List<String> submitActionProperties = Arrays.asList(
                 ReservedProperties.PN_SUBMIT_ACTION_TYPE,
@@ -523,11 +523,11 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                 ReservedProperties.PN_SUBMIT_SPREADSHEETURL);
 
             List<String> submitAepProperties = Arrays.asList(
-                    ReservedProperties.PN_SUBMIT_AEP_SCHEMA_REF_ID,
-                    ReservedProperties.PN_SUBMIT_AEP_IMS_ORG_ID,
-                    ReservedProperties.PN_SUBMIT_AEP_SANDBOX_REGION,
-                    ReservedProperties.PN_SUBMIT_AEP_SANDBOX_ID,
-                    ReservedProperties.PN_SUBMIT_AEP_DATASET_ID);
+                ReservedProperties.PN_SUBMIT_AEP_SCHEMA_REF_ID,
+                ReservedProperties.PN_SUBMIT_AEP_IMS_ORG_ID,
+                ReservedProperties.PN_SUBMIT_AEP_SANDBOX_REGION,
+                ReservedProperties.PN_SUBMIT_AEP_SANDBOX_ID,
+                ReservedProperties.PN_SUBMIT_AEP_DATASET_ID);
 
             ValueMap resourceMap = resource.getValueMap();
             for (Map.Entry<String, Object> entry : resourceMap.entrySet()) {
