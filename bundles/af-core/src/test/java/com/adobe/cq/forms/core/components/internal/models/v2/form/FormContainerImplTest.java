@@ -109,6 +109,8 @@ public class FormContainerImplTest {
     private static final String PATH_FORM_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/formcontainerv2-without-fieldtype";
     private static final String PATH_FORM_WITH_AUTO_SAVE = CONTENT_ROOT + "/formcontainerv2WithAutoSave";
     private static final String PATH_FORM_WITH_CHANGE_EVENT = CONTENT_ROOT + "/formcontainerv2ChangeEventBehaviour";
+    private static final String PATH_FORM_WITH_SSV = CONTENT_ROOT + "/formcontainerv2-with-ssv";
+    private static final String PATH_FORM_SSV_DISABLED = CONTENT_ROOT + "/formcontainerv2-ssv-disabled";
     private static final String PATH_FORM_1_WITHOUT_REDIRECT = CONTENT_ROOT + "/formcontainerv2WithoutRedirect";
     private static final String CONTENT_FORM_WITHOUT_PREFILL_ROOT = "/content/forms/af/formWithoutPrefill";
     private static final String PATH_FORM_WITHOUT_PREFILL = CONTENT_FORM_WITHOUT_PREFILL_ROOT + "/formcontainerv2WithoutPrefill";
@@ -953,5 +955,52 @@ public class FormContainerImplTest {
         // Test setting null language
         formContainer.setLang(null);
         assertEquals(formContainer.getLang(), "en");
+    }
+
+    // ─── SSV submit-properties tests ──────────────────────────────────────────
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void testSsvPropertiesNotExposedInFormJson() throws Exception {
+        // SSV config (enableServerSideValidation, ssvCloudServicePath) must never appear in
+        // the exported form JSON. The submit servlet reads them directly from JCR. Exposing
+        // ssvCloudServicePath to clients leaks an internal JCR path.
+        context.request().setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_SSV, FormContainerImpl.class, context);
+
+        Map<String, Object> props = formContainer.getProperties();
+        assertNotNull("fd:submit must be present in submission view", props.get(ReservedProperties.FD_SUBMIT_PROPERTIES));
+
+        Map<String, Object> submit = (Map<String, Object>) props.get(ReservedProperties.FD_SUBMIT_PROPERTIES);
+        assertNull("serverSideValidation block must NOT be in the form JSON to avoid leaking JCR paths",
+            submit.get("serverSideValidation"));
+        assertFalse("enableServerSideValidation must not be a top-level submit property",
+            submit.containsKey(ReservedProperties.PN_ENABLE_SERVER_SIDE_VALIDATION));
+        assertFalse("ssvCloudServicePath must not be a top-level submit property",
+            submit.containsKey(ReservedProperties.PN_SSV_CLOUD_SERVICE_PATH));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void testSubmitPropertiesHasNoSsvBlockWhenDisabled() throws Exception {
+        context.request().setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
+        FormContainerImpl formContainer = Utils.getComponentUnderTest(PATH_FORM_SSV_DISABLED, FormContainerImpl.class, context);
+
+        Map<String, Object> props = formContainer.getProperties();
+        assertNotNull("fd:submit must be present in submission view", props.get(ReservedProperties.FD_SUBMIT_PROPERTIES));
+
+        Map<String, Object> submit = (Map<String, Object>) props.get(ReservedProperties.FD_SUBMIT_PROPERTIES);
+        assertNull("serverSideValidation block must be absent when SSV is not configured", submit.get("serverSideValidation"));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void testSubmitPropertiesAbsentWithoutSubmissionViewHeader() throws Exception {
+        // Without the submission view request attribute, fd:submit must not be exported
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_WITH_SSV, FormContainer.class, context);
+
+        Map<String, Object> props = formContainer.getProperties();
+        assertNull("fd:submit must NOT be present in regular (non-submission-view) rendering",
+            props.get(ReservedProperties.FD_SUBMIT_PROPERTIES));
     }
 }

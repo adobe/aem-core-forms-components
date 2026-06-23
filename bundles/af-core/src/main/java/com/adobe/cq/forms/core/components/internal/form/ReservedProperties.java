@@ -213,6 +213,8 @@ public final class ReservedProperties {
     public static final String PN_SUBMIT_AEP_DATASET_ID = "datasetId";
     public static final String PN_SUBMIT_AEP_SANDBOX_NAME = "sandboxName";
 
+    public static final String PN_ENABLE_SERVER_SIDE_VALIDATION = "fd:enableServerSideValidation";
+    public static final String PN_SSV_CLOUD_SERVICE_PATH = "fd:ssvCloudServicePath";
     // End: Form submission related properties
     private static final Set<String> reservedProperties = aggregateReservedProperties();
 

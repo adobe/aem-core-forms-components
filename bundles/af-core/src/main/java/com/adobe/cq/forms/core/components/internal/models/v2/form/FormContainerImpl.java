@@ -544,6 +544,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                     submitProps.computeIfAbsent(SS_AEP, k -> new LinkedHashMap<String, Object>());
                     ((Map<String, Object>) submitProps.get(SS_AEP)).put(entry.getKey(), entry.getValue());
                 }
+                // SSV properties (enableServerSideValidation, ssvCloudServicePath) are intentionally
+                // excluded from the form JSON. The submit servlet reads them directly from JCR.
+                // ssvCloudServicePath in particular must not be sent to clients as it exposes
+                // internal JCR paths.
             }
         }
         return submitProps;
