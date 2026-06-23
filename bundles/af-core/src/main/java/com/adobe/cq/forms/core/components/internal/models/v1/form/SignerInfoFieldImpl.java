@@ -31,41 +31,49 @@ import com.adobe.cq.export.json.ExporterConstants;
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class SignerInfoFieldImpl {
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "signerTitle")
+    private static final String PN_SIGNER_TITLE = "signerTitle";
+    private static final String PN_COUNTRY_CODE_SOURCE = "countryCodeSource";
+    private static final String PN_EMAIL = "email";
+    private static final String PN_EMAIL_SOURCE = "emailSource";
+    private static final String PN_PHONE_SOURCE = "phoneSource";
+    private static final String PN_RECIPIENT_ROLE = "recipientRole";
+    private static final String PN_DELEGATES_TO = "delegatesTo";
+    private static final String PN_SECURITY_OPTION = "securityOption";
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_SIGNER_TITLE)
     private String signerTitle;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "countryCodeSource")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_COUNTRY_CODE_SOURCE)
     private String countryCodeSource;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "email")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_EMAIL)
     private String email;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "emailSource")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_EMAIL_SOURCE)
     private String emailSource;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "phoneSource")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_PHONE_SOURCE)
     private String phoneSource;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "recipientRole")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_RECIPIENT_ROLE)
     private String recipientRole;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "delegatesTo")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_DELEGATES_TO)
     private String delegatesTo;
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = "securityOption")
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = PN_SECURITY_OPTION)
     private String securityOption;
 
     public Map<String, Object> getSignerFieldMap() {
         Map<String, Object> signerField = new LinkedHashMap<>();
-        ;
-        signerField.put("signerTitle", signerTitle);
-        signerField.put("countryCodeSource", countryCodeSource);
-        signerField.put("email", email);
-        signerField.put("emailSource", emailSource);
-        signerField.put("phoneSource", phoneSource);
-        signerField.put("recipientRole", recipientRole);
-        signerField.put("delegatesTo", delegatesTo);
-        signerField.put("securityOption", securityOption);
+        signerField.put(PN_SIGNER_TITLE, signerTitle);
+        signerField.put(PN_COUNTRY_CODE_SOURCE, countryCodeSource);
+        signerField.put(PN_EMAIL, email);
+        signerField.put(PN_EMAIL_SOURCE, emailSource);
+        signerField.put(PN_PHONE_SOURCE, phoneSource);
+        signerField.put(PN_RECIPIENT_ROLE, recipientRole);
+        signerField.put(PN_DELEGATES_TO, delegatesTo);
+        signerField.put(PN_SECURITY_OPTION, securityOption);
         return signerField;
     }
 
