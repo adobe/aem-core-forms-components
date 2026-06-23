@@ -41,7 +41,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
-import org.apache.sling.models.annotations.injectorspecific.ChildResource;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
@@ -130,9 +129,6 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @ScriptVariable(injectionStrategy = InjectionStrategy.OPTIONAL)
     @Nullable
     protected Style currentStyle;
-
-    @ChildResource(injectionStrategy = InjectionStrategy.OPTIONAL, name = "fd:signerInfo")
-    private Resource signerInfoResource;
 
     @Nullable
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VIEWTYPE)
@@ -366,8 +362,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             properties.put(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER, associateProperties);
         }
 
+        Resource signerInfoResource = resource.getChild(CUSTOM_SIGNER_PROPERTY_WRAPPER);
         if (signerInfoResource != null) {
-            properties.put("fd:signerInfo", SignerInfoImpl.getSignerDetails(signerInfoResource));
+            properties.put(CUSTOM_SIGNER_PROPERTY_WRAPPER, SignerInfoImpl.getSignerDetails(signerInfoResource));
         }
 
         return properties;
