@@ -161,7 +161,7 @@
                 </dependencies>
                 <configuration>
                     <scmCommentPrefix>@releng [maven-scm] :</scmCommentPrefix>
-                    <preparationGoals>clean install exec:exec@npm-version exec:exec@git-add exec:exec@git-commit</preparationGoals>
+                    <preparationGoals>clean install -Dspotbugs.skip -DskipTests -Drat.skip=true exec:exec@npm-version exec:exec@git-add exec:exec@git-commit</preparationGoals>
                     <goals>deploy</goals>
                     <releaseProfiles>release</releaseProfiles>
                     <projectVersionPolicyId>OddEvenVersionPolicy</projectVersionPolicyId>
