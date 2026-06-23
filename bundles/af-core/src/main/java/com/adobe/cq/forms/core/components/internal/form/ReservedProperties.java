@@ -203,6 +203,15 @@ public final class ReservedProperties {
     public static final String PN_SUBMIT_EMAIL_CC = "cc";
     public static final String PN_SUBMIT_EMAIL_BCC = "bcc";
     public static final String PN_SUBMIT_SPREADSHEETURL = "spreadsheetUrl";
+
+    // AEP submit action properties
+    public static final String SS_AEP = "aep";
+    public static final String PN_SUBMIT_AEP_SCHEMA_REF_ID = "schemaRefId";
+    public static final String PN_SUBMIT_AEP_IMS_ORG_ID = "imsOrgId";
+    public static final String PN_SUBMIT_AEP_SANDBOX_REGION = "sandboxRegion";
+    public static final String PN_SUBMIT_AEP_SANDBOX_ID = "sandboxId";
+    public static final String PN_SUBMIT_AEP_DATASET_ID = "datasetId";
+
     // End: Form submission related properties
     private static final Set<String> reservedProperties = aggregateReservedProperties();
 
