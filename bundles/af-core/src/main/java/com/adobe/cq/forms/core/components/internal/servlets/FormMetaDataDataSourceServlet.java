@@ -86,7 +86,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         SUBMIT_ACTION("submitAction"),
         PREFILL_ACTION("prefillServiceProvider"),
         LANG("lang"),
-        FORMATTERS("formatters");
+        FORMATTERS("formatters"),
+        SSV_CLOUD_CONFIG("ssvCloudServiceConfiguration");
 
         private String value;
 
@@ -174,6 +175,9 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
     private List<Resource> getDataSourceResources(SlingHttpServletRequest request, ResourceResolver resourceResolver, FormMetaDataType type,
         String dataModel, Config config) {
         List<Resource> resources = new ArrayList<>();
+        if (type == FormMetaDataType.SSV_CLOUD_CONFIG) {
+            return getCloudConfigsByGroup(request, resourceResolver);
+        }
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
@@ -223,6 +227,64 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                     resources.add(getResourceForDropdownDisplay(resourceResolver, i18n.get("None"), ""));
                     resources.addAll(this.getResourceListFromComponentDescription(metaDataList, resourceResolver));
                     break;
+                default:
+                    break;
+            }
+        }
+        return resources;
+    }
+
+    private List<Resource> getCloudConfigsByGroup(SlingHttpServletRequest request, ResourceResolver resourceResolver) {
+        List<Resource> resources = new ArrayList<>();
+        resources.add(getResourceForDropdownDisplay(resourceResolver, "None", ""));
+        String contentPath = (String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE);
+        Resource formResource = null;
+        if (StringUtils.isNotBlank(contentPath)) {
+            formResource = resourceResolver.getResource(contentPath);
+        }
+        if (formResource == null) {
+            formResource = request.getRequestPathInfo().getSuffixResource();
+        }
+        String resolvedConfPath = null;
+        if (formResource != null) {
+            Resource r = formResource;
+            while (r != null) {
+                String confPath = r.getValueMap().get("cq:conf", String.class);
+                if (StringUtils.isNotBlank(confPath)) {
+                    resolvedConfPath = confPath;
+                    break;
+                }
+                // cq:conf lives on jcr:content for cq:Page and folder nodes
+                Resource pageContent = r.getChild(JcrConstants.JCR_CONTENT);
+                if (pageContent != null) {
+                    confPath = pageContent.getValueMap().get("cq:conf", String.class);
+                    if (StringUtils.isNotBlank(confPath)) {
+                        resolvedConfPath = confPath;
+                        break;
+                    }
+                }
+                r = r.getParent();
+            }
+        }
+        // Fall back to /conf/global when no cq:conf is found in the hierarchy —
+        // this mirrors AEM's own context-aware configuration resolution behaviour.
+        if (resolvedConfPath == null) {
+            resolvedConfPath = "/conf/global";
+        }
+        // Query for any jcr:content node under cloudconfigs/ that carries serviceEndPoint,
+        // regardless of nesting depth (handles both flat and service-type-subfolder layouts).
+        String cloudConfigsBase = resolvedConfPath + "/settings/cloudconfigs";
+        String query = "SELECT * FROM [nt:base] AS s WHERE ISDESCENDANTNODE(s, '"
+            + cloudConfigsBase + "') AND s.[serviceEndPoint] IS NOT NULL";
+        Iterator<Resource> results = resourceResolver.findResources(query, "JCR-SQL2");
+        while (results.hasNext()) {
+            Resource configContent = results.next();
+            // configContent is the node with serviceEndPoint — its parent is the config root node
+            Resource configNode = configContent.getParent();
+            if (configNode != null) {
+                String title = configContent.getValueMap().get("jcr:title",
+                    configNode.getValueMap().get("jcr:title", configNode.getName()));
+                resources.add(getResourceForDropdownDisplay(resourceResolver, title, configNode.getPath()));
             }
         }
         return resources;

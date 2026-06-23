@@ -372,6 +372,21 @@
                                             </cui>
                                         </uiSettings>
                                     </thankYouMessage>
+                                    <ssvCloudServicePath
+                                      jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                      fieldLabel="Server-Side Validation"
+                                      fieldDescription="Select a cloud configuration to call a validator endpoint before submit. Select None to disable."
+                                      name="./fd:ssvCloudServicePath">
+                                        <datasource
+                                          jcr:primaryType="nt:unstructured"
+                                          sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                          type="ssvCloudServiceConfiguration"/>
+                                        <granite:rendercondition
+                                          jcr:primaryType="nt:unstructured"
+                                          sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                          toggleName="FT_FORMS-25252"/>
+                                    </ssvCloudServicePath>
                                     <submitActionType
                                       jcr:primaryType="nt:unstructured"
                                       granite:class="cmp-adaptiveform-container__submitaction"
