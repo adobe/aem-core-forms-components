@@ -4,4 +4,5 @@
     jcr:description="Add a field to review the form."
     jcr:primaryType="cq:Component"
     jcr:title="Adaptive Form Review (v1)"
+    sling:resourceSuperType="core/fd/components/form/base/v1/base"
     componentGroup=".core-adaptiveform"/>
