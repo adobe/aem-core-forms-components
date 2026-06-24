@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    cq:icon="signature"
+    jcr:description="Add a block of text with placeholders for fields to be filled while signing using Adobe Sign."
+    jcr:primaryType="cq:Component"
+    jcr:title="Adaptive Form Adobe Sign Block"
+    sling:resourceSuperType="core/fd/components/form/text/v1/text"
+    componentGroup=".core-adaptiveform"/>

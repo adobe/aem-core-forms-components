@@ -1,0 +1,20 @@
+{
+  "summarystep": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Summary Step",
+    "id": "summarystep-test",
+    "name": "summarystep1",
+    "fieldType": "plain-text",
+    "displayMsg": "<p>Thank you for submitting the form.</p>",
+    "autoSubmit": true,
+    "sling:resourceType": "core/fd/components/form/summarystep/v1/summarystep"
+  },
+  "summarystep-defaults": {
+    "jcr:primaryType": "nt:unstructured",
+    "jcr:title": "Summary Step Defaults",
+    "id": "summarystep-defaults-test",
+    "name": "summarystepDefaults",
+    "fieldType": "plain-text",
+    "sling:resourceType": "core/fd/components/form/summarystep/v1/summarystep"
+  }
+}
