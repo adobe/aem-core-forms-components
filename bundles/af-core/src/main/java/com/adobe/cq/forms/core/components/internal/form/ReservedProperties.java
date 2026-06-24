@@ -211,6 +211,7 @@ public final class ReservedProperties {
     public static final String PN_SUBMIT_AEP_SANDBOX_REGION = "sandboxRegion";
     public static final String PN_SUBMIT_AEP_SANDBOX_ID = "sandboxId";
     public static final String PN_SUBMIT_AEP_DATASET_ID = "datasetId";
+    public static final String PN_SUBMIT_AEP_SANDBOX_NAME = "sandboxName";
 
     // End: Form submission related properties
     private static final Set<String> reservedProperties = aggregateReservedProperties();
