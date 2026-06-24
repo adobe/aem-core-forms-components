@@ -78,7 +78,7 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
         ResourceResolver resourceResolver = request.getResourceResolver();
         String componentInstancePath = request.getRequestPathInfo().getSuffix();
         List<Resource> resources = new ArrayList<>();
-        if (resourceResolver != null) {
+        if (componentInstancePath != null) {
             Resource componentInstance = resourceResolver.getResource(componentInstancePath);
             Resource formInstance = ComponentUtils.getFormContainer(componentInstance);
             if (formInstance != null) {
@@ -97,7 +97,7 @@ public class ReviewDataSourceServlet extends AbstractDataSourceServlet {
                             }
                         }
                     }
-                    if (name != null && title != null) {
+                    if (org.apache.commons.lang3.StringUtils.isNotBlank(name)) {
                         resources.add(getResourceForDropdownDisplay(resourceResolver, title, name));
                     }
                 }
