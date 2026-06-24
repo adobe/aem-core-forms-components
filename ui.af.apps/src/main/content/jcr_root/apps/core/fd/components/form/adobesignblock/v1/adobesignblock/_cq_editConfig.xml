@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:EditConfig"
+    cq:actions="[edit,-,copymove,delete,-,insert,-]"
+    cq:dialogMode="floating"
+    cq:layout="editbar"
+    cq:disableTargeting="{Boolean}true">
+    <cq:inplaceEditing
+        jcr:primaryType="cq:InplaceEditingConfig"
+        active="{Boolean}true"
+        configPath="inplaceEditingConfig"
+        editorType="text">
+        <inplaceEditingConfig
+            jcr:primaryType="nt:unstructured"
+            hideLabel="{Boolean}true"
+            name="./value"
+            textPropertyName="./value"
+            editElementQuery=".cmp-adaptiveform-adobesignblock__value">
+            <rtePlugins jcr:primaryType="nt:unstructured">
+                <adobesignplugin
+                    jcr:primaryType="nt:unstructured"
+                    features="*"/>
+                <format
+                    jcr:primaryType="nt:unstructured"
+                    features="bold,italic,underline"/>
+                <lists
+                    jcr:primaryType="nt:unstructured"
+                    features="*"/>
+                <justify
+                    jcr:primaryType="nt:unstructured"
+                    features="*"/>
+                <links
+                    jcr:primaryType="nt:unstructured"
+                    features="modifylink,unlink"/>
+                <paraformat
+                    jcr:primaryType="nt:unstructured"
+                    features="*"/>
+                <fullscreen
+                    jcr:primaryType="nt:unstructured"
+                    features="*"/>
+                <keys
+                    jcr:primaryType="nt:unstructured"
+                    features="*"/>
+            </rtePlugins>
+            <uiSettings jcr:primaryType="nt:unstructured">
+                <cui jcr:primaryType="nt:unstructured">
+                    <inline
+                        jcr:primaryType="nt:unstructured"
+                        toolbar="[adobesignplugin#adobesigncommand,format#bold,format#italic,format#underline,fullscreen#start,control#close,control#save]">
+                        <popovers jcr:primaryType="nt:unstructured">
+                            <justify
+                                jcr:primaryType="nt:unstructured"
+                                items="[justify#justifyleft,justify#justifycenter,justify#justifyright]"
+                                ref="justify"/>
+                            <lists
+                                jcr:primaryType="nt:unstructured"
+                                items="[lists#unordered,lists#ordered,lists#outdent,lists#indent]"
+                                ref="lists"/>
+                        </popovers>
+                    </inline>
+                    <fullscreen
+                        jcr:primaryType="nt:unstructured"
+                        toolbar="[adobesignplugin#adobesigncommand,format#bold,format#italic,format#underline,-,links#modifylink,links#unlink,-,justify#justifyleft,justify#justifycenter,justify#justifyright,-,lists#unordered,lists#ordered,lists#outdent,lists#indent]"/>
+                    <additionalClasses jcr:primaryType="nt:unstructured">
+                        <adobesigncommand
+                            jcr:primaryType="nt:unstructured"
+                            classes="rte--trigger"
+                            command="adobesignplugin#adobesigncommand"/>
+                    </additionalClasses>
+                </cui>
+            </uiSettings>
+        </inplaceEditingConfig>
+    </cq:inplaceEditing>
+    <cq:actionConfigs jcr:primaryType="nt:unstructured">
+        <editexpression
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
+                order="after CONFIGURE"
+                icon="bidRule"
+                text="Edit Rules"/>
+        <replace
+                jcr:primaryType="nt:unstructured"
+                condition="CQ.FormsCoreComponents.editorhooks.isReplaceable"
+                handler="CQ.FormsCoreComponents.editorhooks.replace"
+                icon="shuffle"
+                text="Replace"/>
+        <qualifiedName
+                jcr:primaryType="nt:unstructured"
+                handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"
+                icon="viewSOMExpression"
+                text="View Qualified Name"/>
+    </cq:actionConfigs>
+    <cq:listeners
+        jcr:primaryType="cq:EditListenersConfig"
+        afterdelete="guidelib.author.editConfigListeners.REFRESH_PARENT_PANEL"
+        afteredit="guidelib.author.editConfigListeners.REFRESH_PARENT_PANEL"
+        afterinsert="guidelib.author.editConfigListeners.GUIDE_AFTER_INSERT"
+        aftermove="guidelib.author.editConfigListeners.REFRESH_GUIDE"/>
+</jcr:root>
