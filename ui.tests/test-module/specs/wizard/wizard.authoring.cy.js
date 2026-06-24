@@ -171,6 +171,7 @@ describe('Page - Authoring', function () {
         });
 
         it('verify Navigation Working between tabs in Authoring', {retries: 3}, function () {
+            cy.selectLayer("Edit");
             cy.cleanTest(wizardLayoutDrop).then(function () {
                 dropWizardInContainer();
                 addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
@@ -187,16 +188,19 @@ describe('Page - Authoring', function () {
                     cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
                     cy.get('div' + numberInputDataPath).should('not.be.visible');
+                    cy.selectLayer("Edit");
                     cy.invokeEditableAction(editDialogNavigationPanelSelector);
                     cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
                     cy.get('div' + textInputDataPath).should('not.be.visible');
+                    cy.selectLayer("Edit");
                     cy.deleteComponentByPath(wizardLayoutDrop);
                 });
             });
         });
 
         it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
+            cy.selectLayer("Edit");
             cy.cleanTest(wizardLayoutDrop).then(function () {
                 dropWizardInContainer();
                 addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
@@ -207,6 +211,7 @@ describe('Page - Authoring', function () {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
                     cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
+                    cy.selectLayer("Edit");
                     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerDataPath);
                     cy.deleteComponentByPath(wizardLayoutDrop);
                 });
@@ -218,7 +223,8 @@ describe('Page - Authoring', function () {
                 dropWizardInContainer();
                 addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
                 addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
-                cy.reload()
+                cy.reload();
+                cy.selectLayer("Edit");
                 cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').should('have.length', 2);
                 cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').eq(0).should('be.visible');
                 cy.getContentIFrameBody().find('.cmp-adaptiveform-wizard__wizardpanel').eq(1).should('not.be.visible');
@@ -283,6 +289,7 @@ describe('Page - Authoring', function () {
         });
 
         it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
+            cy.selectLayer("Edit");
             cy.cleanTest(wizardEditPath).then(function () {
                 dropWizardInSites();
                 addComponentInWizardOfSites("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
@@ -293,6 +300,7 @@ describe('Page - Authoring', function () {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
                     cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
+                    cy.selectLayer("Edit");
                     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerDataPath);
                     cy.deleteComponentByPath(wizardEditPath);
                 });

@@ -171,10 +171,10 @@ describe('Page - Authoring', function () {
             cy.get('.cq-dialog-submit').click().then(() => {
                 cy.get('.cq-dialog-submit').should('not.exist')
             });
-            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length', 2);
-            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 3');
-            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
-            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 1').should('not.exist');
+            getPreviewIframeBody().contains('.cmp-adaptiveform-checkboxgroup', 'Item 3')
+                .find('.cmp-adaptiveform-checkboxgroup-item').should('have.length', 2);
+            getPreviewIframeBody().contains('.cmp-adaptiveform-checkboxgroup', 'Item 3').contains('Item 2');
+            getPreviewIframeBody().contains('.cmp-adaptiveform-checkboxgroup', 'Item 3').contains('Item 1').should('not.exist');
             cy.deleteComponentByPath(checkBoxGroupDrop);
         });
     });
@@ -187,13 +187,12 @@ describe('Page - Authoring', function () {
         cy.get("div[name='richTextTitle']").should('not.be.visible');
 
         // check rich text selector and see if RTE is visible for title.
-        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
-        cy.wait(500); // Add small wait for UI update
+        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click({force: true});
         cy.get("div[name='richTextTitle']").should('exist').scrollIntoView().should('be.visible');
 
         // check rich text selector and see if RTE is visible for enum names.
         cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('not.be.visible');
-        cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click();
+        cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click({force: true});
         cy.get("div[name='richTextEnumNames']").then(($el) => {
             $el[0].scrollIntoView();
         })
@@ -217,37 +216,50 @@ describe('Page - Authoring', function () {
 
     // adding retry since rule editor sometimes does not open at first try
     it('rule editor is working with rich text enum names', {retries: 2}, function () {
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
-        cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
-        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
-        cy.wait(1000);
-        cy.get(formsSelectors.ruleEditor.action.editRule).click();
+        cy.cleanTest(checkBoxGroupDrop).then(function() {
+            // Setup: drop and configure checkboxgroup with rich text enum name "Select 1"
+            dropCheckBoxGroupInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("div[name='richTextEnumNames']").should('not.be.visible');
+            cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click({force: true});
+            cy.get("div[name='richTextEnumNames']").then(($el) => {
+                $el[0].scrollIntoView();
+            });
+            cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']").eq(0).focus().clear().type("Select 1");
+            cy.get('.cq-dialog-submit').click({ force: true });
 
-        // click on  create option from rule editor header
-        // cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-        cy.wait(1000);
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
+            cy.selectLayer("Edit");
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+            cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
+            cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
+            cy.wait(1000);
+            cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
+            cy.wait(1000);
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
-            .click({force: true});
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .expeditor-customoverlay.is-open coral-selectlist-item[value='EVENT_SCRIPTS']")
+                .click({force: true});
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.CONTAINS).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.CONTAINS).click();
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").should("exist");
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.EVENT_AND_COMPARISON_OPERATOR + " .choice-view-default").click();
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PRIMITIVE_EXPRESSION + " .NUMERIC_LITERAL button").should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PRIMITIVE_EXPRESSION + " .NUMERIC_LITERAL button").first().click();
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.CONTAINS).should("exist");
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.CONTAINS).click();
 
-        cy.getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().contains("Select 1");
-        cy.getRuleEditorIframe().find('.exp-Cancel-Button').click();
-        cy.getRuleEditorIframe().find('.exp-Close-Button').click();
-        cy.deleteComponentByPath(checkBoxGroupDrop);
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PRIMITIVE_EXPRESSION + " .NUMERIC_LITERAL button").should("exist");
+            cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.PRIMITIVE_EXPRESSION + " .NUMERIC_LITERAL button").first().click();
+
+            cy.getRuleEditorIframe().find('[handle="selectList"] coral-list-item-content').first().contains("Select 1");
+            cy.getRuleEditorIframe().find('.exp-Cancel-Button').click();
+            cy.getRuleEditorIframe().find('.exp-Close-Button').click();
+            cy.deleteComponentByPath(checkBoxGroupDrop);
+        });
     });
   });
 /*

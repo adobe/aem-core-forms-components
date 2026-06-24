@@ -125,6 +125,7 @@ describe.only('Page - Authoring', function () {
     });
 
     it('verify second panel is not visible after adding two panel',{ retries: 3 }, function(){
+      cy.selectLayer("Edit");
       cy.cleanTest(tabsPath).then(function() {
         dropTabsInContainer();
         dropPanelInVerticalTabComponent(tabsPath);

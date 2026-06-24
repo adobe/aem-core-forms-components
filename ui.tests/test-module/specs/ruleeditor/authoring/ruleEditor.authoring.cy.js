@@ -132,7 +132,13 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.wait('@ruleEditorRequest').then((interception) => {
             expect(interception.response.statusCode).to.equal(201);
             const submittedData = Object.fromEntries(new URLSearchParams(interception.request.body));
-            expect(submittedData[":content"]).contains("\"fd:events\":{\"change\":[\"if(contains($event.payload.changes[].propertyName, 'value'), if($field.$value == 'abc', {visible : false()}, {}), {})\"]}");
+            const content = submittedData[":content"];
+            // AEM 6.5 generates hide rules using dispatchEvent with 'custom:setProperty'
+            // Newer AEM generates hide rules using {visible : false()} directly
+            const hasNewFormat = content.includes("if($field.$value == 'abc', {visible : false()}, {})");
+            const has650Format = content.includes("if($field.$value == 'abc', dispatchEvent(") &&
+                                 content.includes("'custom:setProperty', {visible : false()}");
+            expect(hasNewFormat || has650Format).to.be.true;
         });
 
         // check and close rule editor
@@ -353,6 +359,7 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.openAuthoring(formPath);
             cy.selectLayer("Edit");
             cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+            cy.cleanTest(textinputEditPath);
 
             cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
                 "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
