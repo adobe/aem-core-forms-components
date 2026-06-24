@@ -224,7 +224,7 @@ describe('Page - Authoring', function () {
                 //Add 2 children in tabs on top component
                 dropTextInputInTabComponent();
                 dropPanelInTabComponent();
-                cy.reload();
+                cy.openSiteAuthoring(pagePath);
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + tabsContainerPathSelector);
                 cy.invokeEditableAction("[data-action='PANEL_SELECT']").then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);

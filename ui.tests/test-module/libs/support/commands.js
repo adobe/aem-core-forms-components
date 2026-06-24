@@ -152,41 +152,25 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
 
 let loginRedirected = false;
 const waitForEditorToInitialize = () => {
-  cy.window().then((win) => {
-    // keeps rechecking "editables"
-    return new Cypress.Promise((resolve, reject) => {
-      const timeoutDuration = 60000;
-      const startTime = Date.now();
-      const isReady = () => {
-        // temporary added this to check if editor is loaded
-        if (win.Granite && win.Granite.author && win.Granite.author.editables && win.Granite.author.editables.length > 0) {
-          return resolve()
-        }
-        const currentTime = Date.now();
-        if (currentTime - startTime >= timeoutDuration) {
-          // Reject the promise if the timeout has occurred
-          return reject(new Error('Editor initialization timed out'));
-        }
-        setTimeout(isReady, 0)
-      };
-      isReady()
-    })
-  });
+  cy.window().its('Granite.author.editables', { timeout: 120000 }).should('have.length.greaterThan', 0);
 };
 
 const preventClickJacking = () => {
   cy.window().then(win => {
-    // only if granite is defined, override the API
-    if (win.Granite) {
-      win.Granite.HTTP.handleLoginRedirect = function () {
-        if (!loginRedirected) {
-          loginRedirected = true;
-          //alert(Granite.I18n.get("Your request could not be completed because you have been signed out."));
-          // var l = util.getTopWindow().document.location; // this causes frame burst and ideally should be fixed in Granite code
-          var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
-          l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
-        }
-      };
+    try {
+      if (win.Granite && win.Granite.HTTP) {
+        win.Granite.HTTP.handleLoginRedirect = function () {
+          if (!loginRedirected) {
+            loginRedirected = true;
+            var l = win.Granite.author.EditorFrame.$doc.get(0).defaultView.location;
+            l.href = win.Granite.HTTP.externalize("/") + "?resource=" + encodeURIComponent(l.pathname + l.search + l.hash);
+          }
+        };
+      }
+    } catch (e) {
+      if (e.name !== 'SecurityError') {
+        throw e;
+      }
     }
   });
 };
@@ -288,29 +272,39 @@ Cypress.Commands.add("selectLayer", (layer) => {
 
 // cypress command to open editable toolbar
 Cypress.Commands.add("openEditableToolbar", (selector) => {
-  cy.get(selector) // adding assertion does implicit retry
+  cy.get('body').then($body => {
+    const $wrapper = $body.find('#OverlayWrapper');
+    if ($wrapper.length && $wrapper.hasClass('is-hidden')) {
+      if ($body.find('#selectlayer-popover [data-layer="Preview"]').length > 0) {
+        // Preview→Edit forces a real layer:change so AEM shows OverlayWrapper.
+        cy.selectLayer("Preview");
+        cy.selectLayer("Edit");
+      }
+      // For Forms Editor (no Preview layer) OverlayWrapper recovers naturally; just wait below.
+    }
+  });
+  cy.get('#OverlayWrapper', { timeout: 20000 }).should('not.have.class', 'is-hidden');
+
+  cy.get(selector)
   .invoke('attr', 'data-path')
   .then(($path) => {
     const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
     cy.get("body").then($body => {
       if ($body.find(path).length === 0) {
-        //evaluates as true if toolbar doesnt exists at all
-        //you get here only if toolbar is visible
-        cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
-        // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-        cy.get(path).should('be.visible');
+        cy.get(selector).click({force: true});
       } else {
         cy.get(path).then($header => {
           if (!$header.is(':visible')) {
+            cy.get('body').click(0, 0);
+            cy.get('#OverlayWrapper', { timeout: 10000 }).should('not.have.class', 'is-hidden');
             cy.get(selector).first().click({force: true});
-            cy.get(path).should('be.visible');
           } else {
-            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
+            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0, {force: true});
             cy.get(selector).click({force: true});
-            cy.get(path).should('be.visible');
           }
         });
       }
+      cy.get(path, { timeout: 15000 }).should('be.visible');
     });
   })
 });
@@ -503,32 +497,34 @@ Cypress.Commands.add("fetchFeatureToggles",()=>{
 })
 
 Cypress.Commands.add("cleanTest", (editPath) => {
-  // clean the test before the next run, if any
+  // clean the test before the next run, if any (also removes accumulated siblings like wizard0, checkboxgroup1, etc.)
+  // uses .cq-Overlay--component to avoid matching toolbar buttons which also carry data-path attributes
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "[data-path='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        cy.deleteComponentByPath(editPath);
+    const targetDepth = editPath.split('/').length;
+    const pathSet = new Set();
+    $body.find(".cq-Overlay--component[data-path^='" + editPath + "']").each((i, el) => {
+      const p = el.getAttribute('data-path');
+      if (p && p.split('/').length === targetDepth) {
+        pathSet.add(p);
       }
-      resolve(editPath);
     });
+    const paths = Array.from(pathSet);
+    if (paths.length > 0) {
+      return paths.reduce((chain, p) => chain.then(() => cy.deleteComponentByPath(p)), cy.wrap(null));
+    }
   });
 })
 
 Cypress.Commands.add("cleanTitleTest", (editPath) => {
   // clean the test before the next run, if any
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "div[data-path^='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        $body.find(selector12).each(($index, $titleComponent) => {
-          cy.deleteComponentByPath($titleComponent.dataset.path);
-        })
-      }
-      resolve(editPath);
+    const paths = [];
+    $body.find("div[data-path^='" + editPath + "']").each((i, el) => {
+      paths.push(el.dataset.path);
     });
+    if (paths.length > 0) {
+      return paths.reduce((chain, p) => chain.then(() => cy.deleteComponentByPath(p)), cy.wrap(null));
+    }
   });
 })
 
@@ -551,6 +547,7 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   // click the delete action
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
   // check if delete dialog is seen and click on yes
+  cy.get("coral-dialog.is-open[role='alertdialog']", { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
@@ -569,8 +566,9 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
   // click the delete action
-  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+  cy.get(siteSelectors.editableToolbar.actions.delete + ":visible").should("be.visible").click({force: true});
   // check if delete dialog is seen and click on yes
+  cy.get("coral-dialog.is-open[role='alertdialog']", { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
