@@ -527,7 +527,8 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                 ReservedProperties.PN_SUBMIT_AEP_IMS_ORG_ID,
                 ReservedProperties.PN_SUBMIT_AEP_SANDBOX_REGION,
                 ReservedProperties.PN_SUBMIT_AEP_SANDBOX_ID,
-                ReservedProperties.PN_SUBMIT_AEP_DATASET_ID);
+                ReservedProperties.PN_SUBMIT_AEP_DATASET_ID,
+                ReservedProperties.PN_SUBMIT_AEP_SANDBOX_NAME);
 
             ValueMap resourceMap = resource.getValueMap();
             for (Map.Entry<String, Object> entry : resourceMap.entrySet()) {
