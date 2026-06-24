@@ -161,7 +161,7 @@ Import-Package: javax.annotation;version=0.0.0,*
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>core-forms-components-af-core</artifactId>
-            <version>3.0.70</version>
+            <version>${project.version}</version>
         </dependency>
         <!-- Json web token dependencies for oauth2 flow -->
         <dependency>
