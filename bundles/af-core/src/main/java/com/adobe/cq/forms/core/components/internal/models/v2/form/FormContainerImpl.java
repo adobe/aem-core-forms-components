@@ -97,6 +97,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     /** Constant representing spreadsheet submit action type */
     private static final String SS_SPREADSHEET = "spreadsheet";
 
+    /** Constant representing AEP submit action type */
+    private static final String SS_AEP = ReservedProperties.SS_AEP;
+
     @OSGiService(injectionStrategy = InjectionStrategy.OPTIONAL)
     private CoreComponentCustomPropertiesProvider coreComponentCustomPropertiesProvider;
 
@@ -501,7 +504,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
         Map<String, Object> submitProps = null;
 
-        if (request == null || ComponentUtils.shouldIncludeSubmitProperties(request)) {
+        String actionName = resource.getValueMap().get(ReservedProperties.PN_SUBMIT_ACTION_NAME, String.class);
+        if (request == null || ComponentUtils.shouldIncludeSubmitProperties(request)
+            || (StringUtils.isNotBlank(actionName) && (SS_AEP.equals(actionName)))) {
             submitProps = new LinkedHashMap<>();
             List<String> submitActionProperties = Arrays.asList(
                 ReservedProperties.PN_SUBMIT_ACTION_TYPE,
@@ -516,6 +521,15 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
 
             List<String> submitSpreadsheetProperties = Arrays.asList(
                 ReservedProperties.PN_SUBMIT_SPREADSHEETURL);
+
+            List<String> submitAepProperties = Arrays.asList(
+                ReservedProperties.PN_SUBMIT_AEP_SCHEMA_REF_ID,
+                ReservedProperties.PN_SUBMIT_AEP_IMS_ORG_ID,
+                ReservedProperties.PN_SUBMIT_AEP_SANDBOX_REGION,
+                ReservedProperties.PN_SUBMIT_AEP_SANDBOX_ID,
+                ReservedProperties.PN_SUBMIT_AEP_DATASET_ID,
+                ReservedProperties.PN_SUBMIT_AEP_SANDBOX_NAME);
+
             ValueMap resourceMap = resource.getValueMap();
             for (Map.Entry<String, Object> entry : resourceMap.entrySet()) {
                 if (submitActionProperties.contains(entry.getKey())) {
@@ -526,7 +540,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
                 } else if (submitSpreadsheetProperties.contains(entry.getKey())) {
                     submitProps.computeIfAbsent(SS_SPREADSHEET, k -> new LinkedHashMap<String, Object>());
                     ((Map<String, Object>) submitProps.get(SS_SPREADSHEET)).put(entry.getKey(), entry.getValue());
+                } else if (submitAepProperties.contains(entry.getKey())) {
+                    submitProps.computeIfAbsent(SS_AEP, k -> new LinkedHashMap<String, Object>());
+                    ((Map<String, Object>) submitProps.get(SS_AEP)).put(entry.getKey(), entry.getValue());
                 }
+                // SSV properties (enableServerSideValidation, ssvCloudServicePath) are intentionally
+                // excluded from the form JSON. The submit servlet reads them directly from JCR.
+                // ssvCloudServicePath in particular must not be sent to clients as it exposes
+                // internal JCR paths.
             }
         }
         return submitProps;

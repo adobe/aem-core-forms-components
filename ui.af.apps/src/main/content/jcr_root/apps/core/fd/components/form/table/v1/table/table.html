@@ -1,0 +1,86 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.table="com.adobe.cq.forms.core.components.models.form.Panel"
+     data-sly-use.renderer="${'table.js'}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"></sly>
+
+<div class="cmp-adaptiveform-table cmp-container"
+     id="${table.id}"
+     data-cmp-is="adaptiveFormTable"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-cmp-visible="${table.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${table.enabled ? 'true' : 'false'}"
+     data-cmp-sorting-enabled="${properties.enableSorting ? 'true' : 'false'}">
+    
+    <sly data-sly-test="${table.label.visible != false}">
+        <div class="cmp-adaptiveform-table__title cmp-container__label">${table.label.value @ context='html'}</div>
+    </sly>
+    <div class="cmp-adaptiveform-table__help-container">
+        <div data-sly-call="${questionMark.questionMark @componentId=table.id, longDescription=table.description, bemBlock='cmp-adaptiveform-table'}" data-sly-unwrap></div>
+    </div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=table.id, shortDescriptionVisible=table.tooltipVisible, shortDescription=table.tooltip, bemBlock='cmp-adaptiveform-table'}" data-sly-unwrap></div>
+    <div data-sly-call="${longDescription.longDescription @componentId=table.id, longDescription=table.description, bemBlock='cmp-adaptiveform-table'}" data-sly-unwrap></div>
+
+    <!--/* EDIT MODE: column widths not applied; children render their own <tr> with data-cq-data-path for the overlay. */-->
+    <sly data-sly-test="${wcmmode.edit}">
+        <table class="cmp-adaptiveform-table__widget"
+               aria-label="${table.label.value @ context='attribute'}">
+            <thead class="cmp-adaptiveform-table__head">
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
+                    </sly>
+                </sly>
+            </thead>
+            <tbody class="cmp-adaptiveform-table__body">
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
+                    </sly>
+                </sly>
+            </tbody>
+        </table>
+    </sly>
+    <!--/* PUBLISH MODE: column widths applied via colgroup; proper semantic table for accessibility. */-->
+    <sly data-sly-test="${!wcmmode.edit}">
+        <table class="cmp-adaptiveform-table__widget"
+               aria-label="${table.label.value @ context='attribute'}"
+               data-sly-attribute.style="${properties.columnWidth ? 'table-layout: fixed; width: 100%' : false}">
+            <sly data-sly-test="${table.columnWidthsConfigured}">
+                <colgroup data-sly-list.colStyle="${table.columnWidthColStyles}">
+                    <col style="${colStyle @ context='styleString'}" />
+                </colgroup>
+            </sly>
+            <thead class="cmp-adaptiveform-table__head">
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tableheader/v1/tableheader'}">
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
+                    </sly>
+                </sly>
+            </thead>
+            <tbody class="cmp-adaptiveform-table__body">
+                <sly data-sly-list.child="${resource.listChildren}">
+                    <sly data-sly-test="${child.resourceType == 'core/fd/components/form/tablerow/v1/tablerow'}">
+                        <sly data-sly-resource="${child @ decoration=false}"></sly>
+                    </sly>
+                </sly>
+            </tbody>
+        </table>
+    </sly>
+</div>

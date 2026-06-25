@@ -150,5 +150,47 @@
                 handler="CQ.FormsCoreComponents.editorhooks.viewQualifiedName"
                 icon="viewSOMExpression"
                 text="View Qualified Name"/>
+        <addcolumn
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.addTableColumn"
+                hidden="{Boolean}true"
+                icon="columnAdd"
+                text="Add Column"/>
+        <delcolumn
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.deleteTableColumn"
+                hidden="{Boolean}true"
+                icon="tableColumnRemove"
+                text="Delete Column"/>
+        <mergerowcells
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableRowCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.mergeTableRowCells"
+                hidden="{Boolean}true"
+                icon="tableMergeCells"
+                text="Merge Cells"/>
+        <splitrowcell
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isMergedRowCell(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.splitTableRowCell"
+                hidden="{Boolean}true"
+                icon="tableCellsSplit"
+                text="Split Cell"/>
+        <removecolumnsorting
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCellSortingEnabled(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.removeColumnSorting"
+                hidden="{Boolean}true"
+                icon="filterRemove"
+                text="Remove Sorting"/>
+        <enablecolumnsorting
+                jcr:primaryType="nt:unstructured"
+                condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCellSortingDisabled(editable); }"
+                handler="CQ.FormsCoreComponents.editorhooks.enableColumnSorting"
+                hidden="{Boolean}true"
+                icon="filterAdd"
+                text="Enable Sorting"/>
     </cq:actionConfigs>
 </jcr:root>

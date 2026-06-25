@@ -1,6 +1,6 @@
 {
   "FileCloseAccessText"         :   "اضغط على Enter لحذف الملف",
-  "FileSizeGreater"             :   "حجم الملفات (${0}) أكبر من الحجم المتوقع: ${1} ميجابايت.",
+  "FileSizeGreater"             :   "حجم الملفات (${0}) أكبر من الحجم المتوقع: ${1}.",
   "FileNameInvalid"             :   "لا تقم بإرفاق ملفات يبدأ اسم الملف بـ (.)، أو يحتوي على \\ / : * ? \" < > | ; % $، أو هو كلمة محجوزة مثل nul، prn، con، lpt، أو com.",
   "FileMimeTypeInvalid"         :   "أنواع الملفات (${0}) غير مدعومة",
   "InternalFormSubmissionError" :   "حدث خطأ داخلي أثناء تقديم النموذج.",
