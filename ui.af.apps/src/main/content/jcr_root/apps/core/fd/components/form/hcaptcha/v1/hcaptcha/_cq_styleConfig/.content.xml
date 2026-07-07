@@ -40,6 +40,20 @@
                                 cssSelector=".cmp-adaptiveform-hcaptcha__label-container .cmp-adaptiveform-hcaptcha__questionmark"
                                 longTitle="hCaptcha Help Icon"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-hcaptcha__label-container .cmp-adaptiveform-hcaptcha__questionmark:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-hcaptcha__label-container .cmp-adaptiveform-hcaptcha__questionmark:hover"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-hcaptcha__label-container .cmp-adaptiveform-hcaptcha__questionmark:disabled"/>
+                            </states>
                         </captchaHelpIcon>
                         <captchaWidget
                                 jcr:primaryType="nt:unstructured"
