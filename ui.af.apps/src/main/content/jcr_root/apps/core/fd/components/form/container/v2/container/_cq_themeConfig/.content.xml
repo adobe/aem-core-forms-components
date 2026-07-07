@@ -22,7 +22,153 @@
                 <formTitle
                     jcr:primaryType="nt:unstructured"
                     target="/mnt/override/libs/core/fd/components/form/title/v2/title/cq:styleConfig/items/formTitle"/>
+                <containerOuterWrapper
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Form Outer Wrapper"
+                    id="af2_formouterwrapper"
+                    cssSelector=".cmp-container.cmp-adaptiveform-container"
+                    longTitle="Form Outer Wrapper"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                <containerWrapper
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Form Wrapper"
+                    id="af2_formwrapper"
+                    cssSelector=".cmp-adaptiveform-container__wrapper"
+                    longTitle="Form Wrapper"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                <hamburgerMenu
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Hamburger Menu"
+                    id="af2_hamburgermenu"
+                    cssSelector=".cmp-adaptiveform-container__hamburger-menu"
+                    longTitle="Hamburger Menu"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <hamburgerMenuIcon
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Icon"
+                            id="af2_hamburgermenuicon"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-icon"
+                            longTitle="Hamburger Menu Icon"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuIconContainer
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Icon Container"
+                            id="af2_hamburgermenuiconcontainer"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-icon-container"
+                            longTitle="Hamburger Menu Icon Container"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuTop
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Top"
+                            id="af2_hamburgermenutop"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-top"
+                            longTitle="Hamburger Menu Top"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuBottom
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Bottom"
+                            id="af2_hamburgermenubottom"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-bottom"
+                            longTitle="Hamburger Menu Bottom"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuMiddle
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Middle"
+                            id="af2_hamburgermenumiddle"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-middle"
+                            longTitle="Hamburger Menu Middle"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuNavigation
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Navigation"
+                            id="af2_hamburgermenunavigation"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-navigation"
+                            longTitle="Hamburger Menu Navigation"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuActiveItemTitle
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Active Item Title"
+                            id="af2_hamburgermenuactiveitemtitle"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-active-item-title"
+                            longTitle="Hamburger Menu Active Item Title"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuButtonPrev
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Prev Button"
+                            id="af2_hamburgermenubuttonprev"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-button--prev"
+                            longTitle="Hamburger Menu Prev Button"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuButtonNext
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Next Button"
+                            id="af2_hamburgermenubuttonnext"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-button--next"
+                            longTitle="Hamburger Menu Next Button"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuButtonOpen
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Open Button"
+                            id="af2_hamburgermenubuttonopen"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-button--open"
+                            longTitle="Hamburger Menu Open Button"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuButtonClose
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Close Button"
+                            id="af2_hamburgermenubuttonclose"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-button--close"
+                            longTitle="Hamburger Menu Close Button"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuDropdown
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Dropdown"
+                            id="af2_hamburgermenudropdown"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-dropdown"
+                            longTitle="Hamburger Menu Dropdown"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuSubmenu
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Submenu"
+                            id="af2_hamburgermenusubmenu"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-submenu"
+                            longTitle="Hamburger Menu Submenu"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuLink
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Link"
+                            id="af2_hamburgermenulink"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-link"
+                            longTitle="Hamburger Menu Link"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuItemActive
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Active Item"
+                            id="af2_hamburgermenuitemactive"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-item--active"
+                            longTitle="Hamburger Menu Active Item"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <hamburgerMenuItemActiveparent
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Active Parent Item"
+                            id="af2_hamburgermenuitemactiveparent"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-item--activeparent"
+                            longTitle="Hamburger Menu Active Parent Item"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
+                </hamburgerMenu>
             </items>
+            <states jcr:primaryType="nt:unstructured">
+                <loading
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Loading"
+                    cssSelector=".cmp-adaptiveform-container--loading"/>
+                <submitting
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Submitting"
+                    cssSelector=".cmp-adaptiveform-container--submitting"/>
+            </states>
         </form>
         <base
             jcr:primaryType="nt:unstructured"
