@@ -58,14 +58,19 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-scribble
     ELEMENT cmp-adaptiveform-scribble__label-container
+        ELEMENT cmp-adaptiveform-scribble__label
+        ELEMENT cmp-adaptiveform-scribble__questionmark
     ELEMENT cmp-adaptiveform-scribble__canvas-signed-container
         ELEMENT cmp-adaptiveform-scribble__canvas-signed-image
+        ELEMENT cmp-adaptiveform-scribble__clear-sign
     ELEMENT cmp-adaptiveform-scribble__container
         ELEMENT cmp-adaptiveform-scribble__header
+        ELEMENT cmp-adaptiveform-scribble__panel
         ELEMENT cmp-adaptiveform-scribble__content
             ELEMENT cmp-adaptiveform-scribble__canvases
                 ELEMENT cmp-adaptiveform-scribble__signcanvases
                     ELEMENT cmp-adaptiveform-scribble__canvas
+                        ELEMENT cmp-adaptiveform-scribble__canvas__main
                     ELEMENT cmp-adaptiveform-scribble__keyboard-sign-box
                 ELEMENT cmp-adaptiveform-scribble__geocanvas
             ELEMENT cmp-adaptiveform-scribble__controlpanel
@@ -88,8 +93,12 @@ BLOCK cmp-adaptiveform-scribble
             ELEMENT cmp-adaptiveform-scribble__clearsign-content
                 ELEMENT cmp-adaptiveform-scribble__clearsign-message
                 ELEMENT cmp-adaptiveform-scribble__clearsign-panel
-                    ELEMENT cmp-adaptiveform-scribble__button--secondary
-                    ELEMENT cmp-adaptiveform-scribble__button--primary
+                    MODIFIER cmp-adaptiveform-scribble__button--secondary
+                    MODIFIER cmp-adaptiveform-scribble__button--primary
+    ELEMENT cmp-adaptiveform-scribble__caption
+    ELEMENT cmp-adaptiveform-scribble__shortdescription
+    ELEMENT cmp-adaptiveform-scribble__longdescription
+    ELEMENT cmp-adaptiveform-scribble__errormessage
 ```
 
 ### Note
