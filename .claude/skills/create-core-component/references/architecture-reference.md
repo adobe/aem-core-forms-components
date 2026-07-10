@@ -45,11 +45,14 @@
 
 ## AbstractBaseImpl vs AbstractFieldImpl vs AbstractContainerImpl
 
+This table is the single source of truth for base-class selection; other references and `SKILL.md` Phase 1 point here.
+
 | Class | Use when | Provides |
 |-------|----------|----------|
-| `AbstractBaseImpl` | Step, display, or non-value component | `id`, `name`, `visible`, `enabled`, `description`, `label`, `data` |
-| `AbstractFieldImpl` | Captures a user-submitted value | Everything in Base + `required`, `readOnly`, `default`, `placeholder`, `constraints`, validation |
-| `AbstractContainerImpl` | Holds child components | Everything in Base + child enumeration, container-specific behavior |
+| `AbstractBaseImpl` | Step, display, or non-value component (button, text, image) | `id`, `name`, `visible`, `enabled`, `description`, `label`, `data` |
+| `AbstractFieldImpl` | Captures a single user-submitted value (text, number, date) | Everything in Base + `required`, `readOnly`, `default`, `placeholder`, `constraints`, validation |
+| `AbstractOptionsFieldImpl` | Options-based field (checkboxes, radios, selects) | Everything in Field + `enum`, `enumNames`, `enforceEnum` |
+| `AbstractContainerImpl` | Holds child components (container/panel) | Everything in Base + child enumeration, container-specific behavior |
 
 ## FormView.FormFieldBase vs FormView.FormContainer
 

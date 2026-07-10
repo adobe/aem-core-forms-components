@@ -31,6 +31,8 @@ ui.af.apps/.../form/{name}/v1/{name}/        src/components/{name}/_{name}.scss
 
 ## Standard BEM Elements for Every Field Component
 
+This table is the single source of truth for the standard BEM element set; other references point here.
+
 Every field component's HTL template emits these elements. The stub CSS and theme SCSS must cover all of them:
 
 | BEM element suffix | CSS class | What it wraps |

@@ -43,10 +43,10 @@ Work through every item after all files are written. Fix all failures before dec
 
 - [ ] `data-cmp-is` value matches JS `static IS` exactly
 - [ ] Boolean `data-cmp-*` attributes use ternary `? 'true' : 'false'`
-- [ ] Widget has `aria-describedby` referencing `{id}__errormessage {id}__longdescription {id}__shortdescription`
 - [ ] No `<script>` or `<style>` elements in the HTL file
 - [ ] `data-sly-use.model` references the correct Sling Model class
 - [ ] No `data-sly-test` on the `__value` div (for display/text components)
+- [ ] Accessibility: every applicable item in `references/accessibility-checklist.md` is satisfied (aria-describedby triple, live regions, focus, keyboard)
 
 ## JavaScript
 

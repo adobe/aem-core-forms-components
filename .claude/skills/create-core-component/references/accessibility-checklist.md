@@ -63,17 +63,7 @@ Every component MUST satisfy all applicable items below. This checklist is deriv
 
 ## BEM Naming Convention for Accessibility Elements
 
-Every component follows this naming pattern:
-```
-.cmp-adaptiveform-{componentname}              — root container
-.cmp-adaptiveform-{componentname}__label        — label element
-.cmp-adaptiveform-{componentname}__widget       — main interactive widget
-.cmp-adaptiveform-{componentname}__errormessage — error message area
-.cmp-adaptiveform-{componentname}__shortdescription — tooltip
-.cmp-adaptiveform-{componentname}__longdescription  — expanded help text
-.cmp-adaptiveform-{componentname}__questionmark     — help toggle button
-.cmp-adaptiveform-{componentname}__label-container  — label + question mark wrapper
-```
+For the standard BEM element set (`__label`, `__widget`, `__errormessage`, `__shortdescription`, `__longdescription`, `__questionmark`, `__label-container`), see the table in `references/css-architecture.md`. Every one of those elements must be present and correctly linked for accessibility.
 
 ## ID Convention for ARIA Linkage
 

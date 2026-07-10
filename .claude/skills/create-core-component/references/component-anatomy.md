@@ -74,11 +74,7 @@ AbstractComponentImpl (WCM Core)
                     └── [Direct subclasses for simple fields]
 ```
 
-Choose the appropriate base class:
-- **Simple text/number field** -> extend `AbstractFieldImpl`
-- **Options-based field** (checkboxes, radios, selects) -> extend `AbstractOptionsFieldImpl`
-- **Container/panel** -> extend `AbstractContainerImpl`
-- **Non-input component** (button, text, image) -> extend `AbstractBaseImpl`
+For base-class selection (which class to extend for each component type), see the selection table in `references/architecture-reference.md`.
 
 ---
 

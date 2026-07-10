@@ -131,13 +131,7 @@ After all files are created, complete the wiring steps from `references/wiring-s
 
 ### Phase 4: Accessibility Verification
 
-After generating all files, read `references/accessibility-checklist.md` and verify:
-
-1. **HTL template** — Every interactive element has `aria-label` or `<label for>`, error div has `aria-live="assertive"`, descriptions have `aria-live="polite"`
-2. **JS view** — `updateValidity()` sets `aria-invalid`, `updateReadOnly()` sets `aria-readonly`, focus/blur handlers call `setActive()`/`setInactive()`
-3. **LESS styles** — `:focus` has visible `outline` with `2px` minimum, error states use color + text
-4. **Keyboard** — All interactive elements have `tabindex` if not natively focusable
-5. **BEM** — All class names follow `cmp-adaptiveform-{componentname}__{element}` convention
+After generating all files, work through `references/accessibility-checklist.md` and satisfy every applicable item (labels, ARIA states, live regions, keyboard, focus, BEM). That file is the single source of truth for the WCAG 2.1 AA requirements.
 
 ### Phase 5: Validation
 
@@ -195,18 +189,17 @@ cd bundles/af-core && mvn test -pl . -Dtest={ComponentName}ImplTest 2>&1 | tail 
 
 ## Critical Rules
 
-1. **Never skip the accessibility checklist** — Every component must satisfy WCAG 2.1 AA
-2. **Always use existing abstract base classes** — Do not reinvent label/description/tooltip/error handling
-3. **Always register in FormConstants** — The resource type constant is required for Sling Model resolution
-4. **Follow BEM strictly** — `cmp-adaptiveform-{componentname}__{element}` with no exceptions
-5. **Use shared field templates** — Label, description, error message, question mark templates from `af-commons`
-6. **JSON export must validate** — The exporter JSON test validates against the Adaptive Form JSON schema
-7. **Match existing copyright headers** — Apache License 2.0 headers on all Java, JS, HTL, and LESS files. Use the **current calendar year** (not a hardcoded year) in `Copyright {year} Adobe`
-8. **Include `data-cmp-data-layer`** — The root `<div>` in HTL must include `data-cmp-data-layer="${{componentname}.data.json}"` for analytics/data layer integration
-9. **Use `@ValueMapValue` with `InjectionStrategy.OPTIONAL`** — Never use `REQUIRED`; missing properties should use defaults
-10. **Test both `Resource` and `SlingHttpServletRequest` adaptation** — The `@Model` annotation must list both `adaptables`
-11. **Widget ID convention** — Always `{componentId}-widget` via `${'{0}-{1}' @ format=[component.id, 'widget']}`
-12. **CSS is split across two repos** — Empty BEM stubs go in `aem-core-forms-components`; all property values go in `aem-forms-theme-canvas`. Never put visual styles in the component repo. See `references/css-architecture.md`.
-13. **Never put `data-sly-test` on the `__value` div** — For display/text components, always render `__value` unconditionally and put conditional content inside via `<sly data-sly-test>`. This ensures `getWidget()` in the JS view never returns null.
-14. **`_cq_editConfig.xml` is required** — Every component needs this file. Display/text components with inplace editing need the extended variant. See `references/templates.md` template #16.
-15. **Read `references/common-mistakes.md` before Phase 3** — 25 failure modes with exact fixes; many are silent bugs that pass compilation but break at runtime.
+Terse non-negotiables. Where a rule has a detailed rationale or failure mode, it is documented once in the referenced file — do not restate it here.
+
+1. **Never skip accessibility** — satisfy every applicable item in `references/accessibility-checklist.md` (WCAG 2.1 AA).
+2. **Always extend an existing abstract base class** — do not reinvent label/description/tooltip/error handling. See `references/architecture-reference.md`.
+3. **Always register in FormConstants** — the resource type constant is required for Sling Model resolution.
+4. **Follow BEM strictly** — `cmp-adaptiveform-{componentname}__{element}`, no exceptions.
+5. **Use shared field templates** from `af-commons` (label, description, error message, question mark).
+6. **JSON export must validate** against the Adaptive Form JSON schema (exporter test).
+7. **Match existing copyright headers** — Apache License 2.0 on all Java/JS/HTL/LESS files, using the current calendar year.
+8. **Include `data-cmp-data-layer`** on the root `<div>` for data-layer integration.
+9. **Widget ID convention** — always `{componentId}-widget` via `${'{0}-{1}' @ format=[component.id, 'widget']}`.
+10. **`_cq_editConfig.xml` is required** for every component (display/text with inplace editing uses the extended variant — `references/templates.md` template #16).
+11. **CSS is split across two repos** — see `references/css-architecture.md` for what goes where.
+12. **Read `references/common-mistakes.md` before Phase 3** — it is the source of truth for the recurring failure modes (`@ValueMapValue`/`InjectionStrategy.OPTIONAL`, dual `adaptables`, `data-sly-test` on `__value`, and others); those are not repeated here.
