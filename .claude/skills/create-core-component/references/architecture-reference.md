@@ -54,6 +54,8 @@ This table is the single source of truth for base-class selection; other referen
 | `AbstractOptionsFieldImpl` | Options-based field (checkboxes, radios, selects) | Everything in Field + `enum`, `enumNames`, `enforceEnum` |
 | `AbstractContainerImpl` | Holds child components (container/panel) | Everything in Base + child enumeration, container-specific behavior |
 
+**Composite / split widget** (e.g. day/month/year — multiple visible inputs feeding one value): still extend the field base that matches the data type (`AbstractFieldImpl` for a date), but render **one hidden combined `<input>`** as the value-bearing widget plus the visible sub-inputs. This category has extra runtime rules — read `references/runtime-view-js.md` before writing the view JS.
+
 ## FormView.FormFieldBase vs FormView.FormContainer
 
 | JS Base Class | Use when |
