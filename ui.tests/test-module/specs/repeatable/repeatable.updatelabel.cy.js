@@ -54,10 +54,27 @@ describe("Form Runtime with Panel Container", () => {
                 checkLabelText(textinputid2, panelid2, 'Text Input2', 'Panel2');
 
                 // remove instance and check label update
-                cy.get(`#${removeButton}`).find("button").click().then(() => {
-                    const [textinputid11, fieldView10] = Object.entries(formContainer._fields)[4];
-                    const [panelid11, fieldView11] = Object.entries(formContainer._fields)[5];
-                    checkLabelText(textinputid11, panelid11, 'Text Input2', 'Panel2');
+                // find Panel[1]'s remove button by its model index
+                const removeBtn1 = Object.values(formContainer._fields).find(f =>
+                    f.getModel &&
+                    f.getModel()?.fieldType === 'button' &&
+                    f.getModel()?.label?.value === 'Remove' &&
+                    f.getModel()?.parent?.index === 1
+                );
+                cy.get(`#${removeBtn1.getId()}`).find("button").click().then(() => {
+                    // after Panel[1] removed, find the surviving panel at index 1 by model
+                    const panel1remaining = Object.values(formContainer._fields).find(f =>
+                        f.getModel &&
+                        f.getModel()?.fieldType === 'panel' &&
+                        f.getModel()?.repeatable === true &&
+                        f.getModel()?.index === 1
+                    );
+                    const textinput1remaining = Object.values(formContainer._fields).find(f =>
+                        f.getModel &&
+                        f.getModel()?.fieldType === 'text-input' &&
+                        f.getModel()?.parent?.id === panel1remaining.getModel().id
+                    );
+                    checkLabelText(textinput1remaining.getId(), panel1remaining.getId(), 'Text Input2', 'Panel2');
                 });
             });
         });

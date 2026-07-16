@@ -53,8 +53,12 @@ It should be added to a relevant site client library using the `embed` property.
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-hcaptcha
-    ELEMENT cmp-adaptiveform-hcaptcha__label
+    ELEMENT cmp-adaptiveform-hcaptcha__label-container
+        ELEMENT cmp-adaptiveform-hcaptcha__label
+        ELEMENT cmp-adaptiveform-hcaptcha__questionmark
     ELEMENT cmp-adaptiveform-hcaptcha__widget
+    ELEMENT cmp-adaptiveform-hcaptcha__longdescription
+    ELEMENT cmp-adaptiveform-hcaptcha__shortdescription
     ELEMENT cmp-adaptiveform-hcaptcha__errormessage
 ```
 

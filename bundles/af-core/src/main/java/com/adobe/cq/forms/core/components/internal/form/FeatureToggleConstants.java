@@ -86,4 +86,24 @@ public final class FeatureToggleConstants {
      * System property: same name ({@code FT_FORMS-24358}); set to {@code "true"} to enable.
      */
     public static final String FT_SKIP_ITEMS_MAP = "FT_FORMS-24358";
+
+    /**
+     * When enabled, the form container exports {@code fd:changeEventBehaviour="deps"}, which makes the
+     * af2-web-runtime allow multiple fields in a single {@code when} rule expression. Previously this
+     * property was injected by the {@code CoreComponentCustomPropertiesProvider} addon service (which
+     * read the Granite toggle directly); the behavior now lives in the core component and is driven by
+     * the system property, so the addon provider is no longer required.
+     * <p>
+     * System property: same name ({@code FT_FORMS-12053}); set to {@code "true"} to enable when using
+     * {@code ToggleMonitorSystemPropertyFactory} or for direct -D JVM override.
+     */
+    public static final String FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN = "FT_FORMS-12053";
+    /**
+     * When enabled, the Server-Side Validation (SSV) cloud configuration dropdown is shown in the
+     * form container dialog, allowing authors to select a validator endpoint to be called before
+     * form submission. When disabled, the SSV option is hidden and no server-side validation occurs.
+     * <p>
+     * System property: same name ({@code FT_FORMS-25252}); set to {@code "true"} to enable.
+     */
+    public static final String FT_SERVER_SIDE_VALIDATION = "FT_FORMS-25252";
 }

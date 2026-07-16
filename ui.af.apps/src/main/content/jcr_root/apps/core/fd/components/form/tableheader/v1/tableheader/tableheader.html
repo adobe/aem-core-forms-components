@@ -1,0 +1,75 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<sly data-sly-use.header="com.adobe.cq.forms.core.components.models.form.Panel"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-set.sortingEnabled="${resource.parent.valueMap.enableSorting}"></sly>
+<!--/* EDIT MODE: hand-rendered <tr> with Granite editable markers so the overlay
+     can bind to the real header row instead of foster-parenting to the <table>. */-->
+<sly data-sly-test="${wcmmode.edit}">
+    <tr class="cmp-adaptiveform-tableheader cq-Editable-dom cq-Editable-dom--container"
+        data-cq-data-path="${resource.path}">
+        <sly data-sly-list.cell="${resource.listChildren}">
+            <th class="cmp-adaptiveform-tablehead"
+                scope="col"
+                data-sly-attribute.colspan="${cell.valueMap.colspan}"
+                data-cmp-hook-tablehead="header">
+                <sly data-sly-test="${sortingEnabled && !cell.valueMap.disableSorting}">
+                    <div class="cmp-adaptiveform-table__sort-header-inner">
+                        <div class="cell-wrapper">
+  							<sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+						</div>
+                        <button type="button"
+                                class="cmp-adaptiveform-table__sort-button"
+                                data-cmp-hook-table-sort="${cellList.index}"
+                                aria-label="Sort column"></button>
+                    </div>
+                </sly>
+                <sly data-sly-test="${!sortingEnabled || cell.valueMap.disableSorting}">
+                    <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+                </sly>
+            </th>
+        </sly>
+    </tr>
+</sly>
+<!--/* PUBLISH MODE: semantic <tr>/<th> with real HTML colspan. */-->
+<sly data-sly-test="${!wcmmode.edit}">
+    <tr id="${header.id}"
+        class="cmp-adaptiveform-tableheader"
+        data-cmp-is="adaptiveFormTableHeader"
+        data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+        data-cmp-visible="${header.visible ? 'true' : 'false'}"
+        data-cmp-enabled="${header.enabled ? 'true' : 'false'}">
+        <sly data-sly-list.cell="${resource.listChildren}">
+            <th class="cmp-adaptiveform-tablehead"
+                scope="col"
+                data-sly-attribute.colspan="${cell.valueMap.colspan}"
+                data-cmp-hook-tablehead="header">
+                <sly data-sly-test="${sortingEnabled && !cell.valueMap.disableSorting}">
+                    <div class="cmp-adaptiveform-table__sort-header-inner">
+                        <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+                        <button type="button"
+                                class="cmp-adaptiveform-table__sort-button"
+                                data-cmp-hook-table-sort="${cellList.index}"
+                                aria-label="Sort column"></button>
+                    </div>
+                </sly>
+                <sly data-sly-test="${!sortingEnabled || cell.valueMap.disableSorting}">
+                    <sly data-sly-resource="${cell @ decorationTagName='div'}"></sly>
+                </sly>
+            </th>
+        </sly>
+    </tr>
+</sly>
