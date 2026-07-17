@@ -80,6 +80,10 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @Nullable
     protected String validationExpression;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ASYNC_VALIDATION_EXPRESSION)
+    @Nullable
+    protected String asyncValidtionExpression;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_REQUIRED)
     @Nullable
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -449,5 +453,12 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public String getValidationExpression() {
         return validationExpression;
+    }
+
+    @Override
+    @Nullable
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    public String getAsyncValidtionExpression() {
+        return asyncValidtionExpression;
     }
 }

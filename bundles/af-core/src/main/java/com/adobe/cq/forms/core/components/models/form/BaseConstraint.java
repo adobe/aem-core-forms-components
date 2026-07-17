@@ -121,4 +121,16 @@ public interface BaseConstraint {
         return null;
     }
 
+    /**
+     * Returns an expression returning boolean value indicating whether the value in the field is valid or not, evaluated
+     * asynchronously
+     *
+     * @return an expression
+     * @since com.adobe.cq.forms.core.components.models.form 0.0.1
+     */
+    @Nullable
+    default String getAsyncValidtionExpression() {
+        return null;
+    }
+
 }

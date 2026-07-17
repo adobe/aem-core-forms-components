@@ -63,6 +63,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
     private static final String PATH_TEXTINPUT_BLANK_DATAREF = CONTENT_ROOT + "/textinput-blank-dataref";
     private static final String PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-validationExpression";
+    private static final String PATH_TEXTINPUT_BLANK_ASYNCVALIDTIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-asyncValidtionExpression";
     private static final String PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/textinput-displayValueExpression";
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
     private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
@@ -512,6 +513,12 @@ public class TextInputImplTest {
     void testJSONExportForEmptyValidationExpression() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION));
+    }
+
+    @Test
+    void testJSONExportForEmptyAsyncValidtionExpression() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_ASYNCVALIDTIONEXPRESSION, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_ASYNCVALIDTIONEXPRESSION));
     }
 
     @Test

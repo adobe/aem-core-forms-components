@@ -46,4 +46,11 @@ public class BaseConstraintTest {
         Mockito.when(baseConstraintMock.getValidationExpression()).thenCallRealMethod();
         assertEquals(null, baseConstraintMock.getValidationExpression());
     }
+
+    @Test
+    void testGetAsyncValidtionExpression() {
+        BaseConstraint baseConstraintMock = Mockito.mock(BaseConstraint.class);
+        Mockito.when(baseConstraintMock.getAsyncValidtionExpression()).thenCallRealMethod();
+        assertEquals(null, baseConstraintMock.getAsyncValidtionExpression());
+    }
 }
