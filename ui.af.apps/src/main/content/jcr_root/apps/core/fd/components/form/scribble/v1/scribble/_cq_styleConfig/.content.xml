@@ -121,6 +121,16 @@
                                         cssSelector=".cmp-adaptiveform-scribble__canvas"
                                         longTitle="Scribble Canvas"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <scribbleCanvasMain
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Canvas Main"
+                                                id="af2_scribblecanvasmain"
+                                                cssSelector=".cmp-adaptiveform-scribble__canvas__main"
+                                                longTitle="Scribble Canvas Main"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        </scribbleCanvasMain>
+                                    </items>
                                 </scribbleCanvas>
                                 <scribbleControlpanel
                                         jcr:primaryType="nt:unstructured"
@@ -129,9 +139,223 @@
                                         cssSelector=".cmp-adaptiveform-scribble__controlpanel"
                                         longTitle="Scribble Control Panel"
                                         propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <scribbleControlGeo
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Control Geo"
+                                                id="af2_scribblecontrolgeo"
+                                                cssSelector=".cmp-adaptiveform-scribble__control-geo"
+                                                longTitle="Scribble Control Geo"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        </scribbleControlGeo>
+                                        <scribbleControlText
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Control Text"
+                                                id="af2_scribblecontroltext"
+                                                cssSelector=".cmp-adaptiveform-scribble__control-text"
+                                                longTitle="Scribble Control Text"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        </scribbleControlText>
+                                        <scribbleControlBrush
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Control Brush"
+                                                id="af2_scribblecontrolbrush"
+                                                cssSelector=".cmp-adaptiveform-scribble__control-brush"
+                                                longTitle="Scribble Control Brush"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        </scribbleControlBrush>
+                                        <scribbleControlClear
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Control Clear"
+                                                id="af2_scribblecontrolclear"
+                                                cssSelector=".cmp-adaptiveform-scribble__control-clear"
+                                                longTitle="Scribble Control Clear"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        </scribbleControlClear>
+                                        <scribbleControlpanelControls
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Control Panel Controls"
+                                                id="af2_scribblecontrolpanelcontrols"
+                                                cssSelector=".cmp-adaptiveform-scribble__controlpanel-controls"
+                                                longTitle="Scribble Control Panel Controls"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                        </scribbleControlpanelControls>
+                                    </items>
                                 </scribbleControlpanel>
                             </items>
                         </scribbleContainer>
+                        <scribbleSignCanvases
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Sign Canvases"
+                                id="af2_scribblesigncanvases"
+                                cssSelector=".cmp-adaptiveform-scribble__signcanvases"
+                                longTitle="Scribble Sign Canvases"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleSignCanvases>
+                        <scribbleCanvases
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Canvases"
+                                id="af2_scribblecanvases"
+                                cssSelector=".cmp-adaptiveform-scribble__canvases"
+                                longTitle="Scribble Canvases"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleCanvases>
+                        <scribblePanel
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Panel"
+                                id="af2_scribblepanel"
+                                cssSelector=".cmp-adaptiveform-scribble__panel"
+                                longTitle="Scribble Panel"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribblePanel>
+                        <scribbleContent
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Content"
+                                id="af2_scribblecontent"
+                                cssSelector=".cmp-adaptiveform-scribble__content"
+                                longTitle="Scribble Content"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleContent>
+                        <scribbleControls
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Controls"
+                                id="af2_scribblecontrols"
+                                cssSelector=".cmp-adaptiveform-scribble__controls"
+                                longTitle="Scribble Controls"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleControls>
+                        <scribbleControlMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Control Message"
+                                id="af2_scribblecontrolmessage"
+                                cssSelector=".cmp-adaptiveform-scribble__control-message"
+                                longTitle="Scribble Control Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleControlMessage>
+                        <scribbleButton
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Button"
+                                id="af2_scribblebutton"
+                                cssSelector=".cmp-adaptiveform-scribble__button"
+                                longTitle="Scribble Button"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleButton>
+                        <scribbleButtonPrimary
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Button Primary"
+                                id="af2_scribblebuttonprimary"
+                                cssSelector=".cmp-adaptiveform-scribble__button--primary"
+                                longTitle="Scribble Button Primary"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleButtonPrimary>
+                        <scribbleButtonSecondary
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Button Secondary"
+                                id="af2_scribblebuttonsecondary"
+                                cssSelector=".cmp-adaptiveform-scribble__button--secondary"
+                                longTitle="Scribble Button Secondary"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleButtonSecondary>
+                        <scribbleSaveButton
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Save Button"
+                                id="af2_scribblesavebutton"
+                                cssSelector=".cmp-adaptiveform-scribble__save-button"
+                                longTitle="Scribble Save Button"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleSaveButton>
+                        <scribbleCloseButton
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Close Button"
+                                id="af2_scribbleclosebutton"
+                                cssSelector=".cmp-adaptiveform-scribble__close-button"
+                                longTitle="Scribble Close Button"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleCloseButton>
+                        <scribbleKeyboardSignBox
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Keyboard Sign Box"
+                                id="af2_scribblekeyboardsignbox"
+                                cssSelector=".cmp-adaptiveform-scribble__keyboard-sign-box"
+                                longTitle="Scribble Keyboard Sign Box"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleKeyboardSignBox>
+                        <scribbleClearSign
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Clear Sign"
+                                id="af2_scribbleclearsign"
+                                cssSelector=".cmp-adaptiveform-scribble__clear-sign"
+                                longTitle="Scribble Clear Sign"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleClearSign>
+                        <scribbleBrushlist
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Brushlist"
+                                id="af2_scribblebrushlist"
+                                cssSelector=".cmp-adaptiveform-scribble__brushlist"
+                                longTitle="Scribble Brushlist"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </scribbleBrushlist>
+                        <scribbleCaption
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Caption"
+                                id="af2_scribblecaption"
+                                cssSelector=".cmp-adaptiveform-scribble__caption"
+                                longTitle="Scribble Caption"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <scribbleCaptionLegend
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Caption Legend"
+                                        id="af2_scribblecaptionlegend"
+                                        cssSelector=".cmp-adaptiveform-scribble__caption > legend"
+                                        longTitle="Scribble Caption Legend"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </scribbleCaptionLegend>
+                            </items>
+                        </scribbleCaption>
+                        <scribbleClearsignContainer
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Clearsign Container"
+                                id="af2_scribbleclearsigncontainer"
+                                cssSelector=".cmp-adaptiveform-scribble__clearsign-container"
+                                longTitle="Scribble Clearsign Container"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <scribbleClearsignTitle
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Clearsign Title"
+                                        id="af2_scribbleclearsigntitle"
+                                        cssSelector=".cmp-adaptiveform-scribble__clearsign-title"
+                                        longTitle="Scribble Clearsign Title"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </scribbleClearsignTitle>
+                                <scribbleClearsignContent
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Clearsign Content"
+                                        id="af2_scribbleclearsigncontent"
+                                        cssSelector=".cmp-adaptiveform-scribble__clearsign-content"
+                                        longTitle="Scribble Clearsign Content"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </scribbleClearsignContent>
+                                <scribbleClearsignMessage
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Clearsign Message"
+                                        id="af2_scribbleclearsignmessage"
+                                        cssSelector=".cmp-adaptiveform-scribble__clearsign-message"
+                                        longTitle="Scribble Clearsign Message"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </scribbleClearsignMessage>
+                                <scribbleClearsignPanel
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Clearsign Panel"
+                                        id="af2_scribbleclearsignpanel"
+                                        cssSelector=".cmp-adaptiveform-scribble__clearsign-panel"
+                                        longTitle="Scribble Clearsign Panel"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                </scribbleClearsignPanel>
+                            </items>
+                        </scribbleClearsignContainer>
                         <scribbleDescriptionShort
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Short Description"

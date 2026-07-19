@@ -1,6 +1,6 @@
 {
   "FileCloseAccessText": "Presione Intro para eliminar el archivo ",
-  "FileSizeGreater": "Los archivos ${0} son mayores que el tamaño esperado: ${1} MB.",
+  "FileSizeGreater": "Los archivos ${0} son mayores que el tamaño esperado: ${1}.",
   "FileNameInvalid": "No adjunte archivos cuyo nombre comience con (.), contenga \\ / : * ? \" < > | ; % $, o sea una palabra clave reservada como nul, prn, con, lpt o com.",
   "FileMimeTypeInvalid": "Los tipos de archivo ${0} no son compatibles",
   "InternalFormSubmissionError": "Error interno al enviar el formulario.",

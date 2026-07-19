@@ -93,32 +93,6 @@ if (typeof window.FileInputWidget === 'undefined') {
             fileItem.appendChild(fileEndContainer);
             return fileItem;
         }
-        validateFile(file, invalidFilesByType) {
-            let currFileName = file.name.split("\\").pop();
-            let size = file.size / 1024 / 1024;
-            if (file.size === 0) {
-                invalidFilesByType.SIZE_ZERO.push(currFileName);
-                return false;
-            } else if (size > parseFloat(this.options.maxFileSize)) {
-                invalidFilesByType.SIZE.push(currFileName);
-                return false;
-            } else if (!FileInputWidget.isValid(currFileName)) {
-                invalidFilesByType.NAME.push(currFileName);
-                return false;
-            } else {
-                let isMatch = false;
-                let extension = currFileName.split('.').pop();
-                let mimeType = (file.type) ? file.type : this.extensionToMimeTypeMap[extension];
-                if (mimeType && mimeType.trim().length > 0) {
-                    isMatch = this.regexMimeTypeList.some(rx => rx.test(mimeType));
-                }
-                if (!isMatch) {
-                    invalidFilesByType.MIMETYPE.push(currFileName);
-                    return false;
-                }
-            }
-            return true;
-        }
         handleChange(filesUploaded) {
             if (!this.isFileUpdate) {
                 let self = this,
@@ -128,12 +102,46 @@ if (typeof window.FileInputWidget === 'undefined') {
                 if (typeof files !== "undefined") {
                     let invalidFilesIndexes = [];
                     Array.from(files).forEach(function (file, fileIndex) {
-                        if (self.validateFile(file, invalidFilesByType)) {
+                        let currFileName = file.name.split("\\").pop();
+                        let size = file.size / 1024 / 1024;
+                        let isCurrentInvalid = false;
+                        if (file.size === 0) {
+                            invalidFilesByType.SIZE_ZERO.push(currFileName);
+                            isCurrentInvalid = true;
+                        } else if (size > parseFloat(this.options.maxFileSize)) {
+                            invalidFilesByType.SIZE.push(currFileName);
+                            isCurrentInvalid = true;
+                        } else if (!FileInputWidget.isValid(currFileName)) {
+                            invalidFilesByType.NAME.push(currFileName);
+                            isCurrentInvalid = true;
+                        } else {
+                            let isMatch = false;
+                            let extension = currFileName.split('.').pop().toLowerCase();
+                            let mimeType = file.type || this.extensionToMimeTypeMap[extension];
+                            // If no MIME type is detected, check if the file extension is in the accept list
+                            if (!mimeType && this.options.acceptExtensions) {
+                                isMatch = this.options.acceptExtensions.some(function(acceptPattern) {
+                                    if (!acceptPattern) {
+                                        return false;
+                                    }
+                                    // Remove leading dot if present and convert to lowercase
+                                    let cleanPattern = acceptPattern.replace(/^\./, '').toLowerCase();
+                                    return cleanPattern === extension;
+                                });
+                            } else {
+                                isMatch = this.regexMimeTypeList.some(rx => rx.test(mimeType));
+                            }
+                            if (!isMatch) {
+                                invalidFilesByType.MIMETYPE.push(currFileName);
+                                isCurrentInvalid = true;
+                            }
+                        }
+                        if (!isCurrentInvalid) {
                             if (self.isMultiSelect()) {
-                                self.values.push(file.name.split("\\").pop());
+                                self.values.push(currFileName);
                                 self.fileArr.push(file);
                             } else {
-                                self.values = [file.name.split("\\").pop()];
+                                self.values = [currFileName];
                                 self.fileArr = [file];
                             }
                         } else {

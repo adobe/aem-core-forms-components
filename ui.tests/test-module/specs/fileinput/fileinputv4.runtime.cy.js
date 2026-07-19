@@ -245,7 +245,7 @@ describe('Click on button tag (V-4)', () => {
 
     it('should display an alert if the file size exceeds the maximum allowed size', () => {
         const maxFileSize = 2 * 1024 * 1024; // 2MB
-        const expectedAlertMessage = `File(s) FileAttachment3mb.jpg are greater than the expected size: ${maxFileSize / (1024 * 1024)}MBMB.`;
+        const expectedAlertMessage = `File(s) FileAttachment3mb.jpg are greater than the expected size: ${maxFileSize / (1024 * 1024)}MB.`;
         const fileInput = 'input[name=\'fileinput5\']';
         cy.attachFile(fileInput, ['FileAttachment3mb.jpg']);
         cy.on('window:alert', (alertText) => {
@@ -278,6 +278,23 @@ describe('Click on button tag (V-4)', () => {
         cy.attachFile(fileInput, [sampleFileNames[0]]);
         cy.get('.cmp-adaptiveform-fileinput__filesize').should('contain.text', '508 bytes');
         cy.attachFile(fileInput, [sampleFileNames[0]]);
-        cy.get('.cmp-adaptiveform-fileinput__filesize').should('contain.text', '508 bytes'); 
+        cy.get('.cmp-adaptiveform-fileinput__filesize').should('contain.text', '508 bytes');
     });
-}); 
+
+    it(`file input should not support extension which are not in accept property`, () => {
+        const fileInput7 = "input[name='fileinput7']";
+        cy.attachFile(fileInput7, ['sample.afe']);
+        cy.get('.cmp-adaptiveform-fileinput__filelist')
+            .children()
+            .should('have.length', 0);
+    });
+
+    it(`fileinput should support custom file extensions`, () => {
+        const fileInput7 = "input[name='fileinput7']";
+        cy.attachFile(fileInput7, ['sample.ifc']);
+        cy.get('.cmp-adaptiveform-fileinput__filelist')
+            .children()
+            .should('have.length', 1)
+            .and('contain.text', 'sample.ifc');
+    });
+});
