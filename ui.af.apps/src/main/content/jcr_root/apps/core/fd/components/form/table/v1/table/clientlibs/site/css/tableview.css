@@ -104,6 +104,7 @@
 
     /* Each body row becomes a card. */
     .cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow {
+        display: block;
         border: 1px solid #DDDDDD;
         border-radius: 4px;
         margin-bottom: 1rem;
@@ -113,6 +114,7 @@
 
     /* Cells stack vertically; reserve the left half for the header label. */
     .cmp-adaptiveform-table__body .cmp-adaptiveform-tablecell {
+        display: block;
         border: none;
         border-bottom: 1px solid #F0F0F0;
         position: relative;
