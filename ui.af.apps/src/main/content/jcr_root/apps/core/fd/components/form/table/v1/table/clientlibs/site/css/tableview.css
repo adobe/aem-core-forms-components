@@ -70,6 +70,96 @@
 
 .cell-wrapper {}
 
+/* Mobile sort bar — hidden on desktop. */
+.cmp-adaptiveform-table__mobile-bar {
+    display: none;
+}
+
+/* Active state on filter button when a direction is applied. */
+.cmp-adaptiveform-table__mobile-bar-btn--filter.is-active {
+    color: #2680EB;
+    font-weight: 600;
+}
+
+/*
+ * Sort sheet overlay — appended to document.body, must be outside the media
+ * query so it is available at all viewport sizes (JS creates it once on init).
+ */
+.cmp-adaptiveform-table__sort-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+    align-items: flex-end;
+}
+
+.cmp-adaptiveform-table__sort-overlay.is-open {
+    display: flex;
+}
+
+.cmp-adaptiveform-table__sort-sheet {
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 1rem 1rem 0 0;
+    padding-bottom: 2rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.25s ease-out;
+}
+
+.cmp-adaptiveform-table__sort-overlay.is-open .cmp-adaptiveform-table__sort-sheet {
+    transform: translateY(0);
+}
+
+.cmp-adaptiveform-table__sort-sheet-handle {
+    width: 2.5rem;
+    height: 0.25rem;
+    background: #CCCCCC;
+    border-radius: 0.125rem;
+    margin: 0.75rem auto 1rem;
+}
+
+.cmp-adaptiveform-table__sort-sheet-title {
+    font-size: 0.875rem;
+    color: #6B6B6B;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #F0F0F0;
+    margin: 0;
+}
+
+.cmp-adaptiveform-table__sort-options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cmp-adaptiveform-table__sort-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+.cmp-adaptiveform-table__sort-option:hover {
+    background-color: #F9F9F9;
+}
+
+.cmp-adaptiveform-table__sort-option[aria-selected="true"] {
+    font-weight: 600;
+}
+
+.cmp-adaptiveform-table__sort-option-indicator {
+    color: #505050;
+    font-size: 0.875rem;
+    min-width: 1rem;
+    text-align: right;
+}
+
 /*
  * Mobile card layout (<= 768px).
  *
@@ -150,5 +240,43 @@
     .cmp-adaptiveform-table__body .cmp-adaptiveform-tablecell:not([data-label]),
     .cmp-adaptiveform-table__body .cmp-adaptiveform-tablecell[data-label=""] {
         padding-left: 0.5rem;
+    }
+
+    /* Mobile sort/filter action bar rendered below the table widget. */
+    .cmp-adaptiveform-table__mobile-bar {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #E0E0E0;
+        padding: 0.25rem 0;
+    }
+
+    .cmp-adaptiveform-table__mobile-bar-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 0.875rem;
+        color: #333333;
+        padding: 0.625rem 0;
+    }
+
+    .cmp-adaptiveform-table__mobile-bar-btn:focus-visible {
+        outline: 2px solid #2680EB;
+        outline-offset: 1px;
+    }
+
+    .cmp-adaptiveform-table__mobile-bar-btn:disabled {
+        color: #AAAAAA;
+        cursor: default;
+    }
+
+    .cmp-adaptiveform-table__mobile-bar-divider {
+        width: 1px;
+        height: 1.25rem;
+        background: #E0E0E0;
     }
 }

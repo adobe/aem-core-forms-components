@@ -34,6 +34,10 @@
             this.children = [];
             /** @type {{ col: number, dir: 'asc'|'desc' }|null} */
             this._tableSortState = null;
+            /** @type {HTMLElement|null} */
+            this._mobileSortOverlay = null;
+            /** @type {HTMLElement|null} */
+            this._mobileFilterOverlay = null;
         }
 
         setModel(model) {
@@ -41,6 +45,7 @@
             queueMicrotask(() => {
                 this.#initColumnSortingIfEnabled();
                 this.#stampMobileLabels();
+                this.#initMobileSortBar();
             });
         }
 
@@ -308,13 +313,13 @@
          * @param {HTMLTableSectionElement} thead
          * @param {number} colIndex
          */
-        #sortTableByColumn(tbody, thead, colIndex) {
+        #sortTableByColumn(tbody, thead, colIndex, forceDir = null) {
             const rows = Array.from(tbody.querySelectorAll(":scope > tr"));
             if (rows.length <= 1) {
                 return;
             }
-            let dir = "asc";
-            if (this._tableSortState && this._tableSortState.col === colIndex) {
+            let dir = forceDir ?? "asc";
+            if (!forceDir && this._tableSortState && this._tableSortState.col === colIndex) {
                 dir = this._tableSortState.dir === "asc" ? "desc" : "asc";
             }
             this._tableSortState = { col: colIndex, dir: dir };
@@ -364,6 +369,196 @@
             if (reordered.length === im.children.length) {
                 im.children = reordered;
             }
+        }
+
+        /**
+         * Builds the mobile action bar (Sort | Filter) inserted before the table widget.
+         * Bar is hidden on desktop via CSS. Overlays appended to document.body so
+         * position:fixed works freely. Sort requires enableSorting; filter is always on.
+         */
+        #initMobileSortBar() {
+            const widget = this.element.querySelector(Table.selectors.widget);
+            if (!widget) return;
+            const thead = widget.querySelector('thead');
+            const tbody = widget.querySelector('tbody');
+            if (!thead || !tbody) return;
+
+            const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            const headers = Array.from(thead.querySelectorAll('th.cmp-adaptiveform-tablehead'))
+                .map((th) => th.innerText.replace(/\s+/g, ' ').trim());
+            if (headers.length === 0) return;
+
+            const sortingEnabled = this.element.dataset.cmpSortingEnabled === 'true';
+
+            // --- Action bar (inserted BEFORE the widget) ---
+            const bar = document.createElement('div');
+            bar.className = 'cmp-adaptiveform-table__mobile-bar';
+            bar.innerHTML = `
+                <button type="button"
+                        class="cmp-adaptiveform-table__mobile-bar-btn cmp-adaptiveform-table__mobile-bar-btn--sort"
+                        aria-haspopup="listbox"
+                        aria-label="Sort table"
+                        ${sortingEnabled ? '' : 'disabled'}>
+                    <span aria-hidden="true">⇅</span><span>Sort</span>
+                </button>
+                <div class="cmp-adaptiveform-table__mobile-bar-divider" role="separator" aria-orientation="vertical"></div>
+                <button type="button"
+                        class="cmp-adaptiveform-table__mobile-bar-btn cmp-adaptiveform-table__mobile-bar-btn--filter"
+                        aria-haspopup="dialog"
+                        aria-label="Filter table">
+                    <span aria-hidden="true">▼</span><span>Filter</span>
+                </button>`;
+            widget.before(bar);
+
+            // --- Sort overlay ---
+            if (sortingEnabled) {
+                const optionsHtml = headers.map((h, i) => `
+                    <li class="cmp-adaptiveform-table__sort-option"
+                        role="option" tabindex="0" data-col-index="${i}" aria-selected="false">
+                        <span class="cmp-adaptiveform-table__sort-option-label">${esc(h)}</span>
+                        <span class="cmp-adaptiveform-table__sort-option-indicator" aria-hidden="true"></span>
+                    </li>`).join('');
+
+                const sortOverlay = document.createElement('div');
+                sortOverlay.className = 'cmp-adaptiveform-table__sort-overlay';
+                sortOverlay.setAttribute('role', 'dialog');
+                sortOverlay.setAttribute('aria-modal', 'true');
+                sortOverlay.setAttribute('aria-label', 'Sort options');
+                sortOverlay.innerHTML = `
+                    <div class="cmp-adaptiveform-table__sort-sheet">
+                        <div class="cmp-adaptiveform-table__sort-sheet-handle" aria-hidden="true"></div>
+                        <p class="cmp-adaptiveform-table__sort-sheet-title">Sort by</p>
+                        <ul class="cmp-adaptiveform-table__sort-options" role="listbox" aria-label="Sort columns">
+                            ${optionsHtml}
+                        </ul>
+                    </div>`;
+                document.body.appendChild(sortOverlay);
+                this._mobileSortOverlay = sortOverlay;
+
+                bar.querySelector('.cmp-adaptiveform-table__mobile-bar-btn--sort').addEventListener('click', () => {
+                    this.#openMobileSortSheet();
+                });
+                sortOverlay.addEventListener('click', (e) => {
+                    if (e.target === sortOverlay) this.#closeMobileSortSheet();
+                });
+                sortOverlay.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') this.#closeMobileSortSheet();
+                });
+                sortOverlay.querySelectorAll('.cmp-adaptiveform-table__sort-option').forEach((opt) => {
+                    const activate = () => {
+                        const colIndex = parseInt(opt.dataset.colIndex, 10);
+                        this.#sortTableByColumn(tbody, thead, colIndex);
+                        this.#updateMobileSortIndicators();
+                        this.#closeMobileSortSheet();
+                    };
+                    opt.addEventListener('click', activate);
+                    opt.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+                    });
+                });
+            }
+
+            // --- Filter overlay (Ascending / Descending direction picker) ---
+            const filterOverlay = document.createElement('div');
+            filterOverlay.className = 'cmp-adaptiveform-table__sort-overlay';
+            filterOverlay.setAttribute('role', 'dialog');
+            filterOverlay.setAttribute('aria-modal', 'true');
+            filterOverlay.setAttribute('aria-label', 'Sort order');
+            filterOverlay.innerHTML = `
+                <div class="cmp-adaptiveform-table__sort-sheet">
+                    <div class="cmp-adaptiveform-table__sort-sheet-handle" aria-hidden="true"></div>
+                    <p class="cmp-adaptiveform-table__sort-sheet-title">Sort order</p>
+                    <ul class="cmp-adaptiveform-table__sort-options" role="listbox" aria-label="Sort direction">
+                        <li class="cmp-adaptiveform-table__sort-option"
+                            role="option" tabindex="0" data-dir="asc" aria-selected="false">
+                            <span>Ascending</span>
+                            <span class="cmp-adaptiveform-table__sort-option-indicator" aria-hidden="true"></span>
+                        </li>
+                        <li class="cmp-adaptiveform-table__sort-option"
+                            role="option" tabindex="0" data-dir="desc" aria-selected="false">
+                            <span>Descending</span>
+                            <span class="cmp-adaptiveform-table__sort-option-indicator" aria-hidden="true"></span>
+                        </li>
+                    </ul>
+                </div>`;
+            document.body.appendChild(filterOverlay);
+            this._mobileFilterOverlay = filterOverlay;
+
+            bar.querySelector('.cmp-adaptiveform-table__mobile-bar-btn--filter').addEventListener('click', () => {
+                this.#openMobileFilterSheet();
+            });
+            filterOverlay.addEventListener('click', (e) => {
+                if (e.target === filterOverlay) this.#closeMobileFilterSheet();
+            });
+            filterOverlay.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') this.#closeMobileFilterSheet();
+            });
+            filterOverlay.querySelectorAll('.cmp-adaptiveform-table__sort-option').forEach((opt) => {
+                const activate = () => {
+                    const dir = opt.dataset.dir;
+                    const colIndex = this._tableSortState ? this._tableSortState.col : 0;
+                    this.#sortTableByColumn(tbody, thead, colIndex, dir);
+                    this.#updateMobileFilterIndicators();
+                    this.#closeMobileFilterSheet();
+                };
+                opt.addEventListener('click', activate);
+                opt.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+                });
+            });
+        }
+
+        #openMobileSortSheet() {
+            if (!this._mobileSortOverlay) return;
+            this.#updateMobileSortIndicators();
+            this._mobileSortOverlay.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            const first = this._mobileSortOverlay.querySelector('.cmp-adaptiveform-table__sort-option');
+            if (first) first.focus();
+        }
+
+        #closeMobileSortSheet() {
+            if (!this._mobileSortOverlay) return;
+            this._mobileSortOverlay.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+
+        #openMobileFilterSheet() {
+            if (!this._mobileFilterOverlay) return;
+            this.#updateMobileFilterIndicators();
+            this._mobileFilterOverlay.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            const first = this._mobileFilterOverlay.querySelector('.cmp-adaptiveform-table__sort-option');
+            if (first) first.focus();
+        }
+
+        #closeMobileFilterSheet() {
+            if (!this._mobileFilterOverlay) return;
+            this._mobileFilterOverlay.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+
+        #updateMobileFilterIndicators() {
+            if (!this._mobileFilterOverlay) return;
+            this._mobileFilterOverlay.querySelectorAll('.cmp-adaptiveform-table__sort-option').forEach((opt) => {
+                const active = !!this._tableSortState && this._tableSortState.dir === opt.dataset.dir;
+                opt.setAttribute('aria-selected', active ? 'true' : 'false');
+                const indicator = opt.querySelector('.cmp-adaptiveform-table__sort-option-indicator');
+                if (indicator) indicator.textContent = active ? '✓' : '';
+            });
+        }
+
+        #updateMobileSortIndicators() {
+            if (!this._mobileSortOverlay) return;
+            this._mobileSortOverlay.querySelectorAll('.cmp-adaptiveform-table__sort-option').forEach((opt) => {
+                const colIndex = parseInt(opt.dataset.colIndex, 10);
+                const indicator = opt.querySelector('.cmp-adaptiveform-table__sort-option-indicator');
+                const active = this._tableSortState && this._tableSortState.col === colIndex;
+                opt.setAttribute('aria-selected', active ? 'true' : 'false');
+                if (indicator) {
+                    indicator.textContent = active ? (this._tableSortState.dir === 'asc' ? '↑' : '↓') : '';
+                }
+            });
         }
 
         /**
