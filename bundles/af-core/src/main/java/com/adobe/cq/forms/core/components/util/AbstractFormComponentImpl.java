@@ -377,11 +377,15 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
      */
     protected final Map<String, String> getRulesForResource(Resource resource) {
         String[] VALID_RULES = new String[] { "description", "enabled", "enum", "enumNames",
-            "exclusiveMaximum", "exclusiveMinimum", "label", "maximum", "minimum",
+            "exclusiveMaximum", "exclusiveMinimum", "label", "maximum", "minimum", "properties",
             "readOnly", "required", "value", "visible" };
 
-        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj
-            .getKey()));
+        // A rule target may be one of the fixed editable properties (which includes the whole
+        // `properties` bag), or a granular custom-variable target keyed `properties.<path>` (e.g.
+        // properties.employer or properties.employer.category) that the runtime routes to the
+        // PropertiesManager per key. Preserve both the bag and the per-key targets.
+        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> obj.getKey().startsWith("properties.")
+            || Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj.getKey()));
 
         Predicate<Map.Entry<String, Object>> isRuleValid = isEntryNonEmpty.and(isRuleNameValid);
 
