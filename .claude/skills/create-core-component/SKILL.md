@@ -210,7 +210,7 @@ described in `references/runtime-view-js.md`.
 - `references/runtime-view-js.md` — **The `FormFieldBase` override contract** (super calls, `updateEmptyStatus`, composite widgets) — read before writing any view JS
 - `references/cypress-tests.md` — Required runtime + authoring specs, wiring, and Cypress gotchas
 - `references/accessibility-checklist.md` — WCAG 2.1 AA checklist with AEM-specific ARIA patterns
-- `references/architecture-reference.md` — Five-layer component architecture diagram and base class selection guide
+- `references/architecture-reference.md` — Java/JS base class selection guide (see `docs/architecture/overview.md` for the component-layer diagram and runtime data flow)
 - `references/css-architecture.md` — Two-layer CSS split: stub in `aem-core-forms-components`, SCSS in `aem-forms-theme-canvas`
 - `references/widget-patterns.md` — HTML widget element patterns for each component type
 - `references/wiring-steps.md` — Post-generation wiring: clientlib embed, FormConstants, i18n, FormContainer dialog, template policy
