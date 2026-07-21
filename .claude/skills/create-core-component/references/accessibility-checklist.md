@@ -87,9 +87,9 @@ common source of runtime bugs.
 
 | Method | If you override it… |
 |--------|---------------------|
-| `updateValidity(validity, state)` | call `super` (it renders the error message + sets `data-cmp-valid`), then mirror `aria-invalid` onto extra sub-widgets |
-| `updateReadOnly(readOnly, state)` | call `super` (sets `data-cmp-readonly`), then set `aria-readonly`/`readonly` on sub-widgets |
-| `updateEnabled(enabled, state)` | call `super` (sets `data-cmp-enabled`), then toggle `disabled` on sub-widgets |
+| `updateValidity(validity, state)` | call `super` first, then mirror `aria-invalid` onto extra sub-widgets |
+| `updateReadOnly(readOnly, state)` | call `super` first, then set `aria-readonly`/`readonly` on sub-widgets |
+| `updateEnabled(enabled, state)` | call `super` first, then toggle `disabled` on sub-widgets |
 | `updateValue(value)` | end with `this.updateEmptyStatus()`; for composite widgets, don't repopulate a focused sub-input |
 | `setModel(model)` | register focus/blur listeners for `setActive()`/`setInactive()` |
 

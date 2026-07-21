@@ -118,75 +118,12 @@ These properties exist in some foundation components and need case-by-case evalu
 
 ## Component-Specific Property Mappings
 
-### GuideTextBox → TextInput
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `multiLine` | `multiLine` | Boolean | `false` | `multiLine` | Direct (separate fieldType: `multiline-input`) |
-| `allowRichText` | `allowRichText` | Boolean | `false` | `richTextContent` / custom | Custom property |
-| `maxChars` | `maxChars` | Integer | null | `maxLength` (StringConstraint) | Rename |
-| `minLength` | `minLength` | Integer | null | `minLength` (StringConstraint) | Direct |
-| `html5MaxLength` | derived | Integer | null | *(computed)* | PostConstruct logic |
-| `autocomplete` | `autocomplete` | String | null | `autocomplete` | Direct |
-| `html5Type` | `html5Type` | String | `"text"` | *(use fieldType)* | Map to fieldType |
-| `rows` | `rows` | Integer | null | `rows` / custom | Custom if multiline |
-| `cols` | `cols` | Integer | null | *(CSS handles)* | Drop (use CSS) |
-
-### GuideCheckBox → Checkbox
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `enabledValue` | `enabledValue` | String | `"on"` | `enum[0]` | Map to options |
-| `disabledValue` | `disabledValue` | String | `"off"` | `enum[1]` | Map to options |
-
-### GuideRadioButton → RadioButton
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `items` (child nodes) | child nodes | Nodes | — | `enum` / `enumNames` | Restructure |
-| `orientation` | `orientation` | String | `"horizontal"` | `orientation` | Direct |
-
-### GuideDropDownList → DropDown
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `items` (child nodes) | child nodes | Nodes | — | `enum` / `enumNames` | Restructure |
-| `multiSelect` | `multiSelect` | Boolean | `false` | `multiSelect` / `type: array` | Direct |
-
-### GuideDatePicker → DatePicker
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `minDate` | `minDate` | String | null | `minimum` (DateConstraint) | Rename |
-| `maxDate` | `maxDate` | String | null | `maximum` (DateConstraint) | Rename |
-| `displayFormat` | `displayFormat` | String | null | `displayFormat` | Direct |
-| `editFormat` | `editFormat` | String | null | `editFormat` | Direct |
-
-### GuideNumericBox → NumberInput
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `minValue` | `minValue` | Number | null | `minimum` (NumberConstraint) | Rename |
-| `maxValue` | `maxValue` | Number | null | `maximum` (NumberConstraint) | Rename |
-| `displayPattern` | `displayPattern` | String | null | `displayFormat` | Rename |
-| `editPattern` | `editPattern` | String | null | *(use displayFormat)* | Merge |
-| `leadDigits` | `leadDigits` | Integer | null | Custom or drop | Evaluate |
-| `fracDigits` | `fracDigits` | Integer | null | Custom or `step` | Evaluate |
-
-### GuideFileUpload → FileInput
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `multiSelection` | `multiSelection` | Boolean | `false` | `type: "array"` | Map to schema type |
-| `fileSizeLimit` | `fileSizeLimit` | Long | null | `maxFileSize` | Rename |
-| `acceptTypes` | `acceptTypes` | String[] | null | `accept` | Rename |
-
-### GuideButton → Button
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `buttonType` | `buttonType` | String | `"button"` | `buttonType` | Direct |
-| `submitUrl` | `submitUrl` | String | null | *(handled by events/rules)* | Drop |
+For known components (GuideTextBox, GuideCheckBox, GuideRadioButton, GuideDropDownList,
+GuideDatePicker, GuideNumericBox, GuideFileUpload, GuideButton, etc.), the per-component
+"Component-Specific JCR Properties" table in `references/known-components.md` — including
+its `Core Action` column — is the single source of truth; do not restate or re-derive it
+here. For custom components, build the equivalent mapping table from the user-provided
+Java model per Phase 3 of `SKILL.md`.
 
 ## JSP → HTL Expression Mapping
 

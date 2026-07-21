@@ -20,12 +20,12 @@ Scaffold a complete, production-ready AEM Core Form Component across all layers 
 Before generating any code or reading any reference files, collect all of the following from the user in a single message. Do not proceed until all answers are received.
 
 1. **Component name and purpose** — e.g., `ImageChoice` (radio group with image thumbnails), `StarRating` (captures 1–5 star rating)
-2. **Component type** — which category:
-   - **Simple field** (text-like input that captures a single value) → extends `AbstractFieldImpl` / implements `Field`
-   - **Options field** (multiple choices: checkboxes, radios, dropdowns) → extends `AbstractOptionsFieldImpl` / implements `OptionsConstraint`
-   - **Container** (holds child components) → extends `AbstractContainerImpl`
-   - **Step / display** (non-input: text, image, separator) → extends `AbstractBaseImpl` / implements `Base`
-   - **Display/text** (renders authored HTML content with a title label) → `sling:resourceSuperType="core/fd/components/form/text/v1/text"`, extends `AbstractBaseImpl`, implements `Text`
+2. **Component type** — which category (see `docs/architecture/overview.md` for the base class and interface each one maps to):
+   - **Simple field** (text-like input that captures a single value)
+   - **Options field** (multiple choices: checkboxes, radios, dropdowns)
+   - **Container** (holds child components)
+   - **Step / display** (non-input: text, image, separator)
+   - **Display/text** (renders authored HTML content with a title label) — `sling:resourceSuperType="core/fd/components/form/text/v1/text"`
 3. **Custom properties** — any JCR properties beyond what the base class provides (name, type, default, purpose for each)
 4. **Widget HTML** — what the interactive element looks like (input type, select, custom div, etc.)
 5. **Constraints** — which constraint interfaces apply (String, Number, Date, Options, File)

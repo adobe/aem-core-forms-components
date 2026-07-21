@@ -257,46 +257,12 @@ Invoke the `create-core-component` skill with all the specifications gathered ab
 
 ### Phase 7: Post-Migration Verification
 
-After the create-core-component skill completes, perform additional migration-specific checks using `references/migration-checklist.md`:
-
-#### 7a. Feature Parity Audit
-
-For every property in the foundation component data (from known-components.md or the user-provided Java model):
-- [ ] Verify there is an equivalent getter in the Core interface or its parent interfaces
-- [ ] Verify the return type is compatible
-- [ ] Verify default values match
-
-#### 7b. Dialog Parity Audit
-
-For every dialog field in the foundation component data (from known-components.md or the user-provided dialog XML):
-- [ ] Verify there is an equivalent field in the Core dialog
-- [ ] Verify the `name` attribute (JCR property name) matches or is mapped
-- [ ] Verify field types are compatible
-
-#### 7c. Rendering Parity Audit
-
-For every rendering branch in the foundation widget data (from known-components.md or the user-provided widget file):
-- [ ] Verify there is an equivalent `data-sly-test` branch in the Core HTL
-- [ ] Verify the HTML structure is semantically equivalent
-- [ ] Verify CSS class names follow BEM convention
-
-#### 7d. Accessibility Upgrade Audit
-
-Foundation components often have minimal accessibility. Verify that the Core component adds:
-- [ ] Proper `aria-label` / `<label for>` linkage (foundation may use different patterns)
-- [ ] `aria-live` regions for error/description (not present in most foundation components)
-- [ ] `aria-invalid`, `aria-readonly`, `aria-required` states
-- [ ] Visible focus indicators (foundation relied on browser defaults)
-- [ ] Keyboard navigation beyond what foundation provided
-
-#### 7e. Property Deprecation Report
-
-Generate a report listing:
-- Properties carried forward (with any renames)
-- Properties dropped (with justification)
-- New properties added by Core framework (label.richText, tooltip, events, rules, etc.)
-
-Present this report to the user for review.
+After the create-core-component skill completes, work through every section of
+`references/migration-checklist.md` — feature parity, dialog parity, rendering
+parity, accessibility upgrade, client-side behavior parity, property deprecation
+report, and build & test verification. That file is the single source of truth
+for these checks; do not restate them here. Present the property deprecation
+report to the user for review before considering the migration complete.
 
 ## Key References
 
