@@ -210,7 +210,7 @@ described in `references/runtime-view-js.md`.
 - `references/runtime-view-js.md` — **The `FormFieldBase` override contract** (super calls, `updateEmptyStatus`, composite widgets) — read before writing any view JS
 - `references/cypress-tests.md` — Required runtime + authoring specs, wiring, and Cypress gotchas
 - `references/accessibility-checklist.md` — WCAG 2.1 AA checklist with AEM-specific ARIA patterns
-- `references/architecture-reference.md` — Java/JS base class selection guide (see `docs/architecture/overview.md` for the component-layer diagram and runtime data flow)
+- `docs/architecture/overview.md` — Component-layer diagram, runtime data flow, and Java/JS base-class selection guide
 - `references/css-architecture.md` — Two-layer CSS split: stub in `aem-core-forms-components`, SCSS in `aem-forms-theme-canvas`
 - `references/widget-patterns.md` — HTML widget element patterns for each component type
 - `references/wiring-steps.md` — Post-generation wiring: clientlib embed, FormConstants, i18n, FormContainer dialog, template policy
@@ -226,7 +226,7 @@ described in `references/runtime-view-js.md`.
 Terse non-negotiables. Where a rule has a detailed rationale or failure mode, it is documented once in the referenced file — do not restate it here.
 
 1. **Never skip accessibility** — satisfy every applicable item in `references/accessibility-checklist.md` (WCAG 2.1 AA), including the grouped-widget label pitfall (use `aria-label`, not `aria-labelledby`).
-2. **Always extend an existing abstract base class** — do not reinvent label/description/tooltip/error handling. See `references/architecture-reference.md`.
+2. **Always extend an existing abstract base class** — do not reinvent label/description/tooltip/error handling. See `docs/architecture/overview.md`.
 3. **Always register in FormConstants** — the resource type constant is required for Sling Model resolution.
 4. **Follow BEM strictly** — `cmp-adaptiveform-{componentname}__{element}`, no exceptions.
 5. **Use shared field templates** from `af-commons` (label, description, error message, question mark).

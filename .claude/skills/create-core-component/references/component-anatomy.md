@@ -77,16 +77,7 @@ FormComponent
 
 ## Implementation Hierarchy
 
-```
-AbstractComponentImpl (WCM Core)
-  └── AbstractFormComponentImpl (name, fieldType, dataRef, visible, value, events, rules)
-        └── AbstractBaseImpl (label, description, tooltip, type, required, enabled)
-              └── AbstractFieldImpl (readOnly, default, placeholder, min/max constraints)
-                    ├── AbstractOptionsFieldImpl (enum, enumNames, enforceEnum)
-                    └── [Direct subclasses for simple fields]
-```
-
-For base-class selection (which class to extend for each component type, including the composite / split-widget case), see the selection table in `references/architecture-reference.md`.
+For the full class hierarchy (Impl classes) and base-class selection guide (including the composite / split-widget case), see `docs/architecture/overview.md` — the "Java Model Hierarchy" section is the single source of truth; do not restate it here.
 
 ---
 

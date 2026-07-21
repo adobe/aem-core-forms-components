@@ -80,11 +80,40 @@ The full sequence — DOM registration and scan, model tree construction, `setMo
 timing, widget↔model sync — is documented in [`runtime-internals.md`](runtime-internals.md);
 that file is the single source of truth for it, do not restate it here.
 
+### JS view base class
+
+| JS Base Class | Use when |
+|---------------|----------|
+| `FormView.FormFieldBase` | Component captures a value (field) |
+| `FormView.FormContainer` | Component is a step, panel, or container |
+
 ---
 
 ## 3. Java Model Hierarchy
 
-Three key base classes, each responsible for one concern.
+### Class hierarchy
+
+```
+AbstractComponentImpl (WCM Core)
+  └── AbstractFormComponentImpl (name, fieldType, dataRef, visible, value, events, rules)
+        ├── AbstractBaseImpl (label, description, tooltip, type, required, enabled)
+        │     └── AbstractFieldImpl (readOnly, default, placeholder, min/max constraints)
+        │           └── AbstractOptionsFieldImpl (enum, enumNames, enforceEnum)
+        └── AbstractContainerImpl (child enumeration, container-specific behavior)
+```
+
+### Which class to extend
+
+| Class | Use when | Provides |
+|-------|----------|----------|
+| `AbstractBaseImpl` | Step, display, or non-value component (button, text, image) | `id`, `name`, `visible`, `enabled`, `required`, `description`, `label`, `data` |
+| `AbstractFieldImpl` | Captures a single user-submitted value (text, number, date) | Everything in Base + `readOnly`, `default`, `placeholder`, `constraints`, validation |
+| `AbstractOptionsFieldImpl` | Options-based field (checkboxes, radios, selects) | Everything in Field + `enum`, `enumNames`, `enforceEnum` |
+| `AbstractContainerImpl` | Holds child components (container/panel) | Everything in Base + child enumeration, container-specific behavior |
+
+**Composite / split widget** (e.g. day/month/year — multiple visible inputs feeding one value): still extend the field base that matches the data type (`AbstractFieldImpl` for a date), rendering one hidden combined `<input>` as the value-bearing widget plus the visible sub-inputs.
+
+Three of these classes carry additional runtime behavior beyond property storage:
 
 ### `AbstractFormComponentImpl`
 
