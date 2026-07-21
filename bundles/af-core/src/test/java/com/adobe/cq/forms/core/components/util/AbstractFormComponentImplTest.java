@@ -53,6 +53,7 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_NO_VALIDATION_STATUS = CONTENT_ROOT + "/datepicker2";
     private static final String PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS = CONTENT_ROOT + "/datepicker3";
     private static final String PATH_COMPONENT_WITH_NO_RULE = CONTENT_ROOT + "/numberinput";
+    private static final String PATH_COMPONENT_WITH_PROPERTIES_RULE = CONTENT_ROOT + "/textinputWithPropertiesRule";
     private static final String PATH_COMPONENT_WITH_DISABLED_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponent";
     private static final String PATH_COMPONENT_WITH_INVALID_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentinvalid";
     private static final String PATH_COMPONENT_WITH_NO_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentnone";
@@ -145,6 +146,39 @@ public class AbstractFormComponentImplTest {
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         assertNull(properties.get("fd:rules"),
             "fd:rules should not appear when publish view attribute is set even in author WCMMode");
+    }
+
+    @Test
+    public void testGranularPropertiesRulesPreserved() {
+        // A rule keyed `properties.<path>` is a granular custom-variable target routed by the
+        // runtime to the PropertiesManager; the exporter must not drop flat or nested ones.
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PROPERTIES_RULE);
+        Map<String, String> rules = abstractFormComponentImpl.getRules();
+        assertEquals("some property expression", rules.get("properties.employer"),
+            "flat properties.<key> rule should be preserved");
+        assertEquals("some nested property expression", rules.get("properties.employer.category"),
+            "nested properties.<a.b> rule should be preserved");
+    }
+
+    @Test
+    public void testBarePropertiesAndWhitelistedRulesPreserved() {
+        // The whole `properties` bag is an editable property, and standard whitelisted targets
+        // (e.g. visible) must keep working alongside the granular properties.<path> targets.
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PROPERTIES_RULE);
+        Map<String, String> rules = abstractFormComponentImpl.getRules();
+        assertEquals("some expression", rules.get("visible"));
+        assertEquals("merge($field.properties, {a: 1})", rules.get("properties"),
+            "the whole properties bag rule should be preserved");
+    }
+
+    @Test
+    public void testUnknownRulesDropped() {
+        // Keys that are neither whitelisted nor a genuine properties.<path> target are filtered
+        // out, including a `properties`-prefixed key without the dot separator.
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PROPERTIES_RULE);
+        Map<String, String> rules = abstractFormComponentImpl.getRules();
+        assertNull(rules.get("notARule"), "non-whitelisted, non-properties rule keys should be dropped");
+        assertNull(rules.get("propertiesFoo"), "a properties-prefixed key without a dot is not a valid target");
     }
 
     @Test

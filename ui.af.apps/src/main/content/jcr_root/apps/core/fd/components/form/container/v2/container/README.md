@@ -62,16 +62,26 @@ This approach is implemented to optimize performance by avoiding additional netw
 ## BEM Description
 ```
 BLOCK cmp-adaptiveform-container
+    MODIFIER cmp-adaptiveform-container--loading
+    MODIFIER cmp-adaptiveform-container--submitting
     ELEMENT cmp-adaptiveform-container__wrapper
     ELEMENT cmp-adaptiveform-container__hamburger-menu
-    ELEMENT cmp-adaptiveform-container__hamburger-menu-top
-    ELEMENT cmp-adaptiveform-container__hamburger-menu-icon-container
-    ELEMENT cmp-adaptiveform-container__hamburger-menu-icon
-    ELEMENT cmp-adaptiveform-container__hamburger-menu-middle
-    ELEMENT cmp-adaptiveform-container__hamburger-menu-bottom
-    ELEMENT cmp-adaptiveform-container__hamburger-menu-active-item-title
-    MODIFIER cmp-adaptiveform-container__hamburger-menu-button--prev
-    MODIFIER cmp-adaptiveform-container__hamburger-menu-button--next
+        ELEMENT cmp-adaptiveform-container__hamburger-menu-top
+            ELEMENT cmp-adaptiveform-container__hamburger-menu-icon-container
+                ELEMENT cmp-adaptiveform-container__hamburger-menu-icon
+        ELEMENT cmp-adaptiveform-container__hamburger-menu-middle
+        ELEMENT cmp-adaptiveform-container__hamburger-menu-bottom
+            ELEMENT cmp-adaptiveform-container__hamburger-menu-active-item-title
+            ELEMENT cmp-adaptiveform-container__hamburger-menu-navigation
+                MODIFIER cmp-adaptiveform-container__hamburger-menu-button--prev
+                MODIFIER cmp-adaptiveform-container__hamburger-menu-button--next
+                MODIFIER cmp-adaptiveform-container__hamburger-menu-button--open
+                MODIFIER cmp-adaptiveform-container__hamburger-menu-button--close
+        ELEMENT cmp-adaptiveform-container__hamburger-menu-dropdown
+            ELEMENT cmp-adaptiveform-container__hamburger-menu-submenu
+                ELEMENT cmp-adaptiveform-container__hamburger-menu-link
+                MODIFIER cmp-adaptiveform-container__hamburger-menu-item--active
+                MODIFIER cmp-adaptiveform-container__hamburger-menu-item--activeparent
 ```
 
 In edit mode, the BEM structure includes a modifier for the cmp-adaptiveform-container block,
