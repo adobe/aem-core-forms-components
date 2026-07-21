@@ -59,7 +59,7 @@ Add new message keys following the existing pattern:
 ```
 
 **Localization requirement:** The key must be added to **all 10 language files** in the same `i18n/` directory:
-`en.json`, `de.json`, `es.json`, `fr.json`, `it.json`, `ja.json`, `ko.json`, `pt_br.json`, `zh_cn.json`, `zh_tw.json`
+`en.json`, `de.json`, `es.json`, `fr.json`, `it.json`, `ja.json`, `ko-kr.json`, `pt-br.json`, `zh-cn.json`, `zh-tw.json`
 
 For languages you cannot translate, use the English string as a placeholder. Do not omit a language file entry; missing keys fall back to the key name (not the English string) in some runtime versions.
 

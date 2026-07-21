@@ -25,7 +25,8 @@
 │  class="cmp-adaptiveform-{componentname}"                     │
 │  data-cmp-is="adaptiveForm{ComponentName}"                    │
 └──────────────────────────┬───────────────────────────────────┘
-                           │ detected by FormView.Utils.setupField
+                           │ registered via FormView.Utils.setupField,
+                           │ scanned during Utils.initializeAllFields
 ┌──────────────────────────▼───────────────────────────────────┐
 │  JS View   {componentname}view.js                             │
 │  class {ComponentName}View extends FormView.FormFieldBase     │
@@ -35,13 +36,17 @@
 
 ## Data Flow at Runtime
 
-1. Page renders — HTL outputs BEM HTML with `data-cmp-*` attributes
-2. `FormView.Utils.setupField` scans DOM for `[data-cmp-is="adaptiveForm{ComponentName}"]`
-3. `{ComponentName}View` is instantiated for each matched element
-4. `setModel(model)` is called — `this.widget` is now available
-5. Widget DOM events (`change`, `blur`) call `this._model.value = value`
-6. Model change propagates reactively to other components and form state
-7. `visible`/`enabled`/`required` changes on the model update DOM via `data-cmp-*` attribute watchers
+The full initialization pipeline — DOM scan, model tree construction, `setModel`
+sequencing, repeatable-instance sync, and common crash signatures — is documented
+in `docs/architecture/runtime-internals.md`; that file is the canonical source, read
+it for the authoritative flow and debugging checklist. Summary of what matters when
+writing a new component's view JS:
+
+1. Page renders — HTL outputs BEM HTML with `data-cmp-*` attributes.
+2. At module load, the view JS registers itself once via `FormView.Utils.setupField(creator, selector)` — this only registers the creator/selector pair; it does not scan the DOM.
+3. When the form container initializes, `Utils.initializeAllFields` scans the DOM for the registered selector and constructs a `{ComponentName}View` for each match (`this.widget` is set from `getWidget()` in the constructor, before any model is attached).
+4. `formContainer.addField` resolves the field's model and calls `setModel(model)`; after this, `this._model` is available and `subscribe()` is wired up.
+5. Widget DOM events (`change`, `blur`) write back via `this._model.value = value`; the model change propagates reactively, and `data-cmp-*` attribute watchers update the DOM for `visible`/`enabled`/`required`.
 
 ## AbstractBaseImpl vs AbstractFieldImpl vs AbstractContainerImpl
 

@@ -146,3 +146,12 @@ extraClientlibs="[core.forms.components.container.v1.editor,core.forms.component
 ## 4. Select Default Behavior (no `emptyText`)
 
 Omitting `emptyText` from a Granite UI `form/select` makes the first `<items>` child the pre-selected default. No placeholder is shown. This is the correct pattern when there is always a valid default (e.g., "From Form Field", "None"). Only add `emptyText="Select"` when forcing the author to make an explicit choice before saving.
+
+---
+
+## 5. Editor JS Safety
+
+Applies to every author-side script (`clientlibs/editor/js/*.js`), not just dialog-interactivity scripts:
+
+- **Never assign `innerHTML`** from a value — use `textContent`. Even `Granite.I18n.get(...)` output should go through `textContent` (a translator could introduce markup).
+- **Do not wrap locale-neutral format strings** (e.g. `'YYYY-MM-DD'`) in `Granite.I18n.get(...)`. Use a plain constant; only run genuinely translatable sentences through `I18n.get`.

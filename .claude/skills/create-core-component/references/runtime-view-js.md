@@ -97,9 +97,5 @@ value. Extra rules:
 
 ## Editor clientlib JS (`clientlibs/editor/js/*.js`)
 
-- **Never assign `innerHTML`** from a value — use `textContent`. Even
-  `Granite.I18n.get(...)` output should go through `textContent` (a translator
-  could introduce markup).
-- **Do not wrap locale-neutral format strings** (e.g. `'YYYY-MM-DD'`) in
-  `Granite.I18n.get(...)`. Use a plain constant; only run genuinely translatable
-  sentences through `I18n.get`.
+Author-side scripts have their own safety rules (`innerHTML`/`textContent`, i18n) — see
+`references/editor-clientlib.md`.

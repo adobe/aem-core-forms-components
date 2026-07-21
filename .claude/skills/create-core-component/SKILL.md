@@ -99,7 +99,7 @@ Read `references/templates.md` for the full template set. Read `references/compo
 
 8. **Site clientlib** — `.content.xml`, `js.txt`, `css.txt`, view JS (`references/templates.md` #11 or #11b), the CSS stub (empty BEM rules in `aem-core-forms-components`) plus the theme SCSS (actual styles in `aem-forms-theme-canvas`). See `references/css-architecture.md` and `references/templates.md` #12. **Before writing the view JS, read `references/runtime-view-js.md`** — it defines the `FormFieldBase` override contract (`super` calls, `updateEmptyStatus`, composite-widget focus guard).
 
-9. **Editor clientlib** — `.content.xml` with editor category. In editor JS use `textContent` (never `innerHTML`) and don't wrap locale-neutral format strings in `Granite.I18n.get`. For dialogs with conditional field visibility, see `references/editor-clientlib.md`.
+9. **Editor clientlib** — `.content.xml` with editor category. See `references/editor-clientlib.md` for JS safety rules (`textContent` vs `innerHTML`, i18n) and the conditional-field-visibility pattern.
 
 10. **Register the runtime clientlib** — embed the component's `core.forms.components.{componentname}.v1.runtime` category in `ui.af.apps/.../af-clientlibs/core-forms-components-runtime-all/.content.xml`. Missing this silently breaks the runtime Cypress suite.
 
@@ -216,7 +216,7 @@ described in `references/runtime-view-js.md`.
 - `references/wiring-steps.md` — Post-generation wiring: clientlib embed, FormConstants, i18n, FormContainer dialog, template policy
 - `references/verification-checklist.md` — Post-implementation checklist covering structure, wiring, CSS, HTL, JS, Java, and tests
 - `references/common-mistakes.md` — Common implementation mistakes with fixes
-- `references/editor-clientlib.md` — JS-driven conditional field visibility in author dialogs
+- `references/editor-clientlib.md` — JS-driven conditional field visibility in author dialogs, and editor JS safety rules
 - `references/composite-multifield.md` — Composite multifield patterns for repeatable dialog items
 - `references/datasource-servlet.md` — Dynamic JCR-sourced options for Granite UI selects
 - `scripts/validate_component.py` — Automated validator — run after generating all files
@@ -240,5 +240,5 @@ Terse non-negotiables. Where a rule has a detailed rationale or failure mode, it
 13. **Cypress specs are mandatory** — ship `{componentname}.runtime.cy.js` + `{componentname}.authoring.cy.js`, the IT sample content, the `formsConstants.js` entry, and the runtime-all embed. Run the runtime spec green against `localhost:4502` before sign-off. See `references/cypress-tests.md`.
 14. **No empty styling or dialogs** — every BEM modifier class you emit must have a CSS rule; never ship an empty `_cq_design_dialog` tab.
 15. **Composite widgets** — only the hidden combined input carries `name`; never repopulate a sub-input the user is actively editing. See `references/runtime-view-js.md`.
-16. **Editor JS safety** — use `textContent` not `innerHTML`; don't wrap locale-neutral format strings (`'YYYY-MM-DD'`) in `Granite.I18n.get`.
+16. **Editor JS safety** — see `references/editor-clientlib.md` (`textContent` vs `innerHTML`, locale-neutral format strings).
 17. **Read `references/common-mistakes.md` before Phase 3** — it is the source of truth for the recurring failure modes (`@ValueMapValue`/`InjectionStrategy.OPTIONAL`, dual `adaptables`, `data-sly-test` on `__value`, and others); those are not repeated here.

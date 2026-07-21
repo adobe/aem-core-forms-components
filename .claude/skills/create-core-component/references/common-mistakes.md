@@ -51,16 +51,12 @@ These apply to any component that uses HTL template 7c and `sling:resourceSuperT
 
 ## Author Dialog and Coral Interactivity
 
-These apply to any component whose author dialog uses composite multifields or JavaScript-driven conditional field visibility. See `references/editor-clientlib.md` for the full boilerplate pattern.
+These apply to any component whose author dialog uses composite multifields or JavaScript-driven conditional field visibility. `references/editor-clientlib.md` is the canonical source for the patterns and fixes below (JS boilerplate, `getSelectValue`, `setVisible`) — this list only flags the symptoms so you recognize them.
 
-1. **Coral listener ordering race** — `Coral.commons.ready(element, callback)` may fire synchronously if the element is already upgraded. If you call any code that adds multifield items BEFORE registering `coral-collection:add`, that event fires with no listener attached. **Fix:** register all dialog event listeners (including `coral-collection:add`) BEFORE calling any code that triggers item insertion.
-
-2. **Both conditional fields visible on new multifield item** — Symptom: when a multifield item is added, fields that should be conditionally hidden all appear. Root cause: `Coral.commons.ready(newItem, callback)` fires after Coral finishes upgrading sub-components; between insertion and that callback the DOM has all fields visible. **Fix:** in the `coral-collection:add` handler, immediately hide default-off fields synchronously on `e.detail.item` using `$(newItem).find(SELECTOR).toggle(false)` BEFORE calling `Coral.commons.ready`. This synchronous hide happens before the browser paints.
-
-3. **`getSelectValue` on a `granite:class`-wrapped element** — `coral-select.value` is only accessible on the `coral-select` DOM element itself, not on its Granite UI fieldwrapper. If the selector targets a wrapper div rather than `coral-select` directly, `$el.val()` returns nothing. **Fix:** always extract the value via `var cs = $el.is("coral-select") ? $el[0] : $el.find("coral-select")[0]; return cs ? (cs.value || "") : "";`
-
-4. **`setVisible` traverses past multifield item boundary** — `$el.closest(".coral-Form-fieldwrapper")` on an element inside a composite multifield item can match a fieldwrapper that wraps the entire `coral-multifield`. **Fix:** cap the search at the item boundary: find the item container first (e.g., `$el.closest(".your-item-class")`), then only use the fieldwrapper if `$.contains(itemContainer, fieldwrapper)` is true.
-
-5. **Select default not applied when `emptyText` omitted** — When `emptyText` is omitted from a Granite UI `form/select` node, Coral selects the first `<items>` child as the default. The JS `getSelectValue` may return `""` before Coral finishes upgrading. Always treat `val === ""` the same as your intended default value in your conditional logic (e.g., `val === "form" || val === ""`) to guarantee correct initial state regardless of upgrade timing.
+1. **Coral listener ordering race** — a `coral-collection:add` handler never fires for a programmatically-added item. See "Listener registration order" in `references/editor-clientlib.md`.
+2. **Both conditional fields visible on new multifield item** — adding an item briefly shows all conditionally-hidden fields before they settle. See "Default-off fields in new items" in `references/editor-clientlib.md`.
+3. **`getSelectValue` returns nothing** — reading `.val()` on a `granite:class`-wrapped element instead of the `coral-select` DOM property. See `getSelectValue` in `references/editor-clientlib.md`.
+4. **`setVisible` hides more than intended** — `.closest(".coral-Form-fieldwrapper")` traverses past the multifield item boundary to a parent container's fieldwrapper. See "`setVisible` boundary" in `references/editor-clientlib.md`.
+5. **Select default not applied when `emptyText` omitted** — the JS may read `val === ""` before Coral finishes upgrading. See "Select Default Behavior" in `references/editor-clientlib.md`.
 
 ---
