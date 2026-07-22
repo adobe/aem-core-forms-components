@@ -106,6 +106,12 @@
                                               sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                               fieldLabel="Default value"
                                               name="./default"/>
+                                            <readonly
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <readonly-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
                                             <fieldType
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
