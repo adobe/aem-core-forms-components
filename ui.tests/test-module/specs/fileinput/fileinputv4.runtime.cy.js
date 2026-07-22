@@ -272,6 +272,16 @@ describe('Click on button tag (V-4)', () => {
         });
     });
 
+    it('should display a custom error message configured by the user for unsupported file type', () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[6];
+        const model = formContainer._model.getElement(id);
+        const fileInput = 'input[name=\'fileinput7\']';
+        cy.attachFile(fileInput, ['sample.afe']);
+        cy.on('window:alert', (alertText) => {
+            expect(alertText).to.equal(model.getState().constraintMessages.accept);
+        });
+    });
+
     it('file when uploaded again should give actual size', () => {
         let sampleFileNames = ['sample.svg'];
         const fileInput = "input[name='fileinput2']";

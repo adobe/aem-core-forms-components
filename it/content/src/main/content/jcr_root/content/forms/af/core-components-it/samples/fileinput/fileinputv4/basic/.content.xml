@@ -108,6 +108,7 @@
                     jcr:title="File Input - 7"
                     sling:resourceType="core/fd/components/form/fileinput/v4/fileinput"
                     accept="[audio/*, video/*, image/*, text/*, application/pdf,.ifc]"
+                    acceptMessage="This file type is not supported!"
                     fieldType="file-input"
                     readOnly="{Boolean}false"
                     name="fileinput7"
