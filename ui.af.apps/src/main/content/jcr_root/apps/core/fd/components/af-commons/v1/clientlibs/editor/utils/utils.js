@@ -316,6 +316,125 @@
                 hiddenFields[i].remove();
             }
         }
+
+        /**
+         * Returns an initializeEditDialog-compatible handler that validates min < max in real time.
+         * Works for both wrapperClass selectors (class on a wrapper div) and granite:class selectors
+         * (class on the coral field itself) by looking for a coral-numberinput or coral-datepicker
+         * inside the selector before falling back to the selector element itself.
+         *
+         * @param {String}   minSelector  Dialog-prefixed CSS selector for the min field or its wrapper
+         * @param {String}   maxSelector  Dialog-prefixed CSS selector for the max field or its wrapper
+         * @param {String}   minMsg       Error message shown on the min field when min > max
+         * @param {String}   maxMsg       Error message shown on the max field when min > max
+         * @param {Function} [compareFn]  Optional (a, b) => boolean. Defaults to numeric comparison.
+         */
+        static handleMinMaxValidation(minSelector, maxSelector, minMsg, maxMsg, compareFn) {
+            return function(dialog) {
+                function getCoralField(selector) {
+                    var container = dialog.find(selector);
+                    if (!container.length) return null;
+                    var inner = container.find("coral-numberinput, coral-datepicker");
+                    return (inner.length ? inner : container)[0];
+                }
+                var minField = getCoralField(minSelector);
+                var maxField = getCoralField(maxSelector);
+                if (!minField || !maxField) return;
+                var compare = compareFn || INT_COMPARE;
+                function validate() {
+                    var minVal = minField.value, maxVal = maxField.value;
+                    var invalid = !!(minVal && maxVal && compare(minVal, maxVal));
+                    minField.invalid = invalid;
+                    maxField.invalid = invalid;
+                    if (invalid) {
+                        minField.errorMessage = Granite.I18n.getMessage(minMsg);
+                        maxField.errorMessage = Granite.I18n.getMessage(maxMsg);
+                    }
+                }
+                validate();
+                minField.addEventListener("change", validate);
+                maxField.addEventListener("change", validate);
+            };
+        }
+
+        /**
+         * Registers a foundation.validation.validator that blocks dialog submission when min > max.
+         * Must be called once at module scope (not inside initializeEditDialog) to avoid stacking
+         * duplicate validators on every dialog open.
+         *
+         * @param {String}   minFieldSelector  Bare CSS selector targeting the coral field for min
+         * @param {String}   maxFieldSelector  Bare CSS selector targeting the coral field for max
+         * @param {String}   minMsg            Error message for the min field
+         * @param {String}   maxMsg            Error message for the max field
+         * @param {Function} [compareFn]       Optional (a, b) => boolean. Defaults to numeric comparison.
+         */
+        static registerMinMaxValidator(minFieldSelector, maxFieldSelector, minMsg, maxMsg, compareFn) {
+            var compare = compareFn || INT_COMPARE;
+            $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
+                selector: minFieldSelector + ", " + maxFieldSelector,
+                validate: function(el) {
+                    var dialog = $(el).closest("coral-dialog");
+                    var minField = dialog.find(minFieldSelector)[0];
+                    var maxField = dialog.find(maxFieldSelector)[0];
+                    if (!minField || !maxField) return;
+                    var minVal = minField.value, maxVal = maxField.value;
+                    if (minVal && maxVal && compare(minVal, maxVal)) {
+                        if (el === minField) {
+                            return Granite.I18n.getMessage(minMsg);
+                        }
+                        return Granite.I18n.getMessage(maxMsg);
+                    }
+                }
+            });
+        }
     }
+
+    // ─── Shared min/max validation for container components ──────────────────
+    // panelcontainer__minOccur / __maxOccur is shared across accordion, wizard,
+    // tabsontop, verticaltabs, and fragment — none of which have their own
+    // editDialog.js — so registration is centralised here.
+    var INT_COMPARE = function(a, b) { return parseInt(a, 10) > parseInt(b, 10); };
+
+    var MIN_MAX_PAIRS = [
+        {
+            minSelector: ".cmp-adaptiveform-panelcontainer__minOccur coral-numberinput",
+            maxSelector: ".cmp-adaptiveform-panelcontainer__maxOccur coral-numberinput",
+            minMsg: "Minimum occurrence cannot be greater than maximum occurrence",
+            maxMsg: "Maximum occurrence cannot be less than minimum occurrence",
+            compareFn: INT_COMPARE
+        }
+    ];
+
+    var Utils = window.CQ.FormsCoreComponents.Utils.v1;
+
+    // Register all foundation submit-time validators once at page load.
+    MIN_MAX_PAIRS.forEach(function(pair) {
+        Utils.registerMinMaxValidator(
+            pair.minSelector,
+            pair.maxSelector,
+            pair.minMsg,
+            pair.maxMsg,
+            pair.compareFn
+        );
+    });
+
+    // Auto-wire real-time change listeners whenever any dialog opens.
+    channel.on("foundation-contentloaded", function(e) {
+        if (!$(e.target).find(".cq-dialog-content").length) return;
+        Coral.commons.ready(e.target, function() {
+            var dialog = $(e.target);
+            MIN_MAX_PAIRS.forEach(function(pair) {
+                if (dialog.find(pair.minSelector).length && dialog.find(pair.maxSelector).length) {
+                    Utils.handleMinMaxValidation(
+                        pair.minSelector,
+                        pair.maxSelector,
+                        pair.minMsg,
+                        pair.maxMsg,
+                        pair.compareFn
+                    )(dialog);
+                }
+            });
+        });
+    });
 
 })(jQuery, jQuery(document), Coral);

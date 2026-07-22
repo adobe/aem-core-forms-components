@@ -256,6 +256,18 @@
         });
     }
 
+    $(window).adaptTo("foundation-registry").register("foundation.validation.validator", {
+        selector: "[data-validation~='forms.redirect.absolutepath']",
+        validate: function(el) {
+            var value = el.value;
+            if (value && !value.startsWith("/") && !/^https?:\/\/.+$/i.test(value)) {
+                return Granite.I18n.getMessage(
+                    "Please enter an absolute path (starting with '/') or an absolute URL (starting with 'http://' or 'https://')."
+                );
+            }
+        }
+    });
+
     Utils.initializeEditDialog(EDIT_DIALOG_FORM)(handleAsyncSubmissionAndThankYouOption, handleSubmitAction,
         registerSubmitActionSubDialogClientLibs, registerRestEndPointDialogClientlibs, registerFDMDialogClientlibs, registerEmailDialogClientlibs, initialiseDataModel, registerAutoSaveDialogAction);
 
