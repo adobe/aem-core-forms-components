@@ -1,16 +1,19 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~ Copyright 2026 Adobe
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~     http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.dataplane;
-
-import com.adobe.aem.wcm.dataplane.openapimodels.pages.PageContentDefinitionComponentDefinitionsInner;
-import com.adobe.aem.wcm.dataplane.openapimodels.pages.PageContentDefinitionComponentDefinitionsInnerFieldsInner;
-import com.adobe.aem.wcm.dataplane.openapimodels.pages.PageContentDefinitionComponentDefinitionsInnerFieldsInnerOptionsInner;
-import com.adobe.aem.wcm.dataplane.schema.spi.ComponentDefinitionEnricher;
-import com.adobe.aem.wcm.dataplane.schema.spi.ComponentDefinitionEnrichmentContext;
-import com.adobe.aemds.guide.model.FormMetaData;
-import com.day.cq.wcm.foundation.forms.FormsManager;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.resource.ValueMap;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,6 +22,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ValueMap;
+import org.osgi.service.component.annotations.Component;
+
+import com.adobe.aem.wcm.dataplane.schema.spi.ComponentDefinition;
+import com.adobe.aem.wcm.dataplane.schema.spi.ComponentDefinitionEnricher;
+import com.adobe.aem.wcm.dataplane.schema.spi.ComponentDefinitionEnrichmentContext;
+import com.adobe.aem.wcm.dataplane.schema.spi.Option;
+import com.adobe.aemds.guide.model.FormMetaData;
+import com.day.cq.wcm.foundation.forms.FormsManager;
 
 @Component(service = ComponentDefinitionEnricher.class)
 public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnricher {
@@ -39,8 +54,7 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
             return;
         }
 
-        Map<String, PageContentDefinitionComponentDefinitionsInner> componentDefinitions =
-            context.getComponentDefinitions();
+        Map<String, ComponentDefinition> componentDefinitions = context.getComponentDefinitions();
         componentDefinitions.entrySet().stream()
             .filter(entry -> isGuideContainerComponent(entry.getValue()))
             .map(Map.Entry::getKey)
@@ -50,10 +64,10 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
 
     private void enrichContainer(
         String componentType,
-        Map<String, PageContentDefinitionComponentDefinitionsInner> componentDefinitions,
+        Map<String, ComponentDefinition> componentDefinitions,
         ComponentDefinitionEnrichmentContext context,
         FormMetaData formMetaData) {
-        PageContentDefinitionComponentDefinitionsInner containerDefinition = componentDefinitions.get(componentType);
+        ComponentDefinition containerDefinition = componentDefinitions.get(componentType);
         if (containerDefinition == null || containerDefinition.getFields() == null) {
             return;
         }
@@ -61,24 +75,22 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
         setDynamicOptions(
             containerDefinition,
             ACTION_TYPE_FIELD,
-            collectSubmitActionOptions(formMetaData, componentType, context, componentDefinitions)
-        );
+            collectSubmitActionOptions(formMetaData, componentType, context, componentDefinitions));
         setDynamicOptions(
             containerDefinition,
             PREFILL_SERVICE_FIELD,
-            collectPrefillServiceOptions(formMetaData, context, componentDefinitions)
-        );
+            collectPrefillServiceOptions(formMetaData, context, componentDefinitions));
     }
 
-    private List<PageContentDefinitionComponentDefinitionsInnerFieldsInnerOptionsInner> collectSubmitActionOptions(
+    private List<Option> collectSubmitActionOptions(
         FormMetaData formMetaData,
         String componentType,
         ComponentDefinitionEnrichmentContext context,
-        Map<String, PageContentDefinitionComponentDefinitionsInner> componentDefinitions) {
+        Map<String, ComponentDefinition> componentDefinitions) {
         String guideDataModel = resolveDatasourceProperty(componentType, ACTION_TYPE_FIELD, GUIDE_DATA_MODEL,
             context.getResourceResolver());
         Set<String> uniqueResourceTypes = new HashSet<>();
-        List<PageContentDefinitionComponentDefinitionsInnerFieldsInnerOptionsInner> options = new ArrayList<>();
+        List<Option> options = new ArrayList<>();
         Iterator<FormsManager.ComponentDescription> iterator = formMetaData.getSubmitActions();
 
         while (iterator != null && iterator.hasNext()) {
@@ -87,7 +99,8 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
                 continue;
             }
 
-            Resource actionResource = findComponentResource(description.getResourceType(), context.getResourceResolver());
+            Resource actionResource = findComponentResource(description.getResourceType(),
+                context.getResourceResolver());
             if (!matchesGuideDataModel(actionResource, guideDataModel)) {
                 continue;
             }
@@ -98,11 +111,11 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
         return options;
     }
 
-    private List<PageContentDefinitionComponentDefinitionsInnerFieldsInnerOptionsInner> collectPrefillServiceOptions(
+    private List<Option> collectPrefillServiceOptions(
         FormMetaData formMetaData,
         ComponentDefinitionEnrichmentContext context,
-        Map<String, PageContentDefinitionComponentDefinitionsInner> componentDefinitions) {
-        List<PageContentDefinitionComponentDefinitionsInnerFieldsInnerOptionsInner> options = new ArrayList<>();
+        Map<String, ComponentDefinition> componentDefinitions) {
+        List<Option> options = new ArrayList<>();
         options.add(option(NONE_OPTION_LABEL, ""));
 
         Iterator<FormsManager.ComponentDescription> iterator = formMetaData.getPrefillActions();
@@ -120,22 +133,22 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
 
     private void addRuntimeDefinition(
         String componentType,
-        Map<String, PageContentDefinitionComponentDefinitionsInner> componentDefinitions,
+        Map<String, ComponentDefinition> componentDefinitions,
         ComponentDefinitionEnrichmentContext context) {
         if (componentType == null || componentType.isEmpty() || componentDefinitions.containsKey(componentType)) {
             return;
         }
 
-        PageContentDefinitionComponentDefinitionsInner schema = context.resolveComponentDialog(componentType);
+        ComponentDefinition schema = context.resolveComponentDialog(componentType);
         if (schema != null) {
             componentDefinitions.put(componentType, schema);
         }
     }
 
     private void setDynamicOptions(
-        PageContentDefinitionComponentDefinitionsInner schema,
+        ComponentDefinition schema,
         String fieldName,
-        List<PageContentDefinitionComponentDefinitionsInnerFieldsInnerOptionsInner> options) {
+        List<Option> options) {
         if (schema.getFields() == null || options == null || options.isEmpty()) {
             return;
         }
@@ -146,11 +159,12 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
             .ifPresent(field -> field.setOptions(options));
     }
 
-    private boolean isGuideContainerComponent(PageContentDefinitionComponentDefinitionsInner definition) {
+    private boolean isGuideContainerComponent(ComponentDefinition definition) {
         if (definition == null) {
             return false;
         }
-        return isGuideContainerType(definition.getComponentType()) || isGuideContainerType(definition.getComponentSuperType());
+        return isGuideContainerType(definition.getComponentType())
+            || isGuideContainerType(definition.getComponentSuperType());
     }
 
     private boolean isGuideContainerType(String componentType) {
@@ -158,8 +172,10 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
             return false;
         }
         String normalizedComponentType = normalizeComponentType(componentType);
-        // TODO: Support EDS form container enrichment for fd/franklin/components/form/v1/form
-        // once AEM_EDGE content definition exposes compatible runtime-backed form properties.
+        // TODO: Support EDS form container enrichment for
+        // fd/franklin/components/form/v1/form
+        // once AEM_EDGE content definition exposes compatible runtime-backed form
+        // properties.
         return GUIDE_CONTAINER_V1.equals(normalizedComponentType) || GUIDE_CONTAINER_V2.equals(normalizedComponentType);
     }
 
@@ -255,9 +271,7 @@ public class FormsComponentDefinitionEnricher implements ComponentDefinitionEnri
         return title == null || title.isEmpty() ? description.getResourceType() : title;
     }
 
-    private PageContentDefinitionComponentDefinitionsInnerFieldsInnerOptionsInner option(String name, String value) {
-        return new PageContentDefinitionComponentDefinitionsInnerFieldsInnerOptionsInner()
-            .name(name)
-            .value(value);
+    private Option option(String name, String value) {
+        return new Option(name, value);
     }
 }

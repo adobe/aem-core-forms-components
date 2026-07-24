@@ -475,7 +475,7 @@
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>sites-dataplane</artifactId>
-            <version>1.0.113-SNAPSHOT</version>
+            <version>1.0.153-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
