@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="panel">
+    <items jcr:primaryType="nt:unstructured">
+        <tablePanel
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Table"
+            id="af2_table"
+            cssSelector=".cmp-adaptiveform-table"
+            longTitle="Table Panel Container"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <tableLabelContainer
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Label Container"
+                        id="af2_tablelabelcontainer"
+                        cssSelector=".cmp-adaptiveform-table__title"
+                        longTitle="Table Label Container"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                <tableHelpContainer
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Help Container"
+                        id="af2_tablehelpcontainer"
+                        cssSelector=".cmp-adaptiveform-table__help-container"
+                        longTitle="Table Help Container"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <tableHelpIcon
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Help Icon"
+                                id="af2_tablehelpicon"
+                                cssSelector=".cmp-adaptiveform-table__help-container .cmp-adaptiveform-table__questionmark"
+                                longTitle="Table Help Icon"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                secondarySelectors="af2_guideContainer:af2_helpicon">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-table__help-container .cmp-adaptiveform-table__questionmark:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-table__help-container .cmp-adaptiveform-table__questionmark:hover"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-table__help-container .cmp-adaptiveform-table__questionmark:disabled"/>
+                            </states>
+                        </tableHelpIcon>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-table__help-container:hover"/>
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-table__help-container:focus"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-table__help-container:disabled"/>
+                    </states>
+                </tableHelpContainer>
+                <tableShortDescription
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Short Description"
+                        id="af2_tabledescriptionshort"
+                        cssSelector=".cmp-adaptiveform-table__shortdescription"
+                        longTitle="Table Short Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                <tableLongDescription
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Long Description"
+                        id="af2_tabledescriptionlong"
+                        cssSelector=".cmp-adaptiveform-table__longdescription"
+                        longTitle="Table Long Description"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <longDescriptionParagraph
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description Paragraph"
+                                id="af2_tabledescriptionlongparagraph"
+                                cssSelector=".cmp-adaptiveform-table__longdescription p"
+                                longTitle="Table Long Description Paragraph"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-table__longdescription:focus"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-table__longdescription:hover"/>
+                    </states>
+                </tableLongDescription>
+                <tableWidget
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Widget"
+                        id="af2_tablewidget"
+                        cssSelector=".cmp-adaptiveform-table__widget"
+                        longTitle="Table Widget"
+                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <tableHead
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Header"
+                                id="af2_tablehead"
+                                cssSelector=".cmp-adaptiveform-table__head"
+                                longTitle="Table Header Section"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <tableHeaderRow
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Header Row"
+                                        id="af2_tableheaderrow"
+                                        cssSelector=".cmp-adaptiveform-tableheader"
+                                        longTitle="Table Header Row"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <tableHeaderCell
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Header Cell"
+                                                id="af2_tableheadercell"
+                                                cssSelector=".cmp-adaptiveform-tablehead"
+                                                longTitle="Table Header Cell"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <tableSortButton
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Sort Button"
+                                                        id="af2_tablesortbutton"
+                                                        cssSelector=".cmp-adaptiveform-table__sort-button"
+                                                        longTitle="Table Sort Button"
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <hover
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Hover"
+                                                                cssSelector=".cmp-adaptiveform-table__sort-button:hover"/>
+                                                        <focus
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Focus"
+                                                                cssSelector=".cmp-adaptiveform-table__sort-button:focus-visible"/>
+                                                        <ascending
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Ascending"
+                                                                cssSelector=".cmp-adaptiveform-table__sort-button--asc"/>
+                                                        <descending
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Descending"
+                                                                cssSelector=".cmp-adaptiveform-table__sort-button--desc"/>
+                                                    </states>
+                                                </tableSortButton>
+                                            </items>
+                                        </tableHeaderCell>
+                                    </items>
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-table__head .cmp-adaptiveform-tableheader:hover"/>
+                                    </states>
+                                </tableHeaderRow>
+                            </items>
+                        </tableHead>
+                        <tableBody
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Body"
+                                id="af2_tablebody"
+                                cssSelector=".cmp-adaptiveform-table__body"
+                                longTitle="Table Body Section"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <tableRow
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Row"
+                                        id="af2_tablerow"
+                                        cssSelector=".cmp-adaptiveform-tablerow"
+                                        longTitle="Table Row"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <tableCell
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Cell"
+                                                id="af2_tablecell"
+                                                cssSelector=".cmp-adaptiveform-tablecell"
+                                                longTitle="Table Cell"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Hover"
+                                                        cssSelector=".cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow:hover > .cmp-adaptiveform-tablecell"/>
+                                                <cellHover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Cell Hover"
+                                                        cssSelector=".cmp-adaptiveform-table__body .cmp-adaptiveform-tablerow > .cmp-adaptiveform-tablecell:hover"/>
+                                            </states>
+                                        </tableCell>
+                                        <tableRowControls
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Row Controls"
+                                                id="af2_tablerowcontrols"
+                                                cssSelector=".cmp-adaptiveform-tablerow__runtime-controls"
+                                                longTitle="Table Row Repeatable Controls"
+                                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <tableAddButton
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Add Button"
+                                                        id="af2_tableaddbutton"
+                                                        cssSelector=".cmp-adaptiveform-tablerow__add-button"
+                                                        longTitle="Table Row Add Button"
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                                <tableRemoveButton
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Remove Button"
+                                                        id="af2_tableremovebutton"
+                                                        cssSelector=".cmp-adaptiveform-tablerow__remove-button"
+                                                        longTitle="Table Row Remove Button"
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                            </items>
+                                        </tableRowControls>
+                                    </items>
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-tablerow:hover"/>
+                                    </states>
+                                </tableRow>
+                            </items>
+                        </tableBody>
+                    </items>
+                </tableWidget>
+            </items>
+        </tablePanel>
+    </items>
+</jcr:root>

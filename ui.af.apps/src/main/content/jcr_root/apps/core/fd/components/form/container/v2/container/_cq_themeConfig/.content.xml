@@ -492,6 +492,9 @@
                 <wizardPanel
                     jcr:primaryType="nt:unstructured"
                     target="/mnt/override/libs/core/fd/components/form/wizard/v2/wizard/cq:styleConfig/items/wizardPanel"/>
+                <tablePanel
+                    jcr:primaryType="nt:unstructured"
+                    target="/mnt/override/libs/core/fd/components/form/table/v1/table/cq:styleConfig/items/tablePanel"/>
             </items>
         </panel>
         <Image
