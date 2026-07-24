@@ -51,13 +51,37 @@ JavaScript handling for authoring interactions. It is already included by its ed
 BLOCK cmp-adaptiveform-table
     ELEMENT cmp-adaptiveform-table__title
     ELEMENT cmp-adaptiveform-table__help-container
+        ELEMENT cmp-adaptiveform-table__questionmark
     ELEMENT cmp-adaptiveform-table__shortdescription
     ELEMENT cmp-adaptiveform-table__longdescription
-    ELEMENT cmp-adaptiveform-table__questionmark
     ELEMENT cmp-adaptiveform-table__widget
-    ELEMENT cmp-adaptiveform-table__head
-    ELEMENT cmp-adaptiveform-table__body
+        ELEMENT cmp-adaptiveform-table__head
+            BLOCK cmp-adaptiveform-tableheader
+                ELEMENT cmp-adaptiveform-tablehead
+                    ELEMENT cmp-adaptiveform-table__sort-header-inner
+                    ELEMENT cmp-adaptiveform-table__sort-button
+                        MODIFIER cmp-adaptiveform-table__sort-button--asc
+                        MODIFIER cmp-adaptiveform-table__sort-button--desc
+        ELEMENT cmp-adaptiveform-table__body
+            BLOCK cmp-adaptiveform-tablerow
+                ELEMENT cmp-adaptiveform-tablecell
+                ELEMENT cmp-adaptiveform-tablerow__runtime-controls
+                    ELEMENT cmp-adaptiveform-tablerow__add-button
+                    ELEMENT cmp-adaptiveform-tablerow__remove-button
 ```
+
+## Theme Editor Support
+The component provides a `_cq_styleConfig` that exposes the full BEM element hierarchy to the AEM Theme Editor. The following elements can be styled globally:
+
+* **Table** — root container (`.cmp-adaptiveform-table`)
+* **Label Container** — table title (`.cmp-adaptiveform-table__title`)
+* **Help Container** — help icon wrapper and question mark icon, with hover/focus/disabled states
+* **Short/Long Description** — tooltip and description text elements
+* **Widget** — the `<table>` element (`.cmp-adaptiveform-table__widget`)
+  * **Header** — `<thead>` section, including header row, header cells, and sort buttons (with ascending/descending states)
+  * **Body** — `<tbody>` section, including rows and cells (with row-hover and cell-hover states), and repeatable row add/remove buttons
+
+Theme editor styles are applied globally via CSS class selectors. Per-row or per-cell individual styling is not supported through the theme editor; all rows and all cells of the same type share the same theme styles. For per-instance overrides, authors can apply a custom CSS class via the component's style dialog and target it in the theme.
 
 ## JavaScript Data Attribute Bindings
 
