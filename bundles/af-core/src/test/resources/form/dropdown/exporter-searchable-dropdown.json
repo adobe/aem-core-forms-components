@@ -1,0 +1,32 @@
+{
+  "id": "dropdown-6bc8619e69",
+  "fieldType": "drop-down",
+  "name": "abc",
+  "type": "string",
+  "minLength": 2,
+  "maxLength": 10,
+  "enforceEnum": false,
+  "enumNames": [
+    "m",
+    "f",
+    "o"
+  ],
+  "pattern": "[a-z]+",
+  "label": {
+    "value": "def"
+  },
+  "properties": {
+    "fd:path": "/content/searchable-dropdown"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "enum": [
+    "a",
+    "b",
+    "c"
+  ],
+  ":type": "core/fd/components/form/dropdown/v1/dropdown"
+}
