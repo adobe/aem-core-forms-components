@@ -28,6 +28,8 @@
         NUMERICINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displayformat",
         NUMERICINPUT_LANG = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__lang",
         NUMERICINPUT_LANGDISPLAYVALUE = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__langdisplayvalue",
+        NUMERICINPUT_MIN_MSG = "Minimum value cannot be greater than maximum value",
+        NUMERICINPUT_MAX_MSG = "Maximum value cannot be less than minimum value",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     /**
@@ -102,8 +104,7 @@
 
     Utils.registerMinMaxValidator(
         NUMERICINPUT_MIN_FIELD, NUMERICINPUT_MAX_FIELD,
-        "Minimum value cannot be greater than maximum value",
-        "Maximum value cannot be less than minimum value",
+        NUMERICINPUT_MIN_MSG, NUMERICINPUT_MAX_MSG,
         NUMBER_COMPARE
     );
 
@@ -114,8 +115,7 @@
         handleTypeDropdown,
         Utils.handleMinMaxValidation(
             NUMERICINPUT_MIN_FIELD, NUMERICINPUT_MAX_FIELD,
-            "Minimum value cannot be greater than maximum value",
-            "Maximum value cannot be less than minimum value",
+            NUMERICINPUT_MIN_MSG, NUMERICINPUT_MAX_MSG,
             NUMBER_COMPARE
         )
     );

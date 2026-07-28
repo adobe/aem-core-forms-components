@@ -28,6 +28,8 @@
         DATEPICKER_MAXDATE = EDIT_DIALOG + " .cmp-adaptiveform-datepicker__maxdate",
         DATEPICKER_MIN_FIELD = ".cmp-adaptiveform-datepicker__mindate coral-datepicker",
         DATEPICKER_MAX_FIELD = ".cmp-adaptiveform-datepicker__maxdate coral-datepicker",
+        DATEPICKER_MIN_MSG = "Minimum date cannot be after maximum date",
+        DATEPICKER_MAX_MSG = "Maximum date cannot be before minimum date",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
 
@@ -78,8 +80,7 @@
 
     Utils.registerMinMaxValidator(
         DATEPICKER_MIN_FIELD, DATEPICKER_MAX_FIELD,
-        "Minimum date cannot be after maximum date",
-        "Maximum date cannot be before minimum date",
+        DATEPICKER_MIN_MSG, DATEPICKER_MAX_MSG,
         DATE_COMPARE
     );
 
@@ -92,8 +93,7 @@
         handleDatePlaceholders,
         Utils.handleMinMaxValidation(
             DATEPICKER_MIN_FIELD, DATEPICKER_MAX_FIELD,
-            "Minimum date cannot be after maximum date",
-            "Maximum date cannot be before minimum date",
+            DATEPICKER_MIN_MSG, DATEPICKER_MAX_MSG,
             DATE_COMPARE
         )
     );
