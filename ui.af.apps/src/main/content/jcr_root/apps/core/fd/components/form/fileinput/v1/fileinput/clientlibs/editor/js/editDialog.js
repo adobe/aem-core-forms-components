@@ -23,6 +23,8 @@
         FILEINPUT_MAXITEMS_ERRMSG = EDIT_DIALOG + " .cmp-adaptiveform-fileinput__maximumFilesMessage",
         FILEINPUT_MIN_FIELD = ".cmp-adaptiveform-fileinput__minimumFiles coral-numberinput",
         FILEINPUT_MAX_FIELD = ".cmp-adaptiveform-fileinput__maximumFiles coral-numberinput",
+        FILEINPUT_MIN_MSG = "Minimum files cannot be greater than maximum files",
+        FILEINPUT_MAX_MSG = "Maximum files cannot be less than minimum files",
     Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     /**
@@ -50,16 +52,14 @@
     }
     Utils.registerMinMaxValidator(
         FILEINPUT_MIN_FIELD, FILEINPUT_MAX_FIELD,
-        "Minimum files cannot be greater than maximum files",
-        "Maximum files cannot be less than minimum files"
+        FILEINPUT_MIN_MSG, FILEINPUT_MAX_MSG
     );
 
     Utils.initializeEditDialog(EDIT_DIALOG)(
         handleMultiSelection,
         Utils.handleMinMaxValidation(
             FILEINPUT_MIN_FIELD, FILEINPUT_MAX_FIELD,
-            "Minimum files cannot be greater than maximum files",
-            "Maximum files cannot be less than minimum files"
+            FILEINPUT_MIN_MSG, FILEINPUT_MAX_MSG
         )
     );
 

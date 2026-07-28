@@ -19,6 +19,8 @@
     var EDIT_DIALOG = ".cmp-adaptiveform-datetime__editdialog",
         DATETIME_MIN_FIELD = ".cmp-adaptiveform-datetime__minimumDateTime coral-datepicker",
         DATETIME_MAX_FIELD = ".cmp-adaptiveform-datetime__maximumDateTime coral-datepicker",
+        DATETIME_MIN_MSG = "Minimum date-time cannot be after maximum date-time",
+        DATETIME_MAX_MSG = "Maximum date-time cannot be before minimum date-time",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
     var DATE_COMPARE = function(a, b) {
@@ -28,16 +30,14 @@
 
     Utils.registerMinMaxValidator(
         DATETIME_MIN_FIELD, DATETIME_MAX_FIELD,
-        "Minimum date-time cannot be after maximum date-time",
-        "Maximum date-time cannot be before minimum date-time",
+        DATETIME_MIN_MSG, DATETIME_MAX_MSG,
         DATE_COMPARE
     );
 
     Utils.initializeEditDialog(EDIT_DIALOG)(
         Utils.handleMinMaxValidation(
             DATETIME_MIN_FIELD, DATETIME_MAX_FIELD,
-            "Minimum date-time cannot be after maximum date-time",
-            "Maximum date-time cannot be before minimum date-time",
+            DATETIME_MIN_MSG, DATETIME_MAX_MSG,
             DATE_COMPARE
         )
     );
