@@ -344,11 +344,17 @@
                 function validate() {
                     var minVal = minField.value, maxVal = maxField.value;
                     var invalid = !!(minVal && maxVal && compare(minVal, maxVal));
+                    // Direct property mutation avoids dispatching change events.
+                    // Using jQuery.trigger() would re-enter this listener via native DOM
+                    // event propagation, causing infinite recursion.
                     minField.invalid = invalid;
                     maxField.invalid = invalid;
                     if (invalid) {
                         minField.errorMessage = Granite.I18n.getMessage(minMsg);
                         maxField.errorMessage = Granite.I18n.getMessage(maxMsg);
+                    } else {
+                        minField.errorMessage = "";
+                        maxField.errorMessage = "";
                     }
                 }
                 validate();
