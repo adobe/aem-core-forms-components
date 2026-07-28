@@ -45,6 +45,10 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction(editDialogConfigurationSelector);
             cy.get('.cmp-adaptiveform-panelcontainer__editdialog').contains('Repeat Panel').click();
 
+            // Enable repeatability to unlock min/max occurrence fields
+            cy.get('.cmp-adaptiveform-panelcontainer__repeatable coral-switch').click();
+            cy.get(maxField).should('not.have.attr', 'disabled');
+
             // Set maximum = 5, then minimum = 10 (invalid: min > max)
             cy.get(maxField).find('input').clear().type('5');
             cy.focused().blur();
@@ -72,6 +76,10 @@ describe('Page - Authoring', function () {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelContainerEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
             cy.get('.cmp-adaptiveform-panelcontainer__editdialog').contains('Repeat Panel').click();
+
+            // Enable repeatability to unlock min/max occurrence fields
+            cy.get('.cmp-adaptiveform-panelcontainer__repeatable coral-switch').click();
+            cy.get(maxField).should('not.have.attr', 'disabled');
 
             // Set an invalid state: minimum > maximum
             cy.get(maxField).find('input').clear().type('5');
