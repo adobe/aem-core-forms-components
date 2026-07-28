@@ -45,7 +45,9 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction(editDialogConfigurationSelector);
 
             // Enable multi-selection to reveal min/max files fields
-            cy.get("[name='./multiSelection']").check();
+            cy.get("[name='./multiSelection'][type='checkbox']").should('exist').check();
+            cy.get('.cmp-adaptiveform-fileinput__minimumFiles').invoke('css', 'display').should('equal', 'block');
+            cy.get('.cmp-adaptiveform-fileinput__maximumFiles').invoke('css', 'display').should('equal', 'block');
 
             // Set maximum = 5, then minimum = 10 (invalid: min > max)
             cy.get(maxField).find('input').clear().type('5');
@@ -75,7 +77,9 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction(editDialogConfigurationSelector);
 
             // Enable multi-selection to reveal min/max files fields
-            cy.get("[name='./multiSelection']").check();
+            cy.get("[name='./multiSelection'][type='checkbox']").should('exist').check();
+            cy.get('.cmp-adaptiveform-fileinput__minimumFiles').invoke('css', 'display').should('equal', 'block');
+            cy.get('.cmp-adaptiveform-fileinput__maximumFiles').invoke('css', 'display').should('equal', 'block');
 
             // Set an invalid state: minimum > maximum
             cy.get(maxField).find('input').clear().type('5');
