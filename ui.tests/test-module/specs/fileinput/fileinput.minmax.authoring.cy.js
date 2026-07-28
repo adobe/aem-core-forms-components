@@ -44,10 +44,10 @@ describe('Page - Authoring', function () {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fileInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
 
-            // Enable multi-selection to reveal min/max files fields
+            // Enable multi-selection (Basic tab) to reveal min/max files fields on the Validation tab
             cy.get("[name='./multiSelection'][type='checkbox']").should('exist').check();
-            cy.get('.cmp-adaptiveform-fileinput__minimumFiles').invoke('css', 'display').should('equal', 'block');
-            cy.get('.cmp-adaptiveform-fileinput__maximumFiles').invoke('css', 'display').should('equal', 'block');
+            // Navigate to Validation tab where min/max fields live
+            cy.get('.cmp-adaptiveform-fileinput__editdialog').contains('Validation').click();
 
             // Set maximum = 5, then minimum = 10 (invalid: min > max)
             cy.get(maxField).find('input').clear().type('5');
@@ -76,10 +76,10 @@ describe('Page - Authoring', function () {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + fileInputEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
 
-            // Enable multi-selection to reveal min/max files fields
+            // Enable multi-selection (Basic tab) to reveal min/max files fields on the Validation tab
             cy.get("[name='./multiSelection'][type='checkbox']").should('exist').check();
-            cy.get('.cmp-adaptiveform-fileinput__minimumFiles').invoke('css', 'display').should('equal', 'block');
-            cy.get('.cmp-adaptiveform-fileinput__maximumFiles').invoke('css', 'display').should('equal', 'block');
+            // Navigate to Validation tab where min/max fields live
+            cy.get('.cmp-adaptiveform-fileinput__editdialog').contains('Validation').click();
 
             // Set an invalid state: minimum > maximum
             cy.get(maxField).find('input').clear().type('5');
