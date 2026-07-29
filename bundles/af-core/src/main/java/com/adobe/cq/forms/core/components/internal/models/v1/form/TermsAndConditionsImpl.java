@@ -88,8 +88,8 @@ public class TermsAndConditionsImpl extends PanelImpl implements TermsAndConditi
         Map<String, Object> properties = super.getProperties();
         if (resource.getValueMap().containsKey(CUSTOM_TNC_PROPERTY)) {
             properties.put(CUSTOM_TNC_PROPERTY, true);
-            properties.put(SHOW_AS_POPUP_PROPERTY, isShowAsPopup());
         }
+        properties.put(SHOW_AS_POPUP_PROPERTY, isShowAsPopup());
         return properties;
     }
 
