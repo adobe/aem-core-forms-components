@@ -264,6 +264,24 @@
                                     cssSelector=".cmp-adaptiveform-container__hamburger-menu-link:active"/>
                             </states>
                         </hamburgerMenuLink>
+                        <hamburgerMenuItem
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Item"
+                            id="af2_hamburgermenuitem"
+                            cssSelector=".cmp-adaptiveform-container__hamburger-menu-item"
+                            longTitle="Hamburger Menu Item"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hidden
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hidden"
+                                    cssSelector=".cmp-adaptiveform-container__hamburger-menu-item[data-panel-visible='false']"/>
+                                <disabled
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Disabled"
+                                    cssSelector=".cmp-adaptiveform-container__hamburger-menu-item[data-panel-enabled='false']"/>
+                            </states>
+                        </hamburgerMenuItem>
                         <hamburgerMenuItemActive
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Active Item"
