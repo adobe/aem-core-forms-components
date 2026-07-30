@@ -35,27 +35,10 @@
 .cmp-adaptiveform-tablerow__remove-button[data-cmp-visible="false"] {}
 
 .cmp-adaptiveform-tablerow__add-button:focus-visible,
-.cmp-adaptiveform-tablerow__remove-button:focus-visible {
-    outline: 2px solid #2680EB;
-    outline-offset: 2px;
-}
+.cmp-adaptiveform-tablerow__remove-button:focus-visible {}
 
-/*
- * Mobile card layout (<= 768px): the table.css media query stacks every cell as a
- * block with a ::before header label. The last cell carries the add/remove controls
- * via a flex layout that fights that block model and the -1px margin, so reset it
- * here and lay the controls out as a footer row inside the card.
- */
 @media (max-width: 768px) {
-    .cmp-adaptiveform-tablecell.cmp-adaptiveform-tablecell--with-row-controls {
-        display: block;
-        margin: 0;
-        border: none;
-    }
+    .cmp-adaptiveform-tablecell.cmp-adaptiveform-tablecell--with-row-controls {}
 
-    .cmp-adaptiveform-tablerow__runtime-controls {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 0.5rem;
-    }
+    .cmp-adaptiveform-tablerow__runtime-controls {}
 }
