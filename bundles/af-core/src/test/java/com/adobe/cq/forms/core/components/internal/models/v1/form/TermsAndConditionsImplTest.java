@@ -105,6 +105,8 @@ public class TermsAndConditionsImplTest {
         Map<String, Object> props = tnc.getProperties();
         Assert.assertTrue(props.containsKey("fd:tnc"));
         Assert.assertTrue((Boolean) props.get("fd:tnc"));
+        Assert.assertTrue(props.containsKey("fd:showAsPopup"));
+        Assert.assertTrue((Boolean) props.get("fd:showAsPopup"));
 
     }
 
