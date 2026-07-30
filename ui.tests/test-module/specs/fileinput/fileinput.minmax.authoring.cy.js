@@ -26,6 +26,13 @@ describe('Page - Authoring', function () {
         cy.get('body').click(0, 0);
     };
 
+    const setNumberInputValue = function (selector, value) {
+        cy.get(selector).then(($el) => {
+            $el[0].value = value;
+            $el[0].dispatchEvent(new Event('change', { bubbles: true }));
+        });
+    };
+
     context('Open Forms Editor', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             fileInputEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/fileinput",
@@ -45,23 +52,21 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction(editDialogConfigurationSelector);
 
             // Enable multi-selection (Basic tab) to reveal min/max files fields on the Validation tab
-            cy.get("[name='./multiSelection'][type='checkbox']").should('exist').check();
+            cy.get("[name='./multiSelection'][type='checkbox']").should('exist').check({ force: true });
             // Navigate to Validation tab where min/max fields live
             cy.get('.cmp-adaptiveform-fileinput__editdialog').contains('Validation').click();
+            cy.get(minField).should('be.visible');
 
             // Set maximum = 5, then minimum = 10 (invalid: min > max)
-            cy.get(maxField).find('input').clear().type('5');
-            cy.focused().blur();
-            cy.get(minField).find('input').clear().type('10');
-            cy.focused().blur();
+            setNumberInputValue(maxField, 5);
+            setNumberInputValue(minField, 10);
 
             // Both fields should be marked invalid
             cy.get(minField).should('have.attr', 'invalid');
             cy.get(maxField).should('have.attr', 'invalid');
 
             // Fix by lowering minimum below maximum
-            cy.get(minField).find('input').clear().type('3');
-            cy.focused().blur();
+            setNumberInputValue(minField, 3);
 
             // Both fields should no longer be invalid
             cy.get(minField).should('not.have.attr', 'invalid');
@@ -77,15 +82,14 @@ describe('Page - Authoring', function () {
             cy.invokeEditableAction(editDialogConfigurationSelector);
 
             // Enable multi-selection (Basic tab) to reveal min/max files fields on the Validation tab
-            cy.get("[name='./multiSelection'][type='checkbox']").should('exist').check();
+            cy.get("[name='./multiSelection'][type='checkbox']").should('exist').check({ force: true });
             // Navigate to Validation tab where min/max fields live
             cy.get('.cmp-adaptiveform-fileinput__editdialog').contains('Validation').click();
+            cy.get(minField).should('be.visible');
 
             // Set an invalid state: minimum > maximum
-            cy.get(maxField).find('input').clear().type('5');
-            cy.focused().blur();
-            cy.get(minField).find('input').clear().type('10');
-            cy.focused().blur();
+            setNumberInputValue(maxField, 5);
+            setNumberInputValue(minField, 10);
 
             // Attempt to save — dialog should remain open
             cy.get('.cq-dialog-submit').click();
