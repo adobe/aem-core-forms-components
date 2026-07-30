@@ -45,6 +45,7 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.internal.models.v1.form.SignerInfoImpl;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -286,6 +287,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     }
 
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    public static final String CUSTOM_SIGNER_PROPERTY_WRAPPER = "fd:signerInfo";
     // used for DOR and SPA editor to work
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
 
@@ -319,6 +321,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (rulesProperties.size() > 0) {
             properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
         }
+
+        Resource signerInfoResource = resource.getChild(CUSTOM_SIGNER_PROPERTY_WRAPPER);
+        if (signerInfoResource != null) {
+            properties.put(CUSTOM_SIGNER_PROPERTY_WRAPPER, SignerInfoImpl.getSignerDetails(signerInfoResource));
+        }
+
         return properties;
     }
 
