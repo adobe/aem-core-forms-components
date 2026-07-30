@@ -31,6 +31,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.AssistPriority;
 import com.adobe.cq.forms.core.components.models.form.Base;
@@ -79,6 +80,10 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_VALIDATION_EXPRESSION)
     @Nullable
     protected String validationExpression;
+
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_ASYNC_VALIDATION_EXPRESSION)
+    @Nullable
+    protected String asyncValidtionExpression;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_REQUIRED)
     @Nullable
@@ -449,5 +454,12 @@ public abstract class AbstractBaseImpl extends AbstractFormComponentImpl impleme
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public String getValidationExpression() {
         return validationExpression;
+    }
+
+    @Override
+    @Nullable
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    public String getAsyncValidtionExpression() {
+        return ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_ASYNC_VALIDATION_EXPRESSION) ? asyncValidtionExpression : null;
     }
 }

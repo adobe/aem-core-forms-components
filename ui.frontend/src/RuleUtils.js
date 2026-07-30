@@ -105,6 +105,9 @@ class RuleUtils {
                 if (item.validationExpression) {
                     extractFunctionNamesFromRuleExpression(item.validationExpression);
                 }
+                if (item.asyncValidtionExpression) {
+                    extractFunctionNamesFromRuleExpression(item.asyncValidtionExpression);
+                }
                 if (item.displayValueExpression) {
                     extractFunctionNamesFromRuleExpression(item.displayValueExpression);
                 }

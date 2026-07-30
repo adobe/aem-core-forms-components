@@ -106,4 +106,14 @@ public final class FeatureToggleConstants {
      * System property: same name ({@code FT_FORMS-25252}); set to {@code "true"} to enable.
      */
     public static final String FT_SERVER_SIDE_VALIDATION = "FT_FORMS-25252";
+
+    /**
+     * When enabled, the {@code asyncValidtionExpression} property is exported on form field/container
+     * components. When disabled, {@link com.adobe.cq.forms.core.components.models.form.BaseConstraint#getAsyncValidtionExpression()}
+     * returns {@code null} regardless of the stored JCR property value, allowing the property to be
+     * rolled out to a limited set of customer instances before general availability.
+     * <p>
+     * System property: same name ({@code FT_FORMS-26583}); set to {@code "true"} to enable.
+     */
+    public static final String FT_ASYNC_VALIDATION_EXPRESSION = "FT_FORMS-26583";
 }

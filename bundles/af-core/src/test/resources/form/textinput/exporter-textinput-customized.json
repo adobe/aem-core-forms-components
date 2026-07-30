@@ -14,6 +14,7 @@
   },
   "readOnly": false,
   "default": "abc",
+  "asyncValidtionExpression": "$field == 'validate'",
   "label": {
     "visible": true,
     "value": "def"
