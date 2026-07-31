@@ -183,7 +183,7 @@ if (typeof window.FileInputWidget === 'undefined') {
             const messages = {
                 [this.invalidFeature.SIZE]: customMessages.maxFileSize || FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeGreater", [fileNames, this.options.maxFileSize]),
                 [this.invalidFeature.NAME]: customMessages.invalidFileName || FormView.LanguageUtils.getTranslatedString(this.lang, "FileNameInvalid", [fileNames]),
-                [this.invalidFeature.MIMETYPE]: customMessages.invalidMimeType || FormView.LanguageUtils.getTranslatedString(this.lang, "FileMimeTypeInvalid", [fileNames]),
+                [this.invalidFeature.MIMETYPE]: customMessages.accept || FormView.LanguageUtils.getTranslatedString(this.lang, "FileMimeTypeInvalid", [fileNames]),
                 [this.invalidFeature.SIZE_ZERO]: customMessages.zeroFileSize || FormView.LanguageUtils.getTranslatedString(this.lang, "FileSizeZero", [fileNames])
             };
             return messages[invalidFeature];
