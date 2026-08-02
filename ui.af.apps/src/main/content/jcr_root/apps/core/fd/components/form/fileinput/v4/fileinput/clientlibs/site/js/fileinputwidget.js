@@ -44,6 +44,58 @@ if (typeof window.FileInputWidget === 'undefined') {
                 }
             });
         }
+
+
+        setValue(value) {
+            let isValueSame = false;
+            if (value != null) {
+                // change to array since we store array internally
+                value = Array.isArray(value) ? value : [value];
+            }
+            // check if current values and new values are same
+            if (this.fileArr != null && value != null) {
+                isValueSame = JSON.stringify(FormView.FileAttachmentUtils.extractFileInfo(this.fileArr)) === JSON.stringify(value);
+            }
+            // if new values, update the DOM
+            if (!isValueSame) {
+                let oldUrls = {};
+                // Cache the url before deletion
+                this.fileList.querySelectorAll(".cmp-adaptiveform-fileinput__filename").forEach(function (elem) {
+                    let url = elem.dataset.key;
+                    if (typeof url !== "undefined") {
+                        let fileName = url.substring(url.lastIndexOf("/") + 1);
+                        oldUrls[fileName] = url;
+                    }
+                });
+                // empty the file list
+                while (this.fileList.lastElementChild) {
+                    this.fileList.removeChild(this.fileList.lastElementChild);
+                }
+                // set the new value
+                if (value != null) {
+                    let self = this;
+                    // Update the value array with the file
+                    this.values = value.map(function (file, index) {
+                        // Check if file Name is a path, if yes get the last part after "/"
+                        let isFileObject= window.File ? file.data instanceof window.File : false,
+                            fileName = typeof file === "string" ? file : file.name,
+                            fileUrl = typeof file === "string" ? file : (isFileObject ? "" : file.data),
+                            fileSize = file.size,
+                            fileUploadUrl = fileUrl;
+                        if (oldUrls[fileName]) {
+                            fileUploadUrl = oldUrls[fileName];
+                        }
+                        self.showFileList(fileName, fileSize, null, fileUploadUrl);
+                        return fileName;
+                    });
+                    this.fileArr = [...value];
+                }  else {
+                    this.values = [];
+                    this.fileArr = [];
+                    this.widget.value = '';
+                }
+            }
+        }
         
         fileItem(fileName, fileSize, comment, fileUrl) {
             let self = this;
