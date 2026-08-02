@@ -259,6 +259,14 @@ describe("Form with Radio Button Input", () => {
         })
     })
 
+    it("each radio button input should have a unique id attribute", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        const widgetId = `${id}-widget`;
+        cy.get(`#${id}`).find(".cmp-adaptiveform-radiobutton__option__widget").each(($radio, index) => {
+            cy.wrap($radio).should('have.attr', 'id', `${widgetId}_${index + 1}`);
+        });
+    })
+
     it("radio button group MUST be wrapped in a <fieldset> and have a legend", () => {
         const [radioButton1] = Object.entries(formContainer._fields)[0];
         cy.get(`#${radioButton1}`).then($el => {
