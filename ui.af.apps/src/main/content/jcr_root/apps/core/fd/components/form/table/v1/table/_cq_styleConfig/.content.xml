@@ -217,14 +217,44 @@
                                                         id="af2_tableaddbutton"
                                                         cssSelector=".cmp-adaptiveform-tablerow__add-button"
                                                         longTitle="Table Row Add Button"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <hover
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Hover"
+                                                                cssSelector=".cmp-adaptiveform-tablerow__add-button:hover"/>
+                                                        <focus
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Focus"
+                                                                cssSelector=".cmp-adaptiveform-tablerow__add-button:focus-visible"/>
+                                                        <disabled
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Disabled"
+                                                                cssSelector=".cmp-adaptiveform-tablerow__add-button:disabled"/>
+                                                    </states>
+                                                </tableAddButton>
                                                 <tableRemoveButton
                                                         jcr:primaryType="nt:unstructured"
                                                         jcr:title="Remove Button"
                                                         id="af2_tableremovebutton"
                                                         cssSelector=".cmp-adaptiveform-tablerow__remove-button"
                                                         longTitle="Table Row Remove Button"
-                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <hover
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Hover"
+                                                                cssSelector=".cmp-adaptiveform-tablerow__remove-button:hover"/>
+                                                        <focus
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Focus"
+                                                                cssSelector=".cmp-adaptiveform-tablerow__remove-button:focus-visible"/>
+                                                        <disabled
+                                                                jcr:primaryType="nt:unstructured"
+                                                                jcr:title="Disabled"
+                                                                cssSelector=".cmp-adaptiveform-tablerow__remove-button:disabled"/>
+                                                    </states>
+                                                </tableRemoveButton>
                                             </items>
                                         </tableRowControls>
                                     </items>
