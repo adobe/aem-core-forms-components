@@ -59,12 +59,3 @@ Visibility/state attributes (set by JS view at runtime):
 .cmp-adaptiveform-{name}[data-cmp-visible=false] { display: none; }
 .cmp-adaptiveform-{name}[data-cmp-enabled=false]  { opacity: 0.5; pointer-events: none; }
 ```
-
-## Build and Deploy the Theme
-
-```bash
-# in aem-forms-theme-canvas/
-npm run build              # Parcel compiles all SCSS → dist/theme.css
-npm run create-clientlib   # packages dist/ as AEM clientlib (outputs to theme-clientlibs/)
-# then install theme-clientlibs/ package into AEM via Package Manager
-```
