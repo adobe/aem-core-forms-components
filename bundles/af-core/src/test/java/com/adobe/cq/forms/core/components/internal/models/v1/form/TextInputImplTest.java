@@ -72,6 +72,8 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_EMPTYVALUE_EMPTY_STRING = CONTENT_ROOT + "/textinput-emptyvalue-empty-string";
     private static final String PATH_TEXTINPUT_EMPTYVALUE_INVALID = CONTENT_ROOT + "/textinput-emptyvalue-invalid";
     private static final String PATH_TEXTINPUT_EMPTYVALUE_NOT_SET = CONTENT_ROOT + "/textinput-emptyvalue-not-set";
+    private static final String PATH_PASSWORD_TEXTINPUT = CONTENT_ROOT + "/password-textinput";
+    private static final String PATH_PASSWORD_TEXTINPUT_TOGGLE_DISABLED = CONTENT_ROOT + "/password-textinput-toggle-disabled";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
@@ -592,6 +594,34 @@ public class TextInputImplTest {
         assertEquals("null", AbstractFieldImpl.EmptyValue.NULL.getValue());
         assertEquals("undefined", AbstractFieldImpl.EmptyValue.UNDEFINED.getValue());
         assertEquals("", AbstractFieldImpl.EmptyValue.EMPTY_STRING.getValue());
+    }
+
+    @Test
+    void testFieldTypeForPassword() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_PASSWORD_TEXTINPUT, TextInput.class, context);
+        assertEquals(FieldType.PASSWORD.getValue(), textInput.getFieldType());
+        assertEquals(FormConstants.RT_FD_FORM_PASSWORD_V1, textInput.getExportedType());
+    }
+
+    @Test
+    void testShowHidePasswordEnabledByDefault() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_PASSWORD_TEXTINPUT, TextInput.class, context);
+        assertTrue(textInput.isShowHidePasswordEnabled());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.isShowHidePasswordEnabled()).thenCallRealMethod();
+        assertTrue(textInputMock.isShowHidePasswordEnabled());
+    }
+
+    @Test
+    void testShowHidePasswordCanBeDisabled() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_PASSWORD_TEXTINPUT_TOGGLE_DISABLED, TextInput.class, context);
+        assertFalse(textInput.isShowHidePasswordEnabled());
+    }
+
+    @Test
+    void testJSONExportForPassword() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_PASSWORD_TEXTINPUT, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_PASSWORD_TEXTINPUT));
     }
 
     @AfterEach
