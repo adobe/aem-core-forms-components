@@ -44,6 +44,18 @@ public interface TextInput extends Field, NumberConstraint, DateConstraint, Stri
     }
 
     /**
+     * Returns {@code true} if the password show/hide visibility toggle should be rendered, otherwise {@code false}.
+     * Only relevant when the field's {@code fieldType} is {@code password}.
+     *
+     * @return {@code true} if the visibility toggle should be rendered, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     */
+    @JsonIgnore
+    default boolean isShowHidePasswordEnabled() {
+        return true;
+    }
+
+    /**
      * Returns {@code "off"} if autocomplete if disabled, otherwise {@code "on"} or values listed @see
      * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete">here</a>
      *
