@@ -505,30 +505,26 @@ Cypress.Commands.add("fetchFeatureToggles",()=>{
 Cypress.Commands.add("cleanTest", (editPath) => {
   // clean the test before the next run, if any
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "[data-path='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        cy.deleteComponentByPath(editPath);
-      }
-      resolve(editPath);
-    });
+    const selector12 = "[data-path='" + editPath + "']";
+    if ($body.find(selector12).length > 0) {
+      return cy.deleteComponentByPath(editPath);
+    }
   });
 })
 
 Cypress.Commands.add("cleanTitleTest", (editPath) => {
   // clean the test before the next run, if any
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "div[data-path^='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        $body.find(selector12).each(($index, $titleComponent) => {
-          cy.deleteComponentByPath($titleComponent.dataset.path);
-        })
-      }
-      resolve(editPath);
-    });
+    const selector12 = "div[data-path^='" + editPath + "']";
+    const $components = $body.find(selector12);
+    if ($components.length > 0) {
+      let chain = cy.wrap(null);
+      $components.each(function(index, element) {
+        const path = element.dataset.path;
+        chain = chain.then(() => cy.deleteComponentByPath(path));
+      });
+      return chain;
+    }
   });
 })
 

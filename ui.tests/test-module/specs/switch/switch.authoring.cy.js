@@ -46,12 +46,16 @@ describe('Page - Authoring', function () {
     } else {
       dropSwitchInContainer();
     }
+    cy.selectLayer("Edit");
+    cy.get(sitesSelectors.overlays.overlay.component + switchEditPathSelector).should('be.visible');
     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + switchEditPathSelector);
     cy.invokeEditableAction("[data-action='CONFIGURE']");
     cy.get("[name='./name']")
     .should("exist");
 
-    cy.get('.cq-dialog-cancel').click();
+    cy.get('.cq-dialog-submit').click();
+    cy.get('.cq-dialog-submit').should('not.exist');
+    cy.selectLayer("Edit");
     cy.deleteComponentByPath(switchDrop);
   }
 
