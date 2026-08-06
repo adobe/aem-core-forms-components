@@ -485,6 +485,7 @@ public class FormContainerImplTest {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
         request.setParameterMap(paramMap);
+        Utils.disableLocaleFeatureToggleLookup(request);
         context.currentResource().adaptTo(FormContainer.class);
         return request.adaptTo(FormContainer.class);
     }
@@ -507,6 +508,7 @@ public class FormContainerImplTest {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "ar-ae");
         request.setParameterMap(paramMap);
+        Utils.disableLocaleFeatureToggleLookup(request);
         context.currentResource().adaptTo(FormContainer.class);
         return request.adaptTo(FormContainer.class);
     }
