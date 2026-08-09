@@ -18,6 +18,30 @@
  * aem-forms-theme-canvas/src/components/table/_table.scss
  */
 
+/* rowspan cells: set height:1px so children can use height:100% without
+   breaking table layout (table still expands the cell to span all rows). */
+.cmp-adaptiveform-tablecell[rowspan] {
+    height: 1px;
+    vertical-align: top;
+}
+
+/* Propagate height through decoration div → component root div */
+.cmp-adaptiveform-tablecell[rowspan] > div {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.cmp-adaptiveform-tablecell[rowspan] > div > div {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Override theme fixed heights — widget fills the full spanned cell height */
+.cmp-adaptiveform-tablecell[rowspan] textarea.cmp-adaptiveform-textinput__widget,
+.cmp-adaptiveform-tablecell[rowspan] input.cmp-adaptiveform-textinput__widget {
+    height: 100%;
+}
+
 .cmp-adaptiveform-tablecell.cmp-adaptiveform-tablecell--with-row-controls {}
 
 .cmp-adaptiveform-tablecell--with-row-controls > div:first-of-type {}

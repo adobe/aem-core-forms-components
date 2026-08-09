@@ -640,7 +640,7 @@
         };
     }
 
-    function postImportAndOrderAfter(targetPath, jsonContent, orderAfterNodeName) {
+    function postImportAndOrder(targetPath, jsonContent, orderSpec) {
         var importParams = {
             "_charset_": "UTF-8",
             ":operation": "import",
@@ -651,7 +651,7 @@
         };
         var orderKey = getSlingOrderParam();
         var orderParams = { "_charset_": "UTF-8" };
-        orderParams[orderKey] = "after " + orderAfterNodeName;
+        orderParams[orderKey] = orderSpec;
         return $.ajax({
             url: Granite.HTTP.externalize(targetPath),
             type: "POST",
@@ -663,6 +663,10 @@
                 data: orderParams
             });
         });
+    }
+
+    function postImportAndOrderAfter(targetPath, jsonContent, orderAfterNodeName) {
+        return postImportAndOrder(targetPath, jsonContent, "after " + orderAfterNodeName);
     }
 
     /**
@@ -1083,6 +1087,109 @@
         return isNaN(cs) || cs < 1 ? 1 : cs;
     }
 
+    function getRowCellRowspan(editable) {
+        var $td = $(getEditableDom(editable)).closest(".cmp-adaptiveform-tablecell");
+        var rs = parseInt($td.attr("rowspan"), 10);
+        return isNaN(rs) || rs < 1 ? 1 : rs;
+    }
+
+    /**
+     * Builds a virtual 2D grid of the table body accounting for colspan and rowspan.
+     * grid[rowIdx] is a plain object keyed by logical column index.
+     * occupied["r,c"] marks positions filled by a spanning cell from another origin.
+     * @param {jQuery} $tableBody .cmp-adaptiveform-table__body element
+     * @returns {{ grid: Array, occupied: Object }}
+     */
+    function buildTableBodyGridModel($tableBody) {
+        var grid = [];
+        var occupied = {};
+        $tableBody.find(".cmp-adaptiveform-tablerow").each(function (rowIdx) {
+            grid[rowIdx] = {};
+            var colCursor = 0;
+            $(this).find(".cmp-adaptiveform-tablecell").each(function () {
+                var $td = $(this);
+                while (occupied[rowIdx + "," + colCursor]) {
+                    colCursor++;
+                }
+                var cs = parseInt($td.attr("colspan"), 10);
+                var rs = parseInt($td.attr("rowspan"), 10);
+                if (isNaN(cs) || cs < 1) { cs = 1; }
+                if (isNaN(rs) || rs < 1) { rs = 1; }
+                grid[rowIdx][colCursor] = { $td: $td, colspan: cs, rowspan: rs };
+                for (var r = 0; r < rs; r++) {
+                    for (var c = 0; c < cs; c++) {
+                        if (r === 0 && c === 0) { continue; }
+                        occupied[(rowIdx + r) + "," + (colCursor + c)] = { originRow: rowIdx, originCol: colCursor };
+                    }
+                }
+                colCursor += cs;
+            });
+        });
+        return { grid: grid, occupied: occupied };
+    }
+
+    /**
+     * Returns the grid origin {row, col, colspan, rowspan} for an editable's cell.
+     * @param {Granite.author.Editable} editable
+     * @param {{ grid: Array }} gridModel
+     * @returns {{ row: number, col: number, colspan: number, rowspan: number }|null}
+     */
+    function getCellGridOrigin(editable, gridModel) {
+        var $td = $(getEditableDom(editable)).closest(".cmp-adaptiveform-tablecell");
+        var grid = gridModel.grid;
+        for (var r = 0; r < grid.length; r++) {
+            if (!grid[r]) { continue; }
+            var cols = Object.keys(grid[r]);
+            for (var ci = 0; ci < cols.length; ci++) {
+                var c = parseInt(cols[ci], 10);
+                if (grid[r][c] && grid[r][c].$td && grid[r][c].$td[0] === $td[0]) {
+                    return { row: r, col: c, colspan: grid[r][c].colspan, rowspan: grid[r][c].rowspan };
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Validates that selected body cells form a complete filled rectangle in the grid.
+     * @param {Array} selectedItems
+     * @param {{ grid: Array, occupied: Object }} gridModel
+     * @returns {{ valid: boolean, error?: string, minRow: number, maxRow: number, minCol: number, maxCol: number }}
+     */
+    function validateBodyCellRectangle(selectedItems, gridModel) {
+        var covered = {};
+        var minRow = Infinity, maxRow = -Infinity, minCol = Infinity, maxCol = -Infinity;
+
+        for (var i = 0; i < selectedItems.length; i++) {
+            var pos = getCellGridOrigin(selectedItems[i], gridModel);
+            if (!pos) {
+                return { valid: false, error: "Could not resolve grid position for all selected cells." };
+            }
+            for (var rr = pos.row; rr < pos.row + pos.rowspan; rr++) {
+                for (var cc = pos.col; cc < pos.col + pos.colspan; cc++) {
+                    if (covered[rr + "," + cc]) {
+                        return { valid: false, error: "Selected cells overlap. Each grid position must be covered by exactly one cell." };
+                    }
+                    covered[rr + "," + cc] = true;
+                    if (rr < minRow) { minRow = rr; }
+                    if (rr > maxRow) { maxRow = rr; }
+                    if (cc < minCol) { minCol = cc; }
+                    if (cc > maxCol) { maxCol = cc; }
+                }
+            }
+        }
+
+        for (var row = minRow; row <= maxRow; row++) {
+            for (var col = minCol; col <= maxCol; col++) {
+                if (!covered[row + "," + col]) {
+                    return { valid: false, error: "Selected cells do not form a complete rectangle. Fill all gaps before merging." };
+                }
+            }
+        }
+
+        return { valid: true, minRow: minRow, maxRow: maxRow, minCol: minCol, maxCol: maxCol };
+    }
+
     /**
      * True when the editable is Adaptive Form Text-Input (or any field) inside a
      * body table-row cell (not a header cell).
@@ -1107,7 +1214,7 @@
     }
 
     /**
-     * True when the body-row cell has a colspan > 1 (has been merged).
+     * True when the body-row cell has been merged (colspan > 1 or rowspan > 1).
      * @param {Granite.author.Editable} editable
      * @returns {boolean}
      */
@@ -1115,14 +1222,13 @@
         if (!window.CQ.FormsCoreComponents.editorhooks.isCoreTableRowCell(editable)) {
             return false;
         }
-        return getRowCellColspan(editable) > 1;
+        return getRowCellColspan(editable) > 1 || getRowCellRowspan(editable) > 1;
     };
 
     /**
-     * Merges 2+ consecutive, same-row selected body cells into one by:
-     * - summing their colspan values
-     * - deleting all but the first (DOM-order) cell
-     * - posting the total colspan to the first cell
+     * Merges selected body cells into one. Cells must form a complete rectangle
+     * in the logical grid (accounts for existing colspan/rowspan). The top-left
+     * surviving cell receives colspan=columns and rowspan=rows (omitted when 1).
      * @param {Granite.author.Editable} editable
      */
     window.CQ.FormsCoreComponents.editorhooks.mergeTableRowCells = function (editable) {
@@ -1158,48 +1264,42 @@
             return;
         }
 
-        var firstParentPath = currentSelectionItems[0].getParentPath();
-        var allSameRow = currentSelectionItems.every(function (item) {
-            return item.getParentPath() === firstParentPath;
-        });
-        if (!allSameRow) {
-            showError("All selected cells must be in the same row.");
+        var $tableBody = $(getEditableDom(currentSelectionItems[0]))
+            .closest(".cmp-adaptiveform-table__body");
+        if (!$tableBody.length) {
+            showError("Could not locate the table body.");
             return;
         }
 
-        var $row = $(getEditableDom(currentSelectionItems[0]))
-            .closest(".cmp-adaptiveform-tablerow");
-        var $allCells = $row.find(".cmp-adaptiveform-tablecell");
-
-        var indices = currentSelectionItems.map(function (item) {
-            return $allCells.index($(getEditableDom(item)).closest(".cmp-adaptiveform-tablecell"));
-        }).sort(function (a, b) { return a - b; });
-
-        var isConsecutive = indices.every(function (idx, i) {
-            return i === 0 || idx === indices[i - 1] + 1;
-        });
-        if (!isConsecutive) {
-            showError("Select consecutive cells in the same row to merge.");
+        var gridModel = buildTableBodyGridModel($tableBody);
+        var validation = validateBodyCellRectangle(currentSelectionItems, gridModel);
+        if (!validation.valid) {
+            showError(validation.error);
             return;
         }
 
-        var sortedItems = currentSelectionItems.slice().sort(function (a, b) {
-            var aIdx = $allCells.index($(getEditableDom(a)).closest(".cmp-adaptiveform-tablecell"));
-            var bIdx = $allCells.index($(getEditableDom(b)).closest(".cmp-adaptiveform-tablecell"));
-            return aIdx - bIdx;
-        });
+        var totalColspan = validation.maxCol - validation.minCol + 1;
+        var totalRowspan = validation.maxRow - validation.minRow + 1;
 
-        var firstItem = sortedItems[0];
-        var firstCellPath = firstItem.path;
-        var totalColspan = 0;
-        sortedItems.forEach(function (item) {
-            totalColspan += getRowCellColspan(item);
-        });
+        var topLeftItem = null;
+        for (var i = 0; i < currentSelectionItems.length; i++) {
+            var pos = getCellGridOrigin(currentSelectionItems[i], gridModel);
+            if (pos && pos.row === validation.minRow && pos.col === validation.minCol) {
+                topLeftItem = currentSelectionItems[i];
+                break;
+            }
+        }
+        if (!topLeftItem) {
+            showError("Could not identify the top-left cell.");
+            return;
+        }
 
+        var firstCellPath = topLeftItem.path;
         var deleteParams = getDeleteParams();
         var chain = $.when();
 
-        sortedItems.slice(1).forEach(function (item) {
+        currentSelectionItems.forEach(function (item) {
+            if (item === topLeftItem) { return; }
             var itemPath = item.path;
             chain = chain.then(function () {
                 return $.ajax({
@@ -1210,14 +1310,17 @@
             });
         });
 
-        chain.then(function () {
+        chain = chain.then(function () {
+            var data = { "_charset_": "UTF-8" };
+            if (totalColspan > 1) { data["colspan"] = String(totalColspan); }
+            if (totalRowspan > 1) { data["rowspan"] = String(totalRowspan); }
             return $.ajax({
                 url: Granite.HTTP.externalize(firstCellPath),
                 type: "POST",
-                data: { "_charset_": "UTF-8", "colspan": String(totalColspan) }
+                data: data
             });
         }).done(function () {
-            var tableEditable = getTableEditableFromRowCellChild(firstItem);
+            var tableEditable = getTableEditableFromRowCellChild(topLeftItem);
             if (tableEditable) {
                 tableEditable.refresh();
             }
@@ -1230,15 +1333,17 @@
     };
 
     /**
-     * Splits a merged body row cell (colspan > 1) back into individual cells by:
-     * - removing the colspan property from the current cell
-     * - inserting (colspan - 1) new text-input cells immediately after it
+     * Splits a merged body row cell (colspan > 1 or rowspan > 1) back into individual cells:
+     * - removes colspan/rowspan properties from the cell
+     * - re-inserts (colspan-1) siblings in the same row
+     * - re-inserts colspan cells in each of the (rowspan-1) spanned rows at the correct position
      * @param {Granite.author.Editable} editable
      */
     window.CQ.FormsCoreComponents.editorhooks.splitTableRowCell = function (editable) {
         var colSpan = getRowCellColspan(editable);
+        var rowSpan = getRowCellRowspan(editable);
 
-        if (colSpan <= 1) {
+        if (colSpan <= 1 && rowSpan <= 1) {
             $("#" + SPLIT_ROW_CELL_DIALOG_ID).remove();
             var dialog = new Coral.Dialog().set({
                 id: SPLIT_ROW_CELL_DIALOG_ID,
@@ -1259,31 +1364,86 @@
         var rowPath = editable.getParentPath();
         var cellName = cellPath.substring(cellPath.lastIndexOf("/") + 1);
         var tableEditable = getTableEditableFromRowCellChild(editable);
-        var numNewCells = colSpan - 1;
-
         var uid = Date.now();
-        var cellsToCreate = [];
-        for (var i = 0; i < numNewCells; i++) {
-            var newName = "cell_" + uid + "_" + i;
-            cellsToCreate.push({
-                name: newName,
-                path: rowPath + "/" + newName,
-                content: buildBodyTextInputJson()
-            });
-        }
+
+        // Capture grid state before any DOM changes
+        var $tableBody = $(getEditableDom(editable)).closest(".cmp-adaptiveform-table__body");
+        var gridModel = buildTableBodyGridModel($tableBody);
+        var originPos = getCellGridOrigin(editable, gridModel);
+        var $allRows = $tableBody.find(".cmp-adaptiveform-tablerow");
+
+        var deleteData = { "_charset_": "UTF-8" };
+        if (colSpan > 1) { deleteData["colspan@Delete"] = "true"; }
+        if (rowSpan > 1) { deleteData["rowspan@Delete"] = "true"; }
 
         $.ajax({
             url: Granite.HTTP.externalize(cellPath),
             type: "POST",
-            data: { "_charset_": "UTF-8", "colspan@Delete": "true" }
+            data: deleteData
         }).then(function () {
             var chain = $.when();
-            cellsToCreate.forEach(function (cell, i) {
-                var orderAfter = i === 0 ? cellName : cellsToCreate[i - 1].name;
-                chain = chain.then(function () {
-                    return postImportAndOrderAfter(cell.path, cell.content, orderAfter);
-                });
-            });
+
+            // Re-insert (colSpan-1) horizontal siblings in the same row
+            if (colSpan > 1) {
+                for (var i = 0; i < colSpan - 1; i++) {
+                    (function (idx) {
+                        chain = chain.then(function () {
+                            var newName = "cell_" + uid + "_h" + idx;
+                            var orderAfter = idx === 0 ? cellName : ("cell_" + uid + "_h" + (idx - 1));
+                            return postImportAndOrderAfter(rowPath + "/" + newName, buildBodyTextInputJson(), orderAfter);
+                        });
+                    })(i);
+                }
+            }
+
+            // Re-insert colSpan cells in each of the (rowSpan-1) spanned rows
+            if (rowSpan > 1 && originPos) {
+                for (var r = 1; r < rowSpan; r++) {
+                    (function (rowOffset) {
+                        var $spannedRow = $allRows.eq(originPos.row + rowOffset);
+                        if (!$spannedRow.length) { return; }
+                        var spannedRowPath = $spannedRow.attr("data-cq-data-path");
+                        if (!spannedRowPath) { return; }
+
+                        var rowGridRow = gridModel.grid[originPos.row + rowOffset] || {};
+
+                        // Find the highest col index strictly before originPos.col in this row
+                        var precedingCol = -1;
+                        Object.keys(rowGridRow).forEach(function (key) {
+                            var ci = parseInt(key, 10);
+                            if (ci < originPos.col && ci > precedingCol) { precedingCol = ci; }
+                        });
+
+                        for (var k = 0; k < colSpan; k++) {
+                            (function (colOffset) {
+                                chain = chain.then(function () {
+                                    var newName = "cell_" + uid + "_r" + rowOffset + "c" + colOffset;
+                                    var orderSpec;
+                                    if (colOffset > 0) {
+                                        // Order after the previous new cell we inserted in this same row
+                                        orderSpec = "after cell_" + uid + "_r" + rowOffset + "c" + (colOffset - 1);
+                                    } else if (precedingCol >= 0) {
+                                        // Order after the existing cell immediately left of the gap
+                                        var $precedingTd = rowGridRow[precedingCol] && rowGridRow[precedingCol].$td;
+                                        var precedingCellPath = $precedingTd
+                                            ? $precedingTd.find("[data-cq-data-path]").first().attr("data-cq-data-path")
+                                            : null;
+                                        var precedingName = precedingCellPath
+                                            ? precedingCellPath.substring(precedingCellPath.lastIndexOf("/") + 1)
+                                            : null;
+                                        orderSpec = precedingName ? "after " + precedingName : "first";
+                                    } else {
+                                        // Gap is at column 0 — insert as first child
+                                        orderSpec = "first";
+                                    }
+                                    return postImportAndOrder(spannedRowPath + "/" + newName, buildBodyTextInputJson(), orderSpec);
+                                });
+                            })(k);
+                        }
+                    })(r);
+                }
+            }
+
             return chain;
         }).done(function () {
             if (tableEditable) {
