@@ -25,7 +25,7 @@ const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE, FT, CORE_COMPONENTS, WCM_COMPONENTS} = process.env;
 const isLatestAddon = AEM === 'addon-latest';
-const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/org.jacoco.agent-0.8.3-runtime.jar';
+const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar';
 
 try {
     // # Define the image name
