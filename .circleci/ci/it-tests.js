@@ -29,7 +29,7 @@ const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0
 
 try {
     // # Define the image name
-    let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
+    let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.7-openjdk21";
     let qpContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
     console.log("container id for qp ", qpContainerId);
 
