@@ -105,7 +105,7 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
-            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${jacocoAgent}=destfile=crx-quickstart/jacoco-it.exec\\\" \
+            --vm-options \\\"-Xmx4096m -Djava.awt.headless=true -javaagent:${jacocoAgent}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts}`);
 });
 
