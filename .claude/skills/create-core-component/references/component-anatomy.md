@@ -77,25 +77,7 @@ FormComponent
 
 ## Implementation Hierarchy
 
-```
-AbstractComponentImpl (WCM Core)
-  └── AbstractFormComponentImpl (name, fieldType, dataRef, visible, value, events, rules)
-        └── AbstractBaseImpl (label, description, tooltip, type, required, enabled)
-              └── AbstractFieldImpl (readOnly, default, placeholder, min/max constraints)
-                    ├── AbstractOptionsFieldImpl (enum, enumNames, enforceEnum)
-                    └── [Direct subclasses for simple fields]
-```
-
-Choose the appropriate base class:
-- **Simple text/number field** -> extend `AbstractFieldImpl`
-- **Options-based field** (checkboxes, radios, selects) -> extend `AbstractOptionsFieldImpl`
-- **Container/panel** -> extend `AbstractContainerImpl`
-- **Non-input component** (button, text, image) -> extend `AbstractBaseImpl`
-- **Composite / split widget** (e.g. day/month/year, multiple visible inputs feeding
-  one value) -> still extend the field base that matches the data type
-  (`AbstractFieldImpl` for date), but render **one hidden combined `<input>`** as the
-  value-bearing widget plus the visible sub-inputs. This category has extra runtime
-  rules — read `references/runtime-view-js.md` before writing the view JS.
+For the full class hierarchy (Impl classes) and base-class selection guide (including the composite / split-widget case), see `docs/architecture/overview.md` — the "Java Model Hierarchy" section is the single source of truth; do not restate it here.
 
 ---
 

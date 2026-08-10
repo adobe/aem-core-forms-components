@@ -17,17 +17,21 @@ Scaffold a complete, production-ready AEM Core Form Component across all layers 
 
 ### Phase 1: Gather Requirements
 
-Before generating any code, collect the following from the user:
+Before generating any code or reading any reference files, collect all of the following from the user in a single message. Do not proceed until all answers are received.
 
-1. **Component name** — e.g., `ImageChoice`, `StarRating`, `ColorPicker`
-2. **Component type** — which category:
-   - **Simple field** (text-like input) → extends `AbstractFieldImpl` / implements `Field`
-   - **Options field** (multiple choices) → extends `AbstractOptionsFieldImpl` / implements `OptionsConstraint`
-   - **Container** (holds child components) → extends `AbstractContainerImpl`
-   - **Display-only** (non-input: text, image, separator) → extends `AbstractBaseImpl` / implements `Base`
-3. **Custom properties** — any JCR properties beyond what the base class provides
-4. **Widget HTML** — what the interactive element looks like (input, select, custom markup)
+1. **Component name and purpose** — e.g., `ImageChoice` (radio group with image thumbnails), `StarRating` (captures 1–5 star rating)
+2. **Component type** — which category (see `docs/architecture/overview.md` for the base class and interface each one maps to):
+   - **Simple field** (text-like input that captures a single value)
+   - **Options field** (multiple choices: checkboxes, radios, dropdowns)
+   - **Container** (holds child components)
+   - **Step / display** (non-input: text, image, separator)
+   - **Display/text** (renders authored HTML content with a title label) — `sling:resourceSuperType="core/fd/components/form/text/v1/text"`
+3. **Custom properties** — any JCR properties beyond what the base class provides (name, type, default, purpose for each)
+4. **Widget HTML** — what the interactive element looks like (input type, select, custom div, etc.)
 5. **Constraints** — which constraint interfaces apply (String, Number, Date, Options, File)
+6. **Target repository and component group** — which repo (`aem-core-forms-components`, or a project overlay) and what `componentGroup` for the author toolbar (e.g., `".core-adaptiveform"`)
+7. **Java backend** — does this component need a custom Sling Model, or can it reuse an existing Core model via `sling:resourceSuperType`? (Reuse is appropriate when the component only adds JS behavior on top of an existing field type; custom Java is required for new authored properties exposed in HTL or JSON)
+8. **FormContainer-level properties** — does this component need any configuration authored on the parent form container rather than on the component instance itself? (e.g., a signing service path set once for the whole form) If yes: what properties, and what tab name should they appear under in the form container dialog?
 
 ### Phase 2: Derive Naming Conventions
 
@@ -44,6 +48,7 @@ From the component name, derive all naming variants. For example, given `ImageCh
 | Resource type | `core/fd/components/form/imagechoice/v1/imagechoice` |
 | Clientlib category | `core.forms.components.imagechoice.v1.runtime` |
 | FormConstant | `RT_FD_FORM_IMAGE_CHOICE_V1` |
+| `fd:viewType` (step only) | `image-choice` |
 
 ### Phase 3: Generate Files
 
@@ -70,9 +75,14 @@ Read `references/templates.md` for the full template set. Read `references/compo
 
 #### 3b. UI AF Apps (HTL, Dialogs, Clientlibs)
 
-4. **Component definition** — `.content.xml` with `sling:resourceSuperType="core/fd/components/form/base/v1/base"`
+4. **Component definition** — `.content.xml` with `sling:resourceSuperType` set to the appropriate base. Also create `_cq_template.xml` (instance defaults: `jcr:title`, `fieldType`, and `fd:viewType` for step components) and `_cq_editConfig.xml` (author toolbar — use the inplace RTE variant from `references/templates.md` template #16 for display/text components). See `references/templates.md` templates #6, #6b, and #16.
 
-5. **HTL template** — Follow the standard structure:
+5. **HTL template** — Choose the correct variant from `references/templates.md`:
+   - **Template #7** — field components (captures a value)
+   - **Template #7b** — step/display components (no widget)
+   - **Template #7c** — display/text with label and rich-text value area
+   
+     Follow the standard structure for the chosen variant:
    - Include shared templates via `data-sly-use` (label, shortDescription, longDescription, errorMessage, questionMark)
    - Root `<div>` with `data-cmp-is`, `data-cmp-visible`, `data-cmp-enabled`, `data-cmp-required`, `data-cmp-readonly`
    - Label container with label + question mark
@@ -87,9 +97,9 @@ Read `references/templates.md` for the full template set. Read `references/compo
 
 7. **Dialog XML** — Include base dialog fields via `granite/ui/components/coral/foundation/include`, add component-specific tabs/fields
 
-8. **Site clientlib** — `.content.xml`, `js.txt`, `css.txt`, view JS, styles. **Before writing the view JS, read `references/runtime-view-js.md`** — it defines the `FormFieldBase` override contract (`super` calls, `updateEmptyStatus`, composite-widget focus guard).
+8. **Site clientlib** — `.content.xml`, `js.txt`, `css.txt`, view JS (`references/templates.md` #11 or #11b), the CSS stub (empty BEM rules in `aem-core-forms-components`) plus the theme SCSS (actual styles in `aem-forms-theme-canvas`). See `references/css-architecture.md` and `references/templates.md` #12. **Before writing the view JS, read `references/runtime-view-js.md`** — it defines the `FormFieldBase` override contract (`super` calls, `updateEmptyStatus`, composite-widget focus guard).
 
-9. **Editor clientlib** — `.content.xml` with editor category. In editor JS use `textContent` (never `innerHTML`) and don't wrap locale-neutral format strings in `Granite.I18n.get`.
+9. **Editor clientlib** — `.content.xml` with editor category. See `references/editor-clientlib.md` for JS safety rules (`textContent` vs `innerHTML`, i18n) and the conditional-field-visibility pattern.
 
 10. **Register the runtime clientlib** — embed the component's `core.forms.components.{componentname}.v1.runtime` category in `ui.af.apps/.../af-clientlibs/core-forms-components-runtime-all/.content.xml`. Missing this silently breaks the runtime Cypress suite.
 
@@ -120,15 +130,21 @@ required** (they catch HTL/view-JS/dialog/sync bugs that unit tests cannot). Rea
 17. **Example content page** — Page structure with `guideContainer` and sample component instance
 18. **Register in example index** — Add entry to `examples/ui.content/.../adaptive-form/.content.xml`
 
+#### 3e. Wiring and Registration
+
+After all files are created, complete the wiring steps from `references/wiring-steps.md`:
+
+- **Step 1** — Embed the clientlib category in `core-forms-components-runtime-all/.content.xml`
+- **Step 2** — Add `FormConstants` resource type constant (if needed by other Java code)
+- **Step 3** — Add i18n strings to all 10 language files (if new constraint messages were added)
+- **Step 4** — Content migration (see `migrate-foundation-component` skill — not applicable for new components)
+- **Step 5** — Extend FormContainer dialog (if component reads form-level properties)
+- **Step 6** — Register component group in the production template policy
+- **Step 7** — Create integration test content and register it in the IT template policy
+
 ### Phase 4: Accessibility Verification
 
-After generating all files, read `references/accessibility-checklist.md` and verify:
-
-1. **HTL template** — Every interactive element has `aria-label` or `<label for>`, error div has `aria-live="assertive"`, descriptions have `aria-live="polite"`. For a grouped widget, give the group `aria-label="${component.label.value}"` — **the shared label template emits no `id`, so `aria-labelledby="...__label"` is broken** (see `references/runtime-view-js.md` and the accessibility checklist).
-2. **JS view** — Prefer the inherited `FormFieldBase` handlers. If you override `updateValidity` / `updateEnabled` / `updateReadOnly` / `updateValue`, **call `super.<handler>(value, state)` first** so `data-cmp-*` attributes, the error message, and `--filled`/`--empty` stay in sync; only then add component-specific behaviour. Focus/blur handlers call `setActive()`/`setInactive()`. Read `references/runtime-view-js.md` — this is the #1 source of runtime bugs.
-3. **LESS styles** — `:focus` has visible `outline` with `2px` minimum, error states use color + text
-4. **Keyboard** — All interactive elements have `tabindex` if not natively focusable
-5. **BEM** — All class names follow `cmp-adaptiveform-{componentname}__{element}` convention
+After generating all files, work through `references/accessibility-checklist.md` and satisfy every applicable item (labels, ARIA states, live regions, keyboard, focus, BEM). That file is the single source of truth for the WCAG 2.1 AA requirements. It also covers the two highest-risk items: the `FormFieldBase` override contract (if you override `updateValidity` / `updateEnabled` / `updateReadOnly` / `updateValue`, call `super.<handler>(value, state)` first — see `references/runtime-view-js.md`, the #1 source of runtime bugs) and the grouped-widget label pitfall (use `aria-label="${component.label.value}"`, not `aria-labelledby`, because the shared label template emits no `id`).
 
 ### Phase 5: Validation
 
@@ -190,28 +206,39 @@ described in `references/runtime-view-js.md`.
 ## Key References
 
 - `references/component-anatomy.md` — Full file checklist (incl. Cypress + wiring), interface/implementation hierarchy, FormConstants pattern
-- `references/templates.md` — Copy-paste-ready templates for every file type with placeholders
+- `references/templates.md` — Copy-paste-ready templates for every file type with placeholders (including variants 2b, 6b, 7b, 7c, 11b, 11c, 16)
 - `references/runtime-view-js.md` — **The `FormFieldBase` override contract** (super calls, `updateEmptyStatus`, composite widgets) — read before writing any view JS
 - `references/cypress-tests.md` — Required runtime + authoring specs, wiring, and Cypress gotchas
 - `references/accessibility-checklist.md` — WCAG 2.1 AA checklist with AEM-specific ARIA patterns
+- `docs/architecture/overview.md` — Component-layer diagram, runtime data flow, and Java/JS base-class selection guide
+- `references/css-architecture.md` — Two-layer CSS split: stub in `aem-core-forms-components`, SCSS in `aem-forms-theme-canvas`
+- `references/widget-patterns.md` — HTML widget element patterns for each component type
+- `references/wiring-steps.md` — Post-generation wiring: clientlib embed, FormConstants, i18n, FormContainer dialog, template policy
+- `references/verification-checklist.md` — Post-implementation checklist covering structure, wiring, CSS, HTL, JS, Java, and tests
+- `references/common-mistakes.md` — Common implementation mistakes with fixes
+- `references/editor-clientlib.md` — JS-driven conditional field visibility in author dialogs, and editor JS safety rules
+- `references/composite-multifield.md` — Composite multifield patterns for repeatable dialog items
+- `references/datasource-servlet.md` — Dynamic JCR-sourced options for Granite UI selects
 - `scripts/validate_component.py` — Automated validator — run after generating all files
 
 ## Critical Rules
 
-1. **Never skip the accessibility checklist** — Every component must satisfy WCAG 2.1 AA
-2. **Always use existing abstract base classes** — Do not reinvent label/description/tooltip/error handling
-3. **Always register in FormConstants** — The resource type constant is required for Sling Model resolution
-4. **Follow BEM strictly** — `cmp-adaptiveform-{componentname}__{element}` with no exceptions
-5. **Use shared field templates** — Label, description, error message, question mark templates from `af-commons`
-6. **JSON export must validate** — The exporter JSON test validates against the Adaptive Form JSON schema
-7. **Match existing copyright headers** — Apache License 2.0 headers on all Java, JS, HTL, and LESS files. Use the **current calendar year** (not a hardcoded year) in `Copyright {year} Adobe`
-8. **Include `data-cmp-data-layer`** — The root `<div>` in HTL must include `data-cmp-data-layer="${{componentname}.data.json}"` for analytics/data layer integration
-9. **Use `@ValueMapValue` with `InjectionStrategy.OPTIONAL`** — Never use `REQUIRED`; missing properties should use defaults
-10. **Test both `Resource` and `SlingHttpServletRequest` adaptation** — The `@Model` annotation must list both `adaptables`
-11. **Widget ID convention** — Always `{componentId}-widget` via `${'{0}-{1}' @ format=[component.id, 'widget']}`
-12. **Call `super` when overriding `update*` handlers** — `FormFieldBase` keeps the root `data-cmp-*` attributes, the error message, and `--filled`/`--empty` in sync; an override that skips `super` silently breaks them. An overridden `updateValue` must also end with `this.updateEmptyStatus()`. See `references/runtime-view-js.md`.
-13. **Cypress specs are mandatory** — ship `{componentname}.runtime.cy.js` + `{componentname}.authoring.cy.js`, the IT sample content, the `formsConstants.js` entry, and the runtime-all embed. Run the runtime spec green against `localhost:4502` before sign-off.
+Terse non-negotiables. Where a rule has a detailed rationale or failure mode, it is documented once in the referenced file — do not restate it here.
+
+1. **Never skip accessibility** — satisfy every applicable item in `references/accessibility-checklist.md` (WCAG 2.1 AA), including the grouped-widget label pitfall (use `aria-label`, not `aria-labelledby`).
+2. **Always extend an existing abstract base class** — do not reinvent label/description/tooltip/error handling. See `docs/architecture/overview.md`.
+3. **Always register in FormConstants** — the resource type constant is required for Sling Model resolution.
+4. **Follow BEM strictly** — `cmp-adaptiveform-{componentname}__{element}`, no exceptions.
+5. **Use shared field templates** from `af-commons` (label, description, error message, question mark).
+6. **JSON export must validate** against the Adaptive Form JSON schema (exporter test).
+7. **Match existing copyright headers** — Apache License 2.0 on all Java/JS/HTL/LESS files, using the current calendar year.
+8. **Include `data-cmp-data-layer`** on the root `<div>` for data-layer integration.
+9. **Widget ID convention** — always `{componentId}-widget` via `${'{0}-{1}' @ format=[component.id, 'widget']}`.
+10. **`_cq_editConfig.xml` is required** for every component (display/text with inplace editing uses the extended variant — `references/templates.md` template #16).
+11. **CSS is split across two repos** — see `references/css-architecture.md` for what goes where.
+12. **Call `super` when overriding `update*` handlers** — an override that skips `super` silently breaks `data-cmp-*`, the error message, and `--filled`/`--empty`; an overridden `updateValue` must also end with `this.updateEmptyStatus()`. See `references/runtime-view-js.md`.
+13. **Cypress specs are mandatory** — ship `{componentname}.runtime.cy.js` + `{componentname}.authoring.cy.js`, the IT sample content, the `formsConstants.js` entry, and the runtime-all embed. Run the runtime spec green against `localhost:4502` before sign-off. See `references/cypress-tests.md`.
 14. **No empty styling or dialogs** — every BEM modifier class you emit must have a CSS rule; never ship an empty `_cq_design_dialog` tab.
-15. **Group label uses `aria-label`** — the shared label template emits no `id`, so `aria-labelledby="...__label"` is broken; use `aria-label="${component.label.value}"` for `role="group"` widgets.
-16. **Composite widgets**: only the hidden combined input carries `name`; never repopulate a sub-input the user is actively editing.
-17. **Editor JS safety** — use `textContent` not `innerHTML`; don't wrap locale-neutral format strings (`'YYYY-MM-DD'`) in `Granite.I18n.get`.
+15. **Composite widgets** — only the hidden combined input carries `name`; never repopulate a sub-input the user is actively editing. See `references/runtime-view-js.md`.
+16. **Editor JS safety** — see `references/editor-clientlib.md` (`textContent` vs `innerHTML`, locale-neutral format strings).
+17. **Read `references/common-mistakes.md` before Phase 3** — it is the source of truth for the recurring failure modes (`@ValueMapValue`/`InjectionStrategy.OPTIONAL`, dual `adaptables`, `data-sly-test` on `__value`, and others); those are not repeated here.

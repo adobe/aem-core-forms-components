@@ -63,28 +63,58 @@ These properties exist in the foundation base `GuideField` / `GuideNode` and are
 
 | Foundation Property | Foundation JCR | Core JCR | Notes |
 |--------------------|---------------|----------|-------|
-| `jcr:title` (field title) | `jcr:title` | `jcr:title` (via label) | Core wraps in label object |
-| `mandatory` | `mandatory` | `required` | Name change |
-| `placeholderText` | `placeholderText` | `emptyText` / `placeholder` | Check Core convention |
-| `bindRef` | `bindRef` | `dataRef` | Core uses `dataRef` |
-| `cssClassName` | `cssClassName` | *(handled differently)* | Core uses data-layer |
+| `jcr:title` (field title) | `jcr:title` | `jcr:title` (via label object) | Core wraps in label object with `value` and `visible` sub-properties |
+| `mandatory` | `mandatory` | `required` | Aligned with HTML/JSON Schema standard |
+| `placeholderText` | `placeholderText` | `placeholder` | Shortened to match HTML attribute |
+| `bindRef` | `bindRef` | `name` | Core binds via `name`; `bindRef` is XFA-specific |
+| `_value` | `_value` | `default` | Foundation prefixed `_` to avoid JCR conflicts; Core uses `default` |
+| `shortDescription` | `shortDescription` | `tooltip` | Concept rename: short description = tooltip in Core |
+| `longDescription` | `longDescription` | `description` | Concept rename |
+| `shortVisible` | `shortVisible` | `tooltipVisible` | Renamed to match its field |
+| `isTitleRichText` | `isTitleRichText` | `label.richText` sub-property | Moved into the label object |
+| `hideTitle` | `hideTitle` | `label` sub-node with `visible=false` | Label is now an object |
+| `maxChars` | `maxChars` | `maxLength` | Aligned with HTML5 `maxlength` |
+| `validatePictureClause` | `validatePictureClause` | `pattern` | XFA picture clause → standard regex |
+| `validatePictureClauseMessage` | `validatePictureClauseMessage` | constraint message for `pattern` | Goes into constraint messages map |
+| `mandatoryMessage` | `mandatoryMessage` | constraint message for `required` | Same constraint messages map |
+| `cssClassName` | `cssClassName` | *(Style System)* | Core uses Design Dialog Style System; see dropped properties |
 
 ## Properties Commonly Dropped
 
-These foundation properties are typically NOT migrated to Core:
+"Dropped" means the specific JCR property has no place on a Core JCR node. It does NOT mean the feature disappears. For every dropped property, the "Core provides this via" column is mandatory in the migration plan — leaving it blank is not acceptable.
 
-| Foundation Property | JCR Name | Reason |
-|--------------------|----------|--------|
-| `guideNodeClass` | `guideNodeClass` | Foundation-only; Sling Model resolution replaces this |
-| `xdpRef` | `xdpRef` | XFA template reference; only if XFA support needed |
-| `dorTemplateRef` | `dorTemplateRef` | Document of Record template ref; separate concern in Core |
-| `dorType` | `dorType` | DOR configuration; handled differently in Core |
-| `dorExclusion` | `dorExclusion` | DOR exclusion; handled differently in Core |
-| `fieldLayout` | `fieldLayout` | Foundation layout system; Core uses CSS/BEM |
-| `allowedParents` | (metadata) | Foundation parsys constraint; Core uses policy |
-| `wrapData` | `wrapData` | XFA data wrapping; not applicable |
-| `assistPriority` | `assistPriority` | Foundation accessibility priority; Core uses explicit ARIA |
-| `custom` | `custom` | Foundation custom object; Core uses `properties` |
+| Foundation Property | JCR Name | Why Dropped | Core provides this via | Action required |
+|--------------------|----------|-------------|------------------------|-----------------|
+| `guideNodeClass` | `guideNodeClass` | Foundation-only; Sling Model resolution replaces this | `sling:resourceType` | None — Core resolves via resource type |
+| `visibleExp` | `visibleExp` | Core does not evaluate this string at runtime | **Rules Editor** — Visibility rule; stored in `fd:rules` | Ensure Rules Editor tab is present in Core dialog |
+| `enabledExp` | `enabledExp` | Same | **Rules Editor** — Enable rule | Same |
+| `calculateExp` | `calculateExp` | Same | **Rules Editor** — Set Value of rule | Same |
+| `initializeExp` | `initializeExp` | Same | **Rules Editor** — Initialize rule | Same |
+| `sOM` | `sOM` | Auto-computed; never authored | **Core runtime** — computed from form schema | Nothing — Core computes automatically |
+| `guideFieldType` | `guideFieldType` | Replaced by a different property | **`fieldType`** in `_cq_template.xml` (kebab-case) | Set correct `fieldType` |
+| `fieldLayout` | `fieldLayout` | Foundation layout system; Core uses CSS/BEM | **HTL template structure** — layout baked into `.html` | Implement correct layout in HTL |
+| `colspan` | `colspan` | Foundation grid system removed | **Container responsive grid** — managed at container level | Configure at container level |
+| `css` (CSS Class field) | `css` | Arbitrary class injection is not a Core pattern | **Style System** — `_cq_design_dialog` with allowed styles | Implement `_cq_design_dialog` with Style System tab |
+| `assistPriority` | `assistPriority` | Foundation accessibility priority; Core uses explicit ARIA | **Core ARIA attributes** — `aria-label`, `aria-describedby` set by shared templates and JS | Nothing — Core handles automatically |
+| `xdpRef` | `xdpRef` | XFA template reference | Nothing (unless XFA support explicitly needed) | Flag for user review |
+| `dorTemplateRef` | `dorTemplateRef` | Document of Record template ref | Separate concern in Core DOR templates | Flag for user review |
+| `dorType` | `dorType` | DOR configuration; handled differently in Core | Core DOR templates | Flag for user review |
+| `dorExclusion` | `dorExclusion` | DOR exclusion flag | Core DOR templates | Flag for user review |
+| `wrapData` | `wrapData` | XFA data wrapping; not applicable | Nothing | No action needed |
+| `allowedParents` | (metadata) | Foundation parsys constraint; Core uses policy | **Template policy** — component groups in `wcm/policies` | Add component group to template policy |
+
+## Properties Requiring Per-Migration Review
+
+These properties exist in some foundation components and need case-by-case evaluation:
+
+| Foundation Property | Core Status | What to do |
+|--------------------|-------------|-----------|
+| `assistPriority` enum values | Supported, but enum values differ: Foundation uses `caption`, `toolTip`, `name`, `custom`; Core uses `LABEL`, `DESCRIPTION`, `NAME`, `CUSTOM` | Remap: `caption`→`LABEL`, `toolTip`→`DESCRIPTION`, `name`→`NAME`, `custom`→`CUSTOM` |
+| `speak` / `custom` (screen reader text) | `custom` JCR property is the same in Core | Port directly; only the `assistPriority` enum needs remapping |
+| `multiLine` + `allowRichText` | `multiLine` supported; `allowRichText` → `richText` | Port both; use the renamed key for rich text |
+| `rows` / `cols` | No Core equivalent | Drop — textarea sizing is controlled by theme CSS |
+| `displayPictureClause` | XFA picture syntax not parsed by Core | Migrate to `displayFormat` using ISO/standard format equivalent |
+| `displayIsSameAsValidate` | No equivalent — `displayFormat` and `editFormat` are always independent in Core | Set both `displayFormat` and `editFormat` explicitly in the dialog |
 
 ## Component-Specific Property Mappings
 

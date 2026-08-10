@@ -63,17 +63,7 @@ Every component MUST satisfy all applicable items below. This checklist is deriv
 
 ## BEM Naming Convention for Accessibility Elements
 
-Every component follows this naming pattern:
-```
-.cmp-adaptiveform-{componentname}              — root container
-.cmp-adaptiveform-{componentname}__label        — label element
-.cmp-adaptiveform-{componentname}__widget       — main interactive widget
-.cmp-adaptiveform-{componentname}__errormessage — error message area
-.cmp-adaptiveform-{componentname}__shortdescription — tooltip
-.cmp-adaptiveform-{componentname}__longdescription  — expanded help text
-.cmp-adaptiveform-{componentname}__questionmark     — help toggle button
-.cmp-adaptiveform-{componentname}__label-container  — label + question mark wrapper
-```
+For the standard BEM element set (`__label`, `__widget`, `__errormessage`, `__shortdescription`, `__longdescription`, `__questionmark`, `__label-container`), see the table in `references/css-architecture.md`. Every one of those elements must be present and correctly linked for accessibility.
 
 ## ID Convention for ARIA Linkage
 
@@ -97,9 +87,9 @@ common source of runtime bugs.
 
 | Method | If you override it… |
 |--------|---------------------|
-| `updateValidity(validity, state)` | call `super` (it renders the error message + sets `data-cmp-valid`), then mirror `aria-invalid` onto extra sub-widgets |
-| `updateReadOnly(readOnly, state)` | call `super` (sets `data-cmp-readonly`), then set `aria-readonly`/`readonly` on sub-widgets |
-| `updateEnabled(enabled, state)` | call `super` (sets `data-cmp-enabled`), then toggle `disabled` on sub-widgets |
+| `updateValidity(validity, state)` | call `super` first, then mirror `aria-invalid` onto extra sub-widgets |
+| `updateReadOnly(readOnly, state)` | call `super` first, then set `aria-readonly`/`readonly` on sub-widgets |
+| `updateEnabled(enabled, state)` | call `super` first, then toggle `disabled` on sub-widgets |
 | `updateValue(value)` | end with `this.updateEmptyStatus()`; for composite widgets, don't repopulate a focused sub-input |
 | `setModel(model)` | register focus/blur listeners for `setActive()`/`setInactive()` |
 

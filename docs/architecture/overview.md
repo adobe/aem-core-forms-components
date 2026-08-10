@@ -38,9 +38,82 @@ aem-core-forms-components/
 
 ---
 
-## 2. Java Model Hierarchy
+## 2. Component Layer Architecture
 
-Three key base classes, each responsible for one concern.
+Every AF2 form component is implemented across five layers, in this order:
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│  Author Dialog   _cq_dialog/.content.xml (Granite UI XML)    │
+│  Author edits properties → saved to JCR node                 │
+└──────────────────────────┬───────────────────────────────────┘
+                           │ JCR properties
+┌──────────────────────────▼───────────────────────────────────┐
+│  JCR Content Node   /content/forms/af/{form}/{component}     │
+│  fieldType, name, required, label, custom properties...       │
+└──────────────────────────┬───────────────────────────────────┘
+                           │ adapted via Sling
+┌──────────────────────────▼───────────────────────────────────┐
+│  Sling Model   {ComponentName}Impl extends Abstract{Base}Impl │
+│  @Model(adaptables=SlingHttpServletRequest.class)            │
+│  Typed getters, computed values, JSON export                  │
+└──────────────────────────┬───────────────────────────────────┘
+                           │ data-sly-use in HTL
+┌──────────────────────────▼───────────────────────────────────┐
+│  HTL Template   {componentname}.html                          │
+│  Renders BEM HTML with data-cmp-* runtime attributes          │
+│  class="cmp-adaptiveform-{componentname}"                     │
+│  data-cmp-is="adaptiveForm{ComponentName}"                    │
+└──────────────────────────┬───────────────────────────────────┘
+                           │ registered via FormView.Utils.setupField,
+                           │ scanned during Utils.initializeAllFields
+┌──────────────────────────▼───────────────────────────────────┐
+│  JS View   {componentname}view.js                             │
+│  class {ComponentName}View extends FormView.FormFieldBase     │
+│  Manages widget↔model sync, events, accessibility state       │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### Data flow at runtime
+
+The full sequence — DOM registration and scan, model tree construction, `setModel`
+timing, widget↔model sync — is documented in [`runtime-internals.md`](runtime-internals.md);
+that file is the single source of truth for it, do not restate it here.
+
+### JS view base class
+
+| JS Base Class | Use when |
+|---------------|----------|
+| `FormView.FormFieldBase` | Component captures a value (field) |
+| `FormView.FormContainer` | Component is a step, panel, or container |
+
+---
+
+## 3. Java Model Hierarchy
+
+### Class hierarchy
+
+```
+AbstractComponentImpl (WCM Core)
+  └── AbstractFormComponentImpl (name, fieldType, dataRef, visible, value, events, rules)
+        ├── AbstractBaseImpl (label, description, tooltip, type, required, enabled)
+        │     └── AbstractFieldImpl (readOnly, default, placeholder, min/max constraints)
+        │           └── AbstractOptionsFieldImpl (enum, enumNames, enforceEnum)
+        └── AbstractContainerImpl (child enumeration, container-specific behavior)
+```
+
+### Which class to extend
+
+| Class | Use when | Provides |
+|-------|----------|----------|
+| `AbstractBaseImpl` | Step, display, or non-value component (button, text, image) | `id`, `name`, `visible`, `enabled`, `required`, `description`, `label`, `data` |
+| `AbstractFieldImpl` | Captures a single user-submitted value (text, number, date) | Everything in Base + `readOnly`, `default`, `placeholder`, `constraints`, validation |
+| `AbstractOptionsFieldImpl` | Options-based field (checkboxes, radios, selects) | Everything in Field + `enum`, `enumNames`, `enforceEnum` |
+| `AbstractContainerImpl` | Holds child components (container/panel) | Everything in Base + child enumeration, container-specific behavior |
+
+**Composite / split widget** (e.g. day/month/year — multiple visible inputs feeding one value): still extend the field base that matches the data type (`AbstractFieldImpl` for a date), rendering one hidden combined `<input>` as the value-bearing widget plus the visible sub-inputs.
+
+Three of these classes carry additional runtime behavior beyond property storage:
 
 ### `AbstractFormComponentImpl`
 
@@ -75,7 +148,7 @@ Reads `System.getProperty(toggleId)`, returns `true` only when the value is exac
 
 ---
 
-## 3. Form JSON Model
+## 4. Form JSON Model
 
 The server renders a page at `<path>.model.json`. This is consumed directly by af2-web-runtime to hydrate the form.
 
@@ -109,7 +182,7 @@ The server renders a page at `<path>.model.json`. This is consumed directly by a
 
 ---
 
-## 4. IT Test Infrastructure
+## 5. IT Test Infrastructure
 
 ### Content page locations
 
@@ -146,7 +219,7 @@ curl -s -u admin:admin \
 
 ---
 
-## 5. Cypress Test Patterns
+## 6. Cypress Test Patterns
 
 ### Key commands (defined in `libs/support/commands.js`)
 
@@ -192,7 +265,7 @@ it('should behave differently when FT_FORMS-XXXXX is enabled', () => {
 
 ---
 
-## 6. JCR Content XML Patterns
+## 7. JCR Content XML Patterns
 
 ### Fragment definition page
 
@@ -240,7 +313,7 @@ A `<fragment>` node embedded in a parent form references the fragment by path:
 
 ---
 
-## 7. Running Tests
+## 8. Running Tests
 
 ```bash
 cd ui.tests/test-module

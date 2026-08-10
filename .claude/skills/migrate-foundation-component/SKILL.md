@@ -23,7 +23,11 @@ Analyze an existing AEM Foundation (Guide) Form Component and migrate it to a fu
 
 ### Phase 1: Identify the Foundation Component
 
-Ask the user **which foundation component** to migrate.
+Before loading any data, collect the following upfront. Ask in a single message and wait for all answers:
+
+- **Which foundation component** to migrate (name or path)
+- **Target repository and component group** — which repo (`aem-core-forms-components`, or a project overlay) and what `componentGroup` for the author toolbar
+- **FormContainer-level properties** — does the component need any configuration authored on the parent form container rather than on the component instance itself? If yes: what properties and what tab name?
 
 #### Known Components (data embedded in skill)
 
@@ -175,7 +179,7 @@ Based on the analysis, determine the inputs for the `create-core-component` skil
 
 3. **Custom properties** — all properties identified in Phase 3 that are NOT in the base classes
 
-4. **Widget HTML** — translate the foundation widget rendering to HTL:
+4. **Widget HTML** — translate the foundation widget rendering to HTL. Read `references/code-patterns.md` for before/after code-level translation examples. Key mappings:
    - `<c:if>` → `data-sly-test`
    - `<c:choose>/<c:when>` → `data-sly-test` chains
    - `<c:forEach>` → `data-sly-list` or `data-sly-repeat`
@@ -298,8 +302,9 @@ Present this report to the user for review.
 
 - `references/known-components.md` — Complete embedded data for all standard foundation components (properties, dialogs, rendering)
 - `references/foundation-anatomy.md` — Foundation component file structure, patterns, and Java hierarchy
-- `references/property-mapping.md` — Foundation → Core type/property/pattern mapping tables
+- `references/property-mapping.md` — Foundation → Core type/property/pattern mapping tables (includes renamed, dropped with Core equivalents, and per-review properties)
 - `references/migration-checklist.md` — Post-migration verification checklist
+- `references/code-patterns.md` — Code-level before/after translation: JSP→HTL, Foundation Java→Sling Model, jQuery→DOM, dialog XML
 
 ## Critical Rules
 
