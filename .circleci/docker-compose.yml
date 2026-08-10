@@ -2,7 +2,7 @@ version: '3'
 
 services:
   circleci-qp:
-    image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.7-openjdk21
+    image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
     entrypoint: tail -f /dev/null  # Keeps the container running
 
   circleci-aem-cloudready:
