@@ -194,7 +194,7 @@ describe('Page/Form Authoring', function () {
         //select marketo data model
         cy.get(".cmp-adaptiveform-container__selectformmodel").click();
         cy.get("coral-selectlist-item[value='none']").contains('None').should('exist');
-        cy.get("coral-selectlist-item[value='connector']").contains('Marketo Configuration').should('be.visible').click();
+        cy.get("coral-selectlist-item[value='connector']").contains('Connector').should('be.visible').click();
 
         //select marketo config
         cy.get(".cmp-adaptiveform-container__marketoselector").click();
