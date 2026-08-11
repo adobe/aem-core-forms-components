@@ -96,6 +96,15 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    // The AF authoring editor (getContentFrameDocument -> renderContentFrameVCFs) reads the
+    // content iframe's document during editor bootstrap. If that fires while the iframe is
+    // momentarily cross-origin (mid-navigation / about:blank / redirect) the browser blocks
+    // the access with a SecurityError, but the editor recovers on the next tick - no functional
+    // impact. Matched on the origin-independent phrase so it works for 4502/cloud/etc.
+    if (err.message.includes("accessing a cross-origin frame")) {
+        return false;
+    }
+
     // circle ci is seen hanging due to this error
     if (err.message.includes("Cannot read properties of null (reading")) {
         return false;
