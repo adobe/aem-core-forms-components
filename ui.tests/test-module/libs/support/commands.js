@@ -288,26 +288,27 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
     .invoke('attr', 'data-path')
     .then(($path) => {
         const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
-        cy.get("body").then($body => {
-            if ($body.find(path).length === 0) {
-                //evaluates as true if toolbar doesnt exists at all
-                //you get here only if toolbar is visible
-                cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
-                // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-                cy.get(path).should('be.visible');
-            } else {
-                cy.get(path).then($header => {
-                    if (!$header.is(':visible')) {
-                        cy.get(selector).first().click({force: true});
-                        cy.get(path).should('be.visible');
-                    } else {
-                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
-                        cy.get(selector).click({force: true});
-                        cy.get(path).should('be.visible');
-                    }
-                });
+        // #EditableToolbar is a single shared element AEM shows for the currently selected
+        // overlay. After a config-dialog submit (or any overlay reposition) a single click
+        // on the overlay can be lost while the toolbar is still hidden, and cypress' implicit
+        // retry only re-runs the `should('be.visible')` assertion - never the click - so it
+        // times out. Retry (scroll overlays into view -> click overlay -> toolbar visible) as
+        // one atomic unit so a lost click is simply issued again until the toolbar shows.
+        recurse(
+            () => {
+                cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
+                cy.get(selector).first().click({force: true}); // force needed due to cypress overlay visibility checks
+                return cy.get("body");
+            },
+            ($body) => $body.find(path).length > 0 && $body.find(path).is(":visible"),
+            {
+                limit: 5,
+                delay: 1000,
+                timeout: 30000,
+                log: false
             }
-        });
+        );
+        return cy.get(path).should('be.visible');
     })
 });
 
