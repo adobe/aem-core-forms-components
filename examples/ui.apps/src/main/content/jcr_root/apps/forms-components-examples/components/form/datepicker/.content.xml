@@ -3,5 +3,5 @@
   jcr:primaryType="cq:Component"
   jcr:title="Adaptive Form Date Picker"
   jcr:description="Add a field with a calendar widget to select a date."
-  sling:resourceSuperType="core/fd/components/form/datepicker/v1/datepicker"
+  sling:resourceSuperType="core/fd/components/form/datepicker/v2/datepicker"
   componentGroup="Core Components Examples - Adaptive Form"/>

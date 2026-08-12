@@ -301,7 +301,8 @@
                                         <replace file="target/jcr_root/libs/core/fd/components/form/container/v1/container/.content.xml" token=".core-wcm" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/container/v2/container/.content.xml" token=".core-wcm" value="Core Content" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/textinput/v1/textinput/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
-                                        <replace file="target/jcr_root/libs/core/fd/components/form/datepicker/v1/datepicker/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/datepicker/v1/datepicker/.content.xml" token=".core-adaptiveform" value=".core-adaptiveform" />
+                                        <replace file="target/jcr_root/libs/core/fd/components/form/datepicker/v2/datepicker/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/tabsontop/v1/tabsontop/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/accordion/v1/accordion/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
                                         <replace file="target/jcr_root/libs/core/fd/components/form/actions/reset/v1/reset/.content.xml" token=".core-adaptiveform" value="Core Adaptive Form" />
