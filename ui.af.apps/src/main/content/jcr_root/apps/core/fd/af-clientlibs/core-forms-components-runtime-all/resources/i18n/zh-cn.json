@@ -93,5 +93,7 @@
   "clearSign": "清晰的签名",
   "brushSize": "画笔大小：",
   "geoLocationError": "获取地理位置时出错",
-  "geoLocationFetch": "正在获取地理位置..."
+  "geoLocationFetch": "正在获取地理位置...",
+  "showPassword": "显示密码",
+  "hidePassword": "隐藏密码"
 }
