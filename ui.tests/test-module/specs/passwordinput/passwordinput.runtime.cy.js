@@ -99,8 +99,7 @@ describe("Form Runtime with Password Input", () => {
         const model = formContainer._model.getElement(id)
         const value = "AnotherSecret!1"
         cy.get(`#${id}`).find("input").clear().type(value);
-        cy.get(`#${id} .${bemBlock}__toggle-visibility`).click();
-        cy.get(`#${id}`).find("input").blur().then(() => {
+        cy.get(`#${id} .${bemBlock}__toggle-visibility`).click().then(() => {
             expect(model.getState().value).to.equal(value)
         })
     });
