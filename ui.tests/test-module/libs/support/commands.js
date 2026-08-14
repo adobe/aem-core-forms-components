@@ -317,6 +317,21 @@ Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
     cy.get(actionSelector).should('be.visible').click({force: true});
 });
 
+// cypress command to submit a component's configure dialog and wait for the editor to settle.
+// A config-dialog submit fires an asynchronous editable re-render that repositions the overlays and
+// hides the shared #EditableToolbar. Any openEditableToolbar issued before that re-render settles
+// races the teardown: recurse opens the toolbar, the late reposition hides it, and the trailing
+// should('be.visible') (never re-clicks) times out with "#EditableToolbar has display: none".
+// Register the same editable-update + overlay-reposition listeners deleteComponentByPath relies on
+// BEFORE clicking submit, then block until both fire so callers can safely reopen the toolbar next.
+Cypress.Commands.add("submitConfigureDialog", (submitSelector = ".cq-dialog-submit") => {
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_EDITABLES_UPDATED).as("isConfigureEditableUpdated");
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isConfigureOverlaysRepositioned");
+    cy.get(submitSelector).click({force: true});
+    cy.get("@isConfigureEditableUpdated").its('done').should('equal', true); // wait until re-render done
+    cy.get("@isConfigureOverlaysRepositioned").its('done').should('equal', true); // wait until overlays settled
+});
+
 // cypress command to initialize event handler on channel
 Cypress.Commands.add("initializeEventHandlerOnChannel", (eventName) => {
     let isEventComplete = {done: false};

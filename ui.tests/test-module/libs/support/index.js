@@ -125,6 +125,15 @@ Cypress.on('uncaught:exception', (err, runnable) => {
         return false;
     }
 
+    // Intermittent CoralUI3 component-bootstrap error while the editor chrome/template structure page
+    // upgrades its Coral custom elements. A property getter returns the boolean `true` where Coral
+    // expects an element/object and then tries to attach `_namespace` to it, throwing. It is racy
+    // (depends on Coral upgrade timing), recovers on the next tick, and has no functional impact on
+    // the form under test, so it must not fail the test.
+    if(err.message.includes("Cannot create property '_namespace'")) {
+        return false;
+    }
+
     // we still want to ensure there are no other unexpected
     // errors, so we let them fail the test
     return true;
