@@ -22,9 +22,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
@@ -33,7 +33,6 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
-import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.Base;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Text;
@@ -67,18 +66,38 @@ public class AdobeSignBlockImpl extends AbstractBaseImpl implements Text {
 
     private static final Pattern ADOBE_SIGN_TAG_PATTERN = Pattern.compile("\\{\\{[*]?([^:]*)_es_:");
 
-    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_TEXT_IS_RICH)
-    @Default(booleanValues = false)
-    private boolean textIsRich;
+    /**
+     * The Adobe Sign merge-tag markup (e.g. {@code <span data-adobesigntype="signature">
+     * {{fieldName_es_:signer1:signature}}</span>}), computed client-side by editDialog.js reusing
+     * integration-adobesign's own dialog plugin ({@code getDomContentFromDialog()} /
+     * {@code ADOBESIGN_UTILS.getDomContent()}) from the included Type/Name/Options/etc. field set,
+     * rather than reimplemented here.
+     */
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
+    private String adobeSignFieldTag;
 
+    /**
+     * Combines the author's narrative {@code value} text - always authored as rich text, there is no
+     * plain-text mode for this field - with the client-computed {@link #adobeSignFieldTag}, so
+     * downstream DoR/agreement generation sees the same wire format it always has, regardless of how the
+     * field was authored. Never wrapped in an artificial {@code <p>} — the narrative can already contain
+     * its own block-level markup (lists, paragraphs), and nesting that inside a single forced {@code <p>}
+     * produces invalid HTML that corrupts the author-canvas DOM.
+     */
     @Override
     public String getValue() {
-        return translate("value", value);
+        String tag = StringUtils.defaultString(adobeSignFieldTag);
+        String markup = StringUtils.isNotBlank(value) ? value + "&nbsp;" + tag : tag;
+        return translate("value", markup);
     }
 
+    /**
+     * Always {@code true}: the Text field is always authored as rich text, and the rendered value
+     * always additionally contains the real (unescaped) placeholder markup above.
+     */
     @Override
     public boolean isRichText() {
-        return textIsRich;
+        return true;
     }
 
     /**

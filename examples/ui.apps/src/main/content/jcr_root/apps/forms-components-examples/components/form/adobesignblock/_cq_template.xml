@@ -3,6 +3,6 @@
           jcr:primaryType="nt:unstructured"
           jcr:title="Adobe Sign Block"
           fieldType="adobe-sign-block"
-          value="&lt;p&gt;Signature:&amp;nbsp;&lt;span data-adobesigntype=&quot;signature&quot;&gt;{{sampleField_es_:signer1:signature}}&lt;/span&gt;&amp;nbsp;&lt;/p&gt;"
-          textIsRich="{Boolean}true"
+          value="Signature:"
+          adobeSignFieldTag="&lt;span data-adobesigntype=&quot;signature&quot;&gt;{{sampleField_es_:signer1:signature}}&lt;/span&gt;"
           visible="{Boolean}false"/>
