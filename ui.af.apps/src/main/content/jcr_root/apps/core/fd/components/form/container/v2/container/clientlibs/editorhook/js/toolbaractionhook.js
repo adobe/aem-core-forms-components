@@ -44,12 +44,21 @@
     const correctEditableEditorType = function (editable, name) {
         if (name === "EDIT") {
             const isAFComponent = editable.dom.find("[data-cmp-is^='adaptiveForm']")[0] != null;
-            if (isAFComponent) {
+            if (isAFComponent && editable.config.editConfig.inplaceEditingConfig) {
+                const isAdobeSignBlock = editable.dom.find("[data-cmp-is='adaptiveFormAdobeSignBlock']")[0] != null;
+                if (isAdobeSignBlock) {
+                    // Adobe Sign Block stores rich HTML in __value; _cq_editConfig uses editorType=text with adobesignplugin
+                    editable.config.editConfig.inplaceEditingConfig.editorType = "text";
+                    return;
+                }
                 const hasRichTextLabel = editable.dom.find("[class$='__label']")[0] && editable.dom.find("[class$='__label']")[0].getAttribute("data-richtext") != null,
-                    hasRichTextAttribute = editable.dom.find("[class$='__text']")[0] && editable.dom.find("[class$='__text']")[0].getAttribute("data-richtext") != null;
-                // We are checking for data-richtext in component to decide whether open rich-text inplace editor or plain text editor
-                if (!(hasRichTextLabel || hasRichTextAttribute)) {
+                    hasRichTextAttribute = editable.dom.find("[class$='__text']")[0] && editable.dom.find("[class$='__text']")[0].getAttribute("data-richtext") != null,
+                    hasRichTextValue = editable.dom.find("[class$='__value']")[0] && editable.dom.find("[class$='__value']")[0].getAttribute("data-richtext") != null;
+                // Use data-richtext on label, text, or value to decide rich-text vs plain-text inplace editor
+                if (!(hasRichTextLabel || hasRichTextAttribute || hasRichTextValue)) {
                     editable.config.editConfig.inplaceEditingConfig.editorType = "plaintext";
+                } else {
+                    editable.config.editConfig.inplaceEditingConfig.editorType = "text";
                 }
             }
         }
