@@ -288,32 +288,48 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
     .invoke('attr', 'data-path')
     .then(($path) => {
         const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
-        cy.get("body").then($body => {
-            if ($body.find(path).length === 0) {
-                //evaluates as true if toolbar doesnt exists at all
-                //you get here only if toolbar is visible
-                cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
-                // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-                cy.get(path).should('be.visible');
-            } else {
-                cy.get(path).then($header => {
-                    if (!$header.is(':visible')) {
-                        cy.get(selector).first().click({force: true});
-                        cy.get(path).should('be.visible');
-                    } else {
-                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
-                        cy.get(selector).click({force: true});
-                        cy.get(path).should('be.visible');
-                    }
-                });
+        // #EditableToolbar is a single shared element AEM shows for the currently selected
+        // overlay. After a config-dialog submit (or any overlay reposition) a single click
+        // on the overlay can be lost while the toolbar is still hidden, and cypress' implicit
+        // retry only re-runs the `should('be.visible')` assertion - never the click - so it
+        // times out. Retry (scroll overlays into view -> click overlay -> toolbar visible) as
+        // one atomic unit so a lost click is simply issued again until the toolbar shows.
+        recurse(
+            () => {
+                cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
+                cy.get(selector).first().click({force: true}); // force needed due to cypress overlay visibility checks
+                return cy.get("body");
+            },
+            ($body) => $body.find(path).length > 0 && $body.find(path).is(":visible"),
+            {
+                limit: 5,
+                delay: 1000,
+                timeout: 30000,
+                log: false
             }
-        });
+        );
+        return cy.get(path).should('be.visible');
     })
 });
 
 // cypress command to invoke an editable action
 Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
     cy.get(actionSelector).should('be.visible').click({force: true});
+});
+
+// cypress command to submit a component's configure dialog and wait for the editor to settle.
+// A config-dialog submit fires an asynchronous editable re-render that repositions the overlays and
+// hides the shared #EditableToolbar. Any openEditableToolbar issued before that re-render settles
+// races the teardown: recurse opens the toolbar, the late reposition hides it, and the trailing
+// should('be.visible') (never re-clicks) times out with "#EditableToolbar has display: none".
+// Register the same editable-update + overlay-reposition listeners deleteComponentByPath relies on
+// BEFORE clicking submit, then block until both fire so callers can safely reopen the toolbar next.
+Cypress.Commands.add("submitConfigureDialog", (submitSelector = ".cq-dialog-submit") => {
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_EDITABLES_UPDATED).as("isConfigureEditableUpdated");
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isConfigureOverlaysRepositioned");
+    cy.get(submitSelector).click({force: true});
+    cy.get("@isConfigureEditableUpdated").its('done').should('equal', true); // wait until re-render done
+    cy.get("@isConfigureOverlaysRepositioned").its('done').should('equal', true); // wait until overlays settled
 });
 
 // cypress command to initialize event handler on channel

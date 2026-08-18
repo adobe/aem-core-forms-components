@@ -170,6 +170,7 @@ public class TitleImplTest {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
         request.setParameterMap(paramMap);
+        Utils.disableLocaleFeatureToggleLookup(request);
         Title title = request.adaptTo(Title.class);
         assertEquals("Title", title.getText());
     }
