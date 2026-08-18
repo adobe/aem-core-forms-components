@@ -453,7 +453,7 @@
         <button
             jcr:primaryType="nt:unstructured"
             jcr:title="Button"
-            id="af2_button"
+            id="af2_buttonroot"
             cssSelector=".cmp-adaptiveform-button"
             longTitle="Button"
             propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
