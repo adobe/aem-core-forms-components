@@ -55,6 +55,7 @@
                                                     sling:orderBefore="visible"
                                                     sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
                                                     class="cq-droptarget"
+                                                    enableNextGenDynamicMedia="{Boolean}true"
                                                     fileNameParameter="./fileName"
                                                     fileReferenceParameter="./fileReference"
                                                     mimeTypes="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
