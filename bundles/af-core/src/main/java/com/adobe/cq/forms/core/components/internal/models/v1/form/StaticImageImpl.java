@@ -17,15 +17,19 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 import javax.jcr.RepositoryException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Optional;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
@@ -37,6 +41,7 @@ import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
+import com.adobe.cq.ui.wcm.commons.config.NextGenDynamicMediaConfig;
 import com.day.cq.wcm.foundation.Image;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -50,6 +55,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class StaticImageImpl extends AbstractFormComponentImpl implements StaticImage {
 
     public static final String DAM_REPO_PATH = "fd:repoPath";
+
+    private static final String NGDM_REFERENCE_PREFIX = "/urn:";
+    private static final String PATH_PLACEHOLDER_ASSET_ID = "{asset-id}";
+    private static final String PATH_PLACEHOLDER_SEO_NAME = "{seo-name}";
+    private static final String PATH_PLACEHOLDER_FORMAT = "{format}";
+    private static final String DEFAULT_NGDM_ASSET_EXTENSION = "jpg";
+    private static final int DEFAULT_NGDM_ASSET_WIDTH = 640;
+
+    @Inject
+    @Optional
+    private NextGenDynamicMediaConfig nextGenDynamicMediaConfig;
 
     private Image image;
 
@@ -79,6 +95,9 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
      */
     @Override
     public String getImageSrc() throws RepositoryException, IOException {
+        if (isNgdmImageReference(fileReference) && isNgdmSupportAvailable()) {
+            return buildNgdmImageSrc(fileReference);
+        }
         image = new Image(this.resource);
         boolean containsData = (image.getData() != null);
         if (containsData) {
@@ -129,7 +148,7 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @Override
     public @Nonnull Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
-        if (fileReference != null && fileReference.length() > 0) {
+        if (StringUtils.isNotBlank(fileReference) && !isNgdmImageReference(fileReference)) {
             properties.put(DAM_REPO_PATH, fileReference);
         }
         return properties;
@@ -138,5 +157,36 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @Override
     public String getFieldType() {
         return super.getFieldType(FieldType.IMAGE);
+    }
+
+    private boolean isNgdmSupportAvailable() {
+        return nextGenDynamicMediaConfig != null && nextGenDynamicMediaConfig.enabled()
+            && StringUtils.isNotBlank(nextGenDynamicMediaConfig.getRepositoryId());
+    }
+
+    /**
+     * Builds the Next Gen Dynamic Media delivery URL for an asset reference of the form
+     * {@code /urn:aaid:aem:<asset-id>/<seo-name>.<format>}.
+     */
+    private String buildNgdmImageSrc(String fileReference) {
+        Scanner scanner = new Scanner(fileReference);
+        scanner.useDelimiter("/");
+        String assetId = scanner.next();
+        scanner = new Scanner(scanner.next());
+        scanner.useDelimiter("\\.");
+        String assetName = scanner.hasNext() ? scanner.next() : assetId;
+        String assetExtension = scanner.hasNext() ? scanner.next() : DEFAULT_NGDM_ASSET_EXTENSION;
+
+        String imageDeliveryPath = nextGenDynamicMediaConfig.getImageDeliveryBasePath()
+            .replace(PATH_PLACEHOLDER_ASSET_ID, assetId)
+            .replace(PATH_PLACEHOLDER_SEO_NAME, assetName)
+            .replace(PATH_PLACEHOLDER_FORMAT, assetExtension);
+
+        return "https://" + nextGenDynamicMediaConfig.getRepositoryId() + imageDeliveryPath
+            + "?width=" + DEFAULT_NGDM_ASSET_WIDTH + "&preferwebp=true";
+    }
+
+    public static boolean isNgdmImageReference(String fileReference) {
+        return StringUtils.isNotBlank(fileReference) && fileReference.startsWith(NGDM_REFERENCE_PREFIX);
     }
 }
