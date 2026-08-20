@@ -504,6 +504,12 @@
             <artifactId>uber-jar</artifactId>
         </dependency>
 
+        <!-- Needed for NextGenDynamicMediaConfig, used by the NGDM image picker. -->
+        <dependency>
+            <groupId>com.adobe.aem</groupId>
+            <artifactId>aem-sdk-api</artifactId>
+        </dependency>
+
         <!-- End of AEM and forms sdk versions -->
 
 
