@@ -64,12 +64,12 @@
 
         constructor(params) {
             super(params);
+            this.lang = params.formContainer.getLang();
             this.initializeScribble();
         }
 
         setModel(model) {
             super.setModel(model);
-            this.lang = model.lang;
         }
 
         initializeScribble() {
