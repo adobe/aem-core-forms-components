@@ -53,6 +53,11 @@
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="wcm/core/components/policies/mapping">
                         </switch>
+                        <table
+                                cq:policy="forms-components-examples/components/form/table/default"
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="wcm/core/components/policies/mapping">
+                        </table>
                     </form>
                 </components>
             </forms-components-examples>
