@@ -93,5 +93,16 @@
   "clearSign": "Unterschrift löschen",
   "brushSize": "Pinselgröße: ",
   "geoLocationError": "Fehler beim Aufrufen des geografischen Standorts",
-  "geoLocationFetch": "Geografischer Standort wird abgerufen …"
+  "geoLocationFetch": "Geografischer Standort wird abgerufen …",
+  "sortTable": "Tabelle sortieren",
+  "filterTable": "Tabelle filtern",
+  "sort": "Sortieren",
+  "filter": "Filtern",
+  "sortOptions": "Sortieroptionen",
+  "sortBy": "Sortieren nach",
+  "sortColumns": "Spalten sortieren",
+  "sortOrder": "Sortierreihenfolge",
+  "sortDirection": "Sortierrichtung",
+  "ascending": "Aufsteigend",
+  "descending": "Absteigend"
 }
