@@ -75,7 +75,7 @@ BLOCK cmp-adaptiveform-table
             MODIFIER cmp-adaptiveform-table__mobile-bar-btn--sort
             MODIFIER cmp-adaptiveform-table__mobile-bar-btn--filter
         ELEMENT cmp-adaptiveform-table__mobile-bar-divider
-    ELEMENT cmp-adaptiveform-table__sort-overlay (shared by sort and filter bottom-sheet overlays)
+    ELEMENT cmp-adaptiveform-table__sort-scrim (shared backdrop for sort and filter bottom sheets)
         ELEMENT cmp-adaptiveform-table__sort-sheet
         ELEMENT cmp-adaptiveform-table__sort-sheet-handle
         ELEMENT cmp-adaptiveform-table__sort-sheet-title
