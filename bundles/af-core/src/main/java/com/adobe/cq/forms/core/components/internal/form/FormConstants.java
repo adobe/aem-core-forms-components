@@ -146,9 +146,6 @@ public final class FormConstants {
     /** Request attribute set when the form definition is serialized with Publish view */
     public static final String REQ_ATTR_PUBLISH_VIEW = "fd:publishView";
 
-    /** The channel for print */
-    public static final String CHANNEL_PRINT = "print";
-
     /** The resource type for date time input field v1 */
     public static final String RT_FD_FORM_DATETIME_V1 = RT_FD_FORM_PREFIX + "datetime/v1/datetime";
 

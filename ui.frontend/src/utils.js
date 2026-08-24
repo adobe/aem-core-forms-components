@@ -324,22 +324,7 @@ class Utils {
                 continue;
             } else {
                 elements[i].dataset.cmpAdaptiveformcontainerInitialized = 'true';
-                let _formJson, callback;
-                const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
-                // Get the schema type from the data attribute with null safety
-                const schemaType = elements[i].getAttribute('data-cmp-schema-type');
-                // Check if this is an XDP form based on the schema type
-                // According to GuideSchemaType enum, XDP has value of FORM_TEMPLATES, not 'XFA'
-                if (loader && schemaType && (schemaType === 'XDP' || schemaType === 'FORM_TEMPLATES')) {
-                    const id = loader.getAttribute('data-cmp-adaptiveform-container-loader');
-                    const response = await fetch(`/adobe/forms/af/${id}`)
-                    _formJson = (await response.json()).afModelDefinition;
-                    _formJson.id = id;
-                    //window.formJson = _formJson
-                    callback = loadXfa(_formJson.formdom, _formJson.xfaRenderContext);
-                } else {
-                    _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
-                }
+                const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 console.debug("fetched model json", _formJson);
                 await RuleUtils.registerCustomFunctionsV2( _formJson);
                 await RuleUtils.registerCustomFunctionsByUrl(customFunctionUrl);

@@ -20,9 +20,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
-import org.apache.sling.testing.resourceresolver.MockValueMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,7 +50,6 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS = CONTENT_ROOT + "/datepicker3";
     private static final String PATH_COMPONENT_WITH_NO_RULE = CONTENT_ROOT + "/numberinput";
     private static final String PATH_COMPONENT_WITH_PROPERTIES_RULE = CONTENT_ROOT + "/textinputWithPropertiesRule";
-    private static final String PATH_COMPONENT_WITH_RULES = CONTENT_ROOT + "/textinputWithPrintRule";
     private static final String AF_PATH = "/content/forms/af/testAf";
     private static final String PAGE_PATH = "/content/testPage";
 
@@ -246,26 +243,4 @@ public class AbstractFormComponentImplTest {
         return abstractFormComponentImpl;
     }
 
-    @Test
-    public void testPrintChannelRuleNotInPublish() {
-        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
-        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
-        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
-    }
-
-    @Test
-    public void testAssociateProperties() {
-        Resource resource = Mockito.mock(Resource.class);
-        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
-        Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
-        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
-        ValueMap valueMap = new MockValueMap(resource);
-        Mockito.doReturn(valueMap).when(resource).getValueMap();
-        Mockito.doReturn(null).when(resource).getChild("fd:dorContainer");
-        Resource associateResource = Mockito.mock(Resource.class);
-        Mockito.doReturn(associateResource).when(resource).getChild("fd:associate");
-        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        assertNull(properties.get("fd:associate"));
-    }
 }
