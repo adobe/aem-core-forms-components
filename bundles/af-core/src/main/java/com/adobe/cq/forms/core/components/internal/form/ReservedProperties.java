@@ -177,8 +177,6 @@ public final class ReservedProperties {
     public static final String FD_DRAFT_ID = "fd:draftId";
     public static final String FD_CHANGE_EVENT_BEHAVIOUR = "fd:changeEventBehaviour";
 
-    public static final String PN_CQ_ANNOTATIONS = "cq:annotations";
-
     /**
      * Comma-separated proportional column widths JCR property, also passed into fd:dor for DOR table rendering (matches
      * GuideTableElement key).
