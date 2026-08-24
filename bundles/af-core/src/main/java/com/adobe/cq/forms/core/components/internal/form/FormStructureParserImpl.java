@@ -59,12 +59,6 @@ public class FormStructureParserImpl implements FormStructureParser {
     }
 
     @Override
-    public String getThemeClientLibRefFromFormContainer() {
-        FormContainer formContainer = getFormContainer(resource);
-        return formContainer != null ? formContainer.getThemeClientLibRef() : null;
-    }
-
-    @Override
     public String getClientLibRefFromFormContainer() {
         FormContainer formContainer = getFormContainer(resource);
         return formContainer != null ? formContainer.getClientLibRef() : null;

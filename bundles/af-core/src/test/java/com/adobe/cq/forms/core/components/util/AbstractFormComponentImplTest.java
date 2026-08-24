@@ -20,7 +20,9 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.apache.sling.testing.resourceresolver.MockValueMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

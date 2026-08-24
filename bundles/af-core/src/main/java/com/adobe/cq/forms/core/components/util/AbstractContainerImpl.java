@@ -40,7 +40,6 @@ import org.slf4j.LoggerFactory;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
-import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
