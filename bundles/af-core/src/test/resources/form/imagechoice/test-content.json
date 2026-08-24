@@ -1,0 +1,156 @@
+{
+  "imagechoice": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
+    "name": "imagechoice_12345",
+    "jcr:title": "Image Choice",
+    "orientation": "horizontal",
+    "selectionType": "single",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "enumNames": [
+      "Option 1",
+      "Option 2"
+    ],
+    "imageSrc": [
+      "/content/dam/image1.png",
+      "/content/dam/image2.png"
+    ],
+    "fieldType": "radio-group",
+    "type": "string"
+  },
+  "imagechoice-customized": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
+    "name": "imagechoice_12345",
+    "jcr:title": "Favorite Animal",
+    "description": "Select your favorite animal",
+    "enabled": true,
+    "orientation": "vertical",
+    "selectionType": "single",
+    "dataRef": "a.b",
+    "custom": "custom screen reader text",
+    "tooltip": "Pick one animal",
+    "required": "true",
+    "dorExclusion": true,
+    "dorColspan": "4",
+    "assistPriority": "custom",
+    "enum": [
+      "cat",
+      "dog",
+      "bird"
+    ],
+    "type": "string",
+    "enumNames": [
+      "Cat",
+      "Dog",
+      "Bird"
+    ],
+    "imageSrc": [
+      "/content/dam/animals/cat.png",
+      "/content/dam/animals/dog.png",
+      "/content/dam/animals/bird.png"
+    ],
+    "visible": false,
+    "readOnly": true,
+    "fieldType": "radio-group",
+    "mandatoryMessage": "This is a required field",
+    "default": "cat",
+    "tooltipVisible": "true"
+  },
+  "imagechoice-multi": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
+    "name": "imagechoice_multi",
+    "jcr:title": "Select Colors",
+    "orientation": "horizontal",
+    "selectionType": "multi",
+    "enum": [
+      "red",
+      "green",
+      "blue"
+    ],
+    "type": "string[]",
+    "enumNames": [
+      "Red",
+      "Green",
+      "Blue"
+    ],
+    "imageSrc": [
+      "/content/dam/colors/red.png",
+      "/content/dam/colors/green.png",
+      "/content/dam/colors/blue.png"
+    ],
+    "fieldType": "checkbox-group",
+    "default": ["red", "blue"]
+  },
+  "imagechoice-no-images": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
+    "name": "imagechoice_noimages",
+    "jcr:title": "No Images",
+    "orientation": "horizontal",
+    "selectionType": "single",
+    "enum": [
+      "a",
+      "b"
+    ],
+    "enumNames": [
+      "Option A",
+      "Option B"
+    ],
+    "fieldType": "radio-group",
+    "type": "string"
+  },
+  "imagechoice-datalayer": {
+    "id": "imagechoice-bafbf1a102",
+    "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
+    "fieldType": "radio-group",
+    "name": "FavoriteColor",
+    "jcr:title": "Favorite Color",
+    "description": "Choose your favorite color",
+    "visible": true,
+    "type": "string",
+    "enabled": true,
+    "readOnly": false,
+    "selectionType": "single",
+    "enforceEnum": true,
+    "enumNames": [
+      "Red",
+      "Blue"
+    ],
+    "enum": [
+      "red",
+      "blue"
+    ],
+    "imageSrc": [
+      "/content/dam/colors/red.png",
+      "/content/dam/colors/blue.png"
+    ]
+  },
+  "imagechoice-option-screenreader-label": {
+    "id": "imagechoice-1076f3bd737",
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/imagechoice/v1/imagechoice",
+    "name": "imagechoice",
+    "isTitleRichText": "true",
+    "jcr:title": "<b>Favorite Pet</b>",
+    "orientation": "vertical",
+    "selectionType": "single",
+    "enum": [
+      "0",
+      "1"
+    ],
+    "enumNames": [
+      "<p><i>Cat</i></p>",
+      "<p><i>Dog</i></p>"
+    ],
+    "imageSrc": [
+      "/content/dam/pets/cat.png",
+      "/content/dam/pets/dog.png"
+    ],
+    "fieldType": "radio-group"
+  }
+}

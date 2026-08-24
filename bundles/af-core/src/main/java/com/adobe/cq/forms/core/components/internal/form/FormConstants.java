@@ -143,7 +143,24 @@ public final class FormConstants {
     /** Form definition type indicating submission view */
     public static final String FORM_DEFINITION_SUBMISSION = "submission";
 
+    /** Request attribute set when the form definition is serialized with Publish view */
+    public static final String REQ_ATTR_PUBLISH_VIEW = "fd:publishView";
+
+    /** The channel for print */
+    public static final String CHANNEL_PRINT = "print";
+
     /** The resource type for date time input field v1 */
     public static final String RT_FD_FORM_DATETIME_V1 = RT_FD_FORM_PREFIX + "datetime/v1/datetime";
+
+    /** The resource type for image choice v1 */
+    public static final String RT_FD_FORM_IMAGE_CHOICE_V1 = RT_FD_FORM_PREFIX + "imagechoice/v1/imagechoice";
+    /** The resource type for table v1 */
+    public static final String RT_FD_FORM_TABLE_V1 = RT_FD_FORM_PREFIX + "table/v1/table";
+
+    /** The resource type for table header v1 */
+    public static final String RT_FD_FORM_TABLE_HEADER_V1 = RT_FD_FORM_PREFIX + "tableheader/v1/tableheader";
+
+    /** The resource type for table row v1 */
+    public static final String RT_FD_FORM_TABLE_ROW_V1 = RT_FD_FORM_PREFIX + "tablerow/v1/tablerow";
 
 }

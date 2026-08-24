@@ -143,13 +143,17 @@ class Utils {
 
     /**
      * Creates fields from all registered fieldCreators present inside addedElement, for given form container.
+     * Also checks if the addedElement itself matches a field selector (querySelectorAll only matches descendants).
      * @param {Element} addedElement - The added element.
      * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static createFieldsForAddedElement(addedElement, formContainer) {
         Object.values(Utils.#fieldCreatorOrder).forEach(function (fieldSelector) {
             let fieldCreatorSet = Utils.#fieldCreatorSets[fieldSelector];
-            const fieldElements = addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']);
+            const fieldElements = Array.from(addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']));
+            if (addedElement.matches && addedElement.matches(fieldCreatorSet['fieldSelector'])) {
+                fieldElements.unshift(addedElement);
+            }
             Utils.#createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
         });
     }
@@ -202,10 +206,13 @@ class Utils {
      * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static #removeChildReferences(fieldView, formContainer) {
+        if (!fieldView) {
+            return;
+        }
         let childViewList = fieldView.children;
         if (childViewList) {
             for (let index = 0; index < childViewList.length; index++) {
-                Utils.#removeChildReferences(childViewList[index]);
+                Utils.#removeChildReferences(childViewList[index], formContainer);
             }
         }
         //remove instanceManger for child repeatable panel
@@ -221,10 +228,13 @@ class Utils {
      * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static removeFieldReferences(fieldView, formContainer) {
+        if (!fieldView) {
+            return;
+        }
         let childViewList = fieldView.children;
         if (childViewList) {
             for (let index = 0; index < childViewList.length; index++) {
-                Utils.#removeChildReferences(childViewList[index]);
+                Utils.#removeChildReferences(childViewList[index], formContainer);
             }
         }
         Utils.#removeFieldId(formContainer, fieldView.id);
@@ -232,11 +242,16 @@ class Utils {
 
     /**
      * Update the id inside the given html element.
+     * Also checks if the root element itself has the id (querySelectorAll only matches descendants).
      * @param {Element} htmlElement - The HTML element.
      * @param {string} oldId - The old ID.
      * @param {string} newId - The new ID.
      */
     static updateId(htmlElement, oldId, newId) {
+        if (htmlElement.id === oldId) {
+            htmlElement.id = newId;
+            return;
+        }
         let elementWithId = htmlElement.querySelectorAll("#" + oldId)[0];
         if (elementWithId) {
             elementWithId.id = newId;
@@ -305,8 +320,26 @@ class Utils {
             }
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
+            } else if (elements[i].dataset.cmpAdaptiveformcontainerInitialized) {
+                continue;
             } else {
-                const _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
+                elements[i].dataset.cmpAdaptiveformcontainerInitialized = 'true';
+                let _formJson, callback;
+                const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
+                // Get the schema type from the data attribute with null safety
+                const schemaType = elements[i].getAttribute('data-cmp-schema-type');
+                // Check if this is an XDP form based on the schema type
+                // According to GuideSchemaType enum, XDP has value of FORM_TEMPLATES, not 'XFA'
+                if (loader && schemaType && (schemaType === 'XDP' || schemaType === 'FORM_TEMPLATES')) {
+                    const id = loader.getAttribute('data-cmp-adaptiveform-container-loader');
+                    const response = await fetch(`/adobe/forms/af/${id}`)
+                    _formJson = (await response.json()).afModelDefinition;
+                    _formJson.id = id;
+                    //window.formJson = _formJson
+                    callback = loadXfa(_formJson.formdom, _formJson.xfaRenderContext);
+                } else {
+                    _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
+                }
                 console.debug("fetched model json", _formJson);
                 await RuleUtils.registerCustomFunctionsV2( _formJson);
                 await RuleUtils.registerCustomFunctionsByUrl(customFunctionUrl);

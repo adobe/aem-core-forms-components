@@ -1,6 +1,6 @@
 {
  "FileCloseAccessText"         :   "กด Enter เพื่อลบไฟล์ ",
- "FileSizeGreater"             :   "ไฟล์ ${0} ใหญ่กว่าขนาดที่คาดไว้: ${1}MB",
+ "FileSizeGreater"             :   "ไฟล์ ${0} ใหญ่กว่าขนาดที่คาดไว้: ${1}",
  "FileNameInvalid"             :   "ห้ามแนบไฟล์ที่ชื่อไฟล์ขึ้นต้นด้วย (.) มี \\ / : * ? \" < > | ; % $ หรือเป็นคีย์เวิร์ดที่สงวนไว้ เช่น nul, prn, con, lpt หรือ com",
  "FileMimeTypeInvalid"         :   "ไฟล์ ${0} เป็นประเภทไฟล์ที่ไม่รองรับ",
  "InternalFormSubmissionError" :   "พบข้อผิดพลาดภายในขณะส่งแบบฟอร์ม",

@@ -94,6 +94,16 @@
       "jcr:primaryType": "nt:unstructured"
     }
   },
+  "checkbox-enableUncheckedValueMissingFromJcr" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/checkbox/v1/checkbox",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "type" : "string",
+    "checkedValue":  ".",
+    "enableUncheckedValue": true,
+    "fieldType": "checkbox"
+  },
   "checkbox-without-fieldtype" : {
     "id": "checkbox-wo-fieldtype1",
     "jcr:primaryType": "nt:unstructured",

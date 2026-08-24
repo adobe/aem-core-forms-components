@@ -23,14 +23,23 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG} = process.env;
- // 6.6.0 packages are published to same artifactory, once fixed use latest here
-const latestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg');
-const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.1328'; // Use the latest version if available, otherwise default to '6.0.1256'
-// this value is for 6.5.21.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
-const classicFormReleasedAddonVersion = '6.0.1360';
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CORE_COMPONENTS, WCM_COMPONENTS} = process.env;
+const isLatestAddon = AEM === 'addon-latest';
+const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar';
 
 try {
+    // # Define the image name
+    let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
+    let qpContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
+    console.log("container id for qp ", qpContainerId);
+
+    // moving the qp docker content and environment variable to host machine
+    ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
+    ci.sh(`docker cp ${qpContainerId}:/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/ /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/`);
+
+    //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
+    //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
+    let wcmVersion = "2.32.4";
     ci.stage("Integration Tests");
     let wcmVersion = "2.30.0";
     ci.dir(qpPath, () => {
@@ -92,30 +101,21 @@ try {
             --bundle com.adobe.cq:core.wcm.components.examples.ui.config:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */)} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */)} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-core'])} \\
-            ${ci.addQpFileDependency(config.modules['core-forms-components-af-core'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-apps'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-content'])} \
-            ${ci.addQpFileDependency(config.modules['core-forms-components-examples-core'])} \
+            ${extras} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-apps'] /*, isLatestAddon ? true : false */) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-apps'] /*, isLatestAddon ? true : false */) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-core']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-af-core']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-apps']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-content']) : ''} \
+            ${!CORE_COMPONENTS ? ci.addQpFileDependency(config.modules['core-forms-components-examples-core']) : ''} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-config'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-core'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
-            --vm-options \\\"-Xmx4096m -XX:MaxPermSize=1024m -Djava.awt.headless=true -javaagent:${process.env.JACOCO_AGENT}=destfile=crx-quickstart/jacoco-it.exec\\\" \
-            ${preleaseOpts} ${contextPathOpts}`);
-
-        if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
-            // add a sleep for 10 mins, add-on takes times to come up
-            ci.sh(`sleep 8m`);
-            // restart the AEM insatnce
-            ci.sh(`./qp.sh stop --id author`);
-            ci.sh(`./qp.sh start --id author`);
-            // add a sleep for 7 mins, add-on takes times to come up
-            ci.sh(`sleep 8m`);
-        }
-    });
+            --vm-options \\\"-Xmx4096m -Djava.awt.headless=true -javaagent:${jacocoAgent}=destfile=crx-quickstart/jacoco-it.exec\\\" \
+            ${preleaseOpts}`);
+});
 
     // Run integration tests
     /*
@@ -129,15 +129,140 @@ try {
     });
     }
     */
-
+    // add a sleep for 8 mins since 23482 version aem has become slow
+    //ci.sh(`sleep 2m`);
     // Run UI tests
     if (TYPE === 'cypress') {
+        if (AEM && AEM.includes("addon")) {
+            // explicitly add the rum bundle, since it is only available on publish tier
+            // upload webvitals and disable api region
+            const disableApiRegion = "curl -u admin:admin -X POST -d 'apply=true' -d 'propertylist=disable' -d 'disable=true' http://localhost:4502/system/console/configMgr/org.apache.sling.feature.apiregions.impl";
+            ci.sh(disableApiRegion);
+            
+            // Only remove duplicate bundles when testing SNAPSHOT builds (not specific CORE_COMPONENTS versions)
+            if (!CORE_COMPONENTS) {
+                // Uninstall old af-core bundles to prevent adaptTo() conflicts
+                // First, log all af-core bundles to debug which one we're keeping
+                const allBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core")) | sort_by(.id | tonumber) | reverse | .[] | "ID: \\(.id) | Version: \\(.version) | State: \\(.state)"\'', true);
+                console.log('Found af-core bundles:');
+                console.log(allBundles);
+                
+                // Get SNAPSHOT bundle ID for later restart
+                const afCoreSnapshotId = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core" and (.version | contains("SNAPSHOT")))) | .[0].id\'', true);
+                
+                // Keep the SNAPSHOT version (from build) and uninstall all others
+                const oldBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-af-core" and (.version | contains("SNAPSHOT") | not))) | .[] | "\\(.id)|\\(.version)"\'', true);
+                if (oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') {
+                    console.log('Uninstalling old af-core bundle versions to avoid conflicts');
+                    oldBundlesInfo.trim().split('\n').forEach(bundleInfo => {
+                        if (bundleInfo && bundleInfo !== 'null' && bundleInfo.trim() !== '') {
+                            const [bundleId, version] = bundleInfo.split('|');
+                            console.log(`  Uninstalling bundle ${bundleId} (version ${version})`);
+                            ci.sh(`curl -s -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
+                        }
+                    });
+                }
+                
+                // Similarly, uninstall old core bundle versions
+                const allCoreBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-core")) | sort_by(.id | tonumber) | reverse | .[] | "ID: \\(.id) | Version: \\(.version) | State: \\(.state)"\'', true);
+                console.log('Found core bundles:');
+                console.log(allCoreBundles);
+                
+                // Get SNAPSHOT bundle ID for later restart
+                const coreSnapshotId = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-core" and (.version | contains("SNAPSHOT")))) | .[0].id\'', true);
+                
+                const oldCoreBundlesInfo = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select(.symbolicName == "com.adobe.aem.core-forms-components-core" and (.version | contains("SNAPSHOT") | not))) | .[] | "\\(.id)|\\(.version)"\'', true);
+                if (oldCoreBundlesInfo && oldCoreBundlesInfo.trim() !== '' && oldCoreBundlesInfo !== 'null') {
+                    console.log('Uninstalling old core bundle versions to avoid conflicts');
+                    oldCoreBundlesInfo.trim().split('\n').forEach(bundleInfo => {
+                        if (bundleInfo && bundleInfo !== 'null' && bundleInfo.trim() !== '') {
+                            const [bundleId, version] = bundleInfo.split('|');
+                            console.log(`  Uninstalling bundle ${bundleId} (version ${version})`);
+                            ci.sh(`curl -s -u admin:admin -F action=uninstall http://localhost:4502/system/console/bundles/${bundleId}`);
+                        }
+                    });
+                }
+                
+                // Restart SNAPSHOT bundles to ensure clean wiring after uninstalling old bundles
+                if ((oldBundlesInfo && oldBundlesInfo.trim() !== '' && oldBundlesInfo !== 'null') || 
+                    (oldCoreBundlesInfo && oldCoreBundlesInfo.trim() !== '' && oldCoreBundlesInfo !== 'null')) {
+                    
+                    // Stop SNAPSHOT bundles (using IDs fetched earlier)
+                    if (afCoreSnapshotId && afCoreSnapshotId.trim() !== '' && afCoreSnapshotId !== 'null') {
+                        console.log(`Stopping af-core SNAPSHOT bundle (ID: ${afCoreSnapshotId.trim()})...`);
+                        ci.sh(`curl -s -u admin:admin -F action=stop http://localhost:4502/system/console/bundles/${afCoreSnapshotId.trim()}`);
+                    }
+                    if (coreSnapshotId && coreSnapshotId.trim() !== '' && coreSnapshotId !== 'null') {
+                        console.log(`Stopping core SNAPSHOT bundle (ID: ${coreSnapshotId.trim()})...`);
+                        ci.sh(`curl -s -u admin:admin -F action=stop http://localhost:4502/system/console/bundles/${coreSnapshotId.trim()}`);
+                    }
+                    
+                    console.log('Waiting 10 seconds for bundles to stop...');
+                    ci.sh('sleep 10');
+                    
+                    // Start SNAPSHOT bundles
+                    if (afCoreSnapshotId && afCoreSnapshotId.trim() !== '' && afCoreSnapshotId !== 'null') {
+                        console.log(`Starting af-core SNAPSHOT bundle (ID: ${afCoreSnapshotId.trim()})...`);
+                        ci.sh(`curl -s -u admin:admin -F action=start http://localhost:4502/system/console/bundles/${afCoreSnapshotId.trim()}`);
+                    }
+                    if (coreSnapshotId && coreSnapshotId.trim() !== '' && coreSnapshotId !== 'null') {
+                        console.log(`Starting core SNAPSHOT bundle (ID: ${coreSnapshotId.trim()})...`);
+                        ci.sh(`curl -s -u admin:admin -F action=start http://localhost:4502/system/console/bundles/${coreSnapshotId.trim()}`);
+                    }
+                    
+                    console.log('Waiting 30 seconds for OSGi to re-wire bundles...');
+                    ci.sh('sleep 10');
+                    
+                    console.log('Checking bundle stability...');
+                    let attempts = 0;
+                    const maxAttempts = 30; // 450 seconds additional wait if needed
+                    while (attempts < maxAttempts) {
+                        const inactiveBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'[.data[] | select(.state != "Active" and .state != "Fragment")] | length\'', true);
+                        const count = parseInt(inactiveBundles.trim());
+                        if (count === 0) {
+                            console.log('All bundles are active');
+                            break;
+                        }
+                        console.log(`  ${count} bundles not active yet, waiting... (attempt ${attempts + 1}/${maxAttempts})`);
+                        ci.sh('sleep 15');
+                        attempts++;
+                    }
+                    
+                    if (attempts >= maxAttempts) {
+                        console.log('Warning: Some bundles still not active, checking critical bundles...');
+                        const criticalBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select((.symbolicName | contains("core-forms-components")) and (.version | contains("SNAPSHOT")))) | .[] | "\\(.symbolicName): \\(.state)"\'', true);
+                        console.log('Critical SNAPSHOT bundle states:');
+                        console.log(criticalBundles);
+                    }
+                }
+            }
+            
+            // const installWebVitalBundle = `curl -u admin:admin \
+            //                                 -F bundlefile=@'${buildPath}/it/core/src/main/resources/com.adobe.granite.webvitals-1.2.2.jar' \
+            //                                 -F name='com.adobe.granite.webvitals' \
+            //                                 -F action=install \
+            //                                 http://localhost:4502/system/console/bundles`;
+            // ci.sh(installWebVitalBundle);
+            // // get the bundle id
+            // const webVitalBundleId = ci.sh("curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r '.data | map(select(.symbolicName == \"com.adobe.granite.webvitals\")) | .[0].id'", true);
+            // console.log("Web Vital Bundle Id " + webVitalBundleId);
+            // if (webVitalBundleId) {
+            //     // start the web vital bundle
+            //     ci.sh(`curl -u admin:admin -F action=start http://localhost:4502/system/console/bundles/${webVitalBundleId}`)
+            // }
+        }
         const disableToggleOption = ((FTCONFIG != null && FTCONFIG === 'false') ? `-DdisableToggle=true` : '');
         if (disableToggleOption) {
             ci.sh(`mvn clean install -pl=it/config ${disableToggleOption} -PautoInstallPackage`);
         }
         const [node, script, ...params] = process.argv;
         let testSuites = params.join(',');
+        if (CORE_COMPONENTS) {
+            // we run only some test suites for older core components
+            testSuites = "specs/prefill/customprefill.cy.js,specs/prefill/repeatableprefillwithzerooccurrencefortabaccordionwizard.cy.js,specs/actions/submit/submit.runtime.cy.js,specs/actions/render/render_with_openapi.cy.js";
+        }
+        // add a sleep for 8 mins since 23482 version aem has become slow
+        //ci.sh(`sleep 9m`);
         // start running the tests
         ci.dir('ui.tests', () => {
             const contextPathOption = CONTEXTPATH ? `-Daem.contextPath=/${CONTEXTPATH}` : '';

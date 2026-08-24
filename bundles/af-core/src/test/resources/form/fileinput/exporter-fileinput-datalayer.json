@@ -20,9 +20,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:buttonText": "Attach",
     "fd:path": "/content/fileinput-datalayer"
   },

@@ -53,6 +53,26 @@ public class RecaptchaImplTest {
         public ReCaptchaConfigurationModel getRecaptchaCloudConfiguration(Resource resource) throws GuideException {
             return reCaptchaConfiguration;
         }
+
+        @Override
+        public String getCustomFunctionUrl(Resource resource) {
+            return null;
+        }
+
+        @Override
+        public String getCustomFunctionFranklinProxyUrl(Resource resource) {
+            return null;
+        }
+
+        @Override
+        public HCaptchaConfiguration getHCaptchaCloudConfiguration(Resource resource) throws GuideException {
+            return null;
+        }
+
+        @Override
+        public TurnstileConfiguration getTurnstileCloudConfiguration(Resource resource) throws GuideException {
+            return null;
+        }
     };
 
     @BeforeEach

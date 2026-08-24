@@ -32,6 +32,7 @@ import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
+import com.day.cq.wcm.api.WCMMode;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
@@ -48,6 +49,13 @@ public class AbstractFormComponentImplTest {
     private static final String PATH_COMPONENT_WITH_NO_VALIDATION_STATUS = CONTENT_ROOT + "/datepicker2";
     private static final String PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS = CONTENT_ROOT + "/datepicker3";
     private static final String PATH_COMPONENT_WITH_NO_RULE = CONTENT_ROOT + "/numberinput";
+    private static final String PATH_COMPONENT_WITH_PROPERTIES_RULE = CONTENT_ROOT + "/textinputWithPropertiesRule";
+    private static final String PATH_COMPONENT_WITH_DISABLED_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponent";
+    private static final String PATH_COMPONENT_WITH_INVALID_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentinvalid";
+    private static final String PATH_COMPONENT_WITH_NO_XFA_SCRIPTS = CONTENT_ROOT + "/xfacomponentnone";
+    private static final String PATH_COMPONENT_WITH_RULES = CONTENT_ROOT + "/textinputWithPrintRule";
+    private static final String PATH_COMPONENT_WITH_PRINT_ANNOTATIONS = CONTENT_ROOT + "/textinputWithPrintAnnotations";
+    private static final String PATH_COMPONENT_WITH_EMPTY_ANNOTATIONS = CONTENT_ROOT + "/textinputWithEmptyAnnotations";
     private static final String AF_PATH = "/content/forms/af/testAf";
     private static final String PAGE_PATH = "/content/testPage";
 
@@ -59,46 +67,153 @@ public class AbstractFormComponentImplTest {
     }
 
     @Test
-    public void testInvalidRule() {
+    public void testInvalidRuleNotInPublish() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_INVALID_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
-        assertNotNull(rulesProperties);
-        assertEquals("invalid", rulesProperties.get("validationStatus"));
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
     }
 
     @Test
-    public void testValidRule() {
+    public void testValidRuleNotInPublish() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_VALID_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
-        assertNotNull(rulesProperties);
-        assertEquals("valid", rulesProperties.get("validationStatus"));
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
     }
 
     @Test
     public void testNoRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_NO_RULE);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Object rulesProperties = properties.get("fd:rules");
-        assertNull(rulesProperties);
+        assertNull(properties.get("fd:rules"));
     }
 
     @Test
     public void testNoValidationStatusRule() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_NO_VALIDATION_STATUS);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
-        Object rulesProperties = properties.get("fd:rules");
-        assertNull(rulesProperties);
+        assertNull(properties.get("fd:rules"));
     }
 
     @Test
-    public void testInvalidValidationStatusRule() {
+    public void testInvalidValidationStatusRuleNotInPublish() {
         AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS);
         Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
+    }
+
+    @Test
+    public void testValidRuleInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_VALID_RULE);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
         Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
-        assertNotNull(rulesProperties);
+        assertNotNull(rulesProperties, "fd:rules should appear in author mode");
+        assertEquals("valid", rulesProperties.get("validationStatus"));
+    }
+
+    @Test
+    public void testInvalidRuleInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_INVALID_RULE);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
+        assertNotNull(rulesProperties, "fd:rules should appear in author mode");
         assertEquals("invalid", rulesProperties.get("validationStatus"));
+    }
+
+    @Test
+    public void testNoRuleInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_NO_RULE);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear when no fd:rules node exists");
+    }
+
+    @Test
+    public void testInvalidValidationStatusInAuthorMode() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_INVALID_VALIDATION_STATUS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> rulesProperties = (Map<String, Object>) properties.get("fd:rules");
+        assertNotNull(rulesProperties, "fd:rules should appear in author mode even with invalid status");
+        assertEquals("invalid", rulesProperties.get("validationStatus"));
+    }
+
+    @Test
+    public void testRulesExcludedWhenPublishViewAttributeSetOnAuthor() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClassWithAuthorMode(PATH_COMPONENT_WITH_VALID_RULE);
+        context.request().setAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW, Boolean.TRUE);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:rules"),
+            "fd:rules should not appear when publish view attribute is set even in author WCMMode");
+    }
+
+    @Test
+    public void testGranularPropertiesRulesPreserved() {
+        // A rule keyed `properties.<path>` is a granular custom-variable target routed by the
+        // runtime to the PropertiesManager; the exporter must not drop flat or nested ones.
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PROPERTIES_RULE);
+        Map<String, String> rules = abstractFormComponentImpl.getRules();
+        assertEquals("some property expression", rules.get("properties.employer"),
+            "flat properties.<key> rule should be preserved");
+        assertEquals("some nested property expression", rules.get("properties.employer.category"),
+            "nested properties.<a.b> rule should be preserved");
+    }
+
+    @Test
+    public void testBarePropertiesAndWhitelistedRulesPreserved() {
+        // The whole `properties` bag is an editable property, and standard whitelisted targets
+        // (e.g. visible) must keep working alongside the granular properties.<path> targets.
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PROPERTIES_RULE);
+        Map<String, String> rules = abstractFormComponentImpl.getRules();
+        assertEquals("some expression", rules.get("visible"));
+        assertEquals("merge($field.properties, {a: 1})", rules.get("properties"),
+            "the whole properties bag rule should be preserved");
+    }
+
+    @Test
+    public void testUnknownRulesDropped() {
+        // Keys that are neither whitelisted nor a genuine properties.<path> target are filtered
+        // out, including a `properties`-prefixed key without the dot separator.
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PROPERTIES_RULE);
+        Map<String, String> rules = abstractFormComponentImpl.getRules();
+        assertNull(rules.get("notARule"), "non-whitelisted, non-properties rule keys should be dropped");
+        assertNull(rules.get("propertiesFoo"), "a properties-prefixed key without a dot is not a valid target");
+    }
+
+    @Test
+    public void testIsAuthorModeUtility() {
+        assertFalse(ComponentUtils.isAuthorMode(null), "null request should not be author mode");
+        assertFalse(ComponentUtils.isAuthorMode(context.request()), "default request should not be author mode");
+        WCMMode.EDIT.toRequest(context.request());
+        assertTrue(ComponentUtils.isAuthorMode(context.request()), "EDIT mode should be author mode");
+        context.request().setAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW, Boolean.TRUE);
+        assertFalse(ComponentUtils.isAuthorMode(context.request()),
+            "publish view attribute should override WCMMode");
+    }
+
+    @Test
+    public void testDisabledXFAScripts() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_DISABLED_XFA_SCRIPTS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        List<String> disabledScripts = (List<String>) properties.get("fd:disabledXfaScripts");
+        assertNotNull(disabledScripts);
+        assertEquals(2, disabledScripts.size());
+        assertTrue(disabledScripts.contains("click"));
+        assertTrue(disabledScripts.contains("change"));
+    }
+
+    @Test
+    public void testInvalidXFAScripts() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_INVALID_XFA_SCRIPTS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Object disabledScripts = properties.get("fd:disabledXfaScripts");
+        // Even with invalid JSON, we should get an empty list, not null
+        assertNull(disabledScripts);
+    }
+
+    @Test
+    public void testNoXFAScripts() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_NO_XFA_SCRIPTS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Object disabledScripts = properties.get("fd:disabledXfaScripts");
+        assertNull(disabledScripts);
     }
 
     @Test
@@ -153,5 +268,154 @@ public class AbstractFormComponentImplTest {
         AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
         Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
         return abstractFormComponentImpl;
+    }
+
+    private AbstractFormComponentImpl prepareTestClassWithAuthorMode(String path) {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(path);
+        WCMMode.EDIT.toRequest(context.request());
+        Utils.setInternalState(abstractFormComponentImpl, "request", context.request());
+        return abstractFormComponentImpl;
+    }
+
+    @Test
+    public void testPrintChannelRuleNotInPublish() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_RULES);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:rules"), "fd:rules should not appear in publish mode");
+    }
+
+    @Test
+    public void testPrintChannelAnnotationsExcludedForWebChannel() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "web");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("cq:annotations"),
+            "cq:annotations should not appear for non-print channel");
+    }
+
+    @Test
+    public void testPrintChannelAnnotationsIncluded() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations, "cq:annotations should appear for print channel");
+        Map<String, Object> annotation = (Map<String, Object>) annotations.get("annotation-1");
+        assertNotNull(annotation);
+        assertEquals("review note", annotation.get("text"));
+    }
+
+    @Test
+    public void testAnnotationPropertiesIncludeAllowedTypes() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations);
+        Map<String, Object> annotation = (Map<String, Object>) annotations.get("annotation-1");
+        assertNotNull(annotation);
+        // String and Long
+        assertEquals("review note", annotation.get("text"));
+        assertEquals(11L, annotation.get("x"));
+        assertEquals(22L, annotation.get("y"));
+        // Boolean
+        assertEquals(Boolean.FALSE, annotation.get("resolved"));
+        // String[]
+        Object tags = annotation.get("tags");
+        assertNotNull(tags);
+        assertTrue(tags instanceof String[], "tags should be exported as String[]");
+        assertEquals(2, ((String[]) tags).length);
+    }
+
+    @Test
+    public void testAnnotationPropertiesExcludeJcrAndSlingPrefixes() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations);
+        Map<String, Object> annotation = (Map<String, Object>) annotations.get("annotation-1");
+        assertNotNull(annotation);
+        assertNull(annotation.get("jcr:primaryType"), "jcr:primaryType must not leak into annotation output");
+        assertNull(annotation.get("jcr:createdBy"), "jcr:createdBy must not leak into annotation output");
+        assertNull(annotation.get("sling:resourceType"), "sling:* must not leak into annotation output");
+    }
+
+    @Test
+    public void testNoAnnotationsResource() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_NO_RULE);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("cq:annotations"),
+            "cq:annotations should not appear when no annotations resource exists");
+    }
+
+    @Test
+    public void testAnnotationsAllChildEntriesFilteredOut() {
+        // Child node contains only jcr:/sling: properties -> filtered map is empty,
+        // child is skipped, and overall annotations map ends up empty -> getProperties
+        // omits cq:annotations entirely. Covers the `!ann.isEmpty()` false branch and
+        // the `result.isEmpty() ? null` true branch in getCqAnnotations().
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_EMPTY_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("cq:annotations"),
+            "cq:annotations should be omitted when every child has only jcr:/sling: properties");
+    }
+
+    @Test
+    public void testAnnotationsWithNullResourceAndPrintChannel() {
+        // channel=print but resource never set: must short-circuit and return null,
+        // not NPE. Covers the `resource == null` branch in getCqAnnotations().
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Method getCqAnnotations = Utils.getPrivateMethod(AbstractFormComponentImpl.class, "getCqAnnotations");
+        try {
+            Object result = getCqAnnotations.invoke(abstractFormComponentImpl);
+            assertNull(result, "getCqAnnotations should return null when resource is null");
+        } catch (Exception e) {
+            fail("getCqAnnotations should not throw when resource is null: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAnnotationsAbsentInDefaultWebChannel() {
+        // No channel set (defaults to non-print): annotations must not appear.
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("cq:annotations"),
+            "cq:annotations should not appear when channel is not print");
+    }
+
+    @Test
+    public void testMultipleAnnotations() {
+        AbstractFormComponentImpl abstractFormComponentImpl = prepareTestClass(PATH_COMPONENT_WITH_PRINT_ANNOTATIONS);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        Map<String, Object> annotations = (Map<String, Object>) properties.get("cq:annotations");
+        assertNotNull(annotations);
+        assertEquals(2, annotations.size(), "Should have 2 annotations");
+        assertNotNull(annotations.get("annotation-1"));
+        assertNotNull(annotations.get("annotation-2"));
+        Map<String, Object> annotation2 = (Map<String, Object>) annotations.get("annotation-2");
+        assertEquals("second review note", annotation2.get("text"));
+        assertEquals("resolved", annotation2.get("state"));
+    }
+
+    @Test
+    public void testAssociateProperties() {
+        Resource resource = Mockito.mock(Resource.class);
+        AbstractFormComponentImpl abstractFormComponentImpl = new AbstractFormComponentImpl();
+        Utils.setInternalState(abstractFormComponentImpl, "resource", resource);
+        Utils.setInternalState(abstractFormComponentImpl, "channel", "print");
+        ValueMap valueMap = new MockValueMap(resource);
+        Mockito.doReturn(valueMap).when(resource).getValueMap();
+        Mockito.doReturn(null).when(resource).getChild("fd:dorContainer");
+        Mockito.doReturn(null).when(resource).getChild("cq:annotations");
+        Resource associateResource = Mockito.mock(Resource.class);
+        Mockito.doReturn(associateResource).when(resource).getChild("fd:associate");
+        Map<String, Object> properties = abstractFormComponentImpl.getProperties();
+        assertNull(properties.get("fd:associate"));
     }
 }

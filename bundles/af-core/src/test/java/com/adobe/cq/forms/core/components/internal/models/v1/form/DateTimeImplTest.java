@@ -35,6 +35,7 @@ import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class DateTimeImplTest {
@@ -77,10 +78,8 @@ public class DateTimeImplTest {
     @Test
     void testDorProperties() {
         DateTime datetime = Utils.getComponentUnderTest(PATH_DATETIME_CUSTOMIZED, DateTime.class, context);
-        assertEquals(false, datetime.getDorProperties().get("dorExclusion"));
-        assertEquals(null, datetime.getDorProperties().get("dorColspan"));
-        assertEquals(null, datetime.getDorProperties().get("dorBindRef"));
-
+        assertTrue("getDorProperties should return empty map when no dor properties are set in JCR",
+            datetime.getDorProperties().isEmpty());
     }
 
     @Test

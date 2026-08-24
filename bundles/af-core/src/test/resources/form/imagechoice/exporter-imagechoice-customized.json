@@ -1,0 +1,55 @@
+{
+  "id": "imagechoice-1e685e32c4",
+  "dataRef": "a.b",
+  "fieldType": "radio-group",
+  "name": "imagechoice_12345",
+  "visible": false,
+  "description": "Select your favorite animal",
+  "tooltip": "Pick one animal",
+  "type": "string",
+  "required": true,
+  "enabled": true,
+  "constraintMessages": {
+    "required": "This is a required field"
+  },
+  "readOnly": true,
+  "enforceEnum": true,
+  "enumNames": [
+    "Cat",
+    "Dog",
+    "Bird"
+  ],
+  "default": "cat",
+  "screenReaderText": "custom screen reader text",
+  "label": {
+    "value": "Favorite Animal"
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": true,
+      "orientation": "vertical",
+      "selectionType": "single",
+      "imageSrc": [
+        "/content/dam/animals/cat.png",
+        "/content/dam/animals/dog.png",
+        "/content/dam/animals/bird.png"
+      ]
+    },
+    "fd:dor": {
+      "dorExclusion": true,
+      "dorColspan": "4"
+    },
+    "fd:path": "/content/imagechoice-customized"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "enum": [
+    "cat",
+    "dog",
+    "bird"
+  ],
+  ":type": "core/fd/components/form/imagechoice/v1/imagechoice"
+}

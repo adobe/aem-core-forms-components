@@ -25,6 +25,7 @@
     <container/>
     <pageheader/>
     <image/>
+    <imagechoice/>
     <numberinput/>
     <panelcontainer/>
     <radiobutton/>

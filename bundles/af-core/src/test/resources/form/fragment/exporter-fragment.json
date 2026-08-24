@@ -6,28 +6,25 @@
   "repeatable": true,
   "minOccur": 0,
   "maxOccur": 4,
+  "fragmentPath": "/content/affragment",
+  "properties": {
+    "customProp": "customPropValue",
+    "fd:path": "/content/fragment",
+    "fd:fragment": true,
+    "fd:viewType": "fragment"
+  },
+  "events": {
+    "custom:setProperty": ["$event.payload"],
+    "change": ["fragmentChangeHandler"],
+    "initialize": ["fragInit"]
+  },
+  "rules": {
+    "visible": "fragmentVisibleRule"
+  },
   "label": {
     "value": "Fragment"
   },
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
-  "properties": {
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
-    "fd:path": "/content/fragment",
-    "fd:fragment": true,
-    "fd:viewType": "fragment",
-    "customProp": "customPropValue"
-  },
-  ":itemsOrder": [
-    "textinput"
-  ],
+  ":itemsOrder": ["textinput"],
   ":items": {
     "textinput": {
       "id": "textinput-233cc688ba",
@@ -37,16 +34,11 @@
       "label": {
         "value": "Text Input"
       },
-      "events": {
-        "custom:setProperty": [
-          "$event.payload"
-        ]
-      },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/affragment/jcr:content/guideContainer/textinput"
+      },
+      "events": {
+        "custom:setProperty": ["$event.payload"]
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }

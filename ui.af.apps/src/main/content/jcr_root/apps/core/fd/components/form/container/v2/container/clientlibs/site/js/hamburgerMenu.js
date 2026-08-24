@@ -47,6 +47,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
         };
     
         static cssClasses = {
+            item: `${HamburgerMenu.bemBlock}-item`,
             active: `${HamburgerMenu.bemBlock}-item--active`,
             activeParent: `${HamburgerMenu.bemBlock}-item--activeparent`,
             hamburgerMenuWidget: {
@@ -108,6 +109,7 @@ if (typeof window.HamburgerMenu === 'undefined') {
             textSpan.setAttribute('tabindex', "0");
             link.appendChild(textSpan);
             li.appendChild(link);
+            li.classList.add(HamburgerMenu.cssClasses.item);
             li.setAttribute('data-panel-id', item?.id);
             li.setAttribute('data-panel-visible', item?.visible);
             li.setAttribute('data-panel-enabled', item?.enabled);
@@ -289,7 +291,8 @@ if (typeof window.HamburgerMenu === 'undefined') {
                 link.appendChild(textSpan);
                 link.style.visibility = item?.label?.visible ? 'visible' : 'hidden';
                 li.appendChild(link);
-                
+
+                li.classList.add(HamburgerMenu.cssClasses.item);
                 li.setAttribute('data-panel-id', item?.id);
                 li.setAttribute('data-panel-visible', item?.visible);
                 li.setAttribute('data-panel-enabled', item?.enabled);

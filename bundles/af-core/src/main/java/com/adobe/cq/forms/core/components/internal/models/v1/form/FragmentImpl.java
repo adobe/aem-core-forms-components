@@ -15,7 +15,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
@@ -41,6 +49,7 @@ import com.adobe.aemds.guide.utils.TranslationUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
@@ -48,10 +57,9 @@ import com.adobe.cq.forms.core.components.models.form.FormComponent;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.Fragment;
 import com.adobe.cq.forms.core.components.util.ComponentUtils;
-import com.adobe.cq.forms.core.components.views.Views;
 import com.day.cq.i18n.I18n;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -78,6 +86,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FRAGMENT_PATH)
     private String fragmentPath;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LAZY)
+    private Boolean lazy;
+
     private Resource fragmentContainer;
 
     @PostConstruct
@@ -91,15 +102,25 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                 formClientLibManager.addClientLibRef(clientLibRef);
             }
         }
+        if (Boolean.TRUE.equals(lazy)) {
+            fragmentContainer = null;
+        }
     }
 
-    @JsonView(Views.Author.class)
     public String getFragmentPath() {
         return fragmentPath;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public boolean getLazy() {
+        return Boolean.TRUE.equals(lazy);
+    }
+
     @Override
     public @NotNull Map<String, ? extends ComponentExporter> getExportedItems() {
+        if (ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_SKIP_ITEMS_MAP)) {
+            return Collections.emptyMap();
+        }
         if (itemModels == null) {
             itemModels = getChildrenModels(request, ComponentExporter.class);
         }
@@ -107,6 +128,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     protected <T> Map<String, T> getChildrenModels(@Nullable SlingHttpServletRequest request, @NotNull Class<T> modelClass) {
+        if (fragmentContainer == null) {
+            return new LinkedHashMap<>();
+        }
         List<Resource> filteredChildrenResources = getFilteredChildrenResources(fragmentContainer);
         SlingHttpServletRequest wrappedSlingHttpServletRequest = null;
         if (request != null) {
@@ -154,7 +178,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     private @Nonnull I18n getFragmentContainerI18n(@Nonnull String localeLang) {
         // Get the locale from the lang setter
         ResourceBundle resourceBundle = null;
-        if (localeLang != null) {
+        if (localeLang != null && fragmentContainer != null) {
             Locale desiredLocale = new Locale(localeLang);
             // Get the resource resolver from the fragment container
             ResourceResolver resourceResolver = fragmentContainer.getResourceResolver();
@@ -220,6 +244,40 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
         properties.put(ReservedProperties.PN_VIEWTYPE, "fragment");
         return properties;
+    }
+
+    @Override
+    public Map<String, String[]> getEvents() {
+        if (fragmentContainer != null && isFragmentMergeContainerRulesEventsEnabled()) {
+            Map<String, String[]> userEvents = new LinkedHashMap<>(super.getEvents());
+            Map<String, String[]> fragmentEvents = getEventsForResource(fragmentContainer);
+            for (Map.Entry<String, String[]> entry : fragmentEvents.entrySet()) {
+                String[] existing = userEvents.get(entry.getKey());
+                if (existing != null) {
+                    String[] combined = Arrays.copyOf(existing, existing.length + entry.getValue().length);
+                    System.arraycopy(entry.getValue(), 0, combined, existing.length, entry.getValue().length);
+                    userEvents.put(entry.getKey(), combined);
+                } else {
+                    userEvents.put(entry.getKey(), entry.getValue());
+                }
+            }
+            return userEvents;
+        }
+        return super.getEvents();
+    }
+
+    @Override
+    public Map<String, String> getRules() {
+        if (fragmentContainer != null && isFragmentMergeContainerRulesEventsEnabled()) {
+            Map<String, String> merged = new LinkedHashMap<>(getRulesForResource(fragmentContainer));
+            merged.putAll(super.getRules());
+            return merged;
+        }
+        return super.getRules();
+    }
+
+    private boolean isFragmentMergeContainerRulesEventsEnabled() {
+        return ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
     }
 
     private String getClientLibForFragment() {

@@ -105,6 +105,33 @@ public class FormMetaDataDataSourceServletTest {
     }
 
     @Test
+    public void testDataSourceForPrefillActionsAddsDefaultNoneOption() throws Exception {
+        context.currentResource("/apps/prefilltypedatasource");
+        when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))
+            .then(returnsFirstArg());
+        ArrayList<FormsManager.ComponentDescription> componentDescriptions = new ArrayList<>();
+        componentDescriptions.add(description);
+        when(formMetaDataMock.getPrefillActions()).thenReturn(componentDescriptions.iterator());
+        when(description.getTitle()).thenReturn("Prefill Service");
+        when(description.getResourceType()).thenReturn("form/prefill");
+        FormMetaDataDataSourceServlet dataSourceServlet = new FormMetaDataDataSourceServlet();
+        // set expression resolver mock
+        Utils.setInternalState(dataSourceServlet, "expressionResolver", expressionResolver);
+        dataSourceServlet.doGet(context.request(), context.response());
+        DataSource dataSource = (com.adobe.granite.ui.components.ds.DataSource) context.request().getAttribute(
+            DataSource.class.getName());
+        assertNotNull(dataSource);
+        Iterator<Resource> iterator = dataSource.iterator();
+        Resource defaultNoneOption = iterator.next();
+        assertEquals("None", defaultNoneOption.getValueMap().get(PN_TEXT, String.class));
+        assertEquals("", defaultNoneOption.getValueMap().get(PN_VALUE, String.class));
+        Resource prefillOption = iterator.next();
+        assertEquals("Prefill Service", prefillOption.getValueMap().get(PN_TEXT, String.class));
+        assertEquals("form/prefill", prefillOption.getValueMap().get(PN_VALUE, String.class));
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
     public void testDataSourceForFormattersForNumberInput() throws Exception {
         context.currentResource("/apps/formattertypedatasourcenumberinput");
         when(expressionResolver.resolve(any(), any(), any(), any(SlingHttpServletRequest.class)))

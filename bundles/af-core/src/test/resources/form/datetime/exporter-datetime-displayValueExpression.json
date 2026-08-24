@@ -13,9 +13,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/dateime-displayValueExpression"
   },
   "format": "date",

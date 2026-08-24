@@ -59,15 +59,15 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUDE_TITLE)
     @Nullable
-    protected boolean dorExcludeTitle;
+    protected Boolean dorExcludeTitle;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUSION)
     @Nullable
-    protected boolean dorExclusion;
+    protected Boolean dorExclusion;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUDE_DESC)
     @Nullable
-    protected boolean dorExcludeDescription;
+    protected Boolean dorExcludeDescription;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_BREAK_BEFORE_TEXT)
     @Nullable
@@ -126,9 +126,15 @@ public class PanelImpl extends AbstractContainerImpl implements Panel {
     public Map<String, Object> getDorProperties() {
         Map<String, Object> customDorProperties = new LinkedHashMap<>();
 
-        customDorProperties.put(DOR_EXCLUSION, dorExclusion);
-        customDorProperties.put(DOR_EXCLUDE_TITLE, dorExcludeTitle);
-        customDorProperties.put(DOR_EXCLUDE_DESCRIPTION, dorExcludeDescription);
+        if (dorExclusion != null) {
+            customDorProperties.put(DOR_EXCLUSION, dorExclusion);
+        }
+        if (dorExcludeTitle != null) {
+            customDorProperties.put(DOR_EXCLUDE_TITLE, dorExcludeTitle);
+        }
+        if (dorExcludeDescription != null) {
+            customDorProperties.put(DOR_EXCLUDE_DESCRIPTION, dorExcludeDescription);
+        }
 
         if (breakBeforeText != null) {
             customDorProperties.put(BREAK_BEFORE_TEXT, breakBeforeText);
