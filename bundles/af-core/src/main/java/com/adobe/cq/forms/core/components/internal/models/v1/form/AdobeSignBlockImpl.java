@@ -42,19 +42,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Sling Model for the Adobe Sign Block core component.
- *
- * <p>
- * Extends {@link AbstractBaseImpl} (same base as all other form field components) so it participates correctly in
- * form-model serialisation and test casting. Implements the {@link Text} interface — replicating the rich-text value
- * and fieldType behaviour from {@link TextImpl} — while inheriting:
- * </p>
- * <ul>
- * <li>{@code getLabel()} from {@link AbstractBaseImpl}: builds a {@code LabelImpl} from {@code jcr:title} and
- * {@code hideTitle}, putting the authored title into the component's JSON model so the form engine and Rules Engine can
- * update it.</li>
- * <li>{@code getDataRef()} from {@link com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl}: serialises
- * the {@code dataRef} JCR property into the JSON model, wiring up the bind-reference backend.</li>
- * </ul>
  */
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -66,24 +53,9 @@ public class AdobeSignBlockImpl extends AbstractBaseImpl implements Text {
 
     private static final Pattern ADOBE_SIGN_TAG_PATTERN = Pattern.compile("\\{\\{[*]?([^:]*)_es_:");
 
-    /**
-     * The Adobe Sign merge-tag markup (e.g. {@code <span data-adobesigntype="signature">
-     * {{fieldName_es_:signer1:signature}}</span>}), computed client-side by editDialog.js reusing
-     * integration-adobesign's own dialog plugin ({@code getDomContentFromDialog()} /
-     * {@code ADOBESIGN_UTILS.getDomContent()}) from the included Type/Name/Options/etc. field set,
-     * rather than reimplemented here.
-     */
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL)
     private String adobeSignFieldTag;
 
-    /**
-     * Combines the author's narrative {@code value} text - always authored as rich text, there is no
-     * plain-text mode for this field - with the client-computed {@link #adobeSignFieldTag}, so
-     * downstream DoR/agreement generation sees the same wire format it always has, regardless of how the
-     * field was authored. Never wrapped in an artificial {@code <p>} — the narrative can already contain
-     * its own block-level markup (lists, paragraphs), and nesting that inside a single forced {@code <p>}
-     * produces invalid HTML that corrupts the author-canvas DOM.
-     */
     @Override
     public String getValue() {
         String tag = StringUtils.defaultString(adobeSignFieldTag);
