@@ -59,17 +59,6 @@
       "validationStatus" : "someInvalidStatus"
     }
   },
-  "xfacomponent": {
-    "jcr:primaryType": "nt:unstructured",
-    "fd:xfaScripts": "[{\"activity\":\"click\",\"disabled\":true},{\"activity\":\"change\",\"disabled\":true},{\"activity\":\"initialize\",\"disabled\":false}]"
-  },
-  "xfacomponentinvalid": {
-    "jcr:primaryType": "nt:unstructured",
-    "fd:xfaScripts": "invalid json"
-  },
-  "xfacomponentnone": {
-    "jcr:primaryType": "nt:unstructured"
-  },
   "textinputWithPrintRule": {
     "jcr:primaryType": "nt:unstructured",
     "name": "name",

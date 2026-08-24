@@ -643,25 +643,4 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         return customDorProperties;
     }
 
-    private List<String> getDisabledXFAScripts() {
-        Set<String> disabledScripts = new HashSet<>();
-        String xfaScripts = resource.getValueMap().get(ReservedProperties.FD_XFA_SCRIPTS, "");
-        if (StringUtils.isNotEmpty(xfaScripts)) {
-            // read string xfaScripts to jsonNode
-            ObjectMapper mapper = new ObjectMapper();
-            try {
-                ArrayNode node = (ArrayNode) mapper.readTree(xfaScripts);
-                // iterate through the array node and add the elements which have disabled property set to true
-                for (JsonNode jsonNode : node) {
-                    if (jsonNode.has("disabled") && jsonNode.get("disabled").asBoolean()) {
-                        disabledScripts.add(jsonNode.get("activity").asText());
-                    }
-                }
-            } catch (IOException e) {
-                logger.error("Error while parsing xfaScripts {} {}", e, resource.getPath());
-            }
-        }
-        return new ArrayList<>(disabledScripts);
-    }
-
 }

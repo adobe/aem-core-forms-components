@@ -44,11 +44,8 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-<<<<<<< HEAD
-=======
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
->>>>>>> origin/master
 
 @ExtendWith(AemContextExtension.class)
 public class PanelImplTest {
