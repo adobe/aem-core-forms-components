@@ -186,7 +186,7 @@ describe('Page - Authoring', function () {
                 const patternDropdown = '.cmp-adaptiveform-textinput__validationpattern';
                 const patternFormat = '.cmp-adaptiveform-textinput__validationformat';
                 // The dropdown exists in the DOM - hide it to make only format visible.
-                $dialog.find(patternDropdown)[0].closest("div").setAttribute("hidden");
+                $dialog.find(patternDropdown)[0].closest("div").setAttribute("hidden", "hidden");
                 $dialog.find(patternFormat)[0].closest("div").removeAttribute("hidden");
 
                 // If the validation pattern dropdown is not visible, ensure the validation format field preserves the authored value.
@@ -230,17 +230,16 @@ describe('Page - Authoring', function () {
 
             // Pick a non-default option (not empty, not "custom") so the format field is shown and synced.
             let chosenValue;
-            cy.get('@validationDropdown').find('select[handle="nativeSelect"]').then(($nativeSelect) => {
-                const options = Array.from($nativeSelect[0]?.options || []);
-                const chosen = options.find((opt) =>
-                    Boolean(opt.value) &&
-                    opt.value !== 'custom' &&
-                    opt.value !== '#####################.###############'
+            cy.get('@validationDropdown').children('button[is="coral-button"][aria-haspopup="listbox"]').click({force: true});
+            cy.get("coral-selectlist-item[role='option']").then(($items) => {
+                const chosen = Array.from($items).find((el) =>
+                    Boolean(el.getAttribute('value')) &&
+                    el.getAttribute('value') !== 'custom' &&
+                    el.getAttribute('value') !== '#####################.###############'
                 );
                 expect(chosen, 'non-default validation pattern option').to.exist;
-                chosenValue = chosen.value;
-                cy.wrap($nativeSelect).select(chosenValue, { force: true });
-                cy.wrap($nativeSelect).trigger('change', { force: true });
+                chosenValue = chosen.getAttribute('value');
+                cy.wrap(chosen).click({force: true});
             });
             cy.then(() => {
                 cy.get('@validationDropdown').should('have.value', chosenValue);
