@@ -23,9 +23,14 @@ const config = ci.restoreConfiguration();
 console.log(config);
 const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
-const { TYPE, BROWSER, AEM, PRERELEASE, FT, CORE_COMPONENTS, WCM_COMPONENTS} = process.env;
+const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG, CORE_COMPONENTS, WCM_COMPONENTS} = process.env;
 const isLatestAddon = AEM === 'addon-latest';
 const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar';
+ // 6.6.0 packages are published to same artifactory, once fixed use latest here
+const latestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg');
+const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.1328'; // Use the latest version if available, otherwise default to '6.0.1256'
+// this value is for 6.5.21.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
+const classicFormReleasedAddonVersion = '6.0.1360';
 
 try {
     // # Define the image name
@@ -96,7 +101,6 @@ try {
         // Start CQ
         ci.sh(`./qp.sh -v start --id author --runmode author --port 4502 --qs-jar /home/circleci/cq/author/cq-quickstart.jar \
             --bundle org.apache.sling:org.apache.sling.junit.core:1.0.23:jar \
-            ${extras} \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.config:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.apps:${wcmVersion}:zip \
             --bundle com.adobe.cq:core.wcm.components.examples.ui.content:${wcmVersion}:zip \
@@ -113,7 +117,17 @@ try {
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-apps'])} \
             ${ci.addQpFileDependency(config.modules['core-forms-components-it-tests-content'])} \
             --vm-options \\\"-Xmx4096m -Djava.awt.headless=true -javaagent:${jacocoAgent}=destfile=crx-quickstart/jacoco-it.exec\\\" \
-            ${preleaseOpts}`);
+            ${preleaseOpts} ${contextPathOpts}`);
+
+        if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
+            // add a sleep for 10 mins, add-on takes times to come up
+            ci.sh(`sleep 8m`);
+            // restart the AEM insatnce
+            ci.sh(`./qp.sh stop --id author`);
+            ci.sh(`./qp.sh start --id author`);
+            // add a sleep for 7 mins, add-on takes times to come up
+            ci.sh(`sleep 8m`);
+        }
 });
 
     // Run integration tests
