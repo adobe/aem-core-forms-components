@@ -25,7 +25,7 @@ const qpPath = '/home/circleci/cq';
 const buildPath = '/home/circleci/build';
 const { TYPE, BROWSER, AEM, PRERELEASE, FT, CONTEXTPATH, FTCONFIG, CORE_COMPONENTS, WCM_COMPONENTS} = process.env;
 const isLatestAddon = AEM === 'addon-latest';
-const jacocoAgent = '/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar';
+const jacocoAgent = process.env.JACOCO_AGENT;
  // 6.6.0 packages are published to same artifactory, once fixed use latest here
 const latestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg');
 const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.1328'; // Use the latest version if available, otherwise default to '6.0.1256'
@@ -33,17 +33,6 @@ const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.13
 const classicFormReleasedAddonVersion = '6.0.1360';
 
 try {
-    // # Define the image name
-    let image_name="docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11";
-    let qpContainerId = ci.sh(`docker ps --filter "ancestor=${image_name}" --quiet`, true);
-    console.log("container id for qp ", qpContainerId);
-
-    // moving the qp docker content and environment variable to host machine
-    ci.sh(`docker cp ${qpContainerId}:/home/circleci/cq ${qpPath}`);
-    ci.sh(`docker cp ${qpContainerId}:/home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/ /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.3/`);
-
-    //todo: remove this later, once aem image is released, since sites rotary aem base image has "2.25.4"
-    //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
     let wcmVersion = "2.32.4";
     ci.stage("Integration Tests");
     ci.dir(qpPath, () => {
