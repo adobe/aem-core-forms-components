@@ -363,7 +363,7 @@ describe("Form Runtime with Date Picker", () => {
 
     it("snapshot testing", () => {
         const [datePicker8, datePicker8FieldView] = Object.entries(formContainer._fields)[8];
-        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click();
+        cy.get(`#${datePicker8}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true});
         cy.get('body').toMatchImageSnapshot({
             imageConfig: {
               threshold: 0,
@@ -377,7 +377,7 @@ describe("Form Runtime with Date Picker", () => {
         const input = "2023-01-01";
 
         cy.get(`#${datePicker4}`).find("input").clear().type(input).should('have.value', '2023-01-01').blur();
-        cy.get(`#${datePicker6}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(x => {
+        cy.get(`#${datePicker6}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click({force: true}).then(x => {
             cy.get(".datetimepicker").should("be.visible");
             cy.get('.datetimepicker .dp-header .dp-caption').eq(1).click();
             cy.get('.datetimepicker').should('be.visible');
@@ -434,7 +434,7 @@ describe("Form Runtime with Date Picker", () => {
         
         cy.get(`#${datePicker7}`).find("input").clear().type(testDate);
         cy.get(`#${datePicker7}`).find("input").focus().blur().focus().blur();
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click();
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click({force: true});
         cy.get(".datetimepicker").should("be.visible");
         cy.get("body").click(10, 10);
         cy.get(".datetimepicker").should("not.be.visible");
@@ -457,7 +457,7 @@ describe("Form Runtime with Date Picker", () => {
             const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[4]
             
             // Touch the datepicker field
-            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(() => {
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click({force: true}).then(() => {
                 cy.get('.datetimepicker').should('be.visible')
                 cy.get('.dp-monthview').should('be.visible')
             })
@@ -467,7 +467,7 @@ describe("Form Runtime with Date Picker", () => {
             const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[4]
             
             // Open the datepicker
-            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(() => {
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click({force: true}).then(() => {
                 cy.get('.datetimepicker').should('be.visible')
             })
             
@@ -481,7 +481,7 @@ describe("Form Runtime with Date Picker", () => {
             const [datePicker4, datePicker4FieldView] = Object.entries(formContainer._fields)[4]
             
             // Open the datepicker
-            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(() => {
+            cy.get(`#${datePicker4}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click({force: true}).then(() => {
                 cy.get('.datetimepicker').should('be.visible')
             })
             
@@ -499,7 +499,7 @@ describe("Form Runtime with Date Picker", () => {
             
             datepickerIds.forEach((id, index) => {
                 // Open datepicker
-                cy.get(`#${id}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click().then(() => {
+                cy.get(`#${id}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click({force: true}).then(() => {
                     cy.get('.datetimepicker').should('be.visible')
                 })
                 

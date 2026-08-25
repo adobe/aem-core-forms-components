@@ -601,8 +601,22 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
-  // click the delete action
-  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+  // Same lost-click race as openEditableToolbar above: a single click on the delete action
+  // can be lost, and cypress' implicit retry only re-runs the visibility assertion, never the
+  // click itself. Retry (click delete -> confirm dialog open) as one atomic unit.
+  recurse(
+      () => {
+          cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+          return cy.get("body");
+      },
+      ($body) => $body.find(siteSelectors.alertDialog.actions.last).is(":visible"),
+      {
+          limit: 5,
+          delay: 1000,
+          timeout: 30000,
+          log: false
+      }
+  );
   // check if delete dialog is seen and click on yes
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
@@ -621,8 +635,21 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
-  // click the delete action
-  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+  // Same lost-click race as deleteComponentByPath above: retry (click delete -> confirm dialog
+  // open) as one atomic unit so a lost click is simply issued again until the dialog shows.
+  recurse(
+      () => {
+          cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+          return cy.get("body");
+      },
+      ($body) => $body.find(siteSelectors.alertDialog.actions.last).is(":visible"),
+      {
+          limit: 5,
+          delay: 1000,
+          timeout: 30000,
+          log: false
+      }
+  );
   // check if delete dialog is seen and click on yes
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
