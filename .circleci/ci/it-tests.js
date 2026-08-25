@@ -41,7 +41,6 @@ try {
     //let wcmVersion = ci.sh('mvn help:evaluate -Dexpression=core.wcm.components.version -q -DforceStdout', true);
     let wcmVersion = "2.32.4";
     ci.stage("Integration Tests");
-    let wcmVersion = "2.30.0";
     ci.dir(qpPath, () => {
         // Connect to QP
         ci.sh('./qp.sh -v bind --server-hostname localhost --server-port 55555');
