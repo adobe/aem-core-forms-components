@@ -603,16 +603,23 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
   // Same lost-click race as openEditableToolbar above: a single click on the delete action
   // can be lost, and cypress' implicit retry only re-runs the visibility assertion, never the
-  // click itself. Retry (click delete -> confirm dialog open) as one atomic unit.
+  // click itself. Unlike openEditableToolbar's overlay click, re-clicking DELETE is not safe
+  // once the confirm dialog is already open (it hides/covers the delete button, so a blind
+  // retry click times out on its own visibility check). Only re-click when the dialog isn't
+  // already present.
   recurse(
       () => {
-          cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+          cy.get("body").then($body => {
+              if ($body.find(siteSelectors.alertDialog.self).length === 0) {
+                  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+              }
+          });
           return cy.get("body");
       },
       ($body) => $body.find(siteSelectors.alertDialog.actions.last).is(":visible"),
       {
           limit: 5,
-          delay: 1000,
+          delay: 2000,
           timeout: 30000,
           log: false
       }
@@ -635,17 +642,22 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
-  // Same lost-click race as deleteComponentByPath above: retry (click delete -> confirm dialog
-  // open) as one atomic unit so a lost click is simply issued again until the dialog shows.
+  // Same lost-click race as deleteComponentByPath above. Unlike openEditableToolbar's overlay
+  // click, re-clicking DELETE is not safe once the confirm dialog is already open (it hides the
+  // delete button, so a blind retry click times out). Only re-click when the dialog isn't present.
   recurse(
       () => {
-          cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+          cy.get("body").then($body => {
+              if ($body.find(siteSelectors.alertDialog.self).length === 0) {
+                  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+              }
+          });
           return cy.get("body");
       },
       ($body) => $body.find(siteSelectors.alertDialog.actions.last).is(":visible"),
       {
           limit: 5,
-          delay: 1000,
+          delay: 2000,
           timeout: 30000,
           log: false
       }
