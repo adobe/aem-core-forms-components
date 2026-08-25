@@ -58,7 +58,6 @@ public class CustomAFSubmitService implements FormSubmitActionService {
         result.put(GuideConstants.FORM_SUBMISSION_COMPLETE, Boolean.FALSE);
         String guideContainerPath = formSubmitInfo.getFormContainerPath();
         String formPath = StringUtils.substringBefore(guideContainerPath, "/jcr:content");
-        String submissionId = formSubmitInfo.getSubmissionId();
         String actionType = null;
         String submitType = null;
 
@@ -95,8 +94,8 @@ public class CustomAFSubmitService implements FormSubmitActionService {
                     dataManager.put(DataManager.getFileAttachmentMapKey(uniqueID), formSubmitInfo.getFileAttachments());
                 }
             }
-            logger.info("{} Submission successful - formPath: {}, submissionId: {}, submitType: {}",
-                LOG_PREFIX, formPath, submissionId, submitType);
+            logger.info("{} Submission successful - formPath: {}, submitType: {}",
+                LOG_PREFIX, formPath, submitType);
             result.put(GuideConstants.FORM_SUBMISSION_COMPLETE, Boolean.TRUE);
             result.put(DataManager.UNIQUE_ID, uniqueID);
             // adding id here so that this available in redirect parameters in final thank you page
@@ -106,8 +105,8 @@ public class CustomAFSubmitService implements FormSubmitActionService {
             // todo: move this to constant, once forms SDK is released
             result.put("fd:redirectParameters", redirectParamMap);
         } catch (Exception ex) {
-            logger.error("{} Submission failed - formPath: {}, submissionId: {}, submitType: {}",
-                LOG_PREFIX, formPath, submissionId, submitType, ex);
+            logger.error("{} Submission failed - formPath: {}, submitType: {}",
+                LOG_PREFIX, formPath, submitType, ex);
             GuideValidationResult guideValidationResult = new GuideValidationResult();
             guideValidationResult.setOriginCode("500");
             guideValidationResult.setErrorMessage("Internal server error");
