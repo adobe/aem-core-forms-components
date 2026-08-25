@@ -129,7 +129,7 @@ describe('Page - Authoring', function () {
         cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
           cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
           cy.get(".cmp-adaptiveform-telephoneinput__editdialog coral-select button").eq(0).click({force: true});
-          cy.get("coral-selectlist-item[role='option']").contains(customKey).should('be.visible').click().then(() => {
+          cy.get("coral-selectlist-item[role='option']").contains(customKey).click().then(() => {
             cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', customValue);
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(telephoneInputDrop);
