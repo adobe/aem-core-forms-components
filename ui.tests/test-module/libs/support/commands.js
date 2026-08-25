@@ -556,32 +556,33 @@ Cypress.Commands.add('disableFeatureToggle', (toggleId) => {
 });
 
 Cypress.Commands.add("cleanTest", (editPath) => {
-  // clean the test before the next run, if any
+  // clean the test before the next run, if any. Wrapping cy.deleteComponentByPath in a
+  // `new Cypress.Promise` here previously resolved as soon as the delete was *queued*, not
+  // once it actually finished, so callers chaining off cleanTest could race ahead of the
+  // real deletion. Returning the cypress command chain directly makes cleanTest actually
+  // wait for deletion to complete.
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "[data-path='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        cy.deleteComponentByPath(editPath);
-      }
-      resolve(editPath);
-    });
+    const selector12 = "[data-path='" + editPath + "']";
+    if ($body.find(selector12).length > 0) {
+      return cy.deleteComponentByPath(editPath);
+    }
   });
 })
 
 Cypress.Commands.add("cleanTitleTest", (editPath) => {
-  // clean the test before the next run, if any
+  // clean the test before the next run, if any. Same fix as cleanTest above: chain the
+  // deletions on the returned cypress command instead of resolving a wrapping Promise early.
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "div[data-path^='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        $body.find(selector12).each(($index, $titleComponent) => {
-          cy.deleteComponentByPath($titleComponent.dataset.path);
-        })
-      }
-      resolve(editPath);
-    });
+    const selector12 = "div[data-path^='" + editPath + "']";
+    const $components = $body.find(selector12);
+    if ($components.length > 0) {
+      let chain = cy.wrap(null);
+      $components.each((index, element) => {
+        const path = element.dataset.path;
+        chain = chain.then(() => cy.deleteComponentByPath(path));
+      });
+      return chain;
+    }
   });
 })
 
@@ -601,30 +602,12 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
-  // Same lost-click race as openEditableToolbar above: a single click on the delete action
-  // can be lost, and cypress' implicit retry only re-runs the visibility assertion, never the
-  // click itself. Unlike openEditableToolbar's overlay click, re-clicking DELETE is not safe
-  // once the confirm dialog is already open (it hides/covers the delete button, so a blind
-  // retry click times out on its own visibility check). Only re-click when the dialog isn't
-  // already present.
-  recurse(
-      () => {
-          cy.get("body").then($body => {
-              if ($body.find(siteSelectors.alertDialog.self).length === 0) {
-                  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
-              }
-          });
-          return cy.get("body");
-      },
-      ($body) => $body.find(siteSelectors.alertDialog.actions.last).is(":visible"),
-      {
-          limit: 5,
-          delay: 2000,
-          timeout: 30000,
-          log: false
-      }
-  );
-  // check if delete dialog is seen and click on yes
+  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+  // The confirm dialog can take longer than the default 10s command timeout to render on the
+  // classic-650 lane; wait for it explicitly (15s) before trying to click its button, rather
+  // than retrying the delete click itself (a retry here is unsafe once the dialog is already
+  // open, since it hides the delete button and the retry's own visibility check would fail).
+  cy.get(siteSelectors.alertDialog.self, { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
@@ -642,27 +625,10 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
-  // Same lost-click race as deleteComponentByPath above. Unlike openEditableToolbar's overlay
-  // click, re-clicking DELETE is not safe once the confirm dialog is already open (it hides the
-  // delete button, so a blind retry click times out). Only re-click when the dialog isn't present.
-  recurse(
-      () => {
-          cy.get("body").then($body => {
-              if ($body.find(siteSelectors.alertDialog.self).length === 0) {
-                  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
-              }
-          });
-          return cy.get("body");
-      },
-      ($body) => $body.find(siteSelectors.alertDialog.actions.last).is(":visible"),
-      {
-          limit: 5,
-          delay: 2000,
-          timeout: 30000,
-          log: false
-      }
-  );
-  // check if delete dialog is seen and click on yes
+  cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
+  // Same dialog-render-timing issue as deleteComponentByPath above; wait for the dialog
+  // explicitly before clicking its button.
+  cy.get(siteSelectors.alertDialog.self, { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
