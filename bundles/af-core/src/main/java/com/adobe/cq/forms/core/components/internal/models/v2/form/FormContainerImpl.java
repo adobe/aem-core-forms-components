@@ -150,6 +150,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private String changeEventBehaviour;
 
+    @ValueMapValue(name = ReservedProperties.FD_SET_PROPERTY_BEHAVIOUR, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String setPropertyBehaviour;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATA)
     @Nullable
     private String data;
@@ -421,6 +425,12 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         // toggle is disabled the default above is absent, so this simply sets the node-authored value.
         if (StringUtils.isNotBlank(changeEventBehaviour)) {
             properties.put(ReservedProperties.FD_CHANGE_EVENT_BEHAVIOUR, changeEventBehaviour);
+        }
+        // fd:setPropertyBehaviour ("async" default | "eager") opts a form into read-after-write for
+        // setProperty / rule-node writes. Node-authored value is emitted as-is; no toggle-driven default
+        // (unlike changeEventBehaviour) since the runtime defaults to the backward-compatible "async".
+        if (StringUtils.isNotBlank(setPropertyBehaviour)) {
+            properties.put(ReservedProperties.FD_SET_PROPERTY_BEHAVIOUR, setPropertyBehaviour);
         }
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         if (this.autoSaveConfig != null && this.autoSaveConfig.isEnableAutoSave()) {
