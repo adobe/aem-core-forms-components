@@ -164,7 +164,7 @@ describe('Page - Authoring', function () {
                                 cy.get("[name='./dataRef']").should("exist");
                                 cy.get("[name='./visible']").should("exist");
                                 cy.get("[name='./enabled']").should("exist");
-                                cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                                cy.get('.cq-dialog-cancel').should('be.visible').click({force: true}).then(() => {
                                     cy.deleteComponentByPath(wizardLayoutDrop);
                                 });
                             });
@@ -281,7 +281,7 @@ describe('Page - Authoring', function () {
                 cy.get("[name='./dataRef']").should("exist");
                 cy.get("[name='./visible']").should("exist");
                 cy.get("[name='./enabled']").should("exist");
-                cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                cy.get('.cq-dialog-cancel').should('be.visible').click({force: true}).then(() => {
                     cy.deleteComponentByPath(wizardEditPath);
                 })
 

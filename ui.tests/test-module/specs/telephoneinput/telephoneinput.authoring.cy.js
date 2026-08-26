@@ -52,7 +52,7 @@ describe('Page - Authoring', function () {
     cy.get("[name='./autocomplete']")
         .should("exist");
     cy.get(bemEditDialog).contains('Validation').click({force:true});
-    cy.get('.cq-dialog-cancel').click();
+    cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
     cy.deleteComponentByPath(telephoneInputDrop);
   }
 

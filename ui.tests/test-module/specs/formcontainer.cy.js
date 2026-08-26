@@ -214,7 +214,7 @@ describe('Page/Form Authoring', function () {
             it('open edit dialog of adaptive form container component', function () {
                 // click configure action on adaptive form container component
                 checkEditDialog(formContainerEditPathSelector);
-                cy.get('.cq-dialog-cancel').click();
+                cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
             });
 
             it('open edit dialog, check and save a submit action', function() {
@@ -223,7 +223,7 @@ describe('Page/Form Authoring', function () {
 
             it('open edit dialog, verify saved submit action', function() {
                 verifySavedSubmitAction(formContainerEditPathSelector);
-                cy.get('.cq-dialog-cancel').click();
+                cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
             });
 
             it('open and select data model in container edit dialog box', function () {
@@ -246,7 +246,7 @@ describe('Page/Form Authoring', function () {
 
             it ('check title in edit dialog', {retries: 3}, function() {
                 checkTitleInEditDialog(formContainerEditPathSelector);
-                cy.get('.cq-dialog-cancel').click();
+                cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
             });
 
             xit('open edit dialog, verify auto save tab in container edit dialog box', {retries: 3},function () {
