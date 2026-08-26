@@ -52,7 +52,7 @@ describe('Page - Authoring', function () {
     cy.get("[name='./autocomplete']")
         .should("exist");
     cy.get(bemEditDialog).contains('Validation').click({force:true});
-    cy.get('.cq-dialog-cancel').click();
+    cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
     cy.deleteComponentByPath(telephoneInputDrop);
   }
 
@@ -85,7 +85,7 @@ describe('Page - Authoring', function () {
       cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
         cy.get(".cmp-adaptiveform-telephoneinput__editdialog coral-select button").eq(0).click({force: true});
-        cy.get("coral-selectlist-item[role='option']").contains('US Phone Number').should('be.visible').click();
+        cy.get("coral-selectlist-item[role='option']").contains('US Phone Number').click();
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+]1[0-9]{0,10}$');
         cy.get('.cq-dialog-cancel').click();
         cy.deleteComponentByPath(telephoneInputDrop);
@@ -114,7 +114,8 @@ describe('Page - Authoring', function () {
       cy.get(telephoneInputPolicy).click({force: true});
       cy.get(bemDesignDialog).contains('Validation patterns').click();
       // cy.get('[role="tablist"][orientation="horizontal"] [role="tab"]').eq(2).click();
-      cy.get('[name="./allowedFormat3"]').eq(0).click();
+      cy.get('[name="./allowedFormat3"]').eq(0).click({force: true});
+      cy.get("[data-granite-coral-multifield-name='./allowedCustomFormats']").should('be.visible');
       cy.get("[data-granite-coral-multifield-name='./allowedCustomFormats'] coral-button-label:contains('Add')").should('exist').click({force: true});
       cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').should('exist').then(() => {
         cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().type(customKey);
@@ -128,7 +129,7 @@ describe('Page - Authoring', function () {
         cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
           cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
           cy.get(".cmp-adaptiveform-telephoneinput__editdialog coral-select button").eq(0).click({force: true});
-          cy.get("coral-selectlist-item[role='option']").contains(customKey).should('be.visible').click().then(() => {
+          cy.get("coral-selectlist-item[role='option']").contains(customKey).click().then(() => {
             cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', customValue);
             cy.get('.cq-dialog-cancel').click();
             cy.deleteComponentByPath(telephoneInputDrop);

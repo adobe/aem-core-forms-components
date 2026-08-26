@@ -206,7 +206,9 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup-item").should('have.length', 2);
         cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Select Animal').should('have.css', 'font-weight', '700');
         cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Dog').should('have.css', 'font-style', 'italic');
-        cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Cat').should('have.css', 'text-decoration', 'underline solid rgb(50, 50, 50)');
+        // text-decoration's exact computed-style serialization (whether it expands to include
+        // style/color tokens) varies across Chrome versions; assert the meaningful part only.
+        cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Cat').should('have.css', 'text-decoration').and('include', 'underline');
     });
 
     it("decoration element should not have same class name", () => {

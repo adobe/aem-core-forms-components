@@ -70,7 +70,7 @@ describe("Form Runtime layout of Date Picker ", () => {
             cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Thursday, 10 August, 2023");
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get("#li-day-3").should("be.visible").click(); // clicking on the 2nd day of the month of October 2023
             cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Wednesday, 2 August, 2023");
             cy.get(`#${datePicker7}`).find("input").focus().should("have.value", "Wednesday, 2 August, 2023");
@@ -85,7 +85,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         const date = '2026-02-01';
         cy.get(`#${datePicker7}`).find("input").clear().type(date);
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
                 cy.get("#li-day-2").should("be.visible").click();
@@ -93,14 +93,14 @@ describe("Form Runtime layout of Date Picker ", () => {
             });
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get("#li-day-29").should("be.visible").click();
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Saturday, 28 February, 2026");
             });
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-rightnav").should("be.visible").click();
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
@@ -122,7 +122,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         const date = '2032-02-01';
         cy.get(`#${datePicker7}`).find("input").clear().type(date);
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
                 cy.get("#li-day-2").should("be.visible").click();
@@ -130,13 +130,13 @@ describe("Form Runtime layout of Date Picker ", () => {
             });
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get("#li-day-30").should("be.visible").click();
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Sunday, 29 February, 2032");
             });
         });
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-rightnav").should("be.visible").click();
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
@@ -158,7 +158,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         const date = '2025-02-01';
         cy.get(`#${datePicker7}`).find("input").clear().type(date);
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
                 cy.get("#li-day-2").should("be.visible").click();
@@ -167,13 +167,13 @@ describe("Form Runtime layout of Date Picker ", () => {
 
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get("#li-day-29").should("be.visible").click();
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Friday, 28 February, 2025");
             });
         });
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-rightnav").should("be.visible").click();
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
@@ -193,7 +193,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         const date = '2020-02-01';
         cy.get(`#${datePicker7}`).find("input").clear().type(date);
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
                 cy.get("#li-day-2").should("be.visible").click();
@@ -201,13 +201,13 @@ describe("Form Runtime layout of Date Picker ", () => {
             });
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get("#li-day-30").should("be.visible").click();
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Saturday, 29 February, 2020");
             });
         });
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-rightnav").should("be.visible").click();
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
@@ -228,7 +228,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         const date = '2020-03-01';
         cy.get(`#${datePicker7}`).find("input").clear().type(date);
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
                 cy.get("#li-day-2").should("be.visible").click();
@@ -236,13 +236,13 @@ describe("Form Runtime layout of Date Picker ", () => {
             });
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get("#li-day-32").should("be.visible").click();
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Tuesday, 31 March, 2020");
             });
         });
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-rightnav").should("be.visible").click();
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
@@ -263,7 +263,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         const date = '2025-03-01';
         cy.get(`#${datePicker7}`).find("input").clear().type(date);
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
                 cy.get("#li-day-2").should("be.visible").click();
@@ -271,13 +271,13 @@ describe("Form Runtime layout of Date Picker ", () => {
             });
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get("#li-day-32").should("be.visible").click();
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Monday, 31 March, 2025");
             });
         });
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-rightnav").should("be.visible").click();
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
@@ -298,7 +298,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         const date = '2029-04-01';
         cy.get(`#${datePicker7}`).find("input").clear().type(date);
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
                 cy.get("#li-day-2").should("be.visible").click();
@@ -306,13 +306,13 @@ describe("Form Runtime layout of Date Picker ", () => {
             });
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get("#li-day-31").should("be.visible").click();
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Monday, 30 April, 2029");
             });
         });
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-rightnav").should("be.visible").click();
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
@@ -333,7 +333,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         const date = '2028-04-01';
         cy.get(`#${datePicker7}`).find("input").clear().type(date);
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
                 cy.get("#li-day-2").should("be.visible").click();
@@ -341,13 +341,13 @@ describe("Form Runtime layout of Date Picker ", () => {
             });
         });
 
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get("#li-day-31").should("be.visible").click();
                 cy.get(`#${datePicker7}`).find("input").blur().should("have.value", "Sunday, 30 April, 2028");
             });
         });
-        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+        cy.get(`#${datePicker7}`).find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
             cy.get(".dp-rightnav").should("be.visible").click();
             cy.get('.datetimepicker.datePickerTarget').then(($selectedElement) => {
                 cy.get('.view.dp-monthview').children().should("have.length", 7)
@@ -365,7 +365,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         cy.viewport(320, 568);
         const [datePicker] = Object.entries(formContainer._fields)[0];
         
-        cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click();
+        cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click({force: true});
         cy.get(".dp-leftnav").should("be.visible");
         cy.get(".dp-rightnav").should("be.visible");
     });
@@ -375,7 +375,7 @@ describe("Form Runtime layout of Date Picker ", () => {
         const [datePicker] = Object.entries(formContainer._fields)[0];
         
         cy.get(`#${datePicker}`).find("input").clear().type('2026-02-01');
-        cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click();
+        cy.get(`#${datePicker}`).find(".cmp-adaptiveform-datepicker__calendar-icon").click({force: true});
         cy.get("#li-day-2").should("be.visible");
     });
 

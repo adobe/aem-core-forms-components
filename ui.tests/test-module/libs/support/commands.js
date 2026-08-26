@@ -556,32 +556,33 @@ Cypress.Commands.add('disableFeatureToggle', (toggleId) => {
 });
 
 Cypress.Commands.add("cleanTest", (editPath) => {
-  // clean the test before the next run, if any
+  // clean the test before the next run, if any. Wrapping cy.deleteComponentByPath in a
+  // `new Cypress.Promise` here previously resolved as soon as the delete was *queued*, not
+  // once it actually finished, so callers chaining off cleanTest could race ahead of the
+  // real deletion. Returning the cypress command chain directly makes cleanTest actually
+  // wait for deletion to complete.
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "[data-path='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        cy.deleteComponentByPath(editPath);
-      }
-      resolve(editPath);
-    });
+    const selector12 = "[data-path='" + editPath + "']";
+    if ($body.find(selector12).length > 0) {
+      return cy.deleteComponentByPath(editPath);
+    }
   });
 })
 
 Cypress.Commands.add("cleanTitleTest", (editPath) => {
-  // clean the test before the next run, if any
+  // clean the test before the next run, if any. Same fix as cleanTest above: chain the
+  // deletions on the returned cypress command instead of resolving a wrapping Promise early.
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "div[data-path^='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        $body.find(selector12).each(($index, $titleComponent) => {
-          cy.deleteComponentByPath($titleComponent.dataset.path);
-        })
-      }
-      resolve(editPath);
-    });
+    const selector12 = "div[data-path^='" + editPath + "']";
+    const $components = $body.find(selector12);
+    if ($components.length > 0) {
+      let chain = cy.wrap(null);
+      $components.each((index, element) => {
+        const path = element.dataset.path;
+        chain = chain.then(() => cy.deleteComponentByPath(path));
+      });
+      return chain;
+    }
   });
 })
 
@@ -599,11 +600,22 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
   // intialize the event handler for overlay overlayRepositionEvent event
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
+  // A caller may have just clicked Cancel/Submit on a config dialog without waiting for it to
+  // actually close before calling delete; if that dialog is still open it can visually block
+  // and intercept clicks intended for the editable toolbar's delete action (confirmed via a
+  // failure screenshot showing the edit dialog still open when the delete-confirm dialog was
+  // expected). Wait for any leftover open dialog to actually close first.
+  cy.get('body').should($body => {
+    expect($body.find('coral-dialog.is-open').length, 'no leftover open dialog before delete').to.equal(0);
+  });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
-  // click the delete action
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
-  // check if delete dialog is seen and click on yes
+  // The confirm dialog can take longer than the default 10s command timeout to render on the
+  // classic-650 lane; wait for it explicitly (15s) before trying to click its button, rather
+  // than retrying the delete click itself (a retry here is unsafe once the dialog is already
+  // open, since it hides the delete button and the retry's own visibility check would fail).
+  cy.get(siteSelectors.alertDialog.self, { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
@@ -619,11 +631,16 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
   // intialize the event handler for overlay overlayRepositionEvent event
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
+  // Same leftover-open-dialog race as deleteComponentByPath above; wait for it to actually close.
+  cy.get('body').should($body => {
+    expect($body.find('coral-dialog.is-open').length, 'no leftover open dialog before delete').to.equal(0);
+  });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
-  // click the delete action
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
-  // check if delete dialog is seen and click on yes
+  // Same dialog-render-timing issue as deleteComponentByPath above; wait for the dialog
+  // explicitly before clicking its button.
+  cy.get(siteSelectors.alertDialog.self, { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done

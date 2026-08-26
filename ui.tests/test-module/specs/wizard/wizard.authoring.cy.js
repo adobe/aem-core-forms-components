@@ -135,7 +135,7 @@ describe('Page - Authoring', function () {
         });
 
         it('runtime library should not be loaded', function() {
-            cy.cleanTest(wizardLayoutDrop).then(function () {
+            cy.cleanTitleTest(wizardLayoutDrop).then(function () {
                 cy.intercept('GET', /jcr:content\/guideContainer\/wizard\.html/).as('wizardRequest');
                 dropWizardInContainer();
                 cy.wait('@wizardRequest').then((interception) => {
@@ -152,7 +152,7 @@ describe('Page - Authoring', function () {
         })
 
         it('verify Basic tab in edit dialog of Wizard', function () {
-            cy.cleanTest(wizardLayoutDrop).then(function () {
+            cy.cleanTitleTest(wizardLayoutDrop).then(function () {
                 dropWizardInContainer();
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector).then(() => {
                     cy.invokeEditableAction(editDialogConfigurationSelector).then(() => {
@@ -164,7 +164,7 @@ describe('Page - Authoring', function () {
                                 cy.get("[name='./dataRef']").should("exist");
                                 cy.get("[name='./visible']").should("exist");
                                 cy.get("[name='./enabled']").should("exist");
-                                cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                                cy.get('.cq-dialog-cancel').should('be.visible').click({force: true}).then(() => {
                                     cy.deleteComponentByPath(wizardLayoutDrop);
                                 });
                             });
@@ -175,24 +175,24 @@ describe('Page - Authoring', function () {
         });
 
         it('verify Navigation Working between tabs in Authoring', {retries: 3}, function () {
-            cy.cleanTest(wizardLayoutDrop).then(function () {
+            cy.cleanTitleTest(wizardLayoutDrop).then(function () {
                 dropWizardInContainer();
                 addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
                 addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
                 cy.invokeEditableAction(editDialogNavigationPanelSelector);
                 cy.wait(2000).then(() => {
-                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table").last().find("tr").should("have.length", 2);
                     // In select panel, text will be in format: <component type>: <title>
-                    cy.get("table.cmp-panelselector__table tr").eq(0)
+                    cy.get("table.cmp-panelselector__table").last().find("tr").eq(0)
                         .should("contain.text", "Adaptive Form Number Input: Number Input");
-                    cy.get("table.cmp-panelselector__table tr").eq(1)
+                    cy.get("table.cmp-panelselector__table").last().find("tr").eq(1)
                         .should("contain.text", "Adaptive Form Text Box: Text Input");
-                    cy.get("table.cmp-panelselector__table").find(textInputDataId).find("td").first().should('be.visible').click();
+                    cy.get("table.cmp-panelselector__table").last().find(textInputDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
                     cy.get('div' + numberInputDataPath).should('not.be.visible');
                     cy.invokeEditableAction(editDialogNavigationPanelSelector);
-                    cy.get("table.cmp-panelselector__table").find(numberInputDataId).find("td").first().should('be.visible').click();
+                    cy.get("table.cmp-panelselector__table").last().find(numberInputDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
                     cy.get('div' + textInputDataPath).should('not.be.visible');
                     cy.deleteComponentByPath(wizardLayoutDrop);
@@ -201,15 +201,15 @@ describe('Page - Authoring', function () {
         });
 
         it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
-            cy.cleanTest(wizardLayoutDrop).then(function () {
+            cy.cleanTitleTest(wizardLayoutDrop).then(function () {
                 dropWizardInContainer();
                 addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
                 addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
                 cy.invokeEditableAction(editDialogNavigationPanelSelector);
                 cy.wait(2000).then(() => {
-                    cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
-                    cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
+                    cy.get("table.cmp-panelselector__table").last().find("tr").should("have.length", 2);
+                    cy.get("table.cmp-panelselector__table").last().find(panelcontainerDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
                     cy.get(`div[data-path='${wizardLayoutDrop}']`).click({force: true});
                     cy.get(`div[data-path='${panelcontainerPath}']`).click({force: true});
@@ -220,7 +220,7 @@ describe('Page - Authoring', function () {
         });
 
         it('verify first panel is visible and second panel is not visible after adding two panels', function () {
-            cy.cleanTest(wizardLayoutDrop).then(function () {
+            cy.cleanTitleTest(wizardLayoutDrop).then(function () {
                 dropWizardInContainer();
                 addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
                 addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
@@ -234,7 +234,7 @@ describe('Page - Authoring', function () {
 
         if (cy.af.isLatestAddon()) {
             it.skip('save as fragment in Wizard', {retries: 3}, function () {
-                cy.cleanTest(wizardLayoutDrop).then(function () {
+                cy.cleanTitleTest(wizardLayoutDrop).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
                     testSaveAsFragment(pagePath, wizardEditPathSelector, wizardLayoutDrop);
@@ -261,7 +261,7 @@ describe('Page - Authoring', function () {
         });
 
         it('insert aem forms Wizard', {retries: 3}, function () {
-            cy.cleanTest(wizardEditPath).then(function () {
+            cy.cleanTitleTest(wizardEditPath).then(function () {
                 dropWizardInSites();
                 cy.deleteComponentByPath(wizardEditPath);
             });
@@ -269,7 +269,7 @@ describe('Page - Authoring', function () {
 
         // adding retry, sometimes site editor does not load
         it('open edit dialog of aem forms Wizard', {retries: 3}, function () {
-            cy.cleanTest(wizardEditPath).then(function () {
+            cy.cleanTitleTest(wizardEditPath).then(function () {
                 dropWizardInSites();
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
                 cy.invokeEditableAction(editDialogConfigurationSelector);
@@ -281,7 +281,7 @@ describe('Page - Authoring', function () {
                 cy.get("[name='./dataRef']").should("exist");
                 cy.get("[name='./visible']").should("exist");
                 cy.get("[name='./enabled']").should("exist");
-                cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
+                cy.get('.cq-dialog-cancel').should('be.visible').click({force: true}).then(() => {
                     cy.deleteComponentByPath(wizardEditPath);
                 })
 
@@ -289,7 +289,7 @@ describe('Page - Authoring', function () {
         });
 
         it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
-            cy.cleanTest(wizardEditPath).then(function () {
+            cy.cleanTitleTest(wizardEditPath).then(function () {
                 dropWizardInSites();
                 addComponentInWizardOfSites("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
                 addComponentInWizardOfSites("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
@@ -307,7 +307,7 @@ describe('Page - Authoring', function () {
 
         if (cy.af.isLatestAddon()) {
             it.skip('save as fragment in Wizard', { retries: 3 }, function() {
-                cy.cleanTest(wizardEditPath).then(function () {
+                cy.cleanTitleTest(wizardEditPath).then(function () {
                     deleteSavedFragment();
                     cy.openSiteAuthoring(pagePath);
                     testSaveAsFragment(pagePath, wizardEditPathSelector, wizardEditPath, true);
