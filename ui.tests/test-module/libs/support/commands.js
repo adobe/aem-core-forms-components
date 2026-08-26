@@ -600,6 +600,14 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
   // intialize the event handler for overlay overlayRepositionEvent event
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
+  // A caller may have just clicked Cancel/Submit on a config dialog without waiting for it to
+  // actually close before calling delete; if that dialog is still open it can visually block
+  // and intercept clicks intended for the editable toolbar's delete action (confirmed via a
+  // failure screenshot showing the edit dialog still open when the delete-confirm dialog was
+  // expected). Wait for any leftover open dialog to actually close first.
+  cy.get('body').should($body => {
+    expect($body.find('coral-dialog.is-open').length, 'no leftover open dialog before delete').to.equal(0);
+  });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
@@ -623,6 +631,10 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
   // intialize the event handler for overlay overlayRepositionEvent event
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
+  // Same leftover-open-dialog race as deleteComponentByPath above; wait for it to actually close.
+  cy.get('body').should($body => {
+    expect($body.find('coral-dialog.is-open').length, 'no leftover open dialog before delete').to.equal(0);
+  });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
