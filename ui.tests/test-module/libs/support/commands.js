@@ -51,6 +51,13 @@ const commons = require('../commons/commons'),
     guideConstants = require('../commons/formsConstants');
 var toggles = [];
 
+// Ignore benign ResizeObserver errors
+Cypress.on('uncaught:exception', (err, runnable) => {
+    if (err.message.includes('ResizeObserver loop')) {
+        return false;
+    }
+});
+
 // Cypress command to login to aem page
 Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
   const username = Cypress.env('crx.username') ? Cypress.env('crx.username') : "admin";
@@ -288,36 +295,52 @@ Cypress.Commands.add("selectLayer", (layer) => {
 
 // cypress command to open editable toolbar
 Cypress.Commands.add("openEditableToolbar", (selector) => {
-  cy.get(selector) // adding assertion does implicit retry
-  .invoke('attr', 'data-path')
-  .then(($path) => {
-    const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
-    cy.get("body").then($body => {
-      if ($body.find(path).length === 0) {
-        //evaluates as true if toolbar doesnt exists at all
-        //you get here only if toolbar is visible
-        cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
-        // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-        cy.get(path).should('be.visible');
-      } else {
-        cy.get(path).then($header => {
-          if (!$header.is(':visible')) {
-            cy.get(selector).first().click({force: true});
-            cy.get(path).should('be.visible');
-          } else {
-            cy.get(siteSelectors.overlays.self).scrollIntoView().click(0, 0); // dont click on body, always use overlay wrapper to click
-            cy.get(selector).click({force: true});
-            cy.get(path).should('be.visible');
-          }
-        });
-      }
-    });
-  })
+    cy.get(selector) // adding assertion does implicit retry
+    .invoke('attr', 'data-path')
+    .then(($path) => {
+        const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
+        // #EditableToolbar is a single shared element AEM shows for the currently selected
+        // overlay. After a config-dialog submit (or any overlay reposition) a single click
+        // on the overlay can be lost while the toolbar is still hidden, and cypress' implicit
+        // retry only re-runs the `should('be.visible')` assertion - never the click - so it
+        // times out. Retry (scroll overlays into view -> click overlay -> toolbar visible) as
+        // one atomic unit so a lost click is simply issued again until the toolbar shows.
+        recurse(
+            () => {
+                cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
+                cy.get(selector).first().click({force: true}); // force needed due to cypress overlay visibility checks
+                return cy.get("body");
+            },
+            ($body) => $body.find(path).length > 0 && $body.find(path).is(":visible"),
+            {
+                limit: 5,
+                delay: 1000,
+                timeout: 30000,
+                log: false
+            }
+        );
+        return cy.get(path).should('be.visible');
+    })
 });
 
 // cypress command to invoke an editable action
 Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
   cy.get(actionSelector).should('be.visible').click({force: true});
+});
+
+// cypress command to submit a component's configure dialog and wait for the editor to settle.
+// A config-dialog submit fires an asynchronous editable re-render that repositions the overlays and
+// hides the shared #EditableToolbar. Any openEditableToolbar issued before that re-render settles
+// races the teardown: recurse opens the toolbar, the late reposition hides it, and the trailing
+// should('be.visible') (never re-clicks) times out with "#EditableToolbar has display: none".
+// Register the same editable-update + overlay-reposition listeners deleteComponentByPath relies on
+// BEFORE clicking submit, then block until both fire so callers can safely reopen the toolbar next.
+Cypress.Commands.add("submitConfigureDialog", (submitSelector = ".cq-dialog-submit") => {
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_EDITABLES_UPDATED).as("isConfigureEditableUpdated");
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isConfigureOverlaysRepositioned");
+    cy.get(submitSelector).click({force: true});
+    cy.get("@isConfigureEditableUpdated").its('done').should('equal', true); // wait until re-render done
+    cy.get("@isConfigureOverlaysRepositioned").its('done').should('equal', true); // wait until overlays settled
 });
 
 // cypress command to initialize event handler on channel
@@ -502,33 +525,64 @@ Cypress.Commands.add("fetchFeatureToggles",()=>{
   return cy.request(`${contextPath}/etc.clientlibs/toggles.json`)
 })
 
+/**
+ * Enables a feature toggle at runtime by calling the Felix OSGi configuration servlet
+ * from the Node.js task runner (no browser session cookies — pure Basic Auth, like curl).
+ * Intended for use in before() hooks so the toggle is active only while the test runs.
+ *
+ * @param {string} toggleId - e.g. "FT_FORMS-24358"
+ */
+Cypress.Commands.add('enableFeatureToggle', (toggleId) => {
+    cy.task('updateOsgiToggleConfig', { action: 'enable', toggleId });
+});
+
+/**
+ * Disables a feature toggle at runtime by calling the Felix OSGi configuration servlet
+ * from the Node.js task runner (no browser session cookies — pure Basic Auth, like curl).
+ * After the OSGi call completes, polls /etc.clientlibs/toggles.json until the toggle
+ * is confirmed absent from the enabled list. This ensures the next test spec does not
+ * run with the toggle still active due to AEM config propagation delay.
+ * Intended for use in after() hooks to restore state after a test run.
+ *
+ * @param {string} toggleId - e.g. "FT_FORMS-24358"
+ */
+Cypress.Commands.add('disableFeatureToggle', (toggleId) => {
+    cy.task('updateOsgiToggleConfig', { action: 'disable', toggleId });
+    recurse(
+        () => cy.fetchFeatureToggles(),
+        (response) => response.status === 200 && !response.body.enabled.includes(toggleId),
+        { limit: 10, delay: 1000 }
+    );
+});
+
 Cypress.Commands.add("cleanTest", (editPath) => {
-  // clean the test before the next run, if any
+  // clean the test before the next run, if any. Wrapping cy.deleteComponentByPath in a
+  // `new Cypress.Promise` here previously resolved as soon as the delete was *queued*, not
+  // once it actually finished, so callers chaining off cleanTest could race ahead of the
+  // real deletion. Returning the cypress command chain directly makes cleanTest actually
+  // wait for deletion to complete.
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "[data-path='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        cy.deleteComponentByPath(editPath);
-      }
-      resolve(editPath);
-    });
+    const selector12 = "[data-path='" + editPath + "']";
+    if ($body.find(selector12).length > 0) {
+      return cy.deleteComponentByPath(editPath);
+    }
   });
 })
 
 Cypress.Commands.add("cleanTitleTest", (editPath) => {
-  // clean the test before the next run, if any
+  // clean the test before the next run, if any. Same fix as cleanTest above: chain the
+  // deletions on the returned cypress command instead of resolving a wrapping Promise early.
   return cy.get("body").then($body => {
-    return new Cypress.Promise((resolve, reject) => {
-      // do something custom here
-      const selector12 = "div[data-path^='" + editPath + "']";
-      if ($body.find(selector12).length > 0) {
-        $body.find(selector12).each(($index, $titleComponent) => {
-          cy.deleteComponentByPath($titleComponent.dataset.path);
-        })
-      }
-      resolve(editPath);
-    });
+    const selector12 = "div[data-path^='" + editPath + "']";
+    const $components = $body.find(selector12);
+    if ($components.length > 0) {
+      let chain = cy.wrap(null);
+      $components.each((index, element) => {
+        const path = element.dataset.path;
+        chain = chain.then(() => cy.deleteComponentByPath(path));
+      });
+      return chain;
+    }
   });
 })
 
@@ -546,11 +600,22 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
   // intialize the event handler for overlay overlayRepositionEvent event
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
+  // A caller may have just clicked Cancel/Submit on a config dialog without waiting for it to
+  // actually close before calling delete; if that dialog is still open it can visually block
+  // and intercept clicks intended for the editable toolbar's delete action (confirmed via a
+  // failure screenshot showing the edit dialog still open when the delete-confirm dialog was
+  // expected). Wait for any leftover open dialog to actually close first.
+  cy.get('body').should($body => {
+    expect($body.find('coral-dialog.is-open').length, 'no leftover open dialog before delete').to.equal(0);
+  });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
-  // click the delete action
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
-  // check if delete dialog is seen and click on yes
+  // The confirm dialog can take longer than the default 10s command timeout to render on the
+  // classic-650 lane; wait for it explicitly (15s) before trying to click its button, rather
+  // than retrying the delete click itself (a retry here is unsafe once the dialog is already
+  // open, since it hides the delete button and the retry's own visibility check would fail).
+  cy.get(siteSelectors.alertDialog.self, { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
@@ -566,11 +631,16 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.initializeEventHandlerOnChannel(editableUpdateEvent).as("isEditableUpdateEventComplete");
   // intialize the event handler for overlay overlayRepositionEvent event
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
+  // Same leftover-open-dialog race as deleteComponentByPath above; wait for it to actually close.
+  cy.get('body').should($body => {
+    expect($body.find('coral-dialog.is-open').length, 'no leftover open dialog before delete').to.equal(0);
+  });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
-  // click the delete action
   cy.get(siteSelectors.editableToolbar.actions.delete).should("be.visible").click({force: true});
-  // check if delete dialog is seen and click on yes
+  // Same dialog-render-timing issue as deleteComponentByPath above; wait for the dialog
+  // explicitly before clicking its button.
+  cy.get(siteSelectors.alertDialog.self, { timeout: 15000 }).should("be.visible");
   cy.get(siteSelectors.alertDialog.actions.last).should("be.visible").click({force: true});
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
@@ -654,6 +724,9 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     //initially long description should have data-cmp-visible="false" to avoid flickering on page load
     cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
+    // check if questiionmark is collapsed
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).invoke('attr', 'aria-expanded')
+    .should('eq', 'false');
     // click on ? mark
     cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).click();
     // long description should be shown
@@ -664,6 +737,9 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     // short description should be hidden.
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
+    // check if questiionmark is expanded
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).invoke('attr', 'aria-expanded')
+    .should('eq', 'true');
 });
 
 Cypress.Commands.add("openSidePanelTab", (tab) => {
@@ -785,6 +861,7 @@ const mimeTypes = {
     'bat': 'application/x-msdos-program',
     'msg': 'application/vnd.ms-outlook',
     'svg': 'image/svg+xml',
+    'ifc': 'model/ifc',
     // Add more mappings as needed
 };
 

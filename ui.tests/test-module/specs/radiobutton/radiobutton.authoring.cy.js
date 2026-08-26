@@ -134,7 +134,7 @@ describe('Page - Authoring', function () {
             cy.get(".cmp-adaptiveform-radiobutton__value").invoke('val', 'Not a Number');
             cy.get('.cq-dialog-submit').click();
             cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
-            cy.get('.cq-dialog-cancel').click();
+            cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
             cy.deleteComponentByPath(radioButtonDrop);
 
             // For Boolean
@@ -147,7 +147,7 @@ describe('Page - Authoring', function () {
             cy.get('.cq-dialog-submit').click();
             cy.get('.coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
 
-            cy.get('.cq-dialog-cancel').click();
+            cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
             cy.deleteComponentByPath(radioButtonDrop);
         });
     })

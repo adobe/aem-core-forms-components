@@ -6,6 +6,8 @@
 .project
 .settings
 .DS_Store
+.codex/
+reasoning/
 
 # auto-generated clientlib
 ui.af.apps/src/main/content/jcr_root/apps/core/fd/af-clientlibs/core-forms-components-runtime-base/**
@@ -75,3 +77,9 @@ ui.tests/test-module/cypress
 
 # Ignore Cypress runtime JSON files
 ui.tests/test-module/**/*.cy.json
+
+# Agent working artifacts
+docs/superpowers/
+
+# Git worktrees
+.worktrees/

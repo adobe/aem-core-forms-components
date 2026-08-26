@@ -162,7 +162,7 @@ describe('Page - Authoring', function () {
                 cy.get('.cmp-adaptiveform-textinput__displaypattern').should('be.visible');
                 
                 // Test display pattern dropdown functionality
-                cy.get('.cmp-adaptiveform-textinput__displaypattern').children('button').click();
+                cy.get('.cmp-adaptiveform-textinput__displaypattern').find('button').click();
 
                 // Select Phone Number and verify displayValueExpression is set
                 cy.get("coral-selectlist-item[value='phonenumber']").should('be.visible').click({force: true, multiple: true});
@@ -171,6 +171,96 @@ describe('Page - Authoring', function () {
                     cy.deleteComponentByPath(textInputDrop);
                 });
             });
+        });
+
+        it('verify validation format value is preserved when validation pattern dropdown is not available', function () {
+            const validationFormatValue = '^[0-9]+$';
+
+            dropTextInputInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+
+            cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
+
+            cy.get('.cmp-adaptiveform-textinput__editdialog').then(($dialog) => {
+                const patternDropdown = '.cmp-adaptiveform-textinput__validationpattern';
+                const patternFormat = '.cmp-adaptiveform-textinput__validationformat';
+                // The dropdown exists in the DOM - hide it to make only format visible.
+                $dialog.find(patternDropdown)[0].closest("div").setAttribute("hidden", "hidden");
+                $dialog.find(patternFormat)[0].closest("div").removeAttribute("hidden");
+
+                // If the validation pattern dropdown is not visible, ensure the validation format field preserves the authored value.
+                cy.get(patternFormat)
+                    .scrollIntoView()
+                    .should('exist')
+                    .then(($pattern) => {
+                        cy.wrap($pattern).clear({ force: true }).type(validationFormatValue, { force: true });
+                    });
+                cy.get('.cq-dialog-submit').should('be.visible').click();
+                cy.reload();
+
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+                cy.invokeEditableAction("[data-action='CONFIGURE']");
+                cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
+                cy.get(patternFormat)
+                    .scrollIntoView()
+                    .should('exist')
+                    .should('have.value', validationFormatValue);
+                cy.get('.cq-dialog-cancel').should('be.visible').click();
+                cy.deleteComponentByPath(textInputDrop);
+            });
+        });
+
+        it('should switch validation pattern dropdown to "Custom" when an unmapped regex is authored', function () {
+            const customValidationFormatValue = '^custom-regex-[0-9]{3}$';
+
+            dropTextInputInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+
+            cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
+            cy.get('.cmp-adaptiveform-textinput__validationpattern')
+                .scrollIntoView()
+                .should('exist')
+                .as('validationDropdown');
+            cy.get(".cmp-adaptiveform-textinput__validationformat")
+                .scrollIntoView()
+                .should('exist')
+                .as('validationFormat');
+
+            // Pick a non-default option (not empty, not "custom") so the format field is shown and synced.
+            let chosenValue;
+            cy.get('@validationDropdown').find('button[is="coral-button"][aria-haspopup="listbox"]').click({force: true});
+            cy.get("coral-selectlist-item[role='option']").then(($items) => {
+                const chosen = Array.from($items).find((el) =>
+                    Boolean(el.getAttribute('value')) &&
+                    el.getAttribute('value') !== 'custom' &&
+                    el.getAttribute('value') !== '#####################.###############'
+                );
+                expect(chosen, 'non-default validation pattern option').to.exist;
+                chosenValue = chosen.getAttribute('value');
+                cy.wrap(chosen).click({force: true});
+            });
+            cy.then(() => {
+                cy.get('@validationDropdown').should('have.value', chosenValue);
+            });
+
+            // Wait until the wrapper around the format field is un-hidden.
+            cy.get('@validationFormat').should(($el) => {
+                const wrapperDiv = $el[0]?.closest('div');
+                expect(wrapperDiv?.hasAttribute('hidden')).to.eq(false);
+            });
+
+            // Type an unmapped regex into the format field; dropdown should switch to "Custom".
+            cy.get('@validationFormat')
+                .clear({ force: true })
+                .type(customValidationFormatValue, { force: true })
+                .blur({ force: true });
+            cy.get('.cq-dialog').click(5, 5, { force: true });
+            cy.get('@validationDropdown').should('have.value', 'custom');
+            cy.get('@validationDropdown').find('button').should('contain.text', 'Custom');
+            cy.get('.cq-dialog-cancel').should('be.visible').click();
+            cy.deleteComponentByPath(textInputDrop);
         });
     })
 

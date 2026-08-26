@@ -69,6 +69,19 @@
                                                     defaultValue=""
                                                     fieldLabel="Default value"
                                                     name="./default"/>
+                                            <fieldType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    name="./fieldType"
+                                                    required="{Boolean}true"
+                                                    granite:hidden="true">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <item jcr:primaryType="nt:unstructured"
+                                                          text="Number Input"
+                                                          value="number-input"
+                                                          selected="{Boolean}true"/>
+                                                </items>
+                                            </fieldType>
                                         </items>
                                     </column>
                                 </items>

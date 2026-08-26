@@ -46,7 +46,11 @@ public abstract class AbstractCheckboxImpl extends AbstractOptionsFieldImpl {
             checkedValue = String.valueOf(getEnums()[0]);
             uncheckedValue = getEnums().length > 1 ? String.valueOf(getEnums()[1]) : null;
         }
-        enums = (checkedValue != null) ? (Boolean.TRUE.equals(enableUncheckedValue)) ? new String[] { checkedValue, uncheckedValue }
+        // Guard against null uncheckedValue: when enableUncheckedValue is true the JCR property
+        // may be absent (e.g. because the push mechanism skipped an empty-string value), which
+        // would put null into the enum array and crash the runtime on .toString() at init time.
+        String safeUncheckedValue = uncheckedValue != null ? uncheckedValue : "";
+        enums = (checkedValue != null) ? (Boolean.TRUE.equals(enableUncheckedValue)) ? new String[] { checkedValue, safeUncheckedValue }
             : new String[] { checkedValue } : null;
     }
 

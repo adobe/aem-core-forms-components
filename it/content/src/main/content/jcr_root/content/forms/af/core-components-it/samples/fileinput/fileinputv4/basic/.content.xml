@@ -53,6 +53,7 @@
                     jcr:title="File Input - 3"
                     sling:resourceType="core/fd/components/form/fileinput/v4/fileinput"
                     accept="[application/pdf]"
+                    acceptMessage="This file type is not supported!"
                     description="This is long description"
                     fieldType="file-input"
                     id="fileinput_tooltip_scenario_test"
@@ -103,6 +104,15 @@
                     maxFileSize="2"
                     type="file[]"
                     visible="{Boolean}true"/>
+             <fileinput7
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="File Input - 7"
+                    sling:resourceType="core/fd/components/form/fileinput/v4/fileinput"
+                    accept="[audio/*, video/*, image/*, text/*, application/pdf,.ifc]"
+                    fieldType="file-input"
+                    readOnly="{Boolean}false"
+                    name="fileinput7"
+                    type="file"/>
             <submit
                     jcr:lastModified="{Date}2023-01-17T16:28:58.844+05:30"
                     jcr:lastModifiedBy="admin"

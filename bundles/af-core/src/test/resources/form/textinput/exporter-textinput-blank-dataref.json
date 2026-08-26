@@ -12,9 +12,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/textinput-blank-dataref"
   },
   ":type": "core/fd/components/form/textinput/v1/textinput"

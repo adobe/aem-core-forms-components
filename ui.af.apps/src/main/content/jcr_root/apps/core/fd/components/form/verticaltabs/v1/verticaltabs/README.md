@@ -46,6 +46,7 @@ BLOCK cmp-verticaltabs
     ELEMENT cmp-verticaltabs__tablist
     ELEMENT cmp-verticaltabs__label
     ELEMENT cmp-verticaltabs__label-container
+    ELEMENT cmp-verticaltabs__tabs-container
     ELEMENT cmp-verticaltabs__tab
         MOD cmp-verticaltabs__tab--active
         MOD cmp-verticaltabs__tab--stepped

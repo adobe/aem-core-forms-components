@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    cq:icon="table"
+    jcr:primaryType="cq:Component"
+    jcr:title="Adaptive Form Table"
+    jcr:description="Display data in a table format."
+    sling:resourceSuperType="core/fd/components/form/table/v1/table"
+    componentGroup="Core Components Examples - Adaptive Form"/>

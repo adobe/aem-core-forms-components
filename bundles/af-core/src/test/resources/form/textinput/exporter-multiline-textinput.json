@@ -17,9 +17,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/multiline-textinput"
   },
   ":type": "core/fd/components/form/textinput/v1/textinput"

@@ -17,9 +17,12 @@ package com.adobe.cq.forms.core.components.internal.form;
 
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
@@ -27,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.adobe.cq.forms.core.components.internal.constants.ThemeConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
 import com.adobe.cq.forms.core.components.models.form.FormStructureParser;
 import com.adobe.cq.forms.core.components.models.form.HtlUtil;
@@ -55,15 +59,35 @@ public class FormStructureParserImpl implements FormStructureParser {
     }
 
     @Override
-    public String getThemeClientLibRefFromFormContainer() {
-        FormContainer formContainer = getFormContainer(resource);
-        return formContainer != null ? formContainer.getThemeClientLibRef() : null;
-    }
-
-    @Override
     public String getClientLibRefFromFormContainer() {
         FormContainer formContainer = getFormContainer(resource);
         return formContainer != null ? formContainer.getClientLibRef() : null;
+    }
+
+    @Override
+    public String getThemeEditorThemeRef() {
+        String themeContentPath = null;
+        String themeClientLibRef = null;
+        if (request != null) {
+            themeContentPath = (String) request.getAttribute(ThemeConstants.THEME_OVERRIDE); // theme editor use-case
+        }
+        if (StringUtils.isBlank(themeContentPath)) {
+            if (request != null) {
+                themeContentPath = request.getParameter(ThemeConstants.THEME_OVERRIDE); // embed component use-case
+            }
+        }
+        // get client library from theme content path
+        if (StringUtils.isNotBlank(themeContentPath)) {
+            Resource themeResource = resource.getResourceResolver().getResource(themeContentPath + ThemeConstants.RELATIVE_PATH_METADATA);
+            if (themeResource != null) {
+                ValueMap themeProps = themeResource.getValueMap();
+                themeClientLibRef = themeProps.get(ThemeConstants.PROPERTY_CLIENTLIB_CATEGORY, "");
+            } else {
+                logger.error("Invalid Theme Name {}", themeContentPath);
+            }
+        }
+
+        return themeClientLibRef;
     }
 
     @Override
@@ -140,10 +164,17 @@ public class FormStructureParserImpl implements FormStructureParser {
             if (isSubmissionView) {
                 request.setAttribute(FormConstants.X_ADOBE_FORM_DEFINITION, FormConstants.FORM_DEFINITION_SUBMISSION);
             }
+            if (request != null) {
+                request.setAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW, Boolean.TRUE);
+            }
             objectWriter = mapper.writerWithView(Views.Publish.class);
             // objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
             objectWriter.writeValue(writer, formContainer);
             result = writer.toString();
+            if (result != null) {
+                double sizeKb = result.getBytes(StandardCharsets.UTF_8).length / 1024.0;
+                logger.info("Form definition JSON size: {} KB, form path: {}", sizeKb, resource.getPath());
+            }
         } catch (Exception e) {
             logger.error("Unable to generate json from resource", e);
         }

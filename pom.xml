@@ -127,6 +127,8 @@
                         <exclude>frontend-maven-plugin/**/*</exclude>
                         <exclude>it/**/*</exclude>
                         <exclude>ui.tests/**/*</exclude>
+                        <exclude>.worktrees/**/*</exclude>
+                        <exclude>.cursor/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

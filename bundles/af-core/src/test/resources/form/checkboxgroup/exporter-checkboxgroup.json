@@ -50,9 +50,6 @@
       "tooltipVisible": false,
       "orientation": "horizontal"
     },
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/checkboxgroup"
   },
   "enum": [

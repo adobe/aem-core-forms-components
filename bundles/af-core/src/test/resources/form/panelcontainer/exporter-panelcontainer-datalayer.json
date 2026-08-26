@@ -15,11 +15,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/panelcontainer-datalayer"
   },
   ":itemsOrder": [
@@ -44,9 +39,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/panelcontainer-datalayer/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"

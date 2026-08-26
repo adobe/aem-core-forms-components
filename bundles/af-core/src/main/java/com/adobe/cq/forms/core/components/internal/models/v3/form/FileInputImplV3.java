@@ -18,6 +18,10 @@
 
 package com.adobe.cq.forms.core.components.internal.models.v3.form;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -48,6 +52,9 @@ public class FileInputImplV3 extends FileInputImplV2 {
     @Default(values = FileInput.DEFAULT_DRAGDROP_TEXT)
     protected String dragDropTextV3;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.FD_FILE_ACCEPT_EXTENSIONS)
+    protected String[] acceptExtensions;
+
     @Override
     public String getDragDropText() {
         return dragDropTextV3;
@@ -59,5 +66,22 @@ public class FileInputImplV3 extends FileInputImplV2 {
         customProperties.remove(ReservedProperties.PN_DRAG_DROP_TEXT);
         customProperties.put(ReservedProperties.PN_DRAG_DROP_TEXT_V3, getDragDropText());
         return customProperties;
+    }
+
+    @Override
+    public List<String> getAcceptExtensions() {
+        if (acceptExtensions == null) {
+            return Collections.emptyList();
+        }
+        return Arrays.stream(acceptExtensions)
+            .map(ext -> "." + ext)
+            .collect(java.util.stream.Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAccept() {
+        List<String> combined = new ArrayList<>(super.getAccept());
+        combined.addAll(getAcceptExtensions()); // adds .pdf, .docx etc.
+        return combined;
     }
 }

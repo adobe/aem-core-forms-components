@@ -28,6 +28,7 @@ import javax.json.JsonReader;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.sling.api.scripting.SlingBindings;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 
@@ -251,5 +252,23 @@ public class Utils {
         } catch (NoSuchMethodException e) {
             return null;
         }
+    }
+
+    /**
+     * Removes the request's {@link SlingBindings} attribute so the AF locale-resolution code in
+     * {@code GuideUtils} takes its {@code bindings == null} branches.
+     * <p>
+     * Call this in tests that set an AF language parameter before adapting/using a model. Newer
+     * {@code aem-forms-sdk-api} versions resolve the locale via {@code GuideUtils}, and when a
+     * {@link SlingBindings} is present they look up services through {@code bindings.getSling()}:
+     * {@code getSanitizedLocale(...)} fetches the runtime-only Granite {@code ToggleRouter} (absent
+     * from the test classpath → {@link NoClassDefFoundError}), and {@code getLocaleParamFromRequest(...)}
+     * fetches {@code GuideLocalizationService} via {@code getSling()} without null-guarding it. Both
+     * are skipped entirely when the {@code SlingBindings} attribute is absent, and the locale is then
+     * taken from the {@code afAcceptLang} request parameter (which these tests set) — the same result
+     * expected in production for that parameter, since no {@code ToggleRouter} is registered in tests.
+     */
+    public static void disableLocaleFeatureToggleLookup(MockSlingHttpServletRequest request) {
+        request.setAttribute(SlingBindings.class.getName(), null);
     }
 }
