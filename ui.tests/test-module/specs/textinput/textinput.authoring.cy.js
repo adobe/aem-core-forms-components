@@ -230,16 +230,17 @@ describe('Page - Authoring', function () {
 
             // Pick a non-default option (not empty, not "custom") so the format field is shown and synced.
             let chosenValue;
-            cy.get('@validationDropdown').children('button[is="coral-button"][aria-haspopup="listbox"]').click({force: true});
-            cy.get("coral-selectlist-item[role='option']").then(($items) => {
-                const chosen = Array.from($items).find((el) =>
-                    Boolean(el.getAttribute('value')) &&
-                    el.getAttribute('value') !== 'custom' &&
-                    el.getAttribute('value') !== '#####################.###############'
+            cy.get('@validationDropdown').find('select[handle="nativeSelect"]').then(($nativeSelect) => {
+                const options = Array.from($nativeSelect[0]?.options || []);
+                const chosen = options.find((opt) =>
+                    Boolean(opt.value) &&
+                    opt.value !== 'custom' &&
+                    opt.value !== '#####################.###############'
                 );
                 expect(chosen, 'non-default validation pattern option').to.exist;
-                chosenValue = chosen.getAttribute('value');
-                cy.wrap(chosen).click({force: true});
+                chosenValue = chosen.value;
+                cy.wrap($nativeSelect).select(chosenValue, { force: true });
+                cy.wrap($nativeSelect).trigger('change', { force: true });
             });
             cy.then(() => {
                 cy.get('@validationDropdown').should('have.value', chosenValue);
