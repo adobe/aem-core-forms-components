@@ -111,8 +111,7 @@ describe('Button - Authoring', function () {
             });
         });
 
-        // todo: need to fixed this is flaky test
-        it.skip('open Inline edit dialog of Button',{ retries: 3 }, function(){
+        it ('open Inline edit dialog of Button',{ retries: 3 }, function(){
             cy.cleanTest(buttonDrop).then(function(){
                 testButtonBehaviourInilineEdit(buttonEditPathSelector, buttonDrop);
                 cy.deleteComponentByPath(buttonDrop);
