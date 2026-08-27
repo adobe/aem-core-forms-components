@@ -43,21 +43,29 @@
 
 ## Common Property Mapping — GuideField → Field/Base
 
-These properties exist in the foundation base `GuideField` / `GuideNode` and are already handled by Core base classes (`AbstractFieldImpl`, `AbstractBaseImpl`). They do NOT need custom migration:
+The foundation base classes `GuideField` / `GuideNode` expose a set of common properties (title, mandatory, readOnly, visible, enabled, name, description, tooltip, default, placeholder, dataRef). Every one of these is already handled by the Core base classes, so they do **NOT** need custom migration — mapping a foundation field onto the correct base class carries them across automatically.
 
-| Foundation Property | JCR Name | Core Equivalent | Handled By |
-|--------------------|----------|-----------------|------------|
-| `getTitle()` / `jcr:title` | `jcr:title` | `getLabel().getValue()` | `AbstractBaseImpl` |
-| `getIsRequired()` | `mandatory` | `isRequired()` | `AbstractBaseImpl` (via `BaseConstraint`) |
-| `getIsReadOnly()` | `readOnly` | `isReadOnly()` | `AbstractFieldImpl` |
-| `getVisible()` | `visible` | `isVisible()` | `AbstractFormComponentImpl` |
-| `getEnabled()` | `enabled` | `isEnabled()` | `AbstractBaseImpl` |
-| `getName()` | `name` | `getName()` | `AbstractFormComponentImpl` |
-| `getDescription()` | `description` | `getDescription()` | `AbstractBaseImpl` |
-| `getToolTip()` | `tooltip` | `getTooltip()` | `AbstractBaseImpl` |
-| `getDefault()` | `value` | `getDefault()` | `AbstractFieldImpl` |
-| `getPlaceHolder()` | `placeholderText` | `getPlaceHolder()` | `AbstractFieldImpl` |
-| `getDataRef()` | `bindRef` / `dataRef` | `getDataRef()` | `AbstractFormComponentImpl` |
+> **Do not maintain a duplicate list of the Core-side getters/JCR names here** — that data drifts as the framework evolves. The authoritative source of the Core base-class property surface is:
+> - the base-interface / implementation hierarchy in the `create-core-component` skill (`references/component-anatomy.md` → "Interface Hierarchy" and "Implementation Hierarchy"), and
+> - the interfaces themselves: `bundles/af-core/src/main/java/com/adobe/cq/forms/core/components/models/form/Base.java` and `Field.java`.
+>
+> Consult those to confirm the exact Core getter/JCR name and which base class owns it.
+
+The only migration-specific knowledge (foundation property name → which Core base class already provides it) is:
+
+| Foundation Property (JCR) | Provided by Core base class |
+|---------------------------|-----------------------------|
+| title (`jcr:title`) | `AbstractBaseImpl` (label) |
+| mandatory | `AbstractBaseImpl` (via `BaseConstraint`) |
+| readOnly | `AbstractFieldImpl` |
+| visible | `AbstractFormComponentImpl` |
+| enabled | `AbstractBaseImpl` |
+| name | `AbstractFormComponentImpl` |
+| description | `AbstractBaseImpl` |
+| tooltip | `AbstractBaseImpl` |
+| default (`value`) | `AbstractFieldImpl` |
+| placeholder (`placeholderText`) | `AbstractFieldImpl` |
+| dataRef (`bindRef`) | `AbstractFormComponentImpl` |
 
 ## Properties That Need Renaming
 
@@ -88,75 +96,52 @@ These foundation properties are typically NOT migrated to Core:
 
 ## Component-Specific Property Mappings
 
-### GuideTextBox → TextInput
+> **The authoritative list of Core properties for any existing component is its own `README.md` — do not duplicate it here.** Each Core component documents every JCR/edit-dialog property it supports in:
+>
+> ```
+> ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{component}/v{n}/{component}/README.md
+> ```
+>
+> (e.g. `textinput/v1/textinput/README.md`, `radiobutton/v2/radiobutton/README.md`). When the foundation component maps to a Core component that already exists, **read that README** to get the current, authoritative property set and its exact JCR names. If the mapping target is a brand-new component, the `create-core-component` skill's `references/component-anatomy.md` (base-class property inventory) is the source of truth for inherited properties.
+>
+> What follows is **only** the foundation-specific transformation knowledge that is *not* recoverable from the Core README: renames, structural restructuring, and properties that must be dropped or computed. Match these against the property set you read from the README.
 
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `multiLine` | `multiLine` | Boolean | `false` | `multiLine` | Direct (separate fieldType: `multiline-input`) |
-| `allowRichText` | `allowRichText` | Boolean | `false` | `richTextContent` / custom | Custom property |
-| `maxChars` | `maxChars` | Integer | null | `maxLength` (StringConstraint) | Rename |
-| `minLength` | `minLength` | Integer | null | `minLength` (StringConstraint) | Direct |
-| `html5MaxLength` | derived | Integer | null | *(computed)* | PostConstruct logic |
-| `autocomplete` | `autocomplete` | String | null | `autocomplete` | Direct |
-| `html5Type` | `html5Type` | String | `"text"` | *(use fieldType)* | Map to fieldType |
-| `rows` | `rows` | Integer | null | `rows` / custom | Custom if multiline |
-| `cols` | `cols` | Integer | null | *(CSS handles)* | Drop (use CSS) |
+### GuideTextBox → TextInput
+- `maxChars` → `maxLength` (rename; StringConstraint).
+- `html5MaxLength` → computed via `@PostConstruct` (no direct JCR property).
+- `multiLine` → not a boolean toggle in Core; select the `multiline-input` fieldType instead.
+- `html5Type` → map to the Core fieldType rather than a stored property.
+- `cols` → drop (CSS handles width); `rows` → carry over only for the multiline variant.
+- `allowRichText` → no core equivalent; add as a custom property only if required.
 
 ### GuideCheckBox → Checkbox
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `enabledValue` | `enabledValue` | String | `"on"` | `enum[0]` | Map to options |
-| `disabledValue` | `disabledValue` | String | `"off"` | `enum[1]` | Map to options |
+- `enabledValue` / `disabledValue` → restructure into the options model (`enum[0]` / `enum[1]`); there are no scalar `*Value` JCR properties in Core.
 
 ### GuideRadioButton → RadioButton
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `items` (child nodes) | child nodes | Nodes | — | `enum` / `enumNames` | Restructure |
-| `orientation` | `orientation` | String | `"horizontal"` | `orientation` | Direct |
+- `items` (child nodes) → restructure into `enum` / `enumNames` arrays (structural change, not a rename).
+- `orientation` → confirm against the RadioButton README (carried over where supported).
 
 ### GuideDropDownList → DropDown
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `items` (child nodes) | child nodes | Nodes | — | `enum` / `enumNames` | Restructure |
-| `multiSelect` | `multiSelect` | Boolean | `false` | `multiSelect` / `type: array` | Direct |
+- `items` (child nodes) → restructure into `enum` / `enumNames` arrays.
+- `multiSelect` → in Core, multi-select is expressed through the field `type` (`array`); confirm the property name against the DropDown README.
 
 ### GuideDatePicker → DatePicker
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `minDate` | `minDate` | String | null | `minimum` (DateConstraint) | Rename |
-| `maxDate` | `maxDate` | String | null | `maximum` (DateConstraint) | Rename |
-| `displayFormat` | `displayFormat` | String | null | `displayFormat` | Direct |
-| `editFormat` | `editFormat` | String | null | `editFormat` | Direct |
+- `minDate` / `maxDate` → `minimum` / `maximum` (rename; DateConstraint).
+- `displayFormat` / `editFormat` → confirm the current names against the DatePicker README.
 
 ### GuideNumericBox → NumberInput
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `minValue` | `minValue` | Number | null | `minimum` (NumberConstraint) | Rename |
-| `maxValue` | `maxValue` | Number | null | `maximum` (NumberConstraint) | Rename |
-| `displayPattern` | `displayPattern` | String | null | `displayFormat` | Rename |
-| `editPattern` | `editPattern` | String | null | *(use displayFormat)* | Merge |
-| `leadDigits` | `leadDigits` | Integer | null | Custom or drop | Evaluate |
-| `fracDigits` | `fracDigits` | Integer | null | Custom or `step` | Evaluate |
+- `minValue` / `maxValue` → `minimum` / `maximum` (rename; NumberConstraint).
+- `displayPattern` → `displayFormat` (rename); `editPattern` → merge into `displayFormat`.
+- `leadDigits` / `fracDigits` → no direct equivalent; evaluate dropping or mapping to `step`.
 
 ### GuideFileUpload → FileInput
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `multiSelection` | `multiSelection` | Boolean | `false` | `type: "array"` | Map to schema type |
-| `fileSizeLimit` | `fileSizeLimit` | Long | null | `maxFileSize` | Rename |
-| `acceptTypes` | `acceptTypes` | String[] | null | `accept` | Rename |
+- `multiSelection` → expressed through the field `type` (`array`), not a boolean.
+- `fileSizeLimit` → `maxFileSize` (rename); `acceptTypes` → `accept` (rename).
+- Confirm exact names against the FileInput README (multiple versions exist — v1–v4).
 
 ### GuideButton → Button
-
-| Foundation | JCR Name | Type | Default | Core Equivalent | Action |
-|-----------|----------|------|---------|-----------------|--------|
-| `buttonType` | `buttonType` | String | `"button"` | `buttonType` | Direct |
-| `submitUrl` | `submitUrl` | String | null | *(handled by events/rules)* | Drop |
+- `submitUrl` → drop (submission is handled by events/rules in Core).
+- `buttonType` → confirm against the Button README.
 
 ## JSP → HTL Expression Mapping
 

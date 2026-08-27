@@ -158,6 +158,8 @@ For each property, determine:
 
 For known components, the `references/known-components.md` entry already has a `Core Action` column for each property — use that as the starting point.
 
+**If the Core target component already exists** (see Phase 4.1), read its `README.md` at `ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/{component}/v{n}/{component}/README.md` to get the current, authoritative list of Core JCR/dialog properties. `references/property-mapping.md` intentionally does **not** duplicate that list — it only records foundation-specific renames, restructuring, and drops. Always cross-check your mapping against the live README rather than relying on a hardcoded copy.
+
 ### Phase 4: Determine Core Component Specifications
 
 Based on the analysis, determine the inputs for the `create-core-component` skill:
@@ -298,7 +300,7 @@ Present this report to the user for review.
 
 - `references/known-components.md` — Complete embedded data for all standard foundation components (properties, dialogs, rendering)
 - `references/foundation-anatomy.md` — Foundation component file structure, patterns, and Java hierarchy
-- `references/property-mapping.md` — Foundation → Core type/property/pattern mapping tables
+- `references/property-mapping.md` — Foundation → Core class-hierarchy, fieldType, JSP→HTL, CSS/BEM, and constraint mappings, plus foundation-specific renames/restructuring/drops. It does **not** duplicate Core component property lists — those are read from each component's `README.md`.
 - `references/migration-checklist.md` — Post-migration verification checklist
 
 ## Critical Rules
