@@ -1,0 +1,71 @@
+{
+  "table": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/table/v1/table",
+    "name": "myTable",
+    "jcr:title": "My Table",
+    "fieldType": "panel"
+  },
+  "table-with-column-width": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/table/v1/table",
+    "name": "myTableWithWidths",
+    "jcr:title": "My Table With Column Widths",
+    "fieldType": "panel",
+    "columnWidth": "1,2,1"
+  },
+  "table-with-sorting": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/table/v1/table",
+    "name": "myTableWithSorting",
+    "jcr:title": "My Table With Sorting",
+    "fieldType": "panel",
+    "enableSorting": true
+  },
+  "table-with-equal-widths": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/table/v1/table",
+    "name": "myTableWithEqualWidths",
+    "jcr:title": "My Table Equal Widths",
+    "fieldType": "panel",
+    "columnWidth": "1,1,1"
+  },
+  "table-with-invalid-width": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/table/v1/table",
+    "name": "myTableWithInvalidWidth",
+    "jcr:title": "My Table Invalid Width",
+    "fieldType": "panel",
+    "columnWidth": "abc,1"
+  },
+  "table-with-negative-width": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/table/v1/table",
+    "name": "myTableWithNegativeWidth",
+    "jcr:title": "My Table Negative Width",
+    "fieldType": "panel",
+    "columnWidth": "-1,2,3"
+  },
+  "table-with-zero-widths": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/table/v1/table",
+    "name": "myTableWithZeroWidths",
+    "jcr:title": "My Table Zero Widths",
+    "fieldType": "panel",
+    "columnWidth": "0,0"
+  },
+  "tableheader": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/tableheader/v1/tableheader",
+    "name": "myTableHeader",
+    "jcr:title": "My Table Header",
+    "fieldType": "panel"
+  },
+  "tablerow": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/tablerow/v1/tablerow",
+    "name": "myTableRow",
+    "jcr:title": "My Table Row",
+    "fieldType": "panel"
+  }
+}

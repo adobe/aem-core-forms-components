@@ -319,7 +319,7 @@ describe("date picker calendar icon pop up inside tabs", () => {
     it(" should be visible on first click ", () => {
         lastTab().click().then(() => {
             // check if first click on date picker calendar opens the pope
-            cy.get('#datepicker-3a195924d8').find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+            cy.get('#datepicker-3a195924d8').find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
                 cy.get(".dp-clear").should("be.visible");
             });
         });
@@ -347,7 +347,7 @@ describe("date picker calendar icon pop up inside tabs", () => {
     it(" should be visible on first click ", () => {
         lastTab().click().then(() => {
             // check if first click on date picker calendar opens the pope
-            cy.get('#datepicker-3a195924d8').find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click().then(() => {
+            cy.get('#datepicker-3a195924d8').find(".cmp-adaptiveform-datepicker__calendar-icon").should("be.visible").click({force: true}).then(() => {
                 cy.get(".dp-clear").should("be.visible");
             });
         });

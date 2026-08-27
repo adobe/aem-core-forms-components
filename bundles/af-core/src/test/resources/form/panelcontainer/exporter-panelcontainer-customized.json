@@ -1,14 +1,14 @@
 {
-  "id":"panelcontainer-d7d0a241a4",
-  "description":"dependent names description",
-  "tooltip":"dependent names tooltip",
-  "fieldType":"panel",
-  "name":"abc",
+  "id": "panelcontainer-d7d0a241a4",
+  "description": "dependent names description",
+  "tooltip": "dependent names tooltip",
+  "fieldType": "panel",
+  "name": "abc",
   "visible": false,
   "enabled": false,
   "readOnly": true,
   ":items": {
-    "textinput" : {
+    "textinput": {
       "id": "textinput-7505d0a80f",
       "fieldType": "text-input",
       "name": "abc",
@@ -25,15 +25,14 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/panelcontainer-customized/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"
     }
   },
-  ":itemsOrder": ["textinput"],
+  ":itemsOrder": [
+    "textinput"
+  ],
   "label": {
     "value": "dependent names"
   },

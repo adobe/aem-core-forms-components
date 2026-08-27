@@ -15,9 +15,6 @@
     "afs:layout": {
       "orientation": "horizontal"
     },
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/checkboxgroup-without-fieldtype"
   },
   "events": {

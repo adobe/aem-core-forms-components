@@ -103,6 +103,7 @@ public final class ReservedProperties {
     public static final String PN_HIDE_TITLE = "hideTitle";
     public static final String PN_IS_TITLE_RICH_TEXT = "isTitleRichText";
     public static final String PN_ORIENTATION = "orientation";
+    public static final String PN_SELECTION_TYPE = "selectionType";
     public static final String PN_TYPE_MESSAGE = "typeMessage";
     public static final String PN_REQUIRED_MESSAGE = "mandatoryMessage"; // reusing the same property name as in foundation
     public static final String PN_MINIMUM_MESSAGE = "minimumMessage";
@@ -131,6 +132,7 @@ public final class ReservedProperties {
     public static final String PN_BUTTON_TEXT = "buttonText";
     public static final String PN_WRAP_DATA = "wrapData";
     public static final String PN_FRAGMENT_PATH = "fragmentPath";
+    public static final String PN_LAZY = "lazy";
     public static final String PN_BUTTON_TYPE = "buttonType";
     public static final String PN_THANK_YOU_MSG_V1 = "thankyouMessage";
     public static final String PN_THANK_YOU_MSG_V2 = "thankYouMessage";
@@ -169,8 +171,24 @@ public final class ReservedProperties {
     public static final String FD_AUTO_SAVE_INTERVAL = "fd:autoSaveInterval";
     public static final String FD_EXCLUDE_FROM_DOR_IF_HIDDEN = "fd:excludeFromDoRIfHidden";
     public static final String FD_DIALOG_LABEL = "fd:dialogLabel";
+    public static final String FD_FILE_ACCEPT_EXTENSIONS = "fd:acceptExtensions";
 
     public static final String FD_DRAFT_ID = "fd:draftId";
+    public static final String FD_CHANGE_EVENT_BEHAVIOUR = "fd:changeEventBehaviour";
+
+    /**
+     * Comma-separated proportional column widths JCR property, also passed into fd:dor for DOR table rendering (matches
+     * GuideTableElement key).
+     */
+    public static final String PN_DOR_COLUMN_WIDTHS = "columnWidth";
+
+    /** When true, adaptive form table columns can be sorted at runtime (publish). */
+    public static final String PN_ENABLE_SORTING = "enableSorting";
+
+    /** fd:viewType values for table sub-components — used as :type in exported JSON and matched in AF2→AF1 DOR transformer. */
+    public static final String VT_TABLE = "table";
+    public static final String VT_TABLE_ROW = "table-row";
+    public static final String VT_TABLE_HEADER = "table-header";
 
     // Begin: Form submission related properties
     public static final String FD_SUBMIT_PROPERTIES = "fd:submit";
@@ -182,6 +200,18 @@ public final class ReservedProperties {
     public static final String PN_SUBMIT_EMAIL_CC = "cc";
     public static final String PN_SUBMIT_EMAIL_BCC = "bcc";
     public static final String PN_SUBMIT_SPREADSHEETURL = "spreadsheetUrl";
+
+    // AEP submit action properties
+    public static final String SS_AEP = "aep";
+    public static final String PN_SUBMIT_AEP_SCHEMA_REF_ID = "schemaRefId";
+    public static final String PN_SUBMIT_AEP_IMS_ORG_ID = "imsOrgId";
+    public static final String PN_SUBMIT_AEP_SANDBOX_REGION = "sandboxRegion";
+    public static final String PN_SUBMIT_AEP_SANDBOX_ID = "sandboxId";
+    public static final String PN_SUBMIT_AEP_DATASET_ID = "datasetId";
+    public static final String PN_SUBMIT_AEP_SANDBOX_NAME = "sandboxName";
+
+    public static final String PN_ENABLE_SERVER_SIDE_VALIDATION = "fd:enableServerSideValidation";
+    public static final String PN_SSV_CLOUD_SERVICE_PATH = "fd:ssvCloudServicePath";
     // End: Form submission related properties
     private static final Set<String> reservedProperties = aggregateReservedProperties();
 

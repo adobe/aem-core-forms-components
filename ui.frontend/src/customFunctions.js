@@ -75,12 +75,51 @@ export const customFunctions = {
 
     /**
      * Handles the error response after a form submission.
+     * When the error originates from Server-Side Validation (SSV), field-level errors
+     * are shown inline under each affected field. All other failures fall back to the
+     * default alert behaviour.
      *
-     * @param {string} defaultSubmitErrorMessage - The default error message.
+     * @param {string} defaultSubmitErrorMessage - Localised fallback error message.
      * @param {object} globals - An object containing form instance and invoke method to call other custom functions.
      * @returns {void}
      */
-    defaultSubmitErrorHandler: cf.defaultSubmitErrorHandler,
+    defaultSubmitErrorHandler: function (defaultSubmitErrorMessage, globals) {
+        var payload = globals && globals.event && globals.event.payload;
+        var body = payload && payload.body;
+
+        if (body && body.errorType === 'SSV_VALIDATION_ERROR' &&
+                Array.isArray(body.errors) && body.errors.length > 0) {
+
+            var fieldErrors = body.errors.filter(function (e) { return e.qualifiedName; });
+            var formErrors  = body.errors.filter(function (e) { return !e.qualifiedName; });
+
+            // Mark each named field invalid inline.
+            // globals.formModel is the actual FormModel (not the rule-node proxy) so
+            // resolveQualifiedName() and markAsInvalid() work without proxy restrictions.
+            // qualifiedName (e.g. "$form.panel.email") is the canonical AF form field identifier
+            // and is unique even when multiple panels share the same field name.
+            var formModel = globals.formModel;
+            fieldErrors.forEach(function (error) {
+                var field = formModel && typeof formModel.resolveQualifiedName === 'function'
+                    ? formModel.resolveQualifiedName(error.qualifiedName)
+                    : null;
+                if (field) {
+                    field.markAsInvalid(error.message);
+                } else {
+                    console.warn('[SSV] No field found for qualifiedName "' + error.qualifiedName + '" — error not shown inline: ' + error.message);
+                }
+            });
+
+            // Show form-level errors (no specific field) as an alert
+            if (formErrors.length > 0) {
+                window.alert(formErrors.map(function (e) { return e.message; }).join('\n'));
+            }
+
+        } else {
+            // Normal submit failure — show the generic localised message
+            cf.defaultSubmitErrorHandler(defaultSubmitErrorMessage, globals);
+        }
+    },
 
     /**
      * Fetches the captcha token for the form.

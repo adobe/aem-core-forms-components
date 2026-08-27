@@ -22,6 +22,7 @@ import java.util.*;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,7 @@ import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
@@ -134,7 +136,22 @@ public class TextInputImplTest {
         assertEquals(true, textInput.getDorProperties().get("dorExclusion"));
         assertEquals("4", textInput.getDorProperties().get("dorColspan"));
         assertEquals("Text1", textInput.getDorProperties().get("dorBindRef"));
+    }
 
+    @Test
+    void testDorPropertiesEmptyWhenNotSet() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
+        assertTrue("getDorProperties should return empty map when no dor properties are set in JCR",
+            textInput.getDorProperties().isEmpty());
+        assertFalse("fd:dor should not appear in properties when no dor properties are set",
+            textInput.getProperties().containsKey("fd:dor"));
+    }
+
+    @Test
+    void testDorPropertiesIncludedWhenSet() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
+        assertTrue("fd:dor should appear in properties when dor properties are set in JCR",
+            textInput.getProperties().containsKey("fd:dor"));
     }
 
     @Test
@@ -575,5 +592,28 @@ public class TextInputImplTest {
         assertEquals("null", AbstractFieldImpl.EmptyValue.NULL.getValue());
         assertEquals("undefined", AbstractFieldImpl.EmptyValue.UNDEFINED.getValue());
         assertEquals("", AbstractFieldImpl.EmptyValue.EMPTY_STRING.getValue());
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.clearProperty(FeatureToggleConstants.FT_SKIP_DEFAULT_SET_PROPERTY_EVENT);
+    }
+
+    @Test
+    void testGetEventsContainsSetPropertyByDefault() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
+        Map<String, String[]> events = textInput.getEvents();
+        assertTrue("getEvents should include custom:setProperty when toggle is OFF",
+            events.containsKey("custom:setProperty"));
+        assertArrayEquals(new String[] { "$event.payload" }, events.get("custom:setProperty"));
+    }
+
+    @Test
+    void testGetEventsOmitsSetPropertyWhenToggleEnabled() {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_DEFAULT_SET_PROPERTY_EVENT, "true");
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT, TextInput.class, context);
+        Map<String, String[]> events = textInput.getEvents();
+        assertFalse("getEvents should NOT include custom:setProperty when toggle is ON",
+            events.containsKey("custom:setProperty"));
     }
 }

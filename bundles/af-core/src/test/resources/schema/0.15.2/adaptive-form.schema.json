@@ -1099,7 +1099,8 @@
                 "uniqueItems",
                 "validationExpression",
                 "visible",
-                "fragmentPath"
+                "fragmentPath",
+                "lazy"
               ],
               "errorMessage": {
                 "enum": "${0} property is not allowed in Panel"
@@ -1115,6 +1116,12 @@
                 "required": [
                   ":items",
                   ":itemsOrder"
+                ]
+              },
+              {
+                "required": [
+                  "lazy",
+                  "fragmentPath"
                 ]
               }
             ]

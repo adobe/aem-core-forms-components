@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@1.0.5
-  browser-tools: circleci/browser-tools@1.4.8
+  browser-tools: circleci/browser-tools@1.4.3
 
 common:
   restore_cache: &restore_cache
@@ -15,8 +15,7 @@ common:
   cypress_test_steps: &cypress_test_steps
     steps:
       - checkout
-      - browser-tools/install-chrome:
-          chrome-version: latest
+      - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
           command: |
@@ -134,13 +133,13 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.24.0-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.25.0-openjdk11
         <<: *docker_auth
   test_executor_655_latest:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.25-load17-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.25.0-openjdk11
         <<: *docker_auth
 
 jobs:
