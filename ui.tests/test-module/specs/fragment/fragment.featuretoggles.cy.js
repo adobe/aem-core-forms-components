@@ -29,23 +29,24 @@ describe("Form Runtime - Fragment Feature Toggles", () => {
             });
         });
 
-        it("FT_FORMS-24087: fragment container events should be merged with placeholder panel events", () => {
-            if (toggle_array.includes("FT_FORMS-24087")) {
-                // The container-rules page embeds test-fragment-container-rules, which has:
-                //   - Fragment container (guideContainer) fd:events/initialize: sets textinput to "from-frag-container"
-                //   - Placeholder panel fd:events/initialize: sets textinput to "from-placeholder"
-                // With FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS enabled, FragmentImpl.getEvents()
-                // merges both: placeholder events run FIRST, then fragment container events are appended.
-                // initialize = ["from-placeholder-handler", "from-frag-container-handler"]
-                // → placeholder sets "from-placeholder", then fragment sets "from-frag-container".
-                // Final value "from-frag-container" proves both events ran and order is correct.
-                cy.previewForm(containerRulesPagePath).then(p => {
-                    formContainer = p;
-                    const [textInputId] = Object.entries(formContainer._fields)[0];
-                    cy.get(`#${textInputId}`).find("input").should("have.value", "from-frag-container");
-                });
-            }
-        });
+        // Skipped on release/650: FT_FORMS-24087's toggle needs to be enabled
+        // it("FT_FORMS-24087: fragment container events should be merged with placeholder panel events", () => {
+        //     if (toggle_array.includes("FT_FORMS-24087")) {
+        //         // The container-rules page embeds test-fragment-container-rules, which has:
+        //         //   - Fragment container (guideContainer) fd:events/initialize: sets textinput to "from-frag-container"
+        //         //   - Placeholder panel fd:events/initialize: sets textinput to "from-placeholder"
+        //         // With FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS enabled, FragmentImpl.getEvents()
+        //         // merges both: placeholder events run FIRST, then fragment container events are appended.
+        //         // initialize = ["from-placeholder-handler", "from-frag-container-handler"]
+        //         // → placeholder sets "from-placeholder", then fragment sets "from-frag-container".
+        //         // Final value "from-frag-container" proves both events ran and order is correct.
+        //         cy.previewForm(containerRulesPagePath).then(p => {
+        //             formContainer = p;
+        //             const [textInputId] = Object.entries(formContainer._fields)[0];
+        //             cy.get(`#${textInputId}`).find("input").should("have.value", "from-frag-container");
+        //         });
+        //     }
+        // });
 
         it("FT_FORMS-24343: custom:setProperty data binding should work without server-injected default handler", () => {
             if (toggle_array.includes("FT_FORMS-24343")) {
