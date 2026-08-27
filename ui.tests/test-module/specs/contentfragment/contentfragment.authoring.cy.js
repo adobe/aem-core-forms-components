@@ -94,6 +94,7 @@ describe('Content Fragment - Authoring', function () {
             .type("/content/experience-fragments/test-experience-fragment/master", { delay: 0 }).click();
         cy.get(".foundation-picker-buttonlist button").should("be.visible").click();
         cy.get('.cq-dialog-submit').click().then(y => {
+            cy.get('.cq-dialog-submit').click();
             cy.get('.cq-dialog-submit').should('not.exist').then(z => {
                 cy.deleteComponentByPath(xfDrop);
             });

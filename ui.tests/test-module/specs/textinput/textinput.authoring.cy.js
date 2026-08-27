@@ -162,7 +162,7 @@ describe('Page - Authoring', function () {
                 cy.get('.cmp-adaptiveform-textinput__displaypattern').should('be.visible');
                 
                 // Test display pattern dropdown functionality
-                cy.get('.cmp-adaptiveform-textinput__displaypattern').find('button').click();
+                cy.get('.cmp-adaptiveform-textinput__displaypattern').children('button').click();
 
                 // Select Phone Number and verify displayValueExpression is set
                 cy.get("coral-selectlist-item[value='phonenumber']").should('be.visible').click({force: true, multiple: true});
@@ -230,7 +230,7 @@ describe('Page - Authoring', function () {
 
             // Pick a non-default option (not empty, not "custom") so the format field is shown and synced.
             let chosenValue;
-            cy.get('@validationDropdown').find('button[is="coral-button"][aria-haspopup="listbox"]').click({force: true});
+            cy.get('@validationDropdown').children('button[is="coral-button"][aria-haspopup="listbox"]').click({force: true});
             cy.get("coral-selectlist-item[role='option']").then(($items) => {
                 const chosen = Array.from($items).find((el) =>
                     Boolean(el.getAttribute('value')) &&
@@ -258,7 +258,7 @@ describe('Page - Authoring', function () {
                 .blur({ force: true });
             cy.get('.cq-dialog').click(5, 5, { force: true });
             cy.get('@validationDropdown').should('have.value', 'custom');
-            cy.get('@validationDropdown').find('button').should('contain.text', 'Custom');
+            cy.get('@validationDropdown').children('button').should('contain.text', 'Custom');
             cy.get('.cq-dialog-cancel').should('be.visible').click();
             cy.deleteComponentByPath(textInputDrop);
         });

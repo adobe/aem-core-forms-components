@@ -21,11 +21,6 @@ describe("Form Runtime - Fragment Feature Toggles", () => {
         let formContainer = null;
         let toggle_array = [];
 
-        // On-prem classic AEM 6.5 has no OSGi bridge wiring the Granite toggle router to the
-        // FT_FORMS-* system properties ComponentUtils#isToggleEnabled actually reads, so a toggle
-        // can never take effect there even when the router reports it enabled (see image.api.cy.js).
-        const isOnPremClassic = ['classic', 'classic-latest', 'classic-latest-cp'].includes(Cypress.env('forms.far'));
-
         before(() => {
             cy.fetchFeatureToggles().then((response) => {
                 if (response.status === 200) {
@@ -35,7 +30,7 @@ describe("Form Runtime - Fragment Feature Toggles", () => {
         });
 
         it("FT_FORMS-24087: fragment container events should be merged with placeholder panel events", () => {
-            if (toggle_array.includes("FT_FORMS-24087") && !isOnPremClassic) {
+            if (toggle_array.includes("FT_FORMS-24087")) {
                 // The container-rules page embeds test-fragment-container-rules, which has:
                 //   - Fragment container (guideContainer) fd:events/initialize: sets textinput to "from-frag-container"
                 //   - Placeholder panel fd:events/initialize: sets textinput to "from-placeholder"
@@ -53,7 +48,7 @@ describe("Form Runtime - Fragment Feature Toggles", () => {
         });
 
         it("FT_FORMS-24343: custom:setProperty data binding should work without server-injected default handler", () => {
-            if (toggle_array.includes("FT_FORMS-24343") && !isOnPremClassic) {
+            if (toggle_array.includes("FT_FORMS-24343")) {
                 // test-fragment: textinput1 has a valueCommit event that dispatches custom:setProperty
                 // on the panel's text element, setting its value to "Thanks".
                 // With FT_FORMS-24343 enabled, the server does NOT inject the default custom:setProperty
