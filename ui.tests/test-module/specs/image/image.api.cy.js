@@ -44,11 +44,7 @@ describe('Form with Adaptive form text', () => {
 
   it('image should use Sling Model Exporter  to fetch model.json', () => {
     cy.fetchFeatureToggles().then(ftResponse => {
-      // On-prem classic AEM 6.5 has no OSGi bridge wiring the Granite toggle router to the
-      // FT_FORMS-24343 system property that ComponentUtils#isToggleEnabled actually reads, so the
-      // toggle can never take effect there even when the router reports it enabled.
-      const isOnPremClassic = ['classic', 'classic-latest', 'classic-latest-cp'].includes(Cypress.env('forms.far'));
-      const ft24343Enabled = !isOnPremClassic && ftResponse.status === 200 && ftResponse.body.enabled.includes('FT_FORMS-24343');
+      const ft24343Enabled = ftResponse.status === 200 && ftResponse.body.enabled.includes('FT_FORMS-24343');
       cy.fixture('image/image.model.json').then(expectedJson => {
         cy.request('GET', '/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image.model.json')
         .then(response => {
