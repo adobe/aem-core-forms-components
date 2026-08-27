@@ -118,8 +118,8 @@ describe('Page - Authoring', function () {
       cy.get("[data-granite-coral-multifield-name='./allowedCustomFormats']").should('be.visible');
       cy.get("[data-granite-coral-multifield-name='./allowedCustomFormats'] coral-button-label:contains('Add')").should('exist').click({force: true});
       cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').should('exist').then(() => {
-        cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().type(customKey);
-        cy.get('[name="./allowedCustomFormats/item0/customFormatValue"]').focus().type(customValue);
+        cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().clear().type(customKey);
+        cy.get('[name="./allowedCustomFormats/item0/customFormatValue"]').focus().clear().type(customValue);
         cy.get(submitBtnSelector).click();
       }).then(() => {
         cy.openSiteAuthoring(authoringPagePath);
