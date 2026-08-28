@@ -21,6 +21,146 @@ import * as cf from "@aemforms/af-custom-functions";
  */
 
 /**
+ * Fetches the captcha token for the form.
+ *
+ * Delegates to @aemforms/af-custom-functions for turnstile and reCAPTCHA Enterprise (unchanged
+ * behavior). reCAPTCHA v3 is handled locally: the upstream package's fetchCaptchaToken only knows
+ * about the grecaptcha.enterprise namespace, but v3 site keys use the classic (non-enterprise)
+ * namespace and endpoint.
+ *
+ * @async
+ * @param {object} globals - An object containing read-only form instance, read-only target field instance and methods for form modifications.
+ * @returns {string} - The captcha token.
+ */
+function fetchCaptchaToken(globals) {
+    var captcha = globals.form.$captcha;
+    var config = captcha && captcha.$properties && captcha.$properties['fd:captcha'] && captcha.$properties['fd:captcha'].config;
+    if (!config || config.version !== 'v3') {
+        return cf.fetchCaptchaToken(globals);
+    }
+    return new Promise(function (resolve, reject) {
+        try {
+            var siteKey = config.siteKey;
+            var captchaElementName = captcha.$name.replaceAll('-', '_');
+            var captchaPath = captcha.$properties['fd:path'];
+            var formName = '';
+            var index = captchaPath ? captchaPath.indexOf('/jcr:content') : -1;
+            if (index > 0) {
+                captchaPath = captchaPath.substring(0, index);
+                formName = captchaPath.substring(captchaPath.lastIndexOf('/') + 1).replaceAll('-', '_');
+            }
+            var actionName = 'submit_' + formName + '_' + captchaElementName;
+            grecaptcha.ready(function () {
+                grecaptcha.execute(siteKey, {action: actionName})
+                    .then(function (token) { resolve(token); })
+                    .catch(function (error) { reject(error); });
+            });
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+function isArrayValue(obj) {
+    return obj !== null && Object.prototype.toString.call(obj) === '[object Array]';
+}
+
+function valueOf(a) {
+    if (a === null || a === undefined) {
+        return a;
+    }
+    if (isArrayValue(a)) {
+        return a.map(function (i) { return valueOf(i); });
+    }
+    return a.valueOf();
+}
+
+function toStringOrEmpty(a) {
+    if (a === null || a === undefined) {
+        return '';
+    }
+    return a.toString();
+}
+
+/**
+ * Overrides @aemforms/af-core's built-in submitForm() rule action.
+ *
+ * Faithfully reimplements the original (both its current and deprecated call signatures - see
+ * @aemforms/af-core's afb-runtime.js), but extends the auto-fetch-captcha-token-before-submit
+ * condition to also cover reCAPTCHA v3 (the upstream implementation only checks
+ * `captchaDisplayMode === "invisible"` (turnstile) or `version === "enterprise" && keyType ===
+ * "score"` - v3 matches neither, so its token never got fetched and the required field stayed
+ * empty at submit time). Registering a function under an existing name via
+ * FunctionRuntime.registerFunctions is the same mechanism @aemforms/af-core itself relies on host
+ * apps for (it has no default `fetchCaptchaToken` at all), so this is not a hack - custom
+ * function-table entries are looked up dynamically by name and always take precedence over
+ * defaults.
+ *
+ * @param {...*} args - Author-supplied arguments (payload/validateForm/contentType, or the
+ *  deprecated success/error/contentType/data/validateForm form), followed by the globals object
+ *  the framework always appends last.
+ * @returns {object} - Empty object, matching the original's return value.
+ */
+function submitForm() {
+    var allArgs = Array.prototype.slice.call(arguments);
+    var globals = allArgs.pop();
+    var args = allArgs;
+
+    var success = null, error = null, submit_data, validate_form, submit_as;
+    if (args.length > 0 && typeof valueOf(args[0]) === 'object') {
+        submit_data = args.length > 0 ? valueOf(args[0]) : null;
+        validate_form = args.length > 1 ? valueOf(args[1]) : true;
+        submit_as = args.length > 2 ? toStringOrEmpty(args[2]) : 'multipart/form-data';
+    } else {
+        success = toStringOrEmpty(args[0]);
+        error = toStringOrEmpty(args[1]);
+        submit_as = args.length > 2 ? toStringOrEmpty(args[2]) : 'multipart/form-data';
+        submit_data = args.length > 3 ? valueOf(args[3]) : null;
+        validate_form = args.length > 4 ? valueOf(args[4]) : true;
+    }
+
+    // globals.form is the rule-node proxy - nested field access requires the $-prefixed
+    // convention (matching fetchCaptchaToken's globals.form.$captcha above), unlike af-core's
+    // original implementation which operates on the raw (non-proxy) interpreter.globals.form.
+    //
+    // XFA-rendered forms use a separate npm package (@aemforms/af-core-xfa) whose rule-node
+    // proxy only defines a `get` trap (af-core's proxy also defines a `set` trap). Assigning
+    // captcha.value = token therefore falls through to the default Proxy set behaviour, which
+    // invokes Field's real `value` setter with `this` bound to the proxy instead of the raw
+    // field instance; the setter's own `this.parent.uniqueItems` lookup then goes through the
+    // same get trap, which has no case for bare (non-`$`, non-own-property) accessors like
+    // `parent` and returns undefined, so the setter throws. Routing the same update through
+    // globals.functions.dispatchEvent(captcha, 'custom:setProperty', {value}) instead - the same
+    // mechanism af-core's own working `set` trap uses internally - looks the field up by id on
+    // the raw (non-proxy) form and dispatches directly on it, so the setter runs with a real
+    // `this` and never touches the proxy.
+    var form = globals.form;
+    var captcha = form.$captcha;
+    var captchaConfig = captcha && captcha.$properties && captcha.$properties['fd:captcha'] &&
+        captcha.$properties['fd:captcha'].config;
+    var needsCaptchaToken = captcha && (
+        captcha.$captchaDisplayMode === 'invisible' ||
+        (captchaConfig && captchaConfig.version === 'enterprise' && captchaConfig.keyType === 'score') ||
+        (captchaConfig && captchaConfig.version === 'v3')
+    );
+    var submitPayload = {success: success, error: error, submit_as: submit_as, validate_form: validate_form, data: submit_data};
+
+    if (!needsCaptchaToken) {
+        globals.functions.dispatchEvent('submit', submitPayload);
+        return {};
+    }
+
+    return fetchCaptchaToken(globals).then(function (token) {
+        globals.functions.dispatchEvent(captcha, 'custom:setProperty', {value: token});
+        globals.functions.dispatchEvent('submit', submitPayload);
+        return {};
+    }).catch(function () {
+        globals.functions.dispatchEvent('submitError', {type: 'FetchCaptchaTokenFailed'});
+        return {};
+    });
+}
+
+/**
  * Namespace for custom functions.
  * @description Contains custom functions which can be used in the rule editor.
  * @exports FormView/customFunctions
@@ -124,13 +264,14 @@ export const customFunctions = {
     /**
      * Fetches the captcha token for the form.
      *
-     * This function uses the Google reCAPTCHA Enterprise service to fetch the captcha token.
+     * Supports turnstile, reCAPTCHA Enterprise (via @aemforms/af-custom-functions), and
+     * reCAPTCHA v3 (handled locally - see fetchCaptchaToken above).
      *
      * @async
      * @param {object} globals - An object containing read-only form instance, read-only target field instance and methods for form modifications.
      * @returns {string} - The captcha token.
      */
-    fetchCaptchaToken: cf.fetchCaptchaToken,
+    fetchCaptchaToken: fetchCaptchaToken,
 
     /**
      * Converts a date to the number of days since the Unix epoch (1970-01-01).
@@ -166,5 +307,20 @@ export const customFunctions = {
     * @param {scope} globals - Global scope object containing form context
     * @returns {string|object} The complete form data as a JSON string
     */
-    exportFormData: cf.exportFormData
+    exportFormData: cf.exportFormData,
+
+    /**
+     * Submits the form.
+     *
+     * Overrides @aemforms/af-core's built-in submitForm() so that reCAPTCHA v3 also gets its
+     * token auto-fetched before submit (see submitForm above for why this is needed and why
+     * overriding by name is safe).
+     *
+     * @param {*} [payload] - Data to submit, or (deprecated usage) a success-redirect URL.
+     * @param {boolean} [validateForm] - Whether to validate the form before submitting, or
+     *  (deprecated usage) an error-redirect URL.
+     * @param {string} [contentType] - The content type to submit as.
+     * @returns {object} - Empty object.
+     */
+    submitForm: submitForm
 };
