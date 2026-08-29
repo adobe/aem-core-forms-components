@@ -59,6 +59,7 @@ public final class ReservedProperties {
     public static final String PN_DOR_TEMPLATE_REF = "dorTemplateRef";
     public static final String PN_DOR_TYPE = "dorType";
     public static final String PN_VALIDATION_EXPRESSION = "validationExpression";
+    public static final String PN_ASYNC_VALIDATION_EXPRESSION = "asyncValidtionExpression";
     public static final String PN_REQUIRED = "required";
     public static final String PN_AUTOCOMPLETE = "autocomplete";
     public static final String PN_ASSIST_PRIORITY = "assistPriority";

@@ -63,6 +63,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_UNBOUNDFORMELEMENT = CONTENT_ROOT + "/textinput_unboundFormElement";
     private static final String PATH_TEXTINPUT_BLANK_DATAREF = CONTENT_ROOT + "/textinput-blank-dataref";
     private static final String PATH_TEXTINPUT_BLANK_VALIDATIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-validationExpression";
+    private static final String PATH_TEXTINPUT_BLANK_ASYNCVALIDTIONEXPRESSION = CONTENT_ROOT + "/textinput-blank-asyncValidtionExpression";
     private static final String PATH_TEXTINPUT_DISPLAY_VALUE_EXPRESSION = CONTENT_ROOT + "/textinput-displayValueExpression";
     private static final String PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE = CONTENT_ROOT + "/textinput-placeholder-autocomplete";
     private static final String PATH_TEXTINPUT_WITH_VIEWTYPE = CONTENT_ROOT + "/textinput-with-viewtype";
@@ -369,6 +370,7 @@ public class TextInputImplTest {
 
     @Test
     void testJSONExportForCustomized() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_ASYNC_VALIDATION_EXPRESSION, "true");
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_CUSTOMIZED));
     }
@@ -515,6 +517,26 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testJSONExportForEmptyAsyncValidtionExpression() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_ASYNC_VALIDATION_EXPRESSION, "true");
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_BLANK_ASYNCVALIDTIONEXPRESSION, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_BLANK_ASYNCVALIDTIONEXPRESSION));
+    }
+
+    @Test
+    void testGetAsyncValidtionExpressionOmittedWhenToggleOff() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
+        assertEquals(null, textInput.getAsyncValidtionExpression());
+    }
+
+    @Test
+    void testGetAsyncValidtionExpressionPresentWhenToggleOn() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_ASYNC_VALIDATION_EXPRESSION, "true");
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
+        assertEquals("$field == 'validate'", textInput.getAsyncValidtionExpression());
+    }
+
+    @Test
     void testPlaceholderAndAutocomplete() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_PLACEHOLDER_AUTOCOMPLETE));
@@ -597,6 +619,7 @@ public class TextInputImplTest {
     @AfterEach
     void tearDown() {
         System.clearProperty(FeatureToggleConstants.FT_SKIP_DEFAULT_SET_PROPERTY_EVENT);
+        System.clearProperty(FeatureToggleConstants.FT_ASYNC_VALIDATION_EXPRESSION);
     }
 
     @Test

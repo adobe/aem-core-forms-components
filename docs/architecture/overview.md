@@ -391,3 +391,5 @@ void testGetProperties() {
 ```
 
 Create one golden file per fixture variant (default, customized, datalayer). See `radiobutton/` for the naming convention (`exporter-radiobutton.json`, `exporter-radiobutton-customized.json`, etc.).
+
+When authoring a new golden file, don't hand-compute the `id` field (a hash derived from the resource path) — write the golden file with a placeholder/guessed `id`, run the new test once, and copy the actual `id` out of the assertion failure diff.

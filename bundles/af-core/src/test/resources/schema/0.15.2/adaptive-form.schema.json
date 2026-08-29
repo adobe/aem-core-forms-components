@@ -61,6 +61,7 @@
           "enum": [
             ":type",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "autocomplete",
             "constraintMessages",
             "dataFormat",
@@ -160,6 +161,7 @@
           "enum": [
             ":type",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "autocomplete",
             "constraintMessages",
             "dataFormat",
@@ -253,6 +255,7 @@
           "enum": [
             ":type",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "checked",
             "constraintMessages",
             "dataFormat",
@@ -357,6 +360,7 @@
           "enum": [
             ":type",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "constraintMessages",
             "dataFormat",
             "dataLayer",
@@ -450,6 +454,7 @@
           "enum": [
             ":type",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "constraintMessages",
             "dataFormat",
             "dataLayer",
@@ -533,6 +538,7 @@
           "enum": [
             ":type",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "constraintMessages",
             "dataLayer",
             "dataRef",
@@ -628,6 +634,7 @@
           "enum": [
             ":type",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "constraintMessages",
             "dataLayer",
             "dataRef",
@@ -720,6 +727,7 @@
           "enum": [
             ":type",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "constraintMessages",
             "dataLayer",
             "dataRef",
@@ -802,6 +810,7 @@
             ":type",
             "accept",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "constraintMessages",
             "dataLayer",
             "dataRef",
@@ -1070,6 +1079,7 @@
                 ":itemsOrder",
                 "allowedComponents",
                 "appliedCssClassNames",
+                "asyncValidtionExpression",
                 "columnClassNames",
                 "columnCount",
                 "constraintMessages",
@@ -1157,6 +1167,7 @@
           "enum": [
             ":type",
             "appliedCssClassNames",
+            "asyncValidtionExpression",
             "dataLayer",
             "description",
             "enabled",
