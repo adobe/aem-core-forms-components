@@ -2,5 +2,6 @@
 <workspaceFilter version="1.0">
     <filter root="/apps/forms-core-components-it"/>
     <filter root="/apps/wknd"/>
+    <filter root="/apps/forms-core-components-it/config"/>
     <filter root="/apps/core/fd/af-clientlibs/core-forms-components-runtime-all/resources/i18n" mode="update"/>
 </workspaceFilter>
