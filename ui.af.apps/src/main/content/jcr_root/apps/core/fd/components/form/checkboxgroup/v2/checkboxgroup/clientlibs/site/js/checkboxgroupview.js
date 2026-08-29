@@ -109,6 +109,7 @@
                 });
             });
             this.#updateModelValue();
+            this.#syncWidgetIds();
         }
 
         #updateModelValue() {
@@ -222,6 +223,14 @@
             super.syncMarkupWithModel();
             this.updateEnum(this._model.enum);
             this.updateEnumNames(this._model.enumNames);
+            this.#syncWidgetIds();
+        }
+
+        #syncWidgetIds() {
+            const widgetId = `${this.id}-widget`;
+            this.widget.forEach((widget, index) => {
+                widget.id = `${widgetId}_${index + 1}`;
+            });
         }
     }
 
