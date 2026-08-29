@@ -75,6 +75,8 @@
                                                   sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                   fieldLabel="When Checked, return value"
                                                   fieldDescription="Value submitted when the checkbox is checked. Enter the value as text. For boolean fields, use true. For numeric intent, enter values such as 1 as text."
+                                                  required="{Boolean}true"
+                                                  value="on"
                                                   name="./checkedValue"/>
                                                 <enableUncheckedValue
                                                   jcr:primaryType="nt:unstructured"
