@@ -56,6 +56,7 @@ public class DropDownImplTest {
     private static final String PATH_MULTISELECT_DROPDOWN = CONTENT_ROOT + "/multiselect-dropdown";
     private static final String PATH_MULTISELECT_DROPDOWN_WITH_VARIANT_PROPERTY = CONTENT_ROOT + "/multiselect-dropdown-2";
     private static final String PATH_DROPDOWN2 = CONTENT_ROOT + "/dropdown2";
+    private static final String PATH_SEARCHABLE_DROPDOWN = CONTENT_ROOT + "/searchable-dropdown";
 
     private static final String PATH_DROPDOWN = CONTENT_ROOT + "/dropdown";
     private static final String PATH_DROPDOWN_DATALAYER = CONTENT_ROOT + "/dropdown-datalayer";
@@ -285,6 +286,38 @@ public class DropDownImplTest {
     void testMultiSelectJSONExport() throws Exception {
         DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN, DropDown.class, context);
         Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_MULTISELECT_DROPDOWN));
+    }
+
+    @Test
+    void testStringConstraintsForSingleSelect() {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_SEARCHABLE_DROPDOWN, DropDown.class, context);
+        assertFalse(dropdown.isMultiSelect());
+        assertEquals(Integer.valueOf(2), dropdown.getMinLength());
+        assertEquals(Integer.valueOf(10), dropdown.getMaxLength());
+        assertEquals("[a-z]+", dropdown.getPattern());
+    }
+
+    @Test
+    void testStringConstraintsNullForMultiSelect() {
+        // authored minLength/maxLength/pattern must be dropped for a multi-select (array-typed) drop-down
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_MULTISELECT_DROPDOWN, DropDown.class, context);
+        assertTrue(dropdown.isMultiSelect());
+        assertNull(dropdown.getMinLength());
+        assertNull(dropdown.getMaxLength());
+        assertNull(dropdown.getPattern());
+    }
+
+    @Test
+    void testGetPatternDefault() {
+        DropDown dropdownMock = Mockito.mock(DropDown.class);
+        Mockito.when(dropdownMock.getPattern()).thenCallRealMethod();
+        assertNull(dropdownMock.getPattern());
+    }
+
+    @Test
+    void testSearchableDropdownJSONExport() throws Exception {
+        DropDown dropdown = Utils.getComponentUnderTest(PATH_SEARCHABLE_DROPDOWN, DropDown.class, context);
+        Utils.testJSONExport(dropdown, Utils.getTestExporterJSONPath(BASE, PATH_SEARCHABLE_DROPDOWN));
     }
 
     @Test
