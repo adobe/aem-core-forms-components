@@ -104,5 +104,6 @@
   "sortOrder": "정렬 순서",
   "sortDirection": "정렬 방향",
   "ascending": "오름차순",
-  "descending": "내림차순"
+  "descending": "내림차순",
+  "edit": "편집"
 }
