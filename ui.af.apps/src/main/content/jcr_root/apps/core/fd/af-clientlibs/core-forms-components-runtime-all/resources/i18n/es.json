@@ -93,5 +93,6 @@
   "clearSign": "Borrar firma",
   "brushSize": "Tamaño de pincel: ",
   "geoLocationError": "Error al obtener la localización geográfica",
-  "geoLocationFetch": "Obteniendo localización geográfica…"
+  "geoLocationFetch": "Obteniendo localización geográfica…",
+  "edit": "Editar"
 }

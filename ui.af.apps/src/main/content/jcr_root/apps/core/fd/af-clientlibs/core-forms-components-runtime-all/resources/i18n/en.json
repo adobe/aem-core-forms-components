@@ -52,5 +52,6 @@
   "clearSign": "Clear Signature",
   "brushSize": "Brush Size: ",
   "geoLocationError": "Error fetching geolocation",
-  "geoLocationFetch": "Fetching Geo Location..."
+  "geoLocationFetch": "Fetching Geo Location...",
+  "edit": "Edit"
 }

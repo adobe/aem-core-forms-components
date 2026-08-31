@@ -18,7 +18,7 @@
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
-describe.only('Page - Authoring', function () {
+describe('Page - Authoring', function () {
 
     const dropComponent = function (responsiveGridDropZoneSelector, componentTitle, componentType) {
         cy.selectLayer("Edit");
@@ -86,8 +86,8 @@ describe.only('Page - Authoring', function () {
                     cy.get("[name='./jcr:title']").should("exist");
                     cy.get("[name='./fd:editModeAction']").should("exist");
                     cy.get("[name='./fd:editModeAction'] coral-select-item").should("have.length", 4);
-                    cy.get("[name='./linkedPanels']").should("exist");
-                    cy.get("[name='./linkedPanels'] coral-select-item").should("have.length", 2);
+                    cy.get("[name='./fd:linkedPanels']").should("exist");
+                    cy.get("[name='./fd:linkedPanels'] coral-select-item").should("have.length", 2);
                     cy.deleteComponentByPath(tabsPath);
                   })
                 });

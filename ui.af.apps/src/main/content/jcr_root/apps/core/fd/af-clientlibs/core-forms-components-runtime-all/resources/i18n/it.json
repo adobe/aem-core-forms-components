@@ -93,5 +93,6 @@
   "clearSign": "Cancella firma",
   "brushSize": "Dimensione pennello: ",
   "geoLocationError": "Errore nel recupero della geolocalizzazione",
-  "geoLocationFetch": "Recupero geolocalizzazione in corso..."
+  "geoLocationFetch": "Recupero geolocalizzazione in corso...",
+  "edit": "Modifica"
 }
