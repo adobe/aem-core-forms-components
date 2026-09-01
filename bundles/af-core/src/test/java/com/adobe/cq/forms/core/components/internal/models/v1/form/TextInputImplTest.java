@@ -57,6 +57,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_DATALAYER = CONTENT_ROOT + "/textinput-datalayer";
     private static final String PATH_TEXTINPUT_CUSTOMIZED = CONTENT_ROOT + "/textinput-customized";
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
+    private static final String PATH_TEXTINPUT_CHARACTERCOUNT = CONTENT_ROOT + "/textinput-charactercount";
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
     private static final String PATH_NUMBER_TEXTINPUT_EXCLUSIVE = CONTENT_ROOT + "/number-textinput-exclusive";
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
@@ -257,6 +258,28 @@ public class TextInputImplTest {
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isMultiLine()).thenCallRealMethod();
         assertEquals(false, textInputMock.isMultiLine());
+    }
+
+    @Test
+    void testIsShowCharacterCount() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
+        assertEquals(null, textInput.isShowCharacterCount());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.isShowCharacterCount()).thenCallRealMethod();
+        assertEquals(null, textInputMock.isShowCharacterCount());
+    }
+
+    @Test
+    void testIsShowCharacterCountWhenSet() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT, TextInput.class, context);
+        assertEquals(true, textInput.isShowCharacterCount());
+        assertEquals(100, textInput.getMaxLength().intValue());
+    }
+
+    @Test
+    void testCharacterCountJSONExport() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_CHARACTERCOUNT));
     }
 
     @Test

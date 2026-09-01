@@ -146,6 +146,14 @@
                                         cssSelector=".cmp-adaptiveform-textinput__longdescription:hover"/>
                             </states>
                         </textinputDescriptionLong>
+                        <textinputCharCount
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Character Count"
+                                id="af2_textinputcharcount"
+                                cssSelector=".cmp-adaptiveform-textinput__charcount"
+                                longTitle="Text Input Character Count"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </textinputCharCount>
                         <textinputErrorMessage
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Text Input Error Message"
