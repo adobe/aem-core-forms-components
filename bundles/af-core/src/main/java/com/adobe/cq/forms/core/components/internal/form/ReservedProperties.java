@@ -133,6 +133,7 @@ public final class ReservedProperties {
     public static final String PN_WRAP_DATA = "wrapData";
     public static final String PN_FRAGMENT_PATH = "fragmentPath";
     public static final String PN_LAZY = "lazy";
+    public static final String PN_LAZY_LOAD = "fd:lazyLoad";
     public static final String PN_BUTTON_TYPE = "buttonType";
     public static final String PN_THANK_YOU_MSG_V1 = "thankyouMessage";
     public static final String PN_THANK_YOU_MSG_V2 = "thankYouMessage";
