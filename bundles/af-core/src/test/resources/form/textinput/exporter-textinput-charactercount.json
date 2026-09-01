@@ -1,0 +1,20 @@
+{
+  "id": "textinput-357c2ee34c",
+  "fieldType": "multiline-input",
+  "name": "abc",
+  "type": "string",
+  "maxLength": 100,
+  "showCharacterCount": true,
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:path": "/content/textinput-charactercount"
+  },
+  ":type": "core/fd/components/form/textinput/v1/textinput"
+}
