@@ -66,6 +66,10 @@
            minlength="${text.minLength}"
            maxlength="${text.maxLength}"
            dir="auto"/>
+    <div data-sly-test="${text.showCharacterCount}"
+         id="${widgetId}-charcount"
+         class="cmp-adaptiveform-textinput__charcount"
+         aria-live="polite"><span class="cmp-adaptiveform-textinput__charcount-current">0</span><span data-sly-test="${text.maxLength}" class="cmp-adaptiveform-textinput__charcount-max"> / ${text.maxLength}</span></div>
     <div data-sly-call="${shortDescription.shortDescription @componentId=text.id, shortDescriptionVisible=text.tooltipVisible, shortDescription=text.tooltip, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap>
     </div>
     <div data-sly-call="${longDescription.longDescription @componentId=text.id, longDescription=text.description, bemBlock='cmp-adaptiveform-textinput'}" data-sly-unwrap></div>
