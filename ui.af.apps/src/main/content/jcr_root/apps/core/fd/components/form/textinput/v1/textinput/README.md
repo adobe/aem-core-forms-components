@@ -46,6 +46,7 @@ The following properties are written to JCR for this Form Text component and are
 12. `./minLengthMessage` - defines the minimum length error message for the field.
 13. `./displayPatternType` - defines the display pattern type for formatting the input value (e.g., 'phonenumber', 'socialsecuritynumber', 'email-alphanumeric', 'zipcode')
 14. `./displayValueExpression` - defines the expression used to format the display value (e.g., 'formatInput($field.$value, 'phonenumber')')
+15. `./showCharacterCount` - if set to `true`, a live character count is displayed below the field. Combine with `maxLength` to show a running total out of the limit (e.g. `12 / 100`).
 
 
 ### Behavior of `maxLength` and `maxLengthMessage`
@@ -80,6 +81,7 @@ BLOCK cmp-adaptiveform-textinput
     ELEMENT cmp-adaptiveform-textinput__shortdescription
     ELEMENT cmp-adaptiveform-textinput__longdescription
     ELEMENT cmp-adaptiveform-textinput__errormessage
+    ELEMENT cmp-adaptiveform-textinput__charcount
 ```
 
 ### Note

@@ -57,6 +57,13 @@
                                                     name="./multiLine"
                                                     text="Allow multiple lines"
                                                     value="true"/>
+                                            <showCharacterCount
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./showCharacterCount"
+                                                    text="Show character count"
+                                                    fieldDescription="Displays a live character count below the field. Combine with 'Maximum Number of characters' in the Validation tab to show a running total out of the limit."
+                                                    value="true"/>
                                             <autocomplete
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/autocomplete"

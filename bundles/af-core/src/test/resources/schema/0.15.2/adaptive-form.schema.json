@@ -96,6 +96,7 @@
             "required",
             "rules",
             "screenReaderText",
+            "showCharacterCount",
             "type",
             "tooltip",
             "validationExpression",
