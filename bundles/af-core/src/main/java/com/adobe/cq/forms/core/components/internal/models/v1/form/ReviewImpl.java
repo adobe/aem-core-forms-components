@@ -58,7 +58,7 @@ public class ReviewImpl extends AbstractBaseImpl implements Review {
     }
 
     public String getEditModeAction() {
-        return editModeAction;
+        return editModeAction != null ? editModeAction : "field";
     }
 
     @Override
