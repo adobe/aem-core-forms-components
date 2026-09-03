@@ -119,10 +119,23 @@ describe("Form with Review component with repeatablity", () => {
         });
       });
     }
-    // Verify the second panel
+    // Verify the second panel ("All addres" tab panel, which wraps the repeatable "Address" panel)
     const checkSecondPanel = () => {
       cy.get(`.${bemBlock}__container .${bemBlock}__panel`).eq(1).within(() => {
-        cy.get(`.${bemBlock}__content`).should('exist').within(() => {
+        cy.get(`.${bemBlock}__label-container`).should('exist');
+        cy.get(`.${bemBlock}__label`).contains('All addres');
+        cy.get(`.${bemBlock}__edit-button`)
+          .should('have.attr', 'data-cmp-visible', 'true')
+          .should('have.attr', 'aria-label')
+          .and('contain', 'All addres');
+
+        // this wrapper panel's own content wrapper (direct child only, via cy.root(), since the
+        // nested repeatable "Address" panel rendered inside it has its own separate .content
+        // one level deeper — a plain cy.get('.content') here would ambiguously match both)
+        cy.root().children(`.${bemBlock}__content`).should('exist');
+
+        // the repeatable "Address" panel is rendered nested inside this wrapper panel's own content
+        cy.get(`.${bemBlock}__panel--repeatable`).eq(0).within(() => {
           cy.get(`.${bemBlock}__label-container`).should('exist');
           cy.get(`.${bemBlock}__label`).contains('Address');
           cy.get(`.${bemBlock}__edit-button`)

@@ -75,13 +75,13 @@
                         sling:resourceType="granite/ui/components/coral/foundation/form/select"
                         granite:class="cmp-adaptiveform-review__editaction"
                         fieldLabel="Enable edit mode actions for"
-                        name="./fd:editModeAction"
-                        value="field">
+                        name="./fd:editModeAction">
                         <items jcr:primaryType="nt:unstructured">
                           <field
                             jcr:primaryType="nt:unstructured"
                             text="Field"
-                            value="field" />
+                            value="field"
+                            selected="{Boolean}true" />
                           <panel
                             jcr:primaryType="nt:unstructured"
                             text="Panel"
