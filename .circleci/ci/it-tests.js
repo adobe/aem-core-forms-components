@@ -31,9 +31,6 @@ const latestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-ae
 const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.1328'; // Use the latest version if available, otherwise default to '6.0.1256'
 // this value is for 6.5.21.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
 const classicFormReleasedAddonVersion = '6.0.1360';
-// 6.6.0 (LTS) forms add-on is published on the 6.1.x line in the same artifactory; pull the latest like we do for 6.5
-const ltsLatestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg', '6.1.');
-const ltsFormAddonVersion = ltsLatestVersion !== null ? ltsLatestVersion : '6.1.244'; // fallback to the last known 6.6.0 add-on
 
 try {
     let wcmVersion = "2.32.4";
@@ -62,6 +59,9 @@ try {
                 contextPathOpts = `--cmd-options \\\"-c ${CONTEXTPATH}\\\"`;
             }
         } else if (AEM === 'classic-lts') {
+            // 6.6.0 (LTS) forms add-on is published on the 6.1.x line in the same artifactory; pull the latest like we do for 6.5
+            const ltsLatestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg', '6.1.');
+            const ltsFormAddonVersion = ltsLatestVersion !== null ? ltsLatestVersion : '6.1.244'; // fallback to the last known 6.6.0 add-on
             // Download latest 6.6.0 (LTS) forms add-on release (6.1.x line) from artifactory
             ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${ltsFormAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.zip`);
             extras += ` --install-file ${buildPath}/forms-linux-addon.zip`;
