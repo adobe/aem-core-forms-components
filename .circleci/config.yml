@@ -141,6 +141,14 @@ executors:
         <<: *docker_auth
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.25.0-openjdk11
         <<: *docker_auth
+  test_executor_lts:
+    docker:
+      # primary (test runner / qp client) reuses the known-good 6.4.6-openjdk11 image;
+      # the 6.4.7-openjdk21 qp image has a stale Google apt key that breaks apt-get update.
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
+        <<: *docker_auth
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-lts:6.6.4-load5-openjdk21
+        <<: *docker_auth
 
 jobs:
   build-java-11:
@@ -241,6 +249,17 @@ jobs:
     executor: test_executor_655_latest
     environment:
       AEM: classic-latest
+      TYPE: cypress
+      BROWSER: chrome
+    resource_class: xlarge
+    working_directory: /home/circleci/build
+    parallelism: 4
+    <<: *cypress_test_steps
+
+  cypress-chrome-lts:
+    executor: test_executor_lts
+    environment:
+      AEM: classic-lts
       TYPE: cypress
       BROWSER: chrome
     resource_class: xlarge
@@ -458,6 +477,13 @@ workflows:
             - build-java-11
             - build-java-8
       - cypress-chrome-655-with-latest-addon-with-ft:
+          filters:
+            tags:
+              only: /.*/
+          requires:
+            - build-java-11
+            - build-java-8
+      - cypress-chrome-lts:
           filters:
             tags:
               only: /.*/

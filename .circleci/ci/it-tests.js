@@ -58,6 +58,15 @@ try {
                 // enable context path settings
                 contextPathOpts = `--cmd-options \\\"-c ${CONTEXTPATH}\\\"`;
             }
+        } else if (AEM === 'classic-lts') {
+            // 6.6.0 (LTS) forms add-on is published on the 6.1.x line in the same artifactory; pull the latest like we do for 6.5
+            const ltsLatestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg', '6.1.');
+            const ltsFormAddonVersion = ltsLatestVersion !== null ? ltsLatestVersion : '6.1.244'; // fallback to the last known 6.6.0 add-on
+            // Download latest 6.6.0 (LTS) forms add-on release (6.1.x line) from artifactory
+            ci.sh(`mvn -s ${buildPath}/.circleci/settings.xml com.googlecode.maven-download-plugin:download-maven-plugin:1.6.3:artifact -Partifactory-cloud -DgroupId=com.adobe.aemds -DartifactId=adobe-aemfd-linux-pkg -Dversion=${ltsFormAddonVersion} -Dtype=zip -DoutputDirectory=${buildPath} -DoutputFileName=forms-linux-addon.zip`);
+            extras += ` --install-file ${buildPath}/forms-linux-addon.zip`;
+            // The core components are already installed in the Cloud SDK
+            extras += ` --bundle com.adobe.cq:core.wcm.components.all:${wcmVersion}:zip`;
         } else if (AEM === 'addon') {
             // Download the forms Add-On
             ci.sh(`curl -s "${process.env.FORMS_ADDON_URL}" -o forms-addon.far`);
@@ -108,7 +117,7 @@ try {
             --vm-options \\\"-Xmx4096m -Djava.awt.headless=true -javaagent:${jacocoAgent}=destfile=crx-quickstart/jacoco-it.exec\\\" \
             ${preleaseOpts} ${contextPathOpts}`);
 
-        if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp') {
+        if (AEM === 'classic' || AEM === 'classic-latest' || AEM === 'classic-latest-cp' || AEM === 'classic-lts') {
             // add a sleep for 10 mins, add-on takes times to come up
             ci.sh(`sleep 8m`);
             // restart the AEM insatnce
