@@ -143,7 +143,9 @@ executors:
         <<: *docker_auth
   test_executor_lts:
     docker:
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.7-openjdk21
+      # primary (test runner / qp client) reuses the known-good 6.4.6-openjdk11 image;
+      # the 6.4.7-openjdk21 qp image has a stale Google apt key that breaks apt-get update.
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem-lts:6.6.4-load5-openjdk21
         <<: *docker_auth
