@@ -327,8 +327,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
             if (resourceType != null && resourceType.contains("/franklin")) {
                 return "";
             } else {
+                // resource.getPath() is the guideContainer node ({pagePath}/jcr:content/guideContainer).
+                // for CC support in Submission service reads FormDefinition from <formName>.model.json
+                // so path is sanitized
+                String submitPath = StringUtils.replace(resource.getPath(),
+                    "/" + JcrConstants.JCR_CONTENT + "/" + GuideConstants.GUIDE_CONTAINER_NODE_NAME, "");
                 return "https://forms.adobe.com" + ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" +
-                    ComponentUtils.getEncodedPath(resource.getPath() + ".model.json");
+                    ComponentUtils.getEncodedPath(submitPath + ".model.json");
             }
         }
         return getContextPath() + resourceResolver.map(ADOBE_GLOBAL_API_ROOT + FORMS_RUNTIME_API_GLOBAL_ROOT + "/submit/" + getId());
