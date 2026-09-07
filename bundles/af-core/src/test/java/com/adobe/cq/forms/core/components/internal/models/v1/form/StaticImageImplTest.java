@@ -249,4 +249,15 @@ public class StaticImageImplTest {
         StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_NGDM, StaticImage.class, context);
         assertNull(image.getImageSrc());
     }
+
+    @Test
+    void testJSONExportForNgdm() throws Exception {
+        MockNextGenDynamicMediaConfig config = new MockNextGenDynamicMediaConfig();
+        config.setEnabled(true);
+        config.setRepositoryId("testrepo");
+        context.registerService(com.adobe.cq.ui.wcm.commons.config.NextGenDynamicMediaConfig.class, config);
+
+        StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_NGDM, StaticImage.class, context);
+        Utils.testJSONExport(image, Utils.getTestExporterJSONPath(BASE, PATH_IMAGE_NGDM));
+    }
 }
