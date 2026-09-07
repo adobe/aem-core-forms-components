@@ -262,6 +262,10 @@ jobs:
       AEM: classic-lts
       TYPE: cypress
       BROWSER: chrome
+      # The primary (6.4.6-openjdk11) bakes JACOCO_AGENT=0.8.3, but the LTS AEM runs on
+      # JDK21 in the sidecar (built from qp 6.4.7-openjdk21, jacoco 0.8.12). Point the
+      # -javaagent at 0.8.12, which is present in the sidecar and supports JDK21.
+      JACOCO_AGENT: /home/circleci/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar
     resource_class: xlarge
     working_directory: /home/circleci/build
     parallelism: 4
