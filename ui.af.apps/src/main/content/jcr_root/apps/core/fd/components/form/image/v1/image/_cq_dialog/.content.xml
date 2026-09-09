@@ -59,7 +59,30 @@
                                                     fileNameParameter="./fileName"
                                                     fileReferenceParameter="./fileReference"
                                                     mimeTypes="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
-                                                    name="./file"/>
+                                                    name="./file">
+                                                <granite:rendercondition
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                                        toggleName="FT_FORMS-26424"/>
+                                            </file>
+                                            <fileLegacy
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:orderBefore="visible"
+                                                    sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
+                                                    class="cq-droptarget"
+                                                    fileNameParameter="./fileName"
+                                                    fileReferenceParameter="./fileReference"
+                                                    mimeTypes="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
+                                                    name="./file">
+                                                <granite:rendercondition
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/renderconditions/not">
+                                                    <featuretoggle
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                                            toggleName="FT_FORMS-26424"/>
+                                                </granite:rendercondition>
+                                            </fileLegacy>
                                             <alt
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:orderBefore="visible"

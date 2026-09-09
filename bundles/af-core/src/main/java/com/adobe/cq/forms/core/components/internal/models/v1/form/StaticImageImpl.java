@@ -35,11 +35,13 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.ui.wcm.commons.config.NextGenDynamicMediaConfig;
 import com.day.cq.wcm.foundation.Image;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -87,7 +89,7 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
      */
     @Override
     public String getImageSrc() throws RepositoryException, IOException {
-        if (NgdmImageUtils.isNgdmImageReference(fileReference) && NgdmImageUtils.isNgdmSupportAvailable(nextGenDynamicMediaConfig)) {
+        if (isNgdmReferenceAndFeatureEnabled() && NgdmImageUtils.isNgdmSupportAvailable(nextGenDynamicMediaConfig)) {
             return NgdmImageUtils.buildNgdmImageSrc(fileReference, nextGenDynamicMediaConfig);
         }
         image = new Image(this.resource);
@@ -140,10 +142,21 @@ public class StaticImageImpl extends AbstractFormComponentImpl implements Static
     @Override
     public @Nonnull Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
-        if (StringUtils.isNotBlank(fileReference) && !NgdmImageUtils.isNgdmImageReference(fileReference)) {
+        if (StringUtils.isNotBlank(fileReference) && !isNgdmReferenceAndFeatureEnabled()) {
             properties.put(DAM_REPO_PATH, fileReference);
         }
         return properties;
+    }
+
+    /**
+     * Whether {@link #fileReference} is a Next Gen Dynamic Media reference AND the NGDM image
+     * picker feature toggle is enabled. When the toggle is disabled, a previously-saved NGDM
+     * reference is treated like any other (unresolvable) fileReference - matching the dialog,
+     * which falls back to the original Browse Assets/Upload UI in that case.
+     */
+    private boolean isNgdmReferenceAndFeatureEnabled() {
+        return ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_NGDM_IMAGE_PICKER)
+            && NgdmImageUtils.isNgdmImageReference(fileReference);
     }
 
     @Override

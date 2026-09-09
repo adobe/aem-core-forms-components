@@ -22,12 +22,14 @@ import javax.jcr.RepositoryException;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.StaticImage;
@@ -57,6 +59,11 @@ public class StaticImageImplTest {
     private static final String PATH_IMAGE_NGDM = CONTENT_ROOT + "/image-ngdm";
 
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
+
+    @AfterEach
+    void clearNgdmFeatureToggle() {
+        System.clearProperty(FeatureToggleConstants.FT_NGDM_IMAGE_PICKER);
+    }
 
     @BeforeEach
     void setUp() {
@@ -220,6 +227,7 @@ public class StaticImageImplTest {
 
     @Test
     void testNgdmImage() throws RepositoryException, IOException {
+        System.setProperty(FeatureToggleConstants.FT_NGDM_IMAGE_PICKER, "true");
         MockNextGenDynamicMediaConfig config = new MockNextGenDynamicMediaConfig();
         config.setEnabled(true);
         config.setRepositoryId("testrepo");
@@ -234,6 +242,7 @@ public class StaticImageImplTest {
 
     @Test
     void testNgdmImageWithConfigDisabled() throws RepositoryException, IOException {
+        System.setProperty(FeatureToggleConstants.FT_NGDM_IMAGE_PICKER, "true");
         MockNextGenDynamicMediaConfig config = new MockNextGenDynamicMediaConfig();
         config.setEnabled(false);
         config.setRepositoryId("testrepo");
@@ -246,12 +255,26 @@ public class StaticImageImplTest {
 
     @Test
     void testNgdmImageWithoutConfig() throws RepositoryException, IOException {
+        System.setProperty(FeatureToggleConstants.FT_NGDM_IMAGE_PICKER, "true");
         StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_NGDM, StaticImage.class, context);
         assertNull(image.getImageSrc());
     }
 
     @Test
+    void testNgdmImageWithFeatureToggleDisabled() throws RepositoryException, IOException {
+        MockNextGenDynamicMediaConfig config = new MockNextGenDynamicMediaConfig();
+        config.setEnabled(true);
+        config.setRepositoryId("testrepo");
+        context.registerService(com.adobe.cq.ui.wcm.commons.config.NextGenDynamicMediaConfig.class, config);
+
+        StaticImage image = Utils.getComponentUnderTest(PATH_IMAGE_NGDM, StaticImage.class, context);
+        assertNull(image.getImageSrc());
+        assertTrue(image.getProperties().containsKey(StaticImageImpl.DAM_REPO_PATH));
+    }
+
+    @Test
     void testJSONExportForNgdm() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_NGDM_IMAGE_PICKER, "true");
         MockNextGenDynamicMediaConfig config = new MockNextGenDynamicMediaConfig();
         config.setEnabled(true);
         config.setRepositoryId("testrepo");
