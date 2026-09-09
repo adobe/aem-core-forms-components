@@ -15,10 +15,12 @@ limitations under the License.
 -->
 Adaptive Form Password Input (v1)
 ====
-Adaptive Form Password input field component written in HTL. It is a thin variant of the
-Text Input component: it reuses the `TextInput` Sling Model (`sling:resourceSuperType`
-points at `core/fd/components/form/textinput/v1/textinput`) and inherits that component's
-dialog, design dialog, and style config, overriding only what differs for a masked field.
+Adaptive Form Password input field component written in HTL. Password is modelled as its own
+first-class field type (`fieldType=password`) backed by the dedicated `PasswordInput` Sling
+Model, so its contract (visibility toggle, default-value masking, credential autofill tokens)
+stays isolated from the Text Input component. For authoring convenience it still inherits the
+Text Input dialog, design dialog, and style config via `sling:resourceSuperType`
+(`core/fd/components/form/textinput/v1/textinput`), overriding only what differs for a masked field.
 
 ## Features
 
@@ -29,7 +31,7 @@ dialog, design dialog, and style config, overriding only what differs for a mask
 * Allows replacing this component with other components (as mentioned below).
 
 ### Use Object
-The Form Password Input component uses the `com.adobe.cq.forms.core.components.models.form.TextInput` Sling Model for its Use-object.
+The Form Password Input component uses the `com.adobe.cq.forms.core.components.models.form.PasswordInput` Sling Model for its Use-object.
 
 ### Edit Dialog Properties
 The following properties are written to JCR for this component and are expected to be available as `Resource` properties:
@@ -49,9 +51,9 @@ The following properties are written to JCR for this component and are expected 
 13. `./showHidePassword` - if set to `false`, the show/hide visibility toggle button is not rendered
 
 ## Client Libraries
-The component reuses the `core.forms.components.textinput.v1.runtime` client library category
-for its JavaScript runtime (the same category `textinput`, `emailinput`, and `telephoneinput`
-share). It should be added to a relevant site client library using the `embed` property.
+The component provides a `core.forms.components.passwordinput.v1.runtime` client library category
+that contains the JavaScript runtime for this component (`passwordinputview.js`). It should be
+added to a relevant site client library using the `embed` property.
 
 It has no dedicated editor client library: the "Formats" tab and the pattern-dropdown-driven
 part of the "Validation" tab are hidden/simplified in this component's own dialog, so the
