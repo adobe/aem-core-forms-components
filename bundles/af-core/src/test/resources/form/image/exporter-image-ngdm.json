@@ -1,0 +1,17 @@
+{
+  "id": "image-05f90862ec",
+  "fieldType": "image",
+  "name": "abcd",
+  "value": "https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png?width=640&preferwebp=true",
+  "visible": false,
+  "altText": "abc",
+  "properties": {
+    "fd:path": "/content/image-ngdm"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  ":type": "core/fd/components/form/image/v1/image"
+}
