@@ -38,6 +38,7 @@ import com.adobe.cq.forms.core.components.internal.services.formsportal.DiscardD
 import com.adobe.cq.forms.core.components.internal.services.formsportal.OpenDraftOperation;
 import com.adobe.cq.forms.core.components.internal.services.formsportal.OperationManagerImpl;
 import com.adobe.cq.forms.core.components.models.formsportal.DraftsAndSubmissions;
+import com.adobe.cq.forms.core.components.models.formsportal.PortalLister;
 import com.adobe.cq.forms.core.components.models.services.formsportal.OperationManager;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.fd.fp.api.exception.FormsPortalException;
@@ -174,6 +175,27 @@ public class DraftsAndSubmissionsImplTest {
 
         DraftsAndSubmissions component = getInstanceUnderTest(DEFAULT_COMPONENT_PATH);
         Assert.assertEquals(2, component.getElements().size());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testFormAssetNotResolvable() {
+        // Draft points to a form that does not resolve on this environment (deleted/unpublished here,
+        // or a record leaked from another environment sharing the store). The item must still be listed,
+        // as an "Item not available" placeholder with no form link.
+        Mockito.when(draftModel.getLastModifiedTime()).thenReturn(new Calendar.Builder().setInstant(12345678)
+            .build());
+        Mockito.when(draftModel.getFormPath()).thenReturn(CONTENT_ROOT + "/dam/formsanddocuments/deleted-form");
+        context.registerInjectActivateService(new DiscardDraftOperation());
+
+        DraftsAndSubmissions component = getInstanceUnderTest(DRAFT_COMPONENT_PATH);
+        List<PortalLister.Item> data = (List<PortalLister.Item>) component.getElements().get("data");
+        Assertions.assertEquals(1, data.size());
+        PortalLister.Item item = data.get(0);
+        Assertions.assertEquals("Item not available", item.getTitle());
+        Assertions.assertEquals("The item is not available. Contact your administrator for more information.",
+            item.getDescription());
+        Assertions.assertNull(item.getFormLink());
     }
 
     private DraftsAndSubmissions getInstanceUnderTest(String resourcePath) {
