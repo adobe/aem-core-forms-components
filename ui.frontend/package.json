@@ -28,6 +28,7 @@
     "@aemforms/af-core": "^1.0.4",
     "@aemforms/af-core-xfa": "^0.1.6",
     "@aemforms/af-formatters": "^1.0.4",
-    "@aemforms/af-custom-functions": "1.0.17"
+    "@aemforms/af-custom-functions": "1.0.17",
+    "@aemforms/af-webmcp": "^1.0.4"
   }
 }
