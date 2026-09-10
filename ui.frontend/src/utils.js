@@ -18,6 +18,7 @@ import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core';
+import {registerFormWebMCP} from '@aemforms/af-webmcp';
 import {loadXfa} from "./handleXfa";
 import RuleUtils from "./RuleUtils.js";
 
@@ -371,6 +372,9 @@ class Utils {
                     callback(formContainer.getModel());
                 }
                 Utils.initializeAllFields(formContainer);
+                // Expose the form's WebMCP tool catalog to in-browser AI agents. No-ops unless the
+                // form opted in via fd:webMcpEnabled and a browser modelContext is available.
+                registerFormWebMCP(formContainer.getModel());
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }
