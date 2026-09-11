@@ -21,47 +21,6 @@ import * as cf from "@aemforms/af-custom-functions";
  */
 
 /**
- * Fetches the captcha token for the form.
- *
- * Delegates to @aemforms/af-custom-functions for turnstile and reCAPTCHA Enterprise (unchanged
- * behavior). reCAPTCHA v3 is handled locally: the upstream package's fetchCaptchaToken only knows
- * about the grecaptcha.enterprise namespace, but v3 site keys use the classic (non-enterprise)
- * namespace and endpoint.
- *
- * @async
- * @param {object} globals - An object containing read-only form instance, read-only target field instance and methods for form modifications.
- * @returns {string} - The captcha token.
- */
-function fetchCaptchaToken(globals) {
-    var captcha = globals.form.$captcha;
-    var config = captcha && captcha.$properties && captcha.$properties['fd:captcha'] && captcha.$properties['fd:captcha'].config;
-    if (!config || config.version !== 'v3') {
-        return cf.fetchCaptchaToken(globals);
-    }
-    return new Promise(function (resolve, reject) {
-        try {
-            var siteKey = config.siteKey;
-            var captchaElementName = captcha.$name.replaceAll('-', '_');
-            var captchaPath = captcha.$properties['fd:path'];
-            var formName = '';
-            var index = captchaPath ? captchaPath.indexOf('/jcr:content') : -1;
-            if (index > 0) {
-                captchaPath = captchaPath.substring(0, index);
-                formName = captchaPath.substring(captchaPath.lastIndexOf('/') + 1).replaceAll('-', '_');
-            }
-            var actionName = 'submit_' + formName + '_' + captchaElementName;
-            grecaptcha.ready(function () {
-                grecaptcha.execute(siteKey, {action: actionName})
-                    .then(function (token) { resolve(token); })
-                    .catch(function (error) { reject(error); });
-            });
-        } catch (error) {
-            reject(error);
-        }
-    });
-}
-
-/**
  * Namespace for custom functions.
  * @description Contains custom functions which can be used in the rule editor.
  * @exports FormView/customFunctions
@@ -165,14 +124,13 @@ export const customFunctions = {
     /**
      * Fetches the captcha token for the form.
      *
-     * Supports turnstile, reCAPTCHA Enterprise (via @aemforms/af-custom-functions), and
-     * reCAPTCHA v3 (handled locally - see fetchCaptchaToken above).
+     * Supports turnstile, reCAPTCHA Enterprise, and reCAPTCHA v3 via @aemforms/af-custom-functions.
      *
      * @async
      * @param {object} globals - An object containing read-only form instance, read-only target field instance and methods for form modifications.
      * @returns {string} - The captcha token.
      */
-    fetchCaptchaToken: fetchCaptchaToken,
+    fetchCaptchaToken: cf.fetchCaptchaToken,
 
     /**
      * Converts a date to the number of days since the Unix epoch (1970-01-01).
