@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2024-05-21T17:20:26.859+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/libs/fd/af/cloudservices/recaptcha/template"
+        jcr:lastModified="{Date}2024-05-21T17:20:26.842+05:30"
+        jcr:lastModifiedBy="admin"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="v3Config"
+        sling:resourceType="fd/af/cloudservices/recaptcha/page"
+        name="v3"
+        secretKey="placeholder-v3-secret-key"
+        siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+        version="v3"/>
+</jcr:root>
