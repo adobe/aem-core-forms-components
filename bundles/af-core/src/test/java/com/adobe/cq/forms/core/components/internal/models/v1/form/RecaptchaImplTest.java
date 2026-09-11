@@ -169,6 +169,21 @@ public class RecaptchaImplTest {
     }
 
     @Test
+    void getCaptchaDisplayModeForV3() {
+        // v3 has no visible challenge, so it must report as invisible for auto token fetch on submit.
+        when(reCaptchaConfiguration.version()).thenReturn("v3");
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
+        assertEquals("invisible", recaptcha.getCaptchaDisplayMode());
+    }
+
+    @Test
+    void getCaptchaDisplayModeForNonV3() {
+        when(reCaptchaConfiguration.version()).thenReturn("enterprise");
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
+        assertEquals("visible", recaptcha.getCaptchaDisplayMode());
+    }
+
+    @Test
     void testNoFieldType() {
         Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA_WITHOUT_FEILDTYPE, Captcha.class, context);
         assertEquals(FieldType.CAPTCHA.getValue(), recaptcha.getFieldType());
