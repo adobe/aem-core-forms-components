@@ -31,5 +31,6 @@
     },
     "customProp": "customPropValue"
   },
+  "captchaDisplayMode": "visible",
   ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
 }

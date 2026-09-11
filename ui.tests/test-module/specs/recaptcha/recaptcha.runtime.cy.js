@@ -20,6 +20,7 @@ describe("Form Runtime with Recaptcha Input", () => {
     const pagePath = "content/forms/af/core-components-it/samples/recaptcha/basic.html"
     const v2checkboxPagePath = "content/forms/af/core-components-it/samples/recaptcha/v2checkbox.html"
     const enterprisePagePath = "content/forms/af/core-components-it/samples/recaptcha/enterprisescore.html"
+    const v3PagePath = "content/forms/af/core-components-it/samples/recaptcha/v3.html"
     const bemBlock = 'cmp-adaptiveform-recaptcha'
     const IS = "adaptiveFormRecaptcha"
     const selectors = {
@@ -237,5 +238,37 @@ describe("Form Runtime with Recaptcha Input", () => {
                 });
             });
         }
+    })
+
+    it("should render reCAPTCHA v3 as an invisible badge", () => {
+        cy.previewForm(v3PagePath).then((p) => {
+            formContainer = p;
+        });
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const [id] = Object.entries(formContainer._fields).find(([id]) => id.includes("captcha"));
+            // v3 has no visible challenge; the widget must render badge-only (invisible).
+            cy.get(`#${id} .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha`)
+                .should('exist')
+                .and('have.class', 'g-recaptcha-invisible');
+        });
+    })
+
+    // Skipped: a passing v3 submission needs a real, Google-registered v3 site+secret key pair.
+    // Unlike v2, reCAPTCHA v3 has no universal always-pass public test key, so grecaptcha.execute
+    // cannot produce a token the server will verify against a placeholder key. Enable this once a
+    // real v3 key is provisioned in the v3 cloud config fixture.
+    it.skip("submission should pass for reCAPTCHA v3", () => {
+        cy.previewForm(v3PagePath).then((p) => {
+            formContainer = p;
+        });
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
+        cy.get(`div.g-recaptcha`).should('exist').then(() => {
+            cy.get(`.cmp-adaptiveform-button__widget`).click();
+            cy.wait('@submitForm', { timeout: 50000 }).then((interception) => {
+                expect(interception.response.statusCode).to.equal(200);
+            });
+        });
     })
 })

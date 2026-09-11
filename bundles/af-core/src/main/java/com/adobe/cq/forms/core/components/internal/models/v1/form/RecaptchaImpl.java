@@ -31,6 +31,8 @@ import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.aemds.guide.model.ReCaptchaConfigurationModel;
 import com.adobe.aemds.guide.service.CloudConfigurationProvider;
@@ -49,6 +51,8 @@ import com.adobe.cq.forms.core.components.util.AbstractCaptchaImpl;
     resourceType = { FormConstants.RT_FD_FORM_RECAPTCHA_V1 })
 @Exporter(name = ExporterConstants.SLING_MODEL_EXPORTER_NAME, extensions = ExporterConstants.SLING_MODEL_EXTENSION)
 public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecaptchaImpl.class);
 
     @Inject
     private ResourceResolver resourceResolver;
@@ -122,5 +126,29 @@ public class RecaptchaImpl extends AbstractCaptchaImpl implements Captcha {
 
         return customCaptchaProperties;
 
+    }
+
+    @Override
+    public String getCaptchaDisplayMode() {
+        // reCAPTCHA v3 has no visible challenge (badge-only), so it is treated as invisible. This
+        // lets the runtime's built-in submitForm auto-fetch the token before submit, the same way
+        // it already does for invisible turnstile and enterprise-score keys.
+        CaptchaDisplayMode captchaDisplayMode = CaptchaDisplayMode.VISIBLE;
+        String version = null;
+        resource = resourceResolver.getResource(this.getPath());
+        if (resource != null && cloudConfigurationProvider != null) {
+            try {
+                reCaptchaConfiguration = cloudConfigurationProvider.getRecaptchaCloudConfiguration(resource);
+                if (reCaptchaConfiguration != null) {
+                    version = reCaptchaConfiguration.version();
+                }
+            } catch (GuideException e) {
+                LOGGER.error("[AF] [Captcha] [RECAPTCHA] Error while fetching cloud configuration to resolve display mode.", e);
+            }
+        }
+        if ("v3".equals(version)) {
+            captchaDisplayMode = CaptchaDisplayMode.INVISIBLE;
+        }
+        return captchaDisplayMode.getValue();
     }
 }

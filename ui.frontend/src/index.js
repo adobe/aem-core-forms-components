@@ -37,6 +37,14 @@ import {customFunctions} from "./customFunctions";
  */
 window.guideBridge = new GuideBridge();
 
+// Register the repo's custom functions at bundle load so BOTH runtimes get them. In the XFA
+// bundle (main-xfa.js) this populates af-core-xfa's FunctionRuntime before the XFA form model is
+// created; the container view only ever registers into the non-XFA runtime via window.FormView, so
+// the XFA rule engine would otherwise see only its built-in defaults and have no fetchCaptchaToken
+// (breaking auto-fetch captcha - invisible/enterprise-score/v3 - on no-iframe XFA embeds).
+// registerFunctions is idempotent, so the later setupFormContainer registration is unaffected.
+FunctionRuntime.registerFunctions(customFunctions);
+
 /**
  * The `Actions` object contains predefined action constants.
  * @type {object}
