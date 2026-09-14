@@ -121,6 +121,15 @@ describe("Form Runtime with Recaptcha Input", () => {
         })
     }
 
+    function updateRecaptchaV3Config(score) {
+        const secretKey = Cypress.env('RECAPTCHA_V3_API_KEY');
+        cy.openPage("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fv3").then(x => {
+            cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey);
+            cy.get('#recaptcha-cloudconfiguration-threshold-score').clear().type(score);
+            cy.get("#shell-propertiespage-doneactivator").click();
+        })
+    }
+
 
     it("client side validation should fail if recaptcha is not filled", () => {
         cy.previewForm(v2checkboxPagePath).then((p) => {
@@ -254,20 +263,36 @@ describe("Form Runtime with Recaptcha Input", () => {
         });
     })
 
-    // Skipped: a passing v3 submission needs a real, Google-registered v3 site+secret key pair.
-    // Unlike v2, reCAPTCHA v3 has no universal always-pass public test key, so grecaptcha.execute
-    // cannot produce a token the server will verify against a placeholder key. Enable this once a
-    // real v3 key is provisioned in the v3 cloud config fixture.
-    it.skip("submission should pass for reCAPTCHA v3", () => {
+    it("submission should pass for reCAPTCHA v3", () => {
+        // v3 is score-based; use a low threshold so a token fetched from a headless browser passes
+        // server-side verification (this test exercises the token fetch + submit flow, not scoring).
+        // The secret key is injected via the RECAPTCHA_V3_API_KEY env var; the site key lives in the
+        // v3 cloud config fixture.
+        updateRecaptchaV3Config(0.1);
         cy.previewForm(v3PagePath).then((p) => {
             formContainer = p;
         });
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
-        cy.get(`div.g-recaptcha`).should('exist').then(() => {
-            cy.get(`.cmp-adaptiveform-button__widget`).click();
-            cy.wait('@submitForm', { timeout: 50000 }).then((interception) => {
-                expect(interception.response.statusCode).to.equal(200);
+        cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
+            cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
+            const submitForm = () => {
+                cy.get(`.cmp-adaptiveform-button__widget`).click();
+                return cy.wait('@submitForm', { timeout: 50000 }).then((interception) => {
+                    if (interception.response.statusCode === 200) {
+                        cy.log('Submit request succeeded');
+                        return cy.wrap(true);
+                    } else {
+                        cy.log('Submit request failed, retrying...');
+                        return cy.wrap(false);
+                    }
+                });
+            };
+            // Retry like the enterprise-score test, since reCAPTCHA can intermittently return a
+            // browser-error on the first assessment.
+            cy.waitUntil(() => submitForm(), {
+                errorMsg: 'Maximum retry limit reached, request did not succeed',
+                timeout: 50000,
+                interval: 5000,
             });
         });
     })
