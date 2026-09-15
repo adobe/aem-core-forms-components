@@ -56,6 +56,10 @@ describe('Page - Authoring', function () {
             .should("exist");
 
         // Checking some dynamic behaviours
+        // "Show character count" is only applicable to multi line fields; hidden until "Allow multiple lines" is checked
+        cy.get(".cmp-adaptiveform-textinput__showcharactercount").parent('div').invoke('css', 'display').should('equal', 'none');
+        cy.get("[name='./multiLine']").click({force: true});
+        cy.get(".cmp-adaptiveform-textinput__showcharactercount").parent('div').invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-textinput__maxlength").invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal', 'block');
