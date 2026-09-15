@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -41,6 +42,21 @@ public interface TextInput extends Field, NumberConstraint, DateConstraint, Stri
     @JsonIgnore
     default boolean isMultiLine() {
         return false;
+    }
+
+    /**
+     * Returns {@code true} if a live character count should be shown below the field, {@code false} if it should not, or
+     * {@code null} if not configured. Only applicable when {@link #isMultiLine()} is {@code true}; {@code null} is returned
+     * for single line fields regardless of how the underlying property was set.
+     *
+     * @return {@code true} if the character count should be shown, {@code false} if not, or {@code null} if not configured or
+     *         not applicable
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    @Nullable
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    default Boolean isShowCharacterCount() {
+        return null;
     }
 
     /**

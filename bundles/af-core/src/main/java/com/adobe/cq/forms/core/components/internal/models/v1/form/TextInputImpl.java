@@ -53,6 +53,10 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Default(booleanValues = false)
     protected boolean multiLine;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SHOW_CHARACTER_COUNT)
+    @Nullable
+    protected Boolean showCharacterCount;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_FORMAT)
     @Nullable
     protected String format;
@@ -73,6 +77,13 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Override
     public boolean isMultiLine() {
         return multiLine;
+    }
+
+    @Override
+    @Nullable
+    public Boolean isShowCharacterCount() {
+        // the character count is only applicable to multi line (textarea) fields
+        return isMultiLine() ? showCharacterCount : null;
     }
 
     @Override
