@@ -58,6 +58,7 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_CUSTOMIZED = CONTENT_ROOT + "/textinput-customized";
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
     private static final String PATH_TEXTINPUT_CHARACTERCOUNT = CONTENT_ROOT + "/textinput-charactercount";
+    private static final String PATH_TEXTINPUT_CHARACTERCOUNT_SINGLELINE = CONTENT_ROOT + "/textinput-charactercount-singleline";
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
     private static final String PATH_NUMBER_TEXTINPUT_EXCLUSIVE = CONTENT_ROOT + "/number-textinput-exclusive";
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
@@ -280,6 +281,15 @@ public class TextInputImplTest {
     void testCharacterCountJSONExport() throws Exception {
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT, TextInput.class, context);
         Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_CHARACTERCOUNT));
+    }
+
+    @Test
+    void testIsShowCharacterCountIgnoredForSingleLine() {
+        // showCharacterCount is only applicable to multi line fields; a single line field must report null
+        // regardless of what was authored, since the feature has no effect there.
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT_SINGLELINE, TextInput.class, context);
+        assertEquals(false, textInput.isMultiLine());
+        assertEquals(null, textInput.isShowCharacterCount());
     }
 
     @Test

@@ -82,7 +82,8 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Override
     @Nullable
     public Boolean isShowCharacterCount() {
-        return showCharacterCount;
+        // the character count is only applicable to multi line (textarea) fields
+        return isMultiLine() ? showCharacterCount : null;
     }
 
     @Override
