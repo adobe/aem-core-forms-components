@@ -12,6 +12,6 @@
         sling:resourceType="fd/af/cloudservices/recaptcha/page"
         name="v3"
         secretKey="placeholder-v3-secret-key"
-        siteKey="6LdV1LUtAAAAAM4xLHqg4bxuxl1LKWvWoIcG9Zqd"
+        siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
         version="v3"/>
 </jcr:root>
