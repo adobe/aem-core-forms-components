@@ -125,7 +125,10 @@ describe("Form Runtime with Recaptcha Input", () => {
         const secretKey = Cypress.env('RECAPTCHA_V3_API_KEY');
         cy.openPage("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fv3").then(x => {
             cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey);
-            cy.get('#recaptcha-cloudconfiguration-threshold-score').clear().type(score);
+            // v3 is score-based, but some addon builds nest Threshold Score inside the
+            // enterprise-fields container and hide it (display:none) for v3. Force past the
+            // visibility check — a hidden input is still submitted on save — so the threshold applies.
+            cy.get('#recaptcha-cloudconfiguration-threshold-score').clear({force: true}).type(score, {force: true});
             cy.get("#shell-propertiespage-doneactivator").click();
         })
     }
@@ -264,10 +267,9 @@ describe("Form Runtime with Recaptcha Input", () => {
     })
 
     it("submission should pass for reCAPTCHA v3", () => {
-        // v3 is score-based; use a low threshold so a token fetched from a headless browser passes
-        // server-side verification (this test exercises the token fetch + submit flow, not scoring).
-        // The secret key is injected via the RECAPTCHA_V3_API_KEY env var; the site key lives in the
-        // v3 cloud config fixture.
+        // Exercises the v3 token fetch + submit flow. The secret key is injected via the
+        // RECAPTCHA_V3_API_KEY env var; the site key lives in the v3 cloud config fixture.
+        // Low threshold so a token from a headless browser passes server-side verification.
         updateRecaptchaV3Config(0.1);
         cy.previewForm(v3PagePath).then((p) => {
             formContainer = p;
