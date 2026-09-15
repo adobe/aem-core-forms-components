@@ -125,10 +125,11 @@ describe("Form Runtime with Recaptcha Input", () => {
         const secretKey = Cypress.env('RECAPTCHA_V3_API_KEY');
         cy.openPage("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fv3").then(x => {
             cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey);
-            // v3 is score-based, but some addon builds nest Threshold Score inside the
-            // enterprise-fields container and hide it (display:none) for v3. Force past the
-            // visibility check — a hidden input is still submitted on save — so the threshold applies.
-            cy.get('#recaptcha-cloudconfiguration-threshold-score').clear({force: true}).type(score, {force: true});
+            // v3 is score-based, but the addon dialog nests Threshold Score inside the hidden
+            // enterprise-fields container for v3, so the coral-numberinput wrapper is never
+            // upgraded to a clearable element. Target its inner native input directly and force
+            // past the visibility check — the value still syncs to the field and is submitted on save.
+            cy.get('#recaptcha-cloudconfiguration-threshold-score input').clear({force: true}).type(score, {force: true});
             cy.get("#shell-propertiespage-doneactivator").click();
         })
     }
