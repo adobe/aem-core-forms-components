@@ -234,5 +234,22 @@
     "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
     "name" : "abc",
     "jcr:title" : "def"
+  },
+  "password-textinput" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/passwordinput/v1/passwordinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "password",
+    "minLength": 8,
+    "maxLength": 20
+  },
+  "password-textinput-toggle-disabled" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/passwordinput/v1/passwordinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "password",
+    "showHidePassword": false
   }
 }

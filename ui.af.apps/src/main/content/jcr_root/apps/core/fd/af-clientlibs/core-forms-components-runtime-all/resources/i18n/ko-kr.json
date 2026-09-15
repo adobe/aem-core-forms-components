@@ -93,5 +93,7 @@
   "clearSign": "서명 지우기",
   "brushSize": "브러시 크기: ",
   "geoLocationError": "지리적 위치 가져오기 중 오류 발생",
-  "geoLocationFetch": "지리적 위치 가져오는 중..."
+  "geoLocationFetch": "지리적 위치 가져오는 중...",
+  "showPassword": "비밀번호 표시",
+  "hidePassword": "비밀번호 숨기기"
 }

@@ -93,5 +93,7 @@
   "clearSign": "署名をクリア",
   "brushSize": "ブラシサイズ :",
   "geoLocationError": "位置情報の取得中にエラーが発生しました",
-  "geoLocationFetch": "位置情報を取得しています..."
+  "geoLocationFetch": "位置情報を取得しています...",
+  "showPassword": "パスワードを表示",
+  "hidePassword": "パスワードを非表示"
 }

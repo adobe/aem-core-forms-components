@@ -93,5 +93,7 @@
   "clearSign": "Unterschrift löschen",
   "brushSize": "Pinselgröße: ",
   "geoLocationError": "Fehler beim Aufrufen des geografischen Standorts",
-  "geoLocationFetch": "Geografischer Standort wird abgerufen …"
+  "geoLocationFetch": "Geografischer Standort wird abgerufen …",
+  "showPassword": "Passwort anzeigen",
+  "hidePassword": "Passwort ausblenden"
 }

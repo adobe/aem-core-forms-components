@@ -93,5 +93,7 @@
   "clearSign": "Effacer la signature",
   "brushSize": "Épaisseur du pinceau : ",
   "geoLocationError": "Erreur lors de la récupération de la géolocalisation",
-  "geoLocationFetch": "Récupération de la géolocalisation..."
+  "geoLocationFetch": "Récupération de la géolocalisation...",
+  "showPassword": "Afficher le mot de passe",
+  "hidePassword": "Masquer le mot de passe"
 }
