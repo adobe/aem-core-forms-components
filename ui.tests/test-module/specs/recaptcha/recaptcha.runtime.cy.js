@@ -20,6 +20,7 @@ describe("Form Runtime with Recaptcha Input", () => {
     const pagePath = "content/forms/af/core-components-it/samples/recaptcha/basic.html"
     const v2checkboxPagePath = "content/forms/af/core-components-it/samples/recaptcha/v2checkbox.html"
     const enterprisePagePath = "content/forms/af/core-components-it/samples/recaptcha/enterprisescore.html"
+    const v3PagePath = "content/forms/af/core-components-it/samples/recaptcha/v3.html"
     const bemBlock = 'cmp-adaptiveform-recaptcha'
     const IS = "adaptiveFormRecaptcha"
     const selectors = {
@@ -116,6 +117,21 @@ describe("Form Runtime with Recaptcha Input", () => {
     function updateRecaptchaSecretKey(secretKey) {
         cy.openPage("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fv2checkbox").then(x => {
             cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey);
+            cy.get("#shell-propertiespage-doneactivator").click();
+        })
+    }
+
+    function updateRecaptchaV3Config(score) {
+        // Google's public test secret key always returns score 0.9 regardless of site/domain,
+        // so the v3 submission test doesn't depend on a real registered key or credentials.
+        const secretKey = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe";
+        cy.openPage("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fv3").then(x => {
+            cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey);
+            // v3 is score-based, but the addon dialog nests Threshold Score inside the hidden
+            // enterprise-fields container for v3, so the coral-numberinput wrapper is never
+            // upgraded to a clearable element. Target its inner native input directly and force
+            // past the visibility check — the value still syncs to the field and is submitted on save.
+            cy.get('#recaptcha-cloudconfiguration-threshold-score input').clear({force: true}).type(score, {force: true});
             cy.get("#shell-propertiespage-doneactivator").click();
         })
     }
@@ -237,5 +253,38 @@ describe("Form Runtime with Recaptcha Input", () => {
                 });
             });
         }
+    })
+
+    it("should render reCAPTCHA v3 as an invisible badge", () => {
+        cy.previewForm(v3PagePath).then((p) => {
+            formContainer = p;
+        });
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.wrap().then(() => {
+            const [id] = Object.entries(formContainer._fields).find(([id]) => id.includes("captcha"));
+            // v3 has no visible challenge; the widget must render badge-only (invisible).
+            cy.get(`#${id} .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha`)
+                .should('exist')
+                .and('have.class', 'g-recaptcha-invisible');
+        });
+    })
+
+    it("submission should pass for reCAPTCHA v3", () => {
+        // Google's public test key always scores 0.9, so this is deterministic and doesn't
+        // need the retry-until-success loop the real-key enterprise-score test relies on.
+        updateRecaptchaV3Config(0.5);
+        cy.previewForm(v3PagePath).then((p) => {
+            formContainer = p;
+        });
+        expect(formContainer, "formcontainer is initialized").to.not.be.null;
+        cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
+            cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
+            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
+                cy.wait('@submitForm').then((interception) => {
+                    expect(interception.response.statusCode).to.equal(200);
+                });
+                cy.get('body').should('contain', "Thank you for submitting the form.\n")
+            });
+        });
     })
 })
