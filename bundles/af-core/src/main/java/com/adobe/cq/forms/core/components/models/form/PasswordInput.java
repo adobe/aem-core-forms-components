@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * into the text, email and telephone components that share {@code TextInput}.
  * </p>
  *
- * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+ * @since com.adobe.cq.forms.core.components.models.form 5.13.0
  */
 @ConsumerType
 public interface PasswordInput extends Field, StringConstraint {
@@ -40,7 +40,7 @@ public interface PasswordInput extends Field, StringConstraint {
      * Returns {@code true} if the password show/hide visibility toggle should be rendered, otherwise {@code false}.
      *
      * @return {@code true} if the visibility toggle should be rendered, otherwise {@code false}
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
      */
     @JsonIgnore
     default boolean isShowHidePasswordEnabled() {
@@ -53,7 +53,7 @@ public interface PasswordInput extends Field, StringConstraint {
      * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete">here</a>.
      *
      * @return the autocomplete attribute value, or {@code null} if not set
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
      */
     @JsonProperty("autocomplete")
     @Nullable
@@ -66,7 +66,7 @@ public interface PasswordInput extends Field, StringConstraint {
      * format by default.
      *
      * @return the format of the form field
-     * @since com.adobe.cq.forms.core.components.models.form 2.0.0
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
      */
     @Override
     @Nullable

@@ -87,20 +87,38 @@
                 const reveal = widget.getAttribute('type') === 'password';
                 widget.setAttribute('type', reveal ? 'text' : 'password');
                 toggle.setAttribute('aria-pressed', reveal ? 'true' : 'false');
-                const key = reveal ? 'hidePassword' : 'showPassword';
-                const fallback = reveal ? 'Hide password' : 'Show password';
-                const label = FormView.LanguageUtils.getTranslatedString(this.lang, key) || fallback;
-                toggle.setAttribute('aria-label', label);
-                toggle.setAttribute('title', label);
+                this.#updateToggleLabel(reveal);
             });
+        }
+
+        /**
+         * Sets the toggle's localized {@code aria-label}/{@code title} for the current state, using the same
+         * client-side i18n keys the runtime already ships (server-side HTL has no dictionary for these). Called on
+         * init so the accessible name is localized before any interaction, and again on every toggle.
+         * @param {boolean} revealed - {@code true} when the password is currently shown (action becomes "hide").
+         */
+        #updateToggleLabel(revealed) {
+            const toggle = this.getToggleButton();
+            if (!toggle) {
+                return;
+            }
+            const key = revealed ? 'hidePassword' : 'showPassword';
+            const fallback = revealed ? 'Hide password' : 'Show password';
+            const label = FormView.LanguageUtils.getTranslatedString(this.lang, key) || fallback;
+            toggle.setAttribute('aria-label', label);
+            toggle.setAttribute('title', label);
         }
 
         setModel(model) {
             super.setModel(model);
             this.lang = model.lang;
+            this.#updateToggleLabel(false);
             if (this.widget.value !== '') {
                 this.setModelValue(this.widget.value);
             }
+            this.widget.addEventListener('input', (e) => {
+                this.setModelValue(e.target.value);
+            });
             this.widget.addEventListener('blur', (e) => {
                 this.setModelValue(e.target.value);
                 this.setWidgetValueToDisplayValue();

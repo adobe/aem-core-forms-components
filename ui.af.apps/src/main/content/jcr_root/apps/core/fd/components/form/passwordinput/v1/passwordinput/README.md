@@ -60,11 +60,11 @@ part of the "Validation" tab are hidden/simplified in this component's own dialo
 `core.forms.components.textinput.v1.editor` interactive behavior isn't needed here.
 
 ### Note on styling the show/hide toggle button
-This component only renders the `.cmp-adaptiveform-passwordinput__toggle-visibility` button
-element and its accessibility attributes (`aria-pressed`, `aria-label`). It intentionally
-ships with **no visual/icon CSS** for that button — consistent with how every other core
-form component ships unstyled BEM placeholders. The eye/eye-slash icon artwork is expected
-to be supplied by the consuming project's own theme/design system, not by this component.
+This component renders the `.cmp-adaptiveform-passwordinput__toggle-visibility` button element
+with its accessibility attributes (`aria-pressed`, `aria-label`) and a minimal **accessible hit
+area only** (a 24x24px minimum target, per WCAG 2.2 SC 2.5.8). It intentionally ships with **no
+eye/eye-slash icon artwork** — that is expected to be supplied by the consuming project's own
+theme/design system, not by this component.
 
 ## BEM Description
 ```
