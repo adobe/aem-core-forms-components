@@ -29,8 +29,8 @@ const jacocoAgent = process.env.JACOCO_AGENT;
  // 6.6.0 packages are published to same artifactory, once fixed use latest here
 const latestVersion = ci.fetchLatestArtifactVersion('com.adobe.aemds', 'adobe-aemfd-linux-pkg');
 const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.1328'; // Use the latest version if available, otherwise default to '6.0.1256'
-// this value is for 6.5.25.0 with latest forms-addon version subsequent to one mentioned on https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
-const classicFormReleasedAddonVersion = '6.0.1508';
+// this value is for 6.5.21.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
+const classicFormReleasedAddonVersion = '6.0.1360';
 
 try {
     let wcmVersion = "2.32.4";
