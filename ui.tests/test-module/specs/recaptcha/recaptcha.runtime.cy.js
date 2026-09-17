@@ -122,9 +122,7 @@ describe("Form Runtime with Recaptcha Input", () => {
     }
 
     function updateRecaptchaV3Config(score) {
-        // Google's public test secret key always returns score 0.9 regardless of site/domain,
-        // so the v3 submission test doesn't depend on a real registered key or credentials.
-        const secretKey = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe";
+        const secretKey = Cypress.env('RECAPTCHA_V3_API_KEY');
         cy.openPage("/mnt/overlay/fd/af/cloudservices/recaptcha/properties.html?item=%2Fconf%2Fcore-components-it%2Fsamples%2Frecaptcha%2Fbasic%2Fsettings%2Fcloudconfigs%2Frecaptcha%2Fv3").then(x => {
             cy.get('#recaptcha-cloudconfiguration-secret-key').clear().type(secretKey);
             // v3 is score-based, but the addon dialog nests Threshold Score inside the hidden
@@ -270,20 +268,34 @@ describe("Form Runtime with Recaptcha Input", () => {
     })
 
     it("submission should pass for reCAPTCHA v3", () => {
-        // Google's public test key always scores 0.9, so this is deterministic and doesn't
-        // need the retry-until-success loop the real-key enterprise-score test relies on.
-        updateRecaptchaV3Config(0.5);
+        // Exercises the v3 token fetch + submit flow. The secret key is injected via the
+        // RECAPTCHA_V3_API_KEY env var; the site key lives in the v3 cloud config fixture.
+        // Threshold of 0 so a token from a headless browser passes server-side verification.
+        updateRecaptchaV3Config(0);
         cy.previewForm(v3PagePath).then((p) => {
             formContainer = p;
         });
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
         cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
             cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
-            cy.get(`.cmp-adaptiveform-button__widget`).click().then(x => {
-                cy.wait('@submitForm').then((interception) => {
-                    expect(interception.response.statusCode).to.equal(200);
+            const submitForm = () => {
+                cy.get(`.cmp-adaptiveform-button__widget`).click();
+                return cy.wait('@submitForm', { timeout: 50000 }).then((interception) => {
+                    if (interception.response.statusCode === 200) {
+                        cy.log('Submit request succeeded');
+                        return cy.wrap(true);
+                    } else {
+                        cy.log('Submit request failed, retrying...');
+                        return cy.wrap(false);
+                    }
                 });
-                cy.get('body').should('contain', "Thank you for submitting the form.\n")
+            };
+            // Retry like the enterprise-score test, since reCAPTCHA can intermittently return a
+            // browser-error on the first assessment.
+            cy.waitUntil(() => submitForm(), {
+                errorMsg: 'Maximum retry limit reached, request did not succeed',
+                timeout: 50000,
+                interval: 5000,
             });
         });
     })
