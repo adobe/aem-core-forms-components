@@ -22,6 +22,8 @@ Adaptive Form Table component written in HTL that allows authors to capture data
 * Ability to contain `tableheader` and `tablerow` child components
 * Configurable proportional column widths via comma-separated values
 * Optional column sorting with ascending/descending toggle (per-column sort can be individually disabled)
+* Mobile card layout — at `max-width: 768px` rows stack into cards; column headers are shown as inline labels via CSS `::before` using `data-label` attributes stamped on each `<td>`
+* Mobile action bar — Sort and Filter overlays accessible via bottom-sheet UI on narrow viewports; Sort requires `enableSorting`
 * Document of Record (DoR) support — table structure and column widths exported for XFA-based DoR rendering
 * Short description / long description / question mark help pattern
 * Visible and enabled state binding for rules engine
@@ -68,6 +70,18 @@ BLOCK cmp-adaptiveform-table
                 ELEMENT cmp-adaptiveform-tablerow__runtime-controls
                     ELEMENT cmp-adaptiveform-tablerow__add-button
                     ELEMENT cmp-adaptiveform-tablerow__remove-button
+    ELEMENT cmp-adaptiveform-table__mobile-bar (injected by JS; hidden on desktop)
+        ELEMENT cmp-adaptiveform-table__mobile-bar-btn
+            MODIFIER cmp-adaptiveform-table__mobile-bar-btn--sort
+            MODIFIER cmp-adaptiveform-table__mobile-bar-btn--filter
+        ELEMENT cmp-adaptiveform-table__mobile-bar-divider
+    ELEMENT cmp-adaptiveform-table__sort-scrim (shared backdrop for sort and filter bottom sheets)
+        ELEMENT cmp-adaptiveform-table__sort-sheet
+        ELEMENT cmp-adaptiveform-table__sort-sheet-handle
+        ELEMENT cmp-adaptiveform-table__sort-sheet-title
+        ELEMENT cmp-adaptiveform-table__sort-options
+        ELEMENT cmp-adaptiveform-table__sort-option
+            ELEMENT cmp-adaptiveform-table__sort-option-indicator
 ```
 
 ## Theme Editor Support
@@ -94,7 +108,10 @@ The following attributes are required for initialization:
 The following are optional attributes that can be added to the component:
 1. `data-cmp-visible` - boolean indicating whether the component is currently visible
 2. `data-cmp-enabled` - boolean indicating whether the component is currently enabled
-3. `data-cmp-sorting-enabled` - set to `"true"` when `./enableSorting` is authored; controls sort button rendering in `tableheader.html`
+3. `data-cmp-sorting-enabled` - set to `"true"` when `./enableSorting` is authored; controls sort button rendering in `tableheader.html` and enables the Sort button in the mobile action bar
+
+The following attribute is stamped by JavaScript on each `<td>` in the table body at runtime:
+1. `data-label` - set to the corresponding column header text; used by CSS `::before` to render inline labels in the mobile card layout (no author action required)
 
 ## Information
 * **Vendor**: Adobe
