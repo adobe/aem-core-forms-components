@@ -27,7 +27,19 @@ describe("Form Runtime with Recaptcha Input", () => {
         recaptcha : `[data-cmp-is="${IS}"]`
     };
 
+    const FT_RECAPTCHA_V3 = "FT_FORMS-27648";
+
     let formContainer = null
+
+    let toggle_array = [];
+
+    before(() => {
+        cy.fetchFeatureToggles().then((response) => {
+            if (response.status === 200) {
+                toggle_array = response.body.enabled;
+            }
+        });
+    });
 
     // Whitelist the error message
     cy.on('uncaught:exception', (err) => {
@@ -254,54 +266,58 @@ describe("Form Runtime with Recaptcha Input", () => {
     })
 
     it("should render reCAPTCHA v3 as an invisible badge", () => {
-        cy.previewForm(v3PagePath).then((p) => {
-            formContainer = p;
-        });
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        cy.wrap().then(() => {
-            const [id] = Object.entries(formContainer._fields).find(([id]) => id.includes("captcha"));
-            // v3 has no visible challenge; the widget must render badge-only (invisible).
-            cy.get(`#${id} .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha`)
-                .should('exist')
-                .and('have.class', 'g-recaptcha-invisible');
-        });
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_RECAPTCHA_V3)) {
+            cy.previewForm(v3PagePath).then((p) => {
+                formContainer = p;
+            });
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.wrap().then(() => {
+                const [id] = Object.entries(formContainer._fields).find(([id]) => id.includes("captcha"));
+                // v3 has no visible challenge; the widget must render badge-only (invisible).
+                cy.get(`#${id} .cmp-adaptiveform-recaptcha__widget > div.g-recaptcha`)
+                    .should('exist')
+                    .and('have.class', 'g-recaptcha-invisible');
+            });
+        }
     })
 
     it("submission should pass for reCAPTCHA v3", () => {
-        // Exercises the v3 token fetch + submit flow. The secret key is injected via the
-        // RECAPTCHA_V3_API_KEY env var; the site key lives in the v3 cloud config fixture.
-        // Threshold of 0 so a token from a headless browser passes server-side verification.
-        updateRecaptchaV3Config(0);
-        cy.previewForm(v3PagePath).then((p) => {
-            formContainer = p;
-        });
-        expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
-            cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
-            const submitForm = () => {
-                cy.get(`.cmp-adaptiveform-button__widget`).click();
-                return cy.wait('@submitForm', { timeout: 50000 }).then((interception) => {
-                    if (interception.response.statusCode === 200) {
-                        cy.log('Submit request succeeded');
-                        return cy.wrap(true);
-                    } else {
-                        cy.log('Submit request failed, retrying...');
-                        return cy.wrap(false);
-                    }
-                });
-            };
-            // Retry like the enterprise-score test, since reCAPTCHA can intermittently return a
-            // browser-error on the first assessment.
-            cy.waitUntil(() => submitForm(), {
-                errorMsg: 'Maximum retry limit reached, request did not succeed',
-                timeout: 50000,
-                interval: 5000,
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_RECAPTCHA_V3)) {
+            // Exercises the v3 token fetch + submit flow. The secret key is injected via the
+            // RECAPTCHA_V3_API_KEY env var; the site key lives in the v3 cloud config fixture.
+            // Threshold of 0 so a token from a headless browser passes server-side verification.
+            updateRecaptchaV3Config(0);
+            cy.previewForm(v3PagePath).then((p) => {
+                formContainer = p;
             });
-        });
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
+                cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
+                const submitForm = () => {
+                    cy.get(`.cmp-adaptiveform-button__widget`).click();
+                    return cy.wait('@submitForm', { timeout: 50000 }).then((interception) => {
+                        if (interception.response.statusCode === 200) {
+                            cy.log('Submit request succeeded');
+                            return cy.wrap(true);
+                        } else {
+                            cy.log('Submit request failed, retrying...');
+                            return cy.wrap(false);
+                        }
+                    });
+                };
+                // Retry like the enterprise-score test, since reCAPTCHA can intermittently return a
+                // browser-error on the first assessment.
+                cy.waitUntil(() => submitForm(), {
+                    errorMsg: 'Maximum retry limit reached, request did not succeed',
+                    timeout: 50000,
+                    interval: 5000,
+                });
+            });
+        }
     })
 
     it("submission should fail for reCAPTCHA v3", () => {
-        if (cy.af.isLatestAddon()) {
+        if (cy.af.isLatestAddon() && toggle_array.includes(FT_RECAPTCHA_V3)) {
             // Threshold of 1.0 is above any real headless-browser score, so server-side
             // verification always rejects the token — deterministically exercises the failure path.
             updateRecaptchaV3Config(1.0);
