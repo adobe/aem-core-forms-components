@@ -93,5 +93,16 @@
   "clearSign": "Borrar firma",
   "brushSize": "Tamaño de pincel: ",
   "geoLocationError": "Error al obtener la localización geográfica",
-  "geoLocationFetch": "Obteniendo localización geográfica…"
+  "geoLocationFetch": "Obteniendo localización geográfica…",
+  "sortTable": "Ordenar tabla",
+  "filterTable": "Filtrar tabla",
+  "sort": "Ordenar",
+  "filter": "Filtrar",
+  "sortOptions": "Opciones de ordenación",
+  "sortBy": "Ordenar por",
+  "sortColumns": "Ordenar columnas",
+  "sortOrder": "Orden de clasificación",
+  "sortDirection": "Dirección de ordenación",
+  "ascending": "Ascendente",
+  "descending": "Descendente"
 }
