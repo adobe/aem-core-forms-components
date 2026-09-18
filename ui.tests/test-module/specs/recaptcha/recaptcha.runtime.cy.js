@@ -299,4 +299,27 @@ describe("Form Runtime with Recaptcha Input", () => {
             });
         });
     })
+
+    it("submission should fail for reCAPTCHA v3", () => {
+        if (cy.af.isLatestAddon()) {
+            // Threshold of 1.0 is above any real headless-browser score, so server-side
+            // verification always rejects the token — deterministically exercises the failure path.
+            updateRecaptchaV3Config(1.0);
+            cy.on('window:alert', (message) => {
+                expect(message).to.equal('Encountered an internal error while submitting the form.');
+            });
+            cy.intercept('POST', /\/adobe\/forms\/af\/submit\/.*/).as('submitForm');
+            cy.previewForm(v3PagePath).then((p) => {
+                formContainer = p;
+            });
+            expect(formContainer, "formcontainer is initialized").to.not.be.null;
+            cy.get(`div.grecaptcha-badge`).should('exist').then(() => {
+                cy.get(`.cmp-adaptiveform-button__widget`).click();
+                cy.wait('@submitForm', { timeout: 50000 }).then((interception) => {
+                    expect(interception.response.statusCode).to.equal(400);
+                    expect(interception.response.body).to.have.property('title', 'The CAPTCHA validation failed. Please try again.');
+                });
+            });
+        }
+    })
 })
