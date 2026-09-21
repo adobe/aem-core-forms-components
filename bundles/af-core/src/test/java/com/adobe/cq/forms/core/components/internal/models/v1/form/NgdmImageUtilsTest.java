@@ -88,7 +88,8 @@ class NgdmImageUtilsTest {
         String src = NgdmImageUtils.buildNgdmImageSrc(
             "/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png", config);
 
-        assertEquals("https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png?width=640&preferwebp=true",
+        assertEquals(
+            "https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png?width=640&preferwebp=true",
             src);
     }
 
@@ -100,7 +101,8 @@ class NgdmImageUtilsTest {
         String src = NgdmImageUtils.buildNgdmImageSrc(
             "/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits", config);
 
-        assertEquals("https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.jpg?width=640&preferwebp=true",
+        assertEquals(
+            "https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.jpg?width=640&preferwebp=true",
             src);
     }
 
@@ -112,7 +114,8 @@ class NgdmImageUtilsTest {
         String src = NgdmImageUtils.buildNgdmImageSrc(
             "/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/product.hero.png", config);
 
-        assertEquals("https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/product.hero.png?width=640&preferwebp=true",
+        assertEquals(
+            "https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/product.hero.png?width=640&preferwebp=true",
             src);
     }
 }

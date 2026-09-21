@@ -32,8 +32,7 @@ public final class NgdmImageUtils {
     private static final String DEFAULT_NGDM_ASSET_EXTENSION = "jpg";
     private static final int DEFAULT_NGDM_ASSET_WIDTH = 640;
 
-    private NgdmImageUtils() {
-    }
+    private NgdmImageUtils() {}
 
     public static boolean isNgdmImageReference(String fileReference) {
         if (StringUtils.isBlank(fileReference) || !fileReference.startsWith(NGDM_REFERENCE_PREFIX)) {
