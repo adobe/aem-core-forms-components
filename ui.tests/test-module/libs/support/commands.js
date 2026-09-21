@@ -139,6 +139,30 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
     });
 });
 
+/**
+ * Resets a telephoneinput design policy to its baseline by removing the custom-format additions a test
+ * makes (`allowedCustomFormats` items and the `allowedFormat3` toggle). The design policy is shared,
+ * persistent repo state; without this, a test that adds a custom format leaves it behind and any later
+ * run/retry starts from a dirty policy — the multifield/Coral dialog then misbehaves and
+ * `allowedCustomFormats/item0/customFormatKey` never renders. Call in beforeEach for a deterministic start.
+ * @param policyPath JCR path of the telephoneinput policy node (…/policies/…/telephoneinput/<policy>)
+ */
+Cypress.Commands.add("resetTelephoneInputDesignPolicy", (policyPath) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    const url = contextPath + policyPath;
+    // POST via the app's jQuery inside the authenticated page (not cy.request) so the session cookie is
+    // carried — same reason enableOrDisableTutorials does; the sling `@Delete` removes the property/node.
+    cy.request(contextPath + '/libs/granite/csrf/token.json').its('body.token').then((token) => {
+        cy.window().then((win) => new Cypress.Promise((resolve) => {
+            win.$.post(url, {
+                'allowedCustomFormats@Delete': '',
+                'allowedFormat3@Delete': '',
+                ':cq_csrf_token': token
+            }).always(resolve);
+        }));
+    });
+});
+
 // Cypress command to open AFv2
 Cypress.Commands.add("openAFv2TemplateEditor", () => {
     const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";

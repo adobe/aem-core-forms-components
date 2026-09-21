@@ -124,7 +124,7 @@ export const customFunctions = {
     /**
      * Fetches the captcha token for the form.
      *
-     * This function uses the Google reCAPTCHA Enterprise service to fetch the captcha token.
+     * Supports turnstile, reCAPTCHA Enterprise, and reCAPTCHA v3 via @aemforms/af-custom-functions.
      *
      * @async
      * @param {object} globals - An object containing read-only form instance, read-only target field instance and methods for form modifications.

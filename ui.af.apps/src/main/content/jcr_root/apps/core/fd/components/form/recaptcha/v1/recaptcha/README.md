@@ -24,6 +24,9 @@ Adaptive Form Recaptcha field component written in HTL.
 * Supports the following recaptcha versions:
   * v2
     * Only visible behaviour is supported
+  * v3
+    * Only invisible behaviour is supported (badge-only, no visible challenge); the token is
+      auto-fetched at submit. Requires the FT_FORMS-27648 feature toggle to be enabled.
   * Enterprise
     * Checkbox keys (Visible Behaviour)
     * Score-based keys (Invisible behaviour)
@@ -45,7 +48,7 @@ The following properties are written to JCR for this Form Recaptcha component an
 7. `./requiredMessage` - defines the message displayed as tooltip when submitting the form if the value is left empty
 8. `./readOnly` - if set to `true`, the filed will be read only
 9. `./rcCloudServicePath` - defines the path of cloud configuration resource for reCAPTCHA
-10. `./recaptchaSize` - defines the size attribute of Google reCAPTCHA. This property is only valid for reCAPTCHA v2 and the checkbox keys of reCAPTCHA enterprise. This property will be disabled for reCAPTCHA Enteprise score-based keys.
+10. `./recaptchaSize` - defines the size attribute of Google reCAPTCHA. This property is only valid for reCAPTCHA v2 and the checkbox keys of reCAPTCHA enterprise. This property will be disabled for reCAPTCHA Enterprise score-based keys and for reCAPTCHA v3 (both invisible).
 
 ## Client Libraries
 The component provides a `core.forms.components.recaptcha.v1.runtime` client library category that contains the Javascript runtime for the component.

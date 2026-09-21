@@ -93,5 +93,16 @@
   "clearSign": "Cancella firma",
   "brushSize": "Dimensione pennello: ",
   "geoLocationError": "Errore nel recupero della geolocalizzazione",
-  "geoLocationFetch": "Recupero geolocalizzazione in corso..."
+  "geoLocationFetch": "Recupero geolocalizzazione in corso...",
+  "sortTable": "Ordina tabella",
+  "filterTable": "Filtra tabella",
+  "sort": "Ordina",
+  "filter": "Filtra",
+  "sortOptions": "Opzioni di ordinamento",
+  "sortBy": "Ordina per",
+  "sortColumns": "Ordina colonne",
+  "sortOrder": "Ordine di ordinamento",
+  "sortDirection": "Direzione di ordinamento",
+  "ascending": "Crescente",
+  "descending": "Decrescente"
 }
