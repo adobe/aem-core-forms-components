@@ -38,6 +38,16 @@ var selectors = {
         edsConfigTypeCreateNew: 'input[name="edsConfigType"][value="createNew"]',
         githubUrl: '[name="githubUrl"]',
         edsConfigPath: '[name="edsConfigPath"]'
+    },
+    createAfFragment: {
+        url: '/aem/createaffragment.html/content/dam/formsanddocuments',
+        franklinTemplateCard: 'coral-masonry-item[data-foundation-collection-item-id="/libs/fd/franklin/templates/fragment"]',
+        nextButton: '.foundation-wizard-control[data-foundation-wizard-control-action="next"]',
+        title: '[name="./jcr:content/metadata/title"]',
+        name: '[name=":name"]',
+        edsConfigTypeCreateNew: 'input[name="edsConfigType"][value="createNew"]',
+        githubUrl: '[name="githubUrl"]',
+        edsConfigPath: '[name="edsConfigPath"]'
     }
 };
 
