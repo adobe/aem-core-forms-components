@@ -106,4 +106,14 @@ public final class FeatureToggleConstants {
      * System property: same name ({@code FT_FORMS-25252}); set to {@code "true"} to enable.
      */
     public static final String FT_SERVER_SIDE_VALIDATION = "FT_FORMS-25252";
+
+    /**
+     * When enabled, the Image field's authoring dialog shows the "Pick" dropdown (Local/Remote)
+     * for selecting a Next Gen Dynamic Media asset, and the component resolves NGDM references to
+     * a delivery URL. When disabled, the dialog shows the original Browse Assets/Upload UI, and any
+     * previously-saved NGDM reference is treated as a plain (unresolvable) fileReference instead.
+     * <p>
+     * System property: same name ({@code FT_FORMS-26424}); set to {@code "true"} to enable.
+     */
+    public static final String FT_NGDM_IMAGE_PICKER = "FT_FORMS-26424";
 }
