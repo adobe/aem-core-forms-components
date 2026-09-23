@@ -16,11 +16,7 @@
 const wizardSelectors = require('../../libs/commons/wizardSelectors');
 
 describe('EDS Form Creation - Authoring', function () {
-    // Guard: the EDS/Universal-Editor template and the create-form GitHub-URL flow only
-    // ship with the latest Forms add-on. On release/650 cy.af.isLatestAddon() is true for
-    // the 'classic-latest' add-on (and for local runs where forms.far is undefined); the
-    // older 'classic' released add-on does not have the franklin template, so skip there.
-    if (cy.af.isLatestAddon()) {
+    if (cy.af.isLtsAddon()) {
         const createAFPage = wizardSelectors.createAf;
         const toggleId = 'FT_FORMS-12378';
         const githubUrl = 'https://github.com/adobe-rnd/aem-boilerplate-forms';
