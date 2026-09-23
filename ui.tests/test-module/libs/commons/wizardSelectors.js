@@ -25,6 +25,19 @@ var selectors = {
         create: '[data-testid="modal"]',
         title: '[name="submitDialogTitle"]',
         createButton: '[data-testid="modal"] button:last-child',
+    },
+    // Selectors for the classic (6.5) "Create Adaptive Form" wizard at /aem/createaf.html.
+    // The EDS/Universal-Editor template (/libs/fd/franklin/templates/page) is an OOTB
+    // template, so it is available on every instance that has the latest Forms add-on.
+    createAf: {
+        url: '/aem/createaf.html/content/dam/formsanddocuments',
+        franklinTemplateCard: 'coral-masonry-item[data-foundation-collection-item-id="/libs/fd/franklin/templates/page"]',
+        nextButton: '.foundation-wizard-control[data-foundation-wizard-control-action="next"]',
+        title: '[name="./jcr:content/metadata/title"]',
+        name: '[name=":name"]',
+        edsConfigTypeCreateNew: 'input[name="edsConfigType"][value="createNew"]',
+        githubUrl: '[name="githubUrl"]',
+        edsConfigPath: '[name="edsConfigPath"]'
     }
 };
 
