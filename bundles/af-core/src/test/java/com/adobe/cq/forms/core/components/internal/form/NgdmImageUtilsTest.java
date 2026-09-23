@@ -13,7 +13,7 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package com.adobe.cq.forms.core.components.internal.models.v1.form;
+package com.adobe.cq.forms.core.components.internal.form;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +27,8 @@ class NgdmImageUtilsTest {
 
     @Test
     void isNgdmImageReference_WithUrnPrefix_ReturnsTrue() {
-        assertTrue(NgdmImageUtils.isNgdmImageReference("/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png"));
+        assertTrue(NgdmImageUtils
+            .isNgdmImageReference("/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png"));
     }
 
     @Test
@@ -85,10 +86,11 @@ class NgdmImageUtilsTest {
         MockNextGenDynamicMediaConfig config = new MockNextGenDynamicMediaConfig();
         config.setRepositoryId("testrepo");
 
-        String src = NgdmImageUtils.buildNgdmImageSrc(
-            "/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png", config);
+        String src = NgdmImageUtils
+            .buildNgdmImageSrc("/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png", config);
 
-        assertEquals("https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png?width=640&preferwebp=true",
+        assertEquals(
+            "https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.png?width=640&preferwebp=true",
             src);
     }
 
@@ -97,10 +99,11 @@ class NgdmImageUtilsTest {
         MockNextGenDynamicMediaConfig config = new MockNextGenDynamicMediaConfig();
         config.setRepositoryId("testrepo");
 
-        String src = NgdmImageUtils.buildNgdmImageSrc(
-            "/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits", config);
+        String src = NgdmImageUtils.buildNgdmImageSrc("/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits",
+            config);
 
-        assertEquals("https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.jpg?width=640&preferwebp=true",
+        assertEquals(
+            "https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/cutfruits.jpg?width=640&preferwebp=true",
             src);
     }
 
@@ -109,10 +112,11 @@ class NgdmImageUtilsTest {
         MockNextGenDynamicMediaConfig config = new MockNextGenDynamicMediaConfig();
         config.setRepositoryId("testrepo");
 
-        String src = NgdmImageUtils.buildNgdmImageSrc(
-            "/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/product.hero.png", config);
+        String src = NgdmImageUtils
+            .buildNgdmImageSrc("/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/product.hero.png", config);
 
-        assertEquals("https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/product.hero.png?width=640&preferwebp=true",
+        assertEquals(
+            "https://testrepo/adobe/dynamicmedia/deliver/urn:aaid:aem:e82c3c87-1453-48f5-844b-1822fb610911/product.hero.png?width=640&preferwebp=true",
             src);
     }
 }
