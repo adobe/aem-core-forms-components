@@ -242,7 +242,7 @@
     "jcr:title" : "def",
     "multiLine": true,
     "fieldType": "multiline-input",
-    "showCharacterCount": true,
+    "fd:showCharacterCount": true,
     "maxLength": 100
   },
   "textinput-charactercount-singleline" : {
@@ -251,7 +251,7 @@
     "name" : "abc",
     "jcr:title" : "def",
     "fieldType": "text-input",
-    "showCharacterCount": true,
+    "fd:showCharacterCount": true,
     "maxLength": 100
   }
 }

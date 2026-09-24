@@ -4,7 +4,6 @@
   "name": "abc",
   "type": "string",
   "maxLength": 100,
-  "showCharacterCount": true,
   "label": {
     "value": "def"
   },
@@ -14,7 +13,8 @@
     ]
   },
   "properties": {
-    "fd:path": "/content/textinput-charactercount"
+    "fd:path": "/content/textinput-charactercount",
+    "fd:showCharacterCount": true
   },
   ":type": "core/fd/components/form/textinput/v1/textinput"
 }
