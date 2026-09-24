@@ -33,6 +33,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
@@ -57,6 +58,8 @@ public class TextInputImplTest {
     private static final String PATH_TEXTINPUT_DATALAYER = CONTENT_ROOT + "/textinput-datalayer";
     private static final String PATH_TEXTINPUT_CUSTOMIZED = CONTENT_ROOT + "/textinput-customized";
     private static final String PATH_TEXTINPUT_2 = CONTENT_ROOT + "/multiline-textinput";
+    private static final String PATH_TEXTINPUT_CHARACTERCOUNT = CONTENT_ROOT + "/textinput-charactercount";
+    private static final String PATH_TEXTINPUT_CHARACTERCOUNT_SINGLELINE = CONTENT_ROOT + "/textinput-charactercount-singleline";
     private static final String PATH_NUMBER_TEXTINPUT = CONTENT_ROOT + "/number-textinput";
     private static final String PATH_NUMBER_TEXTINPUT_EXCLUSIVE = CONTENT_ROOT + "/number-textinput-exclusive";
     private static final String PATH_FORMAT_TEXTINPUT = CONTENT_ROOT + "/textinput-format";
@@ -257,6 +260,47 @@ public class TextInputImplTest {
         TextInput textInputMock = Mockito.mock(TextInput.class);
         Mockito.when(textInputMock.isMultiLine()).thenCallRealMethod();
         assertEquals(false, textInputMock.isMultiLine());
+    }
+
+    @Test
+    void testIsShowCharacterCount() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CUSTOMIZED, TextInput.class, context);
+        assertEquals(null, textInput.isShowCharacterCount());
+        TextInput textInputMock = Mockito.mock(TextInput.class);
+        Mockito.when(textInputMock.isShowCharacterCount()).thenCallRealMethod();
+        assertEquals(null, textInputMock.isShowCharacterCount());
+    }
+
+    @Test
+    void testIsShowCharacterCountWhenSet() {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT, TextInput.class, context);
+        assertEquals(true, textInput.isShowCharacterCount());
+        assertEquals(100, textInput.getMaxLength().intValue());
+    }
+
+    @Test
+    void testCharacterCountJSONExport() throws Exception {
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT, TextInput.class, context);
+        Utils.testJSONExport(textInput, Utils.getTestExporterJSONPath(BASE, PATH_TEXTINPUT_CHARACTERCOUNT));
+    }
+
+    @Test
+    void testShowCharacterCountReportedUnderCustomProperties() {
+        // custom (non-spec) property: exported under properties as fd:showCharacterCount, not as a top-level JSON field
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT, TextInput.class, context);
+        Map<String, Object> properties = textInput.getProperties();
+        assertEquals(true, properties.get(ReservedProperties.PN_SHOW_CHARACTER_COUNT));
+    }
+
+    @Test
+    void testIsShowCharacterCountIgnoredForSingleLine() {
+        // showCharacterCount is only applicable to multi line fields; a single line field must report null
+        // regardless of what was authored, since the feature has no effect there.
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT_SINGLELINE, TextInput.class, context);
+        assertEquals(false, textInput.isMultiLine());
+        assertEquals(null, textInput.isShowCharacterCount());
+        assertFalse("showCharacterCount should not be reported for single line fields",
+            textInput.getProperties().containsKey(ReservedProperties.PN_SHOW_CHARACTER_COUNT));
     }
 
     @Test

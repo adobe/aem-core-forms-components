@@ -50,10 +50,16 @@ describe('Page - Authoring', function () {
         // Check If Dialog Options Are Visible
         cy.get("[name='./multiLine']")
             .should("exist");
+        cy.get("[name='./fd:showCharacterCount']")
+            .should("exist");
         cy.get("[name='./autocomplete']")
             .should("exist");
 
         // Checking some dynamic behaviours
+        // "Show character count" is only applicable to multi line fields; hidden until "Allow multiple lines" is checked
+        cy.get(".cmp-adaptiveform-textinput__showcharactercount").parent('div').invoke('css', 'display').should('equal', 'none');
+        cy.get("[name='./multiLine']").click({force: true});
+        cy.get(".cmp-adaptiveform-textinput__showcharactercount").parent('div').invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-textinput__maxlength").invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-base__placeholder").parent('div').invoke('css', 'display').should('equal', 'block');
@@ -143,6 +149,25 @@ describe('Page - Authoring', function () {
 
         it('open edit dialog of TextInput', function () {
             testTextInputBehaviour(textInputEditPathSelector, textInputDrop);
+        });
+
+        it('shows a static character count placeholder in the authoring canvas', function () {
+            dropTextInputInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
+            cy.invokeEditableAction("[data-action='CONFIGURE']");
+            cy.get("[name='./multiLine']").click({force: true});
+            cy.get("[name='./fd:showCharacterCount']").click({force: true});
+            cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
+            cy.get("[name='./maxLength']").clear({force: true}).type("20", {force: true});
+            cy.get('.cq-dialog-submit').click();
+            cy.reload();
+            // in the authoring canvas the field is not interactive (typing doesn't reach the widget), so the
+            // counter is just the static initial value: "0 / 20"
+            cy.get('[data-type="Editable"][data-path="' + textInputEditPath + '"]')
+                .find('.cmp-adaptiveform-textinput__charcount-current').should('have.text', '0');
+            cy.get('[data-type="Editable"][data-path="' + textInputEditPath + '"]')
+                .find('.cmp-adaptiveform-textinput__charcount-max').should('have.text', ' / 20');
+            cy.deleteComponentByPath(textInputDrop);
         });
 
         it.skip('pasted component should have unique name', function () {
