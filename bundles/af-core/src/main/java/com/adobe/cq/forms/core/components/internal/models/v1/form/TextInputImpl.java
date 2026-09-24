@@ -16,6 +16,7 @@
 package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 import javax.annotation.PostConstruct;
@@ -27,6 +28,7 @@ import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.InjectionStrategy;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.jetbrains.annotations.NotNull;
 
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -178,5 +180,17 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
         if (exclusiveMinimumVaue != null) {
             minimum = null;
         }
+    }
+
+    @Override
+    public @NotNull Map<String, Object> getProperties() {
+        Map<String, Object> properties = super.getProperties();
+        // custom (non-spec) property: reported under properties, not as a top-level JSON field, mirroring
+        // how other custom properties (e.g. fd:disabledXfaScripts) are exported.
+        Boolean showCharacterCountValue = isShowCharacterCount();
+        if (showCharacterCountValue != null) {
+            properties.put(ReservedProperties.PN_SHOW_CHARACTER_COUNT, showCharacterCountValue);
+        }
+        return properties;
     }
 }

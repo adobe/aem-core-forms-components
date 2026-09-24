@@ -33,6 +33,7 @@ import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.*;
 import com.adobe.cq.forms.core.components.util.AbstractFieldImpl;
 import com.adobe.cq.forms.core.components.util.AbstractFormComponentImpl;
@@ -284,12 +285,22 @@ public class TextInputImplTest {
     }
 
     @Test
+    void testShowCharacterCountReportedUnderCustomProperties() {
+        // custom (non-spec) property: exported under properties as fd:showCharacterCount, not as a top-level JSON field
+        TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT, TextInput.class, context);
+        Map<String, Object> properties = textInput.getProperties();
+        assertEquals(true, properties.get(ReservedProperties.PN_SHOW_CHARACTER_COUNT));
+    }
+
+    @Test
     void testIsShowCharacterCountIgnoredForSingleLine() {
         // showCharacterCount is only applicable to multi line fields; a single line field must report null
         // regardless of what was authored, since the feature has no effect there.
         TextInput textInput = Utils.getComponentUnderTest(PATH_TEXTINPUT_CHARACTERCOUNT_SINGLELINE, TextInput.class, context);
         assertEquals(false, textInput.isMultiLine());
         assertEquals(null, textInput.isShowCharacterCount());
+        assertFalse("showCharacterCount should not be reported for single line fields",
+            textInput.getProperties().containsKey(ReservedProperties.PN_SHOW_CHARACTER_COUNT));
     }
 
     @Test

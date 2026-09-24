@@ -159,6 +159,21 @@ describe("Form Runtime with Text Input", () => {
         });
     })
 
+    it("character count updates live and respects maxLength", () => {
+        const charCountWidget = "textarea[name='textcharcount']";
+        const charCountCurrent = ".cmp-adaptiveform-textinput__charcount-current";
+
+        cy.get(charCountWidget).closest('[data-cmp-is="adaptiveFormTextInput"]').find(charCountCurrent).should('have.text', '0');
+        cy.get(charCountWidget).clear().type("hello world").then(() => {
+            cy.get(charCountWidget).closest('[data-cmp-is="adaptiveFormTextInput"]').find(charCountCurrent).should('have.text', '11');
+        });
+        // typing past the field's maxLength (20); native maxlength caps the actual value, counter must reflect the capped length
+        cy.get(charCountWidget).type(" - this extra text pushes well past the limit").then(() => {
+            cy.get(charCountWidget).invoke('val').should('have.length', 20);
+            cy.get(charCountWidget).closest('[data-cmp-is="adaptiveFormTextInput"]').find(charCountCurrent).should('have.text', '20');
+        });
+    })
+
     it("should set valid to false and errorMessage other textfields on a certain string input", () => {
         // Rule on textbox9: When textbox9 is changed => set valid and error message property of textbox10
 
