@@ -242,7 +242,8 @@
     "jcr:title" : "def",
     "fieldType": "password",
     "minLength": 8,
-    "maxLength": 20
+    "maxLength": 20,
+    "pattern": "^[a-zA-Z0-9]+$"
   },
   "password-textinput-toggle-disabled" : {
     "jcr:primaryType": "nt:unstructured",
