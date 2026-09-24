@@ -136,6 +136,11 @@ public class DraftsAndSubmissionsImpl extends PortalListerImpl implements Drafts
                     LOGGER.error("[FP] Could not parse render link", e);
                 }
             }
+        } else {
+            LOGGER.info("[FP] Form asset not resolvable on this environment for {} record; listing an 'Item not available' placeholder. "
+                + "id={}, formPath={}, resolvedAssetPath={}. Likely causes: the form was deleted/unpublished here, "
+                + "or the record originates from another environment sharing this store.",
+                typeEnum, id, formPath, formAssetPath);
         }
 
         PortalListerImpl.Item item = new PortalListerImpl.Item();
