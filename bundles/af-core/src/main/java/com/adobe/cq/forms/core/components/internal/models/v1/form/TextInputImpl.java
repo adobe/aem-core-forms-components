@@ -185,11 +185,14 @@ public class TextInputImpl extends AbstractFieldImpl implements TextInput {
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = super.getProperties();
-        // custom (non-spec) property: reported under properties, not as a top-level JSON field, mirroring
-        // how other custom properties (e.g. fd:disabledXfaScripts) are exported.
+        // custom (non-spec) property: reported under properties as fd:showCharacterCount, not as a top-level JSON
+        // field, mirroring how other custom properties (e.g. fd:disabledXfaScripts) are exported. Note this is a
+        // distinct name from the JCR-authored property (ReservedProperties.PN_SHOW_CHARACTER_COUNT, unprefixed) -
+        // a colon in a Granite checkbox widget's authored "name" breaks dialog rendering, so the fd: namespacing
+        // is applied only on the JSON-export side, same as fd:xfaScripts (JCR) vs fd:disabledXfaScripts (JSON).
         Boolean showCharacterCountValue = isShowCharacterCount();
         if (showCharacterCountValue != null) {
-            properties.put(ReservedProperties.PN_SHOW_CHARACTER_COUNT, showCharacterCountValue);
+            properties.put("fd:showCharacterCount", showCharacterCountValue);
         }
         return properties;
     }

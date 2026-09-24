@@ -50,7 +50,7 @@ describe('Page - Authoring', function () {
         // Check If Dialog Options Are Visible
         cy.get("[name='./multiLine']")
             .should("exist");
-        cy.get("[name='./fd:showCharacterCount']")
+        cy.get("[name='./showCharacterCount']")
             .should("exist");
         cy.get("[name='./autocomplete']")
             .should("exist");
@@ -156,7 +156,7 @@ describe('Page - Authoring', function () {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get("[name='./multiLine']").click({force: true});
-            cy.get("[name='./fd:showCharacterCount']").click({force: true});
+            cy.get("[name='./showCharacterCount']").click({force: true});
             cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
             cy.get("[name='./maxLength']").clear({force: true}).type("20", {force: true});
             cy.get('.cq-dialog-submit').click();

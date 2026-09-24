@@ -258,7 +258,7 @@
                     jcr:title="Text Input with Character Count"
                     sling:resourceType="forms-components-examples/components/form/textinput"
                     enabled="{Boolean}true"
-                    fd:showCharacterCount="true"
+                    showCharacterCount="true"
                     fieldType="text-input"
                     hideTitle="false"
                     maxLength="20"
