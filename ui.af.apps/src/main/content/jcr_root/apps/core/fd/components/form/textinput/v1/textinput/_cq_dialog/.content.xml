@@ -62,7 +62,7 @@
                                                     jcr:primaryType="nt:unstructured"
                                                     granite:class="cmp-adaptiveform-textinput__showcharactercount"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                    name="./showCharacterCount"
+                                                    name="./fd:showCharacterCount"
                                                     text="Show character count"
                                                     fieldDescription="Displays a live character count below the field. Only applicable when 'Allow multiple lines' is enabled. Combine with 'Maximum Number of characters' in the Validation tab to show a running total out of the limit."
                                                     value="true"/>
