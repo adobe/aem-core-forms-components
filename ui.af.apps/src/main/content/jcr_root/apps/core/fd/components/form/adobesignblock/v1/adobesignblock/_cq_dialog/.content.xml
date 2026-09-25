@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--
+  Basic tab mirrors the foundation adobeSignBlock dialog:
+    Name | Bind Reference | Hide Object | CSS Class | Title | Hide title
+
+  Inheritance chain: adobesignblock → text/v1/text → base/v1/base
+  text/v1/text hides title, richTextTitle, isTitleRichText, hideTitle,
+  enabled, enabled-typehint, readonly, dorBindref, placeholder.
+  We restore title, hideTitle, and bindref; add cssClass; hide inapplicable fields.
+-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Adobe Sign Block"
+          sling:resourceType="cq/gui/components/authoring/dialog"
+          extraClientlibs="[core.forms.components.adobesignblock.v1.editor]"
+          helpPath="https://www.adobe.com/go/aem_af_cmp_adobesignblock_v1"
+          trackingFeature="core-components:adaptiveform-adobesignblock:v1">
+    <content
+            granite:class="cmp-adaptiveform-adobesignblock__editdialog"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                    maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <basic
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Basic"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+
+                                            <!--
+                                              bindref: inherited from base/v1/base; text/v1/text does NOT hide it,
+                                              so we just leave it alone (no sling:hideResource here).
+                                              It appears in its natural position after name.
+                                            -->
+
+                                            <!--
+                                              Restore title — text/v1/text hides this; providing a definition
+                                              without sling:hideResource overrides that hide.
+                                            -->
+                                            <title
+                                                    jcr:primaryType="nt:unstructured"
+                                                    granite:class="cmp-adaptiveform-base__title"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Title"
+                                                    name="./jcr:title"/>
+
+                                            <!-- Restore hideTitle for the same reason -->
+                                            <hideTitle
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    name="./hideTitle"
+                                                    text="Hide title"
+                                                    uncheckedValue="false"
+                                                    value="true"/>
+
+                                            <!--
+                                              cssClass: custom CSS class(es) applied to the component root.
+                                              Saves to ./styleClass. Mirrors the "CSS Class" field in the
+                                              foundation adobeSignBlock dialog.
+                                            -->
+                                            <cssClass
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="CSS Class"
+                                                    fieldDescription="Space-separated CSS class(es) to add to the component root element."
+                                                    name="./styleClass"/>
+
+                                            <!-- Fields not applicable to this display-only component -->
+                                            <placeholder
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <richTextTitle
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <isTitleRichText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <enabled
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <enabled-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <readonly
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <readonly-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <dorBindref
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <unboundFormElement
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                            <unboundFormElement-typehint
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:hideResource="{Boolean}true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </basic>
+                    <!-- Validation and Formats tabs not relevant for this component -->
+                    <validation
+                            jcr:primaryType="nt:unstructured"
+                            sling:hideResource="{Boolean}true"/>
+                    <patterns
+                            jcr:primaryType="nt:unstructured"
+                            sling:hideResource="{Boolean}true"/>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
