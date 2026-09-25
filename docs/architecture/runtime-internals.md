@@ -203,51 +203,6 @@ curl -s -u admin:admin \
 
 ---
 
-## 7. Common Failure Patterns
+## 7. Debugging
 
-### `TypeError: Cannot read properties of undefined (reading 'getState')`
-
-**Stack**: `FormFieldBase.setModel` → `[Component].setModel` → `FormContainerV2.addField` → `#createFormContainerFields` → `Utils.initializeAllFields`
-
-`getModel(id)` returned `undefined`. The field view's ID is not in this form container's model.
-
-Causes to check (in order):
-1. **Double initialization** — a second `setupFormContainer` call processed the element after the first already ran `initializeAllFields`. The first call's `InstanceManager` may have inserted UUID DOM elements that the second call cannot resolve. Fix: ensure the `data-cmp-adaptiveformcontainer-initialized` guard is in place.
-2. **Wrong form container** — `data-cmp-adaptiveformcontainer-path` on the DOM element doesn't match the container's `data-cmp-path`. The path guard in `#createFormContainerFields` should catch this; if it doesn't, check that the attribute is set during server-side rendering.
-3. **UUID–model mismatch** — a UUID-based DOM element was inserted by `InstanceManager.#syncInstancesHTML` for a different model instance than the one being processed. Check that the model's IDs and DOM IDs are in sync.
-
-### Fields registered but `formContainer._fields` appears empty
-
-- Check whether `cy.previewForm` waited for `Constants.FORM_CONTAINER_INITIALISED`. This event fires after `initializeAllFields` completes.
-- Check the JSON format: verify `:items`/`:itemsOrder` vs `items` via the model JSON endpoint.
-- Check `sitesModelToFormModel` conversion: it only runs when both `:items` AND `:itemsOrder` are present. If one is absent, the conversion is skipped.
-
-### Exception suppression masking crashes
-
-`cy.on('uncaught:exception', () => false)` silently swallows all application errors and causes tests to pass despite runtime crashes. Avoid using it as a blanket suppressor. Prefer targeted suppression:
-
-```javascript
-cy.on('uncaught:exception', (err) => {
-    // Suppress only Cypress-internal iframe teardown noise, not application errors
-    if (err.message.includes('contentWindow')) return false;
-    return true; // re-throw everything else
-});
-```
-
----
-
-## 8. Debugging Checklist
-
-1. **Get the raw model JSON** — `curl -u admin:admin http://localhost:4502/<pagePath>/_jcr_content/guideContainer.model.json` — verify structure, check `items` vs `:items`/`:itemsOrder`, confirm children are present.
-
-2. **Check for double initialization** — look for two different line numbers for `setupFormContainer` or `onDocumentReady` in the **same bundle hash** in a stack trace. That confirms two separate registrations in the compiled bundle.
-
-3. **Check element ownership** — every field's DOM element must have `data-cmp-adaptiveformcontainer-path` matching the form container's `data-cmp-path`. Mismatches mean the element belongs to a different container.
-
-4. **Inspect UUID DOM elements** — after page load, `document.querySelectorAll('[id]')` and look for UUID-style IDs (short alphanumeric, e.g. `TS4CEFHdFLA`). These are created by `InstanceManager.#syncInstancesHTML` for repeatable panel instances beyond the first. They should exist in `form._fields` if the owning form container initialized correctly.
-
-5. **Check model fields** — `formContainer._model._fields` contains every model node indexed by ID. A DOM element whose ID is absent from this map will crash `addField`.
-
-6. **Check toggle state** — `GET /etc.clientlibs/toggles.json` returns `{ enabled: [...] }`. Confirm which toggles are active and whether the code path you're debugging depends on any of them.
-
-7. **Remove exception suppression** — if the test has `cy.on('uncaught:exception', () => false)`, remove it temporarily and re-run. Real crashes will surface as test failures with stack traces.
+For common failure patterns, debugging checklists, and resolved issues, see [`docs/debugging/known-issues.md`](../debugging/known-issues.md).
