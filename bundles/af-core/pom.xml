@@ -472,6 +472,13 @@
             <classifier>apis</classifier>
         </dependency>
 
+        <dependency>
+            <groupId>com.adobe.aem</groupId>
+            <artifactId>sites-dataplane</artifactId>
+            <version>1.0.113-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- End of AEM and forms sdk versions -->
 
 
