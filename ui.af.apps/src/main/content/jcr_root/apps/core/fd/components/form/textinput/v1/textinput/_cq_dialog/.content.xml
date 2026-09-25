@@ -207,6 +207,17 @@
                                                           selected="{Boolean}true"/>
                                                 </items>
                                             </fieldType>
+                                            <fd-viewType
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                    name="./fd:viewType"
+                                                    granite:hidden="true">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <item jcr:primaryType="nt:unstructured"
+                                                          text="Password"
+                                                          value="password"/>
+                                                </items>
+                                            </fd-viewType>
                                         </items>
                                     </column>
                                 </items>
