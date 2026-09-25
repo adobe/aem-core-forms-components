@@ -51,7 +51,24 @@
     "enumNames" : ["m", "f", "o"],
     "minItems" : 1,
     "maxItems" : 2,
-    "required": true
+    "required": true,
+    "minLength" : 2,
+    "maxLength" : 10,
+    "pattern" : "[a-z]+"
+  },
+  "searchable-dropdown" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/dropdown/v1/dropdown",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "drop-down",
+    "type" : "string",
+    "enforceEnum" : false,
+    "enum" : ["a", "b", "c"],
+    "enumNames" : ["m", "f", "o"],
+    "minLength" : 2,
+    "maxLength" : 10,
+    "pattern" : "[a-z]+"
   },
   "dropdown2" : {
     "jcr:primaryType": "nt:unstructured",

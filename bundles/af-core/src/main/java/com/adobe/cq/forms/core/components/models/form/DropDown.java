@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @since com.adobe.cq.forms.core.components.models.form 2.0.0
  */
 @ConsumerType
-public interface DropDown extends Field, OptionsConstraint, ContainerConstraint {
+public interface DropDown extends Field, OptionsConstraint, ContainerConstraint, StringConstraint {
 
     /**
      * Returns {@code true} if multiple items can be selected in dropdown, {@code false} otherwise
