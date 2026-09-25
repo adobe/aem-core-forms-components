@@ -39,7 +39,8 @@
     "typeMessage" : "incorrect type",
     "tooltip": "test-short-description",
     "default" : "abc",
-    "fieldType": "text-input"
+    "fieldType": "text-input",
+    "asyncValidtionExpression": "$field == 'validate'"
   },
   "number-textinput" : {
     "jcr:primaryType": "nt:unstructured",
@@ -166,6 +167,14 @@
     "jcr:title" : "def",
     "fieldType": "text-input",
     "validationExpression": ""
+  },
+  "textinput-blank-asyncValidtionExpression" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "text-input",
+    "asyncValidtionExpression": ""
   },
   "textinput-displayValueExpression" : {
     "jcr:primaryType": "nt:unstructured",

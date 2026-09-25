@@ -139,6 +139,18 @@ test('extractFunctionNames extracts from validationExpression and displayValueEx
     expect(ids).toContain('formatPhone');
 });
 
+test('extractFunctionNames extracts from asyncValidtionExpression', () => {
+    const formJson = {
+        ':items': {
+            field1: {
+                asyncValidtionExpression: 'asyncValidate($value)'
+            }
+        }
+    };
+    const result = RuleUtils.extractFunctionNames(formJson);
+    expect(result.map(f => f.id)).toContain('asyncValidate');
+});
+
 test('extractFunctionNames extracts from nested panel items', () => {
     const formJson = {
         ':items': {

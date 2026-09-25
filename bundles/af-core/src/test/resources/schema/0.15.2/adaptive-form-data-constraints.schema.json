@@ -138,6 +138,10 @@
     "validationExpression": {
       "type": "string",
       "format": "json-formula"
+    },
+    "asyncValidtionExpression": {
+      "type": "string",
+      "format": "json-formula"
     }
   }
 }
