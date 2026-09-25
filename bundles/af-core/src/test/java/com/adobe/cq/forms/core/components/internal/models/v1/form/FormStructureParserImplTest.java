@@ -136,16 +136,16 @@ public class FormStructureParserImplTest {
         String formDef = formStructureParser.getFormDefinition();
 
         // 1) Output must be syntactically valid JSON - this is exactly what the client's
-        //    JSON.parse needs. Jackson always escapes inner quotes to \" so this holds
-        //    regardless of HTMLCharacterEscapes (proving the raw '"' seen in production
-        //    cannot originate from getFormDefinition).
+        // JSON.parse needs. Jackson always escapes inner quotes to \" so this holds
+        // regardless of HTMLCharacterEscapes (proving the raw '"' seen in production
+        // cannot originate from getFormDefinition).
         Map<String, Object> formJson = new ObjectMapper().readValue(formDef,
             new TypeReference<Map<String, Object>>() {});
 
         // 2) No raw '<'/'>' markup may leak into the serialized JSON. With HTMLCharacterEscapes
-        //    enabled the anchor is emitted as <a href=\"...\", so HTL's html display
-        //    context has no markup to sanitize/mangle. On 650 with the escapes commented out
-        //    this assertion fails: the raw "<a href=" survives and is rewritten downstream.
+        // enabled the anchor is emitted as <a href=\"...\", so HTL's html display
+        // context has no markup to sanitize/mangle. On 650 with the escapes commented out
+        // this assertion fails: the raw "<a href=" survives and is rewritten downstream.
         Assertions.assertFalse(formDef.contains("<a href="),
             "raw <a> markup leaked into the form definition JSON: " + formDef);
         Assertions.assertTrue(formDef.toLowerCase().contains("\\u003ca href="),
