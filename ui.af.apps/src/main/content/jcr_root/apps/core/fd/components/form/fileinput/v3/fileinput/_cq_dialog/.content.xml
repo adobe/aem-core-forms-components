@@ -87,6 +87,7 @@
                     </basic>
                     <validation
                         jcr:primaryType="nt:unstructured"
+                        jcr:title="Validation"
                         sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <columns
