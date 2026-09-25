@@ -94,6 +94,7 @@
             this.widget.forEach(optionWidget => {
                 this.#addWidgetListeners(optionWidget);
             });
+            this.#syncWidgetIds();
         }
 
         updateEnabled(enabled, state) {
@@ -189,12 +190,20 @@
         syncMarkupWithModel() {
             super.syncMarkupWithModel();
             this.#syncWidgetName();
+            this.#syncWidgetIds();
         }
 
         #syncWidgetName() {
             const name = this.getModel()?.name;
             this.widget.forEach(widget => {
                 widget.setAttribute("name", `${this.id}_${name}`);
+            });
+        }
+
+        #syncWidgetIds() {
+            const widgetId = `${this.id}-widget`;
+            this.widget.forEach((widget, index) => {
+                widget.id = `${widgetId}_${index + 1}`;
             });
         }
     }
