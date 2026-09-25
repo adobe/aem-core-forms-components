@@ -30,6 +30,13 @@ cy.af = {
         return Cypress.env("forms.far") === "classic-latest-cp";
     },
 
+    isLtsAddon : () => {
+        // True only on the 6.6.0/LTS add-on line (6.1.x -> forms.far "classic-lts").
+        // Use this for features that ship only on LTS (e.g. EDS form creation), which are
+        // absent from the 6.5 line ("classic"/"classic-latest"). Undefined => local run.
+        return Cypress.env("forms.far") == null || Cypress.env("forms.far") === "classic-lts";
+    },
+
     isReleasedAddon : () => {
         // if not defined always return true for local execution to pass
         return Cypress.env("forms.far") == null || Cypress.env("forms.far") === "classic";
