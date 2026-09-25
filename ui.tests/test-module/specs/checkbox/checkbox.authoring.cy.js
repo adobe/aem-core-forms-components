@@ -57,6 +57,41 @@ describe('Page - Authoring', function () {
     cy.deleteComponentByPath(checkboxDrop);
   }
 
+  const testCheckedValueDefault = function (checkboxEditPathSelector, checkboxDrop, isSites) {
+    if (isSites) {
+      dropCheckBoxInSites();
+    } else {
+      dropCheckboxInContainer();
+    }
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkboxEditPathSelector);
+    cy.invokeEditableAction("[data-action='CONFIGURE']");
+    // checkedValue field should be present and pre-filled with "on"
+    cy.get("[name='./checkedValue']")
+        .should("exist")
+        .should("have.value", "on");
+    cy.get('.cq-dialog-cancel').should('be.visible').click({ force: true });
+    cy.deleteComponentByPath(checkboxDrop);
+  }
+
+  const testCheckedValueRequired = function (checkboxEditPathSelector, checkboxDrop, isSites) {
+    if (isSites) {
+      dropCheckBoxInSites();
+    } else {
+      dropCheckboxInContainer();
+    }
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkboxEditPathSelector);
+    cy.invokeEditableAction("[data-action='CONFIGURE']");
+    // clear the checkedValue field and attempt to submit — dialog should stay open
+    cy.get("[name='./checkedValue']")
+        .should("exist")
+        .clear();
+    cy.get('.cq-dialog-submit').click();
+    // dialog must still be open (required validation blocked submit)
+    cy.get('.cq-dialog-submit').should("exist");
+    cy.get('.cq-dialog-cancel').should('be.visible').click({ force: true });
+    cy.deleteComponentByPath(checkboxDrop);
+  }
+
   // ***** //
 
   context('Open Forms Editor', function() {
@@ -82,6 +117,18 @@ describe('Page - Authoring', function () {
             testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, false);
         });
     });
+
+    it('checkedValue field should have default value "on"', { retries: 3 }, function() {
+        cy.cleanTest(checkboxDrop).then(function() {
+            testCheckedValueDefault(checkboxEditPathSelector, checkboxDrop, false);
+        });
+    });
+
+    it('checkedValue field should be required', { retries: 3 }, function() {
+        cy.cleanTest(checkboxDrop).then(function() {
+            testCheckedValueRequired(checkboxEditPathSelector, checkboxDrop, false);
+        });
+    });
   })
 
   context('Open Sites Editor', function() {
@@ -103,6 +150,18 @@ describe('Page - Authoring', function () {
     it('open edit dialog of aem forms Checkbox', { retries: 3 }, function() {
         cy.cleanTest(checkboxDrop).then(function() {
             testCheckboxBehaviour(checkboxEditPathSelector, checkboxDrop, true);
+        });
+    });
+
+    it('checkedValue field should have default value "on"', { retries: 3 }, function() {
+        cy.cleanTest(checkboxDrop).then(function() {
+            testCheckedValueDefault(checkboxEditPathSelector, checkboxDrop, true);
+        });
+    });
+
+    it('checkedValue field should be required', { retries: 3 }, function() {
+        cy.cleanTest(checkboxDrop).then(function() {
+            testCheckedValueRequired(checkboxEditPathSelector, checkboxDrop, true);
         });
     });
   })
