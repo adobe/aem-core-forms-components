@@ -169,4 +169,7 @@ public final class FormConstants {
     /** The resource type for table row v1 */
     public static final String RT_FD_FORM_TABLE_ROW_V1 = RT_FD_FORM_PREFIX + "tablerow/v1/tablerow";
 
+
+    /** The resource type for Adobe Sign Block v1 */
+    public static final String RT_FD_FORM_ADOBE_SIGN_BLOCK_V1 = RT_FD_FORM_PREFIX + "adobesignblock/v1/adobesignblock";
 }
