@@ -57,6 +57,7 @@ import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
+import com.adobe.cq.forms.core.components.internal.models.v1.form.SignerInfoImpl;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -308,6 +309,7 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_ASSOCIATE_PROPERTY_WRAPPER = "fd:associate";
     public static final String CUSTOM_DOR_PROPERTY_WRAPPER = "fd:dor";
+    public static final String CUSTOM_SIGNER_PROPERTY_WRAPPER = "fd:signerInfo";
     public static final String CUSTOM_DOR_CONTAINER_WRAPPER = "dorContainer";
     // used for DOR and SPA editor to work
     public static final String CUSTOM_JCR_PATH_PROPERTY_WRAPPER = "fd:path";
@@ -336,8 +338,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (!getCustomLayoutProperties().isEmpty()) {
             properties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
         }
-        if (!getDorProperties().isEmpty()) {
-            properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
+        Map<String, Object> dorProperties = getDorProperties();
+        if (!dorProperties.isEmpty()) {
+            properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, dorProperties);
         }
         Map<String, Object> annotations = getCqAnnotations();
         if (annotations != null) {
@@ -358,6 +361,12 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
         if (!associateProperties.isEmpty()) {
             properties.put(CUSTOM_ASSOCIATE_PROPERTY_WRAPPER, associateProperties);
         }
+
+        Resource signerInfoResource = resource.getChild(CUSTOM_SIGNER_PROPERTY_WRAPPER);
+        if (signerInfoResource != null) {
+            properties.put(CUSTOM_SIGNER_PROPERTY_WRAPPER, SignerInfoImpl.getSignerDetails(signerInfoResource));
+        }
+
         return properties;
     }
 
