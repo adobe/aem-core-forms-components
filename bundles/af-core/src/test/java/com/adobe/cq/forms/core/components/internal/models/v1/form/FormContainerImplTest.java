@@ -36,6 +36,7 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
+import com.adobe.cq.forms.core.components.util.ComponentUtils;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.day.cq.dam.api.Asset;
@@ -61,6 +62,8 @@ public class FormContainerImplTest {
     private static final String PATH_FORM_1 = CONTENT_ROOT + "/formcontainer";
     private static final String PATH_FORM_DATALAYER = CONTENT_ROOT + "/formcontainer-datalayer";
     private static final String PATH_FORM_WITH_DOCUMENT_PATH = CONTENT_ROOT + "/formcontainerWithDocumentPath";
+    private static final String SITES_PATH = "/content/exampleSite";
+    private static final String FORM_CONTAINER_PATH_IN_SITES = SITES_PATH + "/jcr:content/root/sitecontainer/formcontainer";
     private static final String TEST_CONTENT_FORM_MODEL = "/test-content-model.json";
     private static final String FORM_MODEL = "/test-form-model.json";
     private static final String CONTENT_DAM_ROOT = "/content/dam";
@@ -72,6 +75,7 @@ public class FormContainerImplTest {
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
         // load the adaptive form model in "/content/dam/abc.json"
         context.load().json(BASE + TEST_CONTENT_FORM_MODEL, CONTENT_DAM_ROOT);
+        context.load().json(BASE + "/test-v1-forms-in-sites.json", SITES_PATH);
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
             private final Set<String> IGNORED_NODE_NAMES = new HashSet<String>() {
@@ -122,6 +126,14 @@ public class FormContainerImplTest {
     void testGetEncodedCurrentPagePath() throws Exception {
         FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
         assertEquals(null, formContainer.getEncodedCurrentPagePath());
+    }
+
+    @Test
+    void testGetEncodedCurrentPagePathForSitesEmbeddedContainer() throws Exception {
+        // A v1 container embedded inside a Sites page must resolve to its own path,
+        // not the wrapping page's path (FORMS-26668).
+        FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class, context);
+        assertEquals(ComponentUtils.getEncodedPath(FORM_CONTAINER_PATH_IN_SITES), formContainer.getEncodedCurrentPagePath());
     }
 
     @Test

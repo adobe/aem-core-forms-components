@@ -37,6 +37,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.ContainerExporter;
 import com.adobe.cq.export.json.ExporterConstants;
@@ -139,11 +140,16 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @Override
     @JsonIgnore
     public String getEncodedCurrentPagePath() {
-        if (getCurrentPage() != null) {
-            return ComponentUtils.getEncodedPath(getCurrentPage().getPath());
-        } else {
+        if (getCurrentPage() == null) {
             return null;
         }
+        String parentPagePath = getCurrentPage().getPath();
+        if (GuideWCMUtils.isForms(parentPagePath)) {
+            // Classic top-level AF page: the whole page IS the form container.
+            return ComponentUtils.getEncodedPath(parentPagePath);
+        }
+        // Container embedded inside a Sites page: use the container's own path, not the page.
+        return ComponentUtils.getEncodedPath(resource.getPath());
     }
 
     @Override
