@@ -15,4 +15,30 @@
  ******************************************************************************/
 (function($) {
     "use strict";
+
+    var EDIT_DIALOG = ".cmp-adaptiveform-datetime__editdialog",
+        DATETIME_MIN_FIELD = ".cmp-adaptiveform-datetime__minimumDateTime coral-datepicker",
+        DATETIME_MAX_FIELD = ".cmp-adaptiveform-datetime__maximumDateTime coral-datepicker",
+        Utils = window.CQ.FormsCoreComponents.Utils.v1;
+
+    var DATE_COMPARE = function(a, b) {
+        var da = new Date(a), db = new Date(b);
+        return !isNaN(da) && !isNaN(db) && da > db;
+    };
+
+    Utils.registerMinMaxValidator(
+        DATETIME_MIN_FIELD, DATETIME_MAX_FIELD,
+        "Minimum date-time cannot be after maximum date-time",
+        "Maximum date-time cannot be before minimum date-time",
+        DATE_COMPARE
+    );
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(
+        Utils.handleMinMaxValidation(
+            DATETIME_MIN_FIELD, DATETIME_MAX_FIELD,
+            "Minimum date-time cannot be after maximum date-time",
+            "Maximum date-time cannot be before minimum date-time",
+            DATE_COMPARE
+        )
+    );
 })(jQuery);
