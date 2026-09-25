@@ -34,9 +34,7 @@
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on submitSuccess event.
-                // getState() omits `events` in the XFA runtime, so guard the access (optional
-                // chaining) to avoid a TypeError; a missing events object means no rule is configured.
-                if (!state.events?.submitSuccess || state.events.submitSuccess.length === 0) {
+                if (!state.events.submitSuccess || state.events.submitSuccess.length === 0) {
                     const globals = {
                         form: self.getModel().getRuleNode(),
                         event: {
@@ -50,7 +48,7 @@
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on submitError event.
-                if (!state.events?.submitError || state.events.submitError.length === 0) {
+                if (!state.events.submitError || state.events.submitError.length === 0) {
                     let defaultSubmissionError = FormView.LanguageUtils.getTranslatedString(self.getLang(), "InternalFormSubmissionError");
                     const globals = {
                         form: self.getModel().getRuleNode(),
@@ -66,7 +64,7 @@
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on custom:saveSuccess event.
-                if (!state.events?.['custom:saveSuccess'] || state.events['custom:saveSuccess'].length === 0) {
+                if (!state.events['custom:saveSuccess'] || state.events['custom:saveSuccess'].length === 0) {
                     console.log("Draft id = " + action?.payload?.body?.draftId);
                     window.alert(FormView.LanguageUtils.getTranslatedString(self.getLang(), "saveDraftSuccessMessage"));
                 }
@@ -74,7 +72,7 @@
             this._model.subscribe((action) => {
                 let state = action.target.getState();
                 // execute the handler only if there are no rules configured on custom:saveError event.
-                if (!state.events?.['custom:saveError'] || state.events['custom:saveError'].length === 0) {
+                if (!state.events['custom:saveError'] || state.events['custom:saveError'].length === 0) {
                     window.alert(FormView.LanguageUtils.getTranslatedString(self.getLang(), "saveDraftErrorMessage"));
                 }
             }, "saveError");
