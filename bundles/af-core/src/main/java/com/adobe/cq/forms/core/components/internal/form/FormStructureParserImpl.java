@@ -148,9 +148,7 @@ public class FormStructureParserImpl implements FormStructureParser {
         String result = null;
         FormContainer formContainer = resource.adaptTo(FormContainer.class);
         try {
-            // commenting the below line because this is causing problem in json encoding
-            // and solving this requires huge bump in 6.5
-            // HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
+            HTMLCharacterEscapes htmlCharacterEscapes = new HTMLCharacterEscapes();
             ObjectMapper mapper = new ObjectMapper();
             Writer writer = new StringWriter();
             ObjectWriter objectWriter;
@@ -168,7 +166,7 @@ public class FormStructureParserImpl implements FormStructureParser {
                 request.setAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW, Boolean.TRUE);
             }
             objectWriter = mapper.writerWithView(Views.Publish.class);
-            // objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
+            objectWriter.getFactory().setCharacterEscapes(htmlCharacterEscapes);
             objectWriter.writeValue(writer, formContainer);
             result = writer.toString();
             if (result != null) {

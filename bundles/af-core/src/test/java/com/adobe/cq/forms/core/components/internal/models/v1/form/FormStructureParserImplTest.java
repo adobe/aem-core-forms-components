@@ -123,6 +123,41 @@ public class FormStructureParserImplTest {
     }
 
     @Test
+    void testFormDefinitionEscapesRawRichTextMarkup() throws JsonProcessingException {
+        // Rich-text value stored as RAW HTML with a quoted anchor - reproduces the
+        // "<a href=...>" content that was breaking client-side JSON.parse on EDS.
+        String richText = "<p>I hereby consent, see the notice "
+            + "<a href=\"https://example.com/notice\" style=\"white-space: pre-wrap;\">here.</a></p>";
+
+        Resource textInput = context.resourceResolver().getResource(FORM_CONTAINER_PATH + "/textinput");
+        textInput.adaptTo(ModifiableValueMap.class).put("description", richText);
+
+        FormStructureParser formStructureParser = getFormStructureParserUnderTest(FORM_CONTAINER_PATH);
+        String formDef = formStructureParser.getFormDefinition();
+
+        // 1) Output must be syntactically valid JSON - this is exactly what the client's
+        // JSON.parse needs. Jackson always escapes inner quotes to \" so this holds
+        // regardless of HTMLCharacterEscapes (proving the raw '"' seen in production
+        // cannot originate from getFormDefinition).
+        Map<String, Object> formJson = new ObjectMapper().readValue(formDef,
+            new TypeReference<Map<String, Object>>() {});
+
+        // 2) No raw '<'/'>' markup may leak into the serialized JSON. With HTMLCharacterEscapes
+        // enabled the anchor is emitted as <a href=\"...\", so HTL's html display
+        // context has no markup to sanitize/mangle. On 650 with the escapes commented out
+        // this assertion fails: the raw "<a href=" survives and is rewritten downstream.
+        Assertions.assertFalse(formDef.contains("<a href="),
+            "raw <a> markup leaked into the form definition JSON: " + formDef);
+        Assertions.assertTrue(formDef.toLowerCase().contains("\\u003ca href="),
+            "anchor markup should be unicode-escaped (\\u003c) in the JSON");
+
+        // 3) After JSON decoding the value must round-trip back to the original rich text.
+        Map<String, Object> textinput = (Map<String, Object>) ((Map<String, Object>) formJson.get(":items"))
+            .get("textinput");
+        Assertions.assertEquals(richText, textinput.get("description"));
+    }
+
+    @Test
     void testFormContainerPathEmbedWithoutIframe() {
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(JCR_CONTENT_PATH, FORM_CONTAINER_PATH);
         assertEquals(FORM_CONTAINER_PATH, formStructureParser.getFormContainerPath());
