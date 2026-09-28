@@ -36,3 +36,9 @@
 
 .cmp-adaptiveform-tablerow__add-button:focus-visible,
 .cmp-adaptiveform-tablerow__remove-button:focus-visible {}
+
+@media (max-width: 768px) {
+    .cmp-adaptiveform-tablecell.cmp-adaptiveform-tablecell--with-row-controls {}
+
+    .cmp-adaptiveform-tablerow__runtime-controls {}
+}
