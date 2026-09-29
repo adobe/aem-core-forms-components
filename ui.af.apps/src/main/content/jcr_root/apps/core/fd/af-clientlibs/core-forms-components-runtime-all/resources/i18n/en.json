@@ -53,6 +53,8 @@
   "brushSize": "Brush Size: ",
   "geoLocationError": "Error fetching geolocation",
   "geoLocationFetch": "Fetching Geo Location...",
+  "showPassword": "Show password",
+  "hidePassword": "Hide password"
   "sortTable": "Sort table",
   "filterTable": "Filter table",
   "sort": "Sort",

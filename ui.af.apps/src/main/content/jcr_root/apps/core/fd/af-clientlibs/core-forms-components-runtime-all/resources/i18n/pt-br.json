@@ -94,6 +94,8 @@
   "brushSize": "Tamanho do pincel: ",
   "geoLocationError": "Erro ao obter geolocalização",
   "geoLocationFetch": "Obtendo geolocalização...",
+  "showPassword": "Mostrar senha",
+  "hidePassword": "Ocultar senha"
   "sortTable": "Ordenar tabela",
   "filterTable": "Filtrar tabela",
   "sort": "Ordenar",

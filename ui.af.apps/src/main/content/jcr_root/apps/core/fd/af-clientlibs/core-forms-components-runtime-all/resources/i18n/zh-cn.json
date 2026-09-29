@@ -94,6 +94,8 @@
   "brushSize": "画笔大小：",
   "geoLocationError": "获取地理位置时出错",
   "geoLocationFetch": "正在获取地理位置...",
+  "showPassword": "显示密码",
+  "hidePassword": "隐藏密码"
   "sortTable": "排序表格",
   "filterTable": "筛选表格",
   "sort": "排序",

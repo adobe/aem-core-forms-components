@@ -94,6 +94,8 @@
   "brushSize": "Dimensione pennello: ",
   "geoLocationError": "Errore nel recupero della geolocalizzazione",
   "geoLocationFetch": "Recupero geolocalizzazione in corso...",
+  "showPassword": "Mostra password",
+  "hidePassword": "Nascondi password"
   "sortTable": "Ordina tabella",
   "filterTable": "Filtra tabella",
   "sort": "Ordina",

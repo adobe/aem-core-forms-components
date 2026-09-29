@@ -94,6 +94,8 @@
   "brushSize": "Épaisseur du pinceau : ",
   "geoLocationError": "Erreur lors de la récupération de la géolocalisation",
   "geoLocationFetch": "Récupération de la géolocalisation...",
+  "showPassword": "Afficher le mot de passe",
+  "hidePassword": "Masquer le mot de passe"
   "sortTable": "Trier le tableau",
   "filterTable": "Filtrer le tableau",
   "sort": "Trier",
