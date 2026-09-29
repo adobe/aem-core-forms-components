@@ -32,6 +32,12 @@ import {registerFormWebMCP} from '@aemforms/af-webmcp';
 import HTTPAPILayer from '../src/HTTPAPILayer.js';
 import formJson from './resources/form.json';
 
+afterEach(() => {
+    document.body.innerHTML = '';
+    delete window.adaptiveFormsWebMcpAdditionalTools;
+    jest.clearAllMocks();
+});
+
 test('setupFormContainer registers the WebMCP catalog once with the form model', async () => {
     HTTPAPILayer.getFormDefinition.mockResolvedValue(formJson);
     const unregister = jest.fn();
@@ -52,6 +58,28 @@ test('setupFormContainer registers the WebMCP catalog once with the form model',
 
     expect(registerFormWebMCP).toHaveBeenCalledTimes(1);
     expect(registerFormWebMCP).toHaveBeenCalledWith(container.getModel());
+    expect(container.getModel().id).toBe('/content/a/b/c');
     container._unregisterWebMcp();
     expect(unregister).toHaveBeenCalledTimes(1);
+});
+
+test('setupFormContainer forwards the domain-specific additionalTools factory', async () => {
+    HTTPAPILayer.getFormDefinition.mockResolvedValue(formJson);
+    const unregister = jest.fn();
+    const additionalTools = jest.fn();
+    window.adaptiveFormsWebMcpAdditionalTools = additionalTools;
+    registerFormWebMCP.mockReturnValue(unregister);
+
+    const el = document.createElement('div');
+    el.classList.add('cmp-adaptiveform-container');
+    el.dataset.cmpPath = '/content/a/b/domain-form';
+    document.body.appendChild(el);
+
+    let container;
+    const createFormContainer = (params) => {
+        container = new FormContainer(params);
+        return container;
+    };
+    await Utils.setupFormContainer(createFormContainer, '.cmp-adaptiveform-container', 'adaptiveFormContainer');
+    expect(registerFormWebMCP).toHaveBeenCalledWith(container.getModel(), {additionalTools});
 });

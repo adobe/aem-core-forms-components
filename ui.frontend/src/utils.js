@@ -342,6 +342,9 @@ class Utils {
                 } else {
                     _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 }
+                if (!_formJson.id) {
+                    _formJson = {..._formJson, id: elements[i].id || _path};
+                }
                 console.debug("fetched model json", _formJson);
                 await RuleUtils.registerCustomFunctionsV2( _formJson);
                 await RuleUtils.registerCustomFunctionsByUrl(customFunctionUrl);
@@ -374,7 +377,13 @@ class Utils {
                 Utils.initializeAllFields(formContainer);
                 // Expose the form's WebMCP tool catalog to in-browser AI agents. No-ops unless the
                 // form opted in via fd:webMcpEnabled and a browser modelContext is available.
-                formContainer._setWebMcpUnregister(registerFormWebMCP(formContainer.getModel()));
+                const additionalTools = window.adaptiveFormsWebMcpAdditionalTools;
+                const webMcpOptions = typeof additionalTools === 'function' ? {additionalTools} : undefined;
+                formContainer._setWebMcpUnregister(
+                    webMcpOptions
+                        ? registerFormWebMCP(formContainer.getModel(), webMcpOptions)
+                        : registerFormWebMCP(formContainer.getModel())
+                );
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }
