@@ -62,7 +62,7 @@
             </pluginRepositories>
         </profile>
         <profile>
-            <id>ossrh</id>
+            <id>central</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>

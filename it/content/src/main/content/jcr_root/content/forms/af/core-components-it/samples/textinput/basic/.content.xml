@@ -249,6 +249,24 @@
                         jcr:primaryType="nt:unstructured"
                         click="[submitForm()]"/>
             </submit>
+            <textcharcount
+                    jcr:created="{Date}2026-09-23T10:00:00.000+05:30"
+                    jcr:createdBy="admin"
+                    jcr:lastModified="{Date}2026-09-23T10:00:00.000+05:30"
+                    jcr:lastModifiedBy="admin"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Text Input with Character Count"
+                    sling:resourceType="forms-components-examples/components/form/textinput"
+                    enabled="{Boolean}true"
+                    fd:showCharacterCount="true"
+                    fieldType="text-input"
+                    hideTitle="false"
+                    maxLength="20"
+                    multiLine="true"
+                    name="textcharcount"
+                    readOnly="{Boolean}false"
+                    unboundFormElement="{Boolean}false"
+                    visible="{Boolean}true"/>
         </guideContainer>
     </jcr:content>
 </jcr:root>
