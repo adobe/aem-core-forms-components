@@ -154,6 +154,9 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private String setPropertyBehaviour;
 
+    @ValueMapValue(name = ReservedProperties.FD_WEB_MCP_ENABLED, injectionStrategy = InjectionStrategy.OPTIONAL)
+    private Boolean webMcpEnabled = false;
+
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATA)
     @Nullable
     private String data;
@@ -437,6 +440,7 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
         if (StringUtils.isNotBlank(setPropertyBehaviour)) {
             properties.put(ReservedProperties.FD_SET_PROPERTY_BEHAVIOUR, setPropertyBehaviour);
         }
+        properties.put(ReservedProperties.FD_WEB_MCP_ENABLED, Boolean.TRUE.equals(webMcpEnabled));
         properties.put(FD_FORM_DATA_ENABLED, formDataEnabled);
         if (this.autoSaveConfig != null && this.autoSaveConfig.isEnableAutoSave()) {
             properties.put(ReservedProperties.FD_AUTO_SAVE_PROPERTY_WRAPPER, this.autoSaveConfig);
