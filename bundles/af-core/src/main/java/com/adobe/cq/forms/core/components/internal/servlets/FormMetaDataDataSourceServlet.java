@@ -87,7 +87,8 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         PREFILL_ACTION("prefillServiceProvider"),
         LANG("lang"),
         FORMATTERS("formatters"),
-        SSV_CLOUD_CONFIG("ssvCloudServiceConfiguration");
+        SSV_CLOUD_CONFIG("ssvCloudServiceConfiguration"),
+        FILE_ATTACHMENT_VALIDATOR("fileAttachmentValidator");
 
         private String value;
 
@@ -181,12 +182,13 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
         FormMetaData formMetaData = resourceResolver.adaptTo(FormMetaData.class);
         if (formMetaData != null) {
             Iterator<FormsManager.ComponentDescription> metaDataList = null;
+            I18n i18n = new I18n(request.getResourceBundle(request.getLocale()));
             switch (type) {
                 case FORMATTERS:
                 case LANG:
                     ContentPolicy policy = ComponentUtils.getPolicy((String) request.getAttribute(Value.CONTENTPATH_ATTRIBUTE),
                         resourceResolver);
-                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Select", ""));
+                    resources.add(getResourceForDropdownDisplay(resourceResolver, i18n.get("Select"), ""));
                     if (policy != null) {
                         ValueMap props = policy.getProperties();
                         if (props != null) {
@@ -204,7 +206,7 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                             }
                         }
                     }
-                    resources.add(getResourceForDropdownDisplay(resourceResolver, "Custom", "custom"));
+                    resources.add(getResourceForDropdownDisplay(resourceResolver, i18n.get("Custom"), "custom"));
                     break;
                 case SUBMIT_ACTION:
                     // filter the submit actions by uniqueness and data model
@@ -223,7 +225,12 @@ public class FormMetaDataDataSourceServlet extends AbstractDataSourceServlet {
                 case PREFILL_ACTION:
                     metaDataList = formMetaData.getPrefillActions();
                     // Add an explicit empty option so authors can clear an already selected prefill service.
-                    I18n i18n = new I18n(request.getResourceBundle(request.getLocale()));
+                    resources.add(getResourceForDropdownDisplay(resourceResolver, i18n.get("None"), ""));
+                    resources.addAll(this.getResourceListFromComponentDescription(metaDataList, resourceResolver));
+                    break;
+                case FILE_ATTACHMENT_VALIDATOR:
+                    metaDataList = formMetaData.getFileAttachmentValidators();
+                    // Add an explicit empty option so authors can clear an already selected file attachment validator.
                     resources.add(getResourceForDropdownDisplay(resourceResolver, i18n.get("None"), ""));
                     resources.addAll(this.getResourceListFromComponentDescription(metaDataList, resourceResolver));
                     break;

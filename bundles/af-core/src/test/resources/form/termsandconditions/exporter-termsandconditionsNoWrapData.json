@@ -4,7 +4,8 @@
   "name": "termsandconditions1694159302516",
   "properties": {
     "fd:path": "/content/termsandconditionsNoWrapData",
-    "fd:tnc": true
+    "fd:tnc": true,
+    "fd:showAsPopup": true
   },
   "label": {
     "value": "Terms And Conditions"

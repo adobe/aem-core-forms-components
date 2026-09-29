@@ -45,11 +45,14 @@ if (typeof window.RecaptchaWidget === 'undefined') {
 
             var self = this;
             var recaptchaConfigData = this.#options;
+            // reCAPTCHA v3 has no "invisible" size setting like classic v2 - it is always
+            // badge-only/invisible, so it needs the same treatment as an explicit invisible size.
+            var isRecaptchaV3 = recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.version === "v3";
             element.innerHTML = '<div class="g-recaptcha"></div>';
             var gcontainer = document.getElementsByClassName("g-recaptcha")[0];
             var widgetId;
             var url = recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.uri;
-            if (recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.size == "invisible") {
+            if (recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.size == "invisible" || isRecaptchaV3) {
                 gcontainer.classList.add('g-recaptcha-invisible');
                 recaptchaConfigData.required = false;
             }
@@ -94,7 +97,7 @@ if (typeof window.RecaptchaWidget === 'undefined') {
             var runtimeLocale = this.#lang;
 
             var scr = document.createElement('script');
-            let queryParams = isScoreBasedKey() ? "?render=" + recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.siteKey
+            let queryParams = (isScoreBasedKey() || isRecaptchaV3) ? "?render=" + recaptchaConfigData.properties[RecaptchaWidget.FD_CAPTCHA].config.siteKey
                 : "?onload=onloadRecaptchaCallback&render=explicit";
             queryParams += "&hl=" + runtimeLocale;
             scr.src = url + queryParams;

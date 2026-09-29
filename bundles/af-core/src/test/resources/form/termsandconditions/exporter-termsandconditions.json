@@ -6,6 +6,7 @@
   "properties": {
     "fd:path": "/content/termsandconditions",
     "fd:tnc": true,
+    "fd:showAsPopup": true,
     "customProp": "customPropValue"
   },
   "label": {

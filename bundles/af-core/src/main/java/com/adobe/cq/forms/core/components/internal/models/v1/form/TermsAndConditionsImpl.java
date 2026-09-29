@@ -46,6 +46,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class TermsAndConditionsImpl extends PanelImpl implements TermsAndConditions {
 
     private static final String CUSTOM_TNC_PROPERTY = "fd:tnc";
+    private static final String SHOW_AS_POPUP_PROPERTY = "fd:showAsPopup";
 
     @JsonIgnore
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_SHOW_APPROVAL_OPTION)
@@ -88,6 +89,7 @@ public class TermsAndConditionsImpl extends PanelImpl implements TermsAndConditi
         if (resource.getValueMap().containsKey(CUSTOM_TNC_PROPERTY)) {
             properties.put(CUSTOM_TNC_PROPERTY, true);
         }
+        properties.put(SHOW_AS_POPUP_PROPERTY, isShowAsPopup());
         return properties;
     }
 

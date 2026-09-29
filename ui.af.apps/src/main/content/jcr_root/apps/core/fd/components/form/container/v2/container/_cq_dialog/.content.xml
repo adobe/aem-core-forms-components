@@ -372,6 +372,26 @@
                                             </cui>
                                         </uiSettings>
                                     </thankYouMessage>
+                                    <fileAttachmentValidator
+                                            granite:class="cmp-adaptiveform-container__fileattachmentvalidator"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                            disabled="false"
+                                            emptyText="Select"
+                                            fieldDescription="Select a file attachment validator service."
+                                            fieldLabel="File Attachment Validator"
+                                            name="./fileAttachmentValidator"
+                                            renderReadOnly="false">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/fd/components/form/container/v1/datasource"
+                                                guideDataModel="basic"
+                                                type="fileAttachmentValidator"/>
+                                        <granite:rendercondition
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                                toggleName="FT_FORMS-23497"/>
+                                    </fileAttachmentValidator>
                                     <ssvCloudServicePath
                                       jcr:primaryType="nt:unstructured"
                                       sling:resourceType="granite/ui/components/coral/foundation/form/select"

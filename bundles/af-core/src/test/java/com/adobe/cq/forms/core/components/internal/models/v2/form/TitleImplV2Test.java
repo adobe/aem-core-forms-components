@@ -197,6 +197,7 @@ public class TitleImplV2Test {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
         request.setParameterMap(paramMap);
+        Utils.disableLocaleFeatureToggleLookup(request);
         FormTitle title = request.adaptTo(FormTitle.class);
         assertEquals("Title", title.getText());
     }

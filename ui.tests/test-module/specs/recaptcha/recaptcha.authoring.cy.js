@@ -75,6 +75,12 @@ describe('Page - Authoring', function () {
         cy.get("input[name='./recaptchaSize'][value='normal']").should("be.disabled");
         cy.get("input[name='./recaptchaSize'][value='compact']").should("be.disabled");
 
+        // reCAPTCHA v3 is badge-only (no visible challenge), so size must be disabled like enterprise-score.
+        cy.get(".cmp-adaptiveform-recaptcha__configuration").click().then(() => {
+            cy.get("coral-selectlist-item[value='v3']").click();
+            cy.get("input[name='./recaptchaSize'][value='normal']").should("be.disabled");
+            cy.get("input[name='./recaptchaSize'][value='compact']").should("be.disabled");
+        })
 
         cy.get(".cmp-adaptiveform-recaptcha__configuration").click().then(() => {
             cy.get("coral-selectlist-item[value='v2checkbox']").click();
