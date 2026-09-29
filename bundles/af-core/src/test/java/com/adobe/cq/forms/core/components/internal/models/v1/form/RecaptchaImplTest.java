@@ -62,6 +62,11 @@ public class RecaptchaImplTest {
         }
 
         @Override
+        public String getCustomFunctionFranklinProxyUrl(Resource resource) {
+            return null;
+        }
+
+        @Override
         public HCaptchaConfiguration getHCaptchaCloudConfiguration(Resource resource) throws GuideException {
             return null;
         }
@@ -151,6 +156,31 @@ public class RecaptchaImplTest {
         Map<String, Object> captchaProps = recaptcha.getCaptchaProperties();
         String enterpriseUrl = (String) captchaProps.get("uri");
         assertEquals("https://www.recaptcha.net/recaptcha/enterprise.js", enterpriseUrl);
+    }
+
+    @Test
+    void getV3Url() {
+        // reCAPTCHA v3 uses the classic (non-enterprise) endpoint, same as v2.
+        when(reCaptchaConfiguration.version()).thenReturn("v3");
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
+        Map<String, Object> captchaProps = recaptcha.getCaptchaProperties();
+        assertEquals("https://www.recaptcha.net/recaptcha/api.js", captchaProps.get("uri"));
+        assertEquals("v3", captchaProps.get("version"));
+    }
+
+    @Test
+    void getCaptchaDisplayModeForV3() {
+        // v3 has no visible challenge, so it must report as invisible for auto token fetch on submit.
+        when(reCaptchaConfiguration.version()).thenReturn("v3");
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
+        assertEquals("invisible", recaptcha.getCaptchaDisplayMode());
+    }
+
+    @Test
+    void getCaptchaDisplayModeForNonV3() {
+        when(reCaptchaConfiguration.version()).thenReturn("enterprise");
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
+        assertEquals("visible", recaptcha.getCaptchaDisplayMode());
     }
 
     @Test

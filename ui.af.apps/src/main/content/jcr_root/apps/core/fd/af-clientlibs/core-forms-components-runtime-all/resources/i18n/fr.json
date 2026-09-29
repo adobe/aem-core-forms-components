@@ -96,4 +96,15 @@
   "geoLocationFetch": "Récupération de la géolocalisation...",
   "showPassword": "Afficher le mot de passe",
   "hidePassword": "Masquer le mot de passe"
+  "sortTable": "Trier le tableau",
+  "filterTable": "Filtrer le tableau",
+  "sort": "Trier",
+  "filter": "Filtrer",
+  "sortOptions": "Options de tri",
+  "sortBy": "Trier par",
+  "sortColumns": "Trier les colonnes",
+  "sortOrder": "Ordre de tri",
+  "sortDirection": "Sens du tri",
+  "ascending": "Croissant",
+  "descending": "Décroissant"
 }

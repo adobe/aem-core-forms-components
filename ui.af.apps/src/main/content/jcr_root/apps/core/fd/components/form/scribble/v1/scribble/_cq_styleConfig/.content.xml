@@ -147,6 +147,24 @@
                                                 cssSelector=".cmp-adaptiveform-scribble__control-geo"
                                                 longTitle="Scribble Control Geo"
                                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Hover"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-geo:hover"/>
+                                                <focus
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Focus"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-geo:focus"/>
+                                                <active
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Down"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-geo:active"/>
+                                                <disabled
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Disabled"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-geo:disabled"/>
+                                            </states>
                                         </scribbleControlGeo>
                                         <scribbleControlText
                                                 jcr:primaryType="nt:unstructured"
@@ -155,6 +173,24 @@
                                                 cssSelector=".cmp-adaptiveform-scribble__control-text"
                                                 longTitle="Scribble Control Text"
                                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Hover"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-text:hover"/>
+                                                <focus
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Focus"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-text:focus"/>
+                                                <active
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Down"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-text:active"/>
+                                                <disabled
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Disabled"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-text:disabled"/>
+                                            </states>
                                         </scribbleControlText>
                                         <scribbleControlBrush
                                                 jcr:primaryType="nt:unstructured"
@@ -163,6 +199,24 @@
                                                 cssSelector=".cmp-adaptiveform-scribble__control-brush"
                                                 longTitle="Scribble Control Brush"
                                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Hover"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-brush:hover"/>
+                                                <focus
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Focus"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-brush:focus"/>
+                                                <active
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Down"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-brush:active"/>
+                                                <disabled
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Disabled"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-brush:disabled"/>
+                                            </states>
                                         </scribbleControlBrush>
                                         <scribbleControlClear
                                                 jcr:primaryType="nt:unstructured"
@@ -171,6 +225,24 @@
                                                 cssSelector=".cmp-adaptiveform-scribble__control-clear"
                                                 longTitle="Scribble Control Clear"
                                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Hover"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-clear:hover"/>
+                                                <focus
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Focus"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-clear:focus"/>
+                                                <active
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Down"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-clear:active"/>
+                                                <disabled
+                                                        jcr:primaryType="nt:unstructured"
+                                                        jcr:title="Disabled"
+                                                        cssSelector=".cmp-adaptiveform-scribble__control-clear:disabled"/>
+                                            </states>
                                         </scribbleControlClear>
                                         <scribbleControlpanelControls
                                                 jcr:primaryType="nt:unstructured"
@@ -239,6 +311,24 @@
                                 cssSelector=".cmp-adaptiveform-scribble__button"
                                 longTitle="Scribble Button"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__button:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__button:focus"/>
+                                <active
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Down"
+                                        cssSelector=".cmp-adaptiveform-scribble__button:active"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-scribble__button:disabled"/>
+                            </states>
                         </scribbleButton>
                         <scribbleButtonPrimary
                                 jcr:primaryType="nt:unstructured"
@@ -247,6 +337,24 @@
                                 cssSelector=".cmp-adaptiveform-scribble__button--primary"
                                 longTitle="Scribble Button Primary"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__button--primary:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__button--primary:focus"/>
+                                <active
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Down"
+                                        cssSelector=".cmp-adaptiveform-scribble__button--primary:active"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-scribble__button--primary:disabled"/>
+                            </states>
                         </scribbleButtonPrimary>
                         <scribbleButtonSecondary
                                 jcr:primaryType="nt:unstructured"
@@ -255,6 +363,24 @@
                                 cssSelector=".cmp-adaptiveform-scribble__button--secondary"
                                 longTitle="Scribble Button Secondary"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__button--secondary:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__button--secondary:focus"/>
+                                <active
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Down"
+                                        cssSelector=".cmp-adaptiveform-scribble__button--secondary:active"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-scribble__button--secondary:disabled"/>
+                            </states>
                         </scribbleButtonSecondary>
                         <scribbleSaveButton
                                 jcr:primaryType="nt:unstructured"
@@ -263,6 +389,24 @@
                                 cssSelector=".cmp-adaptiveform-scribble__save-button"
                                 longTitle="Scribble Save Button"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__save-button:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__save-button:focus"/>
+                                <active
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Down"
+                                        cssSelector=".cmp-adaptiveform-scribble__save-button:active"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-scribble__save-button:disabled"/>
+                            </states>
                         </scribbleSaveButton>
                         <scribbleCloseButton
                                 jcr:primaryType="nt:unstructured"
@@ -271,6 +415,24 @@
                                 cssSelector=".cmp-adaptiveform-scribble__close-button"
                                 longTitle="Scribble Close Button"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__close-button:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__close-button:focus"/>
+                                <active
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Down"
+                                        cssSelector=".cmp-adaptiveform-scribble__close-button:active"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-scribble__close-button:disabled"/>
+                            </states>
                         </scribbleCloseButton>
                         <scribbleKeyboardSignBox
                                 jcr:primaryType="nt:unstructured"
@@ -279,6 +441,16 @@
                                 cssSelector=".cmp-adaptiveform-scribble__keyboard-sign-box"
                                 longTitle="Scribble Keyboard Sign Box"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__keyboard-sign-box:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__keyboard-sign-box:focus"/>
+                            </states>
                         </scribbleKeyboardSignBox>
                         <scribbleClearSign
                                 jcr:primaryType="nt:unstructured"
@@ -287,6 +459,16 @@
                                 cssSelector=".cmp-adaptiveform-scribble__clear-sign"
                                 longTitle="Scribble Clear Sign"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__clear-sign:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__clear-sign:focus"/>
+                            </states>
                         </scribbleClearSign>
                         <scribbleBrushlist
                                 jcr:primaryType="nt:unstructured"
@@ -295,6 +477,16 @@
                                 cssSelector=".cmp-adaptiveform-scribble__brushlist"
                                 longTitle="Scribble Brushlist"
                                 propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-scribble__brushlist:hover"/>
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-scribble__brushlist:focus"/>
+                            </states>
                         </scribbleBrushlist>
                         <scribbleCaption
                                 jcr:primaryType="nt:unstructured"

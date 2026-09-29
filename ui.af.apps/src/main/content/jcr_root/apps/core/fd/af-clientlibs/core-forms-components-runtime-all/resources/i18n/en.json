@@ -55,4 +55,15 @@
   "geoLocationFetch": "Fetching Geo Location...",
   "showPassword": "Show password",
   "hidePassword": "Hide password"
+  "sortTable": "Sort table",
+  "filterTable": "Filter table",
+  "sort": "Sort",
+  "filter": "Filter",
+  "sortOptions": "Sort options",
+  "sortBy": "Sort by",
+  "sortColumns": "Sort columns",
+  "sortOrder": "Sort order",
+  "sortDirection": "Sort direction",
+  "ascending": "Ascending",
+  "descending": "Descending"
 }

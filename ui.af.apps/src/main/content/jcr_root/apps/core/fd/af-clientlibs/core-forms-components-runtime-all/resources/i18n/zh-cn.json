@@ -96,4 +96,15 @@
   "geoLocationFetch": "正在获取地理位置...",
   "showPassword": "显示密码",
   "hidePassword": "隐藏密码"
+  "sortTable": "排序表格",
+  "filterTable": "筛选表格",
+  "sort": "排序",
+  "filter": "筛选",
+  "sortOptions": "排序选项",
+  "sortBy": "排序方式",
+  "sortColumns": "排序列",
+  "sortOrder": "排序顺序",
+  "sortDirection": "排序方向",
+  "ascending": "升序",
+  "descending": "降序"
 }

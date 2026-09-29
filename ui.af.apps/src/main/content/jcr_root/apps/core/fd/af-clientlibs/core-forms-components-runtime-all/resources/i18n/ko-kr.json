@@ -96,4 +96,15 @@
   "geoLocationFetch": "지리적 위치 가져오는 중...",
   "showPassword": "비밀번호 표시",
   "hidePassword": "비밀번호 숨기기"
+  "sortTable": "표 정렬",
+  "filterTable": "표 필터",
+  "sort": "정렬",
+  "filter": "필터",
+  "sortOptions": "정렬 옵션",
+  "sortBy": "정렬 기준",
+  "sortColumns": "열 정렬",
+  "sortOrder": "정렬 순서",
+  "sortDirection": "정렬 방향",
+  "ascending": "오름차순",
+  "descending": "내림차순"
 }

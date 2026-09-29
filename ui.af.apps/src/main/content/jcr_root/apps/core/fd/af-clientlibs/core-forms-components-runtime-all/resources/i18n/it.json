@@ -96,4 +96,15 @@
   "geoLocationFetch": "Recupero geolocalizzazione in corso...",
   "showPassword": "Mostra password",
   "hidePassword": "Nascondi password"
+  "sortTable": "Ordina tabella",
+  "filterTable": "Filtra tabella",
+  "sort": "Ordina",
+  "filter": "Filtra",
+  "sortOptions": "Opzioni di ordinamento",
+  "sortBy": "Ordina per",
+  "sortColumns": "Ordina colonne",
+  "sortOrder": "Ordine di ordinamento",
+  "sortDirection": "Direzione di ordinamento",
+  "ascending": "Crescente",
+  "descending": "Decrescente"
 }

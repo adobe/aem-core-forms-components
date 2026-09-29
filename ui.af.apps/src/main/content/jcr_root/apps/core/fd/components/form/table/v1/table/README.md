@@ -22,6 +22,8 @@ Adaptive Form Table component written in HTL that allows authors to capture data
 * Ability to contain `tableheader` and `tablerow` child components
 * Configurable proportional column widths via comma-separated values
 * Optional column sorting with ascending/descending toggle (per-column sort can be individually disabled)
+* Mobile card layout — at `max-width: 768px` rows stack into cards; column headers are shown as inline labels via CSS `::before` using `data-label` attributes stamped on each `<td>`
+* Mobile action bar — Sort and Filter overlays accessible via bottom-sheet UI on narrow viewports; Sort requires `enableSorting`
 * Document of Record (DoR) support — table structure and column widths exported for XFA-based DoR rendering
 * Short description / long description / question mark help pattern
 * Visible and enabled state binding for rules engine
@@ -51,13 +53,49 @@ JavaScript handling for authoring interactions. It is already included by its ed
 BLOCK cmp-adaptiveform-table
     ELEMENT cmp-adaptiveform-table__title
     ELEMENT cmp-adaptiveform-table__help-container
+        ELEMENT cmp-adaptiveform-table__questionmark
     ELEMENT cmp-adaptiveform-table__shortdescription
     ELEMENT cmp-adaptiveform-table__longdescription
-    ELEMENT cmp-adaptiveform-table__questionmark
     ELEMENT cmp-adaptiveform-table__widget
-    ELEMENT cmp-adaptiveform-table__head
-    ELEMENT cmp-adaptiveform-table__body
+        ELEMENT cmp-adaptiveform-table__head
+            BLOCK cmp-adaptiveform-tableheader
+                ELEMENT cmp-adaptiveform-tablehead
+                    ELEMENT cmp-adaptiveform-table__sort-header-inner
+                    ELEMENT cmp-adaptiveform-table__sort-button
+                        MODIFIER cmp-adaptiveform-table__sort-button--asc
+                        MODIFIER cmp-adaptiveform-table__sort-button--desc
+        ELEMENT cmp-adaptiveform-table__body
+            BLOCK cmp-adaptiveform-tablerow
+                ELEMENT cmp-adaptiveform-tablecell
+                ELEMENT cmp-adaptiveform-tablerow__runtime-controls
+                    ELEMENT cmp-adaptiveform-tablerow__add-button
+                    ELEMENT cmp-adaptiveform-tablerow__remove-button
+    ELEMENT cmp-adaptiveform-table__mobile-bar (injected by JS; hidden on desktop)
+        ELEMENT cmp-adaptiveform-table__mobile-bar-btn
+            MODIFIER cmp-adaptiveform-table__mobile-bar-btn--sort
+            MODIFIER cmp-adaptiveform-table__mobile-bar-btn--filter
+        ELEMENT cmp-adaptiveform-table__mobile-bar-divider
+    ELEMENT cmp-adaptiveform-table__sort-scrim (shared backdrop for sort and filter bottom sheets)
+        ELEMENT cmp-adaptiveform-table__sort-sheet
+        ELEMENT cmp-adaptiveform-table__sort-sheet-handle
+        ELEMENT cmp-adaptiveform-table__sort-sheet-title
+        ELEMENT cmp-adaptiveform-table__sort-options
+        ELEMENT cmp-adaptiveform-table__sort-option
+            ELEMENT cmp-adaptiveform-table__sort-option-indicator
 ```
+
+## Theme Editor Support
+The component provides a `_cq_styleConfig` that exposes the full BEM element hierarchy to the AEM Theme Editor. The following elements can be styled globally:
+
+* **Table** — root container (`.cmp-adaptiveform-table`)
+* **Label Container** — table title (`.cmp-adaptiveform-table__title`)
+* **Help Container** — help icon wrapper and question mark icon, with hover/focus/disabled states
+* **Short/Long Description** — tooltip and description text elements
+* **Widget** — the `<table>` element (`.cmp-adaptiveform-table__widget`)
+  * **Header** — `<thead>` section, including header row, header cells, and sort buttons (with ascending/descending states)
+  * **Body** — `<tbody>` section, including rows and cells (with row-hover and cell-hover states), and repeatable row add/remove buttons
+
+Theme editor styles are applied globally via CSS class selectors. Per-row or per-cell individual styling is not supported through the theme editor; all rows and all cells of the same type share the same theme styles. For per-instance overrides, authors can apply a custom CSS class via the component's style dialog and target it in the theme.
 
 ## JavaScript Data Attribute Bindings
 
@@ -70,7 +108,10 @@ The following attributes are required for initialization:
 The following are optional attributes that can be added to the component:
 1. `data-cmp-visible` - boolean indicating whether the component is currently visible
 2. `data-cmp-enabled` - boolean indicating whether the component is currently enabled
-3. `data-cmp-sorting-enabled` - set to `"true"` when `./enableSorting` is authored; controls sort button rendering in `tableheader.html`
+3. `data-cmp-sorting-enabled` - set to `"true"` when `./enableSorting` is authored; controls sort button rendering in `tableheader.html` and enables the Sort button in the mobile action bar
+
+The following attribute is stamped by JavaScript on each `<td>` in the table body at runtime:
+1. `data-label` - set to the corresponding column header text; used by CSS `::before` to render inline labels in the mobile card layout (no author action required)
 
 ## Information
 * **Vendor**: Adobe

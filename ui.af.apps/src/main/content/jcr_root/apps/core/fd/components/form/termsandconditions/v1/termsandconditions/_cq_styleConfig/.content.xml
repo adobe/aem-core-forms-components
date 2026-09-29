@@ -209,6 +209,10 @@
                                         jcr:primaryType="nt:unstructured"
                                         jcr:title="Visited"
                                         cssSelector=".cmp-adaptiveform-termsandcondition__link a:visited"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Visited"
+                                        cssSelector=".cmp-adaptiveform-termsandcondition__link a:hover"/>
                             </states>
                         </tncLink>
                         <tncConsentArea

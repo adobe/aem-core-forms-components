@@ -97,3 +97,15 @@
   "showPassword": "Passwort anzeigen",
   "hidePassword": "Passwort ausblenden"
 }
+  "sortTable": "Tabelle sortieren",
+  "filterTable": "Tabelle filtern",
+  "sort": "Sortieren",
+  "filter": "Filtern",
+  "sortOptions": "Sortieroptionen",
+  "sortBy": "Sortieren nach",
+  "sortColumns": "Spalten sortieren",
+  "sortOrder": "Sortierreihenfolge",
+  "sortDirection": "Sortierrichtung",
+  "ascending": "Aufsteigend",
+  "descending": "Absteigend"
+}

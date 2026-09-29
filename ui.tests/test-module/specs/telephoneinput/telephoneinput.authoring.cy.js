@@ -102,10 +102,14 @@ describe('Page - Authoring', function () {
         telephoneInputDrop = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop(),
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']";
     const customKey = 'customKey',
-        customValue = 'customValue';
+        customValue = 'customValue',
+        // Shared, persistent design policy this test mutates — reset it each run so a leftover custom
+        // format from a prior run/retry can't leave the dialog in a dirty state (see reset command).
+        telephoneInputPolicyPath = '/conf/core-components-examples/settings/wcm/policies/forms-components-examples/components/form/telephoneinput/default';
 
     beforeEach(function () {
       cy.openAuthoring(templateDataPath + ".html");
+      cy.resetTelephoneInputDesignPolicy(telephoneInputPolicyPath);
     });
 
     it('Adding removing patterns from design policy', function () {
