@@ -96,8 +96,8 @@
                                       jcr:primaryType="nt:unstructured"
                                       sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                       name="./fd:webMcpEnabled"
-                                      text="Enable WebMCP"
-                                      fieldDescription="Expose this form as WebMCP tools to supported browser AI agents."
+                                      text="Enable AI assistant access (WebMCP)"
+                                      fieldDescription="Allows supported browser AI assistants to securely understand and help users complete this form through WebMCP tools. When enabled, assistants can read form fields and, with user confirmation, update values or submit the form."
                                       uncheckedValue="{Boolean}false"
                                       value="{Boolean}true"/>
                                     <fieldType
