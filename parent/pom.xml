@@ -1131,6 +1131,15 @@
                 <scope>provided</scope>
             </dependency>
 
+
+            <!-- Needed for NextGenDynamicMediaConfig, used by the NGDM image picker. -->
+            <dependency>
+                <groupId>com.adobe.aem</groupId>
+                <artifactId>aem-sdk-api</artifactId>
+                <version>2023.9.13665.20230927T063259Z-230800</version>
+                <scope>provided</scope>
+            </dependency>
+
             <!-- Testing -->
             <dependency>
                 <groupId>junit</groupId>
