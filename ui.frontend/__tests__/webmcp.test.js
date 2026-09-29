@@ -34,6 +34,8 @@ import formJson from './resources/form.json';
 
 test('setupFormContainer registers the WebMCP catalog once with the form model', async () => {
     HTTPAPILayer.getFormDefinition.mockResolvedValue(formJson);
+    const unregister = jest.fn();
+    registerFormWebMCP.mockReturnValue(unregister);
 
     const el = document.createElement('div');
     el.classList.add('cmp-adaptiveform-container');
@@ -50,4 +52,6 @@ test('setupFormContainer registers the WebMCP catalog once with the form model',
 
     expect(registerFormWebMCP).toHaveBeenCalledTimes(1);
     expect(registerFormWebMCP).toHaveBeenCalledWith(container.getModel());
+    container._unregisterWebMcp();
+    expect(unregister).toHaveBeenCalledTimes(1);
 });

@@ -374,7 +374,7 @@ class Utils {
                 Utils.initializeAllFields(formContainer);
                 // Expose the form's WebMCP tool catalog to in-browser AI agents. No-ops unless the
                 // form opted in via fd:webMcpEnabled and a browser modelContext is available.
-                registerFormWebMCP(formContainer.getModel());
+                formContainer._setWebMcpUnregister(registerFormWebMCP(formContainer.getModel()));
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }

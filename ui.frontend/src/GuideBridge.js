@@ -487,6 +487,10 @@ class GuideBridge {
         if (this.#formContainerViewMap[pathToUnload]) {
             const formContainerView = this.#formContainerViewMap[pathToUnload];
             container = formContainerView.getFormElement();
+
+            if (typeof formContainerView._unregisterWebMcp === 'function') {
+                formContainerView._unregisterWebMcp();
+            }
             
             // Disconnect all mutation observers for this form
             if (typeof formContainerView._disconnectMutationObservers === 'function') {
@@ -552,5 +556,4 @@ class GuideBridge {
 };
 
 export default GuideBridge;
-
 
