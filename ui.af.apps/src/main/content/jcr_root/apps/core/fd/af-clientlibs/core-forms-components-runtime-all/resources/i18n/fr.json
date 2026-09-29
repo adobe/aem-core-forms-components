@@ -93,5 +93,16 @@
   "clearSign": "Effacer la signature",
   "brushSize": "Épaisseur du pinceau : ",
   "geoLocationError": "Erreur lors de la récupération de la géolocalisation",
-  "geoLocationFetch": "Récupération de la géolocalisation..."
+  "geoLocationFetch": "Récupération de la géolocalisation...",
+  "sortTable": "Trier le tableau",
+  "filterTable": "Filtrer le tableau",
+  "sort": "Trier",
+  "filter": "Filtrer",
+  "sortOptions": "Options de tri",
+  "sortBy": "Trier par",
+  "sortColumns": "Trier les colonnes",
+  "sortOrder": "Ordre de tri",
+  "sortDirection": "Sens du tri",
+  "ascending": "Croissant",
+  "descending": "Décroissant"
 }

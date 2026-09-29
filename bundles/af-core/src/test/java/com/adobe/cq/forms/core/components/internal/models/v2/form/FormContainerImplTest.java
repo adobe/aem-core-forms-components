@@ -679,6 +679,21 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testGetSetPropertyBehaviourFromNode() throws Exception {
+        Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
+        resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_SET_PROPERTY_BEHAVIOUR, "eager");
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals("eager", formContainer.getProperties().get(ReservedProperties.FD_SET_PROPERTY_BEHAVIOUR));
+    }
+
+    @Test
+    void testSetPropertyBehaviourAbsentWhenNotAuthored() throws Exception {
+        // No node value and no toggle-driven default — the runtime falls back to "async".
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNull(formContainer.getProperties().get(ReservedProperties.FD_SET_PROPERTY_BEHAVIOUR));
+    }
+
+    @Test
     void testCustomFunctionUrl() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getCustomFunctionUrl());
