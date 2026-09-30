@@ -20,6 +20,7 @@
         <label class="cmp-adaptiveform-radiobutton__option-label"
                title="${radiobutton.tooltipVisible ? '' : radiobutton.tooltipText}">
           <input class="cmp-adaptiveform-radiobutton__option__widget" type="radio"
+                 id="${widgetId}_${itemList.count}"
                  name="${radiobutton.name}"
                  value="${item.toString}"
                  checked="${radiobutton.enums[itemList.index] == radiobutton.default[0]}"

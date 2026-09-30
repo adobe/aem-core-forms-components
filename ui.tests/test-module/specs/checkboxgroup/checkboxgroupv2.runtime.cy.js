@@ -250,6 +250,14 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         });
     })
 
+    it("each checkbox input should have a unique id attribute", () => {
+        const [id, fieldView] = Object.entries(formContainer._fields)[0];
+        const widgetId = `${id}-widget`;
+        cy.get(`#${id}`).find(".cmp-adaptiveform-checkboxgroup__option__widget").each(($checkbox, index) => {
+            cy.wrap($checkbox).should('have.attr', 'id', `${widgetId}_${index + 1}`);
+        });
+    })
+
     it("checkbox group MUST be wrapped in a <fieldset> and have a legend", () => {
         const [checkBox1] = Object.entries(formContainer._fields)[0];
         cy.get(`#${checkBox1}`).then($el => {
