@@ -12,7 +12,7 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="Core Components Examples - Root"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[/libs/wcm/foundation/components/responsivegrid,group:Core Components Examples,group:.core-wcm,group:.core-wcm-form,group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">
+                        components="[/libs/wcm/foundation/components/responsivegrid,group:Core Components Examples,group:.core-wcm,group:.core-wcm-form,group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal,group:Adobe Sign - Adaptive Form]">
                         <cq:authoring jcr:primaryType="nt:unstructured">
                             <assetToComponentMapping jcr:primaryType="nt:unstructured">
                                 <mapping_1544531934044
@@ -131,7 +131,7 @@
                         jcr:primaryType="nt:unstructured"
                         jcr:title="formcontainer-policy"
                         sling:resourceType="wcm/core/components/policy/policy"
-                        components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal]">
+                        components="[group:Core Components Examples - Adaptive Form,group:Core Components Examples - Forms And Communications Portal,group:Adobe Sign - Adaptive Form]">
                         <jcr:content jcr:primaryType="nt:unstructured"/>
                     </policy_212634895490171>
                 </container>
