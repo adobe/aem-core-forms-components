@@ -58,7 +58,7 @@ describe('Page - Authoring', function () {
         // Checking some dynamic behaviours
         // "Show character count" is only applicable to multi line fields; hidden until "Allow multiple lines" is checked
         cy.get(".cmp-adaptiveform-textinput__showcharactercount").parent('div').invoke('css', 'display').should('equal', 'none');
-        cy.get("[name='./multiLine']").click({force: true});
+        cy.get("input[name='./multiLine']").click({force: true});
         cy.get(".cmp-adaptiveform-textinput__showcharactercount").parent('div').invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-textinput__maxlength").invoke('css', 'display').should('equal', 'block');
         cy.get(".cmp-adaptiveform-textinput__minlength").invoke('css', 'display').should('equal', 'block');
@@ -155,10 +155,10 @@ describe('Page - Authoring', function () {
             dropTextInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
-            cy.get("[name='./multiLine']").click({force: true});
-            cy.get("[name='./showCharacterCount']").click({force: true});
+            cy.get("input[name='./multiLine']").click({force: true});
+            cy.get("input[name='./showCharacterCount']").click({force: true});
             cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
-            cy.get("[name='./maxLength']").clear({force: true}).type("20", {force: true});
+            cy.get("coral-numberinput[name='./maxLength']").find("input").clear({force: true}).type("20", {force: true});
             cy.get('.cq-dialog-submit').click();
             cy.reload();
             // in the authoring canvas the field is not interactive (typing doesn't reach the widget), so the
