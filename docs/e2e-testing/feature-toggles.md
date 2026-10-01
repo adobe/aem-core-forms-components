@@ -37,7 +37,7 @@ it/config/src/main/content/jcr_root/apps/system/config/
   com.adobe.granite.toggle.impl.dev.DynamicToggleProviderImpl.cfg.json
 ```
 
-Add the toggle name to the `enabled` array in that file to turn it on in IT.
+Add the toggle name to the `enabledToggles` array in that file to turn it on in IT.
 
 ### Layer 2 — JVM System Property (server-side)
 
@@ -77,7 +77,7 @@ When adding a new toggle, the only config file that requires an update is:
 
 | File | Change |
 |------|--------|
-| `com.adobe.granite.toggle.impl.dev.DynamicToggleProviderImpl.cfg.json` | Add toggle name to `enabled` array |
+| `com.adobe.granite.toggle.impl.dev.DynamicToggleProviderImpl.cfg.json` | Add toggle name to `enabledToggles` array |
 
 ---
 
@@ -178,6 +178,9 @@ it/content/src/main/content/jcr_root/content/forms/af/core-components-it/samples
 |------|----------------|
 | `ui.tests/test-module/specs/fragment/fragment.featuretoggles.cy.js` | FT_FORMS-24087, FT_FORMS-24343, FT_FORMS-24358 |
 | `ui.tests/test-module/specs/panelcontainer/panelcontainer.featuretoggles.cy.js` | FT_FORMS-24358 |
+| `ui.tests/test-module/specs/webmcp/webmcp.authoring.cy.js` | FT_FORMS-28233 (explicitly skipped) |
+
+The WebMCP authoring suite uses the existing accessibility sample, enables **Enable AI assistant access (WebMCP)** in the container dialog, and opens the saved form in preview. A test-only `document.modelContext` host is installed before runtime initialization; the real runtime must register `list_forms` plus all 12 form tools and return the accessibility form's field summary. The original opt-in property is restored after the test. Running the authoring flow requires enabling the skipped suite and deploying matching components, IT content, and the IT toggle configuration.
 
 ---
 
