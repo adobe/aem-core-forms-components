@@ -378,7 +378,7 @@ class Utils {
                 // Expose the form's WebMCP tool catalog to in-browser AI agents. No-ops unless the
                 // form opted in via fd:webMcpEnabled and a browser modelContext is available.
                 formContainer._setWebMcpUnregister(
-                    registerFormWebMCP(formContainer.getModel())
+                    registerFormWebMCP(formContainer.getModel(), Utils.getWebMcpOptions(formContainer))
                 );
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
@@ -387,6 +387,18 @@ class Utils {
     }
 
     
+    /** Builds form-scoped renderer-focus and optional additional-tool options for WebMCP. */
+    static getWebMcpOptions(formContainer, additionalTools) {
+        return {
+            ...(additionalTools ? {additionalTools} : {}),
+            onFocusRequest: (fieldId) => {
+                const previous = document.activeElement;
+                formContainer.setFocus(fieldId);
+                return document.activeElement !== previous;
+            }
+        };
+    }
+
     /**
      * For backward compatibility with older data formats of prefill services like FDM.
      * @param {object} prefillJson - The prefill JSON object.

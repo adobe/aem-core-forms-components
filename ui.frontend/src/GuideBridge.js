@@ -101,7 +101,7 @@ class GuideBridge {
             const config = self.#webMcpAdditionalTools.get(formContainer.getPath());
             if (config) {
                 formContainer._unregisterWebMcp();
-                formContainer._setWebMcpUnregister(registerFormWebMCP(formContainer.getModel(), {additionalTools: config.factory}));
+                formContainer._setWebMcpUnregister(registerFormWebMCP(formContainer.getModel(), Utils.getWebMcpOptions(formContainer, config.factory)));
             }
             self.#invokeConnectHandlers(formContainer.getPath());
         }
@@ -141,9 +141,7 @@ class GuideBridge {
         const view = this.#formContainerViewMap[formContainerPath];
         if (view) {
             view._unregisterWebMcp();
-            view._setWebMcpUnregister(config
-                ? registerFormWebMCP(view.getModel(), {additionalTools: factory})
-                : registerFormWebMCP(view.getModel()));
+            view._setWebMcpUnregister(registerFormWebMCP(view.getModel(), Utils.getWebMcpOptions(view, factory)));
         }
         return () => {
             if (config && this.#webMcpAdditionalTools.get(formContainerPath) === config) {

@@ -57,7 +57,7 @@ test('setupFormContainer registers the WebMCP catalog once with the form model',
     await Utils.setupFormContainer(createFormContainer, '.cmp-adaptiveform-container', 'adaptiveFormContainer');
 
     expect(registerFormWebMCP).toHaveBeenCalledTimes(1);
-    expect(registerFormWebMCP).toHaveBeenCalledWith(container.getModel());
+    expect(registerFormWebMCP).toHaveBeenCalledWith(container.getModel(), {onFocusRequest: expect.any(Function)});
     expect(container.getModel().id).toBe('/content/a/b/c');
     container._unregisterWebMcp();
     expect(unregister).toHaveBeenCalledTimes(1);
@@ -85,8 +85,8 @@ test('setupFormContainer preserves pre-initialization and connect callback tools
         return container;
     };
     await Utils.setupFormContainer(createFormContainer, '.cmp-adaptiveform-container', 'adaptiveFormContainer');
-    expect(registerFormWebMCP).toHaveBeenCalledWith(container.getModel(), {additionalTools});
-    expect(registerFormWebMCP).toHaveBeenLastCalledWith(container.getModel(), {additionalTools: replacement});
+    expect(registerFormWebMCP).toHaveBeenCalledWith(container.getModel(), {additionalTools, onFocusRequest: expect.any(Function)});
+    expect(registerFormWebMCP).toHaveBeenLastCalledWith(container.getModel(), {additionalTools: replacement, onFocusRequest: expect.any(Function)});
     bridge.unloadAdaptiveForm(path);
 });
 
@@ -102,12 +102,12 @@ test('explicit paths isolate two forms and stale disposers cannot remove replace
         document.dispatchEvent(new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, {detail: container}));
     });
     expect(registerFormWebMCP).toHaveBeenCalledTimes(1);
-    expect(registerFormWebMCP).toHaveBeenCalledWith(first.getModel(), {additionalTools: factory});
+    expect(registerFormWebMCP).toHaveBeenCalledWith(first.getModel(), {additionalTools: factory, onFocusRequest: expect.any(Function)});
     const remove = bridge.registerWebMcpAdditionalTools('/first', replacement);
     dispose();
     expect(registerFormWebMCP).toHaveBeenCalledTimes(2);
     remove();
-    expect(registerFormWebMCP).toHaveBeenLastCalledWith(first.getModel());
+    expect(registerFormWebMCP).toHaveBeenLastCalledWith(first.getModel(), {onFocusRequest: expect.any(Function)});
     bridge.registerWebMcpAdditionalTools('/second', factory);
     const unregister = jest.fn();
     second._setWebMcpUnregister(unregister);
@@ -126,6 +126,21 @@ test('registration rejects invalid factories and missing explicit targets before
     expect(() => bridge.registerWebMcpAdditionalTools('/first', {})).toThrow(TypeError);
     expect(() => bridge.registerWebMcpAdditionalTools('/first', undefined)).toThrow(TypeError);
     expect(registerFormWebMCP).not.toHaveBeenCalled();
+});
+
+test('renderer focus options restore focus through the owning container and detect no-ops', () => {
+    const input = document.createElement('input');
+    const outside = document.createElement('button');
+    document.body.append(input, outside);
+    const first = {setFocus: jest.fn(() => input.focus())};
+    const options = Utils.getWebMcpOptions(first);
+    expect(options.onFocusRequest('city')).toBe(true);
+    expect(document.activeElement).toBe(input);
+    expect(options.onFocusRequest('city')).toBe(false);
+    outside.focus();
+    expect(options.onFocusRequest('city')).toBe(true);
+    expect(document.activeElement).toBe(input);
+    expect(first.setFocus).toHaveBeenCalledWith('city');
 });
 
 test('scoped configuration preserves the adapter opt-out gate and does not invoke the factory itself', () => {
