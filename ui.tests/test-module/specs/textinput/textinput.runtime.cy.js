@@ -174,6 +174,26 @@ describe("Form Runtime with Text Input", () => {
         });
     })
 
+    it("character count stays in sync when the value is updated programmatically (rules/prefill/reset), not just by typing", () => {
+        const charCountWidget = "textarea[name='textcharcount']";
+        const charCountCurrent = ".cmp-adaptiveform-textinput__charcount-current";
+
+        cy.get(charCountWidget).closest('[data-cmp-is="adaptiveFormTextInput"]').then(($el) => {
+            const id = $el.attr('id');
+            const model = formContainer._model.getElement(id);
+
+            // simulate a value change coming from a rule/prefill/default-value (no DOM 'input' event is fired)
+            model.value = "abcdef";
+            cy.get(`#${id}`).find(charCountCurrent).should('have.text', '6');
+
+            // simulate a reset/clear of the value
+            cy.wrap(null).then(() => {
+                model.value = "";
+                cy.get(`#${id}`).find(charCountCurrent).should('have.text', '0');
+            });
+        });
+    })
+
     it("should set valid to false and errorMessage other textfields on a certain string input", () => {
         // Rule on textbox9: When textbox9 is changed => set valid and error message property of textbox10
 

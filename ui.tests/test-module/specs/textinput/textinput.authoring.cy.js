@@ -159,7 +159,9 @@ describe('Page - Authoring', function () {
             cy.get("input[name='./showCharacterCount']").click({force: true});
             cy.get('.cmp-adaptiveform-textinput__editdialog').contains('Validation').click({force: true});
             cy.get("coral-numberinput[name='./maxLength']").find("input").clear({force: true}).type("20", {force: true});
-            cy.get('.cq-dialog-submit').click();
+            // use submitConfigureDialog (not a plain click) so we wait for the save to be persisted
+            // server-side before reloading; otherwise the reload can race the dialog's save request.
+            cy.submitConfigureDialog();
             cy.reload();
             // in the authoring canvas the field is not interactive (typing doesn't reach the widget), so the
             // counter is just the static initial value: "0 / 20"
