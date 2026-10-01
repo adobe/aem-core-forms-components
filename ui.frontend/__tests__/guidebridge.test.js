@@ -14,6 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 
+jest.mock('@aemforms/af-webmcp', () => ({registerFormWebMCP: jest.fn()}), {virtual: true});
+
 import {Constants} from "../src/index";
 import FormContainer from "../src/view/FormContainer";
 import formJson from './resources/form.json';

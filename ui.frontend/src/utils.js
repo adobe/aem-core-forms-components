@@ -377,12 +377,8 @@ class Utils {
                 Utils.initializeAllFields(formContainer);
                 // Expose the form's WebMCP tool catalog to in-browser AI agents. No-ops unless the
                 // form opted in via fd:webMcpEnabled and a browser modelContext is available.
-                const additionalTools = window.adaptiveFormsWebMcpAdditionalTools;
-                const webMcpOptions = typeof additionalTools === 'function' ? {additionalTools} : undefined;
                 formContainer._setWebMcpUnregister(
-                    webMcpOptions
-                        ? registerFormWebMCP(formContainer.getModel(), webMcpOptions)
-                        : registerFormWebMCP(formContainer.getModel())
+                    registerFormWebMCP(formContainer.getModel())
                 );
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);

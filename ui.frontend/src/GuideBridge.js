@@ -19,6 +19,7 @@ import Response from "./Response.js";
 import AfFormData from "./FormData.js";
 import {readAttachments} from "@aemforms/af-core";
 import Utils from "./utils.js";
+import {registerFormWebMCP} from "@aemforms/af-webmcp";
 
 /**
  * The GuideBridge class represents the bridge between an adaptive form and JavaScript APIs.
@@ -33,6 +34,7 @@ class GuideBridge {
      * @instance
      */
     #formContainerViewMap = {};
+    #webMcpAdditionalTools = new Map();
     /**
      * Array to store the guide bridge connect handlers.
      * @member {Array}
@@ -96,6 +98,11 @@ class GuideBridge {
         function onFormContainerInitialised(e) {
             let formContainer = e.detail;
             self.#formContainerViewMap[formContainer.getPath()] = formContainer;
+            const config = self.#webMcpAdditionalTools.get(formContainer.getPath());
+            if (config) {
+                formContainer._unregisterWebMcp();
+                formContainer._setWebMcpUnregister(registerFormWebMCP(formContainer.getModel(), {additionalTools: config.factory}));
+            }
             self.#invokeConnectHandlers(formContainer.getPath());
         }
         document.addEventListener(Constants.FORM_CONTAINER_INITIALISED, onFormContainerInitialised);
@@ -113,6 +120,37 @@ class GuideBridge {
         });
     }
 
+
+    /**
+     * Experimental/internal supported seam for form-scoped WebMCP tools.
+     * @param {string} formContainerPath Explicit target container path.
+     * @param {Function|null} factory Receives the form model and returns tools; null removes it.
+     * @returns {Function} Disposer that removes only this registration.
+     */
+    registerWebMcpAdditionalTools(formContainerPath, factory) {
+        if (typeof formContainerPath !== 'string' || !formContainerPath.trim() ||
+            (factory !== null && typeof factory !== 'function')) {
+            throw new TypeError("An explicit form container path and a function or null are required");
+        }
+        const config = factory === null ? null : {factory};
+        if (config) {
+            this.#webMcpAdditionalTools.set(formContainerPath, config);
+        } else {
+            this.#webMcpAdditionalTools.delete(formContainerPath);
+        }
+        const view = this.#formContainerViewMap[formContainerPath];
+        if (view) {
+            view._unregisterWebMcp();
+            view._setWebMcpUnregister(config
+                ? registerFormWebMCP(view.getModel(), {additionalTools: factory})
+                : registerFormWebMCP(view.getModel()));
+        }
+        return () => {
+            if (config && this.#webMcpAdditionalTools.get(formContainerPath) === config) {
+                this.registerWebMcpAdditionalTools(formContainerPath, null);
+            }
+        };
+    }
 
     /**
      * Returns the string representation of the form data.
@@ -481,6 +519,7 @@ class GuideBridge {
             console.warn("No form container path specified or available to unload.");
             return;
         }
+        this.#webMcpAdditionalTools.delete(pathToUnload);
         
         // Get the container element from the view and disconnect mutation observers
         let container = null;
@@ -556,4 +595,3 @@ class GuideBridge {
 };
 
 export default GuideBridge;
-
