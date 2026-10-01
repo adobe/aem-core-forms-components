@@ -144,6 +144,18 @@ public class RecaptchaImplTest {
     }
 
     @Test
+    void testIsRequired() {
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
+        assertEquals(Boolean.TRUE, recaptcha.isRequired());
+    }
+
+    @Test
+    void testIsRequiredWithoutFieldType() {
+        Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA_WITHOUT_FEILDTYPE, Captcha.class, context);
+        assertEquals(Boolean.TRUE, recaptcha.isRequired());
+    }
+
+    @Test
     void testJSONExport() throws Exception {
         Captcha recaptcha = Utils.getComponentUnderTest(PATH_RECAPTCHA, Captcha.class, context);
         Utils.testJSONExport(recaptcha, Utils.getTestExporterJSONPath(BASE, PATH_RECAPTCHA));
