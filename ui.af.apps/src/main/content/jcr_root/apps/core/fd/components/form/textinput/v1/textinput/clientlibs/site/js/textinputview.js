@@ -66,6 +66,23 @@
             return this.element.querySelector(TextInput.selectors.qm);
         }
 
+        /**
+         * Refreshes the character count span from the widget's current value. Called both on direct
+         * user input and whenever the model pushes a new value to the widget (updateValue), so the
+         * count stays in sync with changes coming from rules, prefill, a default value, or reset/clear -
+         * none of which fire an 'input' event on the widget.
+         */
+        updateCharCount() {
+            if (this.charCountCurrent) {
+                this.charCountCurrent.textContent = this.widget.value ? this.widget.value.length : 0;
+            }
+        }
+
+        updateValue(value) {
+            super.updateValue(value);
+            this.updateCharCount();
+        }
+
         setModel(model) {
             super.setModel(model);
             if (this.widget.value !== '') {
@@ -96,13 +113,10 @@
                     }
                 });
             }
-            const charCountCurrent = this.element.querySelector(TextInput.selectors.charCountCurrent);
-            if (charCountCurrent) {
-                const updateCharCount = () => {
-                    charCountCurrent.textContent = this.widget.value ? this.widget.value.length : 0;
-                };
-                updateCharCount();
-                this.widget.addEventListener('input', updateCharCount);
+            this.charCountCurrent = this.element.querySelector(TextInput.selectors.charCountCurrent);
+            if (this.charCountCurrent) {
+                this.updateCharCount();
+                this.widget.addEventListener('input', () => this.updateCharCount());
             }
         }
     }
