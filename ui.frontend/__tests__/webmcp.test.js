@@ -15,7 +15,7 @@
  ******************************************************************************/
 
 // Adapter behavior lives in af-webmcp's suite; these tests cover bootstrap and scoped forwarding.
-jest.mock('@aemforms/af-webmcp', () => ({registerFormWebMCP: jest.fn()}), {virtual: true});
+jest.mock('@aemforms/af-webmcp', () => ({registerFormWebMCP: jest.fn()}));
 jest.mock('../src/HTTPAPILayer.js', () => ({
     __esModule: true,
     default: {getFormDefinition: jest.fn(), getJson: jest.fn()}
