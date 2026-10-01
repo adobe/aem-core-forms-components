@@ -106,7 +106,7 @@ public class PasswordInputImpl extends AbstractFieldImpl implements PasswordInpu
     @Override
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = new LinkedHashMap<>(super.getProperties());
-        properties.put("fd:" + ReservedProperties.PN_SHOW_HIDE_PASSWORD, showHidePassword);
+        properties.put(ReservedProperties.FD_SHOW_HIDE_PASSWORD, showHidePassword);
         return properties;
     }
 }
