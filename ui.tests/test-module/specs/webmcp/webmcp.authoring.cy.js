@@ -15,12 +15,15 @@
  */
 
 /// <reference types="cypress" />
-/* global cy, Cypress, expect */
+/* global cy, Cypress, expect, window, document */
 
 const sitesSelectors = require('../../libs/commons/sitesSelectors');
 const afConstants = require('../../libs/commons/formsConstants');
 
-describe.skip('WebMCP form authoring and preview', () => {
+describe('WebMCP form authoring and preview', () => {
+    if (!cy.af.isLatestAddon()) {
+        return;
+    }
     const pagePath = '/content/forms/af/core-components-it/samples/accessibility';
     const containerPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX;
     const contextPath = Cypress.env('crx.contextPath') || '';
@@ -50,38 +53,54 @@ describe.skip('WebMCP form authoring and preview', () => {
             'fd:webMcpEnabled@TypeHint': typeof originalValue === 'boolean' ? 'Boolean' : 'String'
         };
         cy.request(contextPath + '/libs/granite/csrf/token.json').its('body.token').then(token => {
-            cy.request({
+            return cy.window().then(win => win.fetch(resourcePath, {
                 method: 'POST',
-                url: resourcePath,
-                form: true,
-                body: Object.assign(properties, {':cq_csrf_token': token})
-            });
+                credentials: 'same-origin',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new win.URLSearchParams(Object.assign(properties, {':cq_csrf_token': token})).toString()
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Unable to restore WebMCP opt-in: HTTP ' + response.status);
+                }
+            }));
         });
     });
 
     it('enables AI assistant access in the container dialog and registers the preview catalog', () => {
-        const tools = new Map();
-        const host = {
-            registerTool(tool) {
-                tools.set(tool.name, tool);
-                return {unregister() { tools.delete(tool.name); }};
-            }
+        const installHost = () => {
+            const tools = new Map();
+            window.__webMcpTestTools = tools;
+            Object.defineProperty(document, 'modelContext', {
+                configurable: true,
+                value: {
+                    registerTool(tool) {
+                        tools.set(tool.name, tool);
+                        return {unregister() { tools.delete(tool.name); }};
+                    }
+                }
+            });
         };
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + '[data-path="' + containerPath + '"]');
+        cy.intercept('GET', '**/container/_cq_dialog.html/**').as('containerDialog');
         cy.invokeEditableAction('[data-action="CONFIGURE"]');
-        cy.get('.cmp-adaptiveform-container__editdialog').contains('Basic').click({force: true});
+        cy.wait('@containerDialog').its('response.statusCode').should('eq', 200);
+        cy.get('.cmp-adaptiveform-container__editdialog', {timeout: 60000}).contains('Basic').click({force: true});
         cy.get('coral-checkbox[name="./fd:webMcpEnabled"]').should('be.visible')
             .find('input[type="checkbox"]').check({force: true}).should('be.checked');
         cy.submitConfigureDialog();
 
-        cy.previewForm(pagePath + '.html', {
-            onBeforeLoad(win) {
-                Object.defineProperty(win.document, 'modelContext', {configurable: true, value: host});
-            }
-        }).then(formContainer => {
+        // Inject into the preview document so editor navigation cannot discard the test host.
+        cy.intercept('GET', '**' + pagePath + '.html*', request => {
+            request.continue(response => {
+                expect(response.body).to.match(/<head(?:\s[^>]*)?>/i);
+                response.body = response.body.replace(/<head(?:\s[^>]*)?>/i,
+                    '$&<script>(' + installHost.toString() + ')();</script>');
+            });
+        });
+        cy.previewForm(pagePath + '.html').then(formContainer => {
             expect(formContainer.getModel().webMcpEnabled).to.equal(true);
         });
-        cy.wrap(tools, {log: false}).should(registered => {
+        cy.window().its('__webMcpTestTools').as('tools').should(registered => {
             expect(Array.from(registered.keys())).to.have.members(toolNames);
             registered.forEach(tool => {
                 expect(tool.execute, tool.name).to.be.a('function');
@@ -90,11 +109,11 @@ describe.skip('WebMCP form authoring and preview', () => {
             expect(registered.get('validate_form_completeness').annotations)
                 .to.include({readOnlyHint: true, untrustedContentHint: true});
         });
-        cy.then(() => tools.get('list_forms').execute({})).then(result => {
+        cy.get('@tools').then(tools => tools.get('list_forms').execute({})).then(result => {
             expect(result.success).to.equal(true);
             expect(result.forms).to.have.length(1);
         });
-        cy.then(() => tools.get('get_form_summary').execute({})).then(summary => {
+        cy.get('@tools').then(tools => tools.get('get_form_summary').execute({})).then(summary => {
             expect(summary.success).to.equal(true);
             expect(summary.fields.length).to.be.greaterThan(10);
         });

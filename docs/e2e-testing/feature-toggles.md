@@ -178,9 +178,11 @@ it/content/src/main/content/jcr_root/content/forms/af/core-components-it/samples
 |------|----------------|
 | `ui.tests/test-module/specs/fragment/fragment.featuretoggles.cy.js` | FT_FORMS-24087, FT_FORMS-24343, FT_FORMS-24358 |
 | `ui.tests/test-module/specs/panelcontainer/panelcontainer.featuretoggles.cy.js` | FT_FORMS-24358 |
-| `ui.tests/test-module/specs/webmcp/webmcp.authoring.cy.js` | FT_FORMS-28233 (explicitly skipped) |
+| `ui.tests/test-module/specs/webmcp/webmcp.authoring.cy.js` | FT_FORMS-28233 (latest addon) |
 
-The WebMCP authoring suite uses the existing accessibility sample, enables **Enable AI assistant access (WebMCP)** in the container dialog, and opens the saved form in preview. A test-only `document.modelContext` host is installed before runtime initialization; the real runtime must register `list_forms` plus all 12 form tools and return the accessibility form's field summary. The original opt-in property is restored after the test. Running the authoring flow requires enabling the skipped suite and deploying matching components, IT content, and the IT toggle configuration.
+The enabled WebMCP authoring suite runs on the latest addon, uses the existing accessibility sample, enables **Enable AI assistant access (WebMCP)** in the container dialog, and opens the saved form in preview. A preview-scoped response interceptor installs a test-only `document.modelContext` host before runtime scripts load; the real runtime must register `list_forms` plus all 12 form tools and return the accessibility form's field summary. Authenticated browser cleanup restores the original opt-in property and its type, or deletes it when originally absent.
+
+Running the authoring flow requires matching Java models and standard/XFA runtime clientlibs, IT content, the examples page component package, and the IT toggle configuration. The instance must have the development toggle provider installed and expose `FT_FORMS-28233` in `/etc.clientlibs/toggles.json`; configuring `enabledToggles` without an active provider does not enable the flag. The suite asserts this prerequisite instead of passing without exercising the feature.
 
 ---
 
@@ -222,7 +224,7 @@ curl -s -u admin:admin "http://localhost:4502/content/forms/af/core-components-i
 
 1. **Define the constant** — add `public static final String FT_FORMS_XXXXX = "FT_FORMS-XXXXX";` to `FeatureToggleConstants.java`.
 
-2. **Enable in Granite config** — add `"FT_FORMS-XXXXX"` to the `enabled` array in `DynamicToggleProviderImpl.cfg.json`.
+2. **Enable in Granite config** — add `"FT_FORMS-XXXXX"` to the `enabledToggles` array in `DynamicToggleProviderImpl.cfg.json`.
 
 3. **Provision test content** — decide whether to reuse an existing IT sample page or create a new one under `it/content/.../samples/`. Create new JCR content only when the toggled behavior requires it.
 

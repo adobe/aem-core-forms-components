@@ -703,17 +703,27 @@ public class FormContainerImplTest {
 
     @Test
     void testWebMcpEnabledFromNode() throws Exception {
-        assertWebMcpEnabledExport(true);
+        assertWebMcpEnabledExport(true, true);
     }
 
     @Test
     void testWebMcpDisabledFromNode() throws Exception {
-        assertWebMcpEnabledExport(false);
+        assertWebMcpEnabledExport(false, false);
     }
 
-    private void assertWebMcpEnabledExport(boolean enabled) throws Exception {
+    @Test
+    void testWebMcpEnabledFromStringNode() throws Exception {
+        assertWebMcpEnabledExport("true", true);
+    }
+
+    @Test
+    void testWebMcpDisabledFromStringNode() throws Exception {
+        assertWebMcpEnabledExport("false", false);
+    }
+
+    private void assertWebMcpEnabledExport(Object authoredValue, boolean enabled) throws Exception {
         Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
-        resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_WEB_MCP_ENABLED, enabled);
+        resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_WEB_MCP_ENABLED, authoredValue);
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals(enabled, formContainer.getProperties().get(ReservedProperties.FD_WEB_MCP_ENABLED));
         JsonNode property = new ObjectMapper().readTree(Utils.getJson(formContainer, Views.Publish.class))
