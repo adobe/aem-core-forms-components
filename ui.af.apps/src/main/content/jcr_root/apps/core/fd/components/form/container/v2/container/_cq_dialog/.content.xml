@@ -99,7 +99,12 @@
                                       text="Enable AI assistant access (WebMCP)"
                                       fieldDescription="Allows supported browser AI assistants to securely understand and help users complete this form through WebMCP tools. When enabled, assistants can read form fields and, with user confirmation, update values or submit the form."
                                       uncheckedValue="{Boolean}false"
-                                      value="{Boolean}true"/>
+                                      value="{Boolean}true">
+                                        <granite:rendercondition
+                                          jcr:primaryType="nt:unstructured"
+                                          sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                          toggleName="FT_FORMS-28233"/>
+                                    </webMcpEnabled>
                                     <fieldType
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"

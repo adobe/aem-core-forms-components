@@ -32,6 +32,24 @@ import HTTPAPILayer from '../src/HTTPAPILayer.js';
 import formJson from './resources/form.json';
 import GuideBridge from '../src/GuideBridge';
 import {Constants} from '../src/constants';
+import fs from 'fs';
+import path from 'path';
+
+test('the authoring WebMCP checkbox is gated by the shared epic feature toggle', () => {
+    const source = fs.readFileSync(path.resolve(__dirname,
+        '../../ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/container/v2/container/_cq_dialog/.content.xml'), 'utf8');
+    const dialog = new DOMParser().parseFromString(source, 'application/xml');
+    expect(dialog.getElementsByTagName('parsererror')).toHaveLength(0);
+    const checkbox = dialog.getElementsByTagName('webMcpEnabled')[0];
+    expect(checkbox.getAttribute('name')).toBe('./fd:webMcpEnabled');
+    expect(checkbox.getAttribute('value')).toBe('{Boolean}true');
+    expect(checkbox.getAttribute('uncheckedValue')).toBe('{Boolean}false');
+    const condition = checkbox.getElementsByTagNameNS('http://www.adobe.com/jcr/granite/1.0', 'rendercondition')[0];
+    expect(condition).toBeDefined();
+    expect(condition.getAttributeNS('http://sling.apache.org/jcr/sling/1.0', 'resourceType'))
+        .toBe('granite/ui/components/renderconditions/featuretoggle');
+    expect(condition.getAttribute('toggleName')).toBe('FT_FORMS-28233');
+});
 
 afterEach(() => {
     document.body.innerHTML = '';
