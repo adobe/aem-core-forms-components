@@ -694,6 +694,46 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testWebMcpEnabledAbsentWhenNotAuthored() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertFalse(formContainer.getProperties().containsKey(ReservedProperties.FD_WEB_MCP_ENABLED));
+        JsonNode properties = new ObjectMapper().readTree(Utils.getJson(formContainer, Views.Publish.class)).get("properties");
+        assertFalse(properties.has(ReservedProperties.FD_WEB_MCP_ENABLED));
+    }
+
+    @Test
+    void testWebMcpEnabledFromNode() throws Exception {
+        assertWebMcpEnabledExport(true, true);
+    }
+
+    @Test
+    void testWebMcpDisabledFromNode() throws Exception {
+        assertWebMcpEnabledExport(false, false);
+    }
+
+    @Test
+    void testWebMcpEnabledFromStringNode() throws Exception {
+        assertWebMcpEnabledExport("true", true);
+    }
+
+    @Test
+    void testWebMcpDisabledFromStringNode() throws Exception {
+        assertWebMcpEnabledExport("false", false);
+    }
+
+    private void assertWebMcpEnabledExport(Object authoredValue, boolean enabled) throws Exception {
+        Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
+        resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_WEB_MCP_ENABLED, authoredValue);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals(enabled, formContainer.getProperties().get(ReservedProperties.FD_WEB_MCP_ENABLED));
+        JsonNode property = new ObjectMapper().readTree(Utils.getJson(formContainer, Views.Publish.class))
+            .get("properties").get(ReservedProperties.FD_WEB_MCP_ENABLED);
+        assertNotNull(property);
+        assertTrue(property.isBoolean());
+        assertEquals(enabled, property.booleanValue());
+    }
+
+    @Test
     void testCustomFunctionUrl() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
         assertEquals("/adobe/forms/af/customfunctions/L2NvbnRlbnQvZm9ybXMvYWYvZGVtbw==", formContainer.getCustomFunctionUrl());
