@@ -44,6 +44,26 @@ public interface TextInput extends Field, NumberConstraint, DateConstraint, Stri
     }
 
     /**
+     * Returns {@code true} if a live character count should be shown below the field, {@code false} if it should not, or
+     * {@code null} if not configured. Only applicable when {@link #isMultiLine()} is {@code true}; {@code null} is returned
+     * for single line fields regardless of how the underlying property was set.
+     * <p>
+     * This is a custom (non-spec) property, not part of the Headless Adaptive Form JSON schema, so it is not exported as a
+     * top-level JSON property; it is instead reported under {@code properties} as {@code fd:showCharacterCount} (see
+     * {@link com.adobe.cq.forms.core.components.models.form.FormComponent#getProperties()}), mirroring how other custom
+     * properties (e.g. {@code fd:disabledXfaScripts}) are exported.
+     *
+     * @return {@code true} if the character count should be shown, {@code false} if not, or {@code null} if not configured or
+     *         not applicable
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    @Nullable
+    @JsonIgnore
+    default Boolean isShowCharacterCount() {
+        return null;
+    }
+
+    /**
      * Returns {@code "off"} if autocomplete if disabled, otherwise {@code "on"} or values listed @see
      * <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete">here</a>
      *

@@ -34,7 +34,8 @@
             description: `.${TextInput.bemBlock}__longdescription`,
             qm: `.${TextInput.bemBlock}__questionmark`,
             errorDiv: `.${TextInput.bemBlock}__errormessage`,
-            tooltipDiv: `.${TextInput.bemBlock}__shortdescription`
+            tooltipDiv: `.${TextInput.bemBlock}__shortdescription`,
+            charCountCurrent: `.${TextInput.bemBlock}__charcount-current`
         };
 
         constructor(params) {
@@ -63,6 +64,23 @@
 
         getQuestionMarkDiv() {
             return this.element.querySelector(TextInput.selectors.qm);
+        }
+
+        /**
+         * Refreshes the character count span from the widget's current value. Called both on direct
+         * user input and whenever the model pushes a new value to the widget (updateValue), so the
+         * count stays in sync with changes coming from rules, prefill, a default value, or reset/clear -
+         * none of which fire an 'input' event on the widget.
+         */
+        updateCharCount() {
+            if (this.charCountCurrent) {
+                this.charCountCurrent.textContent = this.widget.value ? this.widget.value.length : 0;
+            }
+        }
+
+        updateValue(value) {
+            super.updateValue(value);
+            this.updateCharCount();
         }
 
         setModel(model) {
@@ -94,6 +112,11 @@
                         this.widget.selectionStart = this.widget.selectionEnd = cursorPosition + 1;
                     }
                 });
+            }
+            this.charCountCurrent = this.element.querySelector(TextInput.selectors.charCountCurrent);
+            if (this.charCountCurrent) {
+                this.updateCharCount();
+                this.widget.addEventListener('input', () => this.updateCharCount());
             }
         }
     }
