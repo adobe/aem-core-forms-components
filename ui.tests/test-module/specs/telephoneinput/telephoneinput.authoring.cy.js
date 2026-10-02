@@ -97,16 +97,17 @@ describe('Page - Authoring', function () {
   context('Adding removing patterns from design policy', function () {
     const templateDataPath = '/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure',
         telephoneInputPolicy = '[value="' + templateDataPath + '/jcr:content/guideContainer/forms-components-examples/components/form/telephoneinput' + '"] [data-action="POLICY"]',
-        // Policy assertions do not need to create another field through the Insert dialog.
-        authoringPagePath = '/content/forms/af/core-components-it/samples/telephoneinput/basic',
+        authoringPagePath = '/content/forms/af/core-components-it/blank',
         bemEditDialog = '.cmp-adaptiveform-telephoneinput__editdialog',
         bemDesignDialog = '.cmp-adaptiveform-telephoneinput__designdialog',
-        telephoneInputEditPath = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput6",
+        telephoneInputEditPath = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput",
+        telephoneInputDrop = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop(),
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']";
     const customKey = 'customKey',
         customValue = 'customValue',
         // The policy is shared across specs and retries.
-        telephoneInputPolicyPath = '/conf/core-components-examples/settings/wcm/policies/forms-components-examples/components/form/telephoneinput/default';
+        telephoneInputPolicyPath = '/conf/core-components-examples/settings/wcm/policies/forms-components-examples/components/form/telephoneinput/default',
+        sitesConstants = require('../../libs/commons/sitesConstants');
     let policyPrepared = false;
 
     beforeEach(function () {
@@ -146,15 +147,40 @@ describe('Page - Authoring', function () {
             .should('include', {customFormatKey: customKey, customFormatValue: customValue});
       }).then(() => {
         cy.openSiteAuthoring(authoringPagePath);
+        cy.get(sitesSelectors.selectLayer.current).then($layers => {
+          if (!$layers.filter('[data-layer="Edit"].is-selected').length) {
+            cy.initializeEventHandlerOnChannel(sitesConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as('telephoneEditLayerReady');
+            cy.selectLayer('Edit');
+            cy.get('@telephoneEditLayerReady').its('done').should('equal', true);
+          }
+        });
+        cy.cleanTest(telephoneInputDrop);
+        const dropZone = sitesSelectors.overlays.overlay.component +
+            '[data-path="' + authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + '/*"]';
+        const insertDialog = '.InsertComponentDialog:visible';
+        const searchField = insertDialog + ' .InsertComponentDialog-components input[type="search"]';
+        cy.openEditableToolbar(dropZone);
+        cy.initializeEventHandlerOnChannel(sitesConstants.EVENT_NAME_EDITABLES_UPDATED).as('telephoneInserted');
+        cy.initializeEventHandlerOnChannel(sitesConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as('telephoneInsertSettled');
+        cy.get(sitesSelectors.editableToolbar.actions.insert).should('be.visible').click();
+        cy.get(insertDialog).should('have.length', 1).and('be.visible');
+        cy.get(searchField).should('be.visible').clear();
+        cy.get(searchField).should('be.visible').type('Adaptive Form Telephone input');
+        cy.get(searchField).should('have.value', 'Adaptive Form Telephone input').type('{enter}');
+        cy.get(insertDialog + ' .InsertComponentDialog-components [value="' +
+            afConstants.components.forms.resourceType.formtelephoneinput + '"]').should('be.visible').click();
+        cy.get('@telephoneInserted').its('done').should('equal', true);
+        cy.get('@telephoneInsertSettled').its('done').should('equal', true);
+        cy.get(insertDialog).should('not.exist');
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
           cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
-          cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select')
-              .find('option[value="^[+]44[0-9]{0,10}$"]').should('not.exist');
           cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select(customKey, {force: true}).then(() => {
             cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', customValue);
             cy.get('.cq-dialog-cancel').click();
+            cy.get(bemEditDialog + ':visible').should('not.exist');
+            cy.deleteComponentByPath(telephoneInputDrop);
           })
         });
       });
