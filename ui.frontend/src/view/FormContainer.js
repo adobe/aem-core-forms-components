@@ -36,6 +36,7 @@ class FormContainer {
         this._deferredParents = {};
         this._element = params._element;
         this._mutationObservers = []; // Store mutation observers for cleanup
+        this._webMcpUnregister = null;
 
         // Prevent default behaviour on form container.
         this.#preventDefaultSubmit();
@@ -83,6 +84,27 @@ class FormContainer {
     _disconnectMutationObservers() {
         this._mutationObservers.forEach(observer => observer.disconnect());
         this._mutationObservers = [];
+    }
+
+    /**
+     * Replaces the active WebMCP registration cleanup for this form.
+     * @param {Function} unregister - Function that unregisters this form's WebMCP tools.
+     * @private
+     */
+    _setWebMcpUnregister(unregister) {
+        this._unregisterWebMcp();
+        this._webMcpUnregister = typeof unregister === 'function' ? unregister : null;
+    }
+
+    /**
+     * Unregisters this form's WebMCP tools.
+     * @private
+     */
+    _unregisterWebMcp() {
+        if (this._webMcpUnregister) {
+            this._webMcpUnregister();
+            this._webMcpUnregister = null;
+        }
     }
 
     /**

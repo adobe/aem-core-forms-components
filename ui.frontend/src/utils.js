@@ -18,6 +18,7 @@ import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core';
+import {registerFormWebMCP} from '@aemforms/af-webmcp';
 import {loadXfa} from "./handleXfa";
 import RuleUtils from "./RuleUtils.js";
 
@@ -341,6 +342,9 @@ class Utils {
                 } else {
                     _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
                 }
+                if (!_formJson.id) {
+                    _formJson = {..._formJson, id: elements[i].id || _path};
+                }
                 console.debug("fetched model json", _formJson);
                 await RuleUtils.registerCustomFunctionsV2( _formJson);
                 await RuleUtils.registerCustomFunctionsByUrl(customFunctionUrl);
@@ -371,6 +375,11 @@ class Utils {
                     callback(formContainer.getModel());
                 }
                 Utils.initializeAllFields(formContainer);
+                // Expose the form's WebMCP tool catalog to in-browser AI agents. No-ops unless the
+                // form opted in via fd:webMcpEnabled and a browser modelContext is available.
+                formContainer._setWebMcpUnregister(
+                    registerFormWebMCP(formContainer.getModel(), Utils.getWebMcpOptions(formContainer))
+                );
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }
@@ -378,6 +387,18 @@ class Utils {
     }
 
     
+    /** Builds form-scoped renderer-focus and optional additional-tool options for WebMCP. */
+    static getWebMcpOptions(formContainer, additionalTools) {
+        return {
+            ...(additionalTools ? {additionalTools} : {}),
+            onFocusRequest: (fieldId) => {
+                const previous = document.activeElement;
+                formContainer.setFocus(fieldId);
+                return document.activeElement !== previous;
+            }
+        };
+    }
+
     /**
      * For backward compatibility with older data formats of prefill services like FDM.
      * @param {object} prefillJson - The prefill JSON object.
