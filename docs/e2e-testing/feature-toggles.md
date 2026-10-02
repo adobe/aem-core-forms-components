@@ -182,7 +182,7 @@ it/content/src/main/content/jcr_root/content/forms/af/core-components-it/samples
 
 The enabled WebMCP authoring suite runs on the latest addon, uses the existing accessibility sample, enables **Enable AI assistant access (WebMCP)** in the container dialog, and opens the saved form in preview. A preview-scoped response interceptor installs a test-only `document.modelContext` host before runtime scripts load; the real runtime must register `list_forms` plus all 12 form tools and return the accessibility form's field summary. Authenticated browser cleanup restores the original opt-in property and its type, or deletes it when originally absent.
 
-Running the authoring flow requires matching Java models and standard/XFA runtime clientlibs, IT content, the examples page component package, and the IT toggle configuration. The instance must have the development toggle provider installed and expose `FT_FORMS-28233` in `/etc.clientlibs/toggles.json`; configuring `enabledToggles` without an active provider does not enable the flag. The suite asserts this prerequisite instead of passing without exercising the feature.
+Running the authoring flow requires matching Java models and standard/XFA runtime clientlibs, IT content, the examples page component package, and the IT toggle configuration. The instance must have the development toggle provider installed and expose `FT_FORMS-28233` in `/etc.clientlibs/toggles.json`; configuring `enabledToggles` without an active provider does not enable the flag. When the flag is absent, including in without-FT jobs, the suite is reported as skipped without changing the opt-in property. With the flag enabled, the full authoring and preview assertions run.
 
 ---
 

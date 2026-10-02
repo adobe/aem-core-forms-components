@@ -659,18 +659,23 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
 // cypress command to insert component
 Cypress.Commands.add("insertComponent", (selector, componentString, componentType) => {
     //Open toolbar of root panel
-    const insertComponentDialog_Selector = '.InsertComponentDialog-components [value="' + componentType + '"]',
-        insertComponentDialog_searchField = ".InsertComponentDialog-components input[type='search']";
+    const insertComponentDialog = '.InsertComponentDialog:visible',
+        insertComponentDialog_Selector = insertComponentDialog + ' .InsertComponentDialog-components [value="' + componentType + '"]',
+        insertComponentDialog_searchField = insertComponentDialog + " .InsertComponentDialog-components input[type='search']";
     cy.openEditableToolbar(selector);
     cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
+    cy.get(insertComponentDialog).should('be.visible');
     recurse(
         // the commands to repeat, and they yield the input element
-        () => cy.get(insertComponentDialog_searchField).clear().type(componentString),
+        () => {
+            cy.get(insertComponentDialog_searchField).should('be.visible').clear();
+            return cy.get(insertComponentDialog_searchField).should('be.visible').type(componentString);
+        },
         // the predicate takes the output of the above commands
         // and returns a boolean. If it returns true, the recursion stops
         ($input) => $input.val() === componentString,
     )
-    cy.get(insertComponentDialog_searchField).type('{enter}');
+    cy.get(insertComponentDialog_searchField).should('be.visible').type('{enter}');
     cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
     // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
     cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here

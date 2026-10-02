@@ -35,11 +35,15 @@ describe('WebMCP form authoring and preview', () => {
     ];
     let originalProperties;
 
-    before(() => {
+    before(function () {
         cy.openAuthoring(pagePath);
-        cy.fetchFeatureToggles().its('body.enabled').should('include', 'FT_FORMS-28233');
-        cy.request(resourcePath + '.json').its('body').then(properties => {
-            originalProperties = properties;
+        cy.fetchFeatureToggles().its('body.enabled').should('be.an', 'array').then(enabled => {
+            if (!enabled.includes('FT_FORMS-28233')) {
+                return this.skip();
+            }
+            cy.request(resourcePath + '.json').its('body').then(properties => {
+                originalProperties = properties;
+            });
         });
     });
 
