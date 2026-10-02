@@ -15,6 +15,8 @@
  */
 
 
+/* global Cypress */
+
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
@@ -95,21 +97,34 @@ describe('Page - Authoring', function () {
   context('Adding removing patterns from design policy', function () {
     const templateDataPath = '/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure',
         telephoneInputPolicy = '[value="' + templateDataPath + '/jcr:content/guideContainer/forms-components-examples/components/form/telephoneinput' + '"] [data-action="POLICY"]',
-        authoringPagePath = '/content/forms/af/core-components-it/blank',
+        // Policy assertions do not need to create another field through the Insert dialog.
+        authoringPagePath = '/content/forms/af/core-components-it/samples/telephoneinput/basic',
         bemEditDialog = '.cmp-adaptiveform-telephoneinput__editdialog',
         bemDesignDialog = '.cmp-adaptiveform-telephoneinput__designdialog',
-        telephoneInputEditPath = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput",
-        telephoneInputDrop = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/" + afConstants.components.forms.resourceType.formtelephoneinput.split("/").pop(),
+        telephoneInputEditPath = authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/telephoneinput6",
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']";
     const customKey = 'customKey',
         customValue = 'customValue',
-        // Shared, persistent design policy this test mutates — reset it each run so a leftover custom
-        // format from a prior run/retry can't leave the dialog in a dirty state (see reset command).
+        // The policy is shared across specs and retries.
         telephoneInputPolicyPath = '/conf/core-components-examples/settings/wcm/policies/forms-components-examples/components/form/telephoneinput/default';
+    let policyPrepared = false;
 
     beforeEach(function () {
-      cy.openAuthoring(templateDataPath + ".html");
+      policyPrepared = false;
+      cy.openAuthoring(templateDataPath);
+      cy.resetTelephoneInputDesignPolicy(telephoneInputPolicyPath).then(() => {
+        policyPrepared = true;
+      });
+    });
+
+    afterEach(function () {
+      if (!policyPrepared) {
+        return;
+      }
       cy.resetTelephoneInputDesignPolicy(telephoneInputPolicyPath);
+      const contextPath = Cypress.env('crx.contextPath') || '';
+      cy.request(contextPath + telephoneInputPolicyPath + '.json')
+          .its('body').should('not.have.property', 'allowedCustomFormats');
     });
 
     it('Adding removing patterns from design policy', function () {
@@ -121,18 +136,25 @@ describe('Page - Authoring', function () {
       cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').should('exist').then(() => {
         cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().type(customKey);
         cy.get('[name="./allowedCustomFormats/item0/customFormatValue"]').focus().type(customValue);
-        cy.get('[title="Done"]').click();
+        cy.intercept('POST', '**' + telephoneInputPolicyPath + '*').as('saveTelephonePolicy');
+        cy.get('[title="Done"]:visible').click();
+        cy.wait('@saveTelephonePolicy').its('response.statusCode').should('be.oneOf', [200, 201]);
+        cy.get(bemDesignDialog + ':visible').should('not.exist');
+        const contextPath = Cypress.env('crx.contextPath') || '';
+        cy.request(contextPath + telephoneInputPolicyPath + '.infinity.json')
+            .its('body.allowedCustomFormats.item0')
+            .should('include', {customFormatKey: customKey, customFormatValue: customValue});
       }).then(() => {
         cy.openSiteAuthoring(authoringPagePath);
-        dropTelephoneInputInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
           cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
+          cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select')
+              .find('option[value="^[+]44[0-9]{0,10}$"]').should('not.exist');
           cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select(customKey, {force: true}).then(() => {
             cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', customValue);
             cy.get('.cq-dialog-cancel').click();
-            cy.deleteComponentByPath(telephoneInputDrop);
           })
         });
       });
