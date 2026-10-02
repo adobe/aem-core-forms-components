@@ -29,7 +29,7 @@ describe('Replace functionality - sites', function () {
     const pagePath = "/content/forms/sites/core-components-it/blank",
         pageDropZoneSuffix = "/jcr:content/root/responsivegrid/container";
 
-    const replaceDialog = 'coral-dialog:visible .cmp-replace-dialog-search-components';
+    const replaceDialog = '.cmp-replace-dialog-search-components:visible';
 
     const selectReplacement = (resourceTypeSelector, componentPath) => {
         cy.initializeEventHandlerOnChannel(sitesConstants.EVENT_NAME_EDITABLES_UPDATED).as('replacementEditableUpdated');
@@ -149,23 +149,23 @@ describe('Replace functionality - sites', function () {
 
     context('Test replace action within different groups', function () {
         const templatePath = "/conf/core-components-examples/settings/wcm/templates/content-page/structure";
-        const policyDialog = 'coral-dialog:visible:has([value="group:replace test group"])',
-            policyCheckbox = policyDialog + ' coral-checkbox[value="group:replace test group"]';
+        const policyDialog = '.cq-dialog:visible:has([value="group:replace test group"])',
+            policyCheckbox = policyDialog + ' [value="group:replace test group"]';
         let originalTestGroupAllowed;
 
         const updateTestGroupPolicy = (allow) => {
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.self + '[data-path="' + templatePath + '/jcr:content/root/responsivegrid"]');
             cy.invokeEditableAction(sitesSelectors.editableToolbar.actions.policy);
-            cy.get(policyCheckbox).scrollIntoView().should('be.visible').invoke('prop', 'checked')
+            cy.get(policyCheckbox).first().scrollIntoView().should('be.visible').invoke('prop', 'checked')
                 .should('be.a', 'boolean').then((checked) => {
                     if (originalTestGroupAllowed === undefined) {
                         originalTestGroupAllowed = checked;
                     }
                     if (checked !== allow) {
-                        cy.get(policyCheckbox).click();
+                        cy.get(policyCheckbox).first().click();
                     }
                 });
-            cy.get(policyCheckbox).should('have.prop', 'checked', allow);
+            cy.get(policyCheckbox).first().should('have.prop', 'checked', allow);
             cy.intercept('POST', '**/conf/core-components-examples/settings/wcm/policies/**').as('saveReplacePolicy');
             cy.get(policyDialog + ' [title="Done"]').scrollIntoView().should('be.visible').click();
             cy.wait('@saveReplacePolicy').its('response.statusCode').should('be.oneOf', [200, 201]);

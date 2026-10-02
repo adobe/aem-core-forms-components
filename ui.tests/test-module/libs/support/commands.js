@@ -673,9 +673,9 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
  * @param {string} componentType Component resource type.
  */
 Cypress.Commands.add("insertComponent", (selector, componentString, componentType) => {
-    const insertComponentDialog = 'coral-dialog.InsertComponentDialog:visible',
-        insertComponentDialog_Selector = insertComponentDialog + ' .InsertComponentDialog-components [value="' + componentType + '"]',
-        insertComponentDialog_searchField = insertComponentDialog + " .InsertComponentDialog-components input[type='search']";
+    const insertComponentDialog = guideSelectors.insertComponentDialog.dialog + ':visible',
+        insertComponentDialog_Selector = insertComponentDialog + ' [value="' + componentType + '"]',
+        insertComponentDialog_searchField = insertComponentDialog + " input[type='search']";
     // Overlay refreshes can discard an Insert click; retry opening, not interactions with a hidden dialog.
     recurse(
         () => {

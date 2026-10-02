@@ -106,8 +106,7 @@ describe('Page - Authoring', function () {
     const customKey = 'customKey',
         customValue = 'customValue',
         // The policy is shared across specs and retries.
-        telephoneInputPolicyPath = '/conf/core-components-examples/settings/wcm/policies/forms-components-examples/components/form/telephoneinput/default',
-        sitesConstants = require('../../libs/commons/sitesConstants');
+        telephoneInputPolicyPath = '/conf/core-components-examples/settings/wcm/policies/forms-components-examples/components/form/telephoneinput/default';
     let policyPrepared = false;
 
     beforeEach(function () {
@@ -147,31 +146,9 @@ describe('Page - Authoring', function () {
             .should('include', {customFormatKey: customKey, customFormatValue: customValue});
       }).then(() => {
         cy.openSiteAuthoring(authoringPagePath);
-        cy.get(sitesSelectors.selectLayer.current).then($layers => {
-          if (!$layers.filter('[data-layer="Edit"].is-selected').length) {
-            cy.initializeEventHandlerOnChannel(sitesConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as('telephoneEditLayerReady');
-            cy.selectLayer('Edit');
-            cy.get('@telephoneEditLayerReady').its('done').should('equal', true);
-          }
-        });
+        cy.selectLayer('Edit');
         cy.cleanTest(telephoneInputDrop);
-        const dropZone = sitesSelectors.overlays.overlay.component +
-            '[data-path="' + authoringPagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + '/*"]';
-        const insertDialog = '.InsertComponentDialog:visible';
-        const searchField = insertDialog + ' .InsertComponentDialog-components input[type="search"]';
-        cy.openEditableToolbar(dropZone);
-        cy.initializeEventHandlerOnChannel(sitesConstants.EVENT_NAME_EDITABLES_UPDATED).as('telephoneInserted');
-        cy.initializeEventHandlerOnChannel(sitesConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as('telephoneInsertSettled');
-        cy.get(sitesSelectors.editableToolbar.actions.insert).should('be.visible').click();
-        cy.get(insertDialog).should('have.length', 1).and('be.visible');
-        cy.get(searchField).should('be.visible').clear();
-        cy.get(searchField).should('be.visible').type('Adaptive Form Telephone input');
-        cy.get(searchField).should('have.value', 'Adaptive Form Telephone input').type('{enter}');
-        cy.get(insertDialog + ' .InsertComponentDialog-components [value="' +
-            afConstants.components.forms.resourceType.formtelephoneinput + '"]').should('be.visible').click();
-        cy.get('@telephoneInserted').its('done').should('equal', true);
-        cy.get('@telephoneInsertSettled').its('done').should('equal', true);
-        cy.get(insertDialog).should('not.exist');
+        dropTelephoneInputInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
