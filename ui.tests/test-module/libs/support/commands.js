@@ -297,13 +297,23 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     cy.visit(path, options);
 });
 
-// cypress command to select layer in authoring
+/**
+ * Selects an authoring layer and waits for its overlays to be repositioned.
+ * @param {string} layer Authoring layer name.
+ */
 Cypress.Commands.add("selectLayer", (layer) => {
-    // please note: when switching from style to other layer, we refresh guide, so these events need to be checked here
-    cy.get(siteSelectors.selectLayer.trigger).click();
-    cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').should('be.visible');
-    cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').click({force: true});
-    cy.get(siteSelectors.selectLayer.current + '[data-layer="' + layer + '"].is-selected');
+    const selectedLayer = siteSelectors.selectLayer.current + '[data-layer="' + layer + '"].is-selected';
+    return cy.get(siteSelectors.selectLayer.current).then(($layers) => {
+        if ($layers.filter('[data-layer="' + layer + '"].is-selected').length) {
+            return cy.get(selectedLayer).should('be.visible');
+        }
+        cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isLayerOverlaysRepositioned");
+        cy.get(siteSelectors.selectLayer.trigger).click();
+        cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]')
+            .should('be.visible').click({force: true});
+        cy.get(selectedLayer).should('be.visible');
+        return cy.get("@isLayerOverlaysRepositioned").its('done').should('equal', true);
+    });
 });
 
 // cypress command to open editable toolbar
@@ -656,24 +666,47 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
 });
 
 
-// cypress command to insert component
+/**
+ * Inserts a component through the visible dialog and waits for the editor refresh.
+ * @param {string} selector Drop-zone overlay selector.
+ * @param {string} componentString Component search text.
+ * @param {string} componentType Component resource type.
+ */
 Cypress.Commands.add("insertComponent", (selector, componentString, componentType) => {
-    //Open toolbar of root panel
-    const insertComponentDialog_Selector = '.InsertComponentDialog-components [value="' + componentType + '"]',
-        insertComponentDialog_searchField = ".InsertComponentDialog-components input[type='search']";
-    cy.openEditableToolbar(selector);
-    cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
+    const insertComponentDialog = 'coral-dialog.InsertComponentDialog:visible',
+        insertComponentDialog_Selector = insertComponentDialog + ' .InsertComponentDialog-components [value="' + componentType + '"]',
+        insertComponentDialog_searchField = insertComponentDialog + " .InsertComponentDialog-components input[type='search']";
+    // Overlay refreshes can discard an Insert click; retry opening, not interactions with a hidden dialog.
     recurse(
-        // the commands to repeat, and they yield the input element
-        () => cy.get(insertComponentDialog_searchField).clear().type(componentString),
-        // the predicate takes the output of the above commands
-        // and returns a boolean. If it returns true, the recursion stops
+        () => {
+            cy.get('body').then(($body) => {
+                if (!$body.find(insertComponentDialog).length) {
+                    cy.openEditableToolbar(selector);
+                    cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
+                }
+            });
+            return cy.get('body');
+        },
+        ($body) => $body.find(insertComponentDialog).length === 1,
+        {limit: 5, delay: 1000, timeout: 30000, log: false}
+    );
+    cy.get(insertComponentDialog).should('have.length', 1).and('be.visible');
+    recurse(
+        () => {
+            cy.get(insertComponentDialog_searchField).should('be.visible').clear();
+            cy.get(insertComponentDialog_searchField).should('be.visible').type(componentString);
+            return cy.get(insertComponentDialog_searchField);
+        },
         ($input) => $input.val() === componentString,
-    )
+    );
     cy.get(insertComponentDialog_searchField).type('{enter}');
-    cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
-    // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
-    cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
+    cy.get(insertComponentDialog_Selector).should('be.visible');
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_EDITABLES_UPDATED).as("isInsertEditableUpdated");
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isInsertOverlaysRepositioned");
+    cy.get(insertComponentDialog_Selector).click();
+    cy.get(insertComponentDialog).should('not.exist');
+    cy.get("@isInsertEditableUpdated").its('done').should('equal', true);
+    return cy.get("@isInsertOverlaysRepositioned").its('done').should('equal', true);
 });
 
 /**
