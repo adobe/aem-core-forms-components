@@ -51,7 +51,7 @@ commit them. For an ngrok browser-warning endpoint, a non-browser `userAgent`
 override can be supplied together with request login.
 
 The synchronization spec injects a delayed overlay, lost Insert and layer-switcher
-clicks, and delayed insertion/configure responses. Component insertion must finish the
+clicks, late layer options, and delayed insertion/configure responses. Component insertion must finish the
 editor refresh before a caller configures or deletes the new component.
 Use `cleanTest` after entering the Edit layer, `cancelConfigureDialog` for
 configure-dialog cancellation, and `submitConfigureDialog` when a save must

@@ -372,7 +372,7 @@ Cypress.Commands.add("selectLayer", (layer) => {
             return cy.get('body');
         },
         $body => $body.find(layerOption).is(':visible'),
-        {limit: 5, delay: 500, timeout: 10000, log: false}
+        {limit: 21, delay: 500, timeout: 10000, log: false}
     );
     cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isLayerOverlaysRepositioned");
     cy.get(layerOption).click({force: true});

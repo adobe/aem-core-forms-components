@@ -75,6 +75,11 @@ describe('Authoring synchronization', {retries: 0}, function () {
         cy.get(sitesSelectors.selectLayer.popover.self).should('not.be.visible');
         let lostClick = false;
         cy.document().then(doc => {
+            const option = doc.querySelector(sitesSelectors.selectLayer.popover.edit);
+            const parent = option.parentNode;
+            const next = option.nextSibling;
+            option.remove();
+            setTimeout(() => parent.insertBefore(option, next), 4500);
             const discardFirstClick = event => {
                 if (event.target.closest(sitesSelectors.selectLayer.trigger)) {
                     lostClick = true;
