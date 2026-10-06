@@ -47,8 +47,10 @@ Enable it when an external author endpoint requires a session before navigation
 or its UI login redirects escape the Cypress frame. It uses AEM's form-login
 endpoint and the existing `crx.username`, `crx.password`, and `crx.contextPath`
 settings. Supply credentials using Cypress environment configuration; do not
-commit them. For an ngrok browser-warning endpoint, a non-browser `userAgent`
-override can be supplied together with request login.
+commit them. For an ngrok browser-warning endpoint, send its warning-bypass
+header without replacing the normal browser user agent. See
+[SP/LTS authoring compatibility](../../docs/e2e-testing/authoring-compatibility.md)
+for the verified remote setup and cross-version assertion patterns.
 
 Component insertion must finish the editor refresh before a caller configures
 or deletes the new component.
@@ -60,6 +62,11 @@ CSS classes.
 
 Use `createRule` to wait for the rule editor's statement builder, rather than
 assuming its first Create click is handled while the iframe initializes.
+
+Layer selection waits for the selected-layer UI state, not an overlay-reposition
+event that every layer transition may not emit. Use `assertFieldInvalid` to
+check the field's invalid state and Granite validation message without depending
+on Coral's version-specific tooltip or error-label markup.
 
 Use `cleanTestFixture` in teardown to remove only the named test-owned component
 through authenticated requests, even if the editor or configure dialog failed.

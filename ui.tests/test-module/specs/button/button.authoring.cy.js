@@ -75,32 +75,45 @@ describe('Button - Authoring', function () {
     }
 
     const testButtonBehaviourInilineEdit = function(buttonEditPathSelector, buttonDrop, isSites) {
+        const updatedLabel = 'Updated Button';
         if (isSites) {
             dropButtonInSites();
         } else {
             dropButtonInContainer();
         }
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-        cy.invokeEditableAction("[data-action='EDIT']");
-        cy.get('.rte-toolbar:visible').should('have.length', 1);
-        getContentIframeBody().find('.cmp-adaptiveform-button__text').should('have.length', 1)
-            .then(($span) => {
-                $span[0].textContent = '';
-            });
-        recurse(
-            () => {
-                cy.get('body').then($body => {
-                    if ($body.find('.rte-toolbar:visible').length) {
-                        cy.get('body').click(0, 0);
-                    }
+        const contextPath = Cypress.env('crx.contextPath') || '';
+        [updatedLabel, ''].forEach(label => {
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+            cy.invokeEditableAction("[data-action='EDIT']");
+            cy.get('.rte-toolbar:visible').should('have.length', 1);
+            getContentIframeBody().find('.cmp-adaptiveform-button__text').should('have.length', 1)
+                .then(($span) => {
+                    $span[0].textContent = label;
                 });
-                return cy.get('body');
-            },
-            $body => !$body.find('.rte-toolbar:visible').length,
-            {limit: 21, delay: 500, timeout: 10000, log: false}
-        );
-        getContentIframeBody().find('.cmp-adaptiveform-button__text')
-            .should('have.length', 1).and('not.have.text', '');
+            recurse(
+                () => {
+                    cy.get('body').then($body => {
+                        if ($body.find('.rte-toolbar:visible').length) {
+                            cy.get('body').click(0, 0);
+                        }
+                    });
+                    return cy.get('body');
+                },
+                $body => !$body.find('.rte-toolbar:visible').length,
+                {limit: 21, delay: 500, timeout: 10000, log: false}
+            );
+            getContentIframeBody().find('.cmp-adaptiveform-button button').should($button => {
+                expect($button).to.have.length(1);
+                expect($button.text().trim()).to.equal(label);
+            });
+            cy.request(contextPath + buttonDrop + '.json').its('body').should(body => {
+                if (label) {
+                    expect(body['jcr:title']).to.equal(label);
+                } else {
+                    expect([undefined, '']).to.include(body['jcr:title']);
+                }
+            });
+        });
     };
 
 
@@ -112,6 +125,10 @@ describe('Button - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+        });
+
+        afterEach(function () {
+            cy.cleanTestFixture(buttonDrop);
         });
 
         it('insert Button in form container', function () {

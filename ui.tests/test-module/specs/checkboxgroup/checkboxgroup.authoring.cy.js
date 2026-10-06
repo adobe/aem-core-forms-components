@@ -159,8 +159,7 @@ describe('Page - Authoring', function () {
             cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
             cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
             cy.get('.cq-dialog-submit').click();
-            cy.get(".cmp-adaptiveform-checkboxgroup__value input[name='./default']").should('have.attr', 'aria-invalid', 'true');
-            cy.get('.cq-dialog-content:visible .coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
+            cy.assertFieldInvalid(".cmp-adaptiveform-checkboxgroup__value input[name='./default']", 'Value Type Mismatch');
 
 
             cy.cancelConfigureDialog();
@@ -176,8 +175,7 @@ describe('Page - Authoring', function () {
             cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
             cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
             cy.get('.cq-dialog-submit').click();
-            cy.get(".cmp-adaptiveform-checkboxgroup__value input[name='./default']").should('have.attr', 'aria-invalid', 'true');
-            cy.get('.cq-dialog-content:visible .coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
+            cy.assertFieldInvalid(".cmp-adaptiveform-checkboxgroup__value input[name='./default']", 'Value Type Mismatch');
 
             cy.cancelConfigureDialog();
             cy.deleteComponentByPath(checkBoxGroupDrop);

@@ -68,6 +68,7 @@ Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
       method: 'POST',
       url: contextPath + '/libs/granite/core/content/login.html/j_security_check',
       form: true,
+      headers: {Referer: Cypress.config('baseUrl')},
       body: {j_username: username, j_password: password, j_validate: 'true', resource: contextPath + '/index.html'},
       followRedirect: false,
       log: false
@@ -378,10 +379,8 @@ Cypress.Commands.add("selectLayer", (layer) => {
         $body => $body.find(layerOption).is(':visible'),
         {limit: 21, delay: 500, timeout: 10000, log: false}
     );
-    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isLayerOverlaysRepositioned");
     cy.get(layerOption).click({force: true});
-    cy.get(selectedLayer).should('be.visible');
-    return cy.get("@isLayerOverlaysRepositioned").its('done').should('equal', true);
+    return cy.get(selectedLayer).should('be.visible');
   });
 });
 
@@ -418,6 +417,21 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
 // cypress command to invoke an editable action
 Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
   cy.get(actionSelector).should('be.visible').click({force: true});
+});
+
+Cypress.Commands.add("assertFieldInvalid", (selector, message) => {
+    return cy.window().then(win => {
+        return cy.get(selector).should($field => {
+            expect($field, 'unique validation field').to.have.length(1);
+            expect($field).to.have.attr('aria-invalid', 'true');
+            const validation = win.$($field[0]).adaptTo('foundation-validation');
+            expect(validation, 'Granite field validation API').to.exist;
+            const messageAccessor = typeof validation.getValidationMessage === 'function'
+                ? validation.getValidationMessage : validation.validationMessage;
+            expect(messageAccessor, 'Granite validation message accessor').to.be.a('function');
+            expect(messageAccessor.call(validation), 'field validation message').to.equal(message);
+        });
+    });
 });
 
 Cypress.Commands.add("cancelConfigureDialog", () => {
@@ -781,7 +795,8 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   // failure screenshot showing the edit dialog still open when the delete-confirm dialog was
   // expected). Wait for any leftover open dialog to actually close first.
   cy.get('body').should($body => {
-    expect($body.find('coral-dialog.is-open:visible').length, 'no leftover open dialog before delete').to.equal(0);
+    const openDialogs = $body.find('coral-dialog').filter((index, dialog) => dialog.open);
+    expect(openDialogs.filter(':visible').length, 'no leftover open dialog before delete').to.equal(0);
   });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
@@ -817,7 +832,8 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
   // Same leftover-open-dialog race as deleteComponentByPath above; wait for it to actually close.
   cy.get('body').should($body => {
-    expect($body.find('coral-dialog.is-open:visible').length, 'no leftover open dialog before delete').to.equal(0);
+    const openDialogs = $body.find('coral-dialog').filter((index, dialog) => dialog.open);
+    expect(openDialogs.filter(':visible').length, 'no leftover open dialog before delete').to.equal(0);
   });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
@@ -836,7 +852,7 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
 Cypress.Commands.add("insertComponent", (selector, componentString, componentType) => {
   const dialog = '.InsertComponentDialog:visible',
       insertComponentDialog_Selector = dialog + ' [value="' + componentType + '"]',
-      insertComponentDialog_searchField = dialog + " .coral3-Search-input, " + dialog + " input[type='search']";
+      insertComponentDialog_searchField = dialog + " input:not([type='hidden']):visible";
   recurse(
       () => {
           cy.get('body').then($body => {
@@ -853,7 +869,7 @@ Cypress.Commands.add("insertComponent", (selector, componentString, componentTyp
   recurse(
       // the commands to repeat, and they yield the input element
       () => {
-          cy.get(insertComponentDialog_searchField).should('be.visible').clear();
+          cy.get(insertComponentDialog_searchField).should('have.length', 1).and('be.visible').clear();
           return cy.get(insertComponentDialog_searchField).type(componentString);
       },
       // the predicate takes the output of the above commands
