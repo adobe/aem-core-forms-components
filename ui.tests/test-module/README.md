@@ -37,7 +37,7 @@ Override `baseUrl` rather than changing the committed localhost configuration:
 
 ```sh
 npx --no-install cypress run --browser chrome --headless \
-  --spec 'specs/authoring/authoring.synchronization.cy.js,specs/wizard/wizard.authoring.cy.js,specs/checkboxgroup/checkboxgroup.authoring.cy.js,specs/dropdown/dropdown.authoring.cy.js,specs/contentfragment/contentfragment.authoring.cy.js,specs/telephoneinput/telephoneinput.authoring.cy.js' \
+  --spec 'specs/wizard/wizard.authoring.cy.js,specs/checkboxgroup/checkboxgroup.authoring.cy.js,specs/dropdown/dropdown.authoring.cy.js,specs/contentfragment/contentfragment.authoring.cy.js,specs/telephoneinput/telephoneinput.authoring.cy.js' \
   --config 'baseUrl=https://author.example,retries=0,video=false' \
   --env 'crx.loginViaRequest=true'
 ```
@@ -50,9 +50,8 @@ settings. Supply credentials using Cypress environment configuration; do not
 commit them. For an ngrok browser-warning endpoint, a non-browser `userAgent`
 override can be supplied together with request login.
 
-The synchronization spec injects a delayed overlay, lost Insert and layer-switcher
-clicks, late layer options, and delayed insertion/configure responses. Component insertion must finish the
-editor refresh before a caller configures or deletes the new component.
+Component insertion must finish the editor refresh before a caller configures
+or deletes the new component.
 Use `cleanTest` after entering the Edit layer, `cancelConfigureDialog` for
 configure-dialog cancellation, and `submitConfigureDialog` when a save must
 finish before the next toolbar action. Select classic Coral options through
