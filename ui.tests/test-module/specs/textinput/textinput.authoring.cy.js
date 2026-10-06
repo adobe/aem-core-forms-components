@@ -214,6 +214,7 @@ describe('Page - Authoring', function () {
         it('should switch validation pattern dropdown to "Custom" when an unmapped regex is authored', function () {
             const customValidationFormatValue = '^custom-regex-[0-9]{3}$';
 
+            cy.cleanTest(textInputDrop);
             dropTextInputInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textInputEditPathSelector);
             cy.invokeEditableAction("[data-action='CONFIGURE']");
@@ -230,17 +231,16 @@ describe('Page - Authoring', function () {
 
             // Pick a non-default option (not empty, not "custom") so the format field is shown and synced.
             let chosenValue;
-            cy.get('@validationDropdown').find('select[handle="nativeSelect"]').then(($nativeSelect) => {
-                const options = Array.from($nativeSelect[0]?.options || []);
+            cy.get('@validationDropdown').find('coral-select-item[value]').then(($options) => {
+                const options = Array.from($options);
                 const chosen = options.find((opt) =>
-                    Boolean(opt.value) &&
-                    opt.value !== 'custom' &&
-                    opt.value !== '#####################.###############'
+                    Boolean(opt.getAttribute('value')) &&
+                    opt.getAttribute('value') !== 'custom' &&
+                    opt.getAttribute('value') !== '#####################.###############'
                 );
                 expect(chosen, 'non-default validation pattern option').to.exist;
-                chosenValue = chosen.value;
-                cy.wrap($nativeSelect).select(chosenValue, { force: true });
-                cy.wrap($nativeSelect).trigger('change', { force: true });
+                chosenValue = chosen.getAttribute('value');
+                cy.selectCoralOption('.cmp-adaptiveform-textinput__validationpattern', chosenValue);
             });
             cy.then(() => {
                 cy.get('@validationDropdown').should('have.value', chosenValue);
@@ -260,7 +260,7 @@ describe('Page - Authoring', function () {
             cy.get('.cq-dialog').click(5, 5, { force: true });
             cy.get('@validationDropdown').should('have.value', 'custom');
             cy.get('@validationDropdown').children('button').should('contain.text', 'Custom');
-            cy.get('.cq-dialog-cancel').should('be.visible').click();
+            cy.cancelConfigureDialog();
             cy.deleteComponentByPath(textInputDrop);
         });
     })
