@@ -66,7 +66,7 @@ describe('Page - Authoring', function () {
         cy.get('[name="./multiSelect"][type="checkbox"]').should("exist").uncheck();
         cy.get(".cmp-adaptiveform-dropdown__defaultvalue").should("have.css","display","block");
 
-        cy.get('.cq-dialog-cancel').click();
+        cy.cancelConfigureDialog();
         cy.deleteComponentByPath(dropdown);
     }
 
@@ -87,6 +87,11 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            cy.cleanTest(dropdown);
+        });
+
+        afterEach(function () {
+            cy.cleanTestFixture(dropdown);
         });
 
         it('insert Dropdown in form container', function () {
@@ -108,9 +113,10 @@ describe('Page - Authoring', function () {
             cy.get("coral-selectlist-item").contains('Number').should('be.visible').click({force: true});
             cy.get(".cmp-adaptiveform-dropdown__defaultvalue input").invoke('val', 'Not a Number');
             cy.get('.cq-dialog-submit').click();
-            cy.get('.coral-Form-fielderror').should('be.visible').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
+            cy.get(".cmp-adaptiveform-dropdown__defaultvalue input[name='./default']").should('have.attr', 'aria-invalid', 'true');
+            cy.get('.cq-dialog-content:visible .coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
 
-            cy.get('.cq-dialog-cancel').click();
+            cy.cancelConfigureDialog();
             cy.deleteComponentByPath(dropdown);
 
             // For Boolean
@@ -121,9 +127,10 @@ describe('Page - Authoring', function () {
             cy.get("coral-selectlist-item").contains('Boolean').click({force: true});
             cy.get(".cmp-adaptiveform-dropdown__defaultvalue input").invoke('val', 'Not a Boolean');
             cy.get('.cq-dialog-submit').click();
-            cy.get('.coral-Form-fielderror').should('be.visible').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
+            cy.get(".cmp-adaptiveform-dropdown__defaultvalue input[name='./default']").should('have.attr', 'aria-invalid', 'true');
+            cy.get('.cq-dialog-content:visible .coral-Form-errorlabel').should('contain.text', 'Value Type Mismatch');
 
-            cy.get('.cq-dialog-cancel').click();
+            cy.cancelConfigureDialog();
             cy.deleteComponentByPath(dropdown);
         })
 
@@ -160,6 +167,11 @@ describe('Page - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            cy.cleanTest(dropdown);
+        });
+
+        afterEach(function () {
+            cy.cleanTestFixture(dropdown);
         });
 
         it('insert aem forms DropDown', function () {

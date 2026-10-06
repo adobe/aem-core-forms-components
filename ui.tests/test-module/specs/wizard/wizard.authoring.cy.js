@@ -134,6 +134,10 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
+        afterEach(function () {
+            cy.cleanTestFixture(wizardLayoutDrop);
+        });
+
         it('runtime library should not be loaded', function() {
             cy.cleanTest(wizardLayoutDrop).then(function () {
                 cy.intercept('GET', /jcr:content\/guideContainer\/wizard\.html/).as('wizardRequest');
@@ -164,7 +168,7 @@ describe('Page - Authoring', function () {
                                 cy.get("[name='./dataRef']").should("exist");
                                 cy.get("[name='./visible']").should("exist");
                                 cy.get("[name='./enabled']").should("exist");
-                                cy.get('.cq-dialog-cancel').should('be.visible').click({force: true}).then(() => {
+                                cy.cancelConfigureDialog().then(() => {
                                     cy.deleteComponentByPath(wizardLayoutDrop);
                                 });
                             });
@@ -174,14 +178,14 @@ describe('Page - Authoring', function () {
             });
         });
 
-        it('verify Navigation Working between tabs in Authoring', {retries: 3}, function () {
+        it('verify Navigation Working between tabs in Authoring', function () {
             cy.cleanTest(wizardLayoutDrop).then(function () {
                 dropWizardInContainer();
                 addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
                 addComponentInWizard("Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
                 cy.invokeEditableAction(editDialogNavigationPanelSelector);
-                cy.wait(2000).then(() => {
+                cy.then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
                     // In select panel, text will be in format: <component type>: <title>
                     cy.get("table.cmp-panelselector__table tr").eq(0)
@@ -200,14 +204,14 @@ describe('Page - Authoring', function () {
             });
         });
 
-        it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
+        it('open editable toolbar of 2nd wizard panel', function () {
             cy.cleanTest(wizardLayoutDrop).then(function () {
                 dropWizardInContainer();
                 addComponentInWizard("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
                 addComponentInWizard("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
                 cy.invokeEditableAction(editDialogNavigationPanelSelector);
-                cy.wait(2000).then(() => {
+                cy.then(() => {
                     cy.get("table.cmp-panelselector__table").find("tr").should("have.length", 2);
                     cy.get("table.cmp-panelselector__table").find(panelcontainerDataId).find("td").first().should('be.visible').click();
                     cy.get('body').click(0, 0);
@@ -260,15 +264,18 @@ describe('Page - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
-        it('insert aem forms Wizard', {retries: 3}, function () {
+        afterEach(function () {
+            cy.cleanTestFixture(wizardEditPath);
+        });
+
+        it('insert aem forms Wizard', function () {
             cy.cleanTest(wizardEditPath).then(function () {
                 dropWizardInSites();
                 cy.deleteComponentByPath(wizardEditPath);
             });
         });
 
-        // adding retry, sometimes site editor does not load
-        it('open edit dialog of aem forms Wizard', {retries: 3}, function () {
+        it('open edit dialog of aem forms Wizard', function () {
             cy.cleanTest(wizardEditPath).then(function () {
                 dropWizardInSites();
                 cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
@@ -281,27 +288,26 @@ describe('Page - Authoring', function () {
                 cy.get("[name='./dataRef']").should("exist");
                 cy.get("[name='./visible']").should("exist");
                 cy.get("[name='./enabled']").should("exist");
-                cy.get('.cq-dialog-cancel').should('be.visible').click({force: true}).then(() => {
+                cy.cancelConfigureDialog().then(() => {
                     cy.deleteComponentByPath(wizardEditPath);
                 })
 
             });
         });
 
-        it('open editable toolbar of 2nd wizard panel', {retries: 3}, function () {
+        it('open editable toolbar of 2nd wizard panel', function () {
             cy.cleanTest(wizardEditPath).then(function () {
                 dropWizardInSites();
                 addComponentInWizardOfSites("Adaptive Form Number Input", afConstants.components.forms.resourceType.formnumberinput);
                 addComponentInWizardOfSites("Adaptive Form Panel", afConstants.components.forms.resourceType.panelcontainer);
-                cy.wait(2000).then(() => {
-                    cy.get("#sidepanel-toggle-button").click();
-                    cy.get('coral-tab[icon="layers"][aria-label="Content Tree"]').click();
-                    cy.get(`div[data-path='${wizardEditPath}']`).click({force: true});
-                    cy.get(`div[data-path='${panelcontainerPath}']`).click({force: true});
-                    cy.get('#EditableToolbar').should('be.visible');
-                    cy.get('body').click(0, 0);
-                    cy.deleteComponentByPath(wizardEditPath);
-                });
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + wizardEditPathSelector);
+                cy.invokeEditableAction(navigationPanelSelector);
+                cy.get("table.cmp-panelselector__table:visible").find(panelcontainerDataId).find("td").first()
+                    .should('be.visible').click();
+                cy.get('body').click(0, 0);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + panelcontainerDataPath);
+                cy.get('#EditableToolbar button' + panelcontainerDataPath).should('be.visible');
+                cy.deleteComponentByPath(wizardEditPath);
             });
         });
 
