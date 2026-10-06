@@ -112,6 +112,10 @@ function getUserInfoHome(contextPath) {
   cy.request(USER_INFO_SERVLET).its('body.home').as("home")
 }
 
+function getAuthenticatedRequestHeaders(token) {
+  return {'CSRF-Token': token, Referer: Cypress.config('baseUrl')};
+}
+
 
 // Cypress command to open authoring page
 Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
@@ -151,7 +155,7 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
       method: 'POST',
       url,
       form: true,
-      headers: {'CSRF-Token': preferences[":cq_csrf_token"]},
+      headers: getAuthenticatedRequestHeaders(preferences[":cq_csrf_token"]),
       body: preferences,
       log: false
     });
@@ -166,7 +170,7 @@ Cypress.Commands.add("restoreTelephoneInputDesignPolicy", (policyPath, policy) =
     const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
     const url = contextPath + policyPath;
     cy.request(contextPath + '/libs/granite/csrf/token.json').its('body.token').then((token) => {
-        const options = {method: 'POST', url, form: true, headers: {'CSRF-Token': token}, log: false};
+        const options = {method: 'POST', url, form: true, headers: getAuthenticatedRequestHeaders(token), log: false};
         cy.request({...options, body: {
                 'allowedCustomFormats@Delete': '',
                 'allowedFormat3@Delete': '',
@@ -725,7 +729,7 @@ Cypress.Commands.add("cleanTestFixture", (componentPath) => {
             .to.equal(componentPath.split('/').pop());
         cy.request({url: contextPath + '/libs/granite/csrf/token.json', log: false}).its('body.token').then(token => {
             cy.request({
-                method: 'POST', url, form: true, headers: {'CSRF-Token': token},
+                method: 'POST', url, form: true, headers: getAuthenticatedRequestHeaders(token),
                 body: {':operation': 'delete', ':cq_csrf_token': token}, log: false
             });
         });

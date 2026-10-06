@@ -64,8 +64,12 @@ assuming its first Create click is handled while the iframe initializes.
 Use `cleanTestFixture` in teardown to remove only the named test-owned component
 through authenticated requests, even if the editor or configure dialog failed.
 Tutorial preferences are saved through awaited requests; request-login authoring
-does not depend on the landing-page redirect.
+does not depend on the landing-page redirect. Authenticated preferences, policy,
+and fixture-cleanup POSTs include both the CSRF token and the configured AEM
+`baseUrl` as their referrer, including with the default browser user agent.
 
 Repeat stability runs with retries disabled, including per-test retry overrides.
 Verify that test-owned components are removed and the telephone policy matches
 its original snapshot after both passing and failing runs.
+Use the default browser user agent for acceptance: a non-browser user agent can
+bypass Sling's browser referrer checks and mask requests that fail in CI.
