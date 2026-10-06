@@ -17,6 +17,7 @@
 
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
+const {recurse} = require('cypress-recurse');
 
 /**
  * Testing Form Button with Sites Editor
@@ -80,13 +81,26 @@ describe('Button - Authoring', function () {
             dropButtonInContainer();
         }
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-        cy.invokeEditableAction("[data-action='EDIT']").then(() => {
-            getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {
+        cy.invokeEditableAction("[data-action='EDIT']");
+        cy.get('.rte-toolbar:visible').should('have.length', 1);
+        getContentIframeBody().find('.cmp-adaptiveform-button__text').should('have.length', 1)
+            .then(($span) => {
                 $span[0].textContent = '';
             });
-            cy.get('body').click(0,0);
-            cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']").should('exist').should('not.have.text', '');
-        })
+        recurse(
+            () => {
+                cy.get('body').then($body => {
+                    if ($body.find('.rte-toolbar:visible').length) {
+                        cy.get('body').click(0, 0);
+                    }
+                });
+                return cy.get('body');
+            },
+            $body => !$body.find('.rte-toolbar:visible').length,
+            {limit: 21, delay: 500, timeout: 10000, log: false}
+        );
+        getContentIframeBody().find('.cmp-adaptiveform-button__text')
+            .should('have.length', 1).and('not.have.text', '');
     };
 
 
@@ -111,7 +125,7 @@ describe('Button - Authoring', function () {
             });
         });
 
-        it ('open Inline edit dialog of Button',{ retries: 3 }, function(){
+        it ('open Inline edit dialog of Button', function(){
             cy.cleanTest(buttonDrop).then(function(){
                 testButtonBehaviourInilineEdit(buttonEditPathSelector, buttonDrop);
                 cy.deleteComponentByPath(buttonDrop);
