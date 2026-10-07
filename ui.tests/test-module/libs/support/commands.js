@@ -62,6 +62,23 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
   const username = Cypress.env('crx.username') ? Cypress.env('crx.username') : "admin";
   const password = Cypress.env('crx.password') ? Cypress.env('crx.password') : "admin";
+  if (Cypress.env('crx.loginViaRequest') === true) {
+    const contextPath = Cypress.env('crx.contextPath') || '';
+    return cy.request({
+      method: 'POST',
+      url: contextPath + '/libs/granite/core/content/login.html/j_security_check',
+      form: true,
+      headers: {Referer: Cypress.config('baseUrl')},
+      body: {j_username: username, j_password: password, j_validate: 'true', resource: contextPath + '/index.html'},
+      followRedirect: false,
+      log: false
+    }).then(({status}) => {
+      expect(status, 'AEM form authentication').to.be.oneOf([200, 302]);
+      return cy.getCookie('login-token', {log: false}).then(cookie => {
+        expect(Boolean(cookie), 'AEM session established').to.equal(true);
+      });
+    });
+  }
   cy.get('#username').type(username);
   cy.get('#password').type(password);
   let retryCount = 0;
@@ -94,6 +111,10 @@ function getCSRFToken(contextPath) {
 function getUserInfoHome(contextPath) {
   const USER_INFO_SERVLET = contextPath + "/libs/cq/security/userinfo.json";
   cy.request(USER_INFO_SERVLET).its('body.home').as("home")
+}
+
+function getAuthenticatedRequestHeaders(token) {
+  return {'CSRF-Token': token, Referer: Cypress.config('baseUrl')};
 }
 
 
@@ -131,44 +152,66 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
   });
   cy.get("@home").then(home => {
     const url = contextPath + home + '/preferences';
-    //cy.request('POST', url, preferences) // not using cy.request, since application level cookies needs to be passed
-    cy.window().then(win => {
-      win.$.post(url, preferences)
+    return cy.request({
+      method: 'POST',
+      url,
+      form: true,
+      headers: getAuthenticatedRequestHeaders(preferences[":cq_csrf_token"]),
+      body: preferences,
+      log: false
     });
   });
 });
 
 /**
- * Resets a telephoneinput design policy to its baseline by removing the custom-format additions a test
- * makes (`allowedCustomFormats` items and the `allowedFormat3` toggle). The design policy is shared,
- * persistent repo state; without this, a test that adds a custom format leaves it behind and any later
- * run/retry starts from a dirty policy — the multifield/Coral dialog then misbehaves and
- * `allowedCustomFormats/item0/customFormatKey` never renders. Call in beforeEach for a deterministic start.
+ * Restores the mutable telephone policy fields from a snapshot, including existing custom formats.
  * @param policyPath JCR path of the telephoneinput policy node (…/policies/…/telephoneinput/<policy>)
  */
-Cypress.Commands.add("resetTelephoneInputDesignPolicy", (policyPath) => {
+Cypress.Commands.add("restoreTelephoneInputDesignPolicy", (policyPath, policy) => {
     const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
     const url = contextPath + policyPath;
-    // POST via the app's jQuery inside the authenticated page (not cy.request) so the session cookie is
-    // carried — same reason enableOrDisableTutorials does; the sling `@Delete` removes the property/node.
     cy.request(contextPath + '/libs/granite/csrf/token.json').its('body.token').then((token) => {
-        cy.window().then((win) => new Cypress.Promise((resolve) => {
-            win.$.post(url, {
+        const options = {method: 'POST', url, form: true, headers: getAuthenticatedRequestHeaders(token), log: false};
+        cy.request({...options, body: {
                 'allowedCustomFormats@Delete': '',
                 'allowedFormat3@Delete': '',
                 ':cq_csrf_token': token
-            }).always(resolve);
-        }));
+        }});
+        const body = {':cq_csrf_token': token};
+        if (policy.allowedFormat3 !== undefined) {
+            body.allowedFormat3 = policy.allowedFormat3;
+        }
+        if (policy.allowedCustomFormats) {
+            body['allowedCustomFormats/jcr:primaryType'] = policy.allowedCustomFormats['jcr:primaryType'];
+        }
+        Object.entries(policy.allowedCustomFormats || {}).forEach(([item, values]) => {
+            if (typeof values === 'object' && values !== null) {
+                Object.entries(values).forEach(([name, value]) => {
+                    if (name === 'jcr:primaryType' || !name.startsWith('jcr:')) {
+                        body['allowedCustomFormats/' + item + '/' + name] = value;
+                    }
+                });
+            }
+        });
+        cy.request({...options, body});
+    });
+    return cy.request(url + '.infinity.json').then(({body}) => {
+        expect(body.allowedFormat3, 'restored policy pattern').to.equal(policy.allowedFormat3);
+        expect(body.allowedCustomFormats, 'restored custom patterns').to.deep.equal(policy.allowedCustomFormats);
     });
 });
 
 // Cypress command to open AFv2
 Cypress.Commands.add("openAFv2TemplateEditor", () => {
   const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-  cy.visit(baseUrl, {'failOnStatusCode': false});
-  cy.login(baseUrl, () => {
-    cy.openAFv2TemplateEditor();
-  });
+  if (Cypress.env('crx.loginViaRequest') === true) {
+    cy.login(baseUrl);
+  } else {
+    cy.visit(baseUrl, {'failOnStatusCode': false});
+    cy.login(baseUrl, () => {
+      cy.openAFv2TemplateEditor();
+    });
+  }
   cy.openTemplateEditor("/conf/core-components-examples/settings/wcm/templates/af-blank-v2/structure.html");
 });
 
@@ -276,11 +319,15 @@ Cypress.Commands.add("openTemplateEditor", (templatePath) => {
 // Cypress command to open authoring page
 Cypress.Commands.add("openAuthoring", (pagePath) => {
   const baseUrl = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
-  // getting status 403 intermittently, just ignore it
-  cy.visit(baseUrl, {'failOnStatusCode': false});
-  cy.login(baseUrl, () => {
-    cy.openAuthoring(pagePath);
-  });
+  if (Cypress.env('crx.loginViaRequest') === true) {
+    cy.login(baseUrl);
+  } else {
+    // getting status 403 intermittently, just ignore it
+    cy.visit(baseUrl, {'failOnStatusCode': false});
+    cy.login(baseUrl, () => {
+      cy.openAuthoring(pagePath);
+    });
+  }
   cy.openSiteAuthoring(pagePath);
 });
 
@@ -289,9 +336,12 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
   const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
   let path = ((contextPath && !pagePath.startsWith(contextPath)) ? `${contextPath}${pagePath.startsWith('/') ? '' : '/'}${pagePath}` : pagePath);
   if (!options.noLogin) {
-    // getting status 403 intermittently, just ignore it
-    const baseUrl = contextPath;
-    cy.visit(baseUrl, {'failOnStatusCode': false});
+    if (Cypress.env('crx.loginViaRequest') === true) {
+      cy.login(contextPath);
+    } else {
+      // getting status 403 intermittently, just ignore it
+      const baseUrl = contextPath;
+      cy.visit(baseUrl, {'failOnStatusCode': false});
       cy.getCookie('login-token').then(cookie => {
           if(!cookie) {
             cy.login(baseUrl, () => {
@@ -299,6 +349,7 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
             });
           }
       })
+    }
   }
   const defaultOptions = {
     retryOnStatusCodeFailure: true,
@@ -310,11 +361,27 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
 
 // cypress command to select layer in authoring
 Cypress.Commands.add("selectLayer", (layer) => {
-  // please note: when switching from style to other layer, we refresh guide, so these events need to be checked here
-  cy.get(siteSelectors.selectLayer.trigger).click();
-  cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').should('be.visible');
-  cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').click({force: true});
-  cy.get(siteSelectors.selectLayer.current + '[data-layer="' + layer + '"].is-selected');
+  const selectedLayer = siteSelectors.selectLayer.current + '[data-layer="' + layer + '"].is-selected';
+  const layerOption = siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]';
+  return cy.get(siteSelectors.selectLayer.current).then($layers => {
+    if ($layers.filter('[data-layer="' + layer + '"].is-selected').length) {
+      return cy.get(selectedLayer).should('be.visible');
+    }
+    recurse(
+        () => {
+            cy.get('body').then($body => {
+                if (!$body.find(siteSelectors.selectLayer.popover.self).is(':visible')) {
+                    cy.get(siteSelectors.selectLayer.trigger).should('be.visible').click();
+                }
+            });
+            return cy.get('body');
+        },
+        $body => $body.find(layerOption).is(':visible'),
+        {limit: 21, delay: 500, timeout: 10000, log: false}
+    );
+    cy.get(layerOption).click({force: true});
+    return cy.get(selectedLayer).should('be.visible');
+  });
 });
 
 // cypress command to open editable toolbar
@@ -352,6 +419,72 @@ Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
   cy.get(actionSelector).should('be.visible').click({force: true});
 });
 
+Cypress.Commands.add("assertFieldInvalid", (selector, message) => {
+    return cy.window().then(win => {
+        return cy.get(selector).should($field => {
+            expect($field, 'unique validation field').to.have.length(1);
+            expect($field).to.have.attr('aria-invalid', 'true');
+            const validation = win.$($field[0]).adaptTo('foundation-validation');
+            expect(validation, 'Granite field validation API').to.exist;
+            const messageAccessor = typeof validation.getValidationMessage === 'function'
+                ? validation.getValidationMessage : validation.validationMessage;
+            expect(messageAccessor, 'Granite validation message accessor').to.be.a('function');
+            expect(messageAccessor.call(validation), 'field validation message').to.equal(message);
+        });
+    });
+});
+
+Cypress.Commands.add("cancelConfigureDialog", () => {
+    return recurse(
+        () => {
+            cy.get('body').then($body => {
+                if ($body.find('.cq-dialog-cancel:visible').length) {
+                    cy.get('.cq-dialog-cancel:visible').should('have.length', 1).click();
+                }
+            });
+            return cy.get('body');
+        },
+        $body => !$body.find('.cq-dialog-cancel:visible').length,
+        {limit: 5, delay: 500, timeout: 10000, log: false}
+    );
+});
+
+Cypress.Commands.add("createRule", () => {
+    const statement = guideSelectors.ruleEditor.choiceModels.STATEMENT + ' .child-choice-name';
+    return recurse(
+        () => {
+            cy.getRuleEditorIframe().should('not.have.class', 'af-freezeBody').then($body => {
+                if (!$body.find(statement).is(':visible')) {
+                    cy.wrap($body).find(guideSelectors.ruleEditor.action.createRuleButton)
+                        .should('be.visible').and('not.be.disabled').click();
+                }
+            });
+            return cy.getRuleEditorIframe();
+        },
+        $body => $body.find(statement).is(':visible'),
+        {limit: 5, delay: 500, timeout: 10000, log: false}
+    );
+});
+
+Cypress.Commands.add("selectCoralOption", (selector, value) => {
+    cy.get(selector).should('have.length', 1).scrollIntoView().should('be.visible');
+    cy.get(selector).find('button').first().should('be.visible').click();
+    cy.get(selector).find('coral-selectlist-item[value="' + value + '"]')
+        .should('have.length', 1).and('be.visible').click();
+    return cy.get(selector).should('have.value', value);
+});
+
+Cypress.Commands.add("fillTextField", (selector, value) => {
+    return recurse(
+        () => {
+            cy.get(selector).scrollIntoView().should('be.visible').and('not.be.disabled').clear();
+            return cy.get(selector).type(value);
+        },
+        $input => $input.val() === value,
+        {limit: 5, delay: 500, timeout: 10000, log: false}
+    );
+});
+
 // cypress command to submit a component's configure dialog and wait for the editor to settle.
 // A config-dialog submit fires an asynchronous editable re-render that repositions the overlays and
 // hides the shared #EditableToolbar. Any openEditableToolbar issued before that re-render settles
@@ -363,6 +496,7 @@ Cypress.Commands.add("submitConfigureDialog", (submitSelector = ".cq-dialog-subm
     cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_EDITABLES_UPDATED).as("isConfigureEditableUpdated");
     cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isConfigureOverlaysRepositioned");
     cy.get(submitSelector).click({force: true});
+    cy.get('.cq-dialog-submit:visible').should('not.exist');
     cy.get("@isConfigureEditableUpdated").its('done').should('equal', true); // wait until re-render done
     cy.get("@isConfigureOverlaysRepositioned").its('done').should('equal', true); // wait until overlays settled
 });
@@ -585,13 +719,44 @@ Cypress.Commands.add("cleanTest", (editPath) => {
   // once it actually finished, so callers chaining off cleanTest could race ahead of the
   // real deletion. Returning the cypress command chain directly makes cleanTest actually
   // wait for deletion to complete.
-  return cy.get("body").then($body => {
-    const selector12 = "[data-path='" + editPath + "']";
-    if ($body.find(selector12).length > 0) {
+  const contextPath = Cypress.env('crx.contextPath') || '';
+  cy.selectLayer("Edit");
+  return cy.request({url: contextPath + editPath + '.json', failOnStatusCode: false}).then(response => {
+    expect(response.status, 'fixture lookup').to.be.oneOf([200, 404]);
+    if (response.status === 200) {
+      cy.get(siteSelectors.overlays.overlay.component + "[data-path='" + editPath + "']").should('exist');
       return cy.deleteComponentByPath(editPath);
     }
   });
 })
+
+Cypress.Commands.add("cleanTestFixture", (componentPath) => {
+    const contextPath = Cypress.env('crx.contextPath') || '';
+    const url = contextPath + componentPath;
+    return cy.request({url: url + '.json', failOnStatusCode: false, log: false}).then(response => {
+        expect(response.status, 'fixture cleanup lookup').to.be.oneOf([200, 404]);
+        if (response.status === 404) {
+            return;
+        }
+        expect(response.body['sling:resourceType'], 'test fixture resource type').to.be.a('string');
+        expect(response.body['sling:resourceType'].split('/').pop(), 'owned fixture name')
+            .to.equal(componentPath.split('/').pop());
+        cy.request({url: contextPath + '/libs/granite/csrf/token.json', log: false}).its('body.token').then(token => {
+            cy.request({
+                method: 'POST', url, form: true, headers: getAuthenticatedRequestHeaders(token),
+                body: {':operation': 'delete', ':cq_csrf_token': token}, log: false
+            });
+        });
+        return recurse(
+            () => cy.request({url: url + '.json', failOnStatusCode: false, log: false}),
+            result => {
+                expect(result.status, 'removed fixture lookup').to.be.oneOf([200, 404]);
+                return result.status === 404;
+            },
+            {limit: 10, delay: 500, timeout: 20000, log: false}
+        );
+    });
+});
 
 Cypress.Commands.add("cleanTitleTest", (editPath) => {
   // clean the test before the next run, if any. Same fix as cleanTest above: chain the
@@ -630,7 +795,8 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   // failure screenshot showing the edit dialog still open when the delete-confirm dialog was
   // expected). Wait for any leftover open dialog to actually close first.
   cy.get('body').should($body => {
-    expect($body.find('coral-dialog.is-open').length, 'no leftover open dialog before delete').to.equal(0);
+    const openDialogs = $body.find('coral-dialog').filter((index, dialog) => dialog.open);
+    expect(openDialogs.filter(':visible').length, 'no leftover open dialog before delete').to.equal(0);
   });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
@@ -644,6 +810,15 @@ Cypress.Commands.add("deleteComponentByPath", (componentPath) => {
   // wait for event to complete to signify deletion is complete
   cy.get("@isEditableUpdateEventComplete").its('done').should('equal', true); // wait here until done
   cy.get("@isOverlayRepositionEventComplete").its('done').should('equal', true); // wait here until done
+  const contextPath = Cypress.env('crx.contextPath') || '';
+  return recurse(
+      () => cy.request({url: contextPath + componentPath + '.json', failOnStatusCode: false}),
+      response => {
+          expect(response.status, 'deleted fixture lookup').to.be.oneOf([200, 404]);
+          return response.status === 404;
+      },
+      {limit: 10, delay: 500, timeout: 20000, log: false}
+  );
 });
 
 // cypress command to delete component by title
@@ -657,7 +832,8 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
   cy.initializeEventHandlerOnChannel(overlayRepositionEvent).as("isOverlayRepositionEventComplete");
   // Same leftover-open-dialog race as deleteComponentByPath above; wait for it to actually close.
   cy.get('body').should($body => {
-    expect($body.find('coral-dialog.is-open').length, 'no leftover open dialog before delete').to.equal(0);
+    const openDialogs = $body.find('coral-dialog').filter((index, dialog) => dialog.open);
+    expect(openDialogs.filter(':visible').length, 'no leftover open dialog before delete').to.equal(0);
   });
   // open editable toolbar
   cy.openEditableToolbar(siteSelectors.overlays.overlay.component + componentPathSelector);
@@ -674,22 +850,50 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
 
 // cypress command to insert component
 Cypress.Commands.add("insertComponent", (selector, componentString, componentType) => {
-  //Open toolbar of root panel
-  const insertComponentDialog_Selector = '.InsertComponentDialog-components [value="' + componentType + '"]',
-      insertComponentDialog_searchField = ".InsertComponentDialog-components .coral3-Search-input";
-  cy.openEditableToolbar(selector);
-  cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
+  const dialog = '.InsertComponentDialog:visible',
+      insertComponentDialog_Selector = dialog + ' [value="' + componentType + '"]',
+      insertComponentDialog_searchField = dialog + " input:not([type='hidden']):visible";
+  recurse(
+      () => {
+          cy.get('body').then($body => {
+              if (!$body.find(dialog).length) {
+                  cy.openEditableToolbar(selector);
+                  cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
+              }
+          });
+          return cy.get('body');
+      },
+      $body => $body.find(dialog).length === 1,
+      {limit: 5, delay: 1000, timeout: 30000, log: false}
+  );
   recurse(
       // the commands to repeat, and they yield the input element
-      () => cy.get(insertComponentDialog_searchField).clear().type(componentString),
+      () => {
+          cy.get(insertComponentDialog_searchField).should('have.length', 1).and('be.visible').clear();
+          return cy.get(insertComponentDialog_searchField).type(componentString);
+      },
       // the predicate takes the output of the above commands
       // and returns a boolean. If it returns true, the recursion stops
       ($input) => $input.val() === componentString,
   )
   cy.get(insertComponentDialog_searchField).type('{enter}');
-  cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
+  // Granite rebuilds the options asynchronously when the search is applied.
+  cy.get(dialog + ' coral-selectlist-item').should($items => {
+      const visibleItems = $items.filter(':visible');
+      expect(visibleItems.length, 'filtered insert options').to.be.greaterThan(0);
+      visibleItems.each((index, item) => {
+          expect(item.textContent.trim().toLowerCase(), 'insert search applied')
+              .to.include(componentString.toLowerCase());
+      });
+  });
+  cy.get(insertComponentDialog_Selector).should('have.length', 1).and('be.visible');
+  cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_EDITABLES_UPDATED).as("isInsertEditableUpdated");
+  cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isInsertOverlaysRepositioned");
   // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
   cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
+  cy.get(dialog).should('not.exist');
+  cy.get("@isInsertEditableUpdated").its('done').should('equal', true);
+  return cy.get("@isInsertOverlaysRepositioned").its('done').should('equal', true);
 });
 
 /**

@@ -112,20 +112,42 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      cy.cleanTest(checkBoxGroupDrop);
     });
+
+    afterEach(function () {
+      cy.cleanTestFixture(checkBoxGroupDrop);
+    });
+
+    const getGroup = () => getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').should('have.length', 1);
+    const configureRichTextOptions = () => {
+      dropCheckBoxGroupInContainer();
+      cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
+      cy.invokeEditableAction("[data-action='CONFIGURE']");
+      cy.get("input[name='./isTitleRichText'][type='checkbox']").check({force: true}).should('be.checked');
+      cy.get("div[name='richTextTitle']").scrollIntoView().should('be.visible');
+      cy.get("input[name='./areOptionsRichText'][type='checkbox']").check({force: true}).should('be.checked');
+      cy.get("[data-cq-richtext-editable='true'][data-wrapperclass='cmp-adaptiveform-base__richTextEnumNames']")
+          .first().scrollIntoView().should('be.visible').focus().clear().type("Select 1").should('contain.text', "Select 1");
+      cy.get("input[name='./orientation'][value='vertical']").scrollIntoView().click();
+      cy.submitConfigureDialog();
+      getGroup().should('contain.text', "Select 1");
+      cy.openSiteAuthoring(pagePath);
+      getGroup().should('contain.text', "Select 1");
+    };
 
     it('insert CheckBoxGroup in form container', function () {
         dropCheckBoxGroupInContainer();
         cy.deleteComponentByPath(checkBoxGroupDrop);
     });
 
-    it ('open edit dialog of CheckboxGroup', { retries: 3 }, function(){
+    it ('open edit dialog of CheckboxGroup', function(){
         cy.cleanTest(checkBoxGroupDrop).then(function() {
             testCheckBoxGroupBehaviour(checkBoxGroupEditPathSelector, checkBoxGroupDrop);
         });
     });
 
-    it ('check value type validations', { retries: 3 }, function() {
+    it ('check value type validations', function() {
         cy.cleanTest(checkBoxGroupDrop).then(function() {
             // For Number Type
             dropCheckBoxGroupInContainer();
@@ -137,10 +159,10 @@ describe('Page - Authoring', function () {
             cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
             cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Number');
             cy.get('.cq-dialog-submit').click();
-            cy.get('.coral3-Tooltip--error coral-tooltip-content').should('be.visible').should('have.text', 'Value Type Mismatch');
+            cy.assertFieldInvalid(".cmp-adaptiveform-checkboxgroup__value input[name='./default']", 'Value Type Mismatch');
 
 
-            cy.get('.cq-dialog-cancel').click();
+            cy.cancelConfigureDialog();
             cy.deleteComponentByPath(checkBoxGroupDrop);
 
             // For Boolean
@@ -153,14 +175,14 @@ describe('Page - Authoring', function () {
             cy.get('.cmp-adaptiveform-checkboxgroup__value button').click();
             cy.get(".cmp-adaptiveform-checkboxgroup__value input").invoke('val', 'Not a Boolean');
             cy.get('.cq-dialog-submit').click();
-            cy.get('.coral-Form-fielderror').should('be.visible').invoke('attr', 'aria-label').should('eq', 'Value Type Mismatch');
+            cy.assertFieldInvalid(".cmp-adaptiveform-checkboxgroup__value input[name='./default']", 'Value Type Mismatch');
 
-            cy.get('.cq-dialog-cancel').click();
+            cy.cancelConfigureDialog();
             cy.deleteComponentByPath(checkBoxGroupDrop);
         });
     })
 
-    it ('check for duplicate enum values', { retries: 3 }, function() {
+    it ('check for duplicate enum values', function() {
         cy.cleanTest(checkBoxGroupDrop).then(function() {
             dropCheckBoxGroupInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
@@ -168,18 +190,14 @@ describe('Page - Authoring', function () {
             cy.get("[data-granite-coral-multifield-name='./enum'] coral-button-label:contains('Add')").should("exist").click({force: true});
             cy.get('input[name="./enum"]').last().invoke('val', '0');
             cy.get('input[name="./enumNames"]').last().invoke('val', 'Item 3');
-            cy.get('.cq-dialog-submit').click().then(() => {
-                cy.get('.cq-dialog-submit').should('not.exist')
-            });
-            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length', 2);
-            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 3');
-            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
-            getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 1').should('not.exist');
+            cy.submitConfigureDialog();
+            getGroup().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length', 2);
+            getGroup().should('contain.text', 'Item 3').and('contain.text', 'Item 2').and('not.contain.text', 'Item 1');
             cy.deleteComponentByPath(checkBoxGroupDrop);
         });
     });
 
-    it('check rich text support for label', {retries: 2}, function(){
+    it('check rich text support for label', function(){
       cy.cleanTest(checkBoxGroupDrop).then(function() {
         dropCheckBoxGroupInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
@@ -187,13 +205,12 @@ describe('Page - Authoring', function () {
         cy.get("div[name='richTextTitle']").should('not.be.visible');
 
         // check rich text selector and see if RTE is visible for title.
-        cy.get('.cmp-adaptiveform-base__istitlerichtext').should('be.visible').click();
-        cy.wait(500); // Add small wait for UI update
+        cy.get("input[name='./isTitleRichText'][type='checkbox']").check({force: true}).should('be.checked');
         cy.get("div[name='richTextTitle']").should('exist').scrollIntoView().should('be.visible');
 
         // check rich text selector and see if RTE is visible for enum names.
         cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('not.be.visible');
-        cy.get('.cmp-adaptiveform-base__areOptionsRichText').should('exist').click();
+        cy.get("input[name='./areOptionsRichText'][type='checkbox']").check({force: true}).should('be.checked');
         cy.get("div[name='richTextEnumNames']").then(($el) => {
             $el[0].scrollIntoView();
         })
@@ -201,33 +218,27 @@ describe('Page - Authoring', function () {
         cy.get("div[name='richTextEnumNames']").first().should('be.visible');
         cy.get(".cmp-adaptiveform-base__richTextEnumNames").first().should('be.visible');
         cy.get("input[name='./orientation'][value='vertical']").scrollIntoView().click();
-        cy.get('.cq-dialog-submit').click({ force: true });
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Select 1');
-        getPreviewIframeBody().find('.cmp-adaptiveform-checkboxgroup').parent().parent().contains('Item 2');
+        cy.submitConfigureDialog();
+        getGroup().find('.cmp-adaptiveform-checkboxgroup-item').should('have.length',2);
+        getGroup().should('contain.text', 'Select 1').and('contain.text', 'Item 2');
       });
     });
 
-    it('check rich text inline editor is present', {retries: 2}, function(){
+    it('check rich text inline editor is present', function(){
+        configureRichTextOptions();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.invokeEditableAction("[data-action='EDIT']");
         cy.get(".rte-toolbar").should('be.visible');
         cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
     });
 
-    // adding retry since rule editor sometimes does not open at first try
-    it('rule editor is working with rich text enum names', {retries: 2}, function () {
+    it('rule editor is working with rich text enum names', function () {
+        configureRichTextOptions();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + checkBoxGroupEditPathSelector);
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
-        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
-        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
 
-        // click on  create option from rule editor header
-        // cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-        cy.wait(1000);
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
+        cy.createRule();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STATEMENT + " .child-choice-name").click();

@@ -52,7 +52,7 @@ describe('Page - Authoring', function () {
     cy.get("[name='./autocomplete']")
         .should("exist");
     cy.get(bemEditDialog).contains('Validation').click({force:true});
-    cy.get('.cq-dialog-cancel').should('be.visible').click({force: true});
+    cy.cancelConfigureDialog();
     cy.deleteComponentByPath(telephoneInputDrop);
   }
 
@@ -64,6 +64,11 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      cy.cleanTest(telephoneInputDrop);
+    });
+
+    afterEach(function () {
+      cy.cleanTestFixture(telephoneInputDrop);
     });
 
     it('insert TelephoneInput in form container', function () {
@@ -71,7 +76,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(telephoneInputDrop);
     });
 
-    it ('open edit dialog of TelephoneInput', { retries: 3 }, function(){
+    it ('open edit dialog of TelephoneInput', function(){
         cy.cleanTest(telephoneInputDrop).then(function() {
             testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop);
         });
@@ -84,9 +89,9 @@ describe('Page - Authoring', function () {
       cy.invokeEditableAction("[data-action='CONFIGURE']");
       cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
-        cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select('US Phone Number', {force: true});
+        cy.selectCoralOption('.cmp-adaptiveform-telephoneinput__validationpattern', '^[+]1[0-9]{0,10}$');
         cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+]1[0-9]{0,10}$');
-        cy.get('.cq-dialog-cancel').click();
+        cy.cancelConfigureDialog();
         cy.deleteComponentByPath(telephoneInputDrop);
       });
     });
@@ -104,36 +109,57 @@ describe('Page - Authoring', function () {
         telephoneInputEditPathSelector = "[data-path='" + telephoneInputEditPath + "']";
     const customKey = 'customKey',
         customValue = 'customValue',
-        // Shared, persistent design policy this test mutates — reset it each run so a leftover custom
-        // format from a prior run/retry can't leave the dialog in a dirty state (see reset command).
+        // Snapshot this shared policy before editing and restore its original formats after each test.
         telephoneInputPolicyPath = '/conf/core-components-examples/settings/wcm/policies/forms-components-examples/components/form/telephoneinput/default';
+    let originalPolicy;
 
     beforeEach(function () {
-      cy.openAuthoring(templateDataPath + ".html");
-      cy.resetTelephoneInputDesignPolicy(telephoneInputPolicyPath);
+      originalPolicy = undefined;
+      cy.openAuthoring(templateDataPath);
+      const contextPath = Cypress.env('crx.contextPath') || '';
+      cy.request(contextPath + telephoneInputPolicyPath + '.infinity.json').then(({body}) => {
+        originalPolicy = body;
+        cy.restoreTelephoneInputDesignPolicy(telephoneInputPolicyPath, {allowedFormat3: body.allowedFormat3});
+      });
+    });
+
+    afterEach(function () {
+      if (originalPolicy) {
+        cy.restoreTelephoneInputDesignPolicy(telephoneInputPolicyPath, originalPolicy);
+      }
+      cy.cleanTestFixture(telephoneInputDrop);
     });
 
     it('Adding removing patterns from design policy', function () {
       cy.get(telephoneInputPolicy).click({force: true});
       cy.get(bemDesignDialog).contains('Validation patterns').click();
       // cy.get('[role="tablist"][orientation="horizontal"] [role="tab"]').eq(2).click();
-      cy.get('[name="./allowedFormat3"]').eq(0).click({force: true});
+      cy.get('input[name="./allowedFormat3"][type="checkbox"]').uncheck({force: true}).should('not.be.checked');
       cy.get("[data-granite-coral-multifield-name='./allowedCustomFormats']").should('be.visible');
       cy.get("[data-granite-coral-multifield-name='./allowedCustomFormats'] coral-button-label:contains('Add')").should('exist').click({force: true});
       cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').should('exist').then(() => {
-        cy.get('[name="./allowedCustomFormats/item0/customFormatKey"]').focus().clear().type(customKey);
-        cy.get('[name="./allowedCustomFormats/item0/customFormatValue"]').focus().clear().type(customValue);
-        cy.get(submitBtnSelector).click();
+        cy.fillTextField('[name="./allowedCustomFormats/item0/customFormatKey"]', customKey);
+        cy.fillTextField('[name="./allowedCustomFormats/item0/customFormatValue"]', customValue);
+        cy.intercept('POST', '**' + telephoneInputPolicyPath + '*', request => {
+          request.on('response', response => response.setDelay(1000));
+        }).as('saveTelephonePolicy');
+        cy.get(submitBtnSelector + ':visible').click();
+        cy.wait('@saveTelephonePolicy').its('response.statusCode').should('be.oneOf', [200, 201]);
+        cy.get(bemDesignDialog + ':visible').should('not.exist');
+        const contextPath = Cypress.env('crx.contextPath') || '';
+        cy.request(contextPath + telephoneInputPolicyPath + '.infinity.json').its('body.allowedCustomFormats.item0')
+            .should('include', {customFormatKey: customKey, customFormatValue: customValue});
       }).then(() => {
         cy.openSiteAuthoring(authoringPagePath);
+        cy.cleanTest(telephoneInputDrop);
         dropTelephoneInputInContainer();
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + telephoneInputEditPathSelector);
         cy.invokeEditableAction("[data-action='CONFIGURE']");
         cy.get(bemEditDialog).contains('Validation').click({force: true}).then(() => {
           cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', '^[+][0-9]{0,14}$');
-          cy.get('.cmp-adaptiveform-telephoneinput__validationpattern select').select(customKey, {force: true}).then(() => {
+          cy.selectCoralOption('.cmp-adaptiveform-telephoneinput__validationpattern', customValue).then(() => {
             cy.get('.cmp-adaptiveform-telephoneinput__validationformat').should('have.value', customValue);
-            cy.get('.cq-dialog-cancel').click();
+            cy.cancelConfigureDialog();
             cy.deleteComponentByPath(telephoneInputDrop);
           })
         });
@@ -150,6 +176,11 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      cy.cleanTest(telephoneInputDrop);
+    });
+
+    afterEach(function () {
+      cy.cleanTestFixture(telephoneInputDrop);
     });
 
     it('insert aem forms TelephoneInput', function () {
@@ -157,7 +188,7 @@ describe('Page - Authoring', function () {
       cy.deleteComponentByPath(telephoneInputDrop);
     });
 
-    it('open edit dialog of aem forms TelephoneInput', { retries: 3 }, function() {
+    it('open edit dialog of aem forms TelephoneInput', function() {
       cy.cleanTest(telephoneInputDrop).then(function(){
           testTelephoneInputBehaviour(telephoneInputEditPathSelector, telephoneInputDrop, true);
       });

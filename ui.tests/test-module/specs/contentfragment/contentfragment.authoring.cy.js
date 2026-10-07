@@ -65,13 +65,9 @@ describe('Content Fragment - Authoring', function () {
             .should("exist");
 
         cy.get("[name='./fragmentPath'] input[role='combobox']").should("exist").clear()
-            .type("/content/dam/wknd/library/sample-assets/adobe-headquarters", { delay: 0 }).click().then(x => {
-            cy.get('.cq-dialog-submit').click().then(y => {
-                cy.get('.cq-dialog-submit').should('not.exist').then(z => {
-                    cy.deleteComponentByPath(cfDrop);
-                });
-            });
-        });
+            .type("/content/dam/wknd/library/sample-assets/adobe-headquarters", { delay: 0 }).click();
+        cy.submitConfigureDialog();
+        cy.deleteComponentByPath(cfDrop);
     }
 
     const dropExperienceFragmentInSites = function() {
@@ -93,12 +89,8 @@ describe('Content Fragment - Authoring', function () {
         cy.get("[name='./fragmentVariationPath'] input[role='combobox']").should("exist").clear()
             .type("/content/experience-fragments/test-experience-fragment/master", { delay: 0 }).click();
         cy.get(".foundation-picker-buttonlist button").should("be.visible").click();
-        cy.get('.cq-dialog-submit').click().then(y => {
-            cy.get('.cq-dialog-submit').click();
-            cy.get('.cq-dialog-submit').should('not.exist').then(z => {
-                cy.deleteComponentByPath(xfDrop);
-            });
-        });
+        cy.submitConfigureDialog();
+        cy.deleteComponentByPath(xfDrop);
     }
 
     context("Open Forms Editor", function () {
@@ -110,9 +102,14 @@ describe('Content Fragment - Authoring', function () {
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            cy.cleanTest(cfDrop);
         });
 
-        it('insert content fragment inside adaptive form container component', { retries: 3 }, function() {
+        afterEach(function () {
+            cy.cleanTestFixture(cfDrop);
+        });
+
+        it('insert content fragment inside adaptive form container component', function() {
             cy.cleanTest(cfDrop).then(function() {
                 testContentFragmentBehaviour(cfEditPathSelector, cfDrop, false);
             });
@@ -123,9 +120,18 @@ describe('Content Fragment - Authoring', function () {
     context("Open Sites Editor", function () {
         // we can use these values to log in
         const pagePath = "/content/core-components-examples/library/adaptive-form/container";
+        const cfDrop = pagePath + afConstants.RESPONSIVE_GRID_DEMO_SUFFIX + '/formContainer/contentfragment';
+        const xfDrop = pagePath + '/jcr:content/root/responsivegrid/experiencefragment';
         beforeEach(function () {
             // this is done since cypress session results in 403 sometimes
             cy.openAuthoring(pagePath);
+            cy.cleanTest(cfDrop);
+            cy.cleanTest(xfDrop);
+        });
+
+        afterEach(function () {
+            cy.cleanTestFixture(cfDrop);
+            cy.cleanTestFixture(xfDrop);
         });
 
         it('insert content fragment inside adaptive form container component', function() {

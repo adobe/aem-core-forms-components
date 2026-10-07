@@ -28,6 +28,10 @@ npm run cypress:run:file -- ./specs/textinput/textinput.runtime.spec.js
 * Chrome and/or Firefox browser installed locally in default location
 * An AEM author instance running at http://localhost:4502
 
+CircleCI installs Node.js 22.19.0 before the shared UI-test dependencies and
+uses Lighthouse 13.5.0. Lighthouse requires Node.js >=22.19; the older Node.js
+bundled in the AEM test-runner images cannot parse its JSON import attributes.
+Keep the CI Node.js and Lighthouse versions compatible when upgrading either.
 
 #### Remarks
 * After execution, reports and logs are available in `test-module/target/reports` folder

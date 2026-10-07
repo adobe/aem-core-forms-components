@@ -13,5 +13,7 @@ AEM Core Forms Components — Adaptive Forms v2 component library.
   When a change needs a new component version (`v1` → `v2`) vs. a fix-in-place, and the full checklist of what to update when bumping a version (clientlib self-containment, `_cq_dialog`/`_cq_styleConfig` inheritance, `pom.xml`, runtime clientlib embed lists, etc.).
 
 ### E2E Testing
+- **SP/LTS Authoring Compatibility**: [`docs/e2e-testing/authoring-compatibility.md`](docs/e2e-testing/authoring-compatibility.md)
+  Stable selectors and Granite validation APIs, operation-specific waits, referrer requirements, normal-browser ngrok setup, and first-pass validation before repetition.
 - **Feature Toggle Tests**: [`docs/e2e-testing/feature-toggles.md`](docs/e2e-testing/feature-toggles.md)
   How to add Cypress e2e tests for new feature toggles: OSGi config changes, system property wiring, and the isLatestAddon + fetchFeatureToggles test pattern.

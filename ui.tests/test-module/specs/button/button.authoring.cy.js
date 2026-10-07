@@ -17,6 +17,7 @@
 
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
+const {recurse} = require('cypress-recurse');
 
 /**
  * Testing Form Button with Sites Editor
@@ -73,20 +74,74 @@ describe('Button - Authoring', function () {
         cy.deleteComponentByPath(buttonDrop);
     }
 
+    const openButtonInlineEditor = function(buttonEditPathSelector) {
+        recurse(
+            () => {
+                cy.get('body').then($body => {
+                    if (!$body.find('.rte-toolbar:visible').length) {
+                        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+                        cy.get('body').then($currentBody => {
+                            if (!$currentBody.find('.rte-toolbar:visible').length) {
+                                cy.invokeEditableAction("[data-action='EDIT']");
+                            }
+                        });
+                    }
+                });
+                return cy.get('body');
+            },
+            $body => $body.find('.rte-toolbar:visible').length === 1,
+            {limit: 21, delay: 500, timeout: 10000, log: false}
+        );
+        return cy.get('.rte-toolbar:visible').should('have.length', 1);
+    };
+
+    const enableButtonRichText = function(buttonEditPathSelector) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("input[name='./isTitleRichText'][type='checkbox']").check({force: true}).should('be.checked');
+        cy.get("div[name='richTextTitle']").should('be.visible');
+        cy.submitConfigureDialog();
+    };
+
     const testButtonBehaviourInilineEdit = function(buttonEditPathSelector, buttonDrop, isSites) {
+        const updatedLabel = 'Updated Button';
         if (isSites) {
             dropButtonInSites();
         } else {
             dropButtonInContainer();
         }
-        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-        cy.invokeEditableAction("[data-action='EDIT']").then(() => {
-            getContentIframeBody().find('.cmp-adaptiveform-button__text').then(($span) => {
-                $span[0].textContent = '';
+        enableButtonRichText(buttonEditPathSelector);
+        const contextPath = Cypress.env('crx.contextPath') || '';
+        [updatedLabel, ''].forEach(label => {
+            openButtonInlineEditor(buttonEditPathSelector);
+            getContentIframeBody().find('.cmp-adaptiveform-button__text').should('have.length', 1)
+                .then(($span) => {
+                    $span[0].textContent = label;
+                });
+            recurse(
+                () => {
+                    cy.get('body').then($body => {
+                        if ($body.find('.rte-toolbar:visible').length) {
+                            cy.get('body').click(0, 0);
+                        }
+                    });
+                    return cy.get('body');
+                },
+                $body => !$body.find('.rte-toolbar:visible').length,
+                {limit: 21, delay: 500, timeout: 10000, log: false}
+            );
+            getContentIframeBody().find('.cmp-adaptiveform-button button').should($button => {
+                expect($button).to.have.length(1);
+                expect($button.text().trim()).to.equal(label);
             });
-            cy.get('body').click(0,0);
-            cy.get("[data-path='/content/forms/af/core-components-it/blank/jcr:content/guideContainer/button']").should('exist').should('not.have.text', '');
-        })
+            cy.request(contextPath + buttonDrop + '.json').its('body').should(body => {
+                if (label) {
+                    expect(body['jcr:title']).to.equal(label);
+                } else {
+                    expect([undefined, '']).to.include(body['jcr:title']);
+                }
+            });
+        });
     };
 
 
@@ -100,6 +155,10 @@ describe('Button - Authoring', function () {
             cy.openAuthoring(pagePath);
         });
 
+        afterEach(function () {
+            cy.cleanTestFixture(buttonDrop);
+        });
+
         it('insert Button in form container', function () {
             dropButtonInContainer();
             cy.deleteComponentByPath(buttonDrop);
@@ -111,7 +170,7 @@ describe('Button - Authoring', function () {
             });
         });
 
-        it ('open Inline edit dialog of Button',{ retries: 3 }, function(){
+        it ('open Inline edit dialog of Button', function(){
             cy.cleanTest(buttonDrop).then(function(){
                 testButtonBehaviourInilineEdit(buttonEditPathSelector, buttonDrop);
                 cy.deleteComponentByPath(buttonDrop);
@@ -131,11 +190,14 @@ describe('Button - Authoring', function () {
         });
 
         it('check rich text inline editor is present', function(){
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-            cy.invokeEditableAction("[data-action='EDIT']");
-            cy.get(".rte-toolbar").should('be.visible');
-            cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
-            cy.deleteComponentByPath(buttonDrop);
+            cy.cleanTest(buttonDrop).then(function() {
+                dropButtonInContainer();
+                enableButtonRichText(buttonEditPathSelector);
+                openButtonInlineEditor(buttonEditPathSelector);
+                cy.get('.rte-toolbar:visible .rte-toolbar-item[title="Close"]').should('be.visible').click();
+                cy.get('.rte-toolbar:visible').should('not.exist');
+                cy.deleteComponentByPath(buttonDrop);
+            });
         });
     });
 
