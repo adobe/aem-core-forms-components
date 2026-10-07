@@ -52,12 +52,28 @@ then repeats the original empty-label edit and verifies the empty native button
 and absent/empty title before deletion. Both edits wait for the inline toolbar
 to close. API teardown removes only the named test fixture if an assertion fails.
 
-Each inline-editor case creates its own Button. The rich-text case enables and
-saves `isTitleRichText` before opening the editor; it cannot reuse the preceding
+Each RTE inline-editor case creates its own Button and enables and saves
+`isTitleRichText` before opening the editor; it cannot reuse the preceding
 case's fixture because `afterEach` deletes it. Opening retries the overlay/EDIT
 action only while the inline toolbar is absent, within the existing ten-second
 budget. Once the toolbar is visible, EDIT is not invoked again. A persistent
 opening failure still fails the test rather than retrying the whole test.
+
+The Forms toolbar selects the plaintext editor when the rendered label/text
+has no `data-richtext` attribute. A default Button therefore need not expose
+`.rte-toolbar`: retrying EDIT or increasing the timeout cannot turn plaintext
+editing into rich-text editing. RTE caption-edit tests must explicitly enable
+rich text and wait for the configure save to refresh the editable.
+
+## Rule-save assertions
+
+Parse the rule-save POST's `:content` JSON and compare `fd:events.change`
+structurally, as on master. Require the exact expected scripts rather than a
+substring of serialized JSON. The equality-rule test cleans its named text-input
+fixture before insertion and after each attempt so failed saves cannot leave
+rules that accumulate on subsequent runs. It selects the edited field's generated
+name explicitly as the hide target, rather than the first option: a leftover
+sibling otherwise changes a self-hide rule into a `dispatchEvent` rule.
 
 ## Authentication and browser user agents
 

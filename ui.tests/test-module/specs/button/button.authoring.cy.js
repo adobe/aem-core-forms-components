@@ -95,6 +95,14 @@ describe('Button - Authoring', function () {
         return cy.get('.rte-toolbar:visible').should('have.length', 1);
     };
 
+    const enableButtonRichText = function(buttonEditPathSelector) {
+        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+        cy.invokeEditableAction("[data-action='CONFIGURE']");
+        cy.get("input[name='./isTitleRichText'][type='checkbox']").check({force: true}).should('be.checked');
+        cy.get("div[name='richTextTitle']").should('be.visible');
+        cy.submitConfigureDialog();
+    };
+
     const testButtonBehaviourInilineEdit = function(buttonEditPathSelector, buttonDrop, isSites) {
         const updatedLabel = 'Updated Button';
         if (isSites) {
@@ -102,6 +110,7 @@ describe('Button - Authoring', function () {
         } else {
             dropButtonInContainer();
         }
+        enableButtonRichText(buttonEditPathSelector);
         const contextPath = Cypress.env('crx.contextPath') || '';
         [updatedLabel, ''].forEach(label => {
             openButtonInlineEditor(buttonEditPathSelector);
@@ -183,11 +192,7 @@ describe('Button - Authoring', function () {
         it('check rich text inline editor is present', function(){
             cy.cleanTest(buttonDrop).then(function() {
                 dropButtonInContainer();
-                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-                cy.invokeEditableAction("[data-action='CONFIGURE']");
-                cy.get("input[name='./isTitleRichText'][type='checkbox']").check({force: true}).should('be.checked');
-                cy.get("div[name='richTextTitle']").should('be.visible');
-                cy.submitConfigureDialog();
+                enableButtonRichText(buttonEditPathSelector);
                 openButtonInlineEditor(buttonEditPathSelector);
                 cy.get('.rte-toolbar:visible .rte-toolbar-item[title="Close"]').should('be.visible').click();
                 cy.get('.rte-toolbar:visible').should('not.exist');

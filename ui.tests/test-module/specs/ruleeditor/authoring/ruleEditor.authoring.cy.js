@@ -78,17 +78,11 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.closeRuleEditor).click();
     }
 
-    const createRuleToHideTextInputOnEqualityOperator = function() {
+    const createRuleToHideTextInputOnEqualityOperator = function(fieldName) {
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
-        cy.initializeEventHandlerOnChannel("af-rule-editor-initialized").as("isRuleEditorInitialized");
-        cy.wait(1000);
         cy.get(formsSelectors.ruleEditor.action.editRule).click();
-
-        // click on  create option from rule editor header
-        // cy.get("@isRuleEditorInitialized").its('done').should('equal', true);
-        cy.wait(1000);
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.createRuleButton).should("be.visible").click();
+        cy.createRule();
 
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.sideToggleButton + ":first").click();
 
@@ -122,7 +116,9 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").should("be.visible");
         cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE").click();
 
-        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item:first").click({force: true});
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item")
+            .filter((index, item) => item.value === "$form." + fieldName)
+            .should("have.length", 1).click({force: true});
 
         cy.intercept('POST', /content\/forms\/af\/core-components-it\/samples\/ruleeditor\/blank.*/).as('ruleEditorRequest');
 
@@ -132,7 +128,10 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.wait('@ruleEditorRequest').then((interception) => {
             expect(interception.response.statusCode).to.equal(201);
             const submittedData = Object.fromEntries(new URLSearchParams(interception.request.body));
-            expect(submittedData[":content"]).contains("\"fd:events\":{\"change\":[\"if(contains($event.payload.changes[].propertyName, 'value'), if($field.$value == 'abc', {visible : false()}, {}), {})\"]}");
+            const submittedContent = JSON.parse(submittedData[":content"]);
+            expect(submittedContent["fd:events"].change).to.deep.equal([
+                "if(contains($event.payload.changes[].propertyName, 'value'), if($field.$value == 'abc', {visible : false()}, {}), {})"
+            ]);
         });
 
         // check and close rule editor
@@ -349,27 +348,37 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.deleteComponentByPath(buttonEditPath);
         })
 
-        it('should add rule on texbox equality operator to hide a text box', function () {
-            cy.openAuthoring(formPath);
-            cy.selectLayer("Edit");
-            cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+        context('Text box equality rule', function () {
+            afterEach(function () {
+                cy.cleanTestFixture(textinputEditPath);
+            });
 
-            cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
-                "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-            // cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textinputEditPathSelector);
-            // cy.get(formsSelectors.ruleEditor.action.configure).should("exist");
-            // cy.get(formsSelectors.ruleEditor.action.configure).click();
-            // cy.get(".cmp-adaptiveform-base__editdialogbasic [name='./name']").clear().type("textinput");
-            // cy.get(".cq-dialog-actions.cq-dialog-submit").click();
+            it('should add rule on texbox equality operator to hide a text box', function () {
+                cy.openAuthoring(formPath);
+                cy.selectLayer("Edit");
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+                cy.cleanTest(textinputEditPath);
 
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textinputEditPathSelector);
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                    "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
+                // cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textinputEditPathSelector);
+                // cy.get(formsSelectors.ruleEditor.action.configure).should("exist");
+                // cy.get(formsSelectors.ruleEditor.action.configure).click();
+                // cy.get(".cmp-adaptiveform-base__editdialogbasic [name='./name']").clear().type("textinput");
+                // cy.get(".cq-dialog-actions.cq-dialog-submit").click();
 
-            createRuleToHideTextInputOnEqualityOperator();
-            cy.get(sitesSelectors.overlays.overlay.component + textinputEditPathSelector).should("exist");
+                const contextPath = Cypress.env('crx.contextPath') || '';
+                cy.request(contextPath + textinputEditPath + '.json').its('body.name')
+                    .should('be.a', 'string').and('not.be.empty').then(fieldName => {
+                        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textinputEditPathSelector);
+                        createRuleToHideTextInputOnEqualityOperator(fieldName);
+                    });
+                cy.get(sitesSelectors.overlays.overlay.component + textinputEditPathSelector).should("exist");
 
-            cy.selectLayer("Edit");
-            cy.deleteComponentByPath(textinputEditPath);
-        })
+                cy.selectLayer("Edit");
+                cy.deleteComponentByPath(textinputEditPath);
+            });
+        });
 
         if (cy.af.isLatestAddon()) {
             it('should add validation rule on date fields', function () {
