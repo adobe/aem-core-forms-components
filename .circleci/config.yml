@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.5
   browser-tools: circleci/browser-tools@1.4.3
+  node: circleci/node@5.2.0
 
 common:
   restore_cache: &restore_cache
@@ -15,6 +16,8 @@ common:
   cypress_test_steps: &cypress_test_steps
     steps:
       - checkout
+      - node/install:
+          node-version: '22.19.0'
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
@@ -39,7 +42,7 @@ common:
           command: npm install chrome-launcher
       - run:
           name: Install lighthouse
-          command: npm install lighthouse
+          command: npm install lighthouse@13.5.0
       - run:
           name: Install Web Driver
           command: npm install selenium-webdriver
