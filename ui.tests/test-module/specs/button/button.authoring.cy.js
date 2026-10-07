@@ -74,6 +74,27 @@ describe('Button - Authoring', function () {
         cy.deleteComponentByPath(buttonDrop);
     }
 
+    const openButtonInlineEditor = function(buttonEditPathSelector) {
+        recurse(
+            () => {
+                cy.get('body').then($body => {
+                    if (!$body.find('.rte-toolbar:visible').length) {
+                        cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+                        cy.get('body').then($currentBody => {
+                            if (!$currentBody.find('.rte-toolbar:visible').length) {
+                                cy.invokeEditableAction("[data-action='EDIT']");
+                            }
+                        });
+                    }
+                });
+                return cy.get('body');
+            },
+            $body => $body.find('.rte-toolbar:visible').length === 1,
+            {limit: 21, delay: 500, timeout: 10000, log: false}
+        );
+        return cy.get('.rte-toolbar:visible').should('have.length', 1);
+    };
+
     const testButtonBehaviourInilineEdit = function(buttonEditPathSelector, buttonDrop, isSites) {
         const updatedLabel = 'Updated Button';
         if (isSites) {
@@ -83,9 +104,7 @@ describe('Button - Authoring', function () {
         }
         const contextPath = Cypress.env('crx.contextPath') || '';
         [updatedLabel, ''].forEach(label => {
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-            cy.invokeEditableAction("[data-action='EDIT']");
-            cy.get('.rte-toolbar:visible').should('have.length', 1);
+            openButtonInlineEditor(buttonEditPathSelector);
             getContentIframeBody().find('.cmp-adaptiveform-button__text').should('have.length', 1)
                 .then(($span) => {
                     $span[0].textContent = label;
@@ -162,11 +181,18 @@ describe('Button - Authoring', function () {
         });
 
         it('check rich text inline editor is present', function(){
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
-            cy.invokeEditableAction("[data-action='EDIT']");
-            cy.get(".rte-toolbar").should('be.visible');
-            cy.get('.rte-toolbar-item[title="Close"]').should('be.visible').click();
-            cy.deleteComponentByPath(buttonDrop);
+            cy.cleanTest(buttonDrop).then(function() {
+                dropButtonInContainer();
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
+                cy.invokeEditableAction("[data-action='CONFIGURE']");
+                cy.get("input[name='./isTitleRichText'][type='checkbox']").check({force: true}).should('be.checked');
+                cy.get("div[name='richTextTitle']").should('be.visible');
+                cy.submitConfigureDialog();
+                openButtonInlineEditor(buttonEditPathSelector);
+                cy.get('.rte-toolbar:visible .rte-toolbar-item[title="Close"]').should('be.visible').click();
+                cy.get('.rte-toolbar:visible').should('not.exist');
+                cy.deleteComponentByPath(buttonDrop);
+            });
         });
     });
 

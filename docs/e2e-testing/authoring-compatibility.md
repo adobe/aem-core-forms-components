@@ -52,6 +52,13 @@ then repeats the original empty-label edit and verifies the empty native button
 and absent/empty title before deletion. Both edits wait for the inline toolbar
 to close. API teardown removes only the named test fixture if an assertion fails.
 
+Each inline-editor case creates its own Button. The rich-text case enables and
+saves `isTitleRichText` before opening the editor; it cannot reuse the preceding
+case's fixture because `afterEach` deletes it. Opening retries the overlay/EDIT
+action only while the inline toolbar is absent, within the existing ten-second
+budget. Once the toolbar is visible, EDIT is not invoked again. A persistent
+opening failure still fails the test rather than retrying the whole test.
+
 ## Authentication and browser user agents
 
 Use the normal browser user agent for acceptance. Sling's referrer filter
