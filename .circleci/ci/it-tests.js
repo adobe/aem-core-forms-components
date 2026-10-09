@@ -204,7 +204,20 @@ try {
                     
                     console.log('Waiting 30 seconds for OSGi to re-wire bundles...');
                     ci.sh('sleep 10');
-                    
+
+                    // Uninstalling the old af-core/core bundles can leave third-party bundles that
+                    // depend on their exported packages (e.g. com.adobe.aem.forms.af.rest) permanently
+                    // stuck UNRESOLVED: they may have already failed resolution with a "uses constraint
+                    // violation" while both the old and SNAPSHOT bundles were briefly installed together,
+                    // and Felix does not automatically retry a bundle once that happens. Force a package
+                    // refresh (equivalent to "Refresh Packages" in the OSGi console) so every bundle gets
+                    // a fresh resolution attempt now that only the SNAPSHOT bundle remains.
+                    console.log('Refreshing OSGi package wiring so bundles that failed to resolve during the swap get re-resolved...');
+                    ci.sh('curl -s -u admin:admin -F action=refreshPackages http://localhost:4502/system/console/bundles/0');
+
+                    console.log('Waiting 15 seconds for the package refresh to take effect...');
+                    ci.sh('sleep 15');
+
                     console.log('Checking bundle stability...');
                     let attempts = 0;
                     const maxAttempts = 30; // 450 seconds additional wait if needed

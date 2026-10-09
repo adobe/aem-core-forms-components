@@ -51,4 +51,16 @@ public interface Fragment extends Panel {
      * @since com.adobe.cq.forms.core.components.models.form 5.4.1
      */
     Resource getFragmentContainer();
+
+    /**
+     * Returns {@code true} if the fragment is marked to be lazily loaded (via the {@code fd:lazyLoad}
+     * property), in which case its definition is not inlined in the form JSON and is fetched on demand
+     * at runtime, otherwise {@code false}.
+     *
+     * @return {@code true} if the fragment should be lazily loaded, otherwise {@code false}
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    default boolean isLazyLoad() {
+        return false;
+    }
 }

@@ -70,6 +70,7 @@ public class FragmentImplTest {
     private static final String PATH_FRAGMENT_WITH_INVALID_PATH = CONTENT_ROOT + "/fragment-with-invalid-path";
     private static final String PATH_FRAGMENT_WITH_PLACEHOLDER_RULES = CONTENT_ROOT + "/fragment-with-placeholder-rules";
     private static final String PATH_FRAGMENT_LAZY = CONTENT_ROOT + "/fragment-lazy";
+    private static final String PATH_FRAGMENT_LAZYLOAD = CONTENT_ROOT + "/fragment-lazyload";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -490,6 +491,44 @@ public class FragmentImplTest {
     void testLazyFragmentJSONExport() throws Exception {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
         Utils.testJSONExport(fragment, BASE + "/exporter-fragment-lazy.json");
+    }
+
+    @Test
+    void testLazyLoadFragmentDoesNotResolveContainer() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZYLOAD, Fragment.class, context);
+        Assertions.assertTrue(fragment.isLazyLoad(),
+            "isLazyLoad() should return true when fd:lazyLoad is set");
+        Assertions.assertNull(fragment.getFragmentContainer(),
+            "Fragment container should be null when fd:lazyLoad is true so the definition is not inlined");
+        Assertions.assertTrue(fragment.getFragmentChildren().isEmpty(),
+            "Lazy load fragment should have no children since container is not resolved");
+    }
+
+    @Test
+    void testNonLazyLoadFragmentIsLazyLoadFalse() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Assertions.assertFalse(fragment.isLazyLoad(),
+            "isLazyLoad() should return false when fd:lazyLoad is not set");
+    }
+
+    @Test
+    void testLazyLoadFragmentEmitsLoadLazyProperty() {
+        FragmentImpl fragment = (FragmentImpl) Utils.getComponentUnderTest(PATH_FRAGMENT_LAZYLOAD, Fragment.class, context);
+        Map<String, Object> properties = fragment.getProperties();
+        Assertions.assertEquals(true, properties.get("fd:lazyLoad"),
+            "fd:lazyLoad should be emitted in properties when fd:lazyLoad is true");
+        Assertions.assertEquals(true, properties.get("fd:fragment"));
+        Assertions.assertEquals("fragment", properties.get("fd:viewType"));
+        Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
+            "fragmentPath should be accessible for client-side lazy resolution");
+    }
+
+    @Test
+    void testNonLazyLoadFragmentDoesNotEmitLoadLazyProperty() {
+        FragmentImpl fragment = (FragmentImpl) Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, Object> properties = fragment.getProperties();
+        Assertions.assertFalse(properties.containsKey("fd:lazyLoad"),
+            "fd:lazyLoad should not be in properties map when fd:lazyLoad is not set");
     }
 
     @Test
