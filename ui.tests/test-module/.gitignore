@@ -1,0 +1,2 @@
+# Local Cypress secrets/overrides — must never be committed
+cypress.env.json
