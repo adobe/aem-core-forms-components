@@ -132,6 +132,54 @@ describe('Page - Authoring', function () {
         });
 });
 
+        it('shows inline error when minimum is set greater than maximum', function () {
+            dropNumberInputInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
+            cy.invokeEditableAction(editDialogConfigurationSelector);
+            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click();
+
+            // Set maximum = 5, then minimum = 10 (invalid: min > max)
+            cy.get(numberInputBlockBemSelector + '__maximum').find('input').clear().type('5');
+            cy.focused().blur();
+            cy.get(numberInputBlockBemSelector + '__minimum').find('input').clear().type('10');
+            cy.focused().blur();
+
+            // Both fields should be marked invalid
+            cy.get(numberInputBlockBemSelector + '__minimum').should('have.attr', 'invalid');
+            cy.get(numberInputBlockBemSelector + '__maximum').should('have.attr', 'invalid');
+
+            // Fix by lowering minimum below maximum
+            cy.get(numberInputBlockBemSelector + '__minimum').find('input').clear().type('3');
+            cy.focused().blur();
+
+            // Both fields should no longer be invalid
+            cy.get(numberInputBlockBemSelector + '__minimum').should('not.have.attr', 'invalid');
+            cy.get(numberInputBlockBemSelector + '__maximum').should('not.have.attr', 'invalid');
+
+            cy.get('.cq-dialog-cancel').should('be.visible').click();
+            cy.deleteComponentByPath(numberInputDrop);
+        });
+
+        it('blocks dialog save when minimum is greater than maximum', function () {
+            dropNumberInputInContainer();
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + numberInputEditPathSelector);
+            cy.invokeEditableAction(editDialogConfigurationSelector);
+            cy.get(numberInputBlockBemSelector + '__editdialog').contains('Validation').click();
+
+            // Set an invalid state: minimum > maximum
+            cy.get(numberInputBlockBemSelector + '__maximum').find('input').clear().type('5');
+            cy.focused().blur();
+            cy.get(numberInputBlockBemSelector + '__minimum').find('input').clear().type('10');
+            cy.focused().blur();
+
+            // Attempt to save — dialog should remain open
+            cy.get('.cq-dialog-submit').click();
+            cy.get('coral-dialog[open]').should('exist');
+
+            cy.get('.cq-dialog-cancel').should('be.visible').click();
+            cy.deleteComponentByPath(numberInputDrop);
+        });
+
         // todo: leadDigits and fracDigits are not supported as of today
         it.skip('verify editFormat Value Getting saved correctly', function () {
             dropNumberInputInContainer();
