@@ -94,6 +94,8 @@
   "brushSize": "ブラシサイズ :",
   "geoLocationError": "位置情報の取得中にエラーが発生しました",
   "geoLocationFetch": "位置情報を取得しています...",
+  "showPassword": "パスワードを表示",
+  "hidePassword": "パスワードを非表示"
   "sortTable": "テーブルを並べ替え",
   "filterTable": "テーブルをフィルター",
   "sort": "並べ替え",

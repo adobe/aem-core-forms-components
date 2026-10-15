@@ -94,6 +94,9 @@
   "brushSize": "Pinselgröße: ",
   "geoLocationError": "Fehler beim Aufrufen des geografischen Standorts",
   "geoLocationFetch": "Geografischer Standort wird abgerufen …",
+  "showPassword": "Passwort anzeigen",
+  "hidePassword": "Passwort ausblenden"
+}
   "sortTable": "Tabelle sortieren",
   "filterTable": "Tabelle filtern",
   "sort": "Sortieren",

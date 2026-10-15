@@ -44,6 +44,9 @@ public final class FormConstants {
     /** The resource type for email input v1 */
     public static final String RT_FD_FORM_EMAIL_V1 = RT_FD_FORM_PREFIX + "emailinput/v1/emailinput";
 
+    /** The resource type for password input v1 */
+    public static final String RT_FD_FORM_PASSWORD_V1 = RT_FD_FORM_PREFIX + "passwordinput/v1/passwordinput";
+
     /** The resource type for button v1 */
     public static final String RT_FD_FORM_BUTTON_V1 = RT_FD_FORM_PREFIX + "button/v1/button";
 
