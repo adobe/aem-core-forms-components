@@ -34,7 +34,8 @@
             description: `.${TextInput.bemBlock}__longdescription`,
             qm: `.${TextInput.bemBlock}__questionmark`,
             errorDiv: `.${TextInput.bemBlock}__errormessage`,
-            tooltipDiv: `.${TextInput.bemBlock}__shortdescription`
+            tooltipDiv: `.${TextInput.bemBlock}__shortdescription`,
+            charCountCurrent: `.${TextInput.bemBlock}__charcount-current`
         };
 
         constructor(params) {
@@ -94,6 +95,14 @@
                         this.widget.selectionStart = this.widget.selectionEnd = cursorPosition + 1;
                     }
                 });
+            }
+            const charCountCurrent = this.element.querySelector(TextInput.selectors.charCountCurrent);
+            if (charCountCurrent) {
+                const updateCharCount = () => {
+                    charCountCurrent.textContent = this.widget.value ? this.widget.value.length : 0;
+                };
+                updateCharCount();
+                this.widget.addEventListener('input', updateCharCount);
             }
         }
     }

@@ -27,7 +27,28 @@
         TEXTINPUT_VALIDATIONFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__validationformat",
         TEXTINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displaypattern",
         TEXTINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__displayformat",
+        TEXTINPUT_MULTILINE = EDIT_DIALOG + " .cmp-adaptiveform-textinput__multiline",
+        TEXTINPUT_SHOWCHARACTERCOUNT = EDIT_DIALOG + " .cmp-adaptiveform-textinput__showcharactercount",
         Utils = window.CQ.FormsCoreComponents.Utils.v1;
+
+    // "Show character count" is only applicable to multi line (textarea) fields, so hide/show it
+    // depending on the "Allow multiple lines" checkbox, mirroring the rich-text-title toggle in base's editDialog.js.
+    function handleShowCharacterCountVisibility(dialog) {
+        var multiLine = dialog.find(TEXTINPUT_MULTILINE)[0];
+        var showCharacterCount = dialog.find(TEXTINPUT_SHOWCHARACTERCOUNT)[0];
+        if (!multiLine || !showCharacterCount) {
+            return;
+        }
+        var toggleVisibility = function() {
+            if (multiLine.checked) {
+                Utils.showComponent(showCharacterCount, "div");
+            } else {
+                Utils.hideComponent(showCharacterCount, "div");
+            }
+        };
+        toggleVisibility();
+        multiLine.on("change", toggleVisibility);
+    }
 
     function handleValidationPatternDropDown(dialog) {
         Utils.handlePatternDropDown(dialog,TEXTINPUT_VALIDATIONPATTERN,TEXTINPUT_VALIDATIONFORMAT);
@@ -76,6 +97,8 @@
         patternComponent.addEventListener("change", updateDisplayValueExpression);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleValidationPatternDropDown,handleValidationFormat,handleDisplayPatternDropDown,handleDisplayFormat,handleDisplayValueExpression);
+    // registered first so it always runs even if a later handler in this list throws (Utils.initializeEditDialog
+    // has no per-handler error isolation - it forEach()s this list, and one throw aborts everything after it)
+    Utils.initializeEditDialog(EDIT_DIALOG)(handleShowCharacterCountVisibility,handleValidationPatternDropDown,handleValidationFormat,handleDisplayPatternDropDown,handleDisplayFormat,handleDisplayValueExpression);
 
 })(jQuery);
