@@ -13,8 +13,8 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-/* global jQuery, Coral */
-(function ($, Coral) {
+/* global jQuery, Coral, Granite */
+(function ($, Coral, Granite) {
     var initAssetSourcesTab = function () {
         var btn = $('.cmp-formsportal-searchandlister--editor-parameters > ._coral-Button')[0];
 
@@ -23,7 +23,7 @@
                 // overrides the default multi-field button
                 btn.set({
                     label: {
-                        innerHTML: "Add another location"
+                        innerHTML: Granite.I18n.get("Add another location")
                     },
                     icon: "add"
                 });
@@ -35,4 +35,4 @@
     $(document).on("dialog-ready", function () {
         initAssetSourcesTab();
     });
-}(jQuery, Coral));
+}(jQuery, Coral, Granite));
