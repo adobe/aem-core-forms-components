@@ -30,8 +30,10 @@
         'checkbox-group': fieldTypes.SELECT,
         'checkbox': fieldTypes.CHECKBOX,
         'date-input': fieldTypes.TEXT,
+        'datetime-input': fieldTypes.TEXT,
         'drop-down': fieldTypes.SELECT,
         'email': fieldTypes.TEXT,
+        'multiline-input': fieldTypes.TEXT,
         'number-input': fieldTypes.TEXT,
         'radio-group': fieldTypes.SELECT,
         'reset': fieldTypes.NON_INPUT,
@@ -63,7 +65,53 @@
             url: Granite.HTTP.externalize(componentPath + jsonPath),
             cache: false
         });
-        return result.responseJSON.fieldType;
+        return result.responseJSON && result.responseJSON.fieldType;
+    }
+
+    /**
+     * Component .json often omits fieldType; default resource model.json has it (used for replace matching).
+     */
+    function getTemplateFieldType(compTemplatePath) {
+        var ft = getComponentType(compTemplatePath, componentJsonPath);
+        if (ft) {
+            return ft;
+        }
+        return getComponentType(compTemplatePath, editableJsonPath);
+    }
+
+    /**
+     * Restrict replace targets to components allowed in the direct parent container (e.g. table row policy).
+     * @param {Array} allowedFromParent from author.components.computeAllowedComponents
+     * @returns {Set|null} template paths, or null to skip filtering
+     */
+    function buildAllowedTemplatePathSet(allowedFromParent) {
+        if (!allowedFromParent || !allowedFromParent.length) {
+            return null;
+        }
+        var set = new Set();
+        allowedFromParent.forEach(function (c) {
+            var tp = c.templatePath || (c.componentConfig && c.componentConfig.templatePath);
+            if (tp) {
+                set.add(tp);
+            }
+        });
+        return set.size ? set : null;
+    }
+
+    /**
+     * Inside a table row cell, allow replacing with any field allowed in the row (not only same typeMap family),
+     * e.g. text input → checkbox, while still respecting row policy and cannotBeReplacedWith.
+     */
+    function isUnderCoreTableRow(editable) {
+        var p = author.editables.getParent(editable);
+        while (p) {
+            if (typeof p.type === "string" &&
+                (p.type.indexOf("/form/tablerow/") !== -1 || p.type.indexOf("/form/tableheader/") !== -1)) {
+                return true;
+            }
+            p = author.editables.getParent(p);
+        }
+        return false;
     }
 
     window.CQ.FormsCoreComponents.editorhooks.isReplaceable = function (editable) {
@@ -93,7 +141,10 @@
             allowedComponents = author.components.computeAllowedComponents(parent, author.pageDesign),
             selectList;
 
-        var filterComponent = function (allowedComponents) {
+        var allowedTemplatePaths = buildAllowedTemplatePathSet(allowedComponents);
+        var skipTypeFamilyMatch = isUnderCoreTableRow(editable);
+
+        var filterComponent = function () {
             var editableType = getComponentType(editable.path, editableJsonPath);
             var groups = {},
                 keyword = $searchComponent[0].value,
@@ -117,8 +168,11 @@
                 if (!compTemplatePath) {
                     return;
                 }
+                if (allowedTemplatePaths && !allowedTemplatePaths.has(compTemplatePath)) {
+                    return;
+                }
                 if (!allowedCompFieldTypes[compTemplatePath]) {
-                    allowedCompFieldTypes[compTemplatePath] = getComponentType(compTemplatePath, componentJsonPath);
+                    allowedCompFieldTypes[compTemplatePath] = getTemplateFieldType(compTemplatePath);
                 }
 
                 var cfg = component.componentConfig,
@@ -131,8 +185,9 @@
                 }
 
                 if (!(keyword.length > 0) || isKeywordFound) {
-                    if ((!cannotBeReplacedWith.includes(componentType))
-                        && typeMap[editableType] === typeMap[componentType]) {
+                    var sameTypeFamily = typeMap[editableType] === typeMap[componentType];
+                    if (!cannotBeReplacedWith.includes(componentType)
+                        && (skipTypeFamilyMatch || sameTypeFamily)) {
                         performReplace = true;
                     }
 
@@ -158,17 +213,17 @@
             });
         };
 
-        var bindEventToReplaceComponentDialog = function (allowedComponents, editable) {
+        var bindEventToReplaceComponentDialog = function () {
             $searchComponent.off("keydown.replaceComponent.coral-search");
             $searchComponent.on("keydown.replaceComponent.coral-search", $.debounce(150, function (event) {
-                filterComponent(allowedComponents);
+                filterComponent();
             }));
 
             $clearButton.off("click.replaceComponent.clearButton");
             $clearButton.on("click.replaceComponent.clearButton", function () {
                 if ($searchComponent[0].value.trim().length) {
                     $searchComponent[0].value = "";
-                    filterComponent(allowedComponents);
+                    filterComponent();
                 }
             });
 
@@ -189,8 +244,8 @@
             $clearButton = $searchComponent.find('button');
             $('.' + dialogCssClass).css("min-width", "320px");
 
-            filterComponent(allowedComponents);
-            bindEventToReplaceComponentDialog(allowedComponents, editable);
+            filterComponent();
+            bindEventToReplaceComponentDialog();
             dialog.show();
         });
     }

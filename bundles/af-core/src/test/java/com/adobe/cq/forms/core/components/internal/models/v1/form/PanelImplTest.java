@@ -17,19 +17,23 @@ package com.adobe.cq.forms.core.components.internal.models.v1.form;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
+import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.Panel;
@@ -41,6 +45,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
@@ -147,5 +152,64 @@ public class PanelImplTest {
         Mockito.when(mockPanel.getDorProperties()).thenCallRealMethod();
         Map<String, Object> dorProperties = mockPanel.getDorProperties();
         assertTrue(dorProperties.containsKey(PanelImpl.CUSTOM_DOR_CONTAINER_WRAPPER));
+    }
+
+    @Test
+    void testDorPropertiesEmptyWhenNotSet() {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        Map<String, Object> dorProperties = panel.getDorProperties();
+        assertTrue(dorProperties.isEmpty(),
+            "getDorProperties should return empty map when no dor properties are set in JCR");
+        assertFalse(panel.getProperties().containsKey("fd:dor"),
+            "fd:dor should not appear in properties when no dor properties are set");
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.clearProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP);
+    }
+
+    @Test
+    void testExportedItemsMapByDefault() {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        Map<String, ? extends ComponentExporter> exportedItems = panel.getExportedItems();
+        assertFalse(exportedItems.isEmpty(),
+            "getExportedItems should return non-empty map when toggle is OFF");
+        assertTrue(exportedItems.containsKey("textinput"));
+        String[] order = panel.getExportedItemsOrder();
+        assertEquals(1, order.length);
+        assertEquals("textinput", order[0]);
+    }
+
+    @Test
+    void testExportedItemsArrayWhenToggleEnabled() {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        Map<String, ? extends ComponentExporter> exportedItems = panel.getExportedItems();
+        assertTrue(exportedItems.isEmpty(),
+            "getExportedItems should return empty map when toggle is ON");
+        String[] order = panel.getExportedItemsOrder();
+        assertEquals(0, order.length);
+        PanelImpl panelImpl = (PanelImpl) panel;
+        List<? extends ComponentExporter> itemsArray = panelImpl.getExportedItemsArray();
+        assertFalse(itemsArray.isEmpty(),
+            "getExportedItemsArray should return non-empty list when toggle is ON");
+        assertEquals(1, itemsArray.size());
+    }
+
+    @Test
+    void testExportedItemsArrayEmptyWhenToggleDisabled() {
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        PanelImpl panelImpl = (PanelImpl) panel;
+        List<? extends ComponentExporter> itemsArray = panelImpl.getExportedItemsArray();
+        assertTrue(itemsArray.isEmpty(),
+            "getExportedItemsArray should return empty list when toggle is OFF");
+    }
+
+    @Test
+    void testJSONExportWithItemsArrayToggle() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
+        Panel panel = Utils.getComponentUnderTest(PATH_PANEL, Panel.class, context);
+        Utils.testJSONExport(panel, BASE + "/exporter-panel-items-array.json");
     }
 }

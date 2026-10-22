@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[mobile/groups/responsive]"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Adaptive Form V2 (IT) - Table Sorting"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            fieldType="form"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container">
+            <!--
+                enableSorting=true on the table; column2 has disableSorting=true
+                so only column1 gets a sort button at runtime.
+            -->
+            <table
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Sortable Table"
+                sling:resourceType="core/fd/components/form/table/v1/table"
+                fieldType="panel"
+                name="table"
+                visible="{Boolean}true"
+                enabled="{Boolean}true"
+                hideTitle="{Boolean}false"
+                enableSorting="{Boolean}true">
+                <header
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Header Row"
+                    sling:resourceType="core/fd/components/form/tableheader/v1/tableheader"
+                    fieldType="panel">
+                    <!-- column1: sort enabled (inherits table-level enableSorting) -->
+                    <column1
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Name"
+                        sling:resourceType="core/fd/components/form/text/v1/text"
+                        fieldType="plain-text"
+                        name="column1"
+                        value="Name"/>
+                    <!-- column2: sort explicitly disabled for this column -->
+                    <column2
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Score"
+                        sling:resourceType="core/fd/components/form/text/v1/text"
+                        fieldType="plain-text"
+                        name="column2"
+                        value="Score"
+                        disableSorting="{Boolean}true"/>
+                </header>
+                <!-- Row A -->
+                <rowA
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Row A"
+                    sling:resourceType="core/fd/components/form/tablerow/v1/tablerow"
+                    fieldType="panel"
+                    name="rowA"
+                    repeatable="{Boolean}false">
+                    <cell1
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Name"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                        fieldType="text-input"
+                        name="nameA"
+                        default="Charlie"/>
+                    <cell2
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Score"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                        fieldType="text-input"
+                        name="scoreA"
+                        default="30"/>
+                </rowA>
+                <!-- Row B -->
+                <rowB
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Row B"
+                    sling:resourceType="core/fd/components/form/tablerow/v1/tablerow"
+                    fieldType="panel"
+                    name="rowB"
+                    repeatable="{Boolean}false">
+                    <cell1
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Name"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                        fieldType="text-input"
+                        name="nameB"
+                        default="Alice"/>
+                    <cell2
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Score"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                        fieldType="text-input"
+                        name="scoreB"
+                        default="10"/>
+                </rowB>
+                <!-- Row C -->
+                <rowC
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Row C"
+                    sling:resourceType="core/fd/components/form/tablerow/v1/tablerow"
+                    fieldType="panel"
+                    name="rowC"
+                    repeatable="{Boolean}false">
+                    <cell1
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Name"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                        fieldType="text-input"
+                        name="nameC"
+                        default="Bob"/>
+                    <cell2
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Score"
+                        sling:resourceType="core/fd/components/form/textinput/v1/textinput"
+                        fieldType="text-input"
+                        name="scoreC"
+                        default="20"/>
+                </rowC>
+            </table>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>

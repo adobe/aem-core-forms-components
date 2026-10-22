@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Date Time">
+    <items jcr:primaryType="nt:unstructured">
+        <field
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Base"
+            id="af2_datetime"
+            longTitle="Base"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <widgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Date Time"
+                    id="af2_datetimewidgetandtext"
+                    cssSelector=".cmp-adaptiveform-datetime"
+                    longTitle="Date Time Widget"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                    <items jcr:primaryType="nt:unstructured">
+                        <datetimeLabelContainer
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Label Container"
+                                id="af2_datetimelabelcontainer"
+                                cssSelector=".cmp-adaptiveform-datetime__label-container"
+                                longTitle="Date Time Label Container"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <datetimeLabel
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Label"
+                                        id="af2_datetimelabel"
+                                        cssSelector=".cmp-adaptiveform-datetime__label"
+                                        longTitle="Date Time Label"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-datetime__label:hover"/>
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-datetime__label:focus"/>
+                                    </states>
+                                </datetimeLabel>
+                                <datetimeHelpIcon
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Help Icon"
+                                        id="af2_datetimehelpicon"
+                                        cssSelector=".cmp-adaptiveform-datetime__questionmark"
+                                        longTitle="Date Time Help Icon"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        secondarySelectors="af2_guideContainer:af2_helpicon">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-datetime__questionmark:focus"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-datetime__questionmark:hover"/>
+                                        <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-datetime__questionmark:disabled"/>
+                                    </states>
+                                </datetimeHelpIcon>
+                            </items>
+                        </datetimeLabelContainer>
+                        <datetimeInputWrapper
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Input Wrapper"
+                                id="af2_datetimeinputwrapper"
+                                cssSelector=".cmp-adaptiveform-datetime__input-wrapper"
+                                longTitle="Date Time Input Wrapper"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <datetimeWidget
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Date Time Input"
+                                        id="af2_datetimewidget"
+                                        cssSelector=".cmp-adaptiveform-datetime__widget"
+                                        longTitle="Date Time Widget"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Focus"
+                                                cssSelector=".cmp-adaptiveform-datetime__widget:focus"/>
+                                        <hover
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Hover"
+                                                cssSelector=".cmp-adaptiveform-datetime__widget:hover"/>
+                                        <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Disabled"
+                                                cssSelector=".cmp-adaptiveform-datetime__widget:disabled"/>
+                                        <mandatory
+                                                jcr:primaryType="nt:unstructured"
+                                                jcr:title="Mandatory"
+                                                cssSelector=".cmp-adaptiveform-datetime__widget:required"/>
+                                    </states>
+                                </datetimeWidget>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-datetime__input-wrapper:hover"/>
+                                <focusWithin
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus Within"
+                                        cssSelector=".cmp-adaptiveform-datetime__input-wrapper:focus-within"/>
+                            </states>
+                        </datetimeInputWrapper>
+                        <datetimeDescriptionShort
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Short Description"
+                                id="af2_datetimedescriptionshort"
+                                cssSelector=".cmp-adaptiveform-datetime__shortdescription"
+                                longTitle="Date Time Short Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </datetimeDescriptionShort>
+                        <datetimeDescriptionLong
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description"
+                                id="af2_datetimedescriptionlong"
+                                cssSelector=".cmp-adaptiveform-datetime__longdescription"
+                                longTitle="Date Time Long Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-datetime__longdescription:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-datetime__longdescription:hover"/>
+                            </states>
+                        </datetimeDescriptionLong>
+                        <datetimeErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Date Time Error Message"
+                                id="af2_datetimeerrormessage"
+                                cssSelector=".cmp-adaptiveform-datetime__errormessage"
+                                longTitle="Date Time Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                        </datetimeErrorMessage>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Focus"
+                                cssSelector=".cmp-adaptiveform-datetime:focus"/>
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-datetime[data-cmp-enabled='false']"/>
+                        <hover
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Hover"
+                                cssSelector=".cmp-adaptiveform-datetime:hover"/>
+                        <mandatory
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".cmp-adaptiveform-datetime[data-cmp-required='true']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-datetime[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-datetime[data-cmp-valid='true']"/>
+                    </states>
+                </widgetAndText>
+            </items>
+        </field>
+    </items>
+</jcr:root>

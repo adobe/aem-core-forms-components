@@ -19,11 +19,6 @@
     "afs:layout": {
       "tooltipVisible": false
     },
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/array-panel"
   },
   ":itemsOrder": [
@@ -48,9 +43,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/array-panel/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"

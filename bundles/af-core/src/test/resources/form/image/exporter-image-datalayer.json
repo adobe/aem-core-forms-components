@@ -10,10 +10,7 @@
     ]
   },
   "properties": {
-    "fd:path": "/content/image-datalayer",
-    "fd:dor": {
-      "dorExclusion": false
-    }
+    "fd:path": "/content/image-datalayer"
   },
   ":type": "core/fd/components/form/image/v1/image",
   "dataLayer": {

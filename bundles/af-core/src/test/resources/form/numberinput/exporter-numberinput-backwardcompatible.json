@@ -15,9 +15,6 @@
   },
   "name": "Phone Number",
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/numberinput-backwardcompatible"
   },
   "type": "number"

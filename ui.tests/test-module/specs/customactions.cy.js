@@ -34,10 +34,16 @@ describe('Custom Urls to fetch Custom Function & Prefill', () => {
     cy.openPage(pagePath);
   });
 
-  it('should use fd:customFunctionUrl to fetch the custom functions', () => {
+  it('should use client-side parsing instead of fetching fd:customFunctionUrl', () => {
     cy.intercept('GET', /^\/customfunctionsprefix.*/).as('customFunctionRequest');
-    cy.wait('@customFunctionRequest').its('response.statusCode').should('eq', 404);
-    cy.get('@customFunctionRequest').should('have.property', 'state', 'Complete');
+    // Wait for the view layer to signal form is fully initialized
+    cy.document().then(doc => {
+      return new Cypress.Promise(resolve => {
+        doc.addEventListener('AF_FormContainerInitialised', resolve, { once: true });
+      });
+    });
+    // Custom function URL must NOT have been requested — client-side parsing replaces the API call
+    cy.get('@customFunctionRequest.all').should('have.length', 0);
   })
 
   it('should use fd:dataUrl to fetch the prefill data', () => {

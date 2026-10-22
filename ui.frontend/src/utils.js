@@ -18,6 +18,7 @@ import {Constants} from "./constants.js";
 import HTTPAPILayer from "./HTTPAPILayer.js";
 import {customFunctions} from "./customFunctions.js";
 import {FunctionRuntime} from '@aemforms/af-core';
+import {registerFormWebMCP} from '@aemforms/af-webmcp';
 import {loadXfa} from "./handleXfa";
 import RuleUtils from "./RuleUtils.js";
 
@@ -144,13 +145,17 @@ class Utils {
 
     /**
      * Creates fields from all registered fieldCreators present inside addedElement, for given form container.
+     * Also checks if the addedElement itself matches a field selector (querySelectorAll only matches descendants).
      * @param {Element} addedElement - The added element.
      * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static createFieldsForAddedElement(addedElement, formContainer) {
         Object.values(Utils.#fieldCreatorOrder).forEach(function (fieldSelector) {
             let fieldCreatorSet = Utils.#fieldCreatorSets[fieldSelector];
-            const fieldElements = addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']);
+            const fieldElements = Array.from(addedElement.querySelectorAll(fieldCreatorSet['fieldSelector']));
+            if (addedElement.matches && addedElement.matches(fieldCreatorSet['fieldSelector'])) {
+                fieldElements.unshift(addedElement);
+            }
             Utils.#createFormContainerFields(fieldElements, fieldCreatorSet['fieldCreator'], formContainer);
         });
     }
@@ -203,10 +208,13 @@ class Utils {
      * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static #removeChildReferences(fieldView, formContainer) {
+        if (!fieldView) {
+            return;
+        }
         let childViewList = fieldView.children;
         if (childViewList) {
             for (let index = 0; index < childViewList.length; index++) {
-                Utils.#removeChildReferences(childViewList[index]);
+                Utils.#removeChildReferences(childViewList[index], formContainer);
             }
         }
         //remove instanceManger for child repeatable panel
@@ -222,10 +230,13 @@ class Utils {
      * @param {module:FormView~FormContainer} formContainer - The form container.
      */
     static removeFieldReferences(fieldView, formContainer) {
+        if (!fieldView) {
+            return;
+        }
         let childViewList = fieldView.children;
         if (childViewList) {
             for (let index = 0; index < childViewList.length; index++) {
-                Utils.#removeChildReferences(childViewList[index]);
+                Utils.#removeChildReferences(childViewList[index], formContainer);
             }
         }
         Utils.#removeFieldId(formContainer, fieldView.id);
@@ -233,11 +244,16 @@ class Utils {
 
     /**
      * Update the id inside the given html element.
+     * Also checks if the root element itself has the id (querySelectorAll only matches descendants).
      * @param {Element} htmlElement - The HTML element.
      * @param {string} oldId - The old ID.
      * @param {string} newId - The new ID.
      */
     static updateId(htmlElement, oldId, newId) {
+        if (htmlElement.id === oldId) {
+            htmlElement.id = newId;
+            return;
+        }
         let elementWithId = htmlElement.querySelectorAll("#" + oldId)[0];
         if (elementWithId) {
             elementWithId.id = newId;
@@ -306,7 +322,10 @@ class Utils {
             }
             if (_path == null) {
                 console.error(`data-${Constants.NS}-${formContainerClass}-path attribute is not present in the HTML element. Form cannot be initialized` )
+            } else if (elements[i].dataset.cmpAdaptiveformcontainerInitialized) {
+                continue;
             } else {
+                elements[i].dataset.cmpAdaptiveformcontainerInitialized = 'true';
                 let _formJson, callback;
                 const loader = elements[i].parentElement?.querySelector('[data-cmp-adaptiveform-container-loader]');
                 // Get the schema type from the data attribute with null safety
@@ -322,6 +341,9 @@ class Utils {
                     callback = loadXfa(_formJson.formdom, _formJson.xfaRenderContext);
                 } else {
                     _formJson = await HTTPAPILayer.getFormDefinition(_path, _pageLang);
+                }
+                if (!_formJson.id) {
+                    _formJson = {..._formJson, id: elements[i].id || _path};
                 }
                 console.debug("fetched model json", _formJson);
                 await RuleUtils.registerCustomFunctionsV2( _formJson);
@@ -353,6 +375,11 @@ class Utils {
                     callback(formContainer.getModel());
                 }
                 Utils.initializeAllFields(formContainer);
+                // Expose the form's WebMCP tool catalog to in-browser AI agents. No-ops unless the
+                // form opted in via fd:webMcpEnabled and a browser modelContext is available.
+                formContainer._setWebMcpUnregister(
+                    registerFormWebMCP(formContainer.getModel(), Utils.getWebMcpOptions(formContainer))
+                );
                 const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
                 document.dispatchEvent(event);
             }
@@ -360,6 +387,18 @@ class Utils {
     }
 
     
+    /** Builds form-scoped renderer-focus and optional additional-tool options for WebMCP. */
+    static getWebMcpOptions(formContainer, additionalTools) {
+        return {
+            ...(additionalTools ? {additionalTools} : {}),
+            onFocusRequest: (fieldId) => {
+                const previous = document.activeElement;
+                formContainer.setFocus(fieldId);
+                return document.activeElement !== previous;
+            }
+        };
+    }
+
     /**
      * For backward compatibility with older data formats of prefill services like FDM.
      * @param {object} prefillJson - The prefill JSON object.

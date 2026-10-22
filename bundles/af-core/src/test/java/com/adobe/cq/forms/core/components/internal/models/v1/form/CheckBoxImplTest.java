@@ -58,6 +58,7 @@ public class CheckBoxImplTest {
 
     private static final String PATH_CHECKBOX_ENABLEUNCHECKEDOFF = CONTENT_ROOT + "/checkbox-enableUncheckedValueFalse";
     private static final String PATH_CHECKBOX_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/checkbox-without-fieldtype";
+    private static final String PATH_CHECKBOX_ENABLEUNCHECKED_MISSING = CONTENT_ROOT + "/checkbox-enableUncheckedValueMissingFromJcr";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -348,6 +349,15 @@ public class CheckBoxImplTest {
     void shouldOnlyHaveOnEnumIfEnableUncheckedValueOff() {
         CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_ENABLEUNCHECKEDOFF);
         assertArrayEquals(new String[] { "on" }, checkbox.getEnums());
+    }
+
+    @Test
+    void shouldUseEmptyStringWhenUncheckedValueMissingFromJcr() {
+        // Regression: when enableUncheckedValue=true but the uncheckedValue JCR property is absent
+        // (e.g. because the content push mechanism skipped an empty-string value), the enum array
+        // must not contain null — null.toString() in the AFB runtime crashes the form at init time.
+        CheckBox checkbox = getCheckBoxUnderTest(PATH_CHECKBOX_ENABLEUNCHECKED_MISSING);
+        assertArrayEquals(new String[] { ".", "" }, checkbox.getEnums());
     }
 
     private CheckBox getCheckBoxUnderTest(String resourcePath) {

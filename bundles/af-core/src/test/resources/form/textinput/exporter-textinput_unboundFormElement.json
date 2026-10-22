@@ -13,9 +13,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/textinput_unboundFormElement"
   },
   ":type": "core/fd/components/form/textinput/v1/textinput"

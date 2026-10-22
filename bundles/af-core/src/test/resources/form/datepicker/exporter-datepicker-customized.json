@@ -14,7 +14,7 @@
   },
   "readOnly": true,
   "default": "2022-02-07",
-  "lang" : "it-IT",
+  "lang": "it-IT",
   "label": {
     "visible": true,
     "value": "def"
@@ -28,9 +28,6 @@
   "properties": {
     "afs:layout": {
       "tooltipVisible": false
-    },
-    "fd:dor": {
-      "dorExclusion": false
     },
     "fd:path": "/content/datepicker-customized"
   },

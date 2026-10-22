@@ -1,6 +1,6 @@
 {
   "FileCloseAccessText": "Presione Intro para eliminar el archivo ",
-  "FileSizeGreater": "Los archivos ${0} son mayores que el tamaño esperado: ${1} MB.",
+  "FileSizeGreater": "Los archivos ${0} son mayores que el tamaño esperado: ${1}.",
   "FileNameInvalid": "No adjunte archivos cuyo nombre comience con (.), contenga \\ / : * ? \" < > | ; % $, o sea una palabra clave reservada como nul, prn, con, lpt o com.",
   "FileMimeTypeInvalid": "Los tipos de archivo ${0} no son compatibles",
   "InternalFormSubmissionError": "Error interno al enviar el formulario.",
@@ -93,5 +93,16 @@
   "clearSign": "Borrar firma",
   "brushSize": "Tamaño de pincel: ",
   "geoLocationError": "Error al obtener la localización geográfica",
-  "geoLocationFetch": "Obteniendo localización geográfica…"
+  "geoLocationFetch": "Obteniendo localización geográfica…",
+  "sortTable": "Ordenar tabla",
+  "filterTable": "Filtrar tabla",
+  "sort": "Ordenar",
+  "filter": "Filtrar",
+  "sortOptions": "Opciones de ordenación",
+  "sortBy": "Ordenar por",
+  "sortColumns": "Ordenar columnas",
+  "sortOrder": "Orden de clasificación",
+  "sortDirection": "Dirección de ordenación",
+  "ascending": "Ascendente",
+  "descending": "Descendente"
 }

@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="imageChoice">
+    <items jcr:primaryType="nt:unstructured">
+        <field
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Base"
+            id="af_imagechoice_field"
+            longTitle="Image Choice Field"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <widgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Image Choice"
+                    id="af2_imagechoicewidgetandtext"
+                    cssSelector=".cmp-adaptiveform-imagechoice"
+                    longTitle="Image Choice Widget And Text"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                    <items jcr:primaryType="nt:unstructured">
+                        <imageChoiceLabelContainer
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Label Container"
+                            id="af2_imagechoicelabelcontainer"
+                            cssSelector=".cmp-adaptiveform-imagechoice__label-container"
+                            longTitle="Image Choice Label Container"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <imageChoiceLabel
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Label"
+                                    id="af2_imagechoicelabel"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__label"
+                                    longTitle="Image Choice Label"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__label:hover"/>
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__label:focus"/>
+                                    </states>
+                                </imageChoiceLabel>
+                                <imageChoiceHelpIcon
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Help Icon"
+                                    id="af2_imagechoicehelpicon"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__questionmark"
+                                    longTitle="Image Choice Help Icon"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                    secondarySelectors="af2_guideContainer:af2_helpicon">
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__questionmark:focus"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__questionmark:hover"/>
+                                        <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__questionmark:disabled"/>
+                                    </states>
+                                </imageChoiceHelpIcon>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <disabled
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Disabled"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__label-container:disabled"/>
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__label-container:hover"/>
+                                <focus
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Focus"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__label-container:focus"/>
+                            </states>
+                        </imageChoiceLabelContainer>
+                        <imageChoiceWidget
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Image Choice Items Widget"
+                            id="af2_imagechoiceitemswidget"
+                            cssSelector=".cmp-adaptiveform-imagechoice__widget"
+                            longTitle="Image Choice Items Widget"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <imageChoiceItem
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Image Choice Item"
+                                    id="af2_imagechoiceitem"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__option"
+                                    longTitle="Image Choice Item"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <imageChoiceItemLabelContainer
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Option Label (clickable area)"
+                                            id="af2_imagechoiceitemlabelcontainer"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option-label"
+                                            longTitle="Image Choice Item Label Container"
+                                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <imageChoiceItemWidget
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Input Widget"
+                                                    id="af2_imagechoiceitemwidget"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option__widget"
+                                                    longTitle="Image Choice Item Widget"
+                                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <focus
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Focus"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:focus"/>
+                                                        <disabled
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Disabled"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:disabled"/>
+                                                        <hover
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Hover"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:hover"/>
+                                                        <checked
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Selected"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:checked"/>
+                                                    </states>
+                                                </imageChoiceItemWidget>
+                                                <imageChoiceOptionImage
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Option Image Container"
+                                                    id="af2_imagechoiceoptionimage"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option-image"
+                                                    longTitle="Option Image Container"
+                                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <image
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Image"
+                                                            id="af2_imagechoiceimage"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__image"
+                                                            longTitle="Image Element"
+                                                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                                    </items>
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <checked
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Selected"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:checked + .cmp-adaptiveform-imagechoice__option-image"/>
+                                                        <focus
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Focus"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:focus-visible + .cmp-adaptiveform-imagechoice__option-image"/>
+                                                        <disabled
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Disabled"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:disabled + .cmp-adaptiveform-imagechoice__option-image"/>
+                                                        <hover
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Hover"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option-label:hover .cmp-adaptiveform-imagechoice__option-image"/>
+                                                    </states>
+                                                </imageChoiceOptionImage>
+                                                <imageChoiceOptionText
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Option Text"
+                                                    id="af2_imagechoiceoptiontext"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option-text"
+                                                    longTitle="Option Text Label"
+                                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <checked
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Selected"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:checked ~ .cmp-adaptiveform-imagechoice__option-text"/>
+                                                        <disabled
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Disabled"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:disabled ~ .cmp-adaptiveform-imagechoice__option-text"/>
+                                                        <hover
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Hover"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option-label:hover .cmp-adaptiveform-imagechoice__option-text"/>
+                                                    </states>
+                                                </imageChoiceOptionText>
+                                            </items>
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Hover"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option-label:hover"/>
+                                                <focus
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Focus"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option-label:focus"/>
+                                            </states>
+                                        </imageChoiceItemLabelContainer>
+                                    </items>
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option .cmp-adaptiveform-imagechoice__option__widget:disabled"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option:hover"/>
+                                        <checked
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Selected"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option .cmp-adaptiveform-imagechoice__option__widget:checked"/>
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option:focus-within"/>
+                                        <error
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Error"
+                                            cssSelector="[data-cmp-valid='false'] .cmp-adaptiveform-imagechoice__option"/>
+                                        <success
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Success"
+                                            cssSelector="[data-cmp-valid='true'] .cmp-adaptiveform-imagechoice__option"/>
+                                        <mandatory
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Mandatory"
+                                            cssSelector="[data-cmp-required='true'] .cmp-adaptiveform-imagechoice__option"/>
+                                    </states>
+                                </imageChoiceItem>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__widget:hover"/>
+                                <focus
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Focus"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__widget:focus"/>
+                            </states>
+                        </imageChoiceWidget>
+                        <imageChoiceWidgetVertical
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Image Choice Items Widget Vertical"
+                            id="af2_imagechoiceitemswidgetvertical"
+                            cssSelector=".cmp-adaptiveform-imagechoice__widget.vertical"
+                            longTitle="Image Choice Items Widget Vertical"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <imageChoiceItemVertical
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Image Choice Item"
+                                    id="af2_imagechoiceitemvertical"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__option"
+                                    longTitle="Image Choice Item"
+                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <imageChoiceItemLabelContainerVertical
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Option Label (clickable area)"
+                                            id="af2_imagechoiceitemlabelcontainervertical"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option-label"
+                                            longTitle="Image Choice Item Label Container"
+                                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <imageChoiceItemWidgetVertical
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Input Widget"
+                                                    id="af2_imagechoiceitemwidgetvertical"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option__widget"
+                                                    longTitle="Image Choice Item Widget"
+                                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <focus
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Focus"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:focus"/>
+                                                        <disabled
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Disabled"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:disabled"/>
+                                                        <hover
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Hover"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:hover"/>
+                                                        <checked
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Selected"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:checked"/>
+                                                    </states>
+                                                </imageChoiceItemWidgetVertical>
+                                                <imageChoiceOptionImageVertical
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Option Image Container"
+                                                    id="af2_imagechoiceoptionimagevertical"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option-image"
+                                                    longTitle="Option Image Container"
+                                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <imageVertical
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Image"
+                                                            id="af2_imagechoiceimagevertical"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__image"
+                                                            longTitle="Image Element"
+                                                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                                    </items>
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <checked
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Selected"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:checked + .cmp-adaptiveform-imagechoice__option-image"/>
+                                                        <focus
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Focus"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:focus-visible + .cmp-adaptiveform-imagechoice__option-image"/>
+                                                        <disabled
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Disabled"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:disabled + .cmp-adaptiveform-imagechoice__option-image"/>
+                                                        <hover
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Hover"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option-label:hover .cmp-adaptiveform-imagechoice__option-image"/>
+                                                    </states>
+                                                </imageChoiceOptionImageVertical>
+                                                <imageChoiceOptionTextVertical
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Option Text"
+                                                    id="af2_imagechoiceoptiontextvertical"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option-text"
+                                                    longTitle="Option Text Label"
+                                                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                                                    <states jcr:primaryType="nt:unstructured">
+                                                        <checked
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Selected"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:checked ~ .cmp-adaptiveform-imagechoice__option-text"/>
+                                                        <disabled
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Disabled"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option__widget:disabled ~ .cmp-adaptiveform-imagechoice__option-text"/>
+                                                        <hover
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Hover"
+                                                            cssSelector=".cmp-adaptiveform-imagechoice__option-label:hover .cmp-adaptiveform-imagechoice__option-text"/>
+                                                    </states>
+                                                </imageChoiceOptionTextVertical>
+                                            </items>
+                                            <states jcr:primaryType="nt:unstructured">
+                                                <hover
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Hover"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option-label:hover"/>
+                                                <focus
+                                                    jcr:primaryType="nt:unstructured"
+                                                    jcr:title="Focus"
+                                                    cssSelector=".cmp-adaptiveform-imagechoice__option-label:focus"/>
+                                            </states>
+                                        </imageChoiceItemLabelContainerVertical>
+                                    </items>
+                                    <states jcr:primaryType="nt:unstructured">
+                                        <disabled
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Disabled"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option .cmp-adaptiveform-imagechoice__option__widget:disabled"/>
+                                        <hover
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Hover"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option:hover"/>
+                                        <checked
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Selected"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option .cmp-adaptiveform-imagechoice__option__widget:checked"/>
+                                        <focus
+                                            jcr:primaryType="nt:unstructured"
+                                            jcr:title="Focus"
+                                            cssSelector=".cmp-adaptiveform-imagechoice__option:focus-within"/>
+                                    </states>
+                                </imageChoiceItemVertical>
+                            </items>
+                            <states jcr:primaryType="nt:unstructured">
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__widget.vertical:hover"/>
+                                <focus
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Focus"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__widget.vertical:focus"/>
+                            </states>
+                        </imageChoiceWidgetVertical>
+                        <imageChoiceDescriptionShort
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Short Description"
+                            id="af2_imagechoicedescriptionshort"
+                            cssSelector=".cmp-adaptiveform-imagechoice__shortdescription"
+                            longTitle="Image Choice Short Description"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <imageChoiceDescriptionLong
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Long Description"
+                            id="af2_imagechoicedescriptionlong"
+                            cssSelector=".cmp-adaptiveform-imagechoice__longdescription"
+                            longTitle="Image Choice Long Description"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Focus"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__longdescription:focus"/>
+                                <hover
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Hover"
+                                    cssSelector=".cmp-adaptiveform-imagechoice__longdescription:hover"/>
+                            </states>
+                        </imageChoiceDescriptionLong>
+                        <imageChoiceErrorMessage
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Error Message"
+                            id="af2_imagechoiceerrormessage"
+                            cssSelector=".cmp-adaptiveform-imagechoice__errormessage"
+                            longTitle="Image Choice Error Message"
+                            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <focus
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Focus"
+                            cssSelector=".cmp-adaptiveform-imagechoice:focus-within"/>
+                        <disabled
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Disabled"
+                            cssSelector=".cmp-adaptiveform-imagechoice[data-cmp-enabled='false']"/>
+                        <hover
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Hover"
+                            cssSelector=".cmp-adaptiveform-imagechoice:hover"/>
+                        <mandatory
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Mandatory"
+                            cssSelector=".cmp-adaptiveform-imagechoice[data-cmp-required='true']"/>
+                        <error
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Error"
+                            cssSelector=".cmp-adaptiveform-imagechoice[data-cmp-valid='false']"/>
+                        <success
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Success"
+                            cssSelector=".cmp-adaptiveform-imagechoice[data-cmp-valid='true']"/>
+                    </states>
+                </widgetAndText>
+            </items>
+        </field>
+    </items>
+</jcr:root>
+

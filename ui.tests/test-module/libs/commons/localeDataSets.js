@@ -49,7 +49,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Press Enter to delete the file ",
-            "FileSizeGreater"       :       "File(s) ${0} are greater than the expected size: ${1}MB.",
+            "FileSizeGreater"       :       "File(s) ${0} are greater than the expected size: ${1}.",
             "FileNameInvalid"       :       "Do not attach files where filename starts with (.), contains \\ / : * ? \" < > | ; % $, or is a reserved keyword like nul, prn, con, lpt, or com.",
             "FileMimeTypeInvalid"   :       "File(s) ${0} are unsupported file types",
             "InternalFormSubmissionError" :  "Encountered an internal error while submitting the form.",
@@ -80,7 +80,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Drücken Sie die Eingabetaste, um die Datei zu löschen ",
-            "FileSizeGreater"       :        "Dateien ${0} übersteigen die erwartete Größe: ${1}MB.",
+            "FileSizeGreater"       :        "Dateien ${0} übersteigen die erwartete Größe: ${1}.",
             "FileNameInvalid"       :       'Hängen Sie keine Dateien an, deren Dateiname mit (.) beginnt, \\ / : * ? " < > | ; % oder $ enthält oder ein reserviertes Schlüsselwort wie nul, prn, con, lpt oder com ist.',
             "FileMimeTypeInvalid"   :       "Datei(en) ${0} ist/sind nicht unterstützte(r) Dateityp(en)",
             "InternalFormSubmissionError" :  "Beim Übermitteln des Formulars ist ein interner Fehler aufgetreten."
@@ -110,7 +110,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "ファイルを削除するには Enter を押します ",
-            "FileSizeGreater"       :        "ファイル「${0}」は予期されたサイズを超えています :${1} MB。",
+            "FileSizeGreater"       :        "ファイル「${0}」は予期されたサイズを超えています :${1}。",
             "FileNameInvalid"       :       'ファイル名が (.) で始まる、\\ / : * ? " < > | ; % $ を含む、または nul、prn、con、lpt、com などの予約キーワードを含むファイルは添付しないでください。',
             "FileMimeTypeInvalid"   :       "${0} ファイルの形式はサポートされていません",
             "InternalFormSubmissionError" :  "フォームを送信中に内部エラーが発生しました。"
@@ -140,7 +140,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Premete Invio per eliminare il file ",
-            "FileSizeGreater"       :       "I file ${0} superano le dimensioni previste: ${1} MB.",
+            "FileSizeGreater"       :       "I file ${0} superano le dimensioni previste: ${1}.",
             "FileNameInvalid"       :       'Non allegare file il cui nome inizia con (.), contiene \\ / : * ? " < > | ; % $ oppure è una parola chiave riservata come nul, prn, con, lpt o com.',
             "FileMimeTypeInvalid"   :       "I file ${0} non sono tipi di file supportati",
             "InternalFormSubmissionError" :  "Errore interno durante l'invio del modulo."
@@ -170,7 +170,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Appuyer sur Entrée pour supprimer le fichier ",
-            "FileSizeGreater"       :       "${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.",
+            "FileSizeGreater"       :       "${0} fichier(s) dépasse(nt) la taille attendue : ${1}.",
             "FileNameInvalid"       :       "Ne joignez pas de fichiers dont le nom commence par (.), contient \\ / : * ?  \" < > | ; % $, ou est un mot-clé réservé comme nul, prn, con, lpt ou com.",
             "FileMimeTypeInvalid"   :       "Le ou les fichiers ${0} sont des types de fichiers non pris en charge",
             "InternalFormSubmissionError" :  "Une erreur interne s'est produite lors de l'envoi du formulaire."
@@ -200,7 +200,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Presione Intro para eliminar el archivo ",
-            "FileSizeGreater"       :        "Los archivos ${0} son mayores que el tamaño esperado: ${1} MB.",
+            "FileSizeGreater"       :        "Los archivos ${0} son mayores que el tamaño esperado: ${1}.",
             "FileNameInvalid"       :       'No adjunte archivos cuyo nombre comience con (.), contenga \\ / : * ? " < > | ; % $, o sea una palabra clave reservada como nul, prn, con, lpt o com.',
             "FileMimeTypeInvalid"   :       "Los tipos de archivo ${0} no son compatibles",
             "InternalFormSubmissionError" :  "Error interno al enviar el formulario."
@@ -230,7 +230,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Enter 키를 눌러 파일 삭제",
-            "FileSizeGreater"       :        "파일 ${0}이(가) 예상 크기 ${1}MB를 초과합니다.",
+            "FileSizeGreater"       :        "파일 ${0}이(가) 예상 크기 ${1}를 초과합니다.",
             "FileNameInvalid"       :       "파일 이름이 (.)으로 시작하거나, \\ / : * ? \" < > | ; % $를 포함하거나, nul, prn, con, lpt 또는 com과 같이 예약된 키워드인 파일은 첨부하지 마십시오.",
             "FileMimeTypeInvalid"   :       "파일 ${0}은(는) 지원되지 않는 파일 유형입니다.",
             "InternalFormSubmissionError" :  "temp"
@@ -260,7 +260,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "按 Enter 以刪除檔案",
-            "FileSizeGreater"       :        "檔案 ${0} 的大小比預期大: ${1}MB。",
+            "FileSizeGreater"       :        "檔案 ${0} 的大小比預期大: ${1}。",
             "FileNameInvalid"       :       '不要附加以下檔案：檔案名稱以 (.) 開頭且包含 \\ / : * ? " < > | ; % $，或檔案名稱為保留關鍵字，例如 nul、prn、con、lpt 或 com。',
             "FileMimeTypeInvalid"   :       "${0} 檔案的檔案類型不受支援",
             "InternalFormSubmissionError" :  "提交表單時發生內部錯誤。"
@@ -291,7 +291,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "按 Enter 可删除文件",
-            "FileSizeGreater"       :        "文件 ${0} 大于预期大小: ${1}MB。",
+            "FileSizeGreater"       :        "文件 ${0} 大于预期大小: ${1}。",
             "FileNameInvalid"       :       '请勿附加文件名以 (.) 开头、包含 \\ / : * ? " < > | ; % $ 或为保留关键字（如 nul、prn、con、lpt 或 com）的文件。',
             "FileMimeTypeInvalid"   :       "文件 ${0} 的类型不受支持",
             "InternalFormSubmissionError" :  "提交表单时遇到内部错误。"
@@ -321,7 +321,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText"   :       "Pressione Enter para excluir o arquivo ",
-            "FileSizeGreater"       :        "Fos arquivos ${0} são maiores do que o tamanho esperado: ${1}MB.",
+            "FileSizeGreater"       :        "Fos arquivos ${0} são maiores do que o tamanho esperado: ${1}.",
             "FileNameInvalid"       :       'Não anexe arquivos cujos nomes comecem com (.), contenham \\ / : * ? " < > | ; % $, ou sejam palavras-chave reservadas, como nul, prn, con, lpt ou com.',
             "FileMimeTypeInvalid"   :       "O(s) arquivo(s) ${0} não é(são) suportado(s)",
             "InternalFormSubmissionError" :  "Encontrou um erro interno ao enviar o formulário."
@@ -352,7 +352,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText" : "Нажмите Enter, чтобы удалить файл",
-            "FileSizeGreater" : "Файл(ы) ${0} больше ожидаемого размера: ${1}MB.",
+            "FileSizeGreater" : "Файл(ы) ${0} больше ожидаемого размера: ${1}.",
             "FileNameInvalid" : "Не прикрепляйте файлы, у которых имя файла начинается с (.), содержит \\ / : * ? \" < > | ; % $ или является зарезервированным ключевым словом, таким как nul, prn, con, lpt или com.",
             "FileMimeTypeInvalid" : "Файл(ы) ${0} имеют неподдерживаемый тип файла",
             "InternalFormSubmissionError" : "При отправке формы произошла внутренняя ошибка."
@@ -383,7 +383,7 @@ const languages = [
         },
         I18N_STRINGS: {
             "FileCloseAccessText" : "फ़ाइल को हटाने के लिए एंटर दबाएं",
-            "FileSizeGreater" : "फ़ाइल(फ़ाइलें) ${0} अपेक्षित आकार से अधिक हैं: ${1}MB.",
+            "FileSizeGreater" : "फ़ाइल(फ़ाइलें) ${0} अपेक्षित आकार से अधिक हैं: ${1}.",
             "FileNameInvalid" : "फ़ाइल नाम (.) से शुरू होता है, \\ / : * ? \" < > | ; % $ को मद्देनजर न लें, या nul, prn, con, lpt, या com जैसे आपत्तिजनक शब्द हैं।",
             "FileMimeTypeInvalid" : "फ़ाइल(फ़ाइलें) ${0} असमर्थित फ़ाइल प्रकार हैं",
             "InternalFormSubmissionError" : "फ़ॉर्म प्रस्तुत करते समय आंतरिक त्रुटि हुई है."

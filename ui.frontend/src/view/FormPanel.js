@@ -37,6 +37,24 @@ class FormPanel extends FormFieldBase {
     }
 
     /**
+     * DOM container where repeatable sibling instances live (InstanceManager parentElement,
+     * e.g. for getElementAt). Override in layout-specific panels (table row: tbody / table body div).
+     * @returns {HTMLElement|undefined}
+     */
+    getRepeatableInstancesContainerElement() {
+        return this.element.parentElement?.parentElement;
+    }
+
+    /**
+     * DOM node cloned as the repeat template and removed with the instance.
+     * Default: parent of the field root. Override when the repeatable unit differs (e.g. Sling wrapper vs tr).
+     * @returns {HTMLElement|undefined}
+     */
+    getRepeatableDomWrapper() {
+        return this.element.parentElement;
+    }
+
+    /**
      * Instantiates the InstanceManager for the FormPanel.
      * @returns {InstanceManager} The newly instantiated InstanceManager.
      */
@@ -44,7 +62,7 @@ class FormPanel extends FormFieldBase {
         return new InstanceManager({
             "formContainer": this.formContainer,
             "model": this._model.parent,
-            "parentElement": this.element.parentElement.parentElement
+            "parentElement": this.getRepeatableInstancesContainerElement()
         });
     }
 
@@ -318,8 +336,11 @@ class FormPanel extends FormFieldBase {
      * @param {Object} childView - The child view.
      * @returns {HTMLElement} The repeatable root element.
      */
-    getRepeatableRootElement(childView){
-      return childView.element.parentElement;
+    getRepeatableRootElement(childView) {
+        if (typeof childView.getRepeatableDomWrapper === "function") {
+            return childView.getRepeatableDomWrapper();
+        }
+        return childView.element.parentElement;
     }
 
     /**

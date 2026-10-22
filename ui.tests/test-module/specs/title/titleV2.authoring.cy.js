@@ -144,7 +144,10 @@ describe('Page - Authoring', function () {
               cy.get("h2").should('exist');
               cy.openPage("");
               cy.openSiteAuthoring(pagePath);
-              cy.deleteComponentByTitle('Adaptive Form Title');
+              // delete by path (unambiguous) instead of by title: a title-based
+              // selector can match multiple leftover title overlays on the page,
+              // which makes openEditableToolbar click on >1 element and fail
+              cy.cleanTitleTest(titleEditPath);
           });
         });  
      });

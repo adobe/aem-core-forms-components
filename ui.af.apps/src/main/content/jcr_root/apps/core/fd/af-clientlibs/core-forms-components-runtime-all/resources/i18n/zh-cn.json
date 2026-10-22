@@ -1,6 +1,6 @@
 {
   "FileCloseAccessText": "按 Enter 可删除文件",
-  "FileSizeGreater": "文件 ${0} 大于预期大小: ${1}MB。",
+  "FileSizeGreater": "文件 ${0} 大于预期大小: ${1}。",
   "FileNameInvalid": "请勿附加文件名以 (.) 开头、包含 \\ / : * ? \" < > | ; % $ 或为保留关键字（如 nul、prn、con、lpt 或 com）的文件。",
   "FileMimeTypeInvalid": "文件 ${0} 的类型不受支持",
   "InternalFormSubmissionError": "提交表单时遇到内部错误。",
@@ -93,5 +93,16 @@
   "clearSign": "清晰的签名",
   "brushSize": "画笔大小：",
   "geoLocationError": "获取地理位置时出错",
-  "geoLocationFetch": "正在获取地理位置..."
+  "geoLocationFetch": "正在获取地理位置...",
+  "sortTable": "排序表格",
+  "filterTable": "筛选表格",
+  "sort": "排序",
+  "filter": "筛选",
+  "sortOptions": "排序选项",
+  "sortBy": "排序方式",
+  "sortColumns": "排序列",
+  "sortOrder": "排序顺序",
+  "sortDirection": "排序方向",
+  "ascending": "升序",
+  "descending": "降序"
 }

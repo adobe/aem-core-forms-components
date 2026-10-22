@@ -6,6 +6,7 @@
   "repeatable": true,
   "minOccur": 0,
   "maxOccur": 4,
+  "fragmentPath": "/content/dam/formsanddocuments/affragment",
   "label": {
     "value": "Fragment"
   },
@@ -15,11 +16,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/fragment-dampath",
     "fd:fragment": true,
     "fd:viewType": "fragment"
@@ -42,9 +38,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/forms/af/affragment/jcr:content/guideContainer/textinput"
       },
       ":type": "core/fd/components/form/textinput/v1/textinput"

@@ -52,31 +52,6 @@
         </license>
     </licenses>
 
-    <profiles>
-        <profile>
-            <id>Windows</id>
-            <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
-            </activation>
-            <properties>
-                <script.file>jsdoc.cmd</script.file>
-            </properties>
-        </profile>
-        <profile>
-            <id>unix</id>
-            <activation>
-                <os>
-                    <family>unix</family>
-                </os>
-            </activation>
-            <properties>
-                <script.file>jsdoc</script.file>
-            </properties>
-        </profile>
-    </profiles>
-
     <build>
         <plugins>
             <!-- Plugin to install npm artifacts -->
@@ -100,6 +75,16 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
+                    </execution>
+                    <execution>
+                        <id>run-exec-generate-jsdocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run jsdoc</arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -128,25 +113,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>run-exec-generate-jsdocs</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <executable>${project.basedir}/node_modules/.bin/${script.file}</executable>
-                    <commandlineArgs>-c jsdoc.conf.json</commandlineArgs>
-                </configuration>
             </plugin>
 
             <plugin>

@@ -12,9 +12,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/textinput-placeholder-autocomplete"
   },
   "placeholder": "test-placeholder",

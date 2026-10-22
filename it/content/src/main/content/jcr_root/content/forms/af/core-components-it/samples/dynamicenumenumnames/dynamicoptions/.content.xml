@@ -11,7 +11,7 @@
         jcr:primaryType="cq:PageContent"
         jcr:title="dynamicOptions"
         sling:configRef="/conf/forms/core-components-it/samples/dynamicenumenumnames/dynamicoptions"
-        sling:resourceType="core/fd/components/page/v2/page">
+        sling:resourceType="forms-core-components-it/components/page-dynamicoptionsv1">
         <container1
             jcr:primaryType="nt:unstructured"
             sling:resourceType="core/wcm/components/container/v1/container"

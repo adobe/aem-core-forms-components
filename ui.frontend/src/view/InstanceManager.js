@@ -55,12 +55,10 @@ class InstanceManager {
         let addedHtmlElement = null;
         if (instanceView == null) {
             addedHtmlElement = this.#addChildInstance(instanceModel, beforeElement);
-            Utils.createFieldsForAddedElement(addedHtmlElement, this.formContainer);
         } else if (instanceModel == null) {
             this.#removeChildInstance(instanceView.getModel());
         } else if (instanceView.getId() != instanceModel.id) {
             addedHtmlElement = this.#addChildInstance(instanceModel, beforeElement);
-            Utils.createFieldsForAddedElement(addedHtmlElement, this.formContainer);
             this.#removeChildInstance(instanceView.getModel());
         }
         return addedHtmlElement;
@@ -135,8 +133,11 @@ class InstanceManager {
          this.parentElement.insertBefore(markerElement, repeatableElement);
          this.markerElement = markerElement;
          **/
+        const wrapper = (typeof childView.getRepeatableDomWrapper === "function")
+            ? childView.getRepeatableDomWrapper()
+            : repeatableElement;
         //adding template
-        this._templateHTML = repeatableElement.cloneNode(true);
+        this._templateHTML = wrapper.cloneNode(true);
         let childModel = childView.getModel();
         // In case of removed instance by prefill, that is index is -1, model is not associated with view
         if (!childModel) {
@@ -173,7 +174,11 @@ class InstanceManager {
             console.error('Panel needs to have templateHTML to support repeatability.');
             return;
         }
-        return this.handleAddition(addedModel, beforeElement);
+        const addedHtmlElement = this.handleAddition(addedModel, beforeElement);
+        if (addedHtmlElement) {
+            Utils.createFieldsForAddedElement(addedHtmlElement, this.formContainer);
+        }
+        return addedHtmlElement;
     }
 
     /**
@@ -182,15 +187,27 @@ class InstanceManager {
      * @private
      */
     #removeChildInstance(removedModel) {
-        const removedIndex = removedModel.index;
-        let removedChildView = this.children[removedIndex];
-        if (removedIndex == -1) {
-            //That is, model was removed by prefill, and instance manager was synced with child already removed
+        if (!removedModel || !removedModel.id) {
+            return;
+        }
+        let removedChildView = this.children.find((cv) => cv && cv.getId() === removedModel.id);
+        if (!removedChildView && typeof removedModel.index === "number" && removedModel.index >= 0
+            && removedModel.index < this.children.length) {
+            removedChildView = this.children[removedModel.index];
+        }
+        if (!removedChildView) {
             removedChildView = this.formContainer.getField(removedModel.id);
         }
+        if (!removedChildView) {
+            console.warn("InstanceManager: no view for removed instance", removedModel.id);
+            return;
+        }
+        const removedIndex = this.children.indexOf(removedChildView);
         Utils.removeFieldReferences(removedChildView, this.formContainer);
         this.handleRemoval(removedChildView);
-        this.children.splice(removedIndex, 1);
+        if (removedIndex >= 0) {
+            this.children.splice(removedIndex, 1);
+        }
 
         const event = new CustomEvent(Constants.PANEL_INSTANCE_REMOVED, {"detail": removedChildView});
         this.formContainer.getFormElement().dispatchEvent(event);
@@ -314,8 +331,15 @@ class InstanceManager {
             //give parentView chance to adjust to removed instance
             this.repeatableParentView.handleChildRemoval(removedInstanceView);
         }
-        //removing just the parent view HTML child instance, to avoid repainting of UI for removal of each child HTML
-        removedInstanceView.element.parentElement.remove();
+        let toRemove;
+        if (typeof removedInstanceView.getRepeatableDomWrapper === "function") {
+            toRemove = removedInstanceView.getRepeatableDomWrapper();
+        } else {
+            toRemove = removedInstanceView.element.parentElement;
+        }
+        if (toRemove && toRemove.parentElement) {
+            toRemove.remove();
+        }
     }
 
     /**

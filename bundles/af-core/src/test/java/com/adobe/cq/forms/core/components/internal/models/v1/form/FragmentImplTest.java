@@ -30,6 +30,7 @@ import java.util.stream.StreamSupport;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.i18n.ResourceBundleProvider;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,7 @@ import org.mockito.Mockito;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FieldType;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
@@ -54,6 +56,7 @@ import io.wcm.testing.mock.aem.junit5.AemContextExtension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @ExtendWith(AemContextExtension.class)
 public class FragmentImplTest {
@@ -64,6 +67,9 @@ public class FragmentImplTest {
     private static final String PATH_FRAGMENT_DAMPATH = CONTENT_ROOT + "/fragment-dampath";
     private static final String PATH_FRAGMENT_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/fragment-without-fieldtype";
     private static final String PATH_FRAGMENT_WITH_FRAGMENT_PATH = CONTENT_ROOT + "/fragment-with-fragment-path";
+    private static final String PATH_FRAGMENT_WITH_INVALID_PATH = CONTENT_ROOT + "/fragment-with-invalid-path";
+    private static final String PATH_FRAGMENT_WITH_PLACEHOLDER_RULES = CONTENT_ROOT + "/fragment-with-placeholder-rules";
+    private static final String PATH_FRAGMENT_LAZY = CONTENT_ROOT + "/fragment-lazy";
     private final AemContext context = FormsCoreComponentTestContext.newAemContext();
 
     @BeforeEach
@@ -92,6 +98,18 @@ public class FragmentImplTest {
                     .collect(Collectors.toList());
             }
         });
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.clearProperty(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS);
+        System.clearProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP);
+    }
+
+    /** Returns a fragment with the merge toggle enabled (system property set for test). */
+    private Fragment getFragmentWithMergeEnabled(String path) {
+        System.setProperty(FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS, "true");
+        return Utils.getComponentUnderTest(path, Fragment.class, context);
     }
 
     @Test
@@ -131,8 +149,96 @@ public class FragmentImplTest {
     }
 
     @Test
-    void testJSONExport() throws Exception {
+    void testFragmentContainerRulesNotInProperties() {
         Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, Object> properties = fragment.getProperties();
+        assertNotNull(properties);
+        assertTrue("fd:rules is whitelisted and should not appear in properties (rules are at root level)",
+            !properties.containsKey("fd:rules"));
+    }
+
+    @Test
+    void testFragmentContainerEventsIncludedInGetEvents() {
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT);
+        Map<String, String[]> events = fragment.getEvents();
+        assertNotNull(events);
+        assertTrue("Stitched fragment should include events from referenced fragment container",
+            events.containsKey("change"));
+        Assertions.assertArrayEquals(new String[] { "fragmentChangeHandler" }, events.get("change"));
+        assertTrue("Stitched fragment should include default custom:setProperty", events.containsKey("custom:setProperty"));
+    }
+
+    @Test
+    void testFragmentContainerRulesParallelToEvents() {
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT);
+        Map<String, String> rules = fragment.getRules();
+        Map<String, String[]> events = fragment.getEvents();
+        assertNotNull(rules);
+        assertNotNull(events);
+        assertTrue("Stitched fragment should include root-level rules from referenced fragment container (parallel to events)",
+            rules.containsKey("visible"));
+        assertEquals("fragmentVisibleRule", rules.get("visible"));
+        assertTrue("Rules and events should both be present at same level", events.containsKey("change"));
+    }
+
+    @Test
+    void testPlaceholderAndFragmentContainerRulesEventsMerged() {
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT_WITH_PLACEHOLDER_RULES);
+        Map<String, String> rules = fragment.getRules();
+        Map<String, String[]> events = fragment.getEvents();
+        Map<String, Object> properties = fragment.getProperties();
+
+        assertNotNull(rules);
+        assertNotNull(events);
+        assertNotNull(properties);
+
+        assertTrue("Merged rules should include placeholder rule (required)", rules.containsKey("required"));
+        assertEquals("placeholderRequired", rules.get("required"));
+        assertTrue("Merged rules should include visible; panel has priority over fragment container", rules.containsKey("visible"));
+        assertEquals("panelVisibleRule", rules.get("visible"));
+
+        assertTrue("Merged events should include placeholder event (click)", events.containsKey("click"));
+        Assertions.assertArrayEquals(new String[] { "placeholderClick" }, events.get("click"));
+        assertTrue("Merged events should include fragment container event (change)", events.containsKey("change"));
+        Assertions.assertArrayEquals(new String[] { "fragmentChangeHandler" }, events.get("change"));
+        assertTrue("Merged events should include default custom:setProperty", events.containsKey("custom:setProperty"));
+        assertTrue("Merged events should include initialize with panel handler first, then fragment appended", events.containsKey(
+            "initialize"));
+        Assertions.assertArrayEquals(new String[] { "panelInit", "fragInit" }, events.get("initialize"));
+
+        assertTrue("fd:rules is whitelisted and should not appear in properties", !properties.containsKey("fd:rules"));
+    }
+
+    @Test
+    void testNoMergeWhenToggleDisabled() throws Exception {
+        String key = FeatureToggleConstants.FT_FRAGMENT_MERGE_CONTAINER_RULES_EVENTS;
+        String saved = System.getProperty(key);
+        try {
+            System.setProperty(key, "false");
+            Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_PLACEHOLDER_RULES, Fragment.class, context);
+            Map<String, String> rules = fragment.getRules();
+            Map<String, String[]> events = fragment.getEvents();
+
+            assertNotNull(rules);
+            assertNotNull(events);
+            assertEquals("When toggle is off, only panel rules are used", "panelVisibleRule", rules.get("visible"));
+            assertTrue("When toggle is off, only panel events are used", events.containsKey("initialize"));
+            Assertions.assertArrayEquals(new String[] { "panelInit" }, events.get("initialize"),
+                "When toggle is off, fragment container events are not merged; only panel initialize");
+            Assertions.assertFalse(events.containsKey("change"),
+                "When toggle is off, fragment container events like change are not included");
+        } finally {
+            if (saved != null) {
+                System.setProperty(key, saved);
+            } else {
+                System.clearProperty(key);
+            }
+        }
+    }
+
+    @Test
+    void testJSONExport() throws Exception {
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT);
         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT));
     }
 
@@ -144,7 +250,7 @@ public class FragmentImplTest {
 
     @Test
     void testJSONExportWithFragmentPath() throws Exception {
-        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_FRAGMENT_PATH, Fragment.class, context);
+        Fragment fragment = getFragmentWithMergeEnabled(PATH_FRAGMENT_WITH_FRAGMENT_PATH);
         Utils.testJSONExport(fragment, Utils.getTestExporterJSONPath(BASE, PATH_FRAGMENT_WITH_FRAGMENT_PATH), Views.Author.class);
     }
 
@@ -272,5 +378,181 @@ public class FragmentImplTest {
         // Test case 5: Test with empty string localeLang
         I18n result5 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "");
         Assertions.assertNotNull(result5, "getFragmentContainerI18n should handle empty string localeLang");
+    }
+
+    @Test
+    void testNullFragmentContainerHandling() throws Exception {
+        // This test verifies the fix when fragmentContainer is null
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_WITH_INVALID_PATH, Fragment.class, context);
+        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
+
+        // Verify that fragmentContainer is null due to invalid path
+        Assertions.assertNull(fragmentImpl.getFragmentContainer(),
+            "Fragment container should be null for invalid fragment path");
+
+        // Test that getChildrenModels returns empty map instead of throwing NPE
+        Map<String, ComponentExporter> childrenModels = fragmentImpl.getChildrenModels(context.request(),
+            ComponentExporter.class);
+        Assertions.assertNotNull(childrenModels, "getChildrenModels should return non-null map even with null fragmentContainer");
+        Assertions.assertTrue(childrenModels.isEmpty(),
+            "getChildrenModels should return empty map when fragmentContainer is null");
+
+        // Test that getExportedItems doesn't throw NPE
+        Map<String, ? extends ComponentExporter> exportedItems = fragmentImpl.getExportedItems();
+        Assertions.assertNotNull(exportedItems, "getExportedItems should return non-null map even with null fragmentContainer");
+        Assertions.assertTrue(exportedItems.isEmpty(),
+            "getExportedItems should return empty map when fragmentContainer is null");
+
+        // Test that getExportedItemsOrder doesn't throw NPE
+        String[] exportedItemsOrder = fragmentImpl.getExportedItemsOrder();
+        Assertions.assertNotNull(exportedItemsOrder, "getExportedItemsOrder should return non-null array even with null fragmentContainer");
+        Assertions.assertEquals(0, exportedItemsOrder.length,
+            "getExportedItemsOrder should return empty array when fragmentContainer is null");
+
+        // Test getFragmentContainerI18n with null fragmentContainer
+        Method getFragmentContainerI18nMethod = FragmentImpl.class.getDeclaredMethod("getFragmentContainerI18n", String.class);
+        getFragmentContainerI18nMethod.setAccessible(true);
+
+        // Should not throw NPE and should return non-null I18n object
+        I18n result = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "en");
+        Assertions.assertNotNull(result,
+            "getFragmentContainerI18n should return non-null I18n object even when fragmentContainer is null");
+    }
+
+    @Test
+    void testNullFragmentContainerWithNullRequest() throws Exception {
+        // Test with null request to cover both code paths
+        Resource resource = context.resourceResolver().getResource(PATH_FRAGMENT_WITH_INVALID_PATH);
+        Fragment fragment = resource.adaptTo(Fragment.class);
+        Assertions.assertNotNull(fragment, "Fragment should be created even with invalid path");
+
+        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
+
+        // Verify that fragmentContainer is null
+        Assertions.assertNull(fragmentImpl.getFragmentContainer(),
+            "Fragment container should be null for invalid fragment path");
+
+        // Test that getChildrenModels with null request returns empty map instead of throwing NPE
+        Map<String, TextInput> childrenModels = fragmentImpl.getChildrenModels(null, TextInput.class);
+        Assertions.assertNotNull(childrenModels,
+            "getChildrenModels should return non-null map with null request and null fragmentContainer");
+        Assertions.assertTrue(childrenModels.isEmpty(),
+            "getChildrenModels should return empty map when fragmentContainer is null and request is null");
+    }
+
+    @Test
+    void testLazyFragmentDoesNotResolveContainer() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Assertions.assertNull(fragment.getFragmentContainer(),
+            "Fragment container should be null when lazy is true");
+    }
+
+    @Test
+    void testLazyFragmentChildrenEmpty() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        List<Resource> children = fragment.getFragmentChildren();
+        Assertions.assertNotNull(children);
+        Assertions.assertTrue(children.isEmpty(),
+            "Lazy fragment should have no children since container is not resolved");
+    }
+
+    @Test
+    void testLazyFragmentExportedItemsEmpty() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Map<String, ? extends ComponentExporter> items = fragment.getExportedItems();
+        Assertions.assertNotNull(items);
+        Assertions.assertTrue(items.isEmpty(),
+            "Lazy fragment should export no items since container is not resolved");
+    }
+
+    @Test
+    void testLazyFragmentHasLazyProperty() {
+        FragmentImpl fragment = (FragmentImpl) Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Assertions.assertTrue(fragment.getLazy(),
+            "getLazy() should return true when lazy is set");
+        Map<String, Object> properties = fragment.getProperties();
+        Assertions.assertFalse(properties.containsKey("fd:loadLazily"),
+            "fd:loadLazily should not be in properties map");
+        Assertions.assertEquals(true, properties.get("fd:fragment"));
+        Assertions.assertEquals("fragment", properties.get("fd:viewType"));
+        Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
+            "fragmentPath should be accessible for client-side lazy resolution");
+    }
+
+    @Test
+    void testLazyFragmentPathStillAccessible() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
+            "fragmentPath should still be available for client-side lazy resolution");
+    }
+
+    @Test
+    void testLazyFragmentJSONExport() throws Exception {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT_LAZY, Fragment.class, context);
+        Utils.testJSONExport(fragment, BASE + "/exporter-fragment-lazy.json");
+    }
+
+    @Test
+    void testNonLazyFragmentDoesNotHaveLazyProperty() {
+        FragmentImpl fragment = (FragmentImpl) Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Assertions.assertFalse(fragment.getLazy(),
+            "Non-lazy fragment should return false for getLazy()");
+        Assertions.assertNotNull(fragment.getFragmentContainer(),
+            "Non-lazy fragment should have resolved container");
+        Assertions.assertEquals("/content/affragment", fragment.getFragmentPath(),
+            "fragmentPath should always be accessible via getter");
+    }
+
+    @Test
+    void testFragmentExportedItemsMapByDefault() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, ? extends ComponentExporter> exportedItems = fragment.getExportedItems();
+        Assertions.assertNotNull(exportedItems);
+        Assertions.assertFalse(exportedItems.isEmpty(),
+            "getExportedItems should return non-empty map when toggle is OFF");
+        String[] order = fragment.getExportedItemsOrder();
+        Assertions.assertTrue(order.length > 0,
+            "getExportedItemsOrder should return non-empty array when toggle is OFF");
+    }
+
+    @Test
+    void testFragmentExportedItemsEmptyWhenToggleEnabled() {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Map<String, ? extends ComponentExporter> exportedItems = fragment.getExportedItems();
+        Assertions.assertNotNull(exportedItems);
+        Assertions.assertTrue(exportedItems.isEmpty(),
+            "getExportedItems should return empty map when toggle is ON");
+        String[] order = fragment.getExportedItemsOrder();
+        Assertions.assertEquals(0, order.length,
+            "getExportedItemsOrder should return empty array when toggle is ON");
+    }
+
+    @Test
+    void testFragmentItemsArrayWhenToggleEnabled() {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
+        java.util.List<? extends ComponentExporter> itemsArray = fragmentImpl.getExportedItemsArray();
+        Assertions.assertNotNull(itemsArray);
+        Assertions.assertFalse(itemsArray.isEmpty(),
+            "getExportedItemsArray should return non-empty list when toggle is ON");
+    }
+
+    @Test
+    void testFragmentItemsArrayEmptyWhenToggleDisabled() {
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        FragmentImpl fragmentImpl = (FragmentImpl) fragment;
+        java.util.List<? extends ComponentExporter> itemsArray = fragmentImpl.getExportedItemsArray();
+        Assertions.assertNotNull(itemsArray);
+        Assertions.assertTrue(itemsArray.isEmpty(),
+            "getExportedItemsArray should return empty list when toggle is OFF");
+    }
+
+    @Test
+    void testJSONExportWithItemsArrayToggle() throws Exception {
+        System.setProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP, "true");
+        Fragment fragment = Utils.getComponentUnderTest(PATH_FRAGMENT, Fragment.class, context);
+        Utils.testJSONExport(fragment, BASE + "/exporter-fragment-items-array.json");
     }
 }

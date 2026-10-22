@@ -108,7 +108,9 @@ describe("View Qualified Name Tests", () => {
             cy.invokeEditableAction("[data-action='CONFIGURE']");
             cy.get(".cq-dialog").should("be.visible");
             cy.get("[name='./name']").click().clear().type(name);
-            cy.get(submitBtnSelector).click({force: true});
+            // wait for the editor to settle after submit so the next openEditableToolbar doesn't race
+            // the re-render that hides #EditableToolbar (see submitConfigureDialog in commands.js)
+            cy.submitConfigureDialog(submitBtnSelector);
         }
 
         const testQualifiedName = (componentEditPathSelector, componentDrop, isSites) => {
@@ -221,7 +223,9 @@ describe("View Qualified Name Tests", () => {
                     cy.invokeEditableAction("[data-action='CONFIGURE']");
                     cy.get(".cq-dialog").should("be.visible");
                     cy.get("[name='./name']").click().clear().type(name);
-                    cy.get(submitBtnSelector).click({force: true});
+                    // wait for the editor to settle after submit so the next openEditableToolbar doesn't
+                    // race the re-render that hides #EditableToolbar (see submitConfigureDialog in commands.js)
+                    cy.submitConfigureDialog(submitBtnSelector);
 
                     cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + accordionEditPathSelector);
                     cy.invokeEditableAction("[data-action='qualifiedName']");

@@ -21,9 +21,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/dropdown-datalayer"
   },
   "enum": [

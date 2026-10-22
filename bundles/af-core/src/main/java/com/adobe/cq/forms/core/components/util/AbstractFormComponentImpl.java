@@ -54,6 +54,7 @@ import com.adobe.aemds.guide.model.CustomPropertyInfo;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.datalayer.FormComponentData;
 import com.adobe.cq.forms.core.components.internal.datalayer.ComponentDataImpl;
+import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
@@ -78,6 +79,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
+import static com.adobe.cq.forms.core.components.util.ComponentUtils.isAuthorMode;
+import static com.adobe.cq.forms.core.components.util.ComponentUtils.isToggleEnabled;
 
 public class AbstractFormComponentImpl extends AbstractComponentImpl implements FormComponent {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DATAREF)
@@ -114,8 +118,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     private Resource resource;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_EXCLUSION)
-    @Default(booleanValues = false)
-    protected boolean dorExclusion;
+    @Nullable
+    protected Boolean dorExclusion;
 
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_DOR_COLSPAN)
     @Nullable
@@ -310,6 +314,8 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
 
     public static final String CUSTOM_RULE_PROPERTY_WRAPPER = "fd:rules";
 
+    public static final String CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER = "cq:annotations";
+
     /**
      * Predicate to check if a map entry is non empty
      * return true if and only if
@@ -324,19 +330,25 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     public @NotNull Map<String, Object> getProperties() {
         Map<String, Object> properties = new LinkedHashMap<>();
         Map<String, Object> customProperties = getCustomProperties();
-        if (customProperties.size() > 0) {
+        if (!customProperties.isEmpty()) {
             customProperties.forEach(properties::putIfAbsent);
         }
-        if (getCustomLayoutProperties().size() != 0) {
+        if (!getCustomLayoutProperties().isEmpty()) {
             properties.put(CUSTOM_PROPERTY_WRAPPER, getCustomLayoutProperties());
         }
-        if (getDorProperties().size() > 0) {
+        if (!getDorProperties().isEmpty()) {
             properties.put(CUSTOM_DOR_PROPERTY_WRAPPER, getDorProperties());
         }
+        Map<String, Object> annotations = getCqAnnotations();
+        if (annotations != null) {
+            properties.put(CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER, annotations);
+        }
         properties.put(CUSTOM_JCR_PATH_PROPERTY_WRAPPER, getPath());
-        Map<String, Object> rulesProperties = getRulesProperties();
-        if (rulesProperties.size() > 0) {
-            properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
+        if (isAuthorMode(request) || FormConstants.CHANNEL_PRINT.equals(this.channel)) {
+            Map<String, Object> rulesProperties = getRulesProperties();
+            if (!rulesProperties.isEmpty()) {
+                properties.put(CUSTOM_RULE_PROPERTY_WRAPPER, rulesProperties);
+            }
         }
         List<String> disabledScripts = getDisabledXFAScripts();
         if (!disabledScripts.isEmpty()) {
@@ -352,32 +364,65 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @NotNull
     public Map<String, String> getRules() {
+        return getRulesForResource(resource);
+    }
+
+    /**
+     * Returns rules (visible, required, etc.) for the given resource. Used when exporting
+     * fragment components so that rules configured on the referenced fragment are
+     * included in the stitched output as root-level "rules" (parallel to "events").
+     *
+     * @param resource the resource that may have an fd:rules child
+     * @return map of rule name to expression, never null
+     */
+    protected final Map<String, String> getRulesForResource(Resource resource) {
         String[] VALID_RULES = new String[] { "description", "enabled", "enum", "enumNames",
-            "exclusiveMaximum", "exclusiveMinimum", "label", "maximum", "minimum",
+            "exclusiveMaximum", "exclusiveMinimum", "label", "maximum", "minimum", "properties",
             "readOnly", "required", "value", "visible" };
 
-        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj
-            .getKey()));
+        // A rule target may be one of the fixed editable properties (which includes the whole
+        // `properties` bag), or a granular custom-variable target keyed `properties.<path>` (e.g.
+        // properties.employer or properties.employer.category) that the runtime routes to the
+        // PropertiesManager per key. Preserve both the bag and the per-key targets.
+        Predicate<Map.Entry<String, Object>> isRuleNameValid = obj -> obj.getKey().startsWith("properties.")
+            || Arrays.stream(VALID_RULES).anyMatch(validKey -> validKey.equals(obj.getKey()));
 
         Predicate<Map.Entry<String, Object>> isRuleValid = isEntryNonEmpty.and(isRuleNameValid);
 
+        if (resource == null) {
+            return Collections.emptyMap();
+        }
         Resource ruleNode = resource.getChild("fd:rules");
         if (ruleNode != null) {
             ValueMap ruleNodeProps = ruleNode.getValueMap();
-            Map<String, String> rules = ruleNodeProps.entrySet()
+            return ruleNodeProps.entrySet()
                 .stream()
                 .filter(isRuleValid)
                 .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), (String) entry.getValue()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            return rules;
         }
         return Collections.emptyMap();
     }
 
     @JsonIgnore
     private Map<String, Object> getRulesProperties() {
-        Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
+        return getRulesPropertiesForResource(resource);
+    }
+
+    /**
+     * Returns rules properties (fd:rules) for the given resource. Used when exporting
+     * fragment components so that rules configured on the referenced fragment are
+     * included in the stitched output.
+     *
+     * @param resource the resource that may have an fd:rules child
+     * @return map of rules properties, never null
+     */
+    protected final Map<String, Object> getRulesPropertiesForResource(Resource resource) {
         Map<String, Object> customRulesProperties = new LinkedHashMap<>();
+        if (resource == null) {
+            return customRulesProperties;
+        }
+        Resource ruleNode = resource.getChild(CUSTOM_RULE_PROPERTY_WRAPPER);
         if (ruleNode == null) {
             logger.debug("No rules node found for resource: {}", resource.getPath());
             return customRulesProperties;
@@ -473,17 +518,34 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @Override
     @NotNull
     public Map<String, String[]> getEvents() {
-        Resource eventNode = resource.getChild("fd:events");
-        Set<Map.Entry<String, Object>> eventSet = new HashSet<>();
-        eventSet.add(new AbstractMap.SimpleEntry<>("custom_setProperty", "$event.payload"));
-        if (eventNode != null) {
-            ValueMap eventNodeProps = eventNode.getValueMap();
-            eventSet.addAll(eventNodeProps.entrySet());
+        Map<String, String[]> userEvents = new LinkedHashMap<>();
+        if (!isToggleEnabled(FeatureToggleConstants.FT_SKIP_DEFAULT_SET_PROPERTY_EVENT)) {
+            userEvents.put("custom:setProperty", new String[] { "$event.payload" });
         }
-        Map<String, String[]> userEvents = eventSet.stream()
+        userEvents.putAll(getEventsForResource(resource));
+        return userEvents;
+    }
+
+    /**
+     * Returns events (fd:events) for the given resource. Used when exporting
+     * fragment components so that events configured on the referenced fragment are
+     * included in the stitched output.
+     *
+     * @param resource the resource that may have an fd:events child
+     * @return map of event name to handler expressions, never null
+     */
+    protected final Map<String, String[]> getEventsForResource(Resource resource) {
+        Set<Map.Entry<String, Object>> eventSet = new HashSet<>();
+        if (resource != null) {
+            Resource eventNode = resource.getChild("fd:events");
+            if (eventNode != null) {
+                ValueMap eventNodeProps = eventNode.getValueMap();
+                eventSet.addAll(eventNodeProps.entrySet());
+            }
+        }
+        return eventSet.stream()
             .flatMap(this::sanitizeEvent)
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return userEvents;
     }
 
     /**
@@ -630,7 +692,9 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
     @JsonIgnore
     public Map<String, Object> getDorProperties() {
         Map<String, Object> customDorProperties = new LinkedHashMap<>();
-        customDorProperties.put("dorExclusion", dorExclusion);
+        if (dorExclusion != null) {
+            customDorProperties.put("dorExclusion", dorExclusion);
+        }
         if (dorColspan != null) {
             customDorProperties.put("dorColspan", dorColspan);
         }
@@ -684,6 +748,35 @@ public class AbstractFormComponentImpl extends AbstractComponentImpl implements 
             }
         }
         return null;
+    }
+
+    /**
+     * Returns the reviewer annotations stored under the component's {@code cq:annotations} child resource,
+     * keyed by annotation node name. Scoped to the print channel; returns null when no annotations exist
+     * so callers can omit the property.
+     */
+    @JsonIgnore
+    private Map<String, Object> getCqAnnotations() {
+        if (!FormConstants.CHANNEL_PRINT.equals(this.channel) || resource == null) {
+            return null;
+        }
+        Resource annotationsResource = resource.getChild(CUSTOM_ANNOTATIONS_PROPERTY_WRAPPER);
+        if (annotationsResource == null) {
+            return null;
+        }
+        Map<String, Object> result = new LinkedHashMap<>();
+        for (Resource child : annotationsResource.getChildren()) {
+            ValueMap vm = child.getValueMap();
+            Map<String, Object> ann = vm.entrySet().stream()
+                .filter(e -> isAllowedType(e.getValue())
+                    && !e.getKey().startsWith("jcr:")
+                    && !e.getKey().startsWith("sling:"))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
+            if (!ann.isEmpty()) {
+                result.put(child.getName(), ann);
+            }
+        }
+        return result.isEmpty() ? null : result;
     }
 
 }

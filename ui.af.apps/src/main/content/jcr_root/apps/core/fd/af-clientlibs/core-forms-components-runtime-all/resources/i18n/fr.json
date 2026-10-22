@@ -1,6 +1,6 @@
 {
   "FileCloseAccessText": "Appuyer sur Entrée pour supprimer le fichier ",
-  "FileSizeGreater": "${0} fichier(s) dépasse(nt) la taille attendue : ${1} Mo.",
+  "FileSizeGreater": "${0} fichier(s) dépasse(nt) la taille attendue : ${1}.",
   "FileNameInvalid": "Ne joignez pas de fichiers dont le nom commence par (.), contient \\ / : * ?  \" < > | ; % $, ou est un mot-clé réservé comme nul, prn, con, lpt ou com.",
   "FileMimeTypeInvalid": "Le ou les fichiers ${0} sont des types de fichiers non pris en charge",
   "InternalFormSubmissionError": "Une erreur interne s'est produite lors de l'envoi du formulaire.",
@@ -93,5 +93,16 @@
   "clearSign": "Effacer la signature",
   "brushSize": "Épaisseur du pinceau : ",
   "geoLocationError": "Erreur lors de la récupération de la géolocalisation",
-  "geoLocationFetch": "Récupération de la géolocalisation..."
+  "geoLocationFetch": "Récupération de la géolocalisation...",
+  "sortTable": "Trier le tableau",
+  "filterTable": "Filtrer le tableau",
+  "sort": "Trier",
+  "filter": "Filtrer",
+  "sortOptions": "Options de tri",
+  "sortBy": "Trier par",
+  "sortColumns": "Trier les colonnes",
+  "sortOrder": "Ordre de tri",
+  "sortDirection": "Sens du tri",
+  "ascending": "Croissant",
+  "descending": "Décroissant"
 }

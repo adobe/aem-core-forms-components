@@ -15,6 +15,9 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.osgi.annotation.versioning.ConsumerType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,6 +41,17 @@ public interface FileInput extends Field, FileConstraint, ContainerConstraint {
     @JsonIgnore
     default Boolean isMultiple() {
         return false;
+    }
+
+    /**
+     * Returns the list of file extensions which field can accept. The constraint is
+     * applicable for file attachment field
+     *
+     * @return the list of extensions supported by the field
+     */
+    @JsonIgnore
+    default List<String> getAcceptExtensions() {
+        return Collections.emptyList();
     }
 
     /**

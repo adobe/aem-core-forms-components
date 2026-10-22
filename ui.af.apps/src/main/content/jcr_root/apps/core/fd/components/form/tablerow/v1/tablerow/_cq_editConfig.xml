@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+    jcr:primaryType="cq:EditConfig"
+    cq:actions="[edit,-,-,-]"
+    cq:dialogMode="floating"
+    cq:disableTargeting="{Boolean}true"
+    cq:isContainer="{Boolean}true"
+    cq:layout="editbar">
+    <cq:listeners
+        jcr:primaryType="cq:EditListenersConfig"
+        afteredit="REFRESH_PARENT"
+        afterchildinsert="function(editable){Granite.author.responsive.EditableActions.REFRESH.execute(editable)}"
+        afterchilddelete="function(editable){Granite.author.responsive.EditableActions.REFRESH.execute(editable)}"/>
+    <cq:actionConfigs jcr:primaryType="nt:unstructured">
+        <editexpression
+            jcr:primaryType="nt:unstructured"
+            handler="CQ.FormsCoreComponents.editorhooks.openRuleEditor"
+            icon="bidRule"
+            text="Edit Rules"/>
+        <addrow
+            jcr:primaryType="nt:unstructured"
+            condition="function(editable){return !CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderRow(editable);}"
+            icon="tableRowAdd"
+            handler="CQ.FormsCoreComponents.editorhooks.addTableRow"
+            text="Add Row"/>
+        <deleterow
+            jcr:primaryType="nt:unstructured"
+            condition="function(editable){return !CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderRow(editable);}"
+            handler="CQ.FormsCoreComponents.editorhooks.deleteTableRow"
+            icon="tableRowRemove"
+            text="Delete Row"/>
+        <moveup
+            jcr:primaryType="nt:unstructured"
+            condition="function(editable){return !CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderRow(editable) &amp;&amp; !CQ.FormsCoreComponents.editorhooks.isFirstCoreTableRow(editable);}"
+            handler="CQ.FormsCoreComponents.editorhooks.moveTableRowUp"
+            icon="arrowUp"
+            text="Move Up"/>
+        <movedown
+            jcr:primaryType="nt:unstructured"
+            condition="function(editable){return !CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderRow(editable) &amp;&amp; !CQ.FormsCoreComponents.editorhooks.isLastCoreTableRow(editable);}"
+            handler="CQ.FormsCoreComponents.editorhooks.moveTableRowDown"
+            icon="arrowDown"
+            text="Move Down"/>
+    </cq:actionConfigs>
+</jcr:root>

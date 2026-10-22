@@ -80,6 +80,9 @@ BLOCK cmp-adaptiveform-fileinput
     ELEMENT cmp-adaptiveform-fileinput__filename
     ELEMENT cmp-adaptiveform-fileinput__filedelete
     ELEMENT cmp-adaptiveform-fileinput__widgetlabel
+    ELEMENT cmp-adaptiveform-fileinput__dragarea
+    ELEMENT cmp-adaptiveform-fileinput__icon
+    ELEMENT cmp-adaptiveform-fileinput__dragtext
 ```
 
 ### Note

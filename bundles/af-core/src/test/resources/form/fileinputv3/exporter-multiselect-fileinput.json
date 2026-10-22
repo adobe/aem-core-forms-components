@@ -30,11 +30,8 @@
     "afs:layout": {
       "tooltipVisible": false
     },
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/multiselect-fileinput",
-    "fd:dragDropText":"Drag and Drop To Upload",
+    "fd:dragDropText": "Drag and Drop To Upload",
     "fd:buttonText": "Attach"
   },
   ":type": "core/fd/components/form/fileinput/v3/fileinput"

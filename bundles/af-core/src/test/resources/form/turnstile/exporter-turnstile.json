@@ -8,9 +8,6 @@
   "enabled": true,
   "readOnly": false,
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/turnstile",
     "fd:captcha": {
       "config": {

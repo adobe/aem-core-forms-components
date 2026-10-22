@@ -300,6 +300,11 @@
           "title": "The path to the fragment that is used to render the fragment",
           "description": "This property would only be present if fd:viewType is set to fragment"
         },
+        "lazy": {
+          "type": "boolean",
+          "title": "Whether the panel's children should be loaded lazily by the client",
+          "description": "When lazy is true, the panel must also have a fragmentPath property and items, :items, and :itemsOrder must be absent. The client is responsible for fetching and resolving the fragment's children on demand using the fragmentPath."
+        },
         "id": {
           "type": "string",
           "title": "unique identifier for a form element"

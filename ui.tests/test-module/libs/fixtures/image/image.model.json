@@ -11,10 +11,5 @@
     "fd:path": "/content/forms/af/core-components-it/samples/image/image-api-test/jcr:content/guideContainer/image",
     "fd:repoPath": "/content/dam/core-components-examples/library/forms-components/datepicker.svg"
   },
-  "events": {
-    "custom:setProperty": [
-      "$event.payload"
-    ]
-  },
   ":type": "forms-components-examples/components/form/image"
 }

@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:deviceGroups="[/etc/mobile/groups/responsive]"
+        cq:lastModified="{Date}2025-11-06T12:07:40.140+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+        jcr:language="en"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="populate-checkbox"
+        sling:configRef="/conf/forms/core-components-it/samples/customfunctions/populate-checkbox/"
+        sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+            fd:version="2.1"
+            jcr:lastModified="{Date}2025-11-06T12:54:28.955+05:30"
+            jcr:lastModifiedBy="admin"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="forms-components-examples/components/form/container"
+            clientLibRef="corecomponent.it.customfunction"
+            dorType="none"
+            fieldType="form"
+            schemaType="none"
+            textIsRich="true"
+            thankYouMessage="Thank you for submitting the form."
+            thankYouOption="page"
+            themeRef="/libs/fd/af/themes/canvas"
+            title="populate-checkbox">
+            <dropdown
+                jcr:created="{Date}2025-11-06T12:54:23.313+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:07:10.887+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="checkbox with no options"
+                sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                enabled="{Boolean}true"
+                fieldType="checkbox-group"
+                hideTitle="false"
+                name="dropdown1700810663441"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                type="number[]"
+                typeIndex="0"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <button_1974094835
+                jcr:created="{Date}2025-11-06T12:55:50.856+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:56:02.492+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add enumNames"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button_19740948351700810750903">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_19740948351700810750903&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_19740948351700810750903&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enumNames&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown1700810663441&quot;\,&quot;displayName&quot;:&quot;Dropdown with no options&quot;\,&quot;type&quot;:&quot;DROPDOWN&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Dropdown with no options/&quot;\,&quot;name&quot;:&quot;dropdown1700810663441&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnumNames1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_Names_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(dropdown1700810663441\, 'custom:setProperty'\, {enumNames : getEnumNames1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(dropdown1700810663441\, 'custom:setProperty'\, {enumNames : getEnumNames1()})]"/>
+            </button_1974094835>
+            <button
+                jcr:created="{Date}2025-11-06T12:55:15.325+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:55:43.176+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add enums"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button1700810715377">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1700810715377&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1700810715377&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown1700810663441&quot;\,&quot;displayName&quot;:&quot;Dropdown with no options&quot;\,&quot;type&quot;:&quot;DROPDOWN&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Dropdown with no options/&quot;\,&quot;name&quot;:&quot;dropdown1700810663441&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnum1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(dropdown1700810663441\, 'custom:setProperty'\, {enum : getEnum1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(dropdown1700810663441\, 'custom:setProperty'\, {enum : getEnum1()})]"/>
+            </button>
+            <button_804696822
+                jcr:created="{Date}2025-11-06T12:56:12.080+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:56:23.997+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add both"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button_8046968221700810772130">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_8046968221700810772130&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_8046968221700810772130&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown1700810663441&quot;\,&quot;displayName&quot;:&quot;Dropdown with no options&quot;\,&quot;type&quot;:&quot;DROPDOWN&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Dropdown with no options/&quot;\,&quot;name&quot;:&quot;dropdown1700810663441&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnum1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enumNames&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.dropdown1700810663441&quot;\,&quot;displayName&quot;:&quot;Dropdown with no options&quot;\,&quot;type&quot;:&quot;DROPDOWN&quot;\,&quot;isDuplicate&quot;:true\,&quot;displayPath&quot;:&quot;FORM/Dropdown with no options/&quot;\,&quot;name&quot;:&quot;dropdown1700810663441&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnumNames1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_Names_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(dropdown1700810663441\, 'custom:setProperty'\, {enum : getEnum1()\, enumNames : getEnumNames1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(dropdown1700810663441\, 'custom:setProperty'\, {enum : getEnum1()\, enumNames : getEnumNames1()})]"/>
+            </button_804696822>
+            <dropdown_copy
+                jcr:created="{Date}2025-11-06T12:54:23.313+0"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:07:00.456+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="len(current options) = len(enums/enumNames)"
+                sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                enabled="{Boolean}true"
+                enum="[1,2,3]"
+                enumNames="[country1,country2,country3]"
+                fieldType="checkbox-group"
+                hideTitle="false"
+                name="ddw2"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                type="number[]"
+                typeIndex="0"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <button_1974094835_co
+                jcr:created="{Date}2025-11-06T12:55:50.856+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:56:02.492+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add enumNames"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button_19740948351700810750903_copy_1">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_19740948351700810750903_copy_1&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_19740948351700810750903_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enumNames&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw2&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) = len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) = len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnumNames1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_Names_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw2\, 'custom:setProperty'\, {enumNames : getEnumNames1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw2\, 'custom:setProperty'\, {enumNames : getEnumNames1()})]"/>
+            </button_1974094835_co>
+            <button_copy
+                jcr:created="{Date}2025-11-06T12:55:15.325+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:55:43.176+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add enums"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button1700810715377_copy_1">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1700810715377_copy_1&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1700810715377_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw2&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) = len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) = len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnum1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw2\, 'custom:setProperty'\, {enum : getEnum1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw2\, 'custom:setProperty'\, {enum : getEnum1()})]"/>
+            </button_copy>
+            <button_804696822_cop
+                jcr:created="{Date}2025-11-06T12:56:12.080+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:56:23.997+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add both"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button_8046968221700810772130_copy_1">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_8046968221700810772130_copy_1&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_8046968221700810772130_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw2&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) = len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) = len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnum1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enumNames&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw2&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) = len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) = len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw2&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnumNames1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_Names_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw2\, 'custom:setProperty'\, {enum : getEnum1()\, enumNames : getEnumNames1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw2\, 'custom:setProperty'\, {enum : getEnum1()\, enumNames : getEnumNames1()})]"/>
+            </button_804696822_cop>
+            <dropdown_copy_copy_c_2041651304
+                jcr:created="{Date}2025-11-06T12:54:23.313+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:07:26.444+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="len(current options) &lt; len(enums/enumNames)"
+                sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                enabled="{Boolean}true"
+                enum="[1,2]"
+                enumNames="[country1,country2]"
+                fieldType="checkbox-group"
+                hideTitle="false"
+                name="ddw3"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                type="number[]"
+                typeIndex="0"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <button_1974094835_co_1428056074
+                jcr:created="{Date}2025-11-06T12:55:50.856+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:56:02.492+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add enumNames"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button_19740948351700810750903_copy_1_copy_1">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_19740948351700810750903_copy_1_copy_1&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_19740948351700810750903_copy_1_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enumNames&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw3&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) &lt; len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) &lt; len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnumNames1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_Names_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw3\, 'custom:setProperty'\, {enumNames : getEnumNames1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw3\, 'custom:setProperty'\, {enumNames : getEnumNames1()})]"/>
+            </button_1974094835_co_1428056074>
+            <button_copy_copy
+                jcr:created="{Date}2025-11-06T12:55:15.325+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:55:43.176+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add enums"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button1700810715377_copy_1_copy_1">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1700810715377_copy_1_copy_1&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1700810715377_copy_1_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw3&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) &lt; len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) &lt; len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnum1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw3\, 'custom:setProperty'\, {enum : getEnum1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw3\, 'custom:setProperty'\, {enum : getEnum1()})]"/>
+            </button_copy_copy>
+            <button_804696822_cop_1328789925
+                jcr:created="{Date}2025-11-06T12:56:12.080+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:56:23.997+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add both"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button_8046968221700810772130_copy_1_copy_1">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_8046968221700810772130_copy_1_copy_1&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_8046968221700810772130_copy_1_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw3&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) &lt; len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) &lt; len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnum1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enumNames&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw3&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) &lt; len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) &lt; len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw3&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnumNames1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_Names_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw3\, 'custom:setProperty'\, {enum : getEnum1()\, enumNames : getEnumNames1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw3\, 'custom:setProperty'\, {enum : getEnum1()\, enumNames : getEnumNames1()})]"/>
+            </button_804696822_cop_1328789925>
+            <dropdown_copy_copy_c
+                jcr:created="{Date}2025-11-06T12:54:23.313+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:06:48.542+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="len(current options) > len(enums/enumNames)"
+                sling:resourceType="forms-components-examples/components/form/checkboxgroup"
+                enabled="{Boolean}true"
+                enum="[1,2,3,4]"
+                enumNames="[country1,country2,country3,country4]"
+                fieldType="checkbox-group"
+                hideTitle="false"
+                name="ddw4"
+                orientation="horizontal"
+                readOnly="{Boolean}false"
+                textIsRich="[true,true]"
+                type="number[]"
+                typeIndex="0"
+                unboundFormElement="{Boolean}false"
+                visible="{Boolean}true"/>
+            <button_1974094835_co_788386745
+                jcr:created="{Date}2025-11-06T12:55:50.856+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:56:02.492+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add enumNames"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button_19740948351700810750903_copy_1_copy_1_copy_1">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_19740948351700810750903_copy_1_copy_1_copy_1&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_19740948351700810750903_copy_1_copy_1_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enumNames&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw4&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) > len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) > len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnumNames1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_Names_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw4\, 'custom:setProperty'\, {enumNames : getEnumNames1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw4\, 'custom:setProperty'\, {enumNames : getEnumNames1()})]"/>
+            </button_1974094835_co_788386745>
+            <button_copy_copy_cop
+                jcr:created="{Date}2025-11-06T12:55:15.325+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:55:43.176+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add enums"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button1700810715377_copy_1_copy_1_copy_1">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button1700810715377_copy_1_copy_1_copy_1&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button1700810715377_copy_1_copy_1_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw4&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) > len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) > len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnum1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw4\, 'custom:setProperty'\, {enum : getEnum1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw4\, 'custom:setProperty'\, {enum : getEnum1()})]"/>
+            </button_copy_copy_cop>
+            <button_804696822_cop_329945282
+                jcr:created="{Date}2025-11-06T12:56:12.080+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T12:56:23.997+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="add both"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button_8046968221700810772130_copy_1_copy_1_copy_1">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_8046968221700810772130_copy_1_copy_1_copy_1&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_8046968221700810772130_copy_1_copy_1_copy_1&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw4&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) > len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) > len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnum1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enumNames&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw4&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) > len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;AFCOMPONENT|FIELD|DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) > len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;getEnumNames1&quot;\,&quot;displayName&quot;:&quot;Get_Enum_Names_1&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw4\, 'custom:setProperty'\, {enum : getEnum1()\, enumNames : getEnumNames1()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw4\, 'custom:setProperty'\, {enum : getEnum1()\, enumNames : getEnumNames1()})]"/>
+            </button_804696822_cop_329945282>
+            <button_1117995909
+                jcr:created="{Date}2025-11-06T11:18:43.310+05:30"
+                jcr:createdBy="admin"
+                jcr:lastModified="{Date}2025-11-06T11:18:49.326+05:30"
+                jcr:lastModifiedBy="admin"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="clear"
+                sling:resourceType="forms-components-examples/components/form/button"
+                dorExclusion="true"
+                fieldType="button"
+                name="button_11179959091701064123378">
+                <fd:rules
+                    fd:click="[{&quot;nodeName&quot;:&quot;ROOT&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_SCRIPTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;EVENT_CONDITION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.button_11179959091701064123378&quot;\,&quot;type&quot;:&quot;BUTTON&quot;\,&quot;name&quot;:&quot;button_11179959091701064123378&quot;}}\,{&quot;nodeName&quot;:&quot;EVENT_AND_COMPARISON_OPERATOR&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;is clicked&quot;\,&quot;value&quot;:null}}\,{&quot;nodeName&quot;:&quot;PRIMITIVE_EXPRESSION&quot;\,&quot;choice&quot;:null}]}\,&quot;nested&quot;:false}\,{&quot;nodeName&quot;:&quot;Then&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;BLOCK_STATEMENTS&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;BLOCK_STATEMENT&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;SET_PROPERTY&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;MEMBER_EXPRESSION&quot;\,&quot;items&quot;:[{&quot;nodeName&quot;:&quot;PROPERTY_LIST&quot;\,&quot;value&quot;:&quot;enum&quot;}\,{&quot;nodeName&quot;:&quot;of&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;COMPONENT&quot;\,&quot;value&quot;:{&quot;id&quot;:&quot;$form.ddw4&quot;\,&quot;displayName&quot;:&quot;len(Dropdown options) > len(enums/enumNames)&quot;\,&quot;type&quot;:&quot;DROPDOWN&quot;\,&quot;displayPath&quot;:&quot;FORM/len(Dropdown options) > len(enums/enumNames)/&quot;\,&quot;name&quot;:&quot;ddw4&quot;\,&quot;parent&quot;:&quot;$form&quot;}}]}\,{&quot;nodeName&quot;:&quot;to&quot;\,&quot;value&quot;:null}\,{&quot;nodeName&quot;:&quot;EXTENDED_EXPRESSION&quot;\,&quot;choice&quot;:{&quot;nodeName&quot;:&quot;FUNCTION_CALL&quot;\,&quot;functionName&quot;:{&quot;id&quot;:&quot;clearEnums&quot;\,&quot;displayName&quot;:&quot;clear_enum&quot;\,&quot;type&quot;:&quot;ARRAY&quot;\,&quot;isDuplicate&quot;:false\,&quot;displayPath&quot;:&quot;&quot;\,&quot;args&quot;:[]\,&quot;impl&quot;:&quot;$0()&quot;}\,&quot;params&quot;:[]}}]}}]}]}}]\,&quot;isValid&quot;:true\,&quot;enabled&quot;:true\,&quot;version&quot;:1\,&quot;script&quot;:[&quot;dispatchEvent(ddw4\, 'custom:setProperty'\, {enum : clearEnums()})&quot;]\,&quot;eventName&quot;:&quot;Click&quot;\,&quot;ruleType&quot;:&quot;&quot;\,&quot;description&quot;:&quot;&quot;}]"
+                    jcr:primaryType="nt:unstructured"
+                    validationStatus="valid"/>
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    click="[dispatchEvent(ddw4\, 'custom:setProperty'\, {enum : clearEnums()})]"/>
+            </button_1117995909>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>

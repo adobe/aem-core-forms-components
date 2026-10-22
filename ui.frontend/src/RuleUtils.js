@@ -49,22 +49,7 @@ class RuleUtils {
      * @param {object} formJson - The Sling model exporter representation of the form
      */
     static async registerCustomFunctionsV2(formJson) {
-        let funcConfig;
-        let customFunctions = [];
-        const customFunctionsUrl = formJson.properties['fd:customFunctionsUrl'];
-        if (customFunctionsUrl) {
-            funcConfig = await HTTPAPILayer.getJson(customFunctionsUrl);
-        } else {
-            funcConfig = await HTTPAPILayer.getCustomFunctionConfig(formJson.id);
-        }
-        console.debug("Fetched custom functions: " + JSON.stringify(funcConfig));
-        
-        if (funcConfig && funcConfig.clientSideParsingEnabled) {
-            customFunctions = this.extractFunctionNames(formJson);
-        } else if (funcConfig && funcConfig.customFunction) {
-            customFunctions = funcConfig.customFunction;
-        }
-
+        const customFunctions = this.extractFunctionNames(formJson);
         const funcObj = customFunctions.reduce((accumulator, func) => {
             if (Object.prototype.hasOwnProperty.call(window, func.id) && typeof window[func.id] === 'function') {
                 accumulator[func.id] = window[func.id];

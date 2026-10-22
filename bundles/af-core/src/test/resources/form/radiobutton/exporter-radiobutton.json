@@ -20,9 +20,6 @@
     "afs:layout": {
       "orientation": "vertical"
     },
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/radiobutton",
     "customProp": "customPropValue"
   },

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- When bumping a component from vN to vN+1: if the new version's clientlib is fully
+     self-contained (own resources and fixes, no regressions), replace the old category
+     with the new one; otherwise retain the old category alongside the new one.
+     See docs/architecture/component-versioning.md for the full checklist. -->
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="cq:ClientLibraryFolder"
     allowProxy="{Boolean}true"

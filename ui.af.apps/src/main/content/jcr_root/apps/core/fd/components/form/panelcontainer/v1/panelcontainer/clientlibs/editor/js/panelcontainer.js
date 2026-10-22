@@ -17,7 +17,7 @@
 (function($) {
     "use strict";
 
-    var selectors = {
+    const selectors = {
             dialogContent: ".cmp-adaptiveform-panelcontainer__editdialog",
             edit: {
                 backgroundColorSwatchesOnly: "[data-cmp-container-v1-dialog-edit-hook='backgroundColorSwatchesOnly']"
@@ -27,12 +27,16 @@
                 backgroundColorSwatchesOnly: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorSwatchesOnly']",
                 backgroundColorAllowedSwatches: "[data-cmp-container-v1-dialog-policy-hook='backgroundColorAllowedSwatches']"
             }
-        };
+        },
+        Utils = window.CQ.FormsCoreComponents.Utils.v1;
 
-    $(document).on("dialog-loaded", function(e) {
-        var $dialog = e.dialog;
-        var $dialogContent = $dialog.find(selectors.dialogContent);
-        var dialogContent = $dialogContent.length > 0 ? $dialogContent[0] : undefined;
+    /**
+     * Main handler that delegates to edit/policy dialog handlers and always handles common behaviors
+     * @param {jQuery} dialog The jQuery dialog object
+     */
+    function handlePanelDialog(dialog) {
+        const $dialogContent = dialog.find(selectors.dialogContent);
+        const dialogContent = $dialogContent.length > 0 ? $dialogContent[0] : undefined;
 
         if (dialogContent) {
             if (dialogContent.querySelector("[data-cmp-container-v1-dialog-edit-hook]")) {
@@ -40,13 +44,16 @@
             } else if (dialogContent.querySelector("[data-cmp-container-v1-dialog-policy-hook]")) {
                 handlePolicyDialog(dialogContent);
             }
+            
+            // Always handle useFieldset behavior for panel dialogs
+            handleUseFieldsetBehavior(dialogContent);
         }
 
-        if($dialog[0]) {
+        if (dialog[0]) {
             // repeatability, For handling the case when tabs,accordion and wizard inherit panel edit-dialog
-            handleRepeat($dialog[0]);
+            handleRepeat(dialog[0]);
         }
-    });
+    }
 
     /**
      * Binds edit dialog handling
@@ -66,6 +73,71 @@
             });
         }
     }
+
+    /**
+     * Handles the interaction between useFieldset checkbox and hideTitle checkbox.
+     * When useFieldset is enabled:
+     * - hideTitle should be disabled and unchecked (legend must be visible)
+     * - Title is recommended for accessibility, but code falls back to name if not provided
+     *
+     * @param {HTMLElement} containerEditor The dialog wrapper
+     */
+    const handleUseFieldsetBehavior = (containerEditor) => {
+        const useFieldsetCheckbox = containerEditor.querySelector('[data-cmp-adaptiveform-panel-usefieldset]');
+        const hideTitleCheckbox = containerEditor.querySelector('coral-checkbox[name="./hideTitle"]');
+        const titleField = containerEditor.querySelector('input[name="./jcr:title"]');
+
+        if (!useFieldsetCheckbox) {
+            return;
+        }
+
+        // Function to update hideTitle state based on useFieldset
+        const updateHideTitleState = () => {
+            const isFieldsetEnabled = useFieldsetCheckbox.checked;
+            
+            if (isFieldsetEnabled) {
+                // Disable and uncheck hideTitle when fieldset is enabled
+                if (hideTitleCheckbox) {
+                    hideTitleCheckbox.disabled = true;
+                    hideTitleCheckbox.checked = false;
+                }
+
+                // Add visual indicator that title is recommended (but not strictly required since we fall back to name in the HTL template)
+                if (titleField) {
+                    const titleFieldWrapper = titleField.closest('.coral-Form-fieldwrapper');
+                    if (titleFieldWrapper) {
+                        const labelElement = titleFieldWrapper.querySelector('label.coral-Form-fieldlabel');
+                        if (labelElement && !labelElement.dataset.originalText) {
+                            // Store original text and append asterisk (indicating that title is recommended)
+                            labelElement.dataset.originalText = labelElement.textContent;
+                            labelElement.textContent = `${labelElement.textContent} *`;
+                        }
+                    }
+                }
+            } else {
+                // Re-enable hideTitle when fieldset is disabled
+                if (hideTitleCheckbox) {
+                    hideTitleCheckbox.disabled = false;
+                }
+
+                // Remove title recommendation indicator (restore original text)
+                if (titleField) {
+                    const titleFieldWrapper = titleField.closest('.coral-Form-fieldwrapper');
+                    if (titleFieldWrapper) {
+                        const labelElement = titleFieldWrapper.querySelector('label.coral-Form-fieldlabel');
+                        if (labelElement && labelElement.dataset.originalText) {
+                            labelElement.textContent = labelElement.dataset.originalText;
+                            delete labelElement.dataset.originalText;
+                        }
+                    }
+                }
+            }
+        };
+
+        // Initialize state on dialog load
+        updateHideTitleState();
+        useFieldsetCheckbox.addEventListener('change', updateHideTitleState);
+    };
 
     /**
      * Binds policy dialog handling
@@ -153,5 +225,8 @@
             });
         }
     }
+
+    // Initialize dialog handlers using the common utility
+    Utils.initializeEditDialog(selectors.dialogContent)(handlePanelDialog);
 
 })(jQuery);

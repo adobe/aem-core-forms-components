@@ -1,6 +1,6 @@
 {
   "FileCloseAccessText": "Enter 키를 눌러 파일 삭제",
-  "FileSizeGreater": "파일 ${0}이(가) 예상 크기 ${1}MB를 초과합니다.",
+  "FileSizeGreater": "파일 ${0}이(가) 예상 크기 ${1}를 초과합니다.",
   "FileNameInvalid": "파일 이름이 (.)으로 시작하거나, \\ / : * ? \" < > | ; % $를 포함하거나, nul, prn, con, lpt 또는 com과 같이 예약된 키워드인 파일은 첨부하지 마십시오.",
   "FileMimeTypeInvalid": "파일 ${0}은(는) 지원되지 않는 파일 유형입니다.",
   "InternalFormSubmissionError": "양식을 제출하는 중 내부 오류가 발생했습니다.",
@@ -93,5 +93,16 @@
   "clearSign": "서명 지우기",
   "brushSize": "브러시 크기: ",
   "geoLocationError": "지리적 위치 가져오기 중 오류 발생",
-  "geoLocationFetch": "지리적 위치 가져오는 중..."
+  "geoLocationFetch": "지리적 위치 가져오는 중...",
+  "sortTable": "표 정렬",
+  "filterTable": "표 필터",
+  "sort": "정렬",
+  "filter": "필터",
+  "sortOptions": "정렬 옵션",
+  "sortBy": "정렬 기준",
+  "sortColumns": "열 정렬",
+  "sortOrder": "정렬 순서",
+  "sortDirection": "정렬 방향",
+  "ascending": "오름차순",
+  "descending": "내림차순"
 }

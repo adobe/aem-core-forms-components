@@ -16,9 +16,6 @@
     ]
   },
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false
-    },
     "fd:path": "/content/recaptcha",
     "fd:captcha": {
       "provider": "recaptcha",
@@ -34,5 +31,6 @@
     },
     "customProp": "customPropValue"
   },
+  "captchaDisplayMode": "visible",
   ":type": "core/fd/components/form/recaptcha/v1/recaptcha"
 }

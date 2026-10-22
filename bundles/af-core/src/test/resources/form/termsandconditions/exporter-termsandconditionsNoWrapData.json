@@ -3,13 +3,9 @@
   "fieldType": "panel",
   "name": "termsandconditions1694159302516",
   "properties": {
-    "fd:dor": {
-      "dorExclusion": false,
-      "dorExcludeTitle": false,
-      "dorExcludeDescription": false
-    },
     "fd:path": "/content/termsandconditionsNoWrapData",
-    "fd:tnc": true
+    "fd:tnc": true,
+    "fd:showAsPopup": true
   },
   "label": {
     "value": "Terms And Conditions"
@@ -41,9 +37,6 @@
         ]
       },
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/termsandconditionsNoWrapData/approvalcheckbox"
       },
       "enum": [
@@ -71,9 +64,6 @@
       "properties": {
         "afs:layout": {
           "orientation": "vertical"
-        },
-        "fd:dor": {
-          "dorExclusion": false
         },
         "fd:path": "/content/termsandconditionsNoWrapData/link"
       },

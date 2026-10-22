@@ -1,0 +1,64 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<!-- The attach button was originally coded as a label, but it has now been updated and implemented using the button tag. -->
+
+<sly data-sly-use.renderer="${'core/fd/components/form/fileinput/v1/fileinput/fileinput.js'}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"></sly>
+<div class="cmp-adaptiveform-fileinput"
+     data-cmp-is="adaptiveFormCustomFileInput"
+     id="${file.id}"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.file="com.adobe.cq.forms.core.components.models.form.FileInput"
+     data-cmp-visible="${file.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${file.enabled ? 'true' : 'false'}"
+     data-cmp-required="${file.required ? 'true': 'false'}"
+     data-cmp-readonly="${file.readOnly ? 'true' : 'false'}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
+    <div class="cmp-adaptiveform-fileinput__label-container">
+        <div data-sly-call="${label.label @componentId=file.id, labelValue=file.label.value, labelVisible=file.label.visible, labelRichText=file.label.richText, bemBlock='cmp-adaptiveform-fileinput', isHeading=true}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    </div>
+    <br/>
+    <div class="cmp-adaptiveform-fileinput__container">
+        <div class="cmp-adaptiveform-fileinput__dragarea">
+            <div class="cmp-adaptiveform-fileinput__icon"></div>
+            <div class="cmp-adaptiveform-fileinput__dragtext">${file.dragDropText @context='html'}</div>
+            <button type="button" data-sly-test="${file.buttonText}" class="cmp-adaptiveform-fileinput__widgetlabel" tabindex="0">${file.buttonText}</button>
+            <input class="cmp-adaptiveform-fileinput__widget"
+                   data-sly-attribute.multiple="${file.isMultiple ? 'multiple' : ''}"
+                   style="${file.buttonText ? 'display:none' : '' @ context='styleString'}"
+                   title="${file.tooltipVisible ? '' : file.tooltipText}"
+                   name="${file.name}"
+                   disabled="${!file.enabled}"
+                   required="${file.required}"
+                   accept="${file.accept}"
+                   type="file"
+                   data-cmp-data-layer="${file.data.json}"
+            />
+        </div>
+        <ul class="cmp-adaptiveform-fileinput__filelist"></ul>
+    </div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=file.id, shortDescriptionVisible=file.tooltipVisible, shortDescription=file.tooltip, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap>
+    </div>
+    <div data-sly-call="${longDescription.longDescription @componentId=file.id, longDescription=file.description, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=file.id, bemBlock='cmp-adaptiveform-fileinput'}" data-sly-unwrap></div>
+</div>

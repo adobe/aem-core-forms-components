@@ -40,7 +40,9 @@
         const selectedVersion = selectedConfig.getAttribute("data-version");
         const selectedKeyType = selectedConfig.getAttribute("data-key.type");
         const inputs = recaptchaSize.querySelectorAll('input');
-        if (selectedVersion === "enterprise" && selectedKeyType === "score") {
+        // v3 has no keyType concept - it is always invisible/score-based, same as
+        // Enterprise's score-based key case.
+        if ((selectedVersion === "enterprise" && selectedKeyType === "score") || selectedVersion === "v3") {
             inputs.forEach(input => input.setAttribute("disabled", true));
         } else {
             inputs.forEach(input => input.removeAttribute("disabled"));

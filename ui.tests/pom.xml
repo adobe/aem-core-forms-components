@@ -380,38 +380,38 @@
                             <workingDirectory>test-module</workingDirectory>
                         </configuration>
                     </plugin>
-                    <plugin>
-                        <groupId>org.apache.sling</groupId>
-                        <artifactId>maven-sling-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>install-core-bundle-to-override-farbundle</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>install</goal>
-                                </goals>
-                                <configuration>
-                                    <!-- skip the execution if specific core component version is defined to run test -->
-                                    <skip>${CORE_COMPONENTS}</skip>
-                                    <slingUrl>${quickstart.url}/system/console</slingUrl>
-                                    <bundleFileName>${project.basedir}/../bundles/core/target/core-forms-components-core-${project.version}.jar</bundleFileName>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>install-af-core-bundle-to-override-farbundle</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>install</goal>
-                                </goals>
-                                <configuration>
-                                    <!-- skip the execution if specific core component version is defined to run test -->
-                                    <skip>${CORE_COMPONENTS}</skip>
-                                    <slingUrl>${quickstart.url}/system/console</slingUrl>
-                                    <bundleFileName>${project.basedir}/../bundles/af-core/target/core-forms-components-af-core-${project.version}.jar</bundleFileName>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+<!--                    <plugin>-->
+<!--                        <groupId>org.apache.sling</groupId>-->
+<!--                        <artifactId>maven-sling-plugin</artifactId>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>install-core-bundle-to-override-farbundle</id>-->
+<!--                                <phase>pre-integration-test</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>install</goal>-->
+<!--                                </goals>-->
+<!--                                <configuration>-->
+<!--                                    &lt;!&ndash; skip the execution if specific core component version is defined to run test &ndash;&gt;-->
+<!--                                    <skip>${CORE_COMPONENTS}</skip>-->
+<!--                                    <slingUrl>${quickstart.url}/system/console</slingUrl>-->
+<!--                                    <bundleFileName>${project.basedir}/../bundles/core/target/core-forms-components-core-${project.version}.jar</bundleFileName>-->
+<!--                                </configuration>-->
+<!--                            </execution>-->
+<!--                            <execution>-->
+<!--                                <id>install-af-core-bundle-to-override-farbundle</id>-->
+<!--                                <phase>pre-integration-test</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>install</goal>-->
+<!--                                </goals>-->
+<!--                                <configuration>-->
+<!--                                    &lt;!&ndash; skip the execution if specific core component version is defined to run test &ndash;&gt;-->
+<!--                                    <skip>${CORE_COMPONENTS}</skip>-->
+<!--                                    <slingUrl>${quickstart.url}/system/console</slingUrl>-->
+<!--                                    <bundleFileName>${project.basedir}/../bundles/af-core/target/core-forms-components-af-core-${project.version}.jar</bundleFileName>-->
+<!--                                </configuration>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
                 </plugins>
             </build>
         </profile>

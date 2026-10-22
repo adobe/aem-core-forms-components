@@ -1,6 +1,6 @@
 {
   "id": "image-ad1e095fba",
-  "dataRef" : "a.b",
+  "dataRef": "a.b",
   "fieldType": "image",
   "name": "abc",
   "value": "/content/image-customized.img.png",
@@ -12,10 +12,7 @@
     ]
   },
   "properties": {
-    "fd:path": "/content/image-customized",
-    "fd:dor": {
-      "dorExclusion": false
-    }
+    "fd:path": "/content/image-customized"
   },
   ":type": "core/fd/components/form/image/v1/image"
 }

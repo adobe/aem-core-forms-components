@@ -3,9 +3,6 @@
     "fieldType": "plain-text",
     "value": "Title",
     "properties": {
-      "fd:dor": {
-        "dorExclusion": false
-      },
       "fd:path": "/content/title",
       "fd:htmlelementType": null
     },

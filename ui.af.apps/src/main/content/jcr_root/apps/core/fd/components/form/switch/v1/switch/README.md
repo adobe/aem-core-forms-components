@@ -52,6 +52,7 @@ JavaScript handling for dialog interaction. It is already included by its edit d
 ```
 BLOCK cmp-adaptiveform-switch
     ELEMENT cmp-adaptiveform-switch__label-container
+    ELEMENT cmp-adaptiveform-switch__label
     ELEMENT cmp-adaptiveform-switch__container
     ELEMENT cmp-adaptiveform-switch__option
     ELEMENT cmp-adaptiveform-switch__option--off

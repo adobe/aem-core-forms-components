@@ -51,6 +51,13 @@ const commons = require('../commons/commons'),
     guideConstants = require('../commons/formsConstants');
 var toggles = [];
 
+// Ignore benign ResizeObserver errors
+Cypress.on('uncaught:exception', (err, runnable) => {
+    if (err.message.includes('ResizeObserver loop')) {
+        return false;
+    }
+});
+
 // Cypress command to login to aem page
 Cypress.Commands.add("login", (pagePath, failurehandler = () => {}) => {
     const username = Cypress.env('crx.username') ? Cypress.env('crx.username') : "admin";
@@ -129,6 +136,30 @@ Cypress.Commands.add("enableOrDisableTutorials", (enable) => {
         cy.window().then(win => {
             win.$.post(url, preferences)
         });
+    });
+});
+
+/**
+ * Resets a telephoneinput design policy to its baseline by removing the custom-format additions a test
+ * makes (`allowedCustomFormats` items and the `allowedFormat3` toggle). The design policy is shared,
+ * persistent repo state; without this, a test that adds a custom format leaves it behind and any later
+ * run/retry starts from a dirty policy — the multifield/Coral dialog then misbehaves and
+ * `allowedCustomFormats/item0/customFormatKey` never renders. Call in beforeEach for a deterministic start.
+ * @param policyPath JCR path of the telephoneinput policy node (…/policies/…/telephoneinput/<policy>)
+ */
+Cypress.Commands.add("resetTelephoneInputDesignPolicy", (policyPath) => {
+    const contextPath = Cypress.env('crx.contextPath') ? Cypress.env('crx.contextPath') : "";
+    const url = contextPath + policyPath;
+    // POST via the app's jQuery inside the authenticated page (not cy.request) so the session cookie is
+    // carried — same reason enableOrDisableTutorials does; the sling `@Delete` removes the property/node.
+    cy.request(contextPath + '/libs/granite/csrf/token.json').its('body.token').then((token) => {
+        cy.window().then((win) => new Cypress.Promise((resolve) => {
+            win.$.post(url, {
+                'allowedCustomFormats@Delete': '',
+                'allowedFormat3@Delete': '',
+                ':cq_csrf_token': token
+            }).always(resolve);
+        }));
     });
 });
 
@@ -266,13 +297,23 @@ Cypress.Commands.add("openPage", (pagePath, options = {}) => {
     cy.visit(path, options);
 });
 
-// cypress command to select layer in authoring
+/**
+ * Selects an authoring layer and waits for its overlays to be repositioned.
+ * @param {string} layer Authoring layer name.
+ */
 Cypress.Commands.add("selectLayer", (layer) => {
-    // please note: when switching from style to other layer, we refresh guide, so these events need to be checked here
-    cy.get(siteSelectors.selectLayer.trigger).click();
-    cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').should('be.visible');
-    cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]').click({force: true});
-    cy.get(siteSelectors.selectLayer.current + '[data-layer="' + layer + '"].is-selected');
+    const selectedLayer = siteSelectors.selectLayer.current + '[data-layer="' + layer + '"].is-selected';
+    return cy.get(siteSelectors.selectLayer.current).then(($layers) => {
+        if ($layers.filter('[data-layer="' + layer + '"].is-selected').length) {
+            return cy.get(selectedLayer).should('be.visible');
+        }
+        cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isLayerOverlaysRepositioned");
+        cy.get(siteSelectors.selectLayer.trigger).click();
+        cy.get(siteSelectors.selectLayer.popover.self + ' [data-layer="' + layer + '"]')
+            .should('be.visible').click({force: true});
+        cy.get(selectedLayer).should('be.visible');
+        return cy.get("@isLayerOverlaysRepositioned").its('done').should('equal', true);
+    });
 });
 
 // cypress command to open editable toolbar
@@ -281,32 +322,48 @@ Cypress.Commands.add("openEditableToolbar", (selector) => {
     .invoke('attr', 'data-path')
     .then(($path) => {
         const path = siteSelectors.editableToolbar.elementDom.replace("%s", $path);
-        cy.get("body").then($body => {
-            if ($body.find(path).length === 0) {
-                //evaluates as true if toolbar doesnt exists at all
-                //you get here only if toolbar is visible
-                cy.get(selector).click({force: true}); // end user does not face this but due to cypress checks, we need to add force true here
-                // sometimes the above line results in this error, `<div.cq-Overlay.cq-Overlay--component.cq-draggable.cq-droptarget.is-resizable>` is not visible because its parent `<div.cq-Overlay.cq-Overlay--component.cq-Overlay--container>` has CSS property: `display: none`
-                cy.get(path).should('be.visible');
-            } else {
-                cy.get(path).then($header => {
-                    if (!$header.is(':visible')) {
-                        cy.get(selector).first().click({force: true});
-                        cy.get(path).should('be.visible');
-                    } else {
-                        cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
-                        cy.get(selector).click({force: true});
-                        cy.get(path).should('be.visible');
-                    }
-                });
+        // #EditableToolbar is a single shared element AEM shows for the currently selected
+        // overlay. After a config-dialog submit (or any overlay reposition) a single click
+        // on the overlay can be lost while the toolbar is still hidden, and cypress' implicit
+        // retry only re-runs the `should('be.visible')` assertion - never the click - so it
+        // times out. Retry (scroll overlays into view -> click overlay -> toolbar visible) as
+        // one atomic unit so a lost click is simply issued again until the toolbar shows.
+        recurse(
+            () => {
+                cy.get(siteSelectors.overlays.self).scrollIntoView(); // dont click on body, always use overlay wrapper to click
+                cy.get(selector).first().click({force: true}); // force needed due to cypress overlay visibility checks
+                return cy.get("body");
+            },
+            ($body) => $body.find(path).length > 0 && $body.find(path).is(":visible"),
+            {
+                limit: 5,
+                delay: 1000,
+                timeout: 30000,
+                log: false
             }
-        });
+        );
+        return cy.get(path).should('be.visible');
     })
 });
 
 // cypress command to invoke an editable action
 Cypress.Commands.add("invokeEditableAction", (actionSelector) => {
     cy.get(actionSelector).should('be.visible').click({force: true});
+});
+
+// cypress command to submit a component's configure dialog and wait for the editor to settle.
+// A config-dialog submit fires an asynchronous editable re-render that repositions the overlays and
+// hides the shared #EditableToolbar. Any openEditableToolbar issued before that re-render settles
+// races the teardown: recurse opens the toolbar, the late reposition hides it, and the trailing
+// should('be.visible') (never re-clicks) times out with "#EditableToolbar has display: none".
+// Register the same editable-update + overlay-reposition listeners deleteComponentByPath relies on
+// BEFORE clicking submit, then block until both fire so callers can safely reopen the toolbar next.
+Cypress.Commands.add("submitConfigureDialog", (submitSelector = ".cq-dialog-submit") => {
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_EDITABLES_UPDATED).as("isConfigureEditableUpdated");
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isConfigureOverlaysRepositioned");
+    cy.get(submitSelector).click({force: true});
+    cy.get("@isConfigureEditableUpdated").its('done').should('equal', true); // wait until re-render done
+    cy.get("@isConfigureOverlaysRepositioned").its('done').should('equal', true); // wait until overlays settled
 });
 
 // cypress command to initialize event handler on channel
@@ -491,6 +548,36 @@ Cypress.Commands.add("fetchFeatureToggles",()=>{
     return cy.request('/etc.clientlibs/toggles.json')
 })
 
+/**
+ * Enables a feature toggle at runtime by calling the Felix OSGi configuration servlet
+ * from the Node.js task runner (no browser session cookies — pure Basic Auth, like curl).
+ * Intended for use in before() hooks so the toggle is active only while the test runs.
+ *
+ * @param {string} toggleId - e.g. "FT_FORMS-24358"
+ */
+Cypress.Commands.add('enableFeatureToggle', (toggleId) => {
+    cy.task('updateOsgiToggleConfig', { action: 'enable', toggleId });
+});
+
+/**
+ * Disables a feature toggle at runtime by calling the Felix OSGi configuration servlet
+ * from the Node.js task runner (no browser session cookies — pure Basic Auth, like curl).
+ * After the OSGi call completes, polls /etc.clientlibs/toggles.json until the toggle
+ * is confirmed absent from the enabled list. This ensures the next test spec does not
+ * run with the toggle still active due to AEM config propagation delay.
+ * Intended for use in after() hooks to restore state after a test run.
+ *
+ * @param {string} toggleId - e.g. "FT_FORMS-24358"
+ */
+Cypress.Commands.add('disableFeatureToggle', (toggleId) => {
+    cy.task('updateOsgiToggleConfig', { action: 'disable', toggleId });
+    recurse(
+        () => cy.fetchFeatureToggles(),
+        (response) => response.status === 200 && !response.body.enabled.includes(toggleId),
+        { limit: 10, delay: 1000 }
+    );
+});
+
 Cypress.Commands.add("cleanTest", (editPath) => {
     // clean the test before the next run, if any
     return cy.get("body").then($body => {
@@ -579,24 +666,47 @@ Cypress.Commands.add("deleteComponentByTitle", (title) => {
 });
 
 
-// cypress command to insert component
+/**
+ * Inserts a component through the visible dialog and waits for the editor refresh.
+ * @param {string} selector Drop-zone overlay selector.
+ * @param {string} componentString Component search text.
+ * @param {string} componentType Component resource type.
+ */
 Cypress.Commands.add("insertComponent", (selector, componentString, componentType) => {
-    //Open toolbar of root panel
-    const insertComponentDialog_Selector = '.InsertComponentDialog-components [value="' + componentType + '"]',
-        insertComponentDialog_searchField = ".InsertComponentDialog-components input[type='search']";
-    cy.openEditableToolbar(selector);
-    cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
+    const insertComponentDialog = guideSelectors.insertComponentDialog.dialog + ':visible',
+        insertComponentDialog_Selector = insertComponentDialog + ' [value="' + componentType + '"]',
+        insertComponentDialog_searchField = insertComponentDialog + " input[type='search']";
+    // Overlay refreshes can discard an Insert click; retry opening, not interactions with a hidden dialog.
     recurse(
-        // the commands to repeat, and they yield the input element
-        () => cy.get(insertComponentDialog_searchField).clear().type(componentString),
-        // the predicate takes the output of the above commands
-        // and returns a boolean. If it returns true, the recursion stops
+        () => {
+            cy.get('body').then(($body) => {
+                if (!$body.find(insertComponentDialog).length) {
+                    cy.openEditableToolbar(selector);
+                    cy.get(guideSelectors.editableToolbar.actions.insert).should('be.visible').click();
+                }
+            });
+            return cy.get('body');
+        },
+        ($body) => $body.find(insertComponentDialog).length === 1,
+        {limit: 5, delay: 1000, timeout: 30000, log: false}
+    );
+    cy.get(insertComponentDialog).should('have.length', 1).and('be.visible');
+    recurse(
+        () => {
+            cy.get(insertComponentDialog_searchField).should('be.visible').clear();
+            cy.get(insertComponentDialog_searchField).should('be.visible').type(componentString);
+            return cy.get(insertComponentDialog_searchField);
+        },
         ($input) => $input.val() === componentString,
-    )
+    );
     cy.get(insertComponentDialog_searchField).type('{enter}');
-    cy.get(insertComponentDialog_Selector).should('be.visible');// basically should assertions does implicit retry in cypress
-    // refer https://docs.cypress.io/guides/references/error-messages.html#cy-failed-because-the-element-you-are-chaining-off-of-has-become-detached-or-removed-from-the-dom
-    cy.get(insertComponentDialog_Selector).click({force: true}); // sometimes AEM popover is visible, hence adding force here
+    cy.get(insertComponentDialog_Selector).should('be.visible');
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_EDITABLES_UPDATED).as("isInsertEditableUpdated");
+    cy.initializeEventHandlerOnChannel(siteConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as("isInsertOverlaysRepositioned");
+    cy.get(insertComponentDialog_Selector).click();
+    cy.get(insertComponentDialog).should('not.exist');
+    cy.get("@isInsertEditableUpdated").its('done').should('equal', true);
+    return cy.get("@isInsertOverlaysRepositioned").its('done').should('equal', true);
 });
 
 /**
@@ -655,6 +765,9 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     //initially long description should have data-cmp-visible="false" to avoid flickering on page load
     cy.get(`#${fieldId}`).find(`.${bemBlock}__longdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
+    // check if questiionmark is collapsed
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).invoke('attr', 'aria-expanded')
+    .should('eq', 'false');
     // click on ? mark
     cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).click();
     // long description should be shown
@@ -665,6 +778,9 @@ Cypress.Commands.add("toggleDescriptionTooltip", (bemBlock, fieldId, shortDescri
     // short description should be hidden.
     cy.get(`#${fieldId}`).find(`.${bemBlock}__shortdescription`).invoke('attr', 'data-cmp-visible')
     .should('eq', 'false');
+    // check if questiionmark is expanded
+    cy.get(`#${fieldId}`).find(`.${bemBlock}__questionmark`).invoke('attr', 'aria-expanded')
+    .should('eq', 'true');
 });
 
 Cypress.Commands.add("openSidePanelTab", (tab) => {
@@ -772,6 +888,7 @@ const mimeTypes = {
     'bat': 'application/x-msdos-program',
     'msg': 'application/vnd.ms-outlook',
     'svg': 'image/svg+xml',
+    'ifc': 'model/ifc',
     // Add more mappings as needed
 };
 

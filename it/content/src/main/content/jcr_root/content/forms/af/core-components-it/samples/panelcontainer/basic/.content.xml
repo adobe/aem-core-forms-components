@@ -238,6 +238,22 @@
                         fieldType="number-input"
                         name="numberinput1674624783704"/>
             </panelcontainer1>
+            <panelcontainerFieldset
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Fieldset Panel"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    enabled="{Boolean}true"
+                    fieldType="panel"
+                    name="panelcontainerFieldset"
+                    fd:useFieldset="{Boolean}true"
+                    visible="{Boolean}true">
+                <textinputFieldset
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Text Input in Fieldset"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="textinputFieldset"/>
+            </panelcontainerFieldset>
         </guideContainer>
     </jcr:content>
 </jcr:root>

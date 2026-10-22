@@ -16,9 +16,6 @@
           },
           "name": "fragmenttextinput",
           "properties": {
-            "fd:dor": {
-              "dorExclusion": false
-            },
             "fd:path": "/content/forms/af/demo/jcr:content/printfragment/print/jcr:content/guideContainer/textinput"
           },
           "type": "string"
@@ -34,6 +31,7 @@
         ]
       },
       "fieldType": "panel",
+      "fragmentPath": "/content/forms/af/demo/jcr:content/printfragment",
       "id": "fragment-cf97dd9759",
       "label": {
         "value": "Fragment"
@@ -43,11 +41,6 @@
       "name": "fragment-123",
       "properties": {
         "customProp": "customPropValue",
-        "fd:dor": {
-          "dorExcludeDescription": false,
-          "dorExcludeTitle": false,
-          "dorExclusion": false
-        },
         "fd:fragment": true,
         "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2-with-fragment/fragment",
         "fd:viewType": "fragment"
@@ -69,9 +62,6 @@
       },
       "name": "fragmenttextinput",
       "properties": {
-        "fd:dor": {
-          "dorExclusion": false
-        },
         "fd:path": "/content/forms/af/demo/jcr:content/formcontainerv2-with-fragment/textinput"
       },
       "type": "string"

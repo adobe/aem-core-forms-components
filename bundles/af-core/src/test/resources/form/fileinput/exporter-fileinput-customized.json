@@ -2,7 +2,7 @@
   "id": "fileinput-87a9efb7f0",
   "fieldType": "file-input",
   "name": "abc",
-  "visible" : false,
+  "visible": false,
   "enabled": true,
   "readOnly": false,
   "required": true,
@@ -10,18 +10,20 @@
     "value": "def",
     "visible": true
   },
-  "screenReaderText":"Custom screen reader text",
-  "constraintMessages":{"type":"incorrect type"},
+  "screenReaderText": "Custom screen reader text",
+  "constraintMessages": {
+    "type": "incorrect type"
+  },
   "type": "file",
-  "description" : "dummy",
-  "maxFileSize" : "4MB",
+  "description": "dummy",
+  "maxFileSize": "4MB",
   "tooltip": "test-short-description",
   "accept": [
     "audio/*",
     "video/*",
     "image/*"
   ],
-  "dataRef":"a.b",
+  "dataRef": "a.b",
   "events": {
     "custom:setProperty": [
       "$event.payload"
@@ -30,9 +32,6 @@
   "properties": {
     "afs:layout": {
       "tooltipVisible": false
-    },
-    "fd:dor": {
-      "dorExclusion": false
     },
     "fd:buttonText": "Attach",
     "fd:path": "/content/fileinput-customized"

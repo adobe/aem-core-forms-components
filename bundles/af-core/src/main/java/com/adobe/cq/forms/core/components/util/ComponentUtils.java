@@ -46,6 +46,7 @@ import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.BaseConstraint;
 import com.day.cq.i18n.I18n;
+import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -63,11 +64,53 @@ public class ComponentUtils {
     private static final String[] EDGE_DELIVERY_RESOURCE_TYPES = new String[] { "core/franklin/components/page/v1/page" };
     private static final Logger logger = LoggerFactory.getLogger(ComponentUtils.class);
 
-    /**
-     * Private constructor to prevent instantiation of utility class.
-     */
     private ComponentUtils() {
         // NOOP
+    }
+
+    /**
+     * Checks whether a feature toggle is enabled via a system property. The property is set/unset
+     * by the Granite Toggle API when the toggle is wired via OSGi factory
+     * {@code com.adobe.granite.toggle.monitor.systemproperty} (see
+     * {@link com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants} for setup).
+     * <p>
+     * Convention: the system property name is the toggle ID; value {@code "true"} (via
+     * {@link Boolean#parseBoolean(String)}) means enabled.
+     *
+     * @param toggleId the toggle identifier (also used as the system property name)
+     * @return true if the system property is set to "true", false otherwise
+     */
+    public static boolean isToggleEnabledBySystemProperty(@NotNull String toggleId) {
+        return Boolean.parseBoolean(System.getProperty(toggleId, "false"));
+    }
+
+    /**
+     * Checks whether a feature toggle is enabled (system property only).
+     *
+     * @param toggleId the toggle identifier (e.g. from {@link com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants})
+     * @return true if the toggle is enabled, false otherwise
+     */
+    public static boolean isToggleEnabled(@NotNull String toggleId) {
+        return isToggleEnabledBySystemProperty(toggleId);
+    }
+
+    /**
+     * Determines whether the current request is in author mode. Returns {@code true} when the
+     * request is in WCM EDIT or DESIGN mode and has not been explicitly marked as a publish-view
+     * request (e.g. via {@link FormConstants#REQ_ATTR_PUBLISH_VIEW}).
+     *
+     * @param request the current request, may be {@code null}
+     * @return {@code true} if the request is in author mode, {@code false} otherwise
+     */
+    public static boolean isAuthorMode(@Nullable SlingHttpServletRequest request) {
+        if (request == null) {
+            return false;
+        }
+        if (Boolean.TRUE.equals(request.getAttribute(FormConstants.REQ_ATTR_PUBLISH_VIEW))) {
+            return false;
+        }
+        WCMMode mode = WCMMode.fromRequest(request);
+        return mode == WCMMode.EDIT || mode == WCMMode.DESIGN;
     }
 
     /**
