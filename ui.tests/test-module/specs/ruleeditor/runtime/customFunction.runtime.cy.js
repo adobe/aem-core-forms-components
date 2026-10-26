@@ -65,9 +65,23 @@ describe('Form with custom functions configured in client lib', () => {
     it("should have set textinput value based on custom function rule", () => {
         // Rule on textBox1: set value of textBox1 to "test", which is output of custom function testFunction1()
         expect(formContainer, "formcontainer is initialized").to.not.be.null;
-        const [textbox1, textBox1FieldView] = Object.entries(formContainer._fields)[0];
-        cy.get(`#${textbox1}`).find("input").should('have.value', "test")
+        cy.get('input[name="textinput1"]').should('have.value', "test")
     })
+
+    it('should hide the parent section using private field model access in a custom function', () => {
+        expect(formContainer, 'formcontainer is initialized').to.not.be.null;
+        const section = Object.values(formContainer._fields)
+            .find(field => field.getModel().name === 'legacyAddressSection');
+        expect(section, 'legacy address section is initialized').to.not.be.undefined;
+        const sectionModel = section.getModel();
+
+        cy.get(`#${sectionModel.id}`).should('be.visible');
+        cy.get('input[name="streetNumber"]').should('be.visible');
+        cy.contains('button', 'Hide Legacy Address Section').click();
+
+        cy.wrap(sectionModel).its('visible').should('equal', false);
+        cy.get(`#${sectionModel.id}`).should('not.be.visible');
+    });
 
 
     it("should submit custom formData on button click", () => {
