@@ -122,12 +122,8 @@ describe("Form with Review component with repeatablity", () => {
     // Verify the second panel ("All addres" tab panel, which wraps the repeatable "Address" panel)
     const checkSecondPanel = () => {
       cy.get(`.${bemBlock}__container .${bemBlock}__panel`).eq(1).within(() => {
-        cy.get(`.${bemBlock}__label-container`).should('exist');
-        cy.get(`.${bemBlock}__label`).contains('All addres');
-        cy.get(`.${bemBlock}__edit-button`)
-          .should('have.attr', 'data-cmp-visible', 'true')
-          .should('have.attr', 'aria-label')
-          .and('contain', 'All addres');
+        // "All addres" has hideTitle=true, so the review renders no label container / edit button for it
+        cy.root().children(`.${bemBlock}__label-container`).should('not.exist');
 
         // this wrapper panel's own content wrapper (direct child only, via cy.root(), since the
         // nested repeatable "Address" panel rendered inside it has its own separate .content
