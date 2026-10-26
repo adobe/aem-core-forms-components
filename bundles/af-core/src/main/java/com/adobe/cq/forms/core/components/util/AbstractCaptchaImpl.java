@@ -47,11 +47,6 @@ public abstract class AbstractCaptchaImpl extends AbstractFieldImpl implements C
         return super.getFieldType(FieldType.CAPTCHA);
     }
 
-    @Override
-    public Boolean isRequired() {
-        return Boolean.TRUE;
-    }
-
     @JsonIgnore
     public abstract Map<String, Object> getCaptchaProperties();
 
