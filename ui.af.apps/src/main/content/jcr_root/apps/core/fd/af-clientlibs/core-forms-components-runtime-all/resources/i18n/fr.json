@@ -104,5 +104,7 @@
   "sortOrder": "Ordre de tri",
   "sortDirection": "Sens du tri",
   "ascending": "Croissant",
-  "descending": "Décroissant"
+  "descending": "Décroissant",
+  "showPassword": "Afficher le mot de passe",
+  "hidePassword": "Masquer le mot de passe"
 }
