@@ -155,6 +155,10 @@ curl -s -u admin:admin \
 | `cy.previewForm(pagePath)` | Loads form at `<pagePath>?wcmmode=disabled`, waits for AF runtime init, returns `formContainer` |
 | `cy.previewFormWithPanel(pagePath)` | Same as above but waits for panel-specific initialization |
 | `cy.fetchFeatureToggles()` | `GET /etc.clientlibs/toggles.json`, returns `{ enabled: ["FT_FORMS-XXXXX", ...] }` |
+| `cy.selectLayer(layer)` | Keeps an already-selected layer; otherwise waits for the selected layer and overlay repositioning |
+| `cy.insertComponent(dropZone, searchText, resourceType)` | Opens the Insert dialog with bounded retries, searches its visible component region, and waits for insertion and overlay refresh |
+
+Authoring specs should reuse these commands instead of implementing their own layer-switch or insertion sequence. Insert-dialog selectors use `guideSelectors.insertComponentDialog.dialog` (`.InsertComponentDialog-components`) and replacement selectors use the Forms hook `.cmp-replace-dialog-search-components`; visibility is scoped to those content regions without depending on a `coral-dialog` element or an outer dialog wrapper.
 
 ### Key `cy.af` helpers (defined in `libs/support/functions.js`)
 
