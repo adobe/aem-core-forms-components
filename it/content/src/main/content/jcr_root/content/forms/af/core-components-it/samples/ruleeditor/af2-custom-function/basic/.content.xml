@@ -9,7 +9,7 @@
             jcr:language="en"
             jcr:primaryType="cq:PageContent"
             jcr:title="Adaptive Form V2 (IT)"
-            sling:resourceType="forms-components-examples/components/page">
+            sling:resourceType="forms-core-components-it/components/page">
         <guideContainer
                 fd:version="2.1"
                 jcr:primaryType="nt:unstructured"
@@ -266,6 +266,30 @@
                         jcr:primaryType="nt:unstructured"
                         click="[testRemoveInstance()]"/>
             </button_476277589>
+            <legacyAddressSection
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Legacy Address Section"
+                    sling:resourceType="forms-components-examples/components/form/panelcontainer"
+                    fieldType="panel"
+                    name="legacyAddressSection"
+                    visible="{Boolean}true">
+                <streetNumber
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Street Number"
+                        sling:resourceType="forms-components-examples/components/form/textinput"
+                        fieldType="text-input"
+                        name="streetNumber"/>
+            </legacyAddressSection>
+            <hideLegacyAddressSection
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Hide Legacy Address Section"
+                    sling:resourceType="forms-components-examples/components/form/button"
+                    fieldType="button"
+                    name="hideLegacyAddressSection">
+                <fd:events
+                        jcr:primaryType="nt:unstructured"
+                        click="[hideParentSectionUsingPrivateModel(legacyAddressSection.streetNumber)]"/>
+            </hideLegacyAddressSection>
         </guideContainer>
     </jcr:content>
 </jcr:root>
