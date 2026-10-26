@@ -159,6 +159,41 @@ describe("Form Runtime with Text Input", () => {
         });
     })
 
+    it("character count updates live and respects maxLength", () => {
+        const charCountWidget = "textarea[name='textcharcount']";
+        const charCountCurrent = ".cmp-adaptiveform-textinput__charcount-current";
+
+        cy.get(charCountWidget).closest('[data-cmp-is="adaptiveFormTextInput"]').find(charCountCurrent).should('have.text', '0');
+        cy.get(charCountWidget).clear().type("hello world").then(() => {
+            cy.get(charCountWidget).closest('[data-cmp-is="adaptiveFormTextInput"]').find(charCountCurrent).should('have.text', '11');
+        });
+        // typing past the field's maxLength (20); native maxlength caps the actual value, counter must reflect the capped length
+        cy.get(charCountWidget).type(" - this extra text pushes well past the limit").then(() => {
+            cy.get(charCountWidget).invoke('val').should('have.length', 20);
+            cy.get(charCountWidget).closest('[data-cmp-is="adaptiveFormTextInput"]').find(charCountCurrent).should('have.text', '20');
+        });
+    })
+
+    it("character count stays in sync when the value is updated programmatically (rules/prefill/reset), not just by typing", () => {
+        const charCountWidget = "textarea[name='textcharcount']";
+        const charCountCurrent = ".cmp-adaptiveform-textinput__charcount-current";
+
+        cy.get(charCountWidget).closest('[data-cmp-is="adaptiveFormTextInput"]').then(($el) => {
+            const id = $el.attr('id');
+            const model = formContainer._model.getElement(id);
+
+            // simulate a value change coming from a rule/prefill/default-value (no DOM 'input' event is fired)
+            model.value = "abcdef";
+            cy.get(`#${id}`).find(charCountCurrent).should('have.text', '6');
+
+            // simulate a reset/clear of the value
+            cy.wrap(null).then(() => {
+                model.value = "";
+                cy.get(`#${id}`).find(charCountCurrent).should('have.text', '0');
+            });
+        });
+    })
+
     it("should set valid to false and errorMessage other textfields on a certain string input", () => {
         // Rule on textbox9: When textbox9 is changed => set valid and error message property of textbox10
 
@@ -193,7 +228,9 @@ describe("Form Runtime with Text Input", () => {
         const [textbox6, textBox6FieldView] = Object.entries(formContainer._fields)[5];
         const [textbox7, textBox7FieldView] = Object.entries(formContainer._fields)[6];
         const [textbox8, textBox8FieldView] = Object.entries(formContainer._fields)[7];
-        const [submitbutton1, fieldView] = Object.entries(formContainer._fields)[13]
+        const [submitbutton1, fieldView] = Object.entries(formContainer._fields).find(([id, field]) =>
+            field._model && field._model.fieldType === 'button'
+        );
 
         // 1. Required
         cy.get(`#${textbox6}`).find("input").focus().blur().then(x => {

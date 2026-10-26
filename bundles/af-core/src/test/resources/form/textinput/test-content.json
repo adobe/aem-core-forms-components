@@ -234,5 +234,24 @@
     "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
     "name" : "abc",
     "jcr:title" : "def"
+  },
+  "textinput-charactercount" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "multiLine": true,
+    "fieldType": "multiline-input",
+    "showCharacterCount": true,
+    "maxLength": 100
+  },
+  "textinput-charactercount-singleline" : {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType"    : "core/fd/components/form/textinput/v1/textinput",
+    "name" : "abc",
+    "jcr:title" : "def",
+    "fieldType": "text-input",
+    "showCharacterCount": true,
+    "maxLength": 100
   }
 }
