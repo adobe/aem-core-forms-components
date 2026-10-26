@@ -104,5 +104,6 @@
   "sortOrder": "Ordre de tri",
   "sortDirection": "Sens du tri",
   "ascending": "Croissant",
-  "descending": "Décroissant"
+  "descending": "Décroissant",
+  "edit": "Modifier"
 }
