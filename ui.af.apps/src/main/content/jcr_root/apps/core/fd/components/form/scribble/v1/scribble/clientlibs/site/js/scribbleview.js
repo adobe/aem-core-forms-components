@@ -267,6 +267,10 @@
                         signedImage.setAttribute('alt', FormView.LanguageUtils.getTranslatedString(this.lang, 'signature') || 'Signature');
                         signedImage.setAttribute('title', FormView.LanguageUtils.getTranslatedString(this.lang, 'signature') || 'Signature');
                         that.updateEmptyStatus();
+                        if (!that.element.querySelector('.cmp-adaptiveform-scribble__clear-sign')) {
+                            that.addClearSignButton();
+                            that._signSubmitted = true;
+                        }
                     }
                 }
             });
