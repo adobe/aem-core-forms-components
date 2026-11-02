@@ -498,6 +498,14 @@
                             <exclude>**/pom.xml</exclude>
                         </excludes>
                         <group>${vault.package.group}</group>
+                        <mapPackageDependencyToMavenGa>
+                            <mapping>adobe/cq60:core.wcm.components.content=com.adobe.cq:core.wcm.components.content</mapping>
+                            <mapping>adobe/cq60:core.wcm.components.examples.ui.apps=com.adobe.cq:core.wcm.components.examples.ui.apps</mapping>
+                            <mapping>adobe/cq60:core.wcm.components.examples.ui.content=com.adobe.cq:core.wcm.components.examples.ui.content</mapping>
+                            <mapping>${vault.package.group}:core-forms-components-apps=${project.groupId}:core-forms-components-apps</mapping>
+                            <mapping>${vault.package.group}:core-forms-components-af-apps=${project.groupId}:core-forms-components-af-apps</mapping>
+                            <mapping>${vault.package.group}:core-forms-components-examples-apps=${project.groupId}:core-forms-components-examples-apps</mapping>
+                        </mapPackageDependencyToMavenGa>
                         <validatorsSettings>
                             <jackrabbit-filter>
                                 <options>
