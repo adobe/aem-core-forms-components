@@ -51,6 +51,19 @@ public class ReviewImplTest {
     }
 
     @Test
+    void testGetEditActionDefaultsToFieldWhenNotAuthored() {
+        Review review = Utils.getComponentUnderTest(PATH_REVIEW + "DefaultAction", ReviewImpl.class, context);
+        assertEquals("field", review.getEditModeAction());
+        assertEquals("field", review.getProperties().get("fd:editModeAction"));
+    }
+
+    @Test
+    void testGetEditActionReturnsAuthoredValue() {
+        Review review = Utils.getComponentUnderTest(PATH_REVIEW + "PanelAction", ReviewImpl.class, context);
+        assertEquals("panel", review.getEditModeAction());
+    }
+
+    @Test
     public void testGetLinkedPanelsWithNonNullArray() throws IOException {
         Review review = Utils.getComponentUnderTest(PATH_REVIEW, ReviewImpl.class, context);
         String[] linkedPanels = review.getLinkedPanels();
