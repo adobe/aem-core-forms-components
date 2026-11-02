@@ -8,6 +8,8 @@ on:
 
 jobs:
   sync:
+    # Temporarily disabled; use GitHub's Update branch instead.
+    if: ${{ false }}
     runs-on: ubuntu-latest
 
     steps:
