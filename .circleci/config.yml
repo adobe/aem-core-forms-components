@@ -211,6 +211,19 @@ jobs:
           name: Update permissions
           command: sudo chown -R circleci /usr/local/lib/node_modules
       - run:
+          name: Use Maven 3.9.16 for FileVault compatibility
+          command: |
+            version=3.9.16
+            distribution="apache-maven-${version}"
+            directory="$(mktemp -d)"
+            archive="${directory}/${distribution}-bin.tar.gz"
+            repository="https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/${version}"
+            curl --fail --silent --show-error --location "${repository}/${distribution}-bin.tar.gz" --output "${archive}"
+            checksum="$(curl --fail --silent --show-error --location "${repository}/${distribution}-bin.tar.gz.sha512")"
+            printf '%s  %s\n' "${checksum}" "${archive}" | shasum -a 512 --check
+            tar -xzf "${archive}" -C "${directory}"
+            printf 'export MAVEN_HOME="%s/%s"\nexport PATH="$MAVEN_HOME/bin:$PATH"\n' "${directory}" "${distribution}" >> "${BASH_ENV}"
+      - run:
           name: Build with Java 21
           command: node .circleci/ci/build.js
       - save_cache:
