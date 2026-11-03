@@ -306,7 +306,8 @@
       if (editButton) {
         editButton.setAttribute(Review.selectors.fieldId, item.id);
         const currentItemLabel = item?.label?.value;
-        editButton.setAttribute('aria-label', Granite.I18n.get('Edit') + (currentItemLabel ?  " " + currentItemLabel : ""));
+        const editLabel =  FormView.LanguageUtils.getTranslatedString(this.formContainer.getLang(), 'edit') || 'Edit';
+        editButton.setAttribute('aria-label', editLabel + (currentItemLabel ?  " " + currentItemLabel : ""));
         if (item.enabled === false) {
           editButton.setAttribute('disabled', true);
         }

@@ -18,7 +18,7 @@
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
     afConstants = require('../../libs/commons/formsConstants');
 
-describe.only('Page - Authoring', function () {
+describe('Page - Authoring', function () {
 
     const dropComponent = function (responsiveGridDropZoneSelector, componentTitle, componentType) {
         cy.selectLayer("Edit");
@@ -43,10 +43,8 @@ describe.only('Page - Authoring', function () {
         dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
     }
     const dropReviewInTabComponent = function () {
-      const responsiveGridDropZoneSelector = sitesSelectors.overlays.overlay.component + "[data-text='Please drag Tab components here']";
-      cy.get(responsiveGridDropZoneSelector).eq(1).then(($element) => {
-        dropComponent($element, "Adaptive Form Review", afConstants.components.forms.resourceType.review);
-      });
+      const responsiveGridDropZoneSelector = getDropZoneSelector("/content/forms/af/core-components-it/blank/jcr:content/guideContainer/tabsontop/*");
+      dropComponent(responsiveGridDropZoneSelector, "Adaptive Form Review", afConstants.components.forms.resourceType.review);
     }
     const dropTabsInSites = function () {
         const dataPath = "/content/core-components-examples/library/adaptive-form/panelcontainer/jcr:content/root/responsivegrid/demo/component/guideContainer/*",
@@ -58,7 +56,7 @@ describe.only('Page - Authoring', function () {
         const pagePath = "/content/forms/af/core-components-it/blank",
             tabsPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/tabsontop",
             tabsContainerPathSelector = "[data-path='" + tabsPath + "']",
-            reviewPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/review",
+            reviewPath = tabsPath + "/review",
             reviewContainerPathSelector = "[data-path='" + reviewPath + "']",
             editDialogConfigurationSelector = "[data-action='CONFIGURE']",
             reviewBlockBemSelector = '.cmp-adaptiveform-review';
@@ -86,8 +84,9 @@ describe.only('Page - Authoring', function () {
                     cy.get("[name='./jcr:title']").should("exist");
                     cy.get("[name='./fd:editModeAction']").should("exist");
                     cy.get("[name='./fd:editModeAction'] coral-select-item").should("have.length", 4);
-                    cy.get("[name='./linkedPanels']").should("exist");
-                    cy.get("[name='./linkedPanels'] coral-select-item").should("have.length", 2);
+                    cy.get("[name='./fd:linkedPanels']").should("exist");
+                    cy.get("[name='./fd:linkedPanels'] coral-select-item").should("have.length", 2);
+                    cy.get('.cq-dialog-cancel').click();
                     cy.deleteComponentByPath(tabsPath);
                   })
                 });
