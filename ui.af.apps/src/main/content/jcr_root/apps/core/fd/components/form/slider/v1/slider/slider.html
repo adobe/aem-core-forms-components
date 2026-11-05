@@ -1,0 +1,64 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2026 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<sly data-sly-use.renderer="${'slider.js'}"
+     data-sly-use.clientlib="${'/libs/granite/sightly/templates/clientlib.html'}"
+     data-sly-use.label="${renderer.labelPath}"
+     data-sly-use.shortDescription="${renderer.shortDescriptionPath}"
+     data-sly-use.errorMessage="${renderer.errorMessagePath}"
+     data-sly-use.longDescription="${renderer.longDescriptionPath}"
+     data-sly-use.questionMark="${renderer.questionMarkPath}"
+     data-sly-use.formstructparser="com.adobe.cq.forms.core.components.models.form.FormStructureParser"
+     data-sly-use.slider="com.adobe.cq.forms.core.components.models.form.Slider"></sly>
+<div class="cmp-adaptiveform-slider"
+     data-cmp-is="adaptiveFormSlider"
+     data-cmp-visible="${slider.visible ? 'true' : 'false'}"
+     data-cmp-enabled="${slider.enabled ? 'true' : 'false'}"
+     data-cmp-required="${slider.required ? 'true': 'false'}"
+     data-cmp-readonly="${slider.readOnly ? 'true' : 'false'}"
+     id="${slider.id}"
+     data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}"
+     data-sly-test.widgetId="${'{0}-{1}' @ format=[slider.id, 'widget']}">
+    <div class="cmp-adaptiveform-slider__label-container">
+      <div data-sly-call="${label.label @componentId=widgetId, labelValue=slider.label.value, labelVisible=slider.label.visible, labelRichText=slider.label.richText, bemBlock='cmp-adaptiveform-slider'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=slider.id, longDescription=slider.description, bemBlock='cmp-adaptiveform-slider'}" data-sly-unwrap></div>
+    </div>
+    <div class="cmp-adaptiveform-slider__widget-container">
+        <input
+                class="cmp-adaptiveform-slider__widget"
+                id="${widgetId}"
+                title="${slider.tooltipVisible ? '' : slider.tooltipText}"
+                type="range"
+                name="${slider.name}"
+                value="${slider.default}"
+                min="${slider.minimumNumber}"
+                max="${slider.maximumNumber}"
+                step="${slider.step}"
+                data-cmp-data-layer="${slider.data.json}"
+                disabled="${!slider.enabled}"
+                aria-readonly="${slider.readOnly ? 'true' : ''}"
+                aria-required="${slider.required ? 'true' : ''}"
+                aria-describedby="${'{0}__errormessage {0}__shortdescription {0}__longdescription' @ format=slider.id}"
+                dir="auto"/>
+        <output class="cmp-adaptiveform-slider__value"
+                for="${widgetId}"
+                aria-hidden="true"></output>
+    </div>
+    <div data-sly-call="${shortDescription.shortDescription @componentId=slider.id, shortDescriptionVisible=slider.tooltipVisible, shortDescription=slider.tooltip, bemBlock='cmp-adaptiveform-slider'}" data-sly-unwrap>
+    </div>
+    <div data-sly-call="${longDescription.longDescription @componentId=slider.id, longDescription=slider.description, bemBlock='cmp-adaptiveform-slider'}" data-sly-unwrap></div>
+    <div data-sly-call="${errorMessage.errorMessage @componentId=slider.id, bemBlock='cmp-adaptiveform-slider'}" data-sly-unwrap></div>
+</div>

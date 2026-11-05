@@ -1,0 +1,40 @@
+{
+  "id": "slider-64251896d7",
+  "dataRef": "a.b",
+  "fieldType": "range",
+  "name": "abc",
+  "visible": false,
+  "description": "dummy",
+  "tooltip": "test-short-description",
+  "type": "number",
+  "required": true,
+  "enabled": true,
+  "constraintMessages": {
+    "required": "required message",
+    "minimum": "too low",
+    "maximum": "too high",
+    "step": "not on step"
+  },
+  "readOnly": false,
+  "default": 12,
+  "label": {
+    "visible": false,
+    "value": "def"
+  },
+  "screenReaderText": "Custom screen reader text",
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "afs:layout": {
+      "tooltipVisible": false
+    },
+    "fd:path": "/content/slider-customized"
+  },
+  "step": 0.5,
+  "minimum": 10,
+  "maximum": 50,
+  ":type": "core/fd/components/form/slider/v1/slider"
+}
