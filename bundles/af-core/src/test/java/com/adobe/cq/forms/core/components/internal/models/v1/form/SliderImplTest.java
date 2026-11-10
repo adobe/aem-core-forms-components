@@ -39,6 +39,7 @@ public class SliderImplTest {
     private static final String BASE = "/form/slider";
     private static final String CONTENT_ROOT = "/content";
     private static final String PATH_SLIDER = CONTENT_ROOT + "/slider";
+    private static final String PATH_SLIDER_DISABLED = CONTENT_ROOT + "/slider-disabled";
     private static final String PATH_SLIDER_CUSTOMIZED = CONTENT_ROOT + "/slider-customized";
     private static final String PATH_SLIDER_WITHOUT_FIELDTYPE = CONTENT_ROOT + "/slider-without-fieldtype";
     private static final String PATH_SLIDER_INTEGER_TYPE = CONTENT_ROOT + "/slider-integer-type";
@@ -185,6 +186,13 @@ public class SliderImplTest {
     }
 
     @Test
+    void testDisabled() {
+        Slider slider = Utils.getComponentUnderTest(PATH_SLIDER_DISABLED, Slider.class, context);
+        assertEquals(false, slider.isEnabled());
+        assertEquals(false, ((com.adobe.cq.forms.core.components.util.AbstractBaseImpl) slider).getEnabledIfPresent());
+    }
+
+    @Test
     void testGetConstraintMessages() {
         Slider slider = Utils.getComponentUnderTest(PATH_SLIDER_CUSTOMIZED, Slider.class, context);
         Map<ConstraintType, String> messages = slider.getConstraintMessages();
@@ -198,6 +206,12 @@ public class SliderImplTest {
     void testJSONExport() throws Exception {
         Slider slider = Utils.getComponentUnderTest(PATH_SLIDER, Slider.class, context);
         Utils.testJSONExport(slider, Utils.getTestExporterJSONPath(BASE, PATH_SLIDER));
+    }
+
+    @Test
+    void testJSONExportDisabled() throws Exception {
+        Slider slider = Utils.getComponentUnderTest(PATH_SLIDER_DISABLED, Slider.class, context);
+        Utils.testJSONExport(slider, Utils.getTestExporterJSONPath(BASE, PATH_SLIDER_DISABLED));
     }
 
     @Test

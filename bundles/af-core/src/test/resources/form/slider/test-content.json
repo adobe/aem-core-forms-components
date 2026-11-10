@@ -11,6 +11,17 @@
     "step": "5",
     "default": "20"
   },
+  "slider-disabled": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/slider/v1/slider",
+    "name": "disabled",
+    "fieldType": "range",
+    "minimum": "0",
+    "maximum": "10",
+    "step": "1",
+    "default": "4",
+    "enabled": false
+  },
   "slider-customized": {
     "jcr:primaryType": "nt:unstructured",
     "sling:resourceType": "core/fd/components/form/slider/v1/slider",

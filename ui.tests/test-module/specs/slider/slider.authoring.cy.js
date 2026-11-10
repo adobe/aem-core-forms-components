@@ -73,8 +73,8 @@ describe('Page - Authoring', function () {
             dropSliderInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + sliderEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get("[name='./minimum']").clear().type("50");
-            cy.get("[name='./maximum']").clear().type("10").blur();
+            cy.get(sliderBlockBemSelector + '__minimum').clear().type("50");
+            cy.get(sliderBlockBemSelector + '__maximum').clear().type("10").blur();
             cy.get(sliderBlockBemSelector + '__maximum').find('[data-foundation-validation-message], .coral-Form-errorlabel').should('exist');
             cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
                 cy.deleteComponentByPath(sliderDrop);
@@ -85,7 +85,7 @@ describe('Page - Authoring', function () {
             dropSliderInContainer();
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + sliderEditPathSelector);
             cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get("[name='./step']").clear().type("0").blur();
+            cy.get(sliderBlockBemSelector + '__step').clear().type("0").blur();
             cy.get(sliderBlockBemSelector + '__step').find('[data-foundation-validation-message], .coral-Form-errorlabel').should('exist');
             cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
                 cy.deleteComponentByPath(sliderDrop);

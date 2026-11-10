@@ -129,8 +129,11 @@ describe("Form with Slider", () => {
     });
 
     it("should disable the widget of a disabled slider", () => {
-        const [id, field] = getSliderEntries()[3];
-        cy.get(`#${id}`).find('input').should('be.disabled');
+        const [id, field] = getSliderEntries().find(([, f]) => f.getModel().name === 'slider4');
+        cy.wrap(null).should(() => {
+            expect(field.getModel().enabled, "model is disabled").to.equal(false);
+        });
+        cy.get(`#${id}`).find('input').should('have.attr', 'disabled');
         field.getModel().enabled = true;
         cy.get(`#${id}`).find('input').should('not.be.disabled');
     });
