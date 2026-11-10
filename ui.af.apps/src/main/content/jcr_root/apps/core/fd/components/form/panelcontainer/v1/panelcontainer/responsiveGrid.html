@@ -54,7 +54,7 @@
          style="${container.backgroundStyle @ context='styleString'}">
         <div class="cmp-container__label-container" role="heading">
           <div data-sly-call="${label.label @componentId=panel.id, labelValue=panel.label.value, labelVisible=panel.label.visible, labelRichText=panel.label.richText, bemBlock='cmp-container'}" data-sly-unwrap></div>
-          <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container'}" data-sly-unwrap></div>
+          <div data-sly-call="${questionMark.questionMark @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container', componentTitle=panel.label.value}" data-sly-unwrap></div>
         </div>
         <div data-sly-call="${shortDescription.shortDescription @componentId=panel.id, shortDescriptionVisible=panel.tooltipVisible, shortDescription=panel.tooltip, bemBlock='cmp-container'}" data-sly-unwrap></div>
         <div data-sly-call="${longDescription.longDescription @componentId=panel.id, longDescription=panel.description, bemBlock='cmp-container'}" data-sly-unwrap></div>
