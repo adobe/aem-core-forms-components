@@ -1,0 +1,91 @@
+{
+  "slider": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/slider/v1/slider",
+    "name": "abc",
+    "jcr:title": "def",
+    "fieldType": "range",
+    "customProp": "customPropValue",
+    "minimum": "0",
+    "maximum": "100",
+    "step": "5",
+    "default": "20"
+  },
+  "slider-disabled": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/slider/v1/slider",
+    "name": "disabled",
+    "fieldType": "range",
+    "minimum": "0",
+    "maximum": "10",
+    "step": "1",
+    "default": "4",
+    "enabled": false
+  },
+  "slider-customized": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/slider/v1/slider",
+    "name": "abc",
+    "jcr:title": "def",
+    "hideTitle": true,
+    "description": "dummy",
+    "visible": false,
+    "readOnly": false,
+    "enabled": true,
+    "required": true,
+    "mandatoryMessage": "required message",
+    "minimumMessage": "too low",
+    "maximumMessage": "too high",
+    "stepMessage": "not on step",
+    "assistPriority": "custom",
+    "dataRef": "a.b",
+    "custom": "Custom screen reader text",
+    "tooltip": "test-short-description",
+    "fieldType": "range",
+    "type": "number",
+    "minimum": 10,
+    "maximum": 50,
+    "step": 0.5,
+    "default": 12
+  },
+  "slider-without-fieldtype": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/slider/v1/slider",
+    "name": "abc",
+    "jcr:title": "def",
+    "minimum": "1",
+    "maximum": "10"
+  },
+  "slider-integer-type": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/slider/v1/slider",
+    "name": "abc",
+    "jcr:title": "def",
+    "fieldType": "range",
+    "type": "integer",
+    "minimum": "0",
+    "maximum": "10",
+    "step": "1"
+  },
+  "slider-datalayer": {
+    "jcr:primaryType": "nt:unstructured",
+    "sling:resourceType": "core/fd/components/form/slider/v1/slider",
+    "name": "abc",
+    "jcr:title": "def",
+    "fieldType": "range",
+    "minimum": "0",
+    "maximum": "100",
+    "step": "10",
+    "fd:dor": {
+      "jcr:primaryType": "nt:unstructured"
+    },
+    "dataLayer": {
+      "jcr:primaryType": "nt:unstructured",
+      "slider-datalayer": {
+        "jcr:primaryType": "nt:unstructured",
+        "dc:title": "Slider",
+        "@type": "core/fd/components/form/slider/v1/slider"
+      }
+    }
+  }
+}
