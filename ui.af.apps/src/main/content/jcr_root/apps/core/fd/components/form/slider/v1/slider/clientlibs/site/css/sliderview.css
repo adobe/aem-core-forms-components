@@ -13,53 +13,41 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-.cmp-adaptiveform-slider__label-container {
-    display: flex;
-    align-items: center;
-}
 
-.cmp-adaptiveform-slider__widget-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-}
+/* All visual styles live in the theme canvas:
+ * aem-forms-theme-canvas/src/components/slider/_slider.scss
+ */
 
-.cmp-adaptiveform-slider__widget {
-    flex: 1 1 auto;
-    min-width: 0;
-    box-sizing: border-box;
-    margin: 0;
-    min-height: 44px;
-}
+.cmp-adaptiveform-slider {}
 
-.cmp-adaptiveform-slider__widget:focus {
-    outline: 2px solid #0265DC;
-    outline-offset: 2px;
-}
+.cmp-adaptiveform-slider__label-container {}
 
-.cmp-adaptiveform-slider__widget[aria-invalid="true"] {
-    outline: 2px solid #D7373F;
-    outline-offset: 2px;
-}
+.cmp-adaptiveform-slider__widget-container {}
 
-.cmp-adaptiveform-slider__widget:disabled {
-    cursor: not-allowed;
-}
+.cmp-adaptiveform-slider__widget {}
 
-.cmp-adaptiveform-slider__value {
-    flex: 0 0 auto;
-    min-width: 3ch;
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-}
+.cmp-adaptiveform-slider__widget:focus {}
 
-.cmp-adaptiveform-slider__errormessage {
-    color: #D7373F;
-}
+.cmp-adaptiveform-slider__widget[aria-invalid="true"] {}
+
+.cmp-adaptiveform-slider__widget:disabled {}
+
+.cmp-adaptiveform-slider__value {}
+
+.cmp-adaptiveform-slider__longdescription {}
+
+.cmp-adaptiveform-slider__longdescription p {}
+
+.cmp-adaptiveform-slider__shortdescription {}
+
+.cmp-adaptiveform-slider__questionmark {}
+
+.cmp-adaptiveform-slider__errormessage {}
+
+.cmp-adaptiveform-slider[data-cmp-valid="false"] {}
+
+.cmp-adaptiveform-slider[data-cmp-valid="true"] {}
 
 @media (max-width: 480px) {
-    .cmp-adaptiveform-slider__widget-container {
-        gap: 8px;
-    }
+    .cmp-adaptiveform-slider__widget-container {}
 }
