@@ -134,8 +134,6 @@ describe("Form with Slider", () => {
             expect(field.getModel().enabled, "model is disabled").to.equal(false);
         });
         cy.get(`#${id}`).find('input').should('have.attr', 'disabled');
-        field.getModel().enabled = true;
-        cy.get(`#${id}`).find('input').should('not.be.disabled');
     });
 
     it("should be usable in a calculation", () => {

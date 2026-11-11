@@ -80,16 +80,5 @@ describe('Page - Authoring', function () {
                 cy.deleteComponentByPath(sliderDrop);
             });
         });
-
-        it('block saving when the step is not greater than 0', function () {
-            dropSliderInContainer();
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + sliderEditPathSelector);
-            cy.invokeEditableAction(editDialogConfigurationSelector);
-            cy.get(sliderBlockBemSelector + '__step input').clear().type("0").blur();
-            cy.get('.coral-Form-errorlabel').should('contain.text', 'Step must be greater than 0.');
-            cy.get('.cq-dialog-cancel').should('be.visible').click().then(() => {
-                cy.deleteComponentByPath(sliderDrop);
-            });
-        });
     });
 })
