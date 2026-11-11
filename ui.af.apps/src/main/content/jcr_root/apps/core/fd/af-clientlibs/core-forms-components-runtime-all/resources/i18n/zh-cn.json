@@ -104,5 +104,7 @@
   "sortOrder": "排序顺序",
   "sortDirection": "排序方向",
   "ascending": "升序",
-  "descending": "降序"
+  "descending": "降序",
+  "showPassword": "显示密码",
+  "hidePassword": "隐藏密码"
 }

@@ -28,6 +28,7 @@
     <imagechoice/>
     <numberinput/>
     <panelcontainer/>
+    <passwordinput/>
     <radiobutton/>
     <resetbutton/>
     <submitbutton/>

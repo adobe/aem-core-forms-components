@@ -63,5 +63,7 @@
   "sortOrder": "Sort order",
   "sortDirection": "Sort direction",
   "ascending": "Ascending",
-  "descending": "Descending"
+  "descending": "Descending",
+  "showPassword": "Show password",
+  "hidePassword": "Hide password"
 }

@@ -104,5 +104,7 @@
   "sortOrder": "並べ替え順序",
   "sortDirection": "並べ替え方向",
   "ascending": "昇順",
-  "descending": "降順"
+  "descending": "降順",
+  "showPassword": "パスワードを表示",
+  "hidePassword": "パスワードを非表示"
 }

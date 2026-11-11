@@ -104,5 +104,7 @@
   "sortOrder": "정렬 순서",
   "sortDirection": "정렬 방향",
   "ascending": "오름차순",
-  "descending": "내림차순"
+  "descending": "내림차순",
+  "showPassword": "비밀번호 표시",
+  "hidePassword": "비밀번호 숨기기"
 }

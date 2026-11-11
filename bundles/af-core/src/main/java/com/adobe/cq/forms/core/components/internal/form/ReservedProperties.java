@@ -152,6 +152,7 @@ public final class ReservedProperties {
     public static final String PN_SHOW_AS_POPUP = "showAsPopup";
     public static final String PN_TEXT_IS_RICH = "textIsRich";
     public static final String PN_MULTILINE = "multiLine";
+    public static final String PN_SHOW_HIDE_PASSWORD = "showHidePassword";
     public static final String PN_DESIGN_DEFAULT_TYPE = Title.PN_DESIGN_DEFAULT_TYPE;
     public static final String PN_TITLE_LINK_DISABLED = Title.PN_TITLE_LINK_DISABLED;
     public static final String PN_DRAG_DROP_TEXT = "dragDropText";
@@ -173,6 +174,7 @@ public final class ReservedProperties {
     public static final String FD_DIALOG_LABEL = "fd:dialogLabel";
     public static final String FD_XFA_SCRIPTS = "fd:xfaScripts";
     public static final String FD_FILE_ACCEPT_EXTENSIONS = "fd:acceptExtensions";
+    public static final String FD_SHOW_HIDE_PASSWORD = "fd:showHidePassword";
 
     public static final String FD_DRAFT_ID = "fd:draftId";
     public static final String FD_CHANGE_EVENT_BEHAVIOUR = "fd:changeEventBehaviour";
