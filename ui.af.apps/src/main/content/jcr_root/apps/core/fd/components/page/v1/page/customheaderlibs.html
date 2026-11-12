@@ -22,8 +22,8 @@
     <sly data-sly-test.clientLibRef="${formstructparser.clientLibRefFromFormContainer}">
         <sly data-sly-call="${clientlib.css @ categories=clientLibRef}"/>
     </sly>
-    <sly data-sly-test.clientLibRefTheme="${formstructparser.themeEditorThemeRef}">
+    <sly data-sly-set.themeOverride="${formstructparser.themeEditorThemeRef}"/>
+    <sly data-sly-test.clientLibRefTheme="${themeOverride ? themeOverride : formstructparser.themeClientLibRefFromFormContainer}">
         <sly data-sly-call="${clientlib.css @ categories=clientLibRefTheme}"/>
     </sly>
 </sly>
-

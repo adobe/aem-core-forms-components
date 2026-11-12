@@ -25,6 +25,7 @@ import java.util.stream.StreamSupport;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.http.entity.ContentType;
+import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,11 +37,14 @@ import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.Utils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
 import com.adobe.cq.forms.core.components.models.form.FormContainer;
+import com.adobe.cq.forms.core.components.views.Views;
 import com.adobe.cq.forms.core.context.FormsCoreComponentTestContext;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.msm.api.MSMNameConstants;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import io.wcm.testing.mock.aem.junit5.AemContext;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
@@ -110,6 +114,27 @@ public class FormContainerImplTest {
     void testGetId() throws Exception {
         FormContainer formContainer = getFormContainerUnderTest(PATH_FORM_1);
         assertNotNull(formContainer.getId());
+    }
+
+    @Test
+    void testSavedThemeCategoryDoesNotChangeJsonExport() throws Exception {
+        Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
+        FormContainer original = resource.adaptTo(FormContainer.class);
+        assertNotNull(original);
+        assertNull(original.getThemeClientLibRef());
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode publishJson = mapper.readTree(Utils.getJson(original, Views.Publish.class));
+        JsonNode authorJson = mapper.readTree(Utils.getCompleteJson(original));
+
+        resource.adaptTo(ModifiableValueMap.class).put(FormContainer.PN_THEME_CLIENT_LIB_REF, "adaptiveform.theme.canvas3");
+        FormContainer saved = context.resourceResolver().getResource(PATH_FORM_1).adaptTo(FormContainer.class);
+        assertNotNull(saved);
+        assertEquals("adaptiveform.theme.canvas3", saved.getThemeClientLibRef());
+        assertEquals(publishJson, mapper.readTree(Utils.getJson(saved, Views.Publish.class)));
+        assertEquals(authorJson, mapper.readTree(Utils.getCompleteJson(saved)));
+        assertNull(mapper.valueToTree(saved).get("themeClientLibRef"));
+        context.currentResource(PATH_FORM_1);
+        assertEquals("adaptiveform.theme.canvas3", context.request().adaptTo(FormContainer.class).getThemeClientLibRef());
     }
 
     // The test is wrong. It was putting a form element inside a form element.

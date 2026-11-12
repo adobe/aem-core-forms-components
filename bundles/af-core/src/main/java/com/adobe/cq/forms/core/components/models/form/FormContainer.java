@@ -64,6 +64,13 @@ public interface FormContainer extends Container {
      */
     String PN_CLIENT_LIB_REF = GuideConstants.CLIENT_LIB_REF;
 
+    /**
+     * Name of the resource property containing the saved Theme Client Library category used by AEM 6.5.
+     *
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    String PN_THEME_CLIENT_LIB_REF = "themeClientLibRef";
+
     String DEFAULT_FORMS_SPEC_VERSION = "0.15.2";
 
     /**
@@ -119,6 +126,18 @@ public interface FormContainer extends Container {
     @Nullable
     @JsonIgnore
     default String getClientLibRef() {
+        return null;
+    }
+
+    /**
+     * Returns the saved Theme Client Library category used by AEM 6.5, independently of request Theme Editor overrides.
+     *
+     * @return saved theme client library category, or {@code null} if absent
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    @Nullable
+    @JsonIgnore
+    default String getThemeClientLibRef() {
         return null;
     }
 
