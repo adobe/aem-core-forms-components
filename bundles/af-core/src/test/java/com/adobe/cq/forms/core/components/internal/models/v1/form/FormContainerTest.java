@@ -71,6 +71,13 @@ public class FormContainerTest {
     }
 
     @Test
+    void testGetThemeClientLibRefDefaultsToNull() {
+        FormContainer formContainerMock = Mockito.mock(FormContainer.class);
+        Mockito.when(formContainerMock.getThemeClientLibRef()).thenCallRealMethod();
+        assertEquals(null, formContainerMock.getThemeClientLibRef());
+    }
+
+    @Test
     void testGetFormData() {
         FormContainer formContainerMock = Mockito.mock(FormContainer.class);
         Mockito.when(formContainerMock.getFormData()).thenCallRealMethod();

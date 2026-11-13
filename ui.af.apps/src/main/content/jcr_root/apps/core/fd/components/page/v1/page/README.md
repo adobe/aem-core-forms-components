@@ -23,7 +23,12 @@ Adaptive Form Core Page component v1 which extends the wcm  [Page](https://githu
 * This is the page component for the Adaptive Form Core Components. The v1 version of the component extends the site
   page component. This component loads all the required javascripts in the footers and all the required css clientlibs
   in the headers.
-
+* A request `themeOverride` that resolves to a usable Theme Editor client library category takes precedence over the
+  form container's saved `themeClientLibRef` category used by AEM 6.5. Without a usable override, the saved category
+  is loaded only when present. The generic `clientLibRef` is loaded independently, after runtime CSS.
+* Cloud configuration-based `themeRef` loading remains separate and unchanged. The shared header's saved-category
+  lookup normally returns null for Cloud forms without `themeClientLibRef`; an explicitly saved category can also
+  be used on Cloud. This compatibility fallback is property-based, not platform-gated.
 
 
 

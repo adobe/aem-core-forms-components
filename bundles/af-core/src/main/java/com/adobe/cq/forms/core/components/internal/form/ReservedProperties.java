@@ -157,6 +157,7 @@ public final class ReservedProperties {
     public static final String PN_DRAG_DROP_TEXT = "dragDropText";
     public static final String PN_DRAG_DROP_TEXT_V3 = "fd:dragDropText";
     public static final String PN_CLIENTLIB_REF = "clientLibRef";
+    public static final String PN_THEME_CLIENTLIB_REF = FormContainer.PN_THEME_CLIENT_LIB_REF;
     public static final String PN_REDIRECT = "redirect";
     public static final String PN_PREFILL_SERVICE = "prefillService";
     public static final String PN_SPEC_VERSION = "specVersion";
