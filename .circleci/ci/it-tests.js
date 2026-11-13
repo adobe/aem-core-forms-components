@@ -201,6 +201,7 @@ try {
                         console.log(`Starting core SNAPSHOT bundle (ID: ${coreSnapshotId.trim()})...`);
                         ci.sh(`curl -s -u admin:admin -F action=start http://localhost:4502/system/console/bundles/${coreSnapshotId.trim()}`);
                     }
+                    ci.sh('curl -fsS --connect-timeout 10 --max-time 60 -u admin:admin -F action=refreshPackages http://localhost:4502/system/console/bundles');
                     
                     console.log('Waiting 30 seconds for OSGi to re-wire bundles...');
                     ci.sh('sleep 10');
@@ -225,6 +226,7 @@ try {
                         const criticalBundles = ci.sh('curl -s -u admin:admin http://localhost:4502/system/console/bundles.json | jq -r \'.data | map(select((.symbolicName | contains("core-forms-components")) and (.version | contains("SNAPSHOT")))) | .[] | "\\(.symbolicName): \\(.state)"\'', true);
                         console.log('Critical SNAPSHOT bundle states:');
                         console.log(criticalBundles);
+                        throw new Error('OSGi bundle readiness failed after package refresh');
                     }
                 }
             }
