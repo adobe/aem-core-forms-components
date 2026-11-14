@@ -782,7 +782,7 @@
                 return;
             }
             const focusable = Array.from(container.querySelectorAll(
-                'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'
             )).filter((el) => el.offsetParent !== null);
             if (focusable.length === 0) {
                 event.preventDefault();
