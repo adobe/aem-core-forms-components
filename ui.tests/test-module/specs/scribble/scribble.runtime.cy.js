@@ -199,16 +199,30 @@ describe('Form Runtime with Scribble Input', () => {
             cy.focused().should('have.class', 'cmp-adaptiveform-scribble__canvas-signed-container');
         });
 
+        const getFocusable = ($container) => Cypress.$($container).find(
+            'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'
+        ).filter(':visible');
+
         it('should keep focus inside the dialog when tabbing past the last control', () => {
             openDialog();
-            cy.get('.cmp-adaptiveform-scribble__close-button').focus().trigger('keydown', { key: 'Tab', bubbles: true });
-            cy.focused().should('have.class', 'cmp-adaptiveform-scribble__control-brush');
+            cy.get('.cmp-adaptiveform-scribble__container').then(($container) => {
+                const $focusable = getFocusable($container);
+                const first = $focusable.first()[0];
+                const last = $focusable.last()[0];
+                cy.wrap(last).focus().trigger('keydown', { key: 'Tab', bubbles: true });
+                cy.focused().should(($el) => expect($el[0]).to.equal(first));
+            });
         });
 
         it('should keep focus inside the dialog when shift-tabbing past the first control', () => {
             openDialog();
-            cy.get('.cmp-adaptiveform-scribble__control-brush').focus().trigger('keydown', { key: 'Tab', shiftKey: true, bubbles: true });
-            cy.focused().should('have.class', 'cmp-adaptiveform-scribble__close-button');
+            cy.get('.cmp-adaptiveform-scribble__container').then(($container) => {
+                const $focusable = getFocusable($container);
+                const first = $focusable.first()[0];
+                const last = $focusable.last()[0];
+                cy.wrap(first).focus().trigger('keydown', { key: 'Tab', shiftKey: true, bubbles: true });
+                cy.focused().should(($el) => expect($el[0]).to.equal(last));
+            });
         });
 
         it('should be reopenable after closing', () => {
