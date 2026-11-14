@@ -703,6 +703,7 @@
             }
             const container = this.getScribbleContainer();
             container.style.display = 'block';
+            this.makeModal(container);
             // Set focus to the modal container for accessibility
             container.setAttribute('tabindex', '-1');
             container.focus();
@@ -710,6 +711,94 @@
 
         hideScribbleModal() {
             this.getScribbleContainer().style.display = 'none';
+            this.releaseModal();
+        }
+
+        makeModal(container) {
+            if (this._modalActive) {
+                return;
+            }
+            this._modalActive = true;
+            this._previouslyFocused = document.activeElement;
+
+            const backdrop = document.createElement('div');
+            backdrop.className = 'cmp-adaptiveform-scribble__backdrop';
+            container.parentNode.insertBefore(backdrop, container);
+            this._backdrop = backdrop;
+
+            // z-index only applies to positioned elements; keep the dialog above the backdrop
+            if (window.getComputedStyle(container).position === 'static') {
+                container.style.position = 'relative';
+            }
+
+            // Make everything outside the dialog inert, at every ancestor level up to body
+            this._inertElements = [];
+            let node = container;
+            while (node && node !== document.body) {
+                const parent = node.parentNode;
+                if (!parent) {
+                    break;
+                }
+                Array.from(parent.children).forEach((sibling) => {
+                    if (sibling !== node && sibling !== backdrop && !sibling.hasAttribute('inert')) {
+                        sibling.setAttribute('inert', '');
+                        this._inertElements.push(sibling);
+                    }
+                });
+                node = parent;
+            }
+
+            this._modalKeydownHandler = (event) => this.modalKeydownHandler(event, container);
+            container.addEventListener('keydown', this._modalKeydownHandler);
+        }
+
+        releaseModal() {
+            if (!this._modalActive) {
+                return;
+            }
+            this._modalActive = false;
+            (this._inertElements || []).forEach((el) => el.removeAttribute('inert'));
+            this._inertElements = [];
+            this._backdrop?.remove();
+            this._backdrop = null;
+            if (this._modalKeydownHandler) {
+                this.getScribbleContainer()?.removeEventListener('keydown', this._modalKeydownHandler);
+                this._modalKeydownHandler = null;
+            }
+            const previous = this._previouslyFocused;
+            this._previouslyFocused = null;
+            if (previous && document.contains(previous) && typeof previous.focus === 'function') {
+                previous.focus();
+            }
+        }
+
+        modalKeydownHandler(event, container) {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                this.closeEditModal();
+                return;
+            }
+            if (event.key !== 'Tab') {
+                return;
+            }
+            const focusable = Array.from(container.querySelectorAll(
+                'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )).filter((el) => el.offsetParent !== null);
+            if (focusable.length === 0) {
+                event.preventDefault();
+                container.focus();
+                return;
+            }
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            const active = document.activeElement;
+            if (event.shiftKey && (active === first || active === container)) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && active === last) {
+                event.preventDefault();
+                first.focus();
+            }
         }
 
         scribbleContainerClickHandler() {

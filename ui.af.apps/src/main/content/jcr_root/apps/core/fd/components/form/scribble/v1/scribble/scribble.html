@@ -51,7 +51,7 @@
     <div data-sly-call="${longDescription.longDescription @componentId= scribble.id, longDescription=scribble.description, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
 
     <div data-sly-call="${errorMessage.errorMessage @componentId=scribble.id, bemBlock='cmp-adaptiveform-scribble'}" data-sly-unwrap></div>
-      <div class="cmp-adaptiveform-scribble__container" tabindex="0" role="dialog" aria-label="${'pleaseSignText' @ i18n}">
+      <div class="cmp-adaptiveform-scribble__container" tabindex="0" role="dialog" aria-modal="true" aria-label="${'pleaseSignText' @ i18n}">
       <div class="cmp-adaptiveform-scribble__header" aria-live="polite" role="heading">${scribble.dialogLabel}</div>
         <div class="cmp-adaptiveform-scribble__content">
           <div class="cmp-adaptiveform-scribble__canvases">

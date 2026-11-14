@@ -151,6 +151,76 @@ describe('Form Runtime with Scribble Input', () => {
         });
     });
 
+    describe('scribble dialog modal behavior', () => {
+        const openDialog = () => {
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+        };
+
+        it('should declare aria-modal on the dialog', () => {
+            cy.get('.cmp-adaptiveform-scribble__container').should('have.attr', 'aria-modal', 'true');
+        });
+
+        it('should show a backdrop and make the rest of the page inert while open', () => {
+            cy.get('.cmp-adaptiveform-scribble__backdrop').should('not.exist');
+            openDialog();
+            cy.get('.cmp-adaptiveform-scribble__backdrop').should('exist');
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').should('have.attr', 'inert');
+            cy.get('.cmp-adaptiveform-scribble__container').should('not.have.attr', 'inert');
+            cy.get('.cmp-adaptiveform-scribble__container').parents().each(($el) => {
+                expect($el[0].hasAttribute('inert'), 'ancestor is not inert').to.be.false;
+            });
+        });
+
+        it('should remove backdrop and inert when closed with the close button', () => {
+            openDialog();
+            cy.get('.cmp-adaptiveform-scribble__close-button').click();
+            cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+            cy.get('.cmp-adaptiveform-scribble__backdrop').should('not.exist');
+            cy.get('[inert]').should('not.exist');
+        });
+
+        it('should remove backdrop and inert after saving a signature', () => {
+            openDialog();
+            cy.get('.cmp-adaptiveform-scribble__control-text').click();
+            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').type('test');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
+            cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+            cy.get('.cmp-adaptiveform-scribble__backdrop').should('not.exist');
+            cy.get('[inert]').should('not.exist');
+        });
+
+        it('should close on Escape and return focus to the trigger', () => {
+            openDialog();
+            cy.get('.cmp-adaptiveform-scribble__container').type('{esc}');
+            cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+            cy.get('.cmp-adaptiveform-scribble__backdrop').should('not.exist');
+            cy.get('[inert]').should('not.exist');
+            cy.focused().should('have.class', 'cmp-adaptiveform-scribble__canvas-signed-container');
+        });
+
+        it('should keep focus inside the dialog when tabbing past the last control', () => {
+            openDialog();
+            cy.get('.cmp-adaptiveform-scribble__close-button').focus().trigger('keydown', { key: 'Tab', bubbles: true });
+            cy.focused().should('have.class', 'cmp-adaptiveform-scribble__control-brush');
+        });
+
+        it('should keep focus inside the dialog when shift-tabbing past the first control', () => {
+            openDialog();
+            cy.get('.cmp-adaptiveform-scribble__control-brush').focus().trigger('keydown', { key: 'Tab', shiftKey: true, bubbles: true });
+            cy.focused().should('have.class', 'cmp-adaptiveform-scribble__close-button');
+        });
+
+        it('should be reopenable after closing', () => {
+            openDialog();
+            cy.get('.cmp-adaptiveform-scribble__close-button').click();
+            openDialog();
+            cy.get('.cmp-adaptiveform-scribble__backdrop').should('have.length', 1);
+            cy.get('.cmp-adaptiveform-scribble__close-button').click();
+            cy.get('[inert]').should('not.exist');
+        });
+    });
+
     it('should have 2 attachments with correct data prefix in getFormDataObject', () => {
         const ssPagePath = 'content/forms/af/core-components-it/samples/scribble/ss.html';
         cy.previewForm(ssPagePath).then(formContainer => {
