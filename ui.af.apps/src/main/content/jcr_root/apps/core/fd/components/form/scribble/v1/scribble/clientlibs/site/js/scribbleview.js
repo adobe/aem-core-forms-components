@@ -276,7 +276,12 @@
             const ctx = canvas.getContext('2d');
             const width = canvas.width;
             const height = canvas.height;
-            
+
+            // A zero-sized canvas (e.g. hidden in text-sign mode) has no pixels and getImageData would throw
+            if (!width || !height) {
+                return true;
+            }
+
             // Get pixel data from the canvas
             const imageData = ctx.getImageData(0, 0, width, height);
             
@@ -316,6 +321,8 @@
         
                 this.closeEditModal();
                 this._signSubmitted = true;
+            } else {
+                this.disableControl(['save', 'clearSign']);
             }
         }
 
@@ -561,18 +568,10 @@
         
             this.addEventListeners(controlPanel, 'click', this.controlPanelClickHandler.bind(this));
         
-            keyboardSignBox.addEventListener('input', (event) => {
-                if (event?.target?.value) {
-                    this.enableControls(['save', 'clearSign']);
-                } else {
-                    this.disableControl(['save', 'clearSign']);
-                }
-            });
-        
-            keyboardSignBox.addEventListener('keyup', () => {
+            keyboardSignBox.addEventListener('input', () => {
                 this.updateKeyboardSignBoxFont(keyboardSignBox);
             });
-        
+
             document.addEventListener('click', (event) => {
                 if (!brushList.contains(event.target) && !toggleBrushListIcon.contains(event.target)) {
                     brushList.style.display = 'none';
@@ -613,7 +612,15 @@
             }
             fontSize = Math.max(minFontSize, fontSize);
             ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
-            ctx.fillText(value, 0, canvas.height / 2);
+            if (value.trim()) {
+                ctx.fillText(value, 0, canvas.height / 2);
+            }
+            // Enable save only when something is actually drawn, whitespace-only text draws nothing
+            if (this.isCanvasEmpty(canvas)) {
+                this.disableControl(['save', 'clearSign']);
+            } else {
+                this.enableControls(['save', 'clearSign']);
+            }
         }
 
         enableSignatureTextBox() {
@@ -639,6 +646,10 @@
             let imgData = null;
             if (this.canvas.width > 0 && this.canvas.height > 0) {
                 imgData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+            }
+            // Hidden canvas (text-sign mode) reports 0 size, resizing now would wipe it to 0x0
+            if (!this.canvas.offsetWidth || !this.canvas.offsetHeight) {
+                return;
             }
             this.canvas.width = this.canvas.offsetWidth * dpr;
             this.canvas.height = this.canvas.offsetHeight * dpr;
