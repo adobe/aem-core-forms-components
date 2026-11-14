@@ -346,8 +346,10 @@
         updateSignedImage(newData) {
             const img = this.getSignedCanvasImage();
             img.src = newData;
-            img.style.width = '100%';
+            img.style.width = 'auto';
             img.style.height = '150px';
+            img.style.maxWidth = '100%';
+            img.style.objectFit = 'contain';
         }
 
         addClearSignButton() {
