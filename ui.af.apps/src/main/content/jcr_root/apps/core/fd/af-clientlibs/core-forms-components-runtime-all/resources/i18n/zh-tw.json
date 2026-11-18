@@ -93,5 +93,16 @@
   "clearSign": "清除簽名",
   "brushSize": "筆刷大小：",
   "geoLocationError": "擷取地理位置時出錯",
-  "geoLocationFetch": "正在擷取地理位置…"
+  "geoLocationFetch": "正在擷取地理位置…",
+  "sortTable": "排序表格",
+  "filterTable": "篩選表格",
+  "sort": "排序",
+  "filter": "篩選",
+  "sortOptions": "排序選項",
+  "sortBy": "排序方式",
+  "sortColumns": "排序欄位",
+  "sortOrder": "排序順序",
+  "sortDirection": "排序方向",
+  "ascending": "升序",
+  "descending": "降序"
 }

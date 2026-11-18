@@ -15,6 +15,21 @@
     "sling:resourceType": "forms-components-examples/components/form/numberinput",
     "fieldType": "number-input"
   },
+  "textinputWithPropertiesRule": {
+    "jcr:primaryType": "nt:unstructured",
+    "name": "name",
+    "sling:resourceType": "forms-components-examples/components/form/textinput",
+    "fieldType": "text-input",
+    "fd:rules": {
+      "jcr:primaryType": "nt:unstructured",
+      "visible": "some expression",
+      "properties": "merge($field.properties, {a: 1})",
+      "properties.employer": "some property expression",
+      "properties.employer.category": "some nested property expression",
+      "notARule": "should be dropped",
+      "propertiesFoo": "should be dropped"
+    }
+  },
   "datepicker": {
     "jcr:primaryType": "nt:unstructured",
     "name": "datepicker1666939496905",

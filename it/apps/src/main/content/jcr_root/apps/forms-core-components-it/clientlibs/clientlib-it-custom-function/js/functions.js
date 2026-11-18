@@ -329,3 +329,12 @@ function removePanelInstance(panel,globals)
         globals.functions.dispatchEvent(p, 'initialize');
     })
 }
+
+/**
+ * Hides a field's parent section using legacy private model access.
+ * @name hideParentSectionUsingPrivateModel
+ * @param {object} hideSom field in the section to hide
+ */
+function hideParentSectionUsingPrivateModel(hideSom) {
+    hideSom._options.parent._setProperty('visible', false);
+}

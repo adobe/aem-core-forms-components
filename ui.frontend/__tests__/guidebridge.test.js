@@ -14,6 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 
+jest.mock('@aemforms/af-webmcp', () => ({registerFormWebMCP: jest.fn()}));
+
 import {Constants} from "../src/index";
 import FormContainer from "../src/view/FormContainer";
 import formJson from './resources/form.json';
@@ -53,14 +55,18 @@ test('GuideBridge test', () => {
            const resetButton = resultModel.getElement("reset-c7cccb1a5e");
            expect(resetButton).not.toBeNull();
            expect(resetButton.visible).toBeFalsy();
+           guideBridge.unloadAdaptiveForm("/a/b/c");
+           expect(unregisterWebMcp).toHaveBeenCalledTimes(1);
        }});
 
    });
+   const unregisterWebMcp = jest.fn();
    var formContainer = new FormContainer({
        _formJson: formJson,
        _prefillData: {data: {"textinput1662370110841" : "initialData"}},
        _path: "/a/b/c"
    });
+   formContainer._setWebMcpUnregister(unregisterWebMcp);
    const event = new CustomEvent(Constants.FORM_CONTAINER_INITIALISED, { "detail": formContainer });
    document.dispatchEvent(event);
 });

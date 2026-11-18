@@ -141,7 +141,10 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.wait('@ruleEditorRequest').then((interception) => {
             expect(interception.response.statusCode).to.equal(201);
             const submittedData = Object.fromEntries(new URLSearchParams(interception.request.body));
-            expect(submittedData[":content"]).contains("\"fd:events\":{\"change\":[\"if(contains($event.payload.changes[].propertyName, 'value'), if($field.$value == 'abc', {visible : false()}, {}), {})\"]}");
+            const submittedContent = JSON.parse(submittedData[":content"]);
+            expect(submittedContent["fd:events"].change).to.deep.equal([
+                "if(contains($event.payload.changes[].propertyName, 'value'), if($field.$value == 'abc', {visible : false()}, {}), {})"
+            ]);
         });
 
         // check and close rule editor
@@ -466,27 +469,55 @@ describe('Rule editor authoring sanity for core-components',function(){
             cy.deleteComponentByPath(datePickerEditPath);
         })
 
-        it('should add rule on texbox equality operator to hide a text box', function () {
-            cy.openAuthoring(formPath);
-            cy.selectLayer("Edit");
-            cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
+        context('Text box equality rule', function () {
+            const contextPath = Cypress.env('crx.contextPath') || '';
+            const resetTextInput = () => {
+                // Retries must not reuse a persisted field whose saved rules survived a failed assertion.
+                const deleteProperty = textinputEditPath.split('/').pop() + '@Delete';
+                return cy.request(contextPath + '/libs/granite/csrf/token.json').its('body.token').then(token => {
+                    return cy.window().then(win => win.fetch(contextPath + formContainerPath, {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        body: new win.URLSearchParams({
+                            [deleteProperty]: '',
+                            ':cq_csrf_token': token
+                        }).toString()
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('Unable to clean rule-editor text input: HTTP ' + response.status);
+                        }
+                    }));
+                }).then(() => {
+                    return cy.request({
+                        url: contextPath + textinputEditPath + '.json',
+                        failOnStatusCode: false
+                    }).its('status').should('equal', 404);
+                });
+            };
 
-            cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
-                "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
-            // cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textinputEditPathSelector);
-            // cy.get(formsSelectors.ruleEditor.action.configure).should("exist");
-            // cy.get(formsSelectors.ruleEditor.action.configure).click();
-            // cy.get(".cmp-adaptiveform-base__editdialogbasic [name='./name']").clear().type("textinput");
-            // cy.get(".cq-dialog-actions.cq-dialog-submit").click();
+            beforeEach(() => {
+                cy.openAuthoring(formPath);
+                resetTextInput();
+                cy.openSiteAuthoring(formPath);
+                cy.selectLayer("Edit");
+            });
 
-            cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textinputEditPathSelector);
+            afterEach(() => {
+                resetTextInput();
+            });
 
-            createRuleToHideTextInputOnEqualityOperator();
-            cy.get(sitesSelectors.overlays.overlay.component + textinputEditPathSelector).should("exist");
+            it('should add rule on texbox equality operator to hide a text box', function () {
+                cy.get(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']").should("exist");
 
-            cy.selectLayer("Edit");
-            cy.deleteComponentByPath(textinputEditPath);
-        })
+                cy.insertComponent(sitesSelectors.overlays.overlay.component + "[data-path='" + formContainerPath + "/*']",
+                    "Adaptive Form Text Box", afConstants.components.forms.resourceType.formtextinput);
+                cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + textinputEditPathSelector);
+
+                createRuleToHideTextInputOnEqualityOperator();
+                cy.get(sitesSelectors.overlays.overlay.component + textinputEditPathSelector).should("exist");
+            });
+        });
 
         it('should add submission handler rules on form', function () {
             if (toggle_array.includes("FT_FORMS-13209")) {
