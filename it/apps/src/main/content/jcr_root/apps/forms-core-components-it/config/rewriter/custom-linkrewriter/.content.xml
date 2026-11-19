@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+  jcr:primaryType="nt:unstructured"
+  contentTypes="[text/html]"
+  enabled="{Boolean}true"
+  generatorType="htmlparser"
+  order="1"
+  paths="[/content]"
+  serializerType="htmlwriter"
+  transformerTypes="[custom-linkrewriter]">
+  <generator-htmlparser
+    jcr:primaryType="nt:unstructured"
+    includeTags="[LINK,SCRIPT]" />
+</jcr:root>
