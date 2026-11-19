@@ -32,6 +32,9 @@ const classicFormAddonVersion = latestVersion !== null ? latestVersion : '6.0.13
 // this value is for 6.5.21.0 version as per, https://experienceleague.adobe.com/en/docs/experience-manager-release-information/aem-release-updates/forms-updates/aem-forms-releases
 const classicFormReleasedAddonVersion = '6.0.1360';
 
+const cloudflared = require('./cloudflared.js');
+let tunnelHandle = null;
+
 try {
     let wcmVersion = "2.32.4";
     ci.stage("Integration Tests");
@@ -125,6 +128,15 @@ try {
             ci.sh(`./qp.sh start --id author`);
             // add a sleep for 7 mins, add-on takes times to come up
             ci.sh(`sleep 8m`);
+        }
+
+        // Phase 1 (Universal Editor): expose the localhost-only author over a
+        // public https://<name>.trycloudflare.com URL so the Universal Editor
+        // (running under experience.adobe.com) can reach the LTS instance.
+        if (AEM === 'classic-lts') {
+            cloudflared.install();
+            tunnelHandle = cloudflared.start();
+            cloudflared.persistUrl(cloudflared.fetchUrl());
         }
 });
 
@@ -307,6 +319,8 @@ try {
     ci.dir('examples/core', createCoverageReport);
 
 } finally {
+    // Always tear down the Universal Editor tunnel (if started)
+    cloudflared.stop(tunnelHandle);
     // Always download logs from AEM container
     ci.sh('mkdir logs');
     ci.dir('logs', () => {

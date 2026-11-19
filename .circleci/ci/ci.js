@@ -70,6 +70,44 @@ module.exports = class CI {
         }
     };
 
+    /**
+     * Run a long-lived shell command in the background (non-blocking).
+     *
+     * Unlike sh(), which uses execSync and blocks until the command exits, this
+     * spawns a detached process and returns immediately. stdout and stderr are
+     * redirected to the given log file so callers can later scrape it (e.g. for
+     * a generated URL) and stop the process. Returns a handle { pid, logFile }.
+     */
+    shBackground(command, logFile = 'background.log') {
+        console.log('[background] ' + command);
+        const fd = fs.openSync(logFile, 'a');
+        const child = e.spawn(command, {
+            shell: true,
+            detached: true,
+            stdio: ['ignore', fd, fd]
+        });
+        child.unref();
+        return { pid: child.pid, logFile: logFile };
+    };
+
+    /**
+     * Poll a log file until its content matches the given regex or the timeout
+     * elapses. Returns the first match (match[0]) or throws on timeout.
+     */
+    waitForLogMatch(logFile, regex, timeoutSec = 60, intervalSec = 2) {
+        const deadline = Date.now() + timeoutSec * 1000;
+        while (Date.now() < deadline) {
+            if (fs.existsSync(logFile)) {
+                const match = fs.readFileSync(logFile, 'utf8').match(regex);
+                if (match) {
+                    return match[0];
+                }
+            }
+            this.sh('sleep ' + intervalSec, false, false);
+        }
+        throw new Error('Timed out after ' + timeoutSec + 's waiting for ' + regex + ' in ' + logFile);
+    };
+
     fetchLatestArtifactVersion(groupId, artifactId, versionPrefix = '6.0.') {
       const curlCommand = `curl -v -u ${process.env.DOCKER_USER}:${process.env.DOCKER_PASS} "https://artifactory-uw2.adobeitc.com/artifactory/api/search/versions?g=${groupId}&a=${artifactId}&repos=maven-aemforms-release"`;
         console.log("Executing curl command:", curlCommand); // Log the curl command for debugging
