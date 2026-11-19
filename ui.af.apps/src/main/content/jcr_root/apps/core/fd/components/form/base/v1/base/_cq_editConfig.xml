@@ -43,7 +43,7 @@
                 hidden="{Boolean}true"
                 icon="tableColumnRemove"
                 text="Delete Column"/>
-        <!-- <mergeheadercells
+        <mergeheadercells
                 jcr:primaryType="nt:unstructured"
                 condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableHeaderCell(editable); }"
                 handler="CQ.FormsCoreComponents.editorhooks.mergeTableHeaderCells"
@@ -56,7 +56,7 @@
                 handler="CQ.FormsCoreComponents.editorhooks.splitTableHeaderCell"
                 hidden="{Boolean}true"
                 icon="tableCellsSplit"
-                text="Split Cell"/> -->
+                text="Split Cell"/>
         <mergerowcells
                 jcr:primaryType="nt:unstructured"
                 condition="function(editable){ return CQ.FormsCoreComponents.editorhooks.isCoreTableRowCell(editable); }"

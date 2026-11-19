@@ -61,6 +61,11 @@ public class HCaptchaImplTest {
         }
 
         @Override
+        public String getCustomFunctionFranklinProxyUrl(Resource resource) {
+            return null;
+        }
+
+        @Override
         public HCaptchaConfiguration getHCaptchaCloudConfiguration(Resource resource) throws GuideException {
             return hCaptchaConfiguration;
         }

@@ -23,6 +23,8 @@ const sitesSelectors = require('../../libs/commons/sitesSelectors'),
  */
 describe('Page - Authoring', function () {
   // we can use these values to log in
+  let toggle_array = [];
+  const FT_NGDM_IMAGE_PICKER = "FT_FORMS-26424";
 
   const dropImageInContainer = function() {
     const dataPath = "/content/forms/af/core-components-it/blank/jcr:content/guideContainer/*",
@@ -70,6 +72,34 @@ describe('Page - Authoring', function () {
     cy.deleteComponentByPath(imageDrop);
   }
 
+  // FT_FORMS-26424 (Next Gen Dynamic Media): the image dialog renders one of two
+  // fileupload widgets via granite:rendercondition -
+  //   - "file" (NGDM), when the toggle is ON, shows a "Pick" split-button dropdown
+  //     (`.polaris-dropdown` / `.polaris-dd-menu`) offering "Local" and "Remote" asset sources.
+  //   - "fileLegacy", when the toggle is OFF, shows a plain "Pick" button with no dropdown.
+  const testImageFilePickerBehaviour = function(imageEditPathSelector, imageDrop, isSites) {
+    if (isSites) {
+      dropImageInSites();
+    } else {
+      dropImageInContainer();
+    }
+    cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + imageEditPathSelector);
+    cy.invokeEditableAction("[data-action='CONFIGURE']");
+    cy.get("[name='./file']").should("exist");
+    if (toggle_array.includes(FT_NGDM_IMAGE_PICKER)) {
+      // NGDM picker: dropdown with Local/Remote options
+      cy.get("[name='./file'] .polaris-dropdown .polaris-dd-button").should("exist").and("contain.text", "Pick");
+      cy.get("[name='./file'] .polaris-dd-menu li.cq-FileUpload-picker").should("exist").and("contain.text", "Local");
+      cy.get("[name='./file'] .polaris-dd-menu li.cq-FileUpload-picker-polaris").should("exist").and("contain.text", "Remote");
+    } else {
+      // Legacy picker: plain Pick button, no dropdown
+      cy.get("[name='./file'] .polaris-dropdown").should("not.exist");
+      cy.get("[name='./file'] button.cq-FileUpload-picker").first().should("exist").and("contain.text", "Pick");
+    }
+    cy.get('.cq-dialog-cancel').click();
+    cy.deleteComponentByPath(imageDrop);
+  }
+
   context('Open Forms Editor', function() {
     const pagePath = "/content/forms/af/core-components-it/blank",
         imageEditPath = pagePath + afConstants.FORM_EDITOR_FORM_CONTAINER_SUFFIX + "/image",
@@ -78,6 +108,11 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      cy.fetchFeatureToggles().then((response) => {
+        if (response.status === 200) {
+          toggle_array = response.body.enabled;
+        }
+      });
     });
 
     it('insert Image in form container', function () {
@@ -99,6 +134,10 @@ describe('Page - Authoring', function () {
       cy.get('.cq-dialog-cancel').click();
       cy.deleteComponentByPath(imageDrop);
     });
+
+    it('verify file picker widget based on FT_FORMS-26424 (NGDM) toggle', function(){
+      testImageFilePickerBehaviour(imageEditPathSelector, imageDrop);
+    });
   });
 
   context('Open Sites Editor', function () {
@@ -110,6 +149,11 @@ describe('Page - Authoring', function () {
     beforeEach(function () {
       // this is done since cypress session results in 403 sometimes
       cy.openAuthoring(pagePath);
+      cy.fetchFeatureToggles().then((response) => {
+        if (response.status === 200) {
+          toggle_array = response.body.enabled;
+        }
+      });
     });
 
     it('insert aem forms Image', function () {
@@ -119,6 +163,10 @@ describe('Page - Authoring', function () {
 
     it('open edit dialog of aem forms Image', function() {
       testImageBehaviour(imageEditPathSelector, imageDrop, true);
+    });
+
+    it('verify file picker widget based on FT_FORMS-26424 (NGDM) toggle', function(){
+      testImageFilePickerBehaviour(imageEditPathSelector, imageDrop, true);
     });
 
   });

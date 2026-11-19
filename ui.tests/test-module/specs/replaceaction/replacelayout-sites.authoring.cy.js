@@ -15,7 +15,10 @@
  */
 
 
+/* global Cypress */
+
 const sitesSelectors = require('../../libs/commons/sitesSelectors'),
+    sitesConstants = require('../../libs/commons/sitesConstants'),
     afConstants = require('../../libs/commons/formsConstants');
 
 /**
@@ -25,6 +28,19 @@ describe('Replace functionality - sites', function () {
     // we can use these values to log in
     const pagePath = "/content/forms/sites/core-components-it/blank",
         pageDropZoneSuffix = "/jcr:content/root/responsivegrid/container";
+
+    const replaceDialog = '.cmp-replace-dialog-search-components:visible';
+
+    const selectReplacement = (resourceTypeSelector, componentPath) => {
+        cy.initializeEventHandlerOnChannel(sitesConstants.EVENT_NAME_EDITABLES_UPDATED).as('replacementEditableUpdated');
+        cy.initializeEventHandlerOnChannel(sitesConstants.EVENT_NAME_OVERLAYS_REPOSITIONED).as('replacementOverlaysRepositioned');
+        cy.intercept('POST', '**' + componentPath).as('replaceComponent');
+        cy.get(replaceDialog + ' ' + resourceTypeSelector).should('be.visible').click();
+        cy.wait('@replaceComponent').its('response.statusCode').should('be.oneOf', [200, 201]);
+        cy.get(replaceDialog).should('not.exist');
+        cy.get('@replacementEditableUpdated').its('done').should('equal', true);
+        cy.get('@replacementOverlaysRepositioned').its('done').should('equal', true);
+    };
 
     const dropComponentInSites = function (componentName, resourceType) {
         const dataPath = "/content/forms/sites/core-components-it/blank/jcr:content/root/responsivegrid/container/container/*",
@@ -46,14 +62,13 @@ describe('Replace functionality - sites', function () {
         cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + editPathSelector);
         cy.invokeEditableAction("[data-action='replace']"); // this line is causing frame busting which is causing cypress to fail
 
-        cy.get('.cmp-replace-dialog-search-components').should('exist');
+        cy.get(replaceDialog).should('be.visible');
         // Check If Dialog Options Are Visible
         cy.get(textInput)
             .should("not.exist");
         cy.get(submitButton)
             .should("exist");
-        cy.get(title)
-            .click();
+        selectReplacement(title, pagePath + pageDropZoneSuffix + "/container/button");
 
         cy.get('[title="'+titleName+'"]')
             .should('exist');
@@ -85,8 +100,7 @@ describe('Replace functionality - sites', function () {
             .should("exist");
         cy.get(wizard)
             .should("exist");
-        cy.get(accordion)
-            .click();
+        selectReplacement(accordion, pagePath + pageDropZoneSuffix + "/container/panelcontainer");
         cy.get(accordionDefaultPanel)
             .should("not.exist");
 
@@ -107,38 +121,56 @@ describe('Replace functionality - sites', function () {
             testButtonReplaceBehaviour(buttonEditPathSelector);
         });
 
-        it('test behaviour of replace button', function () {
+        it('test behaviour of replace panel with accordion', function () {
             testPanelReplaceBehaviourWithAccordion(panelEditPathSelector);
+        });
+
+        it('recovers when the first insert action is lost during an editor refresh', function () {
+            cy.intercept('POST', '**/content/forms/sites/core-components-it/blank/**', (request) => {
+                request.on('response', (response) => response.setDelay(500));
+            });
+            const lostInsertAction = cy.stub().as('lostInsertAction');
+            cy.window().then((win) => {
+                const discardFirstInsert = (event) => {
+                    if (event.target.closest(sitesSelectors.editableToolbar.actions.insert)) {
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        win.document.removeEventListener('click', discardFirstInsert, true);
+                        lostInsertAction();
+                    }
+                };
+                win.document.addEventListener('click', discardFirstInsert, true);
+            });
+            testButtonReplaceBehaviour(buttonEditPathSelector);
+            cy.get('@lostInsertAction').should('have.been.calledOnce');
         });
 
     });
 
-    const checkTestGroupPolicy = () => {
-        cy.openAuthoring("/conf/core-components-examples/settings/wcm/templates/content-page/structure");
-        cy.get('[data-text="Layout Container"]').eq(0).click()
-            .then(() => {
-                cy.get('.cq-editable-action').eq(3).click().then(() => {
-                    cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
-                        cy.get('[title="Done"]').scrollIntoView().click();
-                    })
-                });
-            });
-    }
-
-    const uncheckTestGroupPolicy = () => {
-        cy.openSiteAuthoring("/conf/core-components-examples/settings/wcm/templates/content-page/structure");
-        cy.get('[data-text="Layout Container"]').eq(0).click()
-            .then(() => {
-                cy.get('.cq-editable-action').eq(3).click().then(() => {
-                    cy.get('[value="group:replace test group"]').eq(0).click().then(() => {
-                        cy.get('[title="Done"]').scrollIntoView().click();
-                    })
-                });
-            });
-    }
-
     context('Test replace action within different groups', function () {
         const templatePath = "/conf/core-components-examples/settings/wcm/templates/content-page/structure";
+        const policyDialog = '.cq-dialog:visible:has([value="group:replace test group"])',
+            policyCheckbox = policyDialog + ' [value="group:replace test group"]';
+        let originalTestGroupAllowed;
+
+        const updateTestGroupPolicy = (allow) => {
+            cy.openEditableToolbar(sitesSelectors.overlays.overlay.self + '[data-path="' + templatePath + '/jcr:content/root/responsivegrid"]');
+            cy.invokeEditableAction(sitesSelectors.editableToolbar.actions.policy);
+            cy.get(policyCheckbox).first().scrollIntoView().should('be.visible').invoke('prop', 'checked')
+                .should('be.a', 'boolean').then((checked) => {
+                    if (originalTestGroupAllowed === undefined) {
+                        originalTestGroupAllowed = checked;
+                    }
+                    if (checked !== allow) {
+                        cy.get(policyCheckbox).first().click();
+                    }
+                });
+            cy.get(policyCheckbox).first().should('have.prop', 'checked', allow);
+            cy.intercept('POST', '**/conf/core-components-examples/settings/wcm/policies/**').as('saveReplacePolicy');
+            cy.get(policyDialog + ' [title="Done"]').scrollIntoView().should('be.visible').click();
+            cy.wait('@saveReplacePolicy').its('response.statusCode').should('be.oneOf', [200, 201]);
+            cy.get(policyDialog).should('not.exist');
+        };
 
         const   pagePath = "/content/forms/sites/core-components-it/blank",
             replaceCompTestGroup = "/apps/forms-core-components-it/form/image",
@@ -153,23 +185,31 @@ describe('Replace functionality - sites', function () {
             replaceCompTestGroupDrop = pagePath + containerSuffix + "/container/image";
 
         beforeEach(function () {
-            checkTestGroupPolicy();
+            originalTestGroupAllowed = undefined;
+            cy.openAuthoring(templatePath);
+            updateTestGroupPolicy(true);
         });
 
         afterEach(function () {
-            uncheckTestGroupPolicy();
+            if (originalTestGroupAllowed !== undefined) {
+                cy.openSiteAuthoring(templatePath);
+                updateTestGroupPolicy(originalTestGroupAllowed);
+            }
         });
 
         it('test behaviour of replace within different groups same component type', function () {
             cy.openSiteAuthoring(pagePath);
             cy.selectLayer("Edit");
+            cy.cleanTest(editPath);
             cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Image", afConstants.components.forms.resourceType.formimage);
             cy.get('body').click( 0,0);
 
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + editPathSelector);
             cy.invokeEditableAction("[data-action='replace']");
 
-            cy.get(image).click();
+            selectReplacement(image, editPath);
+            cy.request((Cypress.env('crx.contextPath') || '') + editPath + '.0.json')
+                .its('body.sling:resourceType').should('equal', replaceCompTestGroup.replace('/apps/', ''));
 
             cy.deleteComponentByPath(replaceCompTestGroupDrop);
         });
@@ -180,13 +220,16 @@ describe('Replace functionality - sites', function () {
 
             cy.openSiteAuthoring(pagePath);
             cy.selectLayer("Edit");
+            cy.cleanTest(buttonEditPath);
 
             cy.insertComponent(responsiveGridDropZoneSelector, "Adaptive Form Button", afConstants.components.forms.resourceType.formbutton);
             cy.get('body').click( 0,0);
 
             cy.openEditableToolbar(sitesSelectors.overlays.overlay.component + buttonEditPathSelector);
             cy.invokeEditableAction("[data-action='replace']");
-            cy.get(image).click();
+            selectReplacement(image, buttonEditPath);
+            cy.request((Cypress.env('crx.contextPath') || '') + buttonEditPath + '.0.json')
+                .its('body.sling:resourceType').should('equal', replaceCompTestGroup.replace('/apps/', ''));
             cy.deleteComponentByPath(buttonEditPath);
         });
     });

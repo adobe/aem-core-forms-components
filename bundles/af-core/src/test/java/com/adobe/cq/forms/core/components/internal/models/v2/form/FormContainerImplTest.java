@@ -485,6 +485,7 @@ public class FormContainerImplTest {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "de");
         request.setParameterMap(paramMap);
+        Utils.disableLocaleFeatureToggleLookup(request);
         context.currentResource().adaptTo(FormContainer.class);
         return request.adaptTo(FormContainer.class);
     }
@@ -507,6 +508,7 @@ public class FormContainerImplTest {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(GuideConstants.AF_LANGUAGE_PARAMETER, "ar-ae");
         request.setParameterMap(paramMap);
+        Utils.disableLocaleFeatureToggleLookup(request);
         context.currentResource().adaptTo(FormContainer.class);
         return request.adaptTo(FormContainer.class);
     }
@@ -674,6 +676,61 @@ public class FormContainerImplTest {
         } finally {
             System.clearProperty(FeatureToggleConstants.FT_ALLOW_MULTIPLE_FIELDS_IN_WHEN);
         }
+    }
+
+    @Test
+    void testGetSetPropertyBehaviourFromNode() throws Exception {
+        Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
+        resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_SET_PROPERTY_BEHAVIOUR, "eager");
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals("eager", formContainer.getProperties().get(ReservedProperties.FD_SET_PROPERTY_BEHAVIOUR));
+    }
+
+    @Test
+    void testSetPropertyBehaviourAbsentWhenNotAuthored() throws Exception {
+        // No node value and no toggle-driven default — the runtime falls back to "async".
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertNull(formContainer.getProperties().get(ReservedProperties.FD_SET_PROPERTY_BEHAVIOUR));
+    }
+
+    @Test
+    void testWebMcpEnabledAbsentWhenNotAuthored() throws Exception {
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertFalse(formContainer.getProperties().containsKey(ReservedProperties.FD_WEB_MCP_ENABLED));
+        JsonNode properties = new ObjectMapper().readTree(Utils.getJson(formContainer, Views.Publish.class)).get("properties");
+        assertFalse(properties.has(ReservedProperties.FD_WEB_MCP_ENABLED));
+    }
+
+    @Test
+    void testWebMcpEnabledFromNode() throws Exception {
+        assertWebMcpEnabledExport(true, true);
+    }
+
+    @Test
+    void testWebMcpDisabledFromNode() throws Exception {
+        assertWebMcpEnabledExport(false, false);
+    }
+
+    @Test
+    void testWebMcpEnabledFromStringNode() throws Exception {
+        assertWebMcpEnabledExport("true", true);
+    }
+
+    @Test
+    void testWebMcpDisabledFromStringNode() throws Exception {
+        assertWebMcpEnabledExport("false", false);
+    }
+
+    private void assertWebMcpEnabledExport(Object authoredValue, boolean enabled) throws Exception {
+        Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
+        resource.adaptTo(ModifiableValueMap.class).put(ReservedProperties.FD_WEB_MCP_ENABLED, authoredValue);
+        FormContainer formContainer = Utils.getComponentUnderTest(PATH_FORM_1, FormContainer.class, context);
+        assertEquals(enabled, formContainer.getProperties().get(ReservedProperties.FD_WEB_MCP_ENABLED));
+        JsonNode property = new ObjectMapper().readTree(Utils.getJson(formContainer, Views.Publish.class))
+            .get("properties").get(ReservedProperties.FD_WEB_MCP_ENABLED);
+        assertNotNull(property);
+        assertTrue(property.isBoolean());
+        assertEquals(enabled, property.booleanValue());
     }
 
     @Test

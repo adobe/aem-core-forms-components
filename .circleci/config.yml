@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   codecov: codecov/codecov@1.0.5
   browser-tools: circleci/browser-tools@1.4.3
+  node: circleci/node@7.2.1
 
 common:
   restore_cache: &restore_cache
@@ -15,6 +16,8 @@ common:
   cypress_test_steps: &cypress_test_steps
     steps:
       - checkout
+      - node/install:
+          node-version: "22.23.4"
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run:
@@ -55,7 +58,7 @@ common:
           command: npm install chrome-launcher
       - run:
           name: Install lighthouse
-          command: npm install lighthouse
+          command: npm install --save-exact lighthouse@13.6.0
       - run:
           name: Install Web Driver
           command: npm install selenium-webdriver
@@ -202,6 +205,19 @@ jobs:
       - run:
           name: Update permissions
           command: sudo chown -R circleci /usr/local/lib/node_modules
+      - run:
+          name: Use Maven 3.9.16 for FileVault compatibility
+          command: |
+            version=3.9.16
+            distribution="apache-maven-${version}"
+            directory="$(mktemp -d)"
+            archive="${directory}/${distribution}-bin.tar.gz"
+            repository="https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/${version}"
+            curl --fail --silent --show-error --location "${repository}/${distribution}-bin.tar.gz" --output "${archive}"
+            checksum="$(curl --fail --silent --show-error --location "${repository}/${distribution}-bin.tar.gz.sha512")"
+            printf '%s  %s\n' "${checksum}" "${archive}" | shasum -a 512 --check
+            tar -xzf "${archive}" -C "${directory}"
+            printf 'export MAVEN_HOME="%s/%s"\nexport PATH="$MAVEN_HOME/bin:$PATH"\n' "${directory}" "${distribution}" >> "${BASH_ENV}"
       - run:
           name: Build with Java 21
           command: node .circleci/ci/build.js

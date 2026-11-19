@@ -93,5 +93,16 @@
   "clearSign": "署名をクリア",
   "brushSize": "ブラシサイズ :",
   "geoLocationError": "位置情報の取得中にエラーが発生しました",
-  "geoLocationFetch": "位置情報を取得しています..."
+  "geoLocationFetch": "位置情報を取得しています...",
+  "sortTable": "テーブルを並べ替え",
+  "filterTable": "テーブルをフィルター",
+  "sort": "並べ替え",
+  "filter": "フィルター",
+  "sortOptions": "並べ替えオプション",
+  "sortBy": "並べ替え基準",
+  "sortColumns": "列を並べ替え",
+  "sortOrder": "並べ替え順序",
+  "sortDirection": "並べ替え方向",
+  "ascending": "昇順",
+  "descending": "降順"
 }
