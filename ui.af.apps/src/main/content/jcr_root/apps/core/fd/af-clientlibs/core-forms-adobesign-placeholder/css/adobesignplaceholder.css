@@ -1,0 +1,52 @@
+/*******************************************************************************
+ * Copyright 2026 Adobe
+ *
+ * Global Adobe Sign placeholder styles for the Forms v2 editor and in-place RTE.
+ * Matches foundation fd/afaddon/adobesign/common (guide.theme2.common).
+ * Must be global — RTE and authoring overlays are not under .cmp-adaptiveform-adobesignblock__value.
+ ******************************************************************************/
+
+[data-adobesigntype]::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+[data-adobesigntype]::-moz-selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+[data-adobesigntype] {
+    width: 6rem;
+    display: inline-block;
+    color: rgba(0, 0, 0, 0);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.3);
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+[data-adobesigntype='radio'],
+[data-adobesigntype='checkbox'] {
+    border-bottom-width: 0;
+    background-repeat: no-repeat;
+    background-position: left center;
+    width: 3rem;
+    min-height: 10px;
+}
+
+[data-adobesigntype='radio'] {
+    background-image: url(../resources/images/radiobutton.svg);
+}
+
+[data-adobesigntype='checkbox'] {
+    background-image: url(../resources/images/checkbox.svg);
+}
+
+[data-adobesigntype='dropdown'] {
+    background-image: url(../resources/images/dropdown_chevron.svg);
+    background-repeat: no-repeat;
+    background-position: right center;
+}
