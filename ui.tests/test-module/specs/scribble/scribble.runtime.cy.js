@@ -151,6 +151,50 @@ describe('Form Runtime with Scribble Input', () => {
         });
     });
 
+    describe('text signature with whitespace only', () => {
+        const openTextSign = () => {
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+            cy.get('.cmp-adaptiveform-scribble__control-text').click();
+            return cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('be.visible');
+        };
+
+        it('should keep save and clear disabled when only spaces are typed', () => {
+            cy.window().then((win) => {
+                cy.spy(win.console, 'error').as('consoleError');
+            });
+            openTextSign().type('   ');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
+            cy.get('.cmp-adaptiveform-scribble__control-clear').should('be.disabled');
+            cy.get('@consoleError').should('not.have.been.called');
+        });
+
+        it('should disable save again when typed text is deleted', () => {
+            openTextSign().type('abc');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
+            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').type('{backspace}{backspace}{backspace}');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
+        });
+
+        it('should disable save when text is replaced by spaces only', () => {
+            openTextSign().type('a');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
+            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').clear().type('  ');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
+        });
+
+        it('should save a text signature with leading spaces without errors', () => {
+            cy.window().then((win) => {
+                cy.spy(win.console, 'error').as('consoleError');
+            });
+            openTextSign().type('  abc');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
+            cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'src').and('not.be.empty');
+            cy.get('@consoleError').should('not.have.been.called');
+        });
+    });
+
     it('should have 2 attachments with correct data prefix in getFormDataObject', () => {
         const ssPagePath = 'content/forms/af/core-components-it/samples/scribble/ss.html';
         cy.previewForm(ssPagePath).then(formContainer => {
