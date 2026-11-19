@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0"
+          jcr:primaryType="cq:Page">
+    <jcr:content
+            cq:deviceGroups="[mobile/groups/responsive]"
+            cq:template="/conf/core-components-examples/settings/wcm/templates/af-blank-v2"
+            jcr:language="en"
+            jcr:primaryType="cq:PageContent"
+            jcr:title="Adaptive Form V2 (IT)"
+            sling:resourceType="forms-components-examples/components/page">
+        <guideContainer
+                fd:version="2.1"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="forms-components-examples/components/form/container"
+                fieldType="form"
+                schemaType="none"
+                textIsRich="true"
+                thankYouMessage="Thank you for submitting the form."
+                thankYouOption="page">
+            <passwordinput1
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Password Input 1"
+                    sling:resourceType="forms-components-examples/components/form/passwordinput"
+                    fieldType="password"
+                    name="passwordinput1"/>
+            <passwordinput2
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Password Input 2 (toggle disabled)"
+                    sling:resourceType="forms-components-examples/components/form/passwordinput"
+                    fieldType="password"
+                    name="passwordinput2"
+                    showHidePassword="{Boolean}false"/>
+            <passwordinput3
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Password Input 3 (length constrained)"
+                    sling:resourceType="forms-components-examples/components/form/passwordinput"
+                    fieldType="password"
+                    name="passwordinput3"
+                    minLength="{Long}8"
+                    maxLength="{Long}20"
+                    minLengthMessage="Password must be at least 8 characters."
+                    maxLengthMessage="Password must be at most 20 characters."/>
+            <passwordinput4
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Password Input With Tooltip, Description, Tooltip always visible"
+                    sling:resourceType="forms-components-examples/components/form/passwordinput"
+                    description="This is long description"
+                    fieldType="password"
+                    mandatoryMessage="custom mandatory message!"
+                    name="passwordinput4"
+                    required="true"
+                    tooltip="This is short description"
+                    tooltipVisible="true"/>
+            <passwordinput5
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Password Input 5 (disabled)"
+                    sling:resourceType="forms-components-examples/components/form/passwordinput"
+                    enabled="{Boolean}false"
+                    fieldType="password"
+                    name="passwordinput5"/>
+        </guideContainer>
+    </jcr:content>
+</jcr:root>

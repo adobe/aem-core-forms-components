@@ -104,5 +104,7 @@
   "sortOrder": "Orden de clasificación",
   "sortDirection": "Dirección de ordenación",
   "ascending": "Ascendente",
-  "descending": "Descendente"
+  "descending": "Descendente",
+  "showPassword": "Mostrar contraseña",
+  "hidePassword": "Ocultar contraseña"
 }

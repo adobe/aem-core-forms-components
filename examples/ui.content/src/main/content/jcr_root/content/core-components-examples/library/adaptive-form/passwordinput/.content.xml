@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:fd="http://www.adobe.com/aemfd/fd/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+  jcr:primaryType="cq:Page">
+    <jcr:content
+      cq:lastModified="{Date}2026-07-29T00:00:00.000+00:00"
+      cq:lastModifiedBy="admin"
+      cq:tags="[]"
+      cq:template="/conf/core-components-examples/settings/wcm/templates/content-page"
+      jcr:description="Password Input"
+      jcr:primaryType="cq:PageContent"
+      jcr:title="Password Input"
+      sling:resourceType="forms-components-examples/components/page">
+        <root
+          jcr:primaryType="nt:unstructured"
+          sling:resourceType="wcm/foundation/components/responsivegrid">
+            <responsivegrid
+              jcr:primaryType="nt:unstructured"
+              sling:resourceType="wcm/foundation/components/responsivegrid">
+                <text_1740702242
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="core/wcm/components/text/v2/text"
+                  text="&lt;h1>Password Input&lt;sub>v1&lt;/sub>&lt;/h1>"
+                  textIsRich="true"/>
+                <text
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="core/wcm/components/text/v2/text"
+                  text="&lt;p>The Adaptive Form Password Input Core Component is used to collect passwords from users. It renders a masked text box with an optional show/hide visibility toggle button, and supports the same length and pattern validations as the Text Input component.&lt;/p>"
+                  textIsRich="true"/>
+                <teaser
+                  jcr:primaryType="nt:unstructured"
+                  jcr:description="&lt;p>GitHub&lt;/p>&#xd;&#xa;"
+                  jcr:title="Technical Documentation"
+                  sling:resourceType="core-components-examples/components/teaser"
+                  actionsEnabled="false"
+                  descriptionFromPage="false"
+                  fileReference="/content/dam/core-components-examples/library/github-logo.svg"
+                  linkURL="https://github.com/adobe/aem-core-forms-components/tree/master/ui.af.apps/src/main/content/jcr_root/apps/core/fd/components/form/passwordinput/v1/passwordinput"
+                  textIsRich="true"
+                  titleFromPage="false"/>
+                <title_865328581
+                  jcr:primaryType="nt:unstructured"
+                  jcr:title="Examples"
+                  sling:resourceType="core/wcm/components/title/v2/title"
+                  type="h2"/>
+                <title_290384409
+                  jcr:primaryType="nt:unstructured"
+                  jcr:title="Standard"
+                  sling:resourceType="core/wcm/components/title/v2/title"
+                  type="h3"/>
+                <text_1337506762
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="core/wcm/components/text/v2/text"
+                  text="&lt;p>A simple Password Input with the show/hide toggle enabled.&lt;/p>"
+                  textIsRich="true"/>
+                <demo
+                  jcr:primaryType="nt:unstructured"
+                  sling:resourceType="forms-components-examples/components/demo">
+                    <component
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="forms-components-examples/components/demo/component">
+                        <guideContainer
+                          fd:version="2.1"
+                          fieldType="form"
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="forms-components-examples/components/form/container">
+                            <container
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="forms-components-examples/components/demo/component">
+                                <passwordinput_demo
+                                  jcr:title="Password"
+                                  fieldType="password"
+                                  jcr:primaryType="nt:unstructured"
+                                  description="&lt;p>This is a long description.&lt;/p>"
+                                  tooltip="&lt;p>This is a short description.&lt;/p>"
+                                  tooltipVisible="true"
+                                  minLength="{Long}8"
+                                  showHidePassword="{Boolean}true"
+                                  sling:resourceType="forms-components-examples/components/form/passwordinput"/>
+                            </container>
+                        </guideContainer>
+                    </component>
+                    <info
+                      jcr:primaryType="nt:unstructured"
+                      sling:resourceType="core-components-examples/components/tabs">
+                        <properties
+                          cq:panelTitle="Properties"
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="core-components-examples/components/demo/properties"
+                          reference="../../component/guideContainer/container"/>
+                        <markup
+                          cq:panelTitle="Markup"
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="core-components-examples/components/demo/markup"
+                          reference="../../component/guideContainer/container"/>
+                        <json
+                          cq:panelTitle="JSON"
+                          jcr:primaryType="nt:unstructured"
+                          sling:resourceType="core-components-examples/components/demo/json"
+                          reference="../../component/guideContainer/container"/>
+                    </info>
+                </demo>
+            </responsivegrid>
+        </root>
+    </jcr:content>
+</jcr:root>
