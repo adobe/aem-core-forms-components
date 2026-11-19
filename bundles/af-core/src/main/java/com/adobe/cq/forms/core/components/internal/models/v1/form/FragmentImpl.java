@@ -90,10 +90,20 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LAZY)
     private Boolean lazy;
 
+    @ValueMapValue(injectionStrategy = InjectionStrategy.OPTIONAL, name = ReservedProperties.PN_LAZY_LOAD)
+    private Boolean lazyLoad;
+
     private Resource fragmentContainer;
 
     @PostConstruct
     private void initFragmentModel() {
+        if (isLazyLoad()) {
+            // When the fragment is lazily loaded, its definition should not be inlined
+            // in the form JSON; it is fetched on demand at runtime instead. Skip resolving
+            // the fragment container and registering its client library altogether.
+            fragmentContainer = null;
+            return;
+        }
         ResourceResolver resourceResolver = resource.getResourceResolver();
         String updatedFragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, updatedFragmentPath);
@@ -107,6 +117,12 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         if (Boolean.TRUE.equals(lazy)) {
             fragmentContainer = null;
         }
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isLazyLoad() {
+        return Boolean.TRUE.equals(lazyLoad);
     }
 
     private String getFragmentPathBasedOnChannel(String fragmentPath) {
@@ -181,7 +197,7 @@ public class FragmentImpl extends PanelImpl implements Fragment {
      * Creates a new I18n object for fragment children using the fragment container resource path
      * instead of the parent form's resource path. This ensures that fragment children use the
      * correct resource bundle path for translations.
-     * 
+     *
      * @return a new I18n object configured for the fragment container resource
      */
     private @Nonnull I18n getFragmentContainerI18n(@Nonnull String localeLang) {
@@ -252,6 +268,9 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         Map<String, Object> properties = super.getProperties();
         properties.put(CUSTOM_FRAGMENT_PROPERTY_WRAPPER, true);
         properties.put(ReservedProperties.PN_VIEWTYPE, "fragment");
+        if (isLazyLoad()) {
+            properties.put(ReservedProperties.PN_LAZY_LOAD, true);
+        }
         return properties;
     }
 

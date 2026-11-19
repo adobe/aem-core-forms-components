@@ -45,6 +45,20 @@
                                                     name="./fragmentPath"
                                                     sling:orderBefore="bindref"
                                                     rootPath="/content/dam/formsanddocuments"/>
+                                            <lazyLoad
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                    fieldLabel="Lazy Load"
+                                                    fieldDescription="Load the fragment definition on demand at runtime instead of inlining it in the form definition."
+                                                    name="./fd:lazyLoad"
+                                                    text="Lazy load fragment"
+                                                    uncheckedValue="false"
+                                                    value="true">
+                                                <granite:rendercondition
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/renderconditions/featuretoggle"
+                                                        toggleName="FT_FORMS-27800"/>
+                                            </lazyLoad>
                                             <layout
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:hideResource="{Boolean}true"/>
