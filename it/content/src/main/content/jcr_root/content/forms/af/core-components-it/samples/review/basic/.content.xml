@@ -374,7 +374,7 @@
                         fd:editModeAction="field"
                         fieldType="plain-text"
                         hideTitle="false"
-                        fd:linkedPanels="tab1_id"
+                        fd:linkedPanels="panelcontainer1724402234656"
                         name="review1724402878089"/>
                     <submit
                         jcr:created="{Date}2024-08-23T14:18:03.480+05:30"

@@ -145,7 +145,15 @@ class FormPanel extends FormFieldBase {
     
         const firstField = findFirstPanelNonPanelField(activeTab);
         if (firstField) {
-            setTimeout(() => {this.formContainer.setFocus(firstField.id)}, 0);
+            const activeTabView = this.formContainer.getField(activeTabId);
+            setTimeout(() => {
+                // focus was already moved into this tab by an explicit request (e.g. review edit button on
+                // a field/repeatable instance), do not override it with the first field of the tab
+                if (activeTabView?.element?.contains(document.activeElement)) {
+                    return;
+                }
+                this.formContainer.setFocus(firstField.id);
+            }, 0);
         }
     }
 

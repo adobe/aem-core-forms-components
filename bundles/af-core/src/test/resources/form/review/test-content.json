@@ -61,6 +61,23 @@
             "item_1"
           ],
           "fd:editModeAction": "field"
+        },
+        "reviewDefaultAction" : {
+          "id": "review-default-action",
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType" : "core/fd/components/form/review/v1/review",
+          "name" : "reviewDefaultAction",
+          "jcr:title" : "Review without edit action",
+          "fieldType" : "text"
+        },
+        "reviewPanelAction" : {
+          "id": "review-panel-action",
+          "jcr:primaryType": "nt:unstructured",
+          "sling:resourceType" : "core/fd/components/form/review/v1/review",
+          "name" : "reviewPanelAction",
+          "jcr:title" : "Review with panel edit action",
+          "fieldType" : "text",
+          "fd:editModeAction": "panel"
         }
       }
     }
