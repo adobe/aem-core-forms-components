@@ -578,7 +578,6 @@
         "properties": {
           "fieldType": {
             "enum": [
-              "drop-down",
               "checkbox-group"
             ]
           }
@@ -592,7 +591,6 @@
         "properties": {
           "fieldType": {
             "enum": [
-              "drop-down",
               "checkbox-group"
             ]
           },
@@ -668,7 +666,109 @@
             "enum": "Options are missing from selection. Add an empty enum array"
           },
           "properties": {
-            "fieldType": "${0/fieldType} is not a valid SelectionField field type. It should be either drop-down or checkbox-group"
+            "fieldType": "${0/fieldType} is not a valid SelectionField field type. It should be checkbox-group"
+          }
+        }
+      }
+    },
+    "DropDownField": {
+      "if": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "drop-down"
+            ]
+          }
+        },
+        "required": [
+          "fieldType"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "fieldType": {
+            "enum": [
+              "drop-down"
+            ]
+          },
+          "type": {
+            "enum": [
+              "string",
+              "number",
+              "boolean",
+              "string[]",
+              "number[]",
+              "boolean[]"
+            ]
+          },
+          "rules": {
+            "type": "object",
+            "propertyNames": {
+              "enum": [
+                "description",
+                "enabled",
+                "enum",
+                "enumNames",
+                "label",
+                "properties",
+                "readOnly",
+                "required",
+                "value",
+                "visible"
+              ]
+            }
+          }
+        },
+        "propertyNames": {
+          "enum": [
+            ":type",
+            "appliedCssClassNames",
+            "constraintMessages",
+            "dataLayer",
+            "dataRef",
+            "default",
+            "description",
+            "enabled",
+            "enforceEnum",
+            "enum",
+            "enumNames",
+            "events",
+            "fieldType",
+            "id",
+            "label",
+            "maxItems",
+            "maxLength",
+            "minItems",
+            "minLength",
+            "name",
+            "pattern",
+            "placeholder",
+            "properties",
+            "readOnly",
+            "required",
+            "rules",
+            "screenReaderText",
+            "tooltip",
+            "type",
+            "uniqueItems",
+            "validationExpression",
+            "visible"
+          ],
+          "errorMessage": {
+            "enum": "${0} property is not allowed in DropDownField"
+          }
+        },
+        "required": [
+          "enum"
+        ],
+        "errorMessage": {
+          "required": {
+            "enum": "Options are missing from selection. Add an empty enum array"
+          },
+          "properties": {
+            "fieldType": "${0/fieldType} is not a valid DropDownField field type. It should be drop-down"
           }
         }
       }
@@ -1695,6 +1795,9 @@
             },
             {
               "$ref": "#/$defs/SelectionField"
+            },
+            {
+              "$ref": "#/$defs/DropDownField"
             },
             {
               "$ref": "#/$defs/RadioGroupField"
