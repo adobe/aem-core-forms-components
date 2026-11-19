@@ -34,7 +34,7 @@
      data-cmp-adaptiveformcontainer-path="${formstructparser.formContainerPath}">
     <div class="cmp-adaptiveform-switch__label-container">
         <div data-sly-call="${label.label @componentId=widgetId, labelValue=switch.label.value, labelVisible=switch.label.visible, labelRichText=switch.label.richText, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
-        <div data-sly-call="${questionMark.questionMark @componentId=switch.id, longDescription=switch.description, bemBlock='cmp-adaptiveform-switch'}" data-sly-unwrap></div>
+        <div data-sly-call="${questionMark.questionMark @componentId=switch.id, longDescription=switch.description, bemBlock='cmp-adaptiveform-switch', componentTitle=switch.label.value}" data-sly-unwrap></div>
     </div>
 
     <div class="cmp-adaptiveform-switch__container" id="${widgetId}">

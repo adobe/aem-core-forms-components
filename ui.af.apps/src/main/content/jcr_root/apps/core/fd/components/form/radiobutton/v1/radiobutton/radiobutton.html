@@ -35,7 +35,7 @@
      data-sly-test.widgetId="${'{0}-{1}' @ format=[radioButton.id, 'widget']}">
     <div class="cmp-adaptiveform-radiobutton__label-container">
       <div data-sly-call="${label.label @componentId=widgetId, labelValue=radioButton.label.value, labelVisible=radioButton.label.visible, labelRichText=radioButton.label.richText, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
-      <div data-sly-call="${questionMark.questionMark @componentId=radiobutton.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton'}" data-sly-unwrap></div>
+      <div data-sly-call="${questionMark.questionMark @componentId=radiobutton.id, longDescription=radioButton.description, bemBlock='cmp-adaptiveform-radiobutton', componentTitle=radioButton.label.value}" data-sly-unwrap></div>
     </div>
     <div class="cmp-adaptiveform-radiobutton__widget ${radioButton.orientation}" id="${widgetId}" role="radiogroup">
       <div data-sly-list="${radioButton.enums}" data-sly-unwrap>
