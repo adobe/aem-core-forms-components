@@ -210,3 +210,36 @@ describe("Form Runtime with Fragment", () => {
         cy.get(`#${model.items[0].id}`).should('have.text', 'Thanks');
     });
 })
+
+describe("Form Runtime with Fragment without a panel", () => {
+    // Regression test for FORMS-24185 (found while fixing FORMS-24163).
+    // PR #1603 (reverted) added an updateLabel override that derived the BEM class from
+    // the element's classList and assumed a `.<bemClass>__label-container` descendant always
+    // exists. That assumption broke rendering (with a console error) for a fragment whose
+    // fragmentPath resolves directly to fields with no wrapping panel. The other fixture used
+    // in this file (test-fragment) always wraps its fields in a panel, so this shape went
+    // uncaught; container-rules.html embeds test-fragment-container-rules, which has none.
+    const pagePath = "content/forms/af/core-components-it/samples/fragment/container-rules.html";
+    const bemBlock = 'cmp-adaptiveform-fragment';
+
+    before(() => {
+        cy.attachConsoleErrorSpy();
+    });
+
+    it("renders the fragment and its label without a console error", () => {
+        cy.previewForm(pagePath).then(formContainer => {
+            expect(formContainer, "formContainer is initialized").to.not.be.null;
+
+            const [textInputId] = Object.entries(formContainer._fields)[0];
+            cy.get(`#${textInputId}`).should('be.visible');
+
+            // Only asserting the container exists here - checked against a live author
+            // (localhost:4502) and this page's fragment label doesn't render text via this
+            // element on this content, so a stricter text/visibility check on `__label`
+            // would be asserting behavior this fixture doesn't actually exhibit.
+            cy.get(`.${bemBlock}__label-container`).should('exist');
+
+            cy.expectNoConsoleErrors();
+        });
+    });
+})
