@@ -22,6 +22,8 @@
         NUMERICINPUT_EXCLUDEMAXCHECK = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__excludeMaximumCheck",
         NUMERICINPUT_MINIMUM = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__minimum",
         NUMERICINPUT_EXCLUDEMINCHECK = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__excludeMinimumCheck",
+        NUMERICINPUT_MIN_FIELD = ".cmp-adaptiveform-numberinput__minimum",
+        NUMERICINPUT_MAX_FIELD = ".cmp-adaptiveform-numberinput__maximum",
         NUMERICINPUT_DISPLAYPATTERN = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displaypattern",
         NUMERICINPUT_DISPLAYFORMAT = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__displayformat",
         NUMERICINPUT_LANG = EDIT_DIALOG + " .cmp-adaptiveform-numberinput__lang",
@@ -96,5 +98,25 @@
         Utils.handlePatternFormat(dialog,NUMERICINPUT_LANGDISPLAYVALUE,NUMERICINPUT_LANG);
     }
 
-    Utils.initializeEditDialog(EDIT_DIALOG)(handleDisplayPatternDropDown,handleDisplayFormat,handleLang, handleTypeDropdown);
+    var NUMBER_COMPARE = function(a, b) { return Number(a) > Number(b); };
+
+    Utils.registerMinMaxValidator(
+        NUMERICINPUT_MIN_FIELD, NUMERICINPUT_MAX_FIELD,
+        "Minimum value cannot be greater than maximum value",
+        "Maximum value cannot be less than minimum value",
+        NUMBER_COMPARE
+    );
+
+    Utils.initializeEditDialog(EDIT_DIALOG)(
+        handleDisplayPatternDropDown,
+        handleDisplayFormat,
+        handleLang,
+        handleTypeDropdown,
+        Utils.handleMinMaxValidation(
+            NUMERICINPUT_MIN_FIELD, NUMERICINPUT_MAX_FIELD,
+            "Minimum value cannot be greater than maximum value",
+            "Maximum value cannot be less than minimum value",
+            NUMBER_COMPARE
+        )
+    );
 })(jQuery);
