@@ -172,6 +172,12 @@ _Important_: this project does Maven reactor releases, do **not** trigger releas
 
 Note: in case it is needed to update the version of a java bundle because of API changes and semantic versioning, one can easily update the parent POM version and all the POMs referencing the parent POM version by running the following command in the PARENT project folder: `mvn versions:set -DnewVersion=x.y.z-SNAPSHOT`. This will ensure all projects have the same version.
 
+## Debugging Knowledge Base
+
+This repository maintains an **AI-assisted debugging knowledge base** at [`docs/debugging/known-issues.md`](docs/debugging/known-issues.md) — a living catalog of resolved customer issues, root causes, and reusable fix patterns.
+
+It is structured for both human engineers and AI coding tools (Claude Code, Cursor, GitHub Copilot) to consume. When you resolve a hard-to-debug customer issue, add the pattern there so no one wastes time re-discovering it.
+
 ## Contributing
 
 Contributions are welcomed! Read the [Contributing Guide](.github/CONTRIBUTING.md) for more information.
