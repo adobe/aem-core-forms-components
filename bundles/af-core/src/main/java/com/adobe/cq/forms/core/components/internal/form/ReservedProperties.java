@@ -90,6 +90,7 @@ public final class ReservedProperties {
     public static final String PN_MAXIMUM_DATE_TIME = "maximumDateTime";
     public static final String PN_MAXIMUM = "maximum";
     public static final String PN_MINIMUM = "minimum";
+    public static final String PN_STEP = "step";
     public static final String PN_EXCLUSIVE_MINIMUM = "exclusiveMinimum";
     public static final String PN_EXCLUSIVE_MAXIMUM = "exclusiveMaximum";
     public static final String PN_EXCLUDE_MINIMUM = "excludeMinimum";

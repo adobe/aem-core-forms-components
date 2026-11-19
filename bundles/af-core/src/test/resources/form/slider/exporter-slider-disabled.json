@@ -1,0 +1,23 @@
+{
+  "id": "slider-dfe12377b7",
+  "fieldType": "range",
+  "name": "disabled",
+  "type": "number",
+  "enabled": false,
+  "default": "4",
+  "label": {
+    "value": ""
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "fd:path": "/content/slider-disabled"
+  },
+  "step": 1,
+  "minimum": 0,
+  "maximum": 10,
+  ":type": "core/fd/components/form/slider/v1/slider"
+}
