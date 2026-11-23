@@ -116,4 +116,20 @@ public final class FeatureToggleConstants {
      * System property: same name ({@code FT_FORMS-26424}); set to {@code "true"} to enable.
      */
     public static final String FT_NGDM_IMAGE_PICKER = "FT_FORMS-26424";
+
+    /**
+     * When enabled, form components fall back to the legacy id generation, which depends on the
+     * rendering context (request, current page and component context) and only considers the
+     * root-most fragment placeholder. As a consequence, components of a fragment referenced several
+     * times inside another fragment get duplicate ids, and ids can differ between HTML rendering and
+     * JSON exports created without request.
+     * <p>
+     * When disabled (default), the id of a form component is generated from the paths of all the
+     * fragment placeholders through which the component is reached and from its own path, so that
+     * every component occurrence has a unique id which is the same in HTML and in all JSON exports.
+     * <p>
+     * System property: same name ({@code FT_FORMS-LEGACY-COMPONENT-ID}); set to {@code "true"} to
+     * restore the legacy behavior.
+     */
+    public static final String FT_LEGACY_COMPONENT_ID = "FT_FORMS-LEGACY-COMPONENT-ID";
 }

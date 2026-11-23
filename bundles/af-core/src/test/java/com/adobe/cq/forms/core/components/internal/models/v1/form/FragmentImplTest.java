@@ -263,7 +263,7 @@ public class FragmentImplTest {
         Assertions.assertNotNull(childrenModels.get("textinput"));
         TextInput textInput = (TextInput) childrenModels.get("textinput");
         Assertions.assertEquals("core/fd/components/form/textinput/v1/textinput", textInput.getExportedType());
-        Assertions.assertEquals("textinput-233cc688ba", textInput.getId());
+        Assertions.assertEquals("textinput-723958a278", textInput.getId());
         Assertions.assertEquals("fragmenttextinput", textInput.getName());
     }
 
@@ -277,7 +277,7 @@ public class FragmentImplTest {
         Assertions.assertEquals(1, childrenModels.size());
         Assertions.assertNotNull(childrenModels.get("textinput"));
         TextInput textInput = childrenModels.get("textinput");
-        Assertions.assertEquals("textinput-233cc688ba", textInput.getId());
+        Assertions.assertEquals("textinput-723958a278", textInput.getId());
         Assertions.assertEquals("fragmenttextinput", textInput.getName());
     }
 

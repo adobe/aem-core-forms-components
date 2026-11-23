@@ -27,7 +27,7 @@
   ":itemsOrder": ["textinput"],
   ":items": {
     "textinput": {
-      "id": "textinput-233cc688ba",
+      "id": "textinput-723958a278",
       "fieldType": "text-input",
       "name": "fragmenttextinput",
       "type": "string",

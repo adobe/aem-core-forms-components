@@ -51,6 +51,7 @@ import com.adobe.cq.export.json.ExporterConstants;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.FragmentOccurrence;
 import com.adobe.cq.forms.core.components.internal.form.ReservedProperties;
 import com.adobe.cq.forms.core.components.models.form.FormClientLibManager;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -92,8 +93,14 @@ public class FragmentImpl extends PanelImpl implements Fragment {
 
     private Resource fragmentContainer;
 
+    /**
+     * Occurrence path of the components of the referenced fragment, see {@link FragmentOccurrence}.
+     */
+    private String childrenOccurrencePath;
+
     @PostConstruct
     private void initFragmentModel() {
+        childrenOccurrencePath = FragmentOccurrence.getOccurrencePath(resource, request) + resource.getPath();
         ResourceResolver resourceResolver = resource.getResourceResolver();
         String updatedFragmentPath = this.getFragmentPathBasedOnChannel(fragmentPath);
         fragmentContainer = ComponentUtils.getFragmentContainer(resourceResolver, updatedFragmentPath);
@@ -141,25 +148,17 @@ public class FragmentImpl extends PanelImpl implements Fragment {
             return new LinkedHashMap<>();
         }
         List<Resource> filteredChildrenResources = getFilteredChildrenResources(fragmentContainer);
-        SlingHttpServletRequest wrappedSlingHttpServletRequest = null;
-        if (request != null) {
-            wrappedSlingHttpServletRequest = new SlingHttpServletRequestWrapper(request) {
-
-                @Override
-                public Object getAttribute(String attrName) {
-                    if (REQ_ATTR_RESOURCE_CALLER_PATH.equals(attrName)) {
-                        String resourceCallerPath = (String) super.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH);
-                        // If the attribute is already defined then we're in a nested situation.
-                        // The code for computing the components id uses the root-most resource path
-                        // (because of how componentContext is handled in HTML rendering, so we return
-                        // that.
-                        return (resourceCallerPath != null) ? resourceCallerPath : resource.getPath();
-                    }
-                    return super.getAttribute(attrName);
-                }
-            };
+        Map<String, T> models;
+        if (FragmentOccurrence.isEnabled()) {
+            // the components of the fragment are reached through this placeholder, add it to their occurrence
+            List<Resource> occurrenceChildren = new ArrayList<>(filteredChildrenResources.size());
+            for (Resource child : filteredChildrenResources) {
+                occurrenceChildren.add(FragmentOccurrence.wrap(child, childrenOccurrencePath));
+            }
+            models = getChildrenModels(request, modelClass, occurrenceChildren);
+        } else {
+            models = getChildrenModels(getLegacyRequest(request), modelClass, filteredChildrenResources);
         }
-        Map<String, T> models = getChildrenModels(wrappedSlingHttpServletRequest, modelClass, filteredChildrenResources);
 
         // Set i18n for fragment children since they are processed with request != null
         // Use fragment container-specific i18n to ensure correct resource bundle path
@@ -175,6 +174,46 @@ public class FragmentImpl extends PanelImpl implements Fragment {
         }
 
         return models;
+    }
+
+    /**
+     * Legacy behavior, used when {@link FeatureToggleConstants#FT_LEGACY_COMPONENT_ID} is enabled: the components of the
+     * fragment use the root-most fragment placeholder path as resource caller path.
+     */
+    @Nullable
+    private SlingHttpServletRequest getLegacyRequest(@Nullable SlingHttpServletRequest request) {
+        if (request == null) {
+            return null;
+        }
+        return new SlingHttpServletRequestWrapper(request) {
+
+            @Override
+            public Object getAttribute(String attrName) {
+                if (REQ_ATTR_RESOURCE_CALLER_PATH.equals(attrName)) {
+                    String resourceCallerPath = (String) super.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH);
+                    // If the attribute is already defined then we're in a nested situation.
+                    // The code for computing the components id uses the root-most resource path
+                    // (because of how componentContext is handled in HTML rendering, so we return
+                    // that.
+                    return (resourceCallerPath != null) ? resourceCallerPath : resource.getPath();
+                }
+                return super.getAttribute(attrName);
+            }
+        };
+    }
+
+    /**
+     * Returns the request attributes to set while including the fragment content in HTML rendering, so that the
+     * components of the fragment get the same ids as in the JSON export.
+     *
+     * @return the request attributes for the fragment include
+     */
+    @JsonIgnore
+    public Map<String, Object> getIncludeRequestAttributes() {
+        if (!FragmentOccurrence.isEnabled()) {
+            return Collections.emptyMap();
+        }
+        return FragmentOccurrence.getIncludeAttributes(childrenOccurrencePath);
     }
 
     /**
