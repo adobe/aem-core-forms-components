@@ -263,7 +263,7 @@ public class FragmentImplTest {
         Assertions.assertNotNull(childrenModels.get("textinput"));
         TextInput textInput = (TextInput) childrenModels.get("textinput");
         Assertions.assertEquals("core/fd/components/form/textinput/v1/textinput", textInput.getExportedType());
-        Assertions.assertEquals("textinput-723958a278", textInput.getId());
+        Assertions.assertEquals("textinput-233cc688ba", textInput.getId());
         Assertions.assertEquals("fragmenttextinput", textInput.getName());
     }
 
@@ -277,7 +277,7 @@ public class FragmentImplTest {
         Assertions.assertEquals(1, childrenModels.size());
         Assertions.assertNotNull(childrenModels.get("textinput"));
         TextInput textInput = childrenModels.get("textinput");
-        Assertions.assertEquals("textinput-723958a278", textInput.getId());
+        Assertions.assertEquals("textinput-233cc688ba", textInput.getId());
         Assertions.assertEquals("fragmenttextinput", textInput.getName());
     }
 
@@ -352,7 +352,8 @@ public class FragmentImplTest {
         I18n result1 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, (String) null);
         Assertions.assertNotNull(result1, "getFragmentContainerI18n should return a non-null I18n object even when localeLang is null");
 
-        // Test case 2: When localeLang is set and resourceBundleProvider is available - should return I18n with resource bundle
+        // Test case 2: When localeLang is set and resourceBundleProvider is available - should return I18n with
+        // resource bundle
         I18n result2 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "en");
         Assertions.assertNotNull(result2, "getFragmentContainerI18n should return a non-null I18n object when localeLang is set");
 

@@ -93,6 +93,7 @@ public class FragmentOccurrenceIdTest {
 
     @BeforeEach
     void setUp() {
+        System.setProperty(FeatureToggleConstants.FT_FRAGMENT_OCCURRENCE_IDS, "true");
         context.load().json(BASE + FormsCoreComponentTestContext.TEST_CONTENT_JSON, CONTENT_ROOT);
         context.registerService(SlingModelFilter.class, new SlingModelFilter() {
 
@@ -110,7 +111,7 @@ public class FragmentOccurrenceIdTest {
 
     @AfterEach
     void tearDown() {
-        System.clearProperty(FeatureToggleConstants.FT_LEGACY_COMPONENT_ID);
+        System.clearProperty(FeatureToggleConstants.FT_FRAGMENT_OCCURRENCE_IDS);
         System.clearProperty(FeatureToggleConstants.FT_SKIP_ITEMS_MAP);
     }
 
@@ -271,8 +272,8 @@ public class FragmentOccurrenceIdTest {
     }
 
     @Test
-    void testLegacyToggleRestoresPreviousIds() {
-        System.setProperty(FeatureToggleConstants.FT_LEGACY_COMPONENT_ID, "true");
+    void testToggleDisabledRetainsPreviousIds() {
+        System.clearProperty(FeatureToggleConstants.FT_FRAGMENT_OCCURRENCE_IDS);
         List<String[]> ssn = ssnOccurrences(collect(requestForm()));
         assertEquals(4, ssn.size());
         // previous behavior: the inner fragment placeholders are not part of the id
@@ -280,6 +281,8 @@ public class FragmentOccurrenceIdTest {
         FragmentImpl outer = (FragmentImpl) context.getService(ModelFactory.class)
             .getModelFromWrappedRequest(newRequest(), resource(OUTER_1), Fragment.class);
         assertTrue(outer.getIncludeRequestAttributes().isEmpty());
+        System.setProperty(FeatureToggleConstants.FT_FRAGMENT_OCCURRENCE_IDS, "false");
+        assertSameOccurrences(collect(requestForm()), collect(resource(FORM).adaptTo(FormContainer.class)));
     }
 
     @Test

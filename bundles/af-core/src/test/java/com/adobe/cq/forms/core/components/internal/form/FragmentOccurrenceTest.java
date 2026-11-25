@@ -52,7 +52,7 @@ public class FragmentOccurrenceTest {
 
     @AfterEach
     void tearDown() {
-        System.clearProperty(FeatureToggleConstants.FT_LEGACY_COMPONENT_ID);
+        System.clearProperty(FeatureToggleConstants.FT_FRAGMENT_OCCURRENCE_IDS);
     }
 
     @Test
@@ -105,8 +105,10 @@ public class FragmentOccurrenceTest {
 
     @Test
     void testToggle() {
-        assertTrue(FragmentOccurrence.isEnabled());
-        System.setProperty(FeatureToggleConstants.FT_LEGACY_COMPONENT_ID, "true");
         assertFalse(FragmentOccurrence.isEnabled());
+        System.setProperty(FeatureToggleConstants.FT_FRAGMENT_OCCURRENCE_IDS, "false");
+        assertFalse(FragmentOccurrence.isEnabled());
+        System.setProperty(FeatureToggleConstants.FT_FRAGMENT_OCCURRENCE_IDS, "true");
+        assertTrue(FragmentOccurrence.isEnabled());
     }
 }

@@ -27,7 +27,11 @@
                 sling:resourceType="forms-components-examples/components/form/textinput"
                 fieldType="text-input"
                 name="ssn"
-                required="{Boolean}true"/>
+                required="{Boolean}true">
+                <fd:events
+                    jcr:primaryType="nt:unstructured"
+                    change="if(contains($event.payload.changes[].propertyName, 'value'), dispatchEvent($field, 'custom:setProperty', {value: testFormatSsn($field.$value)}), {})"/>
+            </textinput>
         </guideContainer>
     </jcr:content>
 </jcr:root>

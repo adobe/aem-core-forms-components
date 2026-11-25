@@ -58,10 +58,10 @@ public final class FragmentOccurrence {
     /**
      * Checks whether occurrence based component ids are enabled.
      *
-     * @return {@code true} unless the legacy component id toggle is enabled
+     * @return {@code true} only when the occurrence id toggle is enabled
      */
     public static boolean isEnabled() {
-        return !ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_LEGACY_COMPONENT_ID);
+        return ComponentUtils.isToggleEnabled(FeatureToggleConstants.FT_FRAGMENT_OCCURRENCE_IDS);
     }
 
     /**

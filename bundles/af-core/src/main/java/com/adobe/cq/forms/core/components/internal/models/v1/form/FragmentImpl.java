@@ -177,8 +177,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
     }
 
     /**
-     * Legacy behavior, used when {@link FeatureToggleConstants#FT_LEGACY_COMPONENT_ID} is enabled: the components of the
-     * fragment use the root-most fragment placeholder path as resource caller path.
+     * Legacy behavior, used when {@link FeatureToggleConstants#FT_FRAGMENT_OCCURRENCE_IDS} is disabled: the components
+     * of the fragment use the root-most fragment placeholder path as resource caller path.
      */
     @Nullable
     private SlingHttpServletRequest getLegacyRequest(@Nullable SlingHttpServletRequest request) {
@@ -238,7 +238,8 @@ public class FragmentImpl extends PanelImpl implements Fragment {
                     // Use the fragment container's resource bundle if available
                     resourceBundle = resourceBundleProvider.getResourceBundle(baseName, desiredLocale);
                 } else {
-                    // Fallback to a random UUID-based resource bundle if fragment-specific translations are not available
+                    // Fallback to a random UUID-based resource bundle if fragment-specific translations are not
+                    // available
                     resourceBundle = resourceBundleProvider.getResourceBundle("/" + UUID.randomUUID(), desiredLocale);
                 }
             }

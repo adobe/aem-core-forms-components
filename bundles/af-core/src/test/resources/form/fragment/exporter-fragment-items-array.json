@@ -22,7 +22,7 @@
   ":type": "core/fd/components/form/fragment/v1/fragment",
   "items": [
     {
-      "id": "textinput-723958a278",
+      "id": "textinput-233cc688ba",
       "fieldType": "text-input",
       "name": "fragmenttextinput",
       "type": "string",

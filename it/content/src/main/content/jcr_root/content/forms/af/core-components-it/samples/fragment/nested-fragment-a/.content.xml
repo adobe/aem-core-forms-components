@@ -33,14 +33,16 @@
                     sling:resourceType="forms-components-examples/components/form/fragment"
                     fieldType="panel"
                     fragmentPath="/content/forms/af/core-components-it/samples/fragment/nested-fragment-b"
-                    name="identity"/>
+                    name="identity"
+                    wrapData="{Boolean}true"/>
                 <fragment_682876963
                     jcr:primaryType="nt:unstructured"
                     jcr:title="Previous identity"
                     sling:resourceType="forms-components-examples/components/form/fragment"
                     fieldType="panel"
                     fragmentPath="/content/forms/af/core-components-it/samples/fragment/nested-fragment-b"
-                    name="previousidentity"/>
+                    name="previousidentity"
+                    wrapData="{Boolean}true"/>
             </panelcontainer>
         </guideContainer>
     </jcr:content>
