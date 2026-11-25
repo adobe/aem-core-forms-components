@@ -68,6 +68,28 @@ describe('Form Runtime with Scribble Input', () => {
         });
     });
 
+    it('should preserve the saved signature image aspect ratio', () => {
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container')
+            .invoke('css', 'width', '400px').click();
+        cy.get('.cmp-adaptiveform-scribble__control-text').click();
+        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').type('aspect');
+        cy.get(selectors.canvas).then(($canvas) => {
+            const canvas = $canvas[0];
+            canvas.width = 200;
+            canvas.height = 100;
+            canvas.getContext('2d').fillRect(20, 20, 20, 20);
+        });
+        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should(($image) => {
+            const image = $image[0];
+            expect(image.naturalWidth).to.be.greaterThan(0);
+            const bounds = image.getBoundingClientRect();
+            expect(bounds.width / bounds.height)
+                .to.be.closeTo(image.naturalWidth / image.naturalHeight, 0.01);
+            expect(bounds.width).to.be.at.most(image.parentElement.clientWidth);
+        });
+    });
+
     it('should clear the signature when clear', () => {
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click().then(() => {
             cy.get('.cmp-adaptiveform-scribble__container').should('be.visible').then(() => {
