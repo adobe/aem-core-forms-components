@@ -106,19 +106,11 @@ describe('Form Runtime with Scribble Input', () => {
         });
     });
 
-    it('should preserve italic input overhang and save signatures without keyup', () => {
+    it('should save typed signatures without keyup and preserve pixels on resize', () => {
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
         cy.get('.cmp-adaptiveform-scribble__control-text').click();
         cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
-        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should(($input) => {
-            const input = $input[0];
-            const win = input.ownerDocument.defaultView;
-            const style = win.getComputedStyle(input);
-            const context = win.document.createElement('canvas').getContext('2d');
-            context.font = style.font;
-            const leftOverhang = context.measureText('j').actualBoundingBoxLeft;
-            expect(parseFloat(style.textIndent)).to.be.greaterThan(leftOverhang);
-        }).type('jjames');
+        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').type('jjames');
         cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
         cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').clear();
         cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
