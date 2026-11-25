@@ -106,26 +106,61 @@ describe('Form Runtime with Scribble Input', () => {
         });
     });
 
-    it('should save typed signatures without keyup and preserve pixels on resize', () => {
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
-        cy.get('.cmp-adaptiveform-scribble__control-text').click();
-        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
-        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').type('jjames');
-        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
-        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').clear();
-        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
-        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box')
-            .invoke('val', 'jjames').trigger('input');
-        cy.get(selectors.canvas).then(($canvas) => {
-            const canvas = $canvas[0];
-            const pixels = Array.from(canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data);
-            canvas.ownerDocument.defaultView.dispatchEvent(new Event('resize'));
-            expect(Array.from(canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data)).to.deep.equal(pixels);
+    ['j', 'jj', 'j'.repeat(30)].forEach(value => {
+        it(`should preserve glyph pixels in the saved image for ${value}`, () => {
+            let expectedPixels;
+            let width;
+            let height;
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-container')
+                .invoke('css', 'width', '600px').click();
+            cy.get('.cmp-adaptiveform-scribble__control-text').click();
+            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box')
+                .invoke('val', value).trigger('input');
+            cy.get(selectors.canvas).then(($canvas) => {
+                const canvas = $canvas[0];
+                const context = canvas.getContext('2d');
+                const metrics = context.measureText(value);
+                const leftOverhang = Math.max(0, metrics.actualBoundingBoxLeft);
+                width = canvas.width;
+                height = canvas.height;
+                expect(leftOverhang).to.be.greaterThan(0);
+                expect(leftOverhang + Math.max(metrics.width, metrics.actualBoundingBoxRight))
+                    .to.be.at.most(width);
+                const reference = canvas.ownerDocument.createElement('canvas');
+                const padding = 128;
+                reference.width = width + padding * 2;
+                reference.height = height;
+                reference.style.display = 'none';
+                // Inherit the page's font smoothing for a like-for-like pixel reference.
+                canvas.parentElement.appendChild(reference);
+                const referenceContext = reference.getContext('2d', {willReadFrequently: true});
+                referenceContext.font = context.font;
+                referenceContext.fillText(value, padding + leftOverhang, height / 2);
+                expectedPixels = referenceContext.getImageData(padding, 0, width, height).data;
+                reference.remove();
+                expect(expectedPixels.some((channel, index) => index % 4 === 3 && channel > 0))
+                    .to.equal(true);
+                const drawnPixels = context.getImageData(0, 0, width, height).data;
+                const differentChannels = drawnPixels.reduce((count, channel, index) =>
+                    count + (channel !== expectedPixels[index] ? 1 : 0), 0);
+                expect(differentChannels, 'drawn canvas versus padded glyph reference').to.equal(0);
+            });
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should(($image) => {
+                expect($image[0].naturalWidth).to.equal(width);
+                expect($image[0].naturalHeight).to.equal(height);
+            }).then(($image) => {
+                const image = $image[0];
+                const exported = image.ownerDocument.createElement('canvas');
+                exported.width = width;
+                exported.height = height;
+                const context = exported.getContext('2d');
+                context.drawImage(image, 0, 0);
+                const actualPixels = context.getImageData(0, 0, width, height).data;
+                expect(actualPixels.every((channel, index) => channel === expectedPixels[index]))
+                    .to.equal(true);
+            });
         });
-        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
-        cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
-        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image')
-            .should('have.attr', 'src').and('match', /^data:image\/png/);
     });
 
     it('should not clear and clear the signature when clear is cancelled and confirmed respectively', () => {
