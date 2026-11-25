@@ -173,7 +173,7 @@ describe('Form Runtime with Scribble Input', () => {
         });
     });
 
-    describe('text signature with whitespace only', () => {
+    describe('typed signature validation', () => {
         const openTextSign = () => {
             cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
             cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
@@ -203,6 +203,40 @@ describe('Form Runtime with Scribble Input', () => {
             cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
             cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').clear().type('  ');
             cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
+        });
+
+        it('should preserve typed signature pixels on resize and save without keyup', () => {
+            openTextSign().invoke('val', 'jjames').trigger('input');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
+            cy.get(selectors.canvas).then(($canvas) => {
+                const canvas = $canvas[0];
+                const context = canvas.getContext('2d');
+                const pixels = Array.from(context.getImageData(0, 0, canvas.width, canvas.height).data);
+                expect(pixels.some((value, index) => index % 4 === 3 && value > 0)).to.equal(true);
+                const win = canvas.ownerDocument.defaultView;
+                win.dispatchEvent(new win.Event('resize'));
+                expect(Array.from(context.getImageData(0, 0, canvas.width, canvas.height).data))
+                    .to.deep.equal(pixels);
+            });
+            cy.get('.cmp-adaptiveform-scribble__save-button').click();
+            cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image')
+                .should('have.attr', 'src').and('match', /^data:image\/png/);
+        });
+
+        it('should reject a zero-size canvas without a pixel-read error', () => {
+            openTextSign();
+            cy.get(selectors.canvas).then(($canvas) => {
+                $canvas[0].width = 0;
+                $canvas[0].height = 0;
+            });
+            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box')
+                .invoke('val', 'abc').trigger('input');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled')
+                .invoke('removeAttr', 'disabled').click().should('be.disabled');
+            cy.get('.cmp-adaptiveform-scribble__control-clear').should('be.disabled');
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('not.have.attr', 'src');
         });
 
         it('should save a text signature with leading spaces without errors', () => {
