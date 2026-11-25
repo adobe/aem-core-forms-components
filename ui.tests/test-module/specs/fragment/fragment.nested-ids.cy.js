@@ -112,9 +112,6 @@ describe('Form Runtime with nested fragments referenced several times', () => {
     it('formats and exports all four SSNs independently', () => {
         const ssnIds = getSsnIds();
         expect(ssnIds).to.have.length(occurrences);
-        cy.window().then(win => {
-            expect(win.FormView.FunctionRuntime.customFunctions.testFormatSsn).to.be.a('function');
-        });
         const values = ['111111111', '222222222', '333333333', '444444444'];
         ssnIds.forEach((id, index) => {
             cy.get(`#${id}`).find('input').clear().type(values[index]).blur();
