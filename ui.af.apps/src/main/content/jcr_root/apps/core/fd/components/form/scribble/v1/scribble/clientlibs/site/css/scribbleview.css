@@ -38,3 +38,7 @@ textarea.cmp-adaptiveform-scribble__widget{
 
 }
 
+.cmp-adaptiveform-scribble__keyboard-sign-box {
+    /* Keep italic overhang inside the native input editor's clipping boundary. */
+    text-indent: 0.25em;
+}

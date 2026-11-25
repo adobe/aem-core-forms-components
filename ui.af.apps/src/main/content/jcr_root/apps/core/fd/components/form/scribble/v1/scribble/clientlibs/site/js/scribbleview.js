@@ -609,17 +609,22 @@
             // Find the largest font size that fits the text within the canvas width
             let fontSize = maxFontSize;
             ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
-            let textWidth = ctx.measureText(value).width;
+            let metrics = ctx.measureText(value);
+            // Italic glyphs can extend beyond their advance width on either side.
+            let textOffset = Math.max(0, metrics.actualBoundingBoxLeft || 0);
+            let textWidth = textOffset + Math.max(metrics.width, metrics.actualBoundingBoxRight || 0);
             const canvasWidth = canvas.width;
             while (fontSize > minFontSize && textWidth > canvasWidth) {
                 fontSize -= 0.5;
                 ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
-                textWidth = ctx.measureText(value).width;
+                metrics = ctx.measureText(value);
+                textOffset = Math.max(0, metrics.actualBoundingBoxLeft || 0);
+                textWidth = textOffset + Math.max(metrics.width, metrics.actualBoundingBoxRight || 0);
             }
             fontSize = Math.max(minFontSize, fontSize);
             ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
             if (value.trim()) {
-                ctx.fillText(value, 0, canvas.height / 2);
+                ctx.fillText(value, textOffset, canvas.height / 2);
             }
             // Enable save only when something is actually drawn, whitespace-only text draws nothing
             if (this.isCanvasEmpty(canvas)) {

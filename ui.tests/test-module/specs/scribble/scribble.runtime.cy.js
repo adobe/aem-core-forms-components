@@ -106,6 +106,36 @@ describe('Form Runtime with Scribble Input', () => {
         });
     });
 
+    it('should preserve italic input overhang and save signatures without keyup', () => {
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
+        cy.get('.cmp-adaptiveform-scribble__control-text').click();
+        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
+        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should(($input) => {
+            const input = $input[0];
+            const win = input.ownerDocument.defaultView;
+            const style = win.getComputedStyle(input);
+            const context = win.document.createElement('canvas').getContext('2d');
+            context.font = style.font;
+            const leftOverhang = context.measureText('j').actualBoundingBoxLeft;
+            expect(parseFloat(style.textIndent)).to.be.greaterThan(leftOverhang);
+        }).type('jjames');
+        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
+        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').clear();
+        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
+        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box')
+            .invoke('val', 'jjames').trigger('input');
+        cy.get(selectors.canvas).then(($canvas) => {
+            const canvas = $canvas[0];
+            const pixels = Array.from(canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data);
+            canvas.ownerDocument.defaultView.dispatchEvent(new Event('resize'));
+            expect(Array.from(canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data)).to.deep.equal(pixels);
+        });
+        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
+        cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image')
+            .should('have.attr', 'src').and('match', /^data:image\/png/);
+    });
+
     it('should not clear and clear the signature when clear is cancelled and confirmed respectively', () => {
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click().then(() => {
             cy.get('.cmp-adaptiveform-scribble__container').should('be.visible').then(() => {
