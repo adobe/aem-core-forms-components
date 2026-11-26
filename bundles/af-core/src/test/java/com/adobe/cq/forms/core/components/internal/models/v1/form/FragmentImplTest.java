@@ -352,7 +352,8 @@ public class FragmentImplTest {
         I18n result1 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, (String) null);
         Assertions.assertNotNull(result1, "getFragmentContainerI18n should return a non-null I18n object even when localeLang is null");
 
-        // Test case 2: When localeLang is set and resourceBundleProvider is available - should return I18n with resource bundle
+        // Test case 2: When localeLang is set and resourceBundleProvider is available - should return I18n with
+        // resource bundle
         I18n result2 = (I18n) getFragmentContainerI18nMethod.invoke(fragmentImpl, "en");
         Assertions.assertNotNull(result2, "getFragmentContainerI18n should return a non-null I18n object when localeLang is set");
 
