@@ -267,6 +267,10 @@
                         signedImage.setAttribute('alt', FormView.LanguageUtils.getTranslatedString(this.lang, 'signature') || 'Signature');
                         signedImage.setAttribute('title', FormView.LanguageUtils.getTranslatedString(this.lang, 'signature') || 'Signature');
                         that.updateEmptyStatus();
+                        if (!that.element.querySelector('.cmp-adaptiveform-scribble__clear-sign')) {
+                            that.addClearSignButton();
+                            that._signSubmitted = true;
+                        }
                     }
                 }
             });
@@ -276,7 +280,12 @@
             const ctx = canvas.getContext('2d');
             const width = canvas.width;
             const height = canvas.height;
-            
+
+            // A zero-sized canvas (e.g. hidden in text-sign mode) has no pixels and getImageData would throw
+            if (!width || !height) {
+                return true;
+            }
+
             // Get pixel data from the canvas
             const imageData = ctx.getImageData(0, 0, width, height);
             
@@ -316,6 +325,8 @@
         
                 this.closeEditModal();
                 this._signSubmitted = true;
+            } else {
+                this.disableControl(['save', 'clearSign']);
             }
         }
 
@@ -346,8 +357,10 @@
         updateSignedImage(newData) {
             const img = this.getSignedCanvasImage();
             img.src = newData;
-            img.style.width = '100%';
+            img.style.width = 'auto';
             img.style.height = '150px';
+            img.style.maxWidth = '100%';
+            img.style.objectFit = 'contain';
         }
 
         addClearSignButton() {
@@ -561,18 +574,10 @@
         
             this.addEventListeners(controlPanel, 'click', this.controlPanelClickHandler.bind(this));
         
-            keyboardSignBox.addEventListener('input', (event) => {
-                if (event?.target?.value) {
-                    this.enableControls(['save', 'clearSign']);
-                } else {
-                    this.disableControl(['save', 'clearSign']);
-                }
-            });
-        
-            keyboardSignBox.addEventListener('keyup', () => {
+            keyboardSignBox.addEventListener('input', () => {
                 this.updateKeyboardSignBoxFont(keyboardSignBox);
             });
-        
+
             document.addEventListener('click', (event) => {
                 if (!brushList.contains(event.target) && !toggleBrushListIcon.contains(event.target)) {
                     brushList.style.display = 'none';
@@ -604,16 +609,29 @@
             // Find the largest font size that fits the text within the canvas width
             let fontSize = maxFontSize;
             ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
-            let textWidth = ctx.measureText(value).width;
+            let metrics = ctx.measureText(value);
+            // Italic glyphs can extend beyond their advance width on either side.
+            let textOffset = Math.max(0, metrics.actualBoundingBoxLeft || 0);
+            let textWidth = textOffset + Math.max(metrics.width, metrics.actualBoundingBoxRight || 0);
             const canvasWidth = canvas.width;
             while (fontSize > minFontSize && textWidth > canvasWidth) {
                 fontSize -= 0.5;
                 ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
-                textWidth = ctx.measureText(value).width;
+                metrics = ctx.measureText(value);
+                textOffset = Math.max(0, metrics.actualBoundingBoxLeft || 0);
+                textWidth = textOffset + Math.max(metrics.width, metrics.actualBoundingBoxRight || 0);
             }
             fontSize = Math.max(minFontSize, fontSize);
             ctx.font = `${fontStyle} ${fontSize}rem ${fontFamily}`;
-            ctx.fillText(value, 0, canvas.height / 2);
+            if (value.trim()) {
+                ctx.fillText(value, textOffset, canvas.height / 2);
+            }
+            // Enable save only when something is actually drawn, whitespace-only text draws nothing
+            if (this.isCanvasEmpty(canvas)) {
+                this.disableControl(['save', 'clearSign']);
+            } else {
+                this.enableControls(['save', 'clearSign']);
+            }
         }
 
         enableSignatureTextBox() {
@@ -639,6 +657,10 @@
             let imgData = null;
             if (this.canvas.width > 0 && this.canvas.height > 0) {
                 imgData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+            }
+            // Hidden canvas (text-sign mode) reports 0 size, resizing now would wipe it to 0x0
+            if (!this.canvas.offsetWidth || !this.canvas.offsetHeight) {
+                return;
             }
             this.canvas.width = this.canvas.offsetWidth * dpr;
             this.canvas.height = this.canvas.offsetHeight * dpr;
