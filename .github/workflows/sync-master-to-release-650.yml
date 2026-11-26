@@ -42,6 +42,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Test release synchronization conflict handling
+        run: python3 .github/scripts/test_sync_master_to_release_650.py
+
       - name: Merge master and open a release/650 PR
         env:
           GH_TOKEN: ${{ secrets.RELEASE_SYNC_TOKEN }}
