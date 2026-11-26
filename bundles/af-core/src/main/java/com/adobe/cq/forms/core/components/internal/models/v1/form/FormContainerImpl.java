@@ -85,6 +85,10 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @Nullable
     private String data;
 
+    @ValueMapValue(name = FormContainer.PN_THEME_CLIENT_LIB_REF, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String themeClientLibRef;
+
     @ValueMapValue(name = FormContainer.PN_RUNTIME_DOCUMENT_PATH, injectionStrategy = InjectionStrategy.OPTIONAL)
     @Default(values = "")
     protected String documentPath;
@@ -99,6 +103,13 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @Override
     public FormMetaData getMetaData() {
         return new FormMetaDataImpl();
+    }
+
+    @Override
+    @Nullable
+    @JsonIgnore
+    public String getThemeClientLibRef() {
+        return themeClientLibRef;
     }
 
     @Override

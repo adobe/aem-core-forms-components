@@ -166,6 +166,108 @@ public class FormStructureParserImplTest {
     }
 
     @Test
+    void testGetThemeClientLibRefFromPageAndContainer() {
+        Resource formContainer = context.resourceResolver().getResource(FORM_CONTAINER_PATH);
+        formContainer.adaptTo(ModifiableValueMap.class).put(FormContainer.PN_THEME_CLIENT_LIB_REF, "adaptiveform.theme.canvas3");
+
+        FormStructureParser parser = getFormStructureParserUnderTest(CONTENT_ROOT + "/myTestPage");
+        assertEquals("adaptiveform.theme.canvas3", parser.getThemeClientLibRefFromFormContainer());
+        assertEquals("abc", parser.getClientLibRefFromFormContainer());
+        assertNull(parser.getThemeEditorThemeRef());
+
+        parser = getFormStructureParserUnderTest(FORM_CONTAINER_PATH);
+        assertEquals("adaptiveform.theme.canvas3", parser.getThemeClientLibRefFromFormContainer());
+    }
+
+    @Test
+    void testCloudThemeRefWithoutSavedCategory() {
+        Resource formContainer = context.resourceResolver().getResource(FORM_CONTAINER_PATH);
+        assertEquals("/content/dam/formsanddocuments-themes/test-theme", formContainer.getValueMap().get("themeRef"));
+        FormStructureParser parser = getFormStructureParserUnderTest(CONTENT_ROOT + "/myTestPage");
+        assertNull(parser.getThemeClientLibRefFromFormContainer());
+        assertEquals("abc", parser.getClientLibRefFromFormContainer());
+        assertNull(parser.getThemeEditorThemeRef());
+
+        context.request().setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
+        parser = context.request().adaptTo(FormStructureParser.class);
+        assertEquals("fdtheme.test-theme", parser.getThemeEditorThemeRef());
+        assertNull(parser.getThemeClientLibRefFromFormContainer());
+        assertEquals("abc", parser.getClientLibRefFromFormContainer());
+    }
+
+    @Test
+    void testSavedThemeCategoryDoesNotChangeFormDefinition() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        String original = getFormStructureParserUnderTest(FORM_CONTAINER_PATH).getFormDefinition();
+        assertNotNull(original);
+        context.resourceResolver().getResource(FORM_CONTAINER_PATH).adaptTo(ModifiableValueMap.class)
+            .put(FormContainer.PN_THEME_CLIENT_LIB_REF, "adaptiveform.theme.canvas3");
+        FormStructureParser parser = getFormStructureParserUnderTest(FORM_CONTAINER_PATH);
+        assertEquals("adaptiveform.theme.canvas3", parser.getThemeClientLibRefFromFormContainer());
+        assertEquals(mapper.readTree(original), mapper.readTree(parser.getFormDefinition()));
+    }
+
+    @Test
+    void testGetThemeClientLibRefWithoutFormContainer() {
+        FormStructureParser parser = getFormStructureParserUnderTest(FORM_CONTAINER_PATH + "/container1");
+        assertNull(parser.getThemeClientLibRefFromFormContainer());
+    }
+
+    @Test
+    void testSavedThemeWithoutGenericClientLib() {
+        ModifiableValueMap properties = context.resourceResolver().getResource(FORM_CONTAINER_PATH).adaptTo(ModifiableValueMap.class);
+        properties.remove(FormContainer.PN_CLIENT_LIB_REF);
+        properties.put(FormContainer.PN_THEME_CLIENT_LIB_REF, "adaptiveform.theme.canvas3");
+        FormStructureParser parser = getFormStructureParserUnderTest(CONTENT_ROOT + "/myTestPage");
+        assertEquals("adaptiveform.theme.canvas3", parser.getThemeClientLibRefFromFormContainer());
+        assertNull(parser.getClientLibRefFromFormContainer());
+    }
+
+    @Test
+    void testClientLibLookupContinuesPastContainerWithMissingCategory() {
+        context.resourceResolver().getResource(FORM_CONTAINER_PATH).adaptTo(ModifiableValueMap.class)
+            .remove(FormContainer.PN_CLIENT_LIB_REF);
+        context.create().resource(JCR_CONTENT_PATH + "/secondForm",
+            "sling:resourceType", "core/fd/components/form/container/v2/container",
+            "fieldType", "form", FormContainer.PN_CLIENT_LIB_REF, "second.generic",
+            FormContainer.PN_THEME_CLIENT_LIB_REF, "second.theme");
+
+        FormStructureParser parser = getFormStructureParserUnderTest(CONTENT_ROOT + "/myTestPage");
+        assertEquals("second.generic", parser.getClientLibRefFromFormContainer());
+        assertEquals("second.theme", parser.getThemeClientLibRefFromFormContainer());
+        assertNull(getFormStructureParserUnderTest(FORM_CONTAINER_PATH).getClientLibRefFromFormContainer());
+    }
+
+    @Test
+    void testClientLibLookupPreservesEmptyCategory() {
+        context.resourceResolver().getResource(FORM_CONTAINER_PATH).adaptTo(ModifiableValueMap.class)
+            .put(FormContainer.PN_CLIENT_LIB_REF, "");
+        context.create().resource(JCR_CONTENT_PATH + "/secondForm",
+            "sling:resourceType", "core/fd/components/form/container/v2/container",
+            "fieldType", "form", FormContainer.PN_CLIENT_LIB_REF, "second.generic");
+        assertEquals("", getFormStructureParserUnderTest(CONTENT_ROOT + "/myTestPage").getClientLibRefFromFormContainer());
+    }
+
+    @Test
+    void testUnusableThemeOverridePreservesSavedCategory() {
+        context.resourceResolver().getResource(FORM_CONTAINER_PATH).adaptTo(ModifiableValueMap.class)
+            .put(FormContainer.PN_THEME_CLIENT_LIB_REF, "adaptiveform.theme.canvas3");
+        context.currentResource(CONTENT_ROOT + "/myTestPage");
+        context.request().setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/non-existent");
+        FormStructureParser parser = context.request().adaptTo(FormStructureParser.class);
+        assertNull(parser.getThemeEditorThemeRef());
+        assertEquals("adaptiveform.theme.canvas3", parser.getThemeClientLibRefFromFormContainer());
+        assertEquals("abc", parser.getClientLibRefFromFormContainer());
+
+        context.request().setAttribute(ThemeConstants.THEME_OVERRIDE, "/content/dam/formsanddocuments-themes/test-theme/jcr:content");
+        context.resourceResolver().getResource("/content/dam/formsanddocuments-themes/test-theme/jcr:content/metadata")
+            .adaptTo(ModifiableValueMap.class).remove(ThemeConstants.PROPERTY_CLIENTLIB_CATEGORY);
+        parser = context.request().adaptTo(FormStructureParser.class);
+        assertEquals("", parser.getThemeEditorThemeRef());
+        assertEquals("adaptiveform.theme.canvas3", parser.getThemeClientLibRefFromFormContainer());
+    }
+
+    @Test
     public void containsFormContainer_should_return_true() {
         String path = JCR_CONTENT_PATH;
         FormStructureParser formStructureParser = getFormStructureParserUnderTest(path);
@@ -198,6 +300,8 @@ public class FormStructureParserImplTest {
 
     @Test
     void testGetThemeEditorThemeRefWithRequestAttribute() {
+        context.resourceResolver().getResource(FORM_CONTAINER_PATH).adaptTo(ModifiableValueMap.class)
+            .put(FormContainer.PN_THEME_CLIENT_LIB_REF, "adaptiveform.theme.canvas3");
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
@@ -205,10 +309,14 @@ public class FormStructureParserImplTest {
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
         String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);
+        assertEquals("adaptiveform.theme.canvas3", formStructureParser.getThemeClientLibRefFromFormContainer());
+        assertEquals("abc", formStructureParser.getClientLibRefFromFormContainer());
     }
 
     @Test
     void testGetThemeEditorThemeRefWithRequestParameter() {
+        context.resourceResolver().getResource(FORM_CONTAINER_PATH).adaptTo(ModifiableValueMap.class)
+            .put(FormContainer.PN_THEME_CLIENT_LIB_REF, "adaptiveform.theme.canvas3");
         String path = CONTENT_ROOT + "/myTestPage";
         context.currentResource(path);
         MockSlingHttpServletRequest request = context.request();
@@ -217,6 +325,8 @@ public class FormStructureParserImplTest {
         FormStructureParser formStructureParser = request.adaptTo(FormStructureParser.class);
         String themeClientLibRef = formStructureParser.getThemeEditorThemeRef();
         assertEquals("fdtheme.test-theme", themeClientLibRef);
+        assertEquals("adaptiveform.theme.canvas3", formStructureParser.getThemeClientLibRefFromFormContainer());
+        assertEquals("abc", formStructureParser.getClientLibRefFromFormContainer());
     }
 
     @Test

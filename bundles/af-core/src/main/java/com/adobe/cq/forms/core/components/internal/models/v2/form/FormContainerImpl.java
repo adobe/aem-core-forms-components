@@ -124,6 +124,10 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     private String clientLibRef;
 
+    @ValueMapValue(name = FormContainer.PN_THEME_CLIENT_LIB_REF, injectionStrategy = InjectionStrategy.OPTIONAL)
+    @Nullable
+    private String themeClientLibRef;
+
     @ValueMapValue(name = FD_IS_HAMBURGER_MENU_ENABLED, injectionStrategy = InjectionStrategy.OPTIONAL)
     private Boolean isHamburgerMenuEnabled = false;
 
@@ -245,6 +249,13 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Nullable
     public String getClientLibRef() {
         return clientLibRef;
+    }
+
+    @Override
+    @Nullable
+    @JsonIgnore
+    public String getThemeClientLibRef() {
+        return themeClientLibRef;
     }
 
     @Override

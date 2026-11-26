@@ -65,6 +65,12 @@ public class FormStructureParserImpl implements FormStructureParser {
     }
 
     @Override
+    @Nullable
+    public String getThemeClientLibRefFromFormContainer() {
+        return getPropertyFromFormContainer(resource, FormContainer.PN_THEME_CLIENT_LIB_REF);
+    }
+
+    @Override
     public String getThemeEditorThemeRef() {
         String themeContentPath = null;
         String themeClientLibRef = null;
@@ -118,7 +124,9 @@ public class FormStructureParserImpl implements FormStructureParser {
         if (ComponentUtils.isAFContainer(resource)) {
             FormContainer formContainer = resource.adaptTo(FormContainer.class);
             if (formContainer != null) {
-                return formContainer.getClientLibRef();
+                return FormContainer.PN_THEME_CLIENT_LIB_REF.equals(propertyName)
+                    ? formContainer.getThemeClientLibRef()
+                    : formContainer.getClientLibRef();
             }
         }
 

@@ -15,6 +15,7 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package com.adobe.cq.forms.core.components.models.form;
 
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -38,8 +39,19 @@ public interface FormStructureParser {
     String getClientLibRefFromFormContainer();
 
     /**
+     * Returns the saved Theme Client Library category used by AEM 6.5, independently of request Theme Editor overrides.
      *
-     * @returns reference to the client lib of the theme from form container
+     * @return saved theme client library category from a form container, or {@code null} if unavailable
+     * @since com.adobe.cq.forms.core.components.models.form 5.13.0
+     */
+    @Nullable
+    String getThemeClientLibRefFromFormContainer();
+
+    /**
+     * Resolves a request Theme Editor override to its theme client library category.
+     * This does not read the saved category from the form container.
+     *
+     * @return resolved override category, or {@code null} if unavailable
      */
     String getThemeEditorThemeRef();
 

@@ -184,6 +184,28 @@ public class FormContainerImplTest {
     }
 
     @Test
+    void testSavedThemeCategoryDoesNotChangeJsonExport() throws Exception {
+        Resource resource = context.resourceResolver().getResource(PATH_FORM_1);
+        FormContainer original = resource.adaptTo(FormContainer.class);
+        assertNotNull(original);
+        assertNull(original.getThemeClientLibRef());
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode publishJson = mapper.readTree(Utils.getJson(original, Views.Publish.class));
+        JsonNode authorJson = mapper.readTree(Utils.getCompleteJson(original));
+
+        resource.adaptTo(ModifiableValueMap.class).put(FormContainer.PN_THEME_CLIENT_LIB_REF, "adaptiveform.theme.canvas3");
+        FormContainer saved = context.resourceResolver().getResource(PATH_FORM_1).adaptTo(FormContainer.class);
+        assertNotNull(saved);
+        assertEquals("adaptiveform.theme.canvas3", saved.getThemeClientLibRef());
+        assertEquals(original.getClientLibRef(), saved.getClientLibRef());
+        assertEquals(publishJson, mapper.readTree(Utils.getJson(saved, Views.Publish.class)));
+        assertEquals(authorJson, mapper.readTree(Utils.getCompleteJson(saved)));
+        assertNull(mapper.valueToTree(saved).get("themeClientLibRef"));
+        context.currentResource(PATH_FORM_1);
+        assertEquals("adaptiveform.theme.canvas3", context.request().adaptTo(FormContainer.class).getThemeClientLibRef());
+    }
+
+    @Test
     void testGetIdForSitePage() throws Exception {
         FormContainer formContainer = Utils.getComponentUnderTest(FORM_CONTAINER_PATH_IN_SITES, FormContainer.class, context);
         assertNotNull(formContainer.getId());
