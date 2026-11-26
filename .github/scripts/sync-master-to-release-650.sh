@@ -38,7 +38,7 @@ trap 'rm -f "$body_file"' EXIT
 cat .github/PULL_REQUEST_TEMPLATE.md > "$body_file"
 
 git switch --create "$branch" "$base_sha"
-if ! git -c core.hooksPath=/dev/null merge --no-ff -X ours "$source_sha" \
+if ! git -c core.hooksPath=/dev/null merge --no-ff "$source_sha" \
     -m "Merge master into release/650 after release" \
     -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; then
     echo "::error::Merge needs manual resolution. No branch or PR has been pushed."
@@ -63,9 +63,9 @@ replacements = {
     "<!--- Please link to the issue here: -->":
         "Automated release synchronization; no separate issue supplied.",
     "<!--- Why is this change required? What problem does it solve? -->":
-        "Bring non-conflicting master changes to release/650. The merge starts on "
-        "release/650 and uses `git merge --no-ff -X ours`, so release/650 wins "
-        "conflicting hunks. Unresolved conflict types stop the workflow without pushing. "
+        "Merge master into release/650 without automatically resolving conflicts. "
+        "Any conflict stops the workflow without pushing a branch or creating a PR; "
+        "maintainer resolution is required. "
         "This PR is not automatically merged.",
     "<!--- Please describe in detail how you tested your changes. -->":
         "`git diff --check \"$base_sha\" HEAD`: passed before pushing. "
