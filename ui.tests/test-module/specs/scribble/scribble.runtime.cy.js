@@ -68,6 +68,28 @@ describe('Form Runtime with Scribble Input', () => {
         });
     });
 
+    it('should preserve the saved signature image aspect ratio', () => {
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-container')
+            .invoke('css', 'width', '400px').click();
+        cy.get('.cmp-adaptiveform-scribble__control-text').click();
+        cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').type('aspect');
+        cy.get(selectors.canvas).then(($canvas) => {
+            const canvas = $canvas[0];
+            canvas.width = 200;
+            canvas.height = 100;
+            canvas.getContext('2d').fillRect(20, 20, 20, 20);
+        });
+        cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
+        cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should(($image) => {
+            const image = $image[0];
+            expect(image.naturalWidth).to.be.greaterThan(0);
+            const bounds = image.getBoundingClientRect();
+            expect(bounds.width / bounds.height)
+                .to.be.closeTo(image.naturalWidth / image.naturalHeight, 0.01);
+            expect(bounds.width).to.be.at.most(image.parentElement.clientWidth);
+        });
+    });
+
     it('should clear the signature when clear', () => {
         cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click().then(() => {
             cy.get('.cmp-adaptiveform-scribble__container').should('be.visible').then(() => {
@@ -80,6 +102,63 @@ describe('Form Runtime with Scribble Input', () => {
                         });
                     });
                  });
+            });
+        });
+    });
+
+    ['j', 'jj', 'j'.repeat(30)].forEach(value => {
+        it(`should preserve glyph pixels in the saved image for ${value}`, () => {
+            let expectedPixels;
+            let width;
+            let height;
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-container')
+                .invoke('css', 'width', '600px').click();
+            cy.get('.cmp-adaptiveform-scribble__control-text').click();
+            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box')
+                .invoke('val', value).trigger('input');
+            cy.get(selectors.canvas).then(($canvas) => {
+                const canvas = $canvas[0];
+                const context = canvas.getContext('2d');
+                const metrics = context.measureText(value);
+                const leftOverhang = Math.max(0, metrics.actualBoundingBoxLeft);
+                width = canvas.width;
+                height = canvas.height;
+                expect(leftOverhang).to.be.greaterThan(0);
+                expect(leftOverhang + Math.max(metrics.width, metrics.actualBoundingBoxRight))
+                    .to.be.at.most(width);
+                const reference = canvas.ownerDocument.createElement('canvas');
+                const padding = 128;
+                reference.width = width + padding * 2;
+                reference.height = height;
+                reference.style.display = 'none';
+                // Inherit the page's font smoothing for a like-for-like pixel reference.
+                canvas.parentElement.appendChild(reference);
+                const referenceContext = reference.getContext('2d', {willReadFrequently: true});
+                referenceContext.font = context.font;
+                referenceContext.fillText(value, padding + leftOverhang, height / 2);
+                expectedPixels = referenceContext.getImageData(padding, 0, width, height).data;
+                reference.remove();
+                expect(expectedPixels.some((channel, index) => index % 4 === 3 && channel > 0))
+                    .to.equal(true);
+                const drawnPixels = context.getImageData(0, 0, width, height).data;
+                const differentChannels = drawnPixels.reduce((count, channel, index) =>
+                    count + (channel !== expectedPixels[index] ? 1 : 0), 0);
+                expect(differentChannels, 'drawn canvas versus padded glyph reference').to.equal(0);
+            });
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should(($image) => {
+                expect($image[0].naturalWidth).to.equal(width);
+                expect($image[0].naturalHeight).to.equal(height);
+            }).then(($image) => {
+                const image = $image[0];
+                const exported = image.ownerDocument.createElement('canvas');
+                exported.width = width;
+                exported.height = height;
+                const context = exported.getContext('2d');
+                context.drawImage(image, 0, 0);
+                const actualPixels = context.getImageData(0, 0, width, height).data;
+                expect(actualPixels.every((channel, index) => channel === expectedPixels[index]))
+                    .to.equal(true);
             });
         });
     });
@@ -148,6 +227,84 @@ describe('Form Runtime with Scribble Input', () => {
                     cy.get('.cmp-adaptiveform-scribble__brushlist').should('not.be.visible');
                 });
             });
+        });
+    });
+
+    describe('typed signature validation', () => {
+        const openTextSign = () => {
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-container').click();
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+            cy.get('.cmp-adaptiveform-scribble__control-text').click();
+            return cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').should('be.visible');
+        };
+
+        it('should keep save and clear disabled when only spaces are typed', () => {
+            cy.window().then((win) => {
+                cy.spy(win.console, 'error').as('consoleError');
+            });
+            openTextSign().type('   ');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
+            cy.get('.cmp-adaptiveform-scribble__control-clear').should('be.disabled');
+            cy.get('@consoleError').should('not.have.been.called');
+        });
+
+        it('should disable save again when typed text is deleted', () => {
+            openTextSign().type('abc');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
+            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').type('{backspace}{backspace}{backspace}');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
+        });
+
+        it('should disable save when text is replaced by spaces only', () => {
+            openTextSign().type('a');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
+            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box').clear().type('  ');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled');
+        });
+
+        it('should preserve typed signature pixels on resize and save without keyup', () => {
+            openTextSign().invoke('val', 'jjames').trigger('input');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled');
+            cy.get(selectors.canvas).then(($canvas) => {
+                const canvas = $canvas[0];
+                const context = canvas.getContext('2d');
+                const pixels = Array.from(context.getImageData(0, 0, canvas.width, canvas.height).data);
+                expect(pixels.some((value, index) => index % 4 === 3 && value > 0)).to.equal(true);
+                const win = canvas.ownerDocument.defaultView;
+                win.dispatchEvent(new win.Event('resize'));
+                expect(Array.from(context.getImageData(0, 0, canvas.width, canvas.height).data))
+                    .to.deep.equal(pixels);
+            });
+            cy.get('.cmp-adaptiveform-scribble__save-button').click();
+            cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image')
+                .should('have.attr', 'src').and('match', /^data:image\/png/);
+        });
+
+        it('should reject a zero-size canvas without a pixel-read error', () => {
+            openTextSign();
+            cy.get(selectors.canvas).then(($canvas) => {
+                $canvas[0].width = 0;
+                $canvas[0].height = 0;
+            });
+            cy.get('.cmp-adaptiveform-scribble__keyboard-sign-box')
+                .invoke('val', 'abc').trigger('input');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.disabled')
+                .invoke('removeAttr', 'disabled').click().should('be.disabled');
+            cy.get('.cmp-adaptiveform-scribble__control-clear').should('be.disabled');
+            cy.get('.cmp-adaptiveform-scribble__container').should('be.visible');
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('not.have.attr', 'src');
+        });
+
+        it('should save a text signature with leading spaces without errors', () => {
+            cy.window().then((win) => {
+                cy.spy(win.console, 'error').as('consoleError');
+            });
+            openTextSign().type('  abc');
+            cy.get('.cmp-adaptiveform-scribble__save-button').should('be.enabled').click();
+            cy.get('.cmp-adaptiveform-scribble__container').should('not.be.visible');
+            cy.get('.cmp-adaptiveform-scribble__canvas-signed-image').should('have.attr', 'src').and('not.be.empty');
+            cy.get('@consoleError').should('not.have.been.called');
         });
     });
 
