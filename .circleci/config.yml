@@ -18,8 +18,12 @@ common:
       - checkout
       - node/install:
           node-version: '22.19.0'
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - run:
+          name: Install Chrome 121 matching master
+          command: bash .circleci/ci/install-chrome.sh
+      - run:
+          name: Verify Cypress browser detection
+          command: node --test .circleci/ci/cypress-browser-config.test.js
       - run:
           command: |
             google-chrome --version

@@ -29,6 +29,7 @@
 // the project's config changing)
 
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 /**
  * @type {Cypress.PluginConfig}
@@ -71,6 +72,17 @@ function aemHttpRequest({ baseUrl, method, path, username, password, body }) {
 const TOGGLE_PID = 'com.adobe.granite.toggle.impl.dev.DynamicToggleProviderImpl';
 
 module.exports = (on, config) => {
+    config.browsers.forEach((browser) => {
+        // Cypress 13 parses Chrome for Testing's version as "for".
+        if (browser.name === 'chrome' && browser.version === 'for') {
+            const version = execFileSync(browser.path, ['--product-version'], { encoding: 'utf8' }).trim();
+            if (!/^\d+\.\d+\.\d+\.\d+$/.test(version)) {
+                throw new Error(`Unexpected Chrome version: ${version}`);
+            }
+            browser.version = version;
+            browser.majorVersion = Number.parseInt(version, 10);
+        }
+    });
     on('task', {
         /**
          * Enables or disables a single feature toggle in the live AEM instance via the
@@ -145,4 +157,5 @@ module.exports = (on, config) => {
 
     require('cypress-terminal-report/src/installLogsPrinter')(on, options);
     require('cypress-log-to-output').install(on);
+    return config;
 };
