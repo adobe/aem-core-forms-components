@@ -30,6 +30,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 
 import com.adobe.aemds.guide.utils.GuideWCMUtils;
 import com.adobe.cq.forms.core.components.internal.form.FormConstants;
+import com.adobe.cq.forms.core.components.internal.form.FormsComponentIdGenerator;
+import com.adobe.cq.forms.core.components.internal.form.FragmentOccurrence;
 import com.adobe.cq.wcm.core.components.models.Component;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
@@ -93,6 +95,11 @@ public abstract class AbstractComponentImpl implements Component {
      */
     private String id;
 
+    /**
+     * The fragment occurrence of this component, captured when the model is created.
+     */
+    private String occurrencePath;
+
     protected I18n i18n = null;
     protected String lang = null;
 
@@ -128,6 +135,9 @@ public abstract class AbstractComponentImpl implements Component {
 
     @PostConstruct
     private void init() {
+        // capture the fragment occurrence before any id is computed, the request attribute set by a fragment
+        // include is only available during the include
+        occurrencePath = FragmentOccurrence.getOccurrencePath(resource, request);
         // Setting currentPage to ResourcePage to prevent id miss-match when invoked via iframe mode in sites.
         if (currentPage != null && resource != null && request.getAttribute(FormConstants.REQ_ATTR_REFERENCED_PATH) != null) {
             if (!GuideWCMUtils.isForms(getCurrentPage().getPath())) {
@@ -145,10 +155,24 @@ public abstract class AbstractComponentImpl implements Component {
     @Override
     public String getId() {
         if (id == null) {
-            String resourceCallerPath = request != null ? (String) request.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH) : null;
-            this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
+            if (FragmentOccurrence.isEnabled()) {
+                this.id = FormsComponentIdGenerator.getId(this.resource, occurrencePath);
+            } else {
+                String resourceCallerPath = request != null ? (String) request.getAttribute(REQ_ATTR_RESOURCE_CALLER_PATH) : null;
+                this.id = ComponentUtils.getId(this.resource, this.currentPage, resourceCallerPath, this.componentContext);
+            }
         }
         return id;
+    }
+
+    /**
+     * Returns the occurrence path of this component, see {@link FragmentOccurrence}.
+     *
+     * @return the occurrence path, empty if the component is not inside a fragment
+     */
+    @NotNull
+    String getOccurrencePath() {
+        return occurrencePath == null ? "" : occurrencePath;
     }
 
     @NotNull
