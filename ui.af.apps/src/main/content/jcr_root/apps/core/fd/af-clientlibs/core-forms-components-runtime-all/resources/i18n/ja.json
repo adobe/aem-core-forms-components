@@ -104,5 +104,6 @@
   "sortOrder": "並べ替え順序",
   "sortDirection": "並べ替え方向",
   "ascending": "昇順",
-  "descending": "降順"
+  "descending": "降順",
+  "edit": "編集"
 }
