@@ -205,7 +205,7 @@ describe("Form Runtime with CheckBoxGroup Input", () => {
         cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup-item").should('have.length', 2);
         cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__label").contains('Select Animal').should('have.css', 'font-weight', '700');
         cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Dog').should('have.css', 'font-style', 'italic');
-        cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Cat').should('have.css', 'text-decoration', 'underline');
+        cy.get(`#${checkBox7}`).find(".cmp-adaptiveform-checkboxgroup__option-label span").contains('Cat').should('have.css', 'text-decoration-line', 'underline');
     });
 
     it("decoration element should not have same class name", () => {
