@@ -1,0 +1,53 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~ Copyright 2026 Adobe
+ ~
+ ~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~ you may not use this file except in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~     http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing, software
+ ~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~ See the License for the specific language governing permissions and
+ ~ limitations under the License.
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/* All visual styles live in the theme canvas:
+ * aem-forms-theme-canvas/src/components/slider/_slider.scss
+ */
+
+.cmp-adaptiveform-slider {}
+
+.cmp-adaptiveform-slider__label-container {}
+
+.cmp-adaptiveform-slider__widget-container {}
+
+.cmp-adaptiveform-slider__widget {}
+
+.cmp-adaptiveform-slider__widget:focus {}
+
+.cmp-adaptiveform-slider__widget[aria-invalid="true"] {}
+
+.cmp-adaptiveform-slider__widget:disabled {}
+
+.cmp-adaptiveform-slider__value {}
+
+.cmp-adaptiveform-slider__longdescription {}
+
+.cmp-adaptiveform-slider__longdescription p {}
+
+.cmp-adaptiveform-slider__shortdescription {}
+
+.cmp-adaptiveform-slider__questionmark {}
+
+.cmp-adaptiveform-slider__errormessage {}
+
+.cmp-adaptiveform-slider[data-cmp-valid="false"] {}
+
+.cmp-adaptiveform-slider[data-cmp-valid="true"] {}
+
+@media (max-width: 480px) {
+    .cmp-adaptiveform-slider__widget-container {}
+}

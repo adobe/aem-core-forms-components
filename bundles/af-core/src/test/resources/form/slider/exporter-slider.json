@@ -1,0 +1,23 @@
+{
+  "id": "slider-13183f5467",
+  "fieldType": "range",
+  "name": "abc",
+  "type": "number",
+  "default": "20",
+  "label": {
+    "value": "def"
+  },
+  "events": {
+    "custom:setProperty": [
+      "$event.payload"
+    ]
+  },
+  "properties": {
+    "customProp": "customPropValue",
+    "fd:path": "/content/slider"
+  },
+  "step": 5,
+  "minimum": 0,
+  "maximum": 100,
+  ":type": "core/fd/components/form/slider/v1/slider"
+}

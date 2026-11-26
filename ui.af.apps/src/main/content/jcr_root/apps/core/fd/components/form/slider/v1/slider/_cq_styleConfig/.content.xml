@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Base">
+    <items jcr:primaryType="nt:unstructured">
+        <field
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Base"
+            id="af2_slider"
+            longTitle="Base"
+            propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+            <items jcr:primaryType="nt:unstructured">
+                <widgetAndText
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Slider"
+                    id="af2_sliderwidgetandtext"
+                    cssSelector=".cmp-adaptiveform-slider"
+                    longTitle="Slider Widget"
+                    propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                    secondarySelectors="af2_guideContainer:af2_widgetAndText">
+                    <items jcr:primaryType="nt:unstructured">
+                        <sliderLabelContainer
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Label Container"
+                                id="af2_sliderlabelcontainer"
+                                cssSelector=".cmp-adaptiveform-slider__label-container"
+                                longTitle="Slider Label Container"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <items jcr:primaryType="nt:unstructured">
+                                <sliderLabel
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Label"
+                                        id="af2_sliderlabel"
+                                        cssSelector=".cmp-adaptiveform-slider__label-container .cmp-adaptiveform-slider__label"
+                                        longTitle="Slider Label"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                                <sliderHelpIcon
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Help Icon"
+                                        id="af2_sliderhelpicon"
+                                        cssSelector=".cmp-adaptiveform-slider__label-container .cmp-adaptiveform-slider__questionmark"
+                                        longTitle="Slider Help Icon"
+                                        propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"
+                                        secondarySelectors="af2_guideContainer:af2_helpicon"/>
+                            </items>
+                        </sliderLabelContainer>
+                        <sliderWidget
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Slider Widget"
+                                id="af2_sliderwidget"
+                                cssSelector=".cmp-adaptiveform-slider__widget"
+                                longTitle="Slider Widget"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common">
+                            <states jcr:primaryType="nt:unstructured">
+                                <focus
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Focus"
+                                        cssSelector=".cmp-adaptiveform-slider__widget:focus"/>
+                                <hover
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Hover"
+                                        cssSelector=".cmp-adaptiveform-slider__widget:hover"/>
+                                <disabled
+                                        jcr:primaryType="nt:unstructured"
+                                        jcr:title="Disabled"
+                                        cssSelector=".cmp-adaptiveform-slider__widget:disabled"/>
+                            </states>
+                        </sliderWidget>
+                        <sliderValue
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Current Value"
+                                id="af2_slidervalue"
+                                cssSelector=".cmp-adaptiveform-slider__value"
+                                longTitle="Slider Current Value"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <sliderDescriptionShort
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Short Description"
+                                id="af2_sliderdescriptionshort"
+                                cssSelector=".cmp-adaptiveform-slider__shortdescription"
+                                longTitle="Slider Short Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <sliderDescriptionLong
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Long Description"
+                                id="af2_sliderdescriptionlong"
+                                cssSelector=".cmp-adaptiveform-slider__longdescription"
+                                longTitle="Slider Long Description"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                        <sliderErrorMessage
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Slider Error Message"
+                                id="af2_slidererrormessage"
+                                cssSelector=".cmp-adaptiveform-slider__errormessage"
+                                longTitle="Slider Error Message"
+                                propertySheet="/mnt/overlay/fd/af/components/stylePropertySheet/common"/>
+                    </items>
+                    <states jcr:primaryType="nt:unstructured">
+                        <disabled
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Disabled"
+                                cssSelector=".cmp-adaptiveform-slider[data-cmp-enabled='false']"/>
+                        <mandatory
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Mandatory"
+                                cssSelector=".cmp-adaptiveform-slider[data-cmp-required='true']"/>
+                        <error
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error"
+                                cssSelector=".cmp-adaptiveform-slider[data-cmp-valid='false']"/>
+                        <success
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Success"
+                                cssSelector=".cmp-adaptiveform-slider[data-cmp-valid='true']"/>
+                    </states>
+                </widgetAndText>
+            </items>
+        </field>
+    </items>
+</jcr:root>

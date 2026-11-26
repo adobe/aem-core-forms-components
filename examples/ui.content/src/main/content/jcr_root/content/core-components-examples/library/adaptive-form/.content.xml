@@ -30,6 +30,7 @@
     <panelcontainer/>
     <radiobutton/>
     <resetbutton/>
+    <slider/>
     <submitbutton/>
     <switch/>
     <tabsontop/>
