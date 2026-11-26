@@ -40,6 +40,7 @@ import org.slf4j.LoggerFactory;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.adobe.cq.export.json.SlingModelFilter;
 import com.adobe.cq.forms.core.components.internal.form.FeatureToggleConstants;
+import com.adobe.cq.forms.core.components.internal.form.FragmentOccurrence;
 import com.adobe.cq.forms.core.components.models.form.Container;
 import com.adobe.cq.forms.core.components.models.form.ContainerConstraint;
 import com.adobe.cq.forms.core.components.models.form.FormComponent;
@@ -150,6 +151,15 @@ public abstract class AbstractContainerImpl extends AbstractBaseImpl implements 
         boolean occurrenceEnabled = FragmentOccurrence.isEnabled();
         for (Resource child : filteredChildrenResources) {
             T model = null;
+            // children inherit the occurrence of their container, unless an occurrence was set by a fragment
+            String childOccurrencePath = null;
+            if (occurrenceEnabled) {
+                childOccurrencePath = FragmentOccurrence.getOccurrencePath(child, null);
+                if (childOccurrencePath.isEmpty()) {
+                    childOccurrencePath = getOccurrencePath();
+                }
+            }
+            Resource childResource = occurrenceEnabled ? FragmentOccurrence.wrap(child, childOccurrencePath) : child;
             if (request != null) {
                 // todo: if possible set i18n form parent to child here, this would optimize the first form rendering
                 model = modelFactory.getModelFromWrappedRequest(request, childResource, modelClass);
