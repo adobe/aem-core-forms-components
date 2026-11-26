@@ -1,3 +1,5 @@
+/* global cy, Cypress, expect */
+
 const commons = require('../../../libs/commons/commons'),
     sitesSelectors = require('../../../libs/commons/sitesSelectors'),
     formsSelectors = require('../../../libs/commons/guideSelectors'),
@@ -100,7 +102,8 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.EQUALS_TO).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.EQUALS_TO).click();
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STRING_LITERAL).type('abc');
+        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STRING_LITERAL)
+            .type('abc').should('have.value', 'abc').blur();
         if (toggle_array.includes("FT_FORMS-12053")) {
             cy.getRuleEditorIframe().find(".delete-else-button").click();
         }
@@ -119,11 +122,12 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE coral-overlay.is-open .expression-selectlist coral-selectlist-item")
             .filter((index, item) => item.value === "$form." + fieldName)
             .should("have.length", 1).click({force: true});
+        cy.getRuleEditorIframe().find(".terminal-view.AFCOMPONENT.VARIABLE")
+            .should('contain.text', fieldName);
 
         cy.intercept('POST', /content\/forms\/af\/core-components-it\/samples\/ruleeditor\/blank.*/).as('ruleEditorRequest');
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+        cy.saveRule('@ruleEditorRequest');
 
         cy.wait('@ruleEditorRequest').then((interception) => {
             expect(interception.response.statusCode).to.equal(201);
@@ -174,8 +178,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         cy.intercept('POST', /content\/forms\/af\/core-components-it\/samples\/ruleeditor\/blank.*/).as('ruleEditorRequest');
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+        cy.saveRule('@ruleEditorRequest');
         cy.wait('@ruleEditorRequest').then((interception) => {
             expect(interception.response.statusCode).to.equal(201);
             const submittedData = Object.fromEntries(new URLSearchParams(interception.request.body));
@@ -290,6 +293,75 @@ describe('Rule editor authoring sanity for core-components',function(){
         // check if rule is created
         // cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.ruleSummary.SUBMISSION_FAILURE_RULE).should("exist");
     }
+
+    context('Rule Save synchronization', function () {
+        const savePath = '/__rule-editor-save-test.html';
+
+        beforeEach(function () {
+            cy.intercept('GET', '**' + savePath, {
+                headers: {'content-type': 'text/html'},
+                body: '<html><body><iframe id="af-rule-editor" srcdoc="<button class=exp-Save-Button>Done</button>"></iframe></body></html>'
+            });
+            cy.visit((Cypress.env('crx.contextPath') || '') + savePath);
+        });
+
+        it('should retry a Save click only until a request starts', function () {
+            let clicks = 0;
+            cy.intercept('POST', '**' + savePath, {statusCode: 201}).as('ruleEditorRequest');
+            cy.getRuleEditorIframe().then($body => {
+                $body.find(formsSelectors.ruleEditor.action.saveRule).on('click', () => {
+                    if (++clicks > 1) {
+                        $body[0].ownerDocument.defaultView.fetch(savePath, {method: 'POST'});
+                    }
+                });
+            });
+
+            cy.saveRule('@ruleEditorRequest');
+            cy.wait('@ruleEditorRequest').its('response.statusCode').should('equal', 201);
+            cy.get('@ruleEditorRequest.all').should('have.length', 1);
+            cy.then(() => expect(clicks).to.equal(2));
+        });
+
+        it('should not submit again while the Save response is pending', function () {
+            let clicks = 0;
+            cy.intercept('POST', '**' + savePath, {statusCode: 201, delay: 2000}).as('ruleEditorRequest');
+            cy.getRuleEditorIframe().then($body => {
+                $body.find(formsSelectors.ruleEditor.action.saveRule).on('click', () => {
+                    clicks++;
+                    $body[0].ownerDocument.defaultView.fetch(savePath, {method: 'POST'});
+                });
+            });
+
+            cy.saveRule('@ruleEditorRequest');
+            cy.wait('@ruleEditorRequest').its('response.statusCode').should('equal', 201);
+            cy.get('@ruleEditorRequest.all').should('have.length', 1);
+            cy.then(() => expect(clicks).to.equal(1));
+        });
+
+        it('should wait for the rule editor to become ready before Save', function () {
+            let clicks = 0;
+            let clickedWhileFrozen = false;
+            cy.intercept('POST', '**' + savePath, {statusCode: 201}).as('ruleEditorRequest');
+            cy.getRuleEditorIframe().then($body => {
+                const win = $body[0].ownerDocument.defaultView;
+                const $save = $body.find(formsSelectors.ruleEditor.action.saveRule);
+                $body.addClass('af-freezeBody');
+                $save.on('click', () => {
+                    clickedWhileFrozen = $body.hasClass('af-freezeBody');
+                    clicks++;
+                    win.fetch(savePath, {method: 'POST'});
+                });
+                win.setTimeout(() => {
+                    $body.removeClass('af-freezeBody');
+                }, 1000);
+            });
+
+            cy.saveRule('@ruleEditorRequest');
+            cy.wait('@ruleEditorRequest').its('response.statusCode').should('equal', 201);
+            cy.then(() => expect(clicks).to.equal(1));
+            cy.then(() => expect(clickedWhileFrozen).to.equal(false));
+        });
+    });
 
     context('Open Forms Editor', function() {
         const formPath = "/content/forms/af/core-components-it/samples/ruleeditor/blank",
