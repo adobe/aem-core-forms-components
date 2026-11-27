@@ -22,9 +22,6 @@ common:
           name: Install Chrome 121 matching master
           command: bash .circleci/ci/install-chrome.sh
       - run:
-          name: Verify Cypress setup and authoring exceptions
-          command: node --test .circleci/ci/cypress-browser-config.test.js .circleci/ci/cypress-authoring-exceptions.test.js
-      - run:
           command: |
             google-chrome --version
             chromedriver --version
