@@ -16,6 +16,14 @@ describe('Rule editor authoring sanity for core-components',function(){
         });
     });
 
+    const enterStringLiteral = function(value) {
+        const literal = formsSelectors.ruleEditor.choiceModels.STRING_LITERAL;
+        cy.getRuleEditorIframe().find(literal + ' coral-autocomplete input:visible')
+            .should('have.length', 1).clear().type(value).should('have.value', value).type('{enter}');
+        return cy.getRuleEditorIframe().find(literal + ' .value-entered span')
+            .should('have.text', value);
+    };
+
     const createRuleToHideTextInputOnButtonClick = function() {
         // Edit rule option not existing on button toolbar
         cy.get(formsSelectors.ruleEditor.action.editRule).should("exist");
@@ -102,8 +110,7 @@ describe('Rule editor authoring sanity for core-components',function(){
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.EQUALS_TO).should("exist");
         cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.operator.EQUALS_TO).click();
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.choiceModels.STRING_LITERAL)
-            .type('abc').should('have.value', 'abc').blur();
+        enterStringLiteral('abc');
         if (toggle_array.includes("FT_FORMS-12053")) {
             cy.getRuleEditorIframe().find(".delete-else-button").click();
         }
@@ -303,6 +310,23 @@ describe('Rule editor authoring sanity for core-components',function(){
                 body: '<html><body><iframe id="af-rule-editor" srcdoc="<button class=exp-Save-Button>Done</button>"></iframe></body></html>'
             });
             cy.visit((Cypress.env('crx.contextPath') || '') + savePath);
+        });
+
+        it('should enter a literal through its nested input and verify the committed label', function () {
+            cy.getRuleEditorIframe().then($body => {
+                const $literal = Cypress.$('<div class="choice-model u-coral-clearFix"><div class="terminal-view STRING_LITERAL"><coral-autocomplete><input type="text"></coral-autocomplete></div></div>');
+                $literal.find('input').on('keydown', event => {
+                    if (event.key !== 'Enter') {
+                        return;
+                    }
+                    const $label = Cypress.$('<div class="value-entered"><span></span></div>');
+                    $label.find('span').text(event.target.value);
+                    $literal.find('.terminal-view').append($label);
+                });
+                $body.append($literal);
+            });
+
+            enterStringLiteral('abc');
         });
 
         it('should retry a Save click only until a request starts', function () {
