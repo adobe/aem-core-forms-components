@@ -18,8 +18,9 @@ common:
       - checkout
       - node/install:
           node-version: '22.19.0'
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - run:
+          name: Install Chrome 121 matching master
+          command: bash .circleci/ci/install-chrome.sh
       - run:
           command: |
             google-chrome --version
@@ -142,7 +143,7 @@ executors:
     docker:
       - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-qp:6.4.6-openjdk11
         <<: *docker_auth
-      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.25.0-openjdk11
+      - image: docker-adobe-cif-release.dr-uw2.adobeitc.com/circleci-aem:6.5.26.0-openjdk11
         <<: *docker_auth
   test_executor_lts:
     docker:
@@ -244,6 +245,19 @@ jobs:
       - run:
           name: Update permissions
           command: sudo chown -R circleci /usr/local/lib/node_modules
+      - run:
+          name: Use Maven 3.9.16 for FileVault compatibility
+          command: |
+            version=3.9.16
+            distribution="apache-maven-${version}"
+            directory="$(mktemp -d)"
+            archive="${directory}/${distribution}-bin.tar.gz"
+            repository="https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/${version}"
+            curl --fail --silent --show-error --location "${repository}/${distribution}-bin.tar.gz" --output "${archive}"
+            checksum="$(curl --fail --silent --show-error --location "${repository}/${distribution}-bin.tar.gz.sha512")"
+            printf '%s  %s\n' "${checksum}" "${archive}" | shasum -a 512 --check
+            tar -xzf "${archive}" -C "${directory}"
+            printf 'export MAVEN_HOME="%s/%s"\nexport PATH="$MAVEN_HOME/bin:$PATH"\n' "${directory}" "${distribution}" >> "${BASH_ENV}"
       - run:
           name: Build
           command: node .circleci/ci/build.js

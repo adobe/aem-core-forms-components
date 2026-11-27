@@ -466,6 +466,35 @@ Cypress.Commands.add("createRule", () => {
     );
 });
 
+Cypress.Commands.add("saveRule", (requestAlias) => {
+    const requestsAlias = requestAlias + '.all';
+    return recurse(
+        () => {
+            // An observed request may still be pending; do not click Save again.
+            cy.get(requestsAlias).then(requests => {
+                if (!requests.length) {
+                    return cy.getRuleEditorIframe().then($body => {
+                        const $save = $body.find(guideSelectors.ruleEditor.action.saveRule);
+                        if (!$body.hasClass('af-freezeBody') && $save.length === 1 &&
+                            $save.is(':visible') && !$save.is(':disabled')) {
+                            return cy.wrap($save).click();
+                        }
+                    });
+                }
+            });
+            return cy.get(requestsAlias);
+        },
+        requests => requests.length > 0,
+        {
+            limit: 5,
+            delay: 1000,
+            timeout: 10000,
+            log: false,
+            error: 'Rule editor did not start ' + requestAlias + ' after Save attempts'
+        }
+    );
+});
+
 Cypress.Commands.add("selectCoralOption", (selector, value) => {
     cy.get(selector).should('have.length', 1).scrollIntoView().should('be.visible');
     cy.get(selector).find('button').first().should('be.visible').click();

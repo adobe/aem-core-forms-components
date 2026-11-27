@@ -1,0 +1,50 @@
+name: Sync master to release/650 after a release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    if: >-
+      (github.event_name == 'release' &&
+       github.event.release.target_commitish == 'master' &&
+       !github.event.release.prerelease) ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: sync-master-to-release-650
+      cancel-in-progress: false
+    steps:
+      - name: Require release synchronization credentials
+        env:
+          SYNC_TOKEN: ${{ secrets.RELEASE_SYNC_TOKEN }}
+        run: |
+          if [[ -z "$SYNC_TOKEN" ]]; then
+            echo "::error::Set RELEASE_SYNC_TOKEN with Contents, Pull requests, and Workflows write access."
+            exit 1
+          fi
+
+      - name: Check out master and its history
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_SYNC_TOKEN }}
+
+      - name: Configure Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge master and open a release/650 PR
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_SYNC_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: bash .github/scripts/sync-master-to-release-650.sh

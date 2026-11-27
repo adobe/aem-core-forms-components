@@ -1,3 +1,5 @@
+/* global cy, Cypress, expect */
+
 const commons = require('../../../libs/commons/commons'),
     sitesSelectors = require('../../../libs/commons/sitesSelectors'),
     formsSelectors = require('../../../libs/commons/guideSelectors'),
@@ -122,8 +124,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         cy.intercept('POST', /content\/forms\/af\/core-components-it\/samples\/ruleeditor\/blank.*/).as('ruleEditorRequest');
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+        cy.saveRule('@ruleEditorRequest');
 
         cy.wait('@ruleEditorRequest').then((interception) => {
             expect(interception.response.statusCode).to.equal(201);
@@ -174,8 +175,7 @@ describe('Rule editor authoring sanity for core-components',function(){
 
         cy.intercept('POST', /content\/forms\/af\/core-components-it\/samples\/ruleeditor\/blank.*/).as('ruleEditorRequest');
 
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).should("exist");
-        cy.getRuleEditorIframe().find(formsSelectors.ruleEditor.action.saveRule).click();
+        cy.saveRule('@ruleEditorRequest');
         cy.wait('@ruleEditorRequest').then((interception) => {
             expect(interception.response.statusCode).to.equal(201);
             const submittedData = Object.fromEntries(new URLSearchParams(interception.request.body));

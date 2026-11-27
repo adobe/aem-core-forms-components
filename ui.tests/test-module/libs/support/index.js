@@ -50,6 +50,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     if (err.message.includes('getEditContext')) {
         return false;
     }
+    // Explicitly allowlisted intermittent AEM authoring editable lookup.
+    if (err.message.includes('Cannot read properties of undefined (reading \'getEditable\')')) {
+        return false;
+    }
     // sometimes on 6.5, the editable toolbar parent div is hidden
     if (err.message.includes('is not visible because its parent')) {
         return false;
